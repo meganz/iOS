@@ -11869,25 +11869,25 @@
 			mainGroup = 137361811A6664C300B740E8;
 			packageReferences = (
 				BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */,
-				BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal.git" */,
-				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession.git" */,
+				BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */,
+				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */,
 				A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */,
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
-				BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout.git" */,
-				BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit.git" */,
-				BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */,
-				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder.git" */,
+				BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */,
+				BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
+				BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				BF1164B927F692DB00E5C5A4 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */,
-				BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout.git" */,
-				A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView.git" */,
+				BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */,
+				A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView" */,
 				A8F5156927F6F58200AEE4D6 /* XCRemoteSwiftPackageReference "FLEX" */,
-				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet.git" */,
-				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout.git" */,
-				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage.git" */,
-				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */,
-				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart.git" */,
-				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */,
+				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
+				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
+				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */,
+				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */,
+				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14745,7 +14745,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -14817,7 +14817,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -14881,7 +14881,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -14945,7 +14945,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -15008,7 +15008,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
@@ -15070,7 +15070,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15115,7 +15115,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
@@ -15157,7 +15157,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15201,7 +15201,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPickerFileProvider";
@@ -15250,7 +15250,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
@@ -15309,7 +15309,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15373,7 +15373,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPicker";
@@ -15435,7 +15435,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15499,7 +15499,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.12.2;
+				MARKETING_VERSION = 7.13;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15721,7 +15721,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -15753,7 +15753,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView.git" */ = {
+		A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/isaced/ISEmojiView.git";
 			requirement = {
@@ -15769,7 +15769,7 @@
 				version = 4.7.0;
 			};
 		};
-		A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet.git" */ = {
+		A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/DZNEmptyDataSet.git";
 			requirement = {
@@ -15777,7 +15777,7 @@
 				kind = branch;
 			};
 		};
-		A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout.git" */ = {
+		A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/FlexLayout.git";
 			requirement = {
@@ -15785,7 +15785,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */ = {
+		BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/SAMKeychain.git";
 			requirement = {
@@ -15801,7 +15801,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal.git" */ = {
+		BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ilia3546/PanModal.git";
 			requirement = {
@@ -15809,7 +15809,7 @@
 				revision = ba721e891b4f32fa015460ad5003d80054171f07;
 			};
 		};
-		BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout.git" */ = {
+		BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/chiahsien/CHTCollectionViewWaterfallLayout.git";
 			requirement = {
@@ -15817,7 +15817,7 @@
 				minimumVersion = 0.9.9;
 			};
 		};
-		BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit.git" */ = {
+		BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit.git";
 			requirement = {
@@ -15825,7 +15825,7 @@
 				version = 3.3.0;
 			};
 		};
-		BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */ = {
+		BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
 			requirement = {
@@ -15833,7 +15833,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder.git" */ = {
+		BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageWebPCoder.git";
 			requirement = {
@@ -15849,7 +15849,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout.git" */ = {
+		BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
 			requirement = {
@@ -15857,7 +15857,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage.git" */ = {
+		BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/GKContactImage.git";
 			requirement = {
@@ -15865,7 +15865,7 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession.git" */ = {
+		BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
 			requirement = {
@@ -15873,7 +15873,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart.git" */ = {
+		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/PieChart.git";
 			requirement = {
@@ -15886,37 +15886,37 @@
 /* Begin XCSwiftPackageProductDependency section */
 		A828E680286B3112004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A828E682286B3150004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A828E684286B317F004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A828E686286B318A004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A828E688286B31B6004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A828E68A286B31F9004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A828E68C286B3204004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		A8B51ADB27F3534F0030F1EA /* Haptica */ = {
@@ -15936,7 +15936,7 @@
 		};
 		A8F5155727F6F24F00AEE4D6 /* ISEmojiView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView.git" */;
+			package = A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView" */;
 			productName = ISEmojiView;
 		};
 		A8F5156A27F6F58300AEE4D6 /* FLEX */ = {
@@ -15946,62 +15946,62 @@
 		};
 		A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet.git" */;
+			package = A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */;
 			productName = DZNEmptyDataSet;
 		};
 		A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet.git" */;
+			package = A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */;
 			productName = DZNEmptyDataSet;
 		};
 		A8F5157B27F6F95800AEE4D6 /* DZNEmptyDataSet */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet.git" */;
+			package = A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */;
 			productName = DZNEmptyDataSet;
 		};
 		A8F5158427F6FF4F00AEE4D6 /* FlexLayout */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout.git" */;
+			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayout;
 		};
 		A8F5158627F6FF4F00AEE4D6 /* FlexLayoutYoga */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout.git" */;
+			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayoutYoga;
 		};
 		A8F5158827F6FF4F00AEE4D6 /* FlexLayoutYogaKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout.git" */;
+			package = A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayoutYogaKit;
 		};
 		BF0CB9352803AEAE00C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
 		BF0CB9392803AF2400C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
 		BF0CB93B2803AF3500C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
 		BF0CB93D2803AF4A00C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
 		BF0CB93F2803AF5500C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
 		BF0CB9412803AF6000C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain.git" */;
+			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
 		BF1163BA27F12ED000E5C5A4 /* MessageKit */ = {
@@ -16011,37 +16011,37 @@
 		};
 		BF1163C127F1305400E5C5A4 /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal.git" */;
+			package = BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */;
 			productName = PanModal;
 		};
 		BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout.git" */;
+			package = BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */;
 			productName = CHTCollectionViewWaterfallLayoutObjC;
 		};
 		BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit.git" */;
+			package = BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
 			productName = PhoneNumberKit;
 		};
 		BF11648127F6764B00E5C5A4 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack.git" */;
+			package = BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwift;
 		};
 		BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder.git" */;
+			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */;
 			productName = SDWebImageWebPCoder;
 		};
 		BF1164B327F6906A00E5C5A4 /* SDWebImageWebPCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder.git" */;
+			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */;
 			productName = SDWebImageWebPCoder;
 		};
 		BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder.git" */;
+			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */;
 			productName = SDWebImageWebPCoder;
 		};
 		BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */ = {
@@ -16051,52 +16051,52 @@
 		};
 		BF1164BF27F6A74D00E5C5A4 /* PureLayout */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout.git" */;
+			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */;
 			productName = PureLayout;
 		};
 		BF1164C527F6A81600E5C5A4 /* PureLayout */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout.git" */;
+			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */;
 			productName = PureLayout;
 		};
 		BF1164C927F6A81F00E5C5A4 /* PureLayout */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout.git" */;
+			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */;
 			productName = PureLayout;
 		};
 		BF1CEA3327FA737200C1A2E5 /* GKContactImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage.git" */;
+			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
 			productName = GKContactImage;
 		};
 		BF1CEA3927FA755C00C1A2E5 /* GKContactImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage.git" */;
+			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
 			productName = GKContactImage;
 		};
 		BF1CEA3D27FA757800C1A2E5 /* GKContactImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage.git" */;
+			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
 			productName = GKContactImage;
 		};
 		BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession.git" */;
+			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
 			productName = SDAVAssetExportSession;
 		};
 		BFA275E427ED316A00E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession.git" */;
+			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
 			productName = SDAVAssetExportSession;
 		};
 		BFA275E627ED317600E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession.git" */;
+			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
 			productName = SDAVAssetExportSession;
 		};
 		BFD2ED4C281228B30018C05A /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart.git" */;
+			package = BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */;
 			productName = PieChart;
 		};
 		BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */ = {
