@@ -385,12 +385,7 @@
         self.currentSearch = nil;
     }
     
-    self.startConversationOptions = @[
-        @(ContactsStartConversationNewGroupChat),
-        @(ContactsStartConversationNewChatLink),
-        @(ContactsStartConversationNewMeeting),
-        @(ContactsStartConversationJoinMeeting)
-    ];
+    [self populateStartConversationOptions];
     
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     [self.indexPathsMutableDictionary removeAllObjects];
@@ -505,6 +500,32 @@
     }
     
     [self addSearchBarController];
+}
+
+- (void)populateStartConversationOptions {
+    switch (self.chatOptionType) {
+    case ChatOptionTypeNone:
+        self.startConversationOptions = @[
+            @(ContactsStartConversationNewGroupChat),
+            @(ContactsStartConversationNewMeeting),
+            @(ContactsStartConversationJoinMeeting)
+        ];
+        break;
+        
+    case ChatOptionTypeMeeting:
+        self.startConversationOptions = @[
+            @(ContactsStartConversationNewMeeting),
+            @(ContactsStartConversationJoinMeeting)
+        ];
+        
+    case ChatOptionTypeNonMeeting:
+        self.startConversationOptions = @[
+            @(ContactsStartConversationNewGroupChat),
+        ];
+        
+    default:
+        break;
+    }
 }
 
 - (NSComparator)userSortComparator {

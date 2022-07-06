@@ -29,6 +29,10 @@ protocol QRMenuDelegate: ContextActionSheetDelegate {
     func qrMenu(didSelect action: MyQRAction)
 }
 
+protocol MeetingContextMenuDelegate: ContextActionSheetDelegate {
+    func meetingContextMenu(didSelect action: MeetingAction)
+}
+
 protocol ContextActionSheetDelegate: AnyObject {
     // iOS 13 Action Sheet delegate functions
     func showActionSheet(with actions: [ContextActionSheetAction])
@@ -41,6 +45,7 @@ final class ContextMenuManager: NSObject {
     weak var rubbishBinMenuDelegate: RubbishBinMenuDelegate?
     weak var chatMenuDelegate: ChatMenuDelegate?
     weak var qrMenuDelegate: QRMenuDelegate?
+    weak var meetingContextMenuDelegate: MeetingContextMenuDelegate?
     
     private let createContextMenuUC: CreateContextMenuUseCaseProtocol
     
@@ -50,6 +55,7 @@ final class ContextMenuManager: NSObject {
          rubbishBinMenuDelegate: RubbishBinMenuDelegate? = nil,
          chatMenuDelegate: ChatMenuDelegate? = nil,
          qrMenuDelegate: QRMenuDelegate? = nil,
+         meetingContextMenuDelegate: MeetingContextMenuDelegate? = nil,
          createContextMenuUseCase: CreateContextMenuUseCaseProtocol) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickFolderActionsMenuDelegate = quickFolderActionsMenuDelegate
@@ -57,6 +63,7 @@ final class ContextMenuManager: NSObject {
         self.rubbishBinMenuDelegate = rubbishBinMenuDelegate
         self.chatMenuDelegate = chatMenuDelegate
         self.qrMenuDelegate = qrMenuDelegate
+        self.meetingContextMenuDelegate = meetingContextMenuDelegate
         self.createContextMenuUC = createContextMenuUseCase
     }
     
@@ -69,16 +76,19 @@ final class ContextMenuManager: NSObject {
     ///     - identifier: String that identify the action.
     ///  - Returns: The especific Context Type of the action with the identifier passed as a parameter.
     private func actionContextType(identifier: String) -> ContextMenuType {
-        [(UploadAddAction.allValues, .uploadAdd),
-         (DisplayAction.allValues, .display),
-         (QuickFolderAction.allValues, .quickFolderActions),
-         (SortOrderType.allValues, .sort),
-         (RubbishBinAction.allValues, .rubbishBin),
-         (ChatAction.allValues, .chat),
-         (ChatStatusAction.allValues, .chatStatus),
-         (DNDTurnOnOption.allValues, .chatDoNotDisturb),
-         (DNDDisabledAction.allValues, .chatDoNotDisturb),
-         (MyQRAction.allValues, .qr)]
+        [
+            (UploadAddAction.allValues, .uploadAdd),
+            (DisplayAction.allValues, .display),
+            (QuickFolderAction.allValues, .quickFolderActions),
+            (SortOrderType.allValues, .sort),
+            (RubbishBinAction.allValues, .rubbishBin),
+            (ChatAction.allValues, .chat),
+            (ChatStatusAction.allValues, .chatStatus),
+            (DNDTurnOnOption.allValues, .chatDoNotDisturb),
+            (DNDDisabledAction.allValues, .chatDoNotDisturb),
+            (MyQRAction.allValues, .qr),
+            (MeetingAction.allValues, .meeting)
+        ]
             .compactMap {
                 isTheIdentifier(identifier, partOf: $0, contextMenu: $1)
             }.first ?? .unknown
@@ -180,6 +190,11 @@ final class ContextMenuManager: NSObject {
             guard let action = MyQRAction(rawValue: identifier) else { return }
             
             qrMenuDelegate?.qrMenu(didSelect: action)
+            
+        case .meeting:
+            guard let action = MeetingAction(rawValue: identifier) else { return }
+            
+            meetingContextMenuDelegate?.meetingContextMenu(didSelect: action)
             
         case .unknown:
             break

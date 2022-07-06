@@ -26,6 +26,8 @@ final class ContextMenuBuilder {
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
     private var chatStatus: ChatStatus = .invalid
+    private var shouldStartMeeting = false
+    private var shouldJoinMeeting = false
     
     func setType(_ menuType: ContextMenuType?) -> ContextMenuBuilder {
         self.menuType = menuType ?? .unknown
@@ -157,6 +159,17 @@ final class ContextMenuBuilder {
         return self
     }
     
+    func setShouldStartMeeting(_ shouldStartMeeting: Bool) -> ContextMenuBuilder {
+        self.shouldStartMeeting = shouldStartMeeting
+        return self
+    }
+    
+    func setShouldJoinMeeting(_ shouldJoinMeeting: Bool) -> ContextMenuBuilder {
+        self.shouldJoinMeeting = shouldJoinMeeting
+        return self
+    }
+    
+    
     func build() -> CMEntity? {
         switch menuType {
         case .uploadAdd:
@@ -169,6 +182,8 @@ final class ContextMenuBuilder {
             return chatMenu()
         case .qr:
             return myQRCodeMenu()
+        case .meeting:
+            return meetingMenu()
         default:
             return nil
         }
@@ -361,6 +376,13 @@ final class ContextMenuBuilder {
                         detail: isDoNotDisturbEnabled ? currentTimeRemainingToDeactiveDND() : nil,
                         identifier: ChatAction.doNotDisturb.rawValue,
                         children: doNotDisturbElements)
+    }
+    
+    //MARK:- Meeting Context Actions
+    
+    private func meetingMenu() -> CMEntity {
+        CMEntity(displayInline: true,
+                 children: [startMeeting, joinMeeting])
     }
     
     //MARK: - My QR Code Actions

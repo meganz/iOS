@@ -248,7 +248,12 @@
     }
     
     EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
-    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (self.chatTypeSelected == MEGAChatTypeMeeting) {
+        [self setEmptyViewButtonWithMeetingsOptionsWithButton:emptyStateView.button];
+    } else {
+        [self setEmptyViewButtonWithChatOptionsWithButton:emptyStateView.button];
+    }
     
     return emptyStateView;
 }
@@ -394,21 +399,6 @@
     return text;
 }
 
-- (void)buttonTouchUpInsideEmptyState {
-    if (self.chatSelectorButton.isSelected) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-        [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"cancel", nil)];
-        ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        contactsVC.contactsMode = ContactsModeChatNamingGroup;
-        contactsVC.getChatLinkEnabled = YES;
-        [self blockCompletionsForCreateChatInContacts:contactsVC];
-        
-        [self presentViewController:navigationController animated:YES completion:nil];
-    } else {
-        [self createNewMeeting];
-    }
-}
-
 #pragma mark - Public
 
 - (void)openChatRoomWithID:(uint64_t)chatID {
@@ -475,6 +465,20 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
+    
+    switch (self.chatTypeSelected ) {
+    case MEGAChatTypeMeeting:
+        contactsVC.chatOptionType = ChatOptionTypeMeeting;
+        break;
+        
+    case MEGAChatTypeNonMeeting:
+        contactsVC.chatOptionType = ChatOptionTypeNonMeeting;
+        break;
+        
+    default:
+        break;
+    }
+    
     [self blockCompletionsForCreateChatInContacts:contactsVC];
     
     [self presentViewController:navigationController animated:YES completion:nil];
