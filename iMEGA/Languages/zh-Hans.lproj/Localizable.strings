@@ -206,6 +206,8 @@
 "noResults"="没有符合搜索的项目";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="回收站为空";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="幻灯片";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="无离线文件";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -2621,7 +2623,7 @@
 /* Meetings: Action on a meeting that change participant's role to moderator */
 "meetings.participant.makeModerator"="设为主持人";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="移除主持人";
+"meetings.participant.removeModerator"="移除主持人权限";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="重命名会议";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="立即注册并免费享受全球领先的协作平台。";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="您是新的会议主持人";
+"meetings.notifications.moderatorPrivilege"="您是新的主持人";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="我们正在升级MEGAchat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="文件已存在";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="文件夹已存在";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="此位置已存在名为%@的文件夹。";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="合并";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="新文件夹将与此位置的文件夹合并。";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="跳过此文件夹";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="替换";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="此位置的文件将被替换为新文件。";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="跳过此文件";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="重命名";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="此文件将被重命名为：";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="更新";
 /* Text description for the update action when upload and already exists in destination */

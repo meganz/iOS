@@ -206,6 +206,8 @@
 "noResults"="結果なし";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="空のごみ箱";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="スライドショー";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="オフライン用に保存されたファイルはありません";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="参加者";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="モデレーター";
+"moderator"="主催者";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="参加者 (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="モデレーター";
+"meetings.participant.moderator"="主催者";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="モデレーターにする";
+"meetings.participant.makeModerator"="主催者を設定";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="モデレーターを削除";
+"meetings.participant.removeModerator"="主催者として削除";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="ミーティング名の変更";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="今すぐ登録して、高度なコラボレーション機能を無料でお楽しみください。";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="あなたが新しいミーティングモデレーターです";
+"meetings.notifications.moderatorPrivilege"="あなたは新しい主催者です";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="MEGAchatをバージョンアップしています。すべての参加者がMEGAアプリを最新版にアップデートしないと、バージョンの互換性がないために、通話がつながらない場合がございます。";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="ファイルがすでに存在します";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="フォルダがすでに存在しています";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
 "nameCollision.folders.alreadyExists"="%@という名前のフォルダは、この場所にすでに存在しています。";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="マージ";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="新しいフォルダは、この場所のフォルダとマージされます。";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="このフォルダをスキップ";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="置き換える";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="この場所のファイルは、新しいファイルに置き換わります。";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="このファイルをとばす";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="名前を変更";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="このファイル名は以下に変更されます：";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="更新";
 /* Text description for the update action when upload and already exists in destination */

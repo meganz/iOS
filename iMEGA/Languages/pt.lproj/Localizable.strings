@@ -206,6 +206,8 @@
 "noResults"="Não há resultados";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Lixeira vazia";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="Slideshow";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Participantes";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Moderador";
+"moderator"="Anfitrião";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Predeterminado";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participantes (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="MODERADOR";
+"meetings.participant.moderator"="Anfitrião";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Converter em Moderador";
+"meetings.participant.makeModerator"="Converter em anfitrião";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Remover Moderador";
+"meetings.participant.removeModerator"="Eliminar permissão de anfitrião";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Renomear reunião";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Cadastre-se agora e aproveite de forma gratuita os recursos de colaboração avançados.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="Você é o novo moderador da chamada";
+"meetings.notifications.moderatorPrivilege"="Você é o novo anfitrião";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Estamos atualizando o MEGAchat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem os seus aplicativos do MEGA à versão mais recente.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,33 +2967,33 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Superior";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="Arquivo já existe";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Pasta já existe";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="";
+"nameCollision.folders.alreadyExists"="Já existe uma pasta chamada %@ neste local.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Combinar";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="A nova pasta será combinada com a pasta que já existe neste local.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Pular esta pasta";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="";
+"nameCollision.files.alreadyExists"="Um arquivo chamado %@ já existe neste local.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Substituir";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="O arquivo que já existe neste local será substituído pelo novo arquivo.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Pular este arquivo";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Renomear";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="O arquivo será renomeado como:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Atualizar";
 /* Text description for the update action when upload and already exists in destination */
-"nameCollision.files.action.update.description"="";
+"nameCollision.files.action.update.description"="O arquivo será atualizado com uma nova versão.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Não tem mais ninguém aqui";
 /* Meetings end call dialog description */

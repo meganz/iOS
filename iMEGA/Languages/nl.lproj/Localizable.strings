@@ -206,6 +206,8 @@
 "noResults"="Geen resultaten";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Prullenbak leegmaken";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="Diavoorstelling";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Geen bestanden Opgeslagen voor Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Deelnemers";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Moderator";
+"moderator"="Gastheer/gastvrouw";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standaard";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Deelnemers (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="GESPREKSLEIDER";
+"meetings.participant.moderator"="Gastheer/gastvrouw";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Maak Gespreksleider";
+"meetings.participant.makeModerator"="Gastheer/gastvrouw maken";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Gespreksleider verwijderen";
+"meetings.participant.removeModerator"="Remove as host";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Hernoem Vergadering";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Meld u nu aan en profiteer gratis van geavanceerde samenwerkingsfuncties.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="U bent nu de nieuwe oproep gespreksleider";
+"meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="We upgraden MEGAchat. Uw gesprekken zijn mogelijk niet verbonden vanwege incompatibiliteit met versies, tenzij alle partijen hun MEGA-applicaties updaten naar de nieuwste versie.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Beste";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="Bestand bestaat al";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Map bestaat al";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="De map %@ bestaat al op deze locatie.";
+"nameCollision.folders.alreadyExists"="Een map genaamd %@ bestaat al op deze locatie.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Samenvoegen";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="De nieuwe map wordt samengevoegd met de map op deze locatie.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Deze map overslaan";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Vervangen";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="Het bestand op deze locatie wordt vervangen met het nieuwe bestand.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Dit bestand overslaan";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Hernoemen";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="Het bestand wordt hernoemd als:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */

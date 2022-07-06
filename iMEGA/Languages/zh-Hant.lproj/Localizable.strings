@@ -206,6 +206,8 @@
 "noResults"="沒有符合搜尋的項目";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="空的垃圾筒";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="投影播放";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="沒有任何可離線存取檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="與會者";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="共同管理";
+"moderator"="主持人";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準模式";
 /* A button title which removes a participant from a chat. */
@@ -2621,7 +2623,7 @@
 /* Meetings: Action on a meeting that change participant's role to moderator */
 "meetings.participant.makeModerator"="設為主持人";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="移除主持人";
+"meetings.participant.removeModerator"="移除主持人權限";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="重新命名會議名稱";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="立即註冊並免費享有進階的協作功能。";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="您是新的會議主持人";
+"meetings.notifications.moderatorPrivilege"="您是新的主持人";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="我們正在升級MEGAchat。由於版本不相容，除非所有與會者將他們的MEGA應用程式更新至最新版本，否則您的通話可能無法接通。";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="最高的";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="檔案已存在";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="資料夾已存在";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="此位置已有名稱為%@的資料夾。";
+"nameCollision.folders.alreadyExists"="此目的地已存在名稱為%@的資料夾。";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="合併";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="新的資料夾將與此目的地的資料夾合併。";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="略過此資料夾";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="取代";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="此目的地的檔案將被新的檔案取代。";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="略過此檔案";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="重新命名";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="檔案將重新命名為：";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="更新";
 /* Text description for the update action when upload and already exists in destination */

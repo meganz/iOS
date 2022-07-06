@@ -206,6 +206,8 @@
 "noResults"="ไม่พบรายการค้นหา";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="ล้างข้อมูลในถังขยะ";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="สไลด์โชว์";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="ไม่มีไฟล์ที่บันทึกออฟไลน์ไว้";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="ผู้เข้าร่วม";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="ผู้ดูแล";
+"moderator"="Host";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="มาตรฐาน";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="ผู้เข้าร่วม (%d คน)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="ผู้ดูแล";
+"meetings.participant.moderator"="Host";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="ตั้งเป็นผู้ดูแล";
+"meetings.participant.makeModerator"="Make host";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="ลบออกจากการเป็นผู้ดูแล";
+"meetings.participant.removeModerator"="Remove as host";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="เปลี่ยนชื่อการประชุม";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="ลงทะเบียนตอนนี้และเพลิดเพลินไปกับฟีเจอร์การทำงานร่วมกันขั้นสูงได้ฟรี";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="คุณเป็นผู้ดูแลการโทรคนใหม่";
+"meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="เรากำลังอัปเกรด MEGAchat การโทรของคุณอาจไม่ได้เชื่อมต่อเนื่องจากว่าเวอร์ชันที่เข้ากันไม่ได้ เว้นแต่ทุกฝ่ายจะอัปเดตแอป MEGA เป็นเวอร์ชันล่าสุดแล้ว";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="ดีที่สุด";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="File already exists";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="โฟลเดอร์นี้มีการใช้งานแล้ว";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="โฟลเดอร์ %@ มีอยู่แล้วในปลายทางนี้";
+"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Merge";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="ข้ามโฟลเดอร์นี้";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="แทนที่";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Skip this file";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="เปลี่ยนชื่อ";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="The file will be renamed as:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="อัปเดต";
 /* Text description for the update action when upload and already exists in destination */

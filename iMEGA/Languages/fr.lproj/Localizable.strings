@@ -206,6 +206,8 @@
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="La Corbeille est vide";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="Diaporama";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Aucun fichier n’est enregistré Hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Participants";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Modérateur";
+"moderator"="Hôte";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Normal";
 /* A button title which removes a participant from a chat. */
@@ -1737,9 +1739,9 @@
 /* Message shown in a chat room when there is an active call */
 "There is an active call. Tap to join."="Un appel est en cours. Touchez pour y participer.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touchez pour revenir à l’appel %@";
+"Touch to return to call %@"="Toucher pour revenir dans l’appel %@";
 /* Message shown in a chat room for a one on one call */
-"Tap to return to call"="Touchez pour reprendre l’appel";
+"Tap to return to call"="Toucher pour revenir dans l’appel";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Enregistrer dans Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="MODÉRATEUR";
+"meetings.participant.moderator"="Hôte";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Désigner comme modérateur";
+"meetings.participant.makeModerator"="Désigner comme hôte";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Supprimer comme modérateur";
+"meetings.participant.removeModerator"="Supprimer comme hôte";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Renommer la réunion";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Inscrivez-vous maintenant et profitez gratuitement de fonctions évoluées de collaboration.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="Vous êtes le nouveau modérateur de l’appel";
+"meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="La meilleure";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="File already exists";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Le dossier existe déjà";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="Le dossier « %@ » existe déjà dans cette destination.";
+"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Merge";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Ignorer ce dossier";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Remplacer";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Skip this file";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Renommer";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="The file will be renamed as:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Mettre à jour";
 /* Text description for the update action when upload and already exists in destination */

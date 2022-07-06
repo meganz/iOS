@@ -206,6 +206,8 @@
 "noResults"="Tidak ada hasil";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Kosongkan Sampah";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="Tampilan slide";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Tidak ada file tersimpan untuk Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Partisipan";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Moderator";
+"moderator"="Host";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standar";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Peserta (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="MODERATOR";
+"meetings.participant.moderator"="Host";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Jadikan Moderator";
+"meetings.participant.makeModerator"="Make host";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Hapus Moderator";
+"meetings.participant.removeModerator"="Remove as host";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Ganti Nama Rapat";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Daftar sekarang dan nikmati fitur kolaborasi lanjutan secara gratis.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="Anda adalah moderator panggilan baru";
+"meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Kami sedang meningkatkan MEGAchat. Panggilan anda mungkin tidak terhubung karena ketidakcocokan versi kecuali semua pihak memperbarui aplikasi MEGA mereka ke versi terbaru.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,15 +2967,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Terbaik";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="File already exists";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Folder sudah ada";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="Folder %@ sudah ada di tujuan ini.";
+"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Merge";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Lewati folder ini";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2981,13 +2983,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Ganti";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Skip this file";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Ubah nama";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="The file will be renamed as:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Perbarui";
 /* Text description for the update action when upload and already exists in destination */
