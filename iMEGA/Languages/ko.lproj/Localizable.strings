@@ -206,6 +206,8 @@
 "noResults"="결과 없음";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="휴지통 비우기";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="슬라이드쇼";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="오프라인용으로 저장된 파일 없음";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="참여자";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="중재자";
+"moderator"="주최자";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="기본";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="참가자 (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="중재자";
+"meetings.participant.moderator"="주최자";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="중재자 임명";
+"meetings.participant.makeModerator"="주최자로 임명";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="중재자 제거";
+"meetings.participant.removeModerator"="주최자에서 해임";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="회의 이름 변경";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="지금 가입하고 고급 협업 기능을 무료로 즐기세요.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="당신은 새 통화 중재자입니다";
+"meetings.notifications.moderatorPrivilege"="당신은 새로운 주최자입니다.";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="MEGAchat을 업그레이드하고 있습니다. 모든 참가자들이 MEGA 앱을 최신 버전으로 업데이트할 때까지 버전 호환성 문제로 통화가 연결되지 않을 수 있습니다.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,33 +2967,33 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="최고";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="파일이 이미 존재합니다";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="폴더가 이미 존재합니다";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="";
+"nameCollision.folders.alreadyExists"="대상 위치에 이름이 %@인 폴더가 이미 존재합니다.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="병합";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="새 폴더가 대상 위치의 폴더와 병합됩니다.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="이 폴더 건너뛰기";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="";
+"nameCollision.files.alreadyExists"="대상 위치에 이름이 %@인 파일이 이미 존재합니다.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="바꾸기";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="대상 위치의 파일이 새 파일로 교체됩니다.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="이 파일 건너뛰기";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="이름 바꾸기";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="파일이 다음과 같이 이름이 변경됩니다:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="업데이트";
 /* Text description for the update action when upload and already exists in destination */
-"nameCollision.files.action.update.description"="";
+"nameCollision.files.action.update.description"="파일이 새 버전으로 업데이트 됩니다.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="여기에 당신만 있습니다";
 /* Meetings end call dialog description */
@@ -3017,4 +3019,4 @@
 /* Label for hang a group chat or meeting when the user is moderator */
 "meetings.leaveCall.buttonTitle"="떠나기";
 /* Label for end a group chat or meeting when the user is moderator */
-"meetings.endForAll.buttonTitle"="End for all";
+"meetings.endForAll.buttonTitle"="모두 통화 종료";

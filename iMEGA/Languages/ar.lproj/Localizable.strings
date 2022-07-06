@@ -206,6 +206,8 @@
 "noResults"="لا يوجد نتائج";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="سلة المحذوفات فارغة";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="عرض الشرائح";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="لا توجد ملفات محفوظة دون اتصال";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="المشاركون";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="مشرف";
+"moderator"="مضيف";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="معيار";
 /* A button title which removes a participant from a chat. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="المشاركون (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="مشرف";
+"meetings.participant.moderator"="مُضيف";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="التعيين كمشرف";
+"meetings.participant.makeModerator"="اجعله مُضيف";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="إزالة مشرف";
+"meetings.participant.removeModerator"="Remove as host";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="إعادة تسمية الاجتماع";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="اشترك الآن واستمتع بميزات التعاون المتقدمة مجانًا.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="أنت مشرف الاتصال الجديد.";
+"meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="نحن بصدد ترقية محادثات ميغا MEGAchat. قد لا تكون مكالماتك متصلة بسبب عدم توافق الإصدار ما لم تقم جميع الأطراف بتحديث تطبيقات ميغا MEGA الخاصة بهم إلى أحدث إصدار.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,29 +2967,29 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="الأفضل";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="File already exists";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="المجلد موجود مسبقاً";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="المجلد %@ موجود بالفعل في هذا الموقع.";
+"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Merge";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="تخطي هذا المجلد";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="يوجد ملف اسمه %@ بالفعل في هذا الموقع.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.replace.title"="";
+"nameCollision.files.action.replace.title"="Replace";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Skip this file";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="إعادة التسمية";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="The file will be renamed as:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="تحديث";
 /* Text description for the update action when upload and already exists in destination */

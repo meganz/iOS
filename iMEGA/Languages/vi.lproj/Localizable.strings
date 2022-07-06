@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi email. Xin sử dụng email hiện thời của tài khoản này và sau đó clíck vào đường liên kết để xác nhận.";
+"needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi email. Xin sử dụng email hiện thời của tài khoản này và sau đó click vào đường liên kết để xác nhận.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Đăng nhập";
 /* Message for login option on Create Account screen */
@@ -206,6 +206,8 @@
 "noResults"="Không Có Kết Quả";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Thùng Rác Trống";
+/* Slideshow Menu Option */
+"sharedItems.menu.slideshow.title"="Chạy trình chiếu";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Không có tệp tin nào trong Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -877,7 +879,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Bạn đã yêu cầu gửi một đường liên kết xác nhận cho địa chỉ email này rồi.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Xin kiểm tra hộp thư và clíck vào đường liên kết để xác nhận địa chỉ email mới.";
+"emailIsChanging_description"="Xin kiểm tra hộp thư và click vào đường liên kết để xác nhận địa chỉ email mới.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Xin nhập mật khẩu để xác thực đây là email của bạn";
 /* The [X] will be replaced with the e-mail address. */
@@ -1271,7 +1273,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Các Thành Viên";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Người điều hành";
+"moderator"="Người chủ trì";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Thường";
 /* A button title which removes a participant from a chat. */
@@ -1341,7 +1343,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Bạn có chắc muốn hủy bỏ việc đăng ký?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa cho chính xác rồi clíck nút “Gửi lại”.";
+"misspelledEmailAddress"="Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa cho chính xác rồi click nút “Gửi lại”.";
 /* A button to resend the email confirmation. */
 "resend"="Gửi lại";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2617,11 +2619,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Thành viên (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="NGƯỜI ĐIỀU HÀNH";
+"meetings.participant.moderator"="Người chủ trì";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Trao Quyền Điều Hành";
+"meetings.participant.makeModerator"="Đặt làm người chủ trì";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Tước Quyền Điều Hành";
+"meetings.participant.removeModerator"="Loại bỏ chức người chủ trì";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Đổi Tên Cuộc Họp";
 /* Action of a call/meeting to share its link */
@@ -2651,7 +2653,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Đăng ký ngay và tận hưởng các tính năng cộng tác hữu dụng và miễn phí.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="Bạn đã được chọn là người điều hành mới";
+"meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchát. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2965,33 +2967,33 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Tốt nhất";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="";
+"nameCollision.title.file"="File already exists";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Thư mục đã tồn tại";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="";
+"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="";
+"nameCollision.folders.action.merge.title"="Merge";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="";
+"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Bỏ qua thư mục này";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="";
+"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Thay thế";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="";
+"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="";
+"nameCollision.files.action.skip.title"="Skip this file";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Đổi tên";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="";
+"nameCollision.files.action.rename.description"="The file will be renamed as:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Cập nhật";
 /* Text description for the update action when upload and already exists in destination */
-"nameCollision.files.action.update.description"="";
+"nameCollision.files.action.update.description"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Bạn là người duy nhất ở đây";
 /* Meetings end call dialog description */
