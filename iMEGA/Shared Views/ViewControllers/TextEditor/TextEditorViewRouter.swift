@@ -61,7 +61,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             fileSystemRepository: fileSystemRepository,
             nodeRepository: nodeRepository,
             fileCacheRepository: FileCacheRepository.newRepo)
-        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk, nodeHandle: nodeEntity?.handle))
+        let nodeActionUC = NodeActionUseCase(repo: NodeRepository.newRepo)
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,

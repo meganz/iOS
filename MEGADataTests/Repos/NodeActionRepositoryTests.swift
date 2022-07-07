@@ -1,11 +1,11 @@
 import XCTest
 @testable import MEGA
 
-final class NodeActionRepositoryTests: XCTestCase {
+final class NodeRepositoryTests: XCTestCase {
     
     func testSlideShow_withFolderContainsImageNode_shouldReturnNodes() throws {
         let mockNode = MockNodeWithTypeAndParent(name: "TestFolder", nodeType: .folder, handle: 1, parentHandle: 0)
-        let repo = NodeActionRepository(sdk: MockSDK(nodes: sampleNodesWithImages()), nodeHandle: nil)
+        let repo = NodeRepository(sdk: MockSDK(nodes: sampleNodesWithImages()), sharedFolderSdk: MEGASdk(), chatSdk: MEGAChatSdk())
         let images = repo.images(for: mockNode.toNodeEntity())
         
         XCTAssertTrue(images.count == 1)
@@ -13,21 +13,21 @@ final class NodeActionRepositoryTests: XCTestCase {
     
     func testSlideShow_withFolderNotContainsImageNode_shouldReturnEmpty() throws {
         let mockNode = MockNodeWithTypeAndParent(name: "TestFolder", nodeType: .folder, handle: 1, parentHandle: 0)
-        let repo = NodeActionRepository(sdk: MockSDK(nodes: sampleNodesWithoutImages()), nodeHandle: nil)
+        let repo = NodeRepository(sdk: MockSDK(nodes: sampleNodesWithoutImages()), sharedFolderSdk: MEGASdk(), chatSdk: MEGAChatSdk())
         let images = repo.images(for: mockNode.toNodeEntity())
         
         XCTAssertTrue(images.count == 0)
     }
     
     func testSlideShow_withFolderHandleContainsImageNode_shouldReturnNodes() throws {
-        let repo = NodeActionRepository(sdk: MockSDK(nodes: sampleNodesWithImages()), nodeHandle: nil)
+        let repo = NodeRepository(sdk: MockSDK(nodes: sampleNodesWithImages()), sharedFolderSdk: MEGASdk(), chatSdk: MEGAChatSdk())
         let images = repo.images(for: 1)
         
         XCTAssertTrue(images.count == 1)
     }
     
     func testSlideShow_withFolderHandleNotContainsImageNode_shouldReturnEmpty() throws {
-        let repo = NodeActionRepository(sdk: MockSDK(nodes: sampleNodesWithoutImages()), nodeHandle: nil)
+        let repo = NodeRepository(sdk: MockSDK(nodes: sampleNodesWithoutImages()), sharedFolderSdk: MEGASdk(), chatSdk: MEGAChatSdk())
         let images = repo.images(for: 1)
         
         XCTAssertTrue(images.count == 0)
