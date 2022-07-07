@@ -14,8 +14,8 @@
 		0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */; };
 		0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */; };
 		0D213E68263A603E00B43723 /* NodeActionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E67263A603E00B43723 /* NodeActionUseCase.swift */; };
-		0D213E7B263A60B700B43723 /* NodeActionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E7A263A60B700B43723 /* NodeActionRepositoryProtocol.swift */; };
-		0D213E8E263A613500B43723 /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeActionRepository.swift */; };
+		0D213E7B263A60B700B43723 /* NodeRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E7A263A60B700B43723 /* NodeRepositoryProtocol.swift */; };
+		0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeRepository.swift */; };
 		0D213EAA263A638C00B43723 /* NodeAccessEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213EA9263A638B00B43723 /* NodeAccessEntity+Mapper.swift */; };
 		0D213EF8263B847200B43723 /* MockNodeActionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213EF7263B847200B43723 /* MockNodeActionUseCase.swift */; };
 		0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */; };
@@ -38,7 +38,6 @@
 		12084048286120020079127B /* SearchOperation+Initialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12084047286120020079127B /* SearchOperation+Initialize.swift */; };
 		1208CEC527FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */; };
 		1209CD9A286E76FE00D5C079 /* NodeActionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1209CD99286E76FE00D5C079 /* NodeActionUseCaseTests.swift */; };
-		1209CD9E286E787E00D5C079 /* MockNodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1209CD9D286E787E00D5C079 /* MockNodeActionRepository.swift */; };
 		1209CDA0286E7B8200D5C079 /* NodeActionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1209CD9F286E7B8200D5C079 /* NodeActionViewModelTests.swift */; };
 		120B4A7927430F3E00312B35 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
@@ -954,6 +953,10 @@
 		83422B25255984C300D46907 /* MEGAWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83422B20255984C300D46907 /* MEGAWidget.swift */; };
 		83422B28255984C300D46907 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83422B23255984C300D46907 /* Assets.xcassets */; };
 		834294D628631EA7002B89B5 /* View+SelectiveCornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834294D528631EA7002B89B5 /* View+SelectiveCornerRadius.swift */; };
+		83438A69281AB00A006C9285 /* NodeRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E7A263A60B700B43723 /* NodeRepositoryProtocol.swift */; };
+		83438A6A281AB01A006C9285 /* NodeAccessTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D39269BA4BA0001D169 /* NodeAccessTypeEntity.swift */; };
+		83438A6B281AB03E006C9285 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeRepository.swift */; };
+		83438A6D281AB531006C9285 /* NodeAccessEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213EA9263A638B00B43723 /* NodeAccessEntity+Mapper.swift */; };
 		8346CA68283CD6E100462F50 /* CopyOrMoveErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA67283CD6E100462F50 /* CopyOrMoveErrorEntity.swift */; };
 		8346CA6B283CD6EC00462F50 /* CopyOrMoveErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA67283CD6E100462F50 /* CopyOrMoveErrorEntity.swift */; };
 		8346CA6E283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */; };
@@ -1169,10 +1172,6 @@
 		83BFB99F27D8DF43001755B6 /* FileSystemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4DB2732189000C19F36 /* FileSystemRepository.swift */; };
 		83BFB9A227D8DF4C001755B6 /* FileSystemRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4DE2732196600C19F36 /* FileSystemRepositoryProtocol.swift */; };
 		83BFB9A727D8E2CE001755B6 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
-		83BFB9A927D8F89C001755B6 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFB9A827D8F89C001755B6 /* NodeRepository.swift */; };
-		83BFB9AA27D8FA45001755B6 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFB9A827D8F89C001755B6 /* NodeRepository.swift */; };
-		83BFB9AD27D8FFA2001755B6 /* NodeRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFB9AC27D8FFA2001755B6 /* NodeRepositoryProtocol.swift */; };
-		83BFB9AE27D8FFB9001755B6 /* NodeRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFB9AC27D8FFA2001755B6 /* NodeRepositoryProtocol.swift */; };
 		83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C1B25125A7349000814074 /* QuickAccessWidgetViewModel.swift */; };
 		83C1B49225A8C14800814074 /* SectionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C1B49125A8C14800814074 /* SectionDetail.swift */; };
 		83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BA0265261B900A7764B /* MeetingParticipantsLayoutViewController.xib */; };
@@ -2669,8 +2668,8 @@
 		0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUploadFileUseCase.swift; sourceTree = "<group>"; };
 		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
 		0D213E67263A603E00B43723 /* NodeActionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionUseCase.swift; sourceTree = "<group>"; };
-		0D213E7A263A60B700B43723 /* NodeActionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepositoryProtocol.swift; sourceTree = "<group>"; };
-		0D213E8D263A613500B43723 /* NodeActionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepository.swift; sourceTree = "<group>"; };
+		0D213E7A263A60B700B43723 /* NodeRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryProtocol.swift; sourceTree = "<group>"; };
+		0D213E8D263A613500B43723 /* NodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepository.swift; sourceTree = "<group>"; };
 		0D213EA9263A638B00B43723 /* NodeAccessEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeAccessEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0D213EF7263B847200B43723 /* MockNodeActionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeActionUseCase.swift; sourceTree = "<group>"; };
 		0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModelTests.swift; sourceTree = "<group>"; };
@@ -2691,7 +2690,6 @@
 		12084047286120020079127B /* SearchOperation+Initialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchOperation+Initialize.swift"; sourceTree = "<group>"; };
 		1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellVideoDurationViewModifier.swift; sourceTree = "<group>"; };
 		1209CD99286E76FE00D5C079 /* NodeActionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionUseCaseTests.swift; sourceTree = "<group>"; };
-		1209CD9D286E787E00D5C079 /* MockNodeActionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeActionRepository.swift; sourceTree = "<group>"; };
 		1209CD9F286E7B8200D5C079 /* NodeActionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewModelTests.swift; sourceTree = "<group>"; };
 		120B4A7827430F3E00312B35 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
@@ -3756,8 +3754,6 @@
 		83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Additions.swift"; sourceTree = "<group>"; };
 		83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodeActionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSelectionType.swift; sourceTree = "<group>"; };
-		83BFB9A827D8F89C001755B6 /* NodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepository.swift; sourceTree = "<group>"; };
-		83BFB9AC27D8FFA2001755B6 /* NodeRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryProtocol.swift; sourceTree = "<group>"; };
 		83C1B25125A7349000814074 /* QuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
 		83C1B49125A8C14800814074 /* SectionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDetail.swift; sourceTree = "<group>"; };
 		83C49BA0265261B900A7764B /* MeetingParticipantsLayoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingParticipantsLayoutViewController.xib; sourceTree = "<group>"; };
@@ -5275,10 +5271,9 @@
 			isa = PBXGroup;
 			children = (
 				5B98BE1027AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift */,
-				0D213E7A263A60B700B43723 /* NodeActionRepositoryProtocol.swift */,
+				0D213E7A263A60B700B43723 /* NodeRepositoryProtocol.swift */,
 				5B9199F126E7C9E900402358 /* ThumbnailRepositoryProtocol.swift */,
 				8396AB4427BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift */,
-				83BFB9AC27D8FFA2001755B6 /* NodeRepositoryProtocol.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -5286,10 +5281,9 @@
 		0D213E8C263A611500B43723 /* Node */ = {
 			isa = PBXGroup;
 			children = (
-				0D213E8D263A613500B43723 /* NodeActionRepository.swift */,
+				0D213E8D263A613500B43723 /* NodeRepository.swift */,
 				5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */,
 				8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */,
-				83BFB9A827D8F89C001755B6 /* NodeRepository.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -10401,7 +10395,6 @@
 				83B5E88727F71BB00073C870 /* MockOfflineFilesRepository.swift */,
 				83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */,
 				833CAF3E2846886500B52B64 /* MockFileCacheRepository.swift */,
-				1209CD9D286E787E00D5C079 /* MockNodeActionRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -12302,7 +12295,7 @@
 				BF49DFBF282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift in Sources */,
 				77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */,
 				A89CBD2B27F45B06006D0949 /* WarningViewModel.swift in Sources */,
-				0D213E7B263A60B700B43723 /* NodeActionRepositoryProtocol.swift in Sources */,
+				0D213E7B263A60B700B43723 /* NodeRepositoryProtocol.swift in Sources */,
 				B6524E60274B2D2900DB4160 /* PhotoMonthCardViewModel.swift in Sources */,
 				77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
 				5D166B89252198A7004F4F4A /* HomeSearchResultFileViewModel.swift in Sources */,
@@ -12498,7 +12491,6 @@
 				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
 				5B33F0FA26601E4100E5F0F4 /* FavouritesRouter.swift in Sources */,
 				83E345CD25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift in Sources */,
-				83BFB9A927D8F89C001755B6 /* NodeRepository.swift in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				5BFA95F6252DF10D003653EB /* ManageChatHistoryViewRouter.swift in Sources */,
@@ -12617,7 +12609,7 @@
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */,
 				5D6092BD256219E1005FA3E4 /* BannerViewModel.swift in Sources */,
-				0D213E8E263A613500B43723 /* NodeActionRepository.swift in Sources */,
+				0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */,
 				5DD6B17424D6D67900F14515 /* UIView+RoundCornerShadow.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				B646DF4A27713E6900BC543F /* ViewDidLoadModifier.swift in Sources */,
@@ -13045,7 +13037,6 @@
 				120B4A7927430F3E00312B35 /* Strings+Generated.swift in Sources */,
 				B616D8342550C16700712012 /* NodeHandle+Additions.swift in Sources */,
 				BF1589222435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift in Sources */,
-				83BFB9AD27D8FFA2001755B6 /* NodeRepositoryProtocol.swift in Sources */,
 				83143B5C2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift in Sources */,
 				838B976826B1615F000E480E /* CallParticipantEntity+Mapping.swift in Sources */,
 				BF782D7A269BA4BB0001D169 /* ShareEntity.swift in Sources */,
@@ -14049,7 +14040,9 @@
 				B6D0B34E283CD9EA0020C64D /* AppGroupContainerRepository.swift in Sources */,
 				B6D0B34A283CD9250020C64D /* AccountCleanerUseCase.swift in Sources */,
 				839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
+				83438A6B281AB03E006C9285 /* NodeRepository.swift in Sources */,
 				B5925B8C279119E400170CD6 /* Colors+Generated.swift in Sources */,
+				83438A6D281AB531006C9285 /* NodeAccessEntity+Mapper.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				83BFB99F27D8DF43001755B6 /* FileSystemRepository.swift in Sources */,
 				775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */,
@@ -14092,6 +14085,7 @@
 				BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */,
 				C46517A8272C9E32004F27A0 /* NodeEntity.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
+				83438A6A281AB01A006C9285 /* NodeAccessTypeEntity.swift in Sources */,
 				5BE689B42419188A00462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
 				8327EE202833918900068856 /* FileVersionErrorEntity.swift in Sources */,
 				B695B60A264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
@@ -14108,6 +14102,7 @@
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				B620C0622845BBFC003CEEE7 /* MediaTypeEntity.swift in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
+				83438A69281AB00A006C9285 /* NodeRepositoryProtocol.swift in Sources */,
 				B695B604264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */,
@@ -14185,7 +14180,6 @@
 				8335C645282E7B2100509479 /* ThumbnailRepository.swift in Sources */,
 				C4E78E9D272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
 				83C8372A27D7891A00AACDE1 /* MEGAHandle.swift in Sources */,
-				83BFB9AA27D8FA45001755B6 /* NodeRepository.swift in Sources */,
 				83CCBC4F279599F700B90EF2 /* TransferStateEntity+Mapper.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
 				B6D0B348283CD9210020C64D /* AppFirstLaunchUseCase.swift in Sources */,
@@ -14238,7 +14232,6 @@
 				8335C648282E7B5700509479 /* Image+Additions.swift in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
-				83BFB9AE27D8FFB9001755B6 /* NodeRepositoryProtocol.swift in Sources */,
 				83E53D2A282A96E70049DFBE /* URL+FileAttribute.swift in Sources */,
 				A82D5CE026BC080D00E73D27 /* PreferenceUseCase.swift in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
@@ -14272,7 +14265,6 @@
 				A81BD5CC27EB68C400234902 /* MockManageChatHistoryRepository.swift in Sources */,
 				A81BD5D427EB702200234902 /* MockClearChatHistoryUseCase.swift in Sources */,
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
-				1209CD9E286E787E00D5C079 /* MockNodeActionRepository.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */,
 				B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
