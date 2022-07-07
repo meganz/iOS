@@ -1,19 +1,19 @@
 import XCTest
 @testable import MEGA
 
-class NodeActionsTests: XCTestCase {
-
+class NodeActionBuilderTests: XCTestCase {
+    
     var actions: [NodeAction] = []
-
+    
     override func setUp() {
         super.setUp()
     }
-
+    
     override func tearDown() {
         super .tearDown()
         actions.removeAll()
     }
-
+    
     //MARK: - Private methods
     
     func isEqual(nodeActionTypes types: [MegaNodeActionType]) -> Bool {
@@ -25,7 +25,7 @@ class NodeActionsTests: XCTestCase {
     }
     
     // MARK: - Cloud Drive tests
-
+    
     func testCloudDriveNodeMediaFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
@@ -257,7 +257,6 @@ class NodeActionsTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info]))
     }
-    
     
     func testRubbishBinTakedownNode() {
         actions = NodeActionBuilder()
@@ -562,7 +561,7 @@ class NodeActionsTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat]))
     }
-
+    
     // MARK: - Preview Documents
     
     func testDocumentPreviewFileLink() {
@@ -595,7 +594,7 @@ class NodeActionsTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
     }
-        
+    
     func testPreviewDocument() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
@@ -886,5 +885,23 @@ class NodeActionsTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testSlideShowEnabled_withReadAccess_shouldReturnTrue() throws {
+        actions = NodeActionBuilder()
+            .setShowSlideshow(true)
+            .setAccessLevel(.accessRead)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .slideShow, .download, .copy]))
+    }
+    
+    func testSlideShowDisabled_withReadAccess_shouldReturnFalse() throws {
+        actions = NodeActionBuilder()
+            .setShowSlideshow(false)
+            .setAccessLevel(.accessRead)
+            .build()
+        
+        XCTAssertFalse(isEqual(nodeActionTypes: [.info, .slideShow, .download, .copy]))
     }
 }

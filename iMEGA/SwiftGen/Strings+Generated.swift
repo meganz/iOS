@@ -1191,7 +1191,7 @@ public enum Strings {
     public static let misspelledEmailAddress = Strings.tr("Localizable", "misspelledEmailAddress")
     /// Mobile Data is turned off
     public static let mobileDataIsTurnedOff = Strings.tr("Localizable", "Mobile Data is turned off")
-    /// Moderator
+    /// Host
     public static let moderator = Strings.tr("Localizable", "moderator")
     /// Modified
     public static let modified = Strings.tr("Localizable", "modified")
@@ -3863,7 +3863,7 @@ public enum Strings {
         }
       }
       public enum Notifications {
-        /// You are the new call moderator
+        /// You are the new host
         public static let moderatorPrivilege = Strings.tr("Localizable", "meetings.notifications.moderatorPrivilege")
       }
       public enum Panel {
@@ -3877,11 +3877,11 @@ public enum Strings {
         public static let shareLink = Strings.tr("Localizable", "meetings.panel.shareLink")
       }
       public enum Participant {
-        /// Make Moderator
+        /// Make host
         public static let makeModerator = Strings.tr("Localizable", "meetings.participant.makeModerator")
-        /// MODERATOR
+        /// Host
         public static let moderator = Strings.tr("Localizable", "meetings.participant.moderator")
-        /// Remove Moderator
+        /// Remove as host
         public static let removeModerator = Strings.tr("Localizable", "meetings.participant.removeModerator")
       }
       public enum QuickAction {
@@ -3933,7 +3933,7 @@ public enum Strings {
         }
       }
       public enum Folders {
-        /// The folder %@ already exists at this destination.
+        /// A folder named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.folders.alreadyExists", String(describing: p1))
         }
