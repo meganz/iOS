@@ -22,7 +22,6 @@ final class NodeActionBuilder {
     private var viewMode: ViewModePreference = .list
     private var nodeSelectionType: NodeSelectionType = .single
     private var isTakedown = false
-    
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -135,7 +134,6 @@ final class NodeActionBuilder {
     }
     
     func build() -> [NodeAction] {
-        
         var nodeActions = [NodeAction]()
         
         if isTakedown {
@@ -299,16 +297,24 @@ final class NodeActionBuilder {
         if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
         }
+        
         if displayMode != .nodeInfo && displayMode != .nodeVersions {
             nodeActions.append(NodeAction.infoAction())
             if versionCount > 0 {
                 nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
             }
         }
+        
+        if showSlideshow {
+            nodeActions.append(NodeAction.slideShowAction())
+        }
+        
         if isMediaFile {
             nodeActions.append(NodeAction.saveToPhotosAction())
         }
+        
         nodeActions.append(NodeAction.downloadAction())
+        
         if displayMode != .nodeVersions {
             nodeActions.append(NodeAction.copyAction())
             if isIncomingShareChildView {
