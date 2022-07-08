@@ -13,7 +13,8 @@ import UIKit
     }
     
     func build() -> UIViewController {
-        let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: self)
+        let usecase = MediaDiscoveryStatsUseCase(repository: StatsRepository.newRepo)
+        let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: self, statsUseCase: usecase)
         let vc = MediaDiscoveryViewController(viewModel: viewModel, folderName: parentNode.name ?? "")
         
         return vc
