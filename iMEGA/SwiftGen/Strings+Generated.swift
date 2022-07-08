@@ -2303,8 +2303,6 @@ public enum Strings {
     public static let voiceAndVideoCalls = Strings.tr("Localizable", "voiceAndVideoCalls")
     /// Warning
     public static let warning = Strings.tr("Localizable", "warning")
-    /// [A] was changed to [B] by [C].
-    public static let wasChangedToBy = Strings.tr("Localizable", "wasChangedToBy")
     /// [A] was removed from the group chat by [B].
     public static let wasRemovedFromTheGroupChatBy = Strings.tr("Localizable", "wasRemovedFromTheGroupChatBy")
     /// We recommend JPG, as it is the most compatible format for photos.
@@ -2971,6 +2969,14 @@ public enum Strings {
       public enum Message {
         /// Message…
         public static let placeholder = Strings.tr("Localizable", "chat.message.placeholder")
+        public enum ChangedRole {
+          /// [A] was changed to [S]host role[/S] by [B]
+          public static let host = Strings.tr("Localizable", "chat.message.changedRole.host")
+          /// [A] was changed to [S]read-only[/S] by [B]
+          public static let readOnly = Strings.tr("Localizable", "chat.message.changedRole.readOnly")
+          /// [A] was changed to [S]standard role[/S] by [B]
+          public static let standard = Strings.tr("Localizable", "chat.message.changedRole.standard")
+        }
       }
       public enum Photos {
         /// To share photos and videos, grant MEGA access to your gallery
