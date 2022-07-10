@@ -2890,6 +2890,20 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      /// Chats
+      public static let title = Strings.tr("Localizable", "chat.title")
+      public enum Chats {
+        public enum EmptyState {
+          /// Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.
+          public static let description = Strings.tr("Localizable", "chat.chats.emptyState.description")
+          /// Start chatting now
+          public static let title = Strings.tr("Localizable", "chat.chats.emptyState.title")
+          public enum Button {
+            /// New Chat
+            public static let title = Strings.tr("Localizable", "chat.chats.emptyState.button.title")
+          }
+        }
+      }
       public enum Link {
         /// Link removed
         public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")
@@ -2942,6 +2956,18 @@ public enum Strings {
         /// File
         public static let file = Strings.tr("Localizable", "chat.match.file")
       }
+      public enum Meetings {
+        public enum EmptyState {
+          /// Talk securely and privately on audio or video calls with friends and colleagues around the world.
+          public static let description = Strings.tr("Localizable", "chat.meetings.emptyState.description")
+          /// Start a meeting
+          public static let title = Strings.tr("Localizable", "chat.meetings.emptyState.title")
+          public enum Button {
+            /// New Meeting
+            public static let title = Strings.tr("Localizable", "chat.meetings.emptyState.button.title")
+          }
+        }
+      }
       public enum Message {
         /// Message…
         public static let placeholder = Strings.tr("Localizable", "chat.message.placeholder")
@@ -2949,6 +2975,12 @@ public enum Strings {
       public enum Photos {
         /// To share photos and videos, grant MEGA access to your gallery
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
+      }
+      public enum Selector {
+        /// Chat
+        public static let chat = Strings.tr("Localizable", "chat.selector.chat")
+        /// Meeting
+        public static let meeting = Strings.tr("Localizable", "chat.selector.meeting")
       }
       public enum Status {
         public enum Duration {

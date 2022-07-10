@@ -366,6 +366,7 @@ internal enum Asset {
       internal static let invalidFileLink = ImageAsset(name: "invalidFileLink")
       internal static let invalidFolderLink = ImageAsset(name: "invalidFolderLink")
       internal static let linksEmptyState = ImageAsset(name: "linksEmptyState")
+      internal static let meetingEmptyState = ImageAsset(name: "meetingEmptyState")
       internal static let noInternetEmptyState = ImageAsset(name: "noInternetEmptyState")
       internal static let notificationsEmptyState = ImageAsset(name: "notificationsEmptyState")
       internal static let offlineEmptyState = ImageAsset(name: "offlineEmptyState")

@@ -45,8 +45,6 @@
 @property (nonatomic) NSMutableArray<MEGAUser *> *usersWithoutChatArray;
 @property (nonatomic) NSMutableArray<MEGAUser *> *searchUsersWithoutChatArray;
 
-@property (strong, nonatomic) UISearchController *searchController;
-
 @property (assign, nonatomic) BOOL isArchivedChatsRowVisible;
 @property (assign, nonatomic) BOOL isScrollAtTop;
 
@@ -109,12 +107,14 @@
     
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault:
-            self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+            [self configureSelectorViewForChatType:MEGAChatTypeNonMeeting];
+            self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItemsByType:self.chatTypeSelected];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
             self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
             break;
             
         case ChatRoomsTypeArchived:
+            self.chatOrMeetingSelectorView.hidden = YES;
             self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
             self.navigationItem.rightBarButtonItems = @[];
             break;
@@ -303,7 +303,12 @@
     } else {
         switch (self.chatRoomsType) {
             case ChatRoomsTypeDefault:
-                text = NSLocalizedString(@"noConversations", @"Empty Conversations section");
+                if (self.chatSelectorButton.isSelected) {
+                    text = NSLocalizedString(@"chat.chats.emptyState.title", @"Ttile for empty chats tab");
+                } else {
+                    text = NSLocalizedString(@"chat.meetings.emptyState.title", @"Ttile for empty meetings tab ");
+
+                }
                 break;
                 
             case ChatRoomsTypeArchived:
@@ -323,7 +328,11 @@
     } else {
         switch (self.chatRoomsType) {
             case ChatRoomsTypeDefault:
-                text = NSLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
+                if (self.chatSelectorButton.isSelected) {
+                    text = NSLocalizedString(@"chat.chats.emptyState.description", @"Description for empty chats tab");
+                } else {
+                    text = NSLocalizedString(@"chat.meetings.emptyState.description", @"Description for empty meetings tab");
+                }
                 break;
                 
             case ChatRoomsTypeArchived:
@@ -348,8 +357,12 @@
             } else {
                 switch (self.chatRoomsType) {
                     case ChatRoomsTypeDefault:
-                        return [UIImage imageNamed:@"chatEmptyState"];
-                        
+                        if (self.chatSelectorButton.isSelected) {
+                            return [UIImage imageNamed:@"chatEmptyState"];
+                        } else {
+                            return [UIImage imageNamed:@"meetingEmptyState"];
+                        }
+                    
                     case ChatRoomsTypeArchived:
                         return [UIImage imageNamed:@"chatsArchivedEmptyState"];
                 }
@@ -366,7 +379,11 @@
         if (!self.searchController.isActive) {
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
-                    text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+                    if (self.chatSelectorButton.isSelected) {
+                        text = NSLocalizedString(@"chat.chats.emptyState.button.title", @"Text button for empty chats tab");
+                    } else {
+                        text = NSLocalizedString(@"chat.meetings.emptyState.button.title", @"Text button for empty meetings tab");
+                    }
                     break;
                 case ChatRoomsTypeArchived:
                     return nil;
@@ -378,14 +395,18 @@
 }
 
 - (void)buttonTouchUpInsideEmptyState {
-    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-    [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"cancel", nil)];
-    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    contactsVC.contactsMode = ContactsModeChatNamingGroup;
-    contactsVC.getChatLinkEnabled = YES;
-    [self blockCompletionsForCreateChatInContacts:contactsVC];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    if (self.chatSelectorButton.isSelected) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+        [navigationController addLeftDismissButtonWithText:NSLocalizedString(@"cancel", nil)];
+        ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+        contactsVC.contactsMode = ContactsModeChatNamingGroup;
+        contactsVC.getChatLinkEnabled = YES;
+        [self blockCompletionsForCreateChatInContacts:contactsVC];
+        
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+        [self createNewMeeting];
+    }
 }
 
 #pragma mark - Public
@@ -469,6 +490,7 @@
     
     self.topBannerView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     self.topBannerLabel.textColor = UIColor.whiteColor;
+    self.chatOrMeetingSelectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
 }
 
 - (void)internetConnectionChanged {
@@ -582,14 +604,14 @@
             NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
             
             if (onlineStatusString) {
-                UILabel *label = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
+                UILabel *label = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"chat.title", @"Title for chats section") subtitle:onlineStatusString];
                 label.adjustsFontSizeToFitWidth = YES;
                 label.minimumScaleFactor = 0.8f;
                 label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
                 [self.navigationItem setTitleView:label];
             } else {
                 self.navigationItem.titleView = nil;
-                self.navigationItem.title = NSLocalizedString(@"chat", @"Chat section header");
+                self.navigationItem.title = NSLocalizedString(@"chat.title", @"Title for chats section");
             }
         }
             break;
@@ -623,7 +645,7 @@
 }
 
 - (void)reloadData {
-    self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItems] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+    self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItemsByType:self.chatTypeSelected] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     [self reorderList];
     [self updateChatIdIndexPathDictionary];
@@ -748,9 +770,10 @@
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    
-    self.navigationItem.searchController = self.searchController;
-    self.navigationItem.hidesSearchBarWhenScrolling = YES;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    });
 }
 
 - (void)showOptionsForChatAtIndexPath:(NSIndexPath *)indexPath {
@@ -799,21 +822,21 @@
 - (void)showTopBanner {
     if (self.topBannerView.hidden) {
         self.topBannerView.hidden = NO;
-        self.topBannerViewTopConstraint.constant = 0;
-        self.tableView.contentOffset = CGPointZero;
+        self.topBannerViewTopConstraint.constant = 44;
+        [self.tableView setContentInset:UIEdgeInsetsMake(CGRectGetHeight(self.topBannerView.frame), 0, 0, 0)];
         [self.view layoutIfNeeded];
     }
 }
 
 - (void)hideTopBanner {
     if (!self.topBannerView.hidden) {
-         [UIView animateWithDuration:.5f animations:^ {
-               self.topBannerViewTopConstraint.constant = -44;
-               [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-               [self.view layoutIfNeeded];
-           } completion:^(BOOL finished) {
-               self.topBannerView.hidden = YES;
-           }];
+        [UIView animateWithDuration:.5f animations:^ {
+            self.topBannerViewTopConstraint.constant = 0;
+            self.tableView.contentInset = UIEdgeInsetsZero;
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            self.topBannerView.hidden = YES;
+        }];
     }
     
     [self.timer invalidate];
