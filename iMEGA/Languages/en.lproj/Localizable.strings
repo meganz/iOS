@@ -3020,3 +3020,21 @@
 "meetings.leaveCall.buttonTitle"="Leave";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="End for all";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Chat";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Meeting";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Start a meeting";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="New Meeting";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Start chatting now";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="New Chat";
+/* Title for chats section */
+"chat.title"="Chats";
