@@ -220,7 +220,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     if (nodesArray.count == 1) {
         MEGANode *node = nodesArray.firstObject;
         if (node.name.mnz_isVisualMediaPathExtension) {
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject];
             [self.delegate showSelectedNodeInViewController:photoBrowserVC];
         } else {
             if (node.name.mnz_isMultimediaPathExtension && !node.name.mnz_isVideoPathExtension && node.mnz_isPlayable) {

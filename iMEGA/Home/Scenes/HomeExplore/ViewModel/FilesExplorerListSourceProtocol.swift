@@ -47,7 +47,7 @@ extension FilesExplorerListSourceProtocol {
     
     func isAnyNodeBeingDisplayed(inNodes nodes: [MEGANode]) -> Bool {
         guard let storedNodes = self.nodes else { return false }
-        return !nodes.intersection(storedNodes).isEmpty
+        return Set(nodes).intersection(Set(storedNodes)).isNotEmpty
     }
     
     func updateCells(forNodes nodes: [MEGANode]) {

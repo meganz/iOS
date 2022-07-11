@@ -13,7 +13,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             guard let deleteBarButton = sender as? UIBarButtonItem else { return }
             deleteAction(sender: deleteBarButton)
         case .exportFile:
-            let entityNodes = nodes.map { NodeEntity(node: $0) }
+            let entityNodes = nodes.toNodeEntities()
             ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
             setEditMode(false)
         case .shareFolder:

@@ -39,7 +39,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
                     guard let node = self.sdk.node(forHandle: handle.uint64Value) else {
                         return nil
                     }
-                    return NodeEntity(node: node)
+                    return node.toNodeEntity()
                 }
                 
                 self.favouritesNodesEntityArray = favouritesNodesArray

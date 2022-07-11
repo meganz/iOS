@@ -180,7 +180,7 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        let entityNodes = selectedNodes.map { NodeEntity(node: $0) }
+        let entityNodes = selectedNodes.toNodeEntities()
         ExportFileRouter(presenter: self, sender: button).export(nodes: entityNodes)
         endEditingMode()
     }

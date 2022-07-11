@@ -750,7 +750,7 @@
     if (![self.photosCollectionView allowsMultipleSelection]) {
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
-        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:[self.viewModel.mediaNodesArray mutableCopy] api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:[self.viewModel.mediaNodesArray mutableCopy] api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node];
         photoBrowserVC.originFrame = cellFrame;
         photoBrowserVC.delegate = self;
         

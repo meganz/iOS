@@ -209,7 +209,7 @@ final class FilesExplorerViewModel {
         favouritesUseCase?.allFavouriteNodes(searchString: text) { [weak self] result in
             switch result {
             case .success(let nodes):
-                let nodeList = nodes.toMEGANodes()
+                let nodeList = nodes.toMEGANodes(in: MEGASdkManager.sharedMEGASdk())
                 self?.updateListenerForFilesDownload(withNodes: nodeList)
                 self?.invokeCommand?(.reloadNodes(nodes: nodeList, searchText: text))
             case .failure(_):

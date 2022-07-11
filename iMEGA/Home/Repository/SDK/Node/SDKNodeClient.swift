@@ -31,7 +31,7 @@ extension SDKNodeClient {
         megaSDKOperationQueue.qualityOfService = .userInteractive
 
         return Self.init(findNode: { nodeHandle in
-            return sdk.node(forHandle: nodeHandle).map(NodeEntity.init(node: ))
+            return sdk.node(forHandle: nodeHandle)?.toNodeEntity()
         },
 
         loadThumbnail: { (nodeHandle, destinationPathURL, completion) in
@@ -67,7 +67,7 @@ extension SDKNodeClient {
                         return
                     }
                     let chatFilesFolderNode = sdk.node(forHandle: request.nodeHandle)
-                    completion(chatFilesFolderNode.map(NodeEntity.init(node:)))
+                    completion(chatFilesFolderNode?.toNodeEntity())
                 }
                 sdk.getMyChatFilesFolder(with: delegate)
             }

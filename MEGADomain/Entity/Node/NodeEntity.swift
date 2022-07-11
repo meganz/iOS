@@ -60,22 +60,16 @@ struct NodeEntity {
     let longitude: Double?
 }
 
-extension NodeEntity: Equatable {
+extension NodeEntity: Hashable {
     static func == (lhs: NodeEntity, rhs: NodeEntity) -> Bool {
         lhs.handle == rhs.handle
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(handle)
     }
 }
 
 extension NodeEntity: Identifiable {
     var id: MEGAHandle { handle }
-}
-
-extension NodeEntity {
-    var isVideo: Bool {
-        (name as NSString).mnz_isVideoPathExtension
-    }
-    
-    var isImage: Bool {
-        (name as NSString).mnz_isImagePathExtension
-    }
 }

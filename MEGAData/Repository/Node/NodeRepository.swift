@@ -65,7 +65,7 @@ struct NodeRepository: NodeRepositoryProtocol {
             return nil
         }
         
-        return NodeEntity(node: node)
+        return node.toNodeEntity()
     }
 
     func nameForNode(handle: MEGAHandle) -> String? {
@@ -229,7 +229,7 @@ struct NodeRepository: NodeRepositoryProtocol {
             return nil
         }
         
-        return NodeEntity(node: node)
+        return node.toNodeEntity()
     }
 
     func creationDateForNode(handle: MEGAHandle) -> Date? {
