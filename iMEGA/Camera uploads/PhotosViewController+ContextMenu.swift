@@ -11,7 +11,7 @@ extension PhotosViewController {
     @objc func configureContextMenuManager() {
         contextMenuManager = ContextMenuManager(
             displayMenuDelegate: self,
-            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository())
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
     }
     

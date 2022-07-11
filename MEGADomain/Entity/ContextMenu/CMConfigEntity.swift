@@ -38,6 +38,7 @@ struct CMConfigEntity {
     var isSharedItems: Bool = false
     var isIncomingShareChild: Bool = false
     var isHome: Bool = false
+    var isFavouritesExplorer: Bool = false
     var isDocumentExplorer: Bool = false
     var isAudiosExplorer: Bool = false
     var isVideosExplorer: Bool = false

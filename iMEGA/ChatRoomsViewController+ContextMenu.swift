@@ -63,7 +63,7 @@ extension ChatRoomsViewController: ChatMenuDelegate {
     
     @objc func configureContextMenuManager() {
         contextMenuManager = ContextMenuManager(chatMenuDelegate: self,
-                                                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()))
+                                                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
     @objc private func presentActionSheet(sender: Any) {

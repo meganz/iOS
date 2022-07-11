@@ -3644,6 +3644,10 @@ public enum Strings {
       }
     }
     public enum Home {
+      public enum Favourites {
+        /// Favourites
+        public static let title = Strings.tr("Localizable", "home.favourites.title")
+      }
       public enum Images {
         /// No Images Found
         public static let empty = Strings.tr("Localizable", "home.images.empty")

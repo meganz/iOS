@@ -2,9 +2,14 @@
 
 final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
     
+    var getAllFavouriteNodesWithSearchResult: Result<[NodeEntity], GetFavouriteNodesErrorEntity> = .failure(.generic)
     var getAllFavouriteNodesResult: Result<[NodeEntity], GetFavouriteNodesErrorEntity> = .failure(.generic)
     var getFavouriteNodesResult: Result<[NodeEntity], GetFavouriteNodesErrorEntity> = .failure(.generic)
     var onNodesUpdateCallback: [NodeEntity]? = [NodeEntity()]
+   
+    func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+        completion(getAllFavouriteNodesWithSearchResult)
+    }
     
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         completion(getAllFavouriteNodesResult)

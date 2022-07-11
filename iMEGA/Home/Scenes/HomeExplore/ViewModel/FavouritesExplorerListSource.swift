@@ -1,15 +1,13 @@
 
-final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
-    
-    // MARK:- Private variables.
-
+final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
+    // MARK:- Private variables
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
     var explorerType: ExplorerTypeEntity
     var tableView: UITableView
     weak var delegate: FilesExplorerListSourceDelegate?
     
-    // MARK:- Initializers.
+    // MARK:- Initializers
 
     init(tableView: UITableView,
          nodes: [MEGANode]?,
@@ -22,6 +20,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
         self.explorerType = explorerType
         self.delegate = delegate
         super.init()
+        configureNodes()
         configureTableView(tableView)
     }
 
@@ -41,7 +40,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     
     // MARK:- Private methods.
     
-    private func configureTableView(_ tableView: UITableView) {        
+    private func configureTableView(_ tableView: UITableView) {
         tableView.rowHeight = 60
         tableView.register(UINib(nibName: "NodeTableViewCell", bundle: nil),
                            forCellReuseIdentifier: "nodeCell")
@@ -53,11 +52,29 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
             self?.reloadCell(withNode: node)
         }
     }
+    
+    private func configureNodes() {
+        var sortedNodes = [MEGANode]()
+        let sortOrder = SortOrderType.defaultSortOrderType(forNode: nil)
+
+        if let folderNodes = nodes?.folderNodeList() {
+            let isValidSort = [SortOrderType.nameDescending,
+                               SortOrderType.nameAscending,
+                               SortOrderType.label].contains(sortOrder)
+            //Folder can't be sorted by size and modificationTime
+            let folderSortOrder = isValidSort ? sortOrder : .nameAscending
+            sortedNodes.append(contentsOf: folderNodes.sort(by: folderSortOrder))
+        }
+        if let fileNodes = nodes?.fileNodeList() {
+            sortedNodes.append(contentsOf: fileNodes.sort(by: sortOrder))
+        }
+        nodes = sortedNodes
+    }
 }
 
 // MARK:- UITableViewDataSource
 
-extension DocAndAudioListSource {
+extension FavouritesExplorerListSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return nodes?.count ?? 0
     }
@@ -74,7 +91,7 @@ extension DocAndAudioListSource {
             moreButton.addTarget(self, action: #selector(moreButtonTapped(sender:)), for: .touchUpInside)
         }
                 
-        cell?.cellFlavor = .explorerView
+        cell?.cellFlavor = .flavorCloudDrive
         cell?.configureCell(for: node, api: MEGASdkManager.sharedMEGASdk())
         cell?.setSelectedBackgroundView(withColor: .clear)
         
@@ -91,7 +108,7 @@ extension DocAndAudioListSource {
 
 // MARK:- UITableViewDelegate
 
-extension DocAndAudioListSource {
+extension FavouritesExplorerListSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         select(indexPath: indexPath)
     }
@@ -116,7 +133,7 @@ extension DocAndAudioListSource {
 
 // MARK:- Swipe gesture UITableViewDelegate
 
-extension DocAndAudioListSource {
+extension FavouritesExplorerListSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         guard let nodeCell = tableView.cellForRow(at: indexPath) as? NodeTableViewCell,

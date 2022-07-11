@@ -2436,6 +2436,8 @@
 "home.images.title"="Images";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="No Images Found";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Favourites";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
 /* Home Screen: Explorer view card title - Documents */

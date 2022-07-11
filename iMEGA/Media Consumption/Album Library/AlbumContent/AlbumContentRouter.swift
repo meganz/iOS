@@ -11,7 +11,7 @@ struct AlbumContentRouter: Routing {
     func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
         
-        let favouriteRepo = FavouriteNodesRepository(sdk: sdk)
+        let favouriteRepo = FavouriteNodesRepository.newRepo
         let nodesUpdateRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let albumContentsRepo = AlbumContentsUpdateNotifierRepository(
             sdk: sdk,

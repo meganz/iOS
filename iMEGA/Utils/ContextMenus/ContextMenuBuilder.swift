@@ -12,6 +12,7 @@ final class ContextMenuBuilder {
     private var isSharedItems: Bool = false
     private var isIncomingShareChild: Bool = false
     private var isHome: Bool = false
+    private var isFavouritesExplorer: Bool = false
     private var isDocumentExplorer: Bool = false
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
@@ -83,6 +84,11 @@ final class ContextMenuBuilder {
     
     func setIsHome(_ isHome: Bool) -> ContextMenuBuilder {
         self.isHome = isHome
+        return self
+    }
+    
+    func setIsFavouritesExplorer(_ isFavouritesExplorer: Bool) -> ContextMenuBuilder {
+        self.isFavouritesExplorer = isFavouritesExplorer
         return self
     }
     
@@ -234,7 +240,11 @@ final class ContextMenuBuilder {
             sortMenuActions = [sortNewest, sortOldest]
         }
         else if !isSharedItems {
-            sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest, sortLabel, sortFavourite])
+            var list = [sortLargest, sortSmallest, sortNewest, sortOldest, sortLabel]
+            if !isFavouritesExplorer {
+                list.append(sortFavourite)
+            }
+            sortMenuActions.append(contentsOf: list)
         }
         
         return CMEntity(title: Strings.Localizable.sortTitle,

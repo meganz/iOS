@@ -196,4 +196,82 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             }
                                                                             .compactMap{$0.rawValue})
     }
+    
+    func testDisplayMenuFavouritesExplorerSortByOptions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setSortType(.newest)
+                                                .setIsFavouritesExplorer(true)
+                                                .build())
+        
+        let menuEntitySort = try XCTUnwrap(menuEntity.children
+                                                .compactMap{ $0 as? CMEntity }
+                                                .filter{ $0.identifier == DisplayAction.sort.rawValue }
+                                                .first)
+
+        compare(menuEntity: menuEntitySort, menuActionIdentifiers: SortOrderType
+                                                                            .allCases
+                                                                            .filter {
+                                                                                $0 != .none &&
+                                                                                $0 != .favourite
+                                                                            }.compactMap{ $0.rawValue })
+    }
+    
+    func testDisplayMenuDocumentExplorerSortByOptions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setSortType(.newest)
+                                                .setIsDocumentExplorer(true)
+                                                .build())
+        
+        let menuEntitySort = try XCTUnwrap(menuEntity.children
+                                                .compactMap{ $0 as? CMEntity }
+                                                .filter{ $0.identifier == DisplayAction.sort.rawValue }
+                                                .first)
+
+        compare(menuEntity: menuEntitySort, menuActionIdentifiers: SortOrderType
+                                                                            .allCases
+                                                                            .filter {
+                                                                                $0 != .none
+                                                                            }.compactMap{ $0.rawValue })
+    }
+    
+    func testDisplayMenuAudioExplorerSortByOptions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setSortType(.newest)
+                                                .setIsAudiosExplorer(true)
+                                                .build())
+        
+        let menuEntitySort = try XCTUnwrap(menuEntity.children
+                                                .compactMap{ $0 as? CMEntity }
+                                                .filter{ $0.identifier == DisplayAction.sort.rawValue }
+                                                .first)
+
+        compare(menuEntity: menuEntitySort, menuActionIdentifiers: SortOrderType
+                                                                            .allCases
+                                                                            .filter {
+                                                                                $0 != .none
+                                                                            }.compactMap{ $0.rawValue })
+    }
+    
+    func testDisplayMenuVideoExplorerSortByOptions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setSortType(.newest)
+                                                .setIsVideosExplorer(true)
+                                                .build())
+        
+        let menuEntitySort = try XCTUnwrap(menuEntity.children
+                                                .compactMap{ $0 as? CMEntity }
+                                                .filter{ $0.identifier == DisplayAction.sort.rawValue }
+                                                .first)
+
+        compare(menuEntity: menuEntitySort, menuActionIdentifiers: SortOrderType
+                                                                            .allCases
+                                                                            .filter {
+                                                                                $0 != .none
+                                                                            }.compactMap{ $0.rawValue })
+    }
+
 }

@@ -45,7 +45,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             navigationItem.leftBarButtonItem = selectAllBarButtonItem
             navigationItem.rightBarButtonItem = editBarButtonItem
         } else {
-            contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()))
+            contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
             
             if #available(iOS 14.0, *) {
                 contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
