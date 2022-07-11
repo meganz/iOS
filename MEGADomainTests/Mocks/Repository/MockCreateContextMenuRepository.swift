@@ -1,8 +1,8 @@
+@testable import MEGA
 
-struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
-    static var newRepo: CreateContextMenuRepository {
-        CreateContextMenuRepository()
-    }
+final class MockCreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
+    
+    static var newRepo = MockCreateContextMenuRepository()
     
     func createContextMenu(config: CMConfigEntity) -> CMEntity? {
         ContextMenuBuilder()
@@ -34,3 +34,4 @@ struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .build()
     }
 }
+

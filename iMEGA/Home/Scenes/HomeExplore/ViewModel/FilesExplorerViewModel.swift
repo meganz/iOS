@@ -32,7 +32,8 @@ final class FilesExplorerViewModel {
     }
     
     private let router: FilesExplorerRouter
-    private let useCase: FilesSearchUseCaseProtocol
+    private let useCase: FilesSearchUseCaseProtocol?
+    private let favouritesUseCase: FavouriteNodesUseCaseProtocol?
     private let filesDownloadUseCase: FilesDownloadUseCase
     private let nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
     private let createContextMenuUseCase: CreateContextMenuUseCaseProtocol
@@ -46,6 +47,8 @@ final class FilesExplorerViewModel {
             return AudioExploreViewConfiguration()
         case .video:
             return VideoExplorerViewConfiguration()
+        case .favourites:
+            return FavouritesExplorerViewConfiguration()
         default:
             fatalError("invalid configuration object")
         }
@@ -64,18 +67,27 @@ final class FilesExplorerViewModel {
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,
-                  useCase: FilesSearchUseCaseProtocol,
+                  useCase: FilesSearchUseCaseProtocol?,
+                  favouritesUseCase: FavouriteNodesUseCaseProtocol?,
                   filesDownloadUseCase: FilesDownloadUseCase,
                   nodeClipboardOperationUseCase: NodeClipboardOperationUseCase,
                   createContextMenuUseCase: CreateContextMenuUseCaseProtocol) {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase
+        self.favouritesUseCase = favouritesUseCase
         self.nodeClipboardOperationUseCase = nodeClipboardOperationUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.filesDownloadUseCase = filesDownloadUseCase
+
+        self.useCase?.onNodesUpdate { [weak self] nodes in
+            guard let self = self else { return }
+            self.debouncer.start {
+                self.invokeCommand?(.reloadData)
+            }
+        }
         
-        self.useCase.onNodesUpdate { [weak self] nodes in
+        self.favouritesUseCase?.registerOnNodesUpdate { [weak self] nodes in
             guard let self = self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
@@ -114,6 +126,7 @@ final class FilesExplorerViewModel {
         configForDisplayMenu = CMConfigEntity(menuType: .display,
                                               viewMode: viewTypePreference == .list ? ViewModePreference.list : ViewModePreference.thumbnail,
                                               sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: nil)),
+                                              isFavouritesExplorer: explorerType == .favourites,
                                               isDocumentExplorer: explorerType == .document,
                                               isAudiosExplorer: explorerType == .audio,
                                               isVideosExplorer: explorerType == .video)
@@ -154,7 +167,12 @@ final class FilesExplorerViewModel {
     
     // MARK: search
     private func startSearching(_ text: String?) {
-        useCase.search(string: text,
+        guard explorerType != .favourites else {
+            startSearchingFavouriteNodes(text)
+            return
+        }
+        
+        useCase?.search(string: text,
                        inNode: nil,
                        sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).megaSortOrderType,
                        cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
@@ -184,6 +202,20 @@ final class FilesExplorerViewModel {
     
     func contextMenuActions(with config: CMConfigEntity) -> [ContextActionSheetAction]? {
         contextMenuManager?.actionSheetActions(with: config)
+    }
+    
+    //MARK: Favourites
+    private func startSearchingFavouriteNodes(_ text: String?) {
+        favouritesUseCase?.allFavouriteNodes(searchString: text) { [weak self] result in
+            switch result {
+            case .success(let nodes):
+                let nodeList = nodes.toMEGANodes()
+                self?.updateListenerForFilesDownload(withNodes: nodeList)
+                self?.invokeCommand?(.reloadNodes(nodes: nodeList, searchText: text))
+            case .failure(_):
+                MEGALogError("Error getting all favourites nodes")
+            }
+        }
     }
 }
 

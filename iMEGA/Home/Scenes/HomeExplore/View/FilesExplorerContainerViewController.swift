@@ -58,6 +58,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         configureNavigationBarButtons()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -185,7 +186,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                     devicePermission: .live
                 ),
                 reachabilityUseCase: ReachabilityUseCase(),
-                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()),
+                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
                 router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
             )
             self.uploadViewModel = uploadViewModel

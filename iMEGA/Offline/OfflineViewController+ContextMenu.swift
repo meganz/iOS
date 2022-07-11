@@ -8,7 +8,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     }
     
     @objc func setNavigationBarButtons() {
-        contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()))
+        contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         
         if #available(iOS 14.0, *) {
             contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,

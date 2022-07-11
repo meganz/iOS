@@ -164,6 +164,12 @@ final class HomeRouter: HomeRouterProtocol {
         PhotosExplorerRouter(navigationController: navigationController, explorerType: .photo).start()
     }
     
+    // MARK: - Show Favourites Explorer View Controller
+    
+    func favouriteExplorerSelected() {
+        FilesExplorerRouter(navigationController: navigationController, explorerType: .favourites).start()
+    }
+    
     // MARK: - Show Documents Explorer View Controller
     
     func documentsExplorerSelected() {

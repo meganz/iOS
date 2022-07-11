@@ -59,7 +59,41 @@ class ExplorerBaseViewController: UIViewController {
         toolbar.items = explorerToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
     }
     
+    func configureFavouriteToolbarButtons() {
+        if explorerToolbarConfigurator == nil {
+            explorerToolbarConfigurator = FavouriteExplorerToolbarConfigurator(
+                downloadAction: downloadBarButtonPressed,
+                shareLinkAction: shareLinkBarButtonPressed,
+                moveAction: moveBarButtonPressed,
+                copyAction: copyBarButtonPressed,
+                deleteAction: deleteButtonPressed,
+                moreAction: didPressedMoreBarButton,
+                favouriteAction: didPressedFavouriteBarButton
+            )
+        }
+        
+        toolbar.items = explorerToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
+    }
+
     // MARK:- Toolbar Button actions
+    private func didPressedFavouriteBarButton(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        
+        let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        
+        selectedNodes.forEach { node in
+            if node.isFavourite {
+                favoriteUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { _ in }
+            } else {
+                favoriteUseCase.addNodeToFavourite(nodeHandle: node.handle) { _ in }
+            }
+        }
+        endEditingMode()
+    }
+    
     fileprivate func downloadBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {

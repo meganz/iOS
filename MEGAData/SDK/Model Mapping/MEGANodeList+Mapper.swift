@@ -16,4 +16,16 @@ extension Array where Element == MEGANode {
     func toNodeEntities() -> [NodeEntity] {
         map { $0.toNodeEntity() }
     }
+    
+    func folderNodeList() -> [MEGANode] {
+        filter { $0.isFolder() }
+    }
+    
+    func fileNodeList() -> [MEGANode] {
+        filter { $0.isFile() }
+    }
+    
+    func multiMediaNodeList() -> [MEGANode] {
+        filter { $0.name?.mnz_isVisualMediaPathExtension == true }
+    }
 }
