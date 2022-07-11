@@ -728,7 +728,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self.cdCollectionView reloadData];
     }
     
-    [self setNavigationBarButtons];
+    if (!self.cdTableView.tableView.isEditing && !self.cdCollectionView.collectionView.allowsMultipleSelection) {
+        [self setNavigationBarButtons];
+    }
 }
 
 - (void)setEditMode:(BOOL)editMode {
