@@ -76,11 +76,11 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     func showCancelRightBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(
             title: Strings.Localizable.cancel,
             style: .plain,
             target: self,
-            action: #selector(cancelButtonPressed(_:)))
+            action: #selector(cancelButtonPressed(_:)))]
     }
     
     func showSelectAllBarButton() {
