@@ -51,7 +51,7 @@ extension ChatRoomsViewController: ChatMenuDelegate {
     }
     
     @objc func setNavigationBarButtons() {
-        addBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.startConversation.image,
+        addBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
                                            style: .plain,
                                            target: self,
                                            action: #selector(showStartConversation))
