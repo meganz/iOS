@@ -150,7 +150,7 @@ final class NodeActionViewControllerGenericDelegate:
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
         SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
 
-        saveMediaToPhotosUseCase.saveToPhotos(node: NodeEntity(node: node), completion: saveToPhotosCompletion)
+        saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity(), completion: saveToPhotosCompletion)
     }
     
     private func download(_ node: MEGANode) {
@@ -213,7 +213,7 @@ final class NodeActionViewControllerGenericDelegate:
     
     private func exportFile(node: MEGANode, sender: Any) {
         guard let viewController = viewController else { return }
-        ExportFileRouter(presenter: viewController, sender: sender).export(node: NodeEntity(node: node))
+        ExportFileRouter(presenter: viewController, sender: sender).export(node: node.toNodeEntity())
     }
 }
 

@@ -19,4 +19,12 @@ extension MEGARequest {
         
         return URL(string: path)
     }
+    
+    func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
+        sdk.node(forHandle: nodeHandle)
+    }
+    
+    func toNodeEntity(in sdk: MEGASdk) -> NodeEntity? {
+        toMEGANode(in: sdk)?.toNodeEntity()
+    }
 }

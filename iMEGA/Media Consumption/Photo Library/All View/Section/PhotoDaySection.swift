@@ -34,7 +34,7 @@ final class PhotoDaySection: PhotoDateSection {
 }
 
 extension PhotoLibrary {
-    var allPhotosDaySections: [PhotoDaySection] {
-        allPhotosByDayList.map { PhotoDaySection(photoByDay: $0)}
+    var photosDaySections: [PhotoDaySection] {
+        photosByDayList.map { PhotoDaySection(photoByDay: $0)}
     }
 }

@@ -19,7 +19,7 @@ final class TextEditorViewRouter: NSObject {
     ) {
         self.init(textFile: textFile,
                   textEditorMode: textEditorMode,
-                  nodeEntity: node.map { NodeEntity(node: $0) },
+                  nodeEntity: node?.toNodeEntity(),
                   presenter: presenter)
     }
     

@@ -25,7 +25,7 @@ extension TransferEntity {
         self.deltaSize = transfer.deltaSize.intValue
         self.updateTime = transfer.updateTime
         if let node = transfer.publicNode {
-            self.publicNode = NodeEntity(node: node)
+            self.publicNode = node.toNodeEntity()
         } else {
             self.publicNode = nil
         }
