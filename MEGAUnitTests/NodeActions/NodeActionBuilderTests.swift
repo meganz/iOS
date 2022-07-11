@@ -844,7 +844,7 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download]))
     }
     
-    func testMultiselectFiles() {
+    func testMultiselectFiles_noLinkedNodes() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files)
             .multiselectBuild()
@@ -852,7 +852,27 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectFolders() {
+    func testMultiselectFiles_allLinkedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files)
+            .setLinkedNodeCount(2)
+            .setIsAllLinkedNode(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFiles_withSomeLinkedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files)
+            .setLinkedNodeCount(2)
+            .setIsAllLinkedNode(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFolders_noLinkedNodes() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.folders)
             .multiselectBuild()
@@ -860,12 +880,52 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectFilesAndFolders() {
+    func testMultiselectFolders_allLinkedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders)
+            .setLinkedNodeCount(2)
+            .setIsAllLinkedNode(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFolders_withSomeLinkedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders)
+            .setLinkedNodeCount(2)
+            .setIsAllLinkedNode(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFilesAndFolders_noLinkedNodes() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.filesAndFolders)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFilesAndFolders_allLinkedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders)
+            .setLinkedNodeCount(2)
+            .setIsAllLinkedNode(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFilesAndFolders_withSomeLinkedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders)
+            .setLinkedNodeCount(2)
+            .setIsAllLinkedNode(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .move, .copy, .moveToRubbishBin]))
     }
     
     func testExportedNodeActions_nodeExported() {
