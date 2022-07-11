@@ -692,15 +692,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 #pragma mark - Public
 
-- (void)enableButtonsByNumberOfItems {
-    NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
-    if (rows == 0) {
-        [self.editBarButtonItem setEnabled:NO];
-    } else {
-        [self.editBarButtonItem setEnabled:YES];
-    }
-}
-
 - (void)enableButtonsBySelectedItems {
     if (self.selectedItems.count == 0) {
         [self.activityBarButtonItem setEnabled:NO];

@@ -96,7 +96,6 @@ static NSString *kPath = @"kPath";
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    [self.offline enableButtonsByNumberOfItems];
     return section == ThumbnailSectionFile ? [self.fileList count] : [self.folderList count];
 }
 

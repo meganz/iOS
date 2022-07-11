@@ -78,7 +78,6 @@ static NSString *kPath = @"kPath";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows = self.offline.searchController.isActive ? self.offline.searchItemsArray.count : self.offline.offlineSortedItems.count;
-    [self.offline enableButtonsByNumberOfItems];
     return rows;
 }
 
