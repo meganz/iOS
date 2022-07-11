@@ -39,7 +39,6 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 - (BOOL)removeOfflineNodeCell:(NSString *)itemPath;
 - (void)setViewEditing:(BOOL)editing;
 - (void)itemTapped:(NSString *)name atIndexPath:(NSIndexPath *)indexPath;
-- (void)enableButtonsByNumberOfItems;
 - (void)enableButtonsBySelectedItems;
 - (void)showInfoFilePath:(NSString *)itemPath at:(nullable NSIndexPath *)indexPath from:(UIButton *)sender;
 - (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(nullable void (^)(void))cancelAction;
