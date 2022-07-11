@@ -15,6 +15,7 @@ final class NodeActionBuilder {
     private var isIncomingShareChildView = false
     private var isExported = false
     private var linkedNodeCount = 0
+    private var isAllLinkedNode = false
     private var isOutShare = false
     private var isChildVersion = false
     private var isBackupFolder = false
@@ -101,6 +102,11 @@ final class NodeActionBuilder {
     
     func setLinkedNodeCount(_ count: Int) -> NodeActionBuilder {
         self.linkedNodeCount = count
+        return self
+    }
+    
+    func setIsAllLinkedNode(_ isAllLinkedNode: Bool) -> NodeActionBuilder {
+        self.isAllLinkedNode = isAllLinkedNode
         return self
     }
     
@@ -540,9 +546,13 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
+    private func multiselectedLinkNodesAction() -> NodeAction {
+        isAllLinkedNode ? NodeAction.manageLinksAction() : NodeAction.shareLinksAction()
+    }
+    
     private func multiselectFoldersActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
-                       NodeAction.shareLinksAction(),
+                       multiselectedLinkNodesAction(),
                        NodeAction.shareFoldersAction(),
                        NodeAction.moveAction(),
                        NodeAction.copyAction(),
@@ -555,7 +565,7 @@ final class NodeActionBuilder {
     
     private func multiselectFilesActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
-                       NodeAction.shareLinksAction(),
+                       multiselectedLinkNodesAction(),
                        NodeAction.exportFilesAction(),
                        NodeAction.sendToChatAction(),
                        NodeAction.moveAction(),
@@ -569,7 +579,7 @@ final class NodeActionBuilder {
     
     private func multiselectFoldersAndFilesActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
-                       NodeAction.shareLinksAction(),
+                       multiselectedLinkNodesAction(),
                        NodeAction.moveAction(),
                        NodeAction.copyAction(),
                        NodeAction.moveToRubbishBinAction()]

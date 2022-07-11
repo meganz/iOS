@@ -159,6 +159,10 @@ extension NodeAction {
         return NodeAction(title: Strings.Localizable.CloudDrive.NodeOptions.manageLink, detail: nil, image: Asset.Images.Generic.link.image, type: .manageLink)
     }
     
+    class func manageLinksAction() -> NodeAction {
+        return NodeAction(title: Strings.Localizable.CloudDrive.NodeOptions.manageLinks, detail: nil, image: Asset.Images.Generic.link.image, type: .manageLink)
+    }
+    
     class func removeLinkAction(nodeCount: Int = 1) -> NodeAction {
         return NodeAction(title: Strings.Localizable.General.MenuAction.RemoveLink.title(nodeCount), detail: nil, image: Asset.Images.NodeActions.removeLink.image, type: .removeLink)
     }
