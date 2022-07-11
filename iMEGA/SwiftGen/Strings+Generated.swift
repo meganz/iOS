@@ -37,16 +37,12 @@ public enum Strings {
   public enum Localizable {
     /// %1 and [A]%2 more[/A]
     public static let _1AndA2MoreA = Strings.tr("Localizable", "%1 and [A]%2 more[/A]")
-    /// %1 Images
-    public static let _1Images = Strings.tr("Localizable", "%1 Images")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
     /// %1$d items
     public static func _1DItems(_ p1: Int) -> String {
       return Strings.tr("Localizable", "%1$d items", p1)
     }
-    /// %2 Videos
-    public static let _2Videos = Strings.tr("Localizable", "%2 Videos")
     /// %@ created a chat link
     public static func createdAPublicLinkForTheChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ created a public link for the chat.", String(describing: p1))
@@ -4037,6 +4033,14 @@ public enum Strings {
       public enum Section {
         public enum Thumbnail {
           public enum Count {
+            /// Plural format key: "%#@image@"
+            public static func image(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "recents.section.thumbnail.count.image", p1)
+            }
+            /// Plural format key: "%#@video@"
+            public static func video(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "recents.section.thumbnail.count.video", p1)
+            }
             public enum ImageAndVideo {
               /// Plural format key: "%#@image@"
               public static func image(_ p1: Int) -> String {

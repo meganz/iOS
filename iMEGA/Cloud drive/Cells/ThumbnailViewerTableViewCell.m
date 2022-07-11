@@ -73,11 +73,11 @@
     
     NSString *title;
     if (numberOfPhotos == 0) {
-        NSString *tempString = NSLocalizedString(@"%2 Videos", @"Multiple videos title shown in recents section of web client.");
-        title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
+        NSString *videoCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.video", @"Multiple videos title shown in recents section of web client.");
+        title = [NSString stringWithFormat:videoCountFormat, numberOfVideos];
     } else if (numberOfVideos == 0) {
-        NSString *tempString = NSLocalizedString(@"%1 Images", @"Multiple Images title shown in recents section of webclient");
-        title = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
+        NSString *imageCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.image", @"Multiple Images title shown in recents section of webclient");
+        title = [NSString stringWithFormat:imageCountFormat, numberOfPhotos];
     } else {
         NSString *imageCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.imageAndVideo.image", @"Image count on recents section that will be concatenated with number of videos. e.g 1 image and 1 video, 2 images and 1 video");
         NSString *imageCount = [NSString stringWithFormat:imageCountFormat, numberOfPhotos];
