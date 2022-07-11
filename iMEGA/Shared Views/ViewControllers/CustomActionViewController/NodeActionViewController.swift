@@ -97,9 +97,11 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsFavourite(true)
                 .multiselectAlbumBuild()
         } else {
+            let linkedNodeCount = nodes.publicLinkedNodes().count
             actions = NodeActionBuilder()
                 .setNodeSelectionType(selectionType)
-                .setLinkedNodeCount(nodes.publicLinkedNodes().count)
+                .setLinkedNodeCount(linkedNodeCount)
+                .setIsAllLinkedNode(linkedNodeCount == self.nodes.count)
                 .multiselectBuild()
         }
     }
