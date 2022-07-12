@@ -3,7 +3,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     //MARK: - Context Menus configuration
     func contextMenuConfiguration() -> CMConfigEntity {
         return CMConfigEntity(menuType: .display,
-                              viewMode: .list,
+                              viewMode: isListViewModeSelected() ? ViewModePreference.list : ViewModePreference.thumbnail,
                               sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: currentOfflinePath)))
     }
     

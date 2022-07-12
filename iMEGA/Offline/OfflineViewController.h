@@ -46,6 +46,7 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 - (void)openFileFromWidgetWith:(NSString *)path;
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName;
 
+- (BOOL)isListViewModeSelected;
 - (void)changeViewModePreference;
 - (void)changeEditingModeStatus;
 - (void)nodesSortTypeHasChanged;

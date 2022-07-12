@@ -302,6 +302,10 @@ static NSString *kisDirectory = @"kisDirectory";
     [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
 }
 
+- (BOOL)isListViewModeSelected {
+    return self.viewModePreference == ViewModePreferenceList;
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
