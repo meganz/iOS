@@ -2,10 +2,12 @@ import UIKit
 
 extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
-        CMConfigEntity(menuType: .display,
-                       sortType: SortOrderType.newest,
-                       isSharedItems: true,
-                       isCameraUploadExplorer: true)
+        CMConfigEntity(
+            menuType: .display,
+            sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+            isSharedItems: true,
+            isCameraUploadExplorer: true
+        )
     }
     
     @objc func configureContextMenuManager() {
@@ -134,7 +136,10 @@ extension PhotosViewController: DisplayMenuDelegate {
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
-        
+        guard sortType != viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed) else { return }
+        viewModel.cameraUploadExplorerSortOrderType = sortType
+        Helper.save(sortType.megaSortOrderType, for: PhotoViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
+        setRightNavigationBarButtons()
     }
     
     func showActionSheet(with actions: [ContextActionSheetAction]) {
