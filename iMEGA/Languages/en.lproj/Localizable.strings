@@ -1878,10 +1878,6 @@
 "Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Map settings";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Accurate to %d meters";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -3024,6 +3020,12 @@
 "chat.message.changedRole.host"="[A] was changed to [S]host role[/S] by [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
 "chat.message.changedRole.standard"="[A] was changed to [S]standard role[/S] by [B]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Standard";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Hybrid";
 /* Meeting - start converstion context menu text for starting a meeting*/
 "meetings.startConversation.contextMenu.startMeeting"="Start Meeting";
 /* Meeting - start conversation context menu text for joining a meeting */

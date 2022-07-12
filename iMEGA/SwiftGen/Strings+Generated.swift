@@ -955,8 +955,6 @@ public enum Strings {
     public static let howItWorksTertiary = Strings.tr("Localizable", "howItWorksTertiary")
     /// HTTP Error
     public static let httpError = Strings.tr("Localizable", "HTTP error")
-    /// Hybrid
-    public static let hybrid = Strings.tr("Localizable", "Hybrid")
     /// If enabled, location information will be included with your pictures. Please be careful when sharing them.
     public static let ifEnabledYouWillUploadInformationAboutWhereYourPicturesAndVideosWereTakenSoBeCarefulWhenSharingThem = Strings.tr("Localizable", "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.")
     /// If you do not have the password, contact the creator of the link.
@@ -1767,8 +1765,6 @@ public enum Strings {
     public static let rubbishBinLabel = Strings.tr("Localizable", "rubbishBinLabel")
     /// Same for All
     public static let sameForAll = Strings.tr("Localizable", "Same for All")
-    /// Satellite
-    public static let satellite = Strings.tr("Localizable", "Satellite")
     /// Save
     public static let save = Strings.tr("Localizable", "save")
     /// Save a copy of the images and videos taken from the MEGA App in your device’s media library.
@@ -2979,6 +2975,16 @@ public enum Strings {
         public static let chat = Strings.tr("Localizable", "chat.selector.chat")
         /// Meeting
         public static let meeting = Strings.tr("Localizable", "chat.selector.meeting")
+      }
+      public enum SendLocation {
+        public enum Map {
+          /// Hybrid
+          public static let hybrid = Strings.tr("Localizable", "chat.sendLocation.map.hybrid")
+          /// Satellite
+          public static let satellite = Strings.tr("Localizable", "chat.sendLocation.map.satellite")
+          /// Standard
+          public static let standard = Strings.tr("Localizable", "chat.sendLocation.map.standard")
+        }
       }
       public enum Status {
         public enum Duration {
