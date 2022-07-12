@@ -1931,10 +1931,6 @@ public enum Strings {
     }
     /// Some items could not be shared with MEGA
     public static let shareExtensionUnsupportedAssets = Strings.tr("Localizable", "shareExtensionUnsupportedAssets")
-    /// Share Folder
-    public static let shareFolder = Strings.tr("Localizable", "shareFolder")
-    /// Share Folders
-    public static let shareFolders = Strings.tr("Localizable", "shareFolders")
     /// Share left
     public static let shareLeft = Strings.tr("Localizable", "shareLeft")
     /// Share removed
@@ -3016,16 +3012,6 @@ public enum Strings {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
       }
-      public enum NodeOptions {
-        /// Manage Link
-        public static let manageLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLink")
-        /// Manage Links
-        public static let manageLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLinks")
-        /// Share Link
-        public static let shareLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLink")
-        /// Share Links
-        public static let shareLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLinks")
-      }
       public enum Root {
         public enum Backup {
           public enum Folder {
@@ -3312,10 +3298,6 @@ public enum Strings {
       public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
-      /// Export File
-      public static let exportFile = Strings.tr("Localizable", "general.exportFile")
-      /// Export Files
-      public static let exportFiles = Strings.tr("Localizable", "general.exportFiles")
       /// Join Meeting as Guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
       /// Unable to connect to the Internet. Please check your connection and try again.
@@ -3571,6 +3553,18 @@ public enum Strings {
         public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
         /// Move to rubbish bin
         public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
+        public enum ExportFile {
+          /// Plural format key: "%#@file@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.exportFile.title", p1)
+          }
+        }
+        public enum ManageLink {
+          /// Plural format key: "%#@link@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.manageLink.title", p1)
+          }
+        }
         public enum RemoveLink {
           /// Plural format key: "%#@link@"
           public static func title(_ p1: Int) -> String {
@@ -3581,6 +3575,18 @@ public enum Strings {
             public static func success(_ p1: Int) -> String {
               return Strings.tr("Localizable", "general.menuAction.removeLink.message.success", p1)
             }
+          }
+        }
+        public enum ShareFolder {
+          /// Plural format key: "%#@folder@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.shareFolder.title", p1)
+          }
+        }
+        public enum ShareLink {
+          /// Plural format key: "%#@link@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.shareLink.title", p1)
           }
         }
       }
