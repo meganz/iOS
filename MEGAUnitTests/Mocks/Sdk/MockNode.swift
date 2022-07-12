@@ -7,17 +7,20 @@ final class MockNode: MEGANode {
     private let nodeParentHandle: MEGAHandle
     private let nodeHandle: MEGAHandle
     private let changeType: MEGANodeChangeType
+    private var nodeModificationTime: Date?
     
     init(handle: MEGAHandle,
          name: String = "",
          nodeType: MEGANodeType = .file,
          parentHandle: MEGAHandle = .invalid,
-         changeType: MEGANodeChangeType = .new) {
+         changeType: MEGANodeChangeType = .new,
+         modificationTime: Date? = nil ) {
         nodeHandle = handle
         nodeName = name
         self.nodeType = nodeType
         nodeParentHandle = parentHandle
         self.changeType = changeType
+        nodeModificationTime = modificationTime
         super.init()
     }
     
@@ -38,4 +41,6 @@ final class MockNode: MEGANode {
     override var name: String! { nodeName }
     
     override var parentHandle: MEGAHandle { nodeParentHandle }
+    
+    override var modificationTime: Date? { nodeModificationTime }
 }
