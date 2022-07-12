@@ -212,13 +212,21 @@ final class ContextMenuBuilder {
     }
     
     private func viewTypeMenu() -> CMEntity {
-        if #available(iOS 14.0, *) {
-            return CMEntity(displayInline: true,
-                     children: [thumbnailView, listView]
-            )
-        } else {
-            return CMEntity(children: [viewMode == .thumbnail ? listView : thumbnailView])
+        var viewTypeMenuActions: [CMElement] = []
+        
+        if showMediaDiscovery && !isRubbishBinFolder {
+            viewTypeMenuActions.append(mediaDiscovery)
         }
+        
+        if #available(iOS 14.0, *) {
+            viewTypeMenuActions.append(contentsOf: [thumbnailView, listView])
+        } else {
+            viewTypeMenuActions.append(contentsOf: [viewMode == .thumbnail ? listView : thumbnailView])
+        }
+        
+        return CMEntity(displayInline: true,
+                        children: viewTypeMenuActions
+        )
     }
     
     private func rubbishBinMenu() -> CMEntity {
@@ -262,10 +270,6 @@ final class ContextMenuBuilder {
         if isRubbishBinFolder {
             displayActionsMenuChildren.append(rubbishBinMenu())
         }
-                
-        if showMediaDiscovery && !isRubbishBinFolder {
-            displayActionsMenuChildren.append(mediaDiscovery)
-        }
         
         return CMEntity(displayInline: true,
                         children: displayActionsMenuChildren)
@@ -276,7 +280,8 @@ final class ContextMenuBuilder {
         
         if accessLevel == .accessOwner {
             quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
-            quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder, rename])
+            quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder])
+            quickActions.append(rename)
         }
         
         quickActions.append(copy)
@@ -285,7 +290,7 @@ final class ContextMenuBuilder {
             quickActions.append(leaveSharing)
         }
         
-        if isOutShare {
+        if isSharedItemsChild, isOutShare {
             quickActions.append(removeSharing)
         }
         

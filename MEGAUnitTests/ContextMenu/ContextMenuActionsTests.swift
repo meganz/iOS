@@ -142,11 +142,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setType(.display)
                                                 .setAccessLevel(.accessOwner)
                                                 .setIsOutShare(true)
+                                                .setIsSharedItemsChild(true)
                                                 .setShowMediaDiscovery(true)
                                                 .setIsAFolder(true)
                                                 .build())
         
-        let excludedActions: [QuickFolderAction] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .rename]
+        let excludedActions: [QuickFolderAction] = [.manageLink, .removeLink, .leaveSharing, .shareFolder]
         
         compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
                                                                             .allCases
@@ -163,12 +164,13 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setType(.display)
                                                 .setAccessLevel(.accessOwner)
                                                 .setIsOutShare(true)
+                                                .setIsSharedItemsChild(true)
                                                 .setIsExported(true)
                                                 .setShowMediaDiscovery(true)
                                                 .setIsAFolder(true)
                                                 .build())
         
-        let excludedActions: [QuickFolderAction] = [.shareLink, .leaveSharing, .shareFolder, .rename]
+        let excludedActions: [QuickFolderAction] = [.shareLink, .leaveSharing, .shareFolder]
         
         compare(menuEntity: menuEntity, menuActionIdentifiers: [QuickFolderAction
                                                                             .allCases
