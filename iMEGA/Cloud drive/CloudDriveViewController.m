@@ -764,7 +764,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)cancelSearchIfNeeded {
     if (self.searchQueue.operationCount) {
-        [self.cancelToken cancelWithNewValue:YES];
+        [self.cancelToken cancel];
         [self.searchQueue cancelAllOperations];
     }
 }

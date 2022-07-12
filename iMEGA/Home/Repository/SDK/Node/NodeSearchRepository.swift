@@ -51,7 +51,7 @@ extension NodeSearchRepository {
 
                 searchQueue.addOperation(searchOperation)
                 return {
-                    cancelToken.cancel(withNewValue: true)
+                    cancelToken.cancel()
                 }
             },
 
