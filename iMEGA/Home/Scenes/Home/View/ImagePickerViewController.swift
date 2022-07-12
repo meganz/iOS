@@ -80,7 +80,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
 
     private func processImageType(with image: UIImage) {
         let imageName = NSDate().mnz_formattedDefaultNameForMedia() + ".jpg"
-        guard let imagePath = FileManager.default.uploadsDirectory()?.appending(imageName),
+        guard let imagePath = FileManager.default.uploadsDirectory()?.append(pathComponent: imageName),
             let imageAsData = image.jpegData(compressionQuality: 1) as NSData? else {
             completion?(.failure(.failedCreateTemporaryData))
             return
