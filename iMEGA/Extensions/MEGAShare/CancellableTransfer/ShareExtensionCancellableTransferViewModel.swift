@@ -44,7 +44,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
         case .didTapDismissConfirmCancel:
             router.dismissConfirmCancel()
         case .didTapProceedCancel:
-            cancelToken.cancel(withNewValue: true)
+            cancelToken.cancel()
             router.transferCancelled(with: Strings.Localizable.transferCancelled)
         }
     }
