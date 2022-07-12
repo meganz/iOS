@@ -146,13 +146,13 @@ extension ContextMenuBuilder {
     }
     
     var shareLink: CMActionEntity {
-        CMActionEntity(title: Strings.Localizable.CloudDrive.NodeOptions.shareLink,
+        CMActionEntity(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                        image: Asset.Images.Generic.link.image,
                        identifier: QuickFolderAction.shareLink.rawValue)
     }
     
     var manageLink: CMActionEntity {
-        CMActionEntity(title: Strings.Localizable.CloudDrive.NodeOptions.manageLink,
+        CMActionEntity(title: Strings.Localizable.General.MenuAction.ManageLink.title(1),
                        image: Asset.Images.Generic.link.image,
                        identifier: QuickFolderAction.manageLink.rawValue)
     }
@@ -182,7 +182,7 @@ extension ContextMenuBuilder {
     }
     
     var shareFolder: CMActionEntity {
-        CMActionEntity(title: Strings.Localizable.shareFolder,
+        CMActionEntity(title: Strings.Localizable.General.MenuAction.ShareFolder.title(1),
                        image: Asset.Images.NodeActions.shareFolder.image,
                        identifier: QuickFolderAction.shareFolder.rawValue)
     }

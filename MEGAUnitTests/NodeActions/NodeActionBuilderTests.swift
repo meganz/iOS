@@ -463,7 +463,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testFileLinkArrayWithPublicLink() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.files)
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .multiselectBuild()
         
@@ -472,7 +472,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testFolderLinkArrayWithPublicLink() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.folders)
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .multiselectBuild()
         
@@ -481,7 +481,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testFileAndFolderLinkArrayWithPublicLink() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.filesAndFolders)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .multiselectBuild()
         
@@ -490,7 +490,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testFileLinkArrayWithoutPublicLink() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.files)
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
             .setLinkedNodeCount(0)
             .multiselectBuild()
         
@@ -499,7 +499,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testFolderLinkArrayWithoutPublicLink() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.folders)
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
             .setLinkedNodeCount(0)
             .multiselectBuild()
         
@@ -508,7 +508,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testFileAndFolderLinkArrayWithoutPublicLink() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.filesAndFolders)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
             .setLinkedNodeCount(0)
             .multiselectBuild()
         
@@ -846,7 +846,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFiles_noLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.files)
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
@@ -854,7 +854,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFiles_allLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.files)
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .setIsAllLinkedNode(true)
             .multiselectBuild()
@@ -864,7 +864,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFiles_withSomeLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.files)
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .setIsAllLinkedNode(false)
             .multiselectBuild()
@@ -874,7 +874,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFolders_noLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.folders)
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .shareFolder, .move, .copy, .moveToRubbishBin]))
@@ -882,7 +882,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFolders_allLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.folders)
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .setIsAllLinkedNode(true)
             .multiselectBuild()
@@ -892,7 +892,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFolders_withSomeLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.folders)
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .setIsAllLinkedNode(false)
             .multiselectBuild()
@@ -902,7 +902,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFilesAndFolders_noLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.filesAndFolders)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .move, .copy, .moveToRubbishBin]))
@@ -910,7 +910,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFilesAndFolders_allLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.filesAndFolders)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .setIsAllLinkedNode(true)
             .multiselectBuild()
@@ -920,7 +920,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectFilesAndFolders_withSomeLinkedNodes() {
         actions = NodeActionBuilder()
-            .setNodeSelectionType(.filesAndFolders)
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
             .setLinkedNodeCount(2)
             .setIsAllLinkedNode(false)
             .multiselectBuild()

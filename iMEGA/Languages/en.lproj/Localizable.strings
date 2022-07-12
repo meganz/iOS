@@ -334,14 +334,6 @@
 "folderInboxError"="Inbox is reserved for use by Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Save Image";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Share Link";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Share Links";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Manage Link";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Manage Links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Share";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Export File";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Export Files";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Export";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="1 contact";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacts";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Share Folder";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Share Folders";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Select";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */

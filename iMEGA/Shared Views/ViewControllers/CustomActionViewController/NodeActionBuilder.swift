@@ -20,6 +20,7 @@ final class NodeActionBuilder {
     private var isChildVersion = false
     private var isBackupFolder = false
     private var isInVersionsView = false
+    private var selectedNodeCount = 1
     private var viewMode: ViewModePreference = .list
     private var nodeSelectionType: NodeSelectionType = .single
     private var isTakedown = false
@@ -129,8 +130,10 @@ final class NodeActionBuilder {
         return self
     }
     
-    func setNodeSelectionType(_ selectionType: NodeSelectionType?) -> NodeActionBuilder {
+    func setNodeSelectionType(_ selectionType: NodeSelectionType?,
+                              selectedNodeCount: Int) -> NodeActionBuilder {
         self.nodeSelectionType = selectionType ?? .single
+        self.selectedNodeCount = selectedNodeCount
         return self
     }
     
@@ -553,13 +556,15 @@ final class NodeActionBuilder {
     }
     
     private func multiselectedLinkNodesAction() -> NodeAction {
-        isAllLinkedNode ? NodeAction.manageLinksAction() : NodeAction.shareLinksAction()
+        isAllLinkedNode ?
+            NodeAction.manageLinkAction(nodeCount: linkedNodeCount) :
+            NodeAction.shareLinkAction(nodeCount: selectedNodeCount)
     }
     
     private func multiselectFoldersActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
                        multiselectedLinkNodesAction(),
-                       NodeAction.shareFoldersAction(),
+                       NodeAction.shareFolderAction(nodeCount: selectedNodeCount),
                        NodeAction.moveAction(),
                        NodeAction.copyAction(),
                        NodeAction.moveToRubbishBinAction()]
@@ -572,7 +577,7 @@ final class NodeActionBuilder {
     private func multiselectFilesActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
                        multiselectedLinkNodesAction(),
-                       NodeAction.exportFilesAction(),
+                       NodeAction.exportFileAction(nodeCount: selectedNodeCount),
                        NodeAction.sendToChatAction(),
                        NodeAction.moveAction(),
                        NodeAction.copyAction(),
@@ -597,8 +602,8 @@ final class NodeActionBuilder {
     
     private func albumActions() -> [NodeAction] {
         [.downloadAction(),
-         .shareLinksAction(),
-         .exportFilesAction(),
+         .shareLinkAction(nodeCount: selectedNodeCount),
+         .exportFileAction(nodeCount: selectedNodeCount),
          .sendToChatAction(),
          .favouriteAction(isFavourite: isFavourite),
          .copyAction(),

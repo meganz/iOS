@@ -91,17 +91,18 @@ class NodeActionViewController: ActionSheetViewController {
             selectionType = .files
         }
         
+        let nodesCount = nodes.count
         if displayMode == .favouriteAlbumSelectionToolBar {
             actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType)
+                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsFavourite(true)
                 .multiselectAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
             actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType)
+                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setLinkedNodeCount(linkedNodeCount)
-                .setIsAllLinkedNode(linkedNodeCount == self.nodes.count)
+                .setIsAllLinkedNode(linkedNodeCount == nodesCount)
                 .multiselectBuild()
         }
     }
