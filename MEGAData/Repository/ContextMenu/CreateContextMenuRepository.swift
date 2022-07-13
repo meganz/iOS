@@ -8,6 +8,7 @@ struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setSortType(config.sortType)
                         .setIsAFolder(config.isAFolder)
                         .setIsRubbishBinFolder(config.isRubbishBinFolder)
+                        .setIsOfflineFolder(config.isOfflineFolder)
                         .setIsRestorable(config.isRestorable)
                         .setIsInVersionsView(config.isInVersionsView)
                         .setVersionsCount(config.versionsCount)
