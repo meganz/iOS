@@ -62,6 +62,20 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                         .compactMap{$0.rawValue})
     }
     
+    func testDisplayMenuOffline() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.display)
+                                                .setViewMode(.list)
+                                                .setSortType(.nameAscending)
+                                                .setIsOfflineFolder(true)
+                                                .build())
+        
+        compare(menuEntity: menuEntity, menuActionIdentifiers: DisplayAction
+                                                                            .allCases
+                                                                            .filter{$0 != .clearRubbishBin && $0 != .mediaDiscovery}
+                                                                            .compactMap{$0.rawValue})
+    }
+    
     func testRubbishBinSubFoldersMenu() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                     .setType(.rubbishBin)
@@ -273,5 +287,4 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                                 $0 != .none
                                                                             }.compactMap{ $0.rawValue })
     }
-
 }

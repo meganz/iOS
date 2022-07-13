@@ -7,6 +7,7 @@ final class ContextMenuBuilder {
     private var sortType: SortOrderType = .nameAscending
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
+    private var isOfflineFolder: Bool = false
     private var isRestorable: Bool = false
     private var isInVersionsView: Bool = false
     private var isSharedItems: Bool = false
@@ -61,6 +62,11 @@ final class ContextMenuBuilder {
     
     func setIsRubbishBinFolder(_ isRubbishBinFolder: Bool) -> ContextMenuBuilder {
         self.isRubbishBinFolder = isRubbishBinFolder
+        return self
+    }
+    
+    func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
+        self.isOfflineFolder = isOfflineFolder
         return self
     }
     
@@ -255,9 +261,12 @@ final class ContextMenuBuilder {
             sortMenuActions = [sortNewest, sortOldest]
         }
         else if !isSharedItems {
-            var list = [sortLargest, sortSmallest, sortNewest, sortOldest, sortLabel]
-            if !isFavouritesExplorer {
-                list.append(sortFavourite)
+            var list = [sortLargest, sortSmallest, sortNewest, sortOldest]
+            if !isOfflineFolder {
+                list.append(sortLabel)
+                if !isFavouritesExplorer {
+                    list.append(sortFavourite)
+                }
             }
             sortMenuActions.append(contentsOf: list)
         }
