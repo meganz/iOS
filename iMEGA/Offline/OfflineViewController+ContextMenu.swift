@@ -4,7 +4,8 @@ extension OfflineViewController: DisplayMenuDelegate {
     func contextMenuConfiguration() -> CMConfigEntity {
         return CMConfigEntity(menuType: .display,
                               viewMode: .list,
-                              sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: currentOfflinePath)))
+                              sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: currentOfflinePath)),
+                              isOfflineFolder: true)
     }
     
     @objc func setNavigationBarButtons() {

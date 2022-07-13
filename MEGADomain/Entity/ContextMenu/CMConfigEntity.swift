@@ -7,6 +7,7 @@
 ///     - accessLevel: The access level type for the current folder
 ///     - sortType: The selected sort type for this folder
 ///     - isRubbishBinFolder: Indicates whether or not it is the RubbishBin folder
+///     - isOfflineFolder: Indicates whether or not it is the Offline folder
 ///     - isRestorable: Indicates if the current node is restorable
 ///     - isInVersionsView: Indicates whether or not it is versions view
 ///     - isSharedItems: Indicates whether or not it is the shared items screen
@@ -35,6 +36,7 @@ struct CMConfigEntity {
     var sortType: SortOrderType? = nil
     var isAFolder: Bool = false
     var isRubbishBinFolder: Bool = false
+    var isOfflineFolder: Bool = false
     var isRestorable: Bool = false
     var isInVersionsView: Bool = false
     var isSharedItems: Bool = false
