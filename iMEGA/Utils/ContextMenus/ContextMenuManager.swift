@@ -112,6 +112,7 @@ final class ContextMenuManager: NSObject {
                 uploadAddMenuDelegate?.uploadAddMenu(didSelect: action)
             } else {
                 guard let subMenuActions = subMenuActions else {
+                    uploadAddMenuDelegate?.uploadAddMenu(didSelect: action)
                     return
                 }
 
@@ -148,6 +149,8 @@ final class ContextMenuManager: NSObject {
                                                                                           action.rawValue != QuickFolderAction.copy.rawValue)
             } else {
                 guard let subMenuActions = subMenuActions else {
+                    quickFolderActionsMenuDelegate?.quickFolderActionsMenu(didSelect: action,
+                                                                           needToRefreshMenu: false)
                     return
                 }
 
