@@ -8,6 +8,7 @@
 ///     - sortType: The selected sort type for this folder
 ///     - isRubbishBinFolder: Indicates whether or not it is the RubbishBin folder
 ///     - isRestorable: Indicates if the current node is restorable
+///     - isOfflineFolder: Indicates whether or not it is the Offline folder
 ///     - isInVersionsView: Indicates whether or not it is versions view
 ///     - isSharedItems: Indicates whether or not it is the shared items screen
 ///     - isIncomingShareChild: Indicates whether or not it is an incoming shared child folder
@@ -35,6 +36,7 @@ struct CMConfigEntity {
     var isRubbishBinFolder: Bool = false
     var isRestorable: Bool = false
     var isInVersionsView: Bool = false
+    var isOfflineFolder: Bool = false
     var isSharedItems: Bool = false
     var isIncomingShareChild: Bool = false
     var isHome: Bool = false

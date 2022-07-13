@@ -7,6 +7,7 @@ final class ContextMenuBuilder {
     private var sortType: SortOrderType = .nameAscending
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
+    private var isOfflineFolder: Bool = false
     private var isRestorable: Bool = false
     private var isInVersionsView: Bool = false
     private var isSharedItems: Bool = false
@@ -58,6 +59,11 @@ final class ContextMenuBuilder {
     
     func setIsRubbishBinFolder(_ isRubbishBinFolder: Bool) -> ContextMenuBuilder {
         self.isRubbishBinFolder = isRubbishBinFolder
+        return self
+    }
+    
+    func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
+        self.isOfflineFolder = isOfflineFolder
         return self
     }
     
@@ -237,13 +243,17 @@ final class ContextMenuBuilder {
     
     private func sortMenu() -> CMEntity {
         var sortMenuActions = [sortNameAscending, sortNameDescending]
-        
+                
         if isCameraUploadExplorer {
             sortMenuActions = [sortNewest, sortOldest]
+        } else if !isSharedItems {
+            var list = [sortLargest, sortSmallest, sortNewest, sortOldest]
+            if !isOfflineFolder {
+                list.append(contentsOf: [sortLabel, sortFavourite])
+            }
+            sortMenuActions.append(contentsOf: list)
         }
-        else if !isSharedItems {
-            sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest, sortLabel, sortFavourite])
-        }
+        
         
         return CMEntity(title: Strings.Localizable.sortTitle,
                         detail: sortType.localizedString,
