@@ -5,5 +5,5 @@ final class FeatureFlag: NSObject {
     // @objc static let isNewPhotosLibraryEnabled = true
     @objc static let shouldRemoveHomeImage = false
     @objc static let shouldEnableSlideShow = false
-    @objc static let shouldEnableContextMenuOnCameraUploadExplorer = true
+    @objc static let shouldEnableContextMenuOnCameraUploadExplorer = false
 }
