@@ -26,11 +26,10 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
         return operationQueue
     }()
     
-    private let cancelToken: MEGACancelToken
+    private var cancelToken: MEGACancelToken?
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
-        cancelToken = MEGACancelToken()
     }
     
     // MARK: - Protocols
@@ -55,21 +54,13 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
         guard let inNode = node ?? sdk.rootNode else {
             return completionBlock(nil, true)
         }
-        
-        let searchOperation = SearchOperation(
-            parentNode: inNode,
-            text: string,
-            cancelToken: cancelToken,
-            sortOrderType: sortOrderType,
-            nodeFormatType: formatType,
-            completion: completionBlock)
-        
-        searchOperationQueue.addOperation(searchOperation)
+
+        addSearchOperation(string: string, inNode: inNode, sortOrderType: sortOrderType, formatType: formatType, completionBlock: completionBlock)
     }
     
     func cancelSearch() {
         if searchOperationQueue.operationCount > 0 {
-            cancelToken.cancel(withNewValue: true)
+            cancelToken?.cancel(withNewValue: true)
             searchOperationQueue.cancelAllOperations()
         }
     }
@@ -86,13 +77,23 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
             return completionBlock(.failure(NodeSearchResultErrorEntity.noDataAvailable))
         }
         
-        let searchOperation = SearchOperation(parentNode: inNode,
-                                              text: string ?? "",
-                                              cancelToken: cancelToken,
-                                              sortOrderType: sortOrderType,
-                                              nodeFormatType: formatType,
-                                              completion: completionBlock)
+        addSearchOperation(string: string, inNode: inNode, sortOrderType: sortOrderType, formatType: formatType) { nodes, fail in
+            completionBlock(fail ? .failure(NodeSearchResultErrorEntity.noDataAvailable) : .success(nodes ?? []))
+        }
+    }
+    
+    private func addSearchOperation(string: String?, inNode: MEGANode, sortOrderType: MEGASortOrderType, formatType: MEGANodeFormatType, completionBlock: @escaping ([MEGANode]?, Bool) -> Void) {
+        cancelToken = MEGACancelToken()
         
-        searchOperationQueue.addOperation(searchOperation)
+        if let cancelToken = cancelToken {
+            let searchOperation = SearchOperation(parentNode: inNode,
+                                                  text: string ?? "",
+                                                  cancelToken: cancelToken,
+                                                  sortOrderType: sortOrderType,
+                                                  nodeFormatType: formatType,
+                                                  completion: completionBlock)
+            
+            searchOperationQueue.addOperation(searchOperation)
+        }
     }
 }
