@@ -1,20 +1,20 @@
 import Foundation
 
 extension MEGANodeList {
-    func toPhotoLibrary() -> PhotoLibrary {
-        toNodeArray().toPhotoLibrary()
+    func toPhotoLibrary(withSortType type: SortOrderType) -> PhotoLibrary {
+        toNodeArray().toPhotoLibrary(withSortType: type)
     }
 }
 
 extension Array where Element == MEGANode {
-    func toPhotoLibrary() -> PhotoLibrary {
-        let library = toNodeEntities().toPhotoLibrary()
+    func toPhotoLibrary(withSortType type: SortOrderType) -> PhotoLibrary {
+        let library = toNodeEntities().toPhotoLibrary(withSortType: type)
         return library
     }
 }
 
 extension Array where Element == NodeEntity {
-    func toPhotoLibrary() -> PhotoLibrary {
+    func toPhotoLibrary(withSortType type: SortOrderType) -> PhotoLibrary {
         var dayDict = [Date: PhotoByDay]()
         for node in self where NSString(string: node.name).mnz_isVisualMediaPathExtension {
             guard let day = node.categoryDate.removeTimestamp() else { continue }
@@ -24,7 +24,7 @@ extension Array where Element == NodeEntity {
         }
         
         var monthDict = [Date: PhotoByMonth]()
-        for (day, photosByDate) in dayDict.sorted(by: { $0.key > $1.key }) {
+        for (day, photosByDate) in dayDict.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key }) {
             guard let month = day.removeDay() else { continue }
             var photoByMonth = monthDict[month] ?? PhotoByMonth(categoryDate: month)
             photoByMonth.append(photosByDate)
@@ -32,13 +32,15 @@ extension Array where Element == NodeEntity {
         }
         
         var yearDict = [Date: PhotoByYear]()
-        for (month, photoByMonth) in monthDict.sorted(by: { $0.key > $1.key }) {
+        for (month, photoByMonth) in monthDict.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key }) {
             guard let year = month.removeMonth() else { continue }
             var photoByYear = yearDict[year] ?? PhotoByYear(categoryDate: year)
             photoByYear.append(photoByMonth)
             yearDict[year] = photoByYear
         }
         
-        return PhotoLibrary(photoByYearList: yearDict.values.sorted(by: { $0.categoryDate > $1.categoryDate }))
+        return PhotoLibrary(photoByYearList: yearDict.values.sorted {
+            return type == .oldest ? $0.categoryDate < $1.categoryDate : $0.categoryDate > $1.categoryDate
+        })
     }
 }
