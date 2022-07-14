@@ -6,13 +6,13 @@
     }
     
     @objc func copyNodes(_ nodes: [MEGANode], to parent: MEGANode, isFolderLink: Bool = false, presenter: UIViewController) {
-        let nodeEntities = nodes.map { NodeEntity(node: $0) }
+        let nodeEntities = nodes.toNodeEntities()
         let collisionEntities = nodeEntities.map { NameCollisionEntity(parentHandle: parent.handle, name: $0.name, isFile: $0.isFile, nodeHandle: $0.handle)}
         NameCollisionViewRouter(presenter: presenter, transfers: nil, nodes: nodeEntities, collisions: collisionEntities, collisionType: .copy, isFolderLink: isFolderLink).start()
     }
     
     @objc func moveNodes(_ nodes: [MEGANode], to parent: MEGANode, presenter: UIViewController) {
-        let nodeEntities = nodes.map { NodeEntity(node: $0) }
+        let nodeEntities = nodes.toNodeEntities()
         let collisionEntities = nodeEntities.map { NameCollisionEntity(parentHandle: parent.handle, name: $0.name, isFile: $0.isFile, nodeHandle: $0.handle)}
         NameCollisionViewRouter(presenter: presenter, transfers: nil, nodes: nodeEntities, collisions: collisionEntities, collisionType: .move).start()
     }

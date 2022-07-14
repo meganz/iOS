@@ -14,29 +14,29 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
         self.slideShowImages = slideShowImages
     }
     
-    func nodeAccessLevel() -> NodeAccessTypeEntity {
+    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
         return nodeAccessLevelVariable
     }
     
-    func downloadToOffline() { }
+    func downloadToOffline(nodeHandle: MEGAHandle) { }
     
     func labelString(label: NodeLabelTypeEntity) -> String {
         labelString
     }
     
-    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {
+    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
         filesAndFolders
     }
     
-    func hasVersions() -> Bool {
+    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
         versions
     }
     
-    func isDownloaded() -> Bool {
+    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
         downloaded
     }
     
-    func isInRubbishBin() -> Bool {
+    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
         inRubbishBin
     }
     

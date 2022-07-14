@@ -196,32 +196,32 @@ static const void *richTitleTagKey = &richTitleTagKey;
             }
                 
             case MEGAChatMessageTypePrivilegeChange: {
-                NSString *wasChangedToBy = NSLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
-                wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                NSString *privilige;
+                NSString *wasChangedToBy;
                 switch (self.privilege) {
                     case 0:
-                        privilige = NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                        wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.readOnly", @"A log message in a chat to display that a participant's permission was changed to read-only and by whom");
                         break;
                         
                     case 2:
-                        privilige = NSLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
+                        wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.standard", @"A log message in a chat to display that a participant's permission was changed to standard role and by whom");
                         break;
                         
                     case 3:
-                        privilige = NSLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat");
+                        wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.host", @"A log message in a chat to display that a participant's permission was changed to host role and by whom");
                         break;
                         
                     default:
                         break;
                 }
-                wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:privilige];
-                wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[C]" withString:fullNameDidAction];
+                NSString *privilegeString = [wasChangedToBy mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+                wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                wasChangedToBy = wasChangedToBy.mnz_removeWebclientFormatters;
                 text = wasChangedToBy;
                 
                 NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:wasChangedToBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.mnz_label}];
                 [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:privilige]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:privilegeString]];
                 [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasChangedToBy rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;

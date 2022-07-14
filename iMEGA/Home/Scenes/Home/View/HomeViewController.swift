@@ -489,7 +489,11 @@ extension HomeViewController: ExploreViewStackDelegate {
 
         switch card {
         case .images:
-            router.photosExplorerSelected()
+            guard FeatureFlag.shouldRemoveHomeImage else {
+                router.photosExplorerSelected()
+                return
+            }
+            router.favouriteExplorerSelected()
         case .documents:
             router.documentsExplorerSelected()
         case .audio:

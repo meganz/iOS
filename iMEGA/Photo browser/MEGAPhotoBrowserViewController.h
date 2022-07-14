@@ -3,7 +3,9 @@
 
 #import "DisplayMode.h"
 
-@class MEGAPhotoBrowserViewController;
+NS_ASSUME_NONNULL_BEGIN
+
+@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider;
 
 typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeThumbnail = 0,
@@ -14,7 +16,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @protocol MEGAPhotoBrowserDelegate <NSObject>
 
 @optional
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node;
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(nullable MEGANode *)node;
 - (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNodeAtIndex:(NSUInteger)index;
 - (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser;
 
@@ -22,14 +24,15 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @interface MEGAPhotoBrowserViewController : UIViewController
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node preferredIndex:(NSUInteger)preferredIndex;
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node;
 
-@property (nonatomic) NSMutableArray<MEGANode *> *mediaNodes;
-@property (nonatomic) NSUInteger preferredIndex;
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode preferredIndex:(NSUInteger)preferredIndex;
+
++ (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode;
 
 @property (nonatomic) MEGASdk *api;
 @property (nonatomic) CGRect originFrame;
-@property (nonatomic, weak) id<MEGAPhotoBrowserDelegate> delegate;
+@property (nonatomic, weak, nullable) id<MEGAPhotoBrowserDelegate> delegate;
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic) NSString *publicLink;
 @property (nonatomic) NSString *encryptedLink;
@@ -38,3 +41,5 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) MEGAHandle messageId;
 
 @end
+
+NS_ASSUME_NONNULL_END

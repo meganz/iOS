@@ -80,7 +80,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         importNodeRepository.importChatNode(node) { result in
             switch result {
             case .success(let node):
-                downloadNode(NodeEntity(node: node), completion: completion)
+                downloadNode(node.toNodeEntity(), completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -194,7 +194,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
     }
     
     func exportMessageNode(_ node: MEGANode, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        if let nodeUrl = nodeUrl(NodeEntity(node: node)) {
+        if let nodeUrl = nodeUrl(node.toNodeEntity()) {
             completion(.success(nodeUrl))
         } else {
             importNodeToDownload(node, completion: completion)

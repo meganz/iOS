@@ -339,29 +339,27 @@
                 MEGALogWarning(@"[Chat Links Scalability] Display name not ready");
             }
             
-            NSString *wasChangedToBy = NSLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
-            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-            NSString *privilige;
+            NSString *wasChangedToBy;
             switch (item.lastMessagePriv) {
                 case 0:
-                    privilige = NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.readOnly", @"A log message in a chat to display that a participant's permission was changed to read-only and by whom");
                     break;
                     
                 case 2:
-                    privilige = NSLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.");
+                    wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.standard", @"A log message in a chat to display that a participant's permission was changed to standard role and by whom");
                     break;
                     
                 case 3:
-                    privilige = NSLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat");
+                    wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.host", @"A log message in a chat to display that a participant's permission was changed to host role and by whom");
                     break;
                     
                 default:
-                    privilige = @"";
                     break;
             }
-            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:privilige];
-            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[C]" withString:fullNameDidAction];
-            self.chatLastMessage.text = wasChangedToBy;
+
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+            wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+            self.chatLastMessage.text = wasChangedToBy.mnz_removeWebclientFormatters;
             break;
         }
             

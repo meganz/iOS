@@ -20,7 +20,7 @@ final class PhotoMonthSection: PhotoDateSection {
 }
 
 extension PhotoLibrary {
-    var allPhotosMonthSections: [PhotoMonthSection] {
-        allPhotosByMonthList.map { PhotoMonthSection(photoByMonth: $0) }
+    var photoMonthSections: [PhotoMonthSection] {
+        photosByMonthList.map { PhotoMonthSection(photoByMonth: $0) }
     }
 }

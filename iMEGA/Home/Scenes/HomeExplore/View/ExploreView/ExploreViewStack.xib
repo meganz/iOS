@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21179.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21169.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,7 +30,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="74" height="70"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zWE-AR-6ZO">
-                                    <rect key="frame" x="0.0" y="3" width="74" height="42"/>
+                                    <rect key="frame" x="0.0" y="10" width="74" height="30"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Photos" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zd-jk-2G3">
                                     <rect key="frame" x="5" y="50" width="64" height="12"/>
@@ -51,8 +51,8 @@
                                 <constraint firstAttribute="trailing" secondItem="5Tj-Ir-02a" secondAttribute="trailing" id="S4B-g5-Run"/>
                                 <constraint firstItem="5Tj-Ir-02a" firstAttribute="top" secondItem="Dya-jq-TR5" secondAttribute="top" id="Tnt-pz-hWD"/>
                                 <constraint firstAttribute="trailing" secondItem="zWE-AR-6ZO" secondAttribute="trailing" id="VEl-xB-WEj"/>
-                                <constraint firstItem="zWE-AR-6ZO" firstAttribute="top" secondItem="Dya-jq-TR5" secondAttribute="top" constant="3" id="cGL-XD-BJV"/>
-                                <constraint firstItem="8zd-jk-2G3" firstAttribute="top" secondItem="zWE-AR-6ZO" secondAttribute="bottom" constant="5" id="ewE-yT-cE2"/>
+                                <constraint firstItem="zWE-AR-6ZO" firstAttribute="top" secondItem="Dya-jq-TR5" secondAttribute="top" constant="10" id="cGL-XD-BJV"/>
+                                <constraint firstItem="8zd-jk-2G3" firstAttribute="top" secondItem="zWE-AR-6ZO" secondAttribute="bottom" constant="10" id="ewE-yT-cE2"/>
                                 <constraint firstAttribute="bottom" secondItem="8zd-jk-2G3" secondAttribute="bottom" constant="8" id="g60-52-wP8"/>
                                 <constraint firstItem="8zd-jk-2G3" firstAttribute="leading" secondItem="Dya-jq-TR5" secondAttribute="leading" constant="5" id="h4N-cI-YJK"/>
                                 <constraint firstAttribute="trailing" secondItem="8zd-jk-2G3" secondAttribute="trailing" constant="5" id="hsJ-hH-mHS"/>
@@ -150,9 +150,9 @@
                                     <rect key="frame" x="0.0" y="3" width="74" height="42"/>
                                 </imageView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fEE-Tx-tku">
-                                    <rect key="frame" x="30.5" y="13.5" width="13" height="21"/>
+                                    <rect key="frame" x="27" y="13.5" width="20" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="13" id="OV1-IW-gff"/>
+                                        <constraint firstAttribute="width" constant="20" id="OV1-IW-gff"/>
                                         <constraint firstAttribute="height" constant="21" id="iOM-g4-2ua"/>
                                     </constraints>
                                 </imageView>

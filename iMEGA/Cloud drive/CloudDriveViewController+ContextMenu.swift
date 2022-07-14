@@ -50,7 +50,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                                 quickFolderActionsMenuDelegate: self,
                                                 uploadAddMenuDelegate: self,
                                                 rubbishBinMenuDelegate: self,
-                                                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()))
+                                                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
     @objc func setNavigationBarButtons() {

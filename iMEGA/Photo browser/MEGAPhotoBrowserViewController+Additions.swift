@@ -53,7 +53,7 @@ extension MEGAPhotoBrowserViewController {
                 case .fileLink:
                     saveMediaUseCase.saveToPhotosMEGANode(node: node, completion: completionBlock)
                 default:
-                    saveMediaUseCase.saveToPhotos(node: NodeEntity(node: node), completion: completionBlock)
+                    saveMediaUseCase.saveToPhotos(node: node.toNodeEntity(), completion: completionBlock)
                 }
             } else {
                 DevicePermissionsHelper.alertPhotosPermission()

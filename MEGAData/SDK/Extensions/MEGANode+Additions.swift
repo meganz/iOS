@@ -23,16 +23,3 @@ extension MEGANode {
         }
     }
 }
-
-
-extension Array where Element == MEGANode {
-    func contentCounts() -> (fileCount: UInt, folderCount: UInt) {
-        reduce(into: (fileCount: 0, folderCount: 0)) { (counts, node) in
-            if node.isFile() {
-                counts.fileCount += 1
-            } else if node.isFolder() {
-                counts.folderCount += 1
-            }
-        }
-    }
-}

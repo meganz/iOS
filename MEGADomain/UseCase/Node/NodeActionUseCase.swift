@@ -1,49 +1,50 @@
 // MARK: - Use case protocol -
 protocol NodeActionUseCaseProtocol {
-    func nodeAccessLevel() -> NodeAccessTypeEntity
+    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
-    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int)
-    func hasVersions() -> Bool
-    func isDownloaded() -> Bool
-    func isInRubbishBin() -> Bool
+    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int)
+    func hasVersions(nodeHandle: MEGAHandle) -> Bool
+    func isDownloaded(nodeHandle: MEGAHandle) -> Bool
+    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool
     func slideShowImages(for node: NodeEntity) -> [NodeEntity]
 }
 
 // MARK: - Use case implementation -
-struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProtocol {
-    private let repo: T
+struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
+    
+    private let nodeRepository: T
     
     init(repo: T) {
-        self.repo = repo
+        self.nodeRepository = repo
     }
     
-    func nodeAccessLevel() -> NodeAccessTypeEntity {
-        repo.nodeAccessLevel()
+    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
+        nodeRepository.nodeAccessLevel(nodeHandle: nodeHandle)
     }
     
     func labelString(label: NodeLabelTypeEntity) -> String {
-        return repo.labelString(label: label)
+        return nodeRepository.labelString(label: label)
     }
     
-    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {
-        repo.getFilesAndFolders()
+    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
+        nodeRepository.getFilesAndFolders(nodeHandle: nodeHandle)
     }
     
-    func hasVersions() -> Bool {
-        repo.hasVersions()
+    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
+        nodeRepository.hasVersions(nodeHandle: nodeHandle)
     }
     
-    func isDownloaded() -> Bool {
-        repo.isDownloaded()
+    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
+        nodeRepository.isDownloaded(nodeHandle: nodeHandle)
     }
     
-    func isInRubbishBin() -> Bool {
-        repo.isInRubbishBin()
+    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
+        nodeRepository.isInRubbishBin(nodeHandle: nodeHandle)
     }
 
     func slideShowImages(for node: NodeEntity) -> [NodeEntity] {
         let parentHandle = node.isFolder ? node.handle : node.parentHandle
         
-        return repo.images(for: parentHandle)
+        return nodeRepository.images(for: parentHandle)
     }
 }
