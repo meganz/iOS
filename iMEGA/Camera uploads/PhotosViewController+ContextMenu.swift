@@ -71,7 +71,7 @@ extension PhotosViewController {
         }
     }
     
-    @objc func cancelEditing (sender:UIButton) {
+    @objc func cancelEditing() {
         setEditing(!isEditing, animated: true)
         setRightNavigationBarButtons()
         
