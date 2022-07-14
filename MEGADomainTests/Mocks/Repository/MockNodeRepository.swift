@@ -61,6 +61,13 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         name
     }
     
+    func nodeNameFor(fileLink: FileLinkEntity) async throws -> String {
+        guard let name = name else {
+            throw NodeErrorEntity.nodeNameNotFound
+        }
+        return name
+    }
+    
     func sizeForNode(handle: MEGAHandle) -> UInt64? {
         size
     }

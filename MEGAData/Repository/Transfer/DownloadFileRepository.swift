@@ -22,10 +22,6 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         sdk.startDownloadNode(node, localPath: path, fileName: nil, appData: appData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: completion))
     }
     
-    func download(node: MEGANode, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        sdk.startDownloadNode(node, localPath: path, fileName: nil, appData: appData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: completion))
-    }
-    
     func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), nodeHandle == node.handle else {
             completion(.failure(.couldNotFindNodeByHandle))
@@ -119,6 +115,26 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             sdk.startDownloadNode(node, localPath: relativeFilePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
         } else {
             sdk.startDownloadNode(node, localPath: relativeFilePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken)
+        }
+    }
+    
+    func downloadFileLink(_ fileLink: FileLinkEntity, toURL url: URL, transferMetaData: TransferMetaDataEntity?, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.publicNode(forMegaFileLink: fileLink.linkURLString, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
+                guard let error = error, error.type == .apiOk, let node = request?.publicNode else {
+                    continuation.resume(throwing: TransferErrorEntity.couldNotFindNodeByLink)
+                    return
+                }
+                
+                sdk.startDownloadNode(node, localPath: url.path, fileName: nil, appData: transferMetaData?.metaData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: { result in
+                    switch result {
+                    case .success(let transferEntity):
+                        continuation.resume(returning: transferEntity)
+                    case .failure(_):
+                        continuation.resume(throwing: TransferErrorEntity.download)
+                    }
+                }))
+            }))
         }
     }
 }
