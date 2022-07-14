@@ -800,6 +800,7 @@
         cell.thumbnailImageView.alpha = 1.0;
     }
     
+    cell.isNodeInBrowserView = YES;
     return cell;
 }
 

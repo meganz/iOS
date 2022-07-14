@@ -51,7 +51,10 @@
             self.separatorInset = UIEdgeInsetsMake(0, 62, 0, 0);
             [self layoutIfNeeded];
         }];
-        self.moreButton.hidden = self.recentActionBucket ? self.moreButton.hidden : self.isNodeInRubbishBin;
+        
+        if (!self.recentActionBucket) {
+            self.moreButton.hidden = self.isNodeInRubbishBin || self.isNodeInBrowserView;
+        }
     }
 }
 
