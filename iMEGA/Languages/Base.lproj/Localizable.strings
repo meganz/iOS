@@ -3005,13 +3005,13 @@
 /* Description for empty meetings tab */
 "chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
 /* Text button for empty meetings tab */
-"chat.meetings.emptyState.button.title"="New Meeting";
+"chat.meetings.emptyState.button.title"="New meeting";
 /* Ttile for empty chats tab */
 "chat.chats.emptyState.title"="Start chatting now";
 /* Description for empty chats tab */
 "chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
 /* Text button for empty chats tab */
-"chat.chats.emptyState.button.title"="New Chat";
+"chat.chats.emptyState.button.title"="New chat";
 /* Title for chats section */
 "chat.title"="Chats";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
@@ -3026,7 +3026,7 @@
 "chat.sendLocation.map.satellite"="Satellite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Hybrid";
-/* Meeting - start converstion context menu text for starting a meeting*/
-"meetings.startConversation.contextMenu.startMeeting"="Start Meeting";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="Start meeting";
 /* Meeting - start conversation context menu text for joining a meeting */
-"meetings.startConversation.contextMenu.joinMeeting"="Join Meeting";
+"meetings.startConversation.contextMenu.joinMeeting"="Join meeting";

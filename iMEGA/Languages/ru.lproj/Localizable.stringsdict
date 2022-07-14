@@ -282,6 +282,46 @@
         <string>• %d файла</string>
       </dict>
     </dict>
+    <key>recents.section.thumbnail.count.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d изображение</string>
+        <key>few</key>
+        <string>%d изображения</string>
+        <key>many</key>
+        <string>%d изображений</string>
+        <key>other</key>
+        <string>%d изображения</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d видео</string>
+        <key>few</key>
+        <string>%d видео</string>
+        <key>many</key>
+        <string>%d видео</string>
+        <key>other</key>
+        <string>%d видео</string>
+      </dict>
+    </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -400,6 +440,86 @@
         <string>Ссылки удалены</string>
         <key>other</key>
         <string>Ссылки удалены</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolder.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Поделиться папкой</string>
+        <key>few</key>
+        <string>Поделиться папками</string>
+        <key>many</key>
+        <string>Поделиться папками</string>
+        <key>other</key>
+        <string>Поделиться папками</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Поделиться ссылкой</string>
+        <key>few</key>
+        <string>Поделиться ссылками</string>
+        <key>many</key>
+        <string>Поделиться ссылками</string>
+        <key>other</key>
+        <string>Поделиться ссылками</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.manageLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Управление ссылкой</string>
+        <key>few</key>
+        <string>Управление ссылками</string>
+        <key>many</key>
+        <string>Управление ссылками</string>
+        <key>other</key>
+        <string>Управление ссылками</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.exportFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Экспорт файла</string>
+        <key>few</key>
+        <string>Экспорт файлов</string>
+        <key>many</key>
+        <string>Экспорт файлов</string>
+        <key>other</key>
+        <string>Экспорт файлов</string>
       </dict>
     </dict>
     <key>call.duration.second</key>

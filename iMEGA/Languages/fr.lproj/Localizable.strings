@@ -334,14 +334,6 @@
 "folderInboxError"="« Boîte de réception » est réservé à l’usage d’Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Enregistrer l’image";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Partager le lien";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Partager des liens";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Gérer le lien";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Gérer les liens";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Génération du lien…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -447,7 +439,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Saisissez le nouveau nom";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Les caractères suivants ne sont pas autorisés : ” * / : < > ? |";
+"general.error.charactersNotAllowed"="Les caractères suivants ne sont pas autorisés : ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Renommer le fichier %@ ?";
 /* Title for the action that allows you to replace a file. */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages ?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Partager";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Exporter le fichier";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Exporter les fichiers";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Exporter";
 /* Select all items/elements on the list */
@@ -610,16 +598,12 @@
 "oneContact"="1 contact";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacts";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Partager le dossier";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Partager des dossiers";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Sélectionner";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Droits";
 /* Permissions given to the user you share your folder with */
-"readOnly"="En lecture seule";
+"readOnly"="Lecture seule";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Lecture et écriture";
 /* Permissions given to the user you share your folder with */
@@ -1176,8 +1160,6 @@
 "joinedTheGroupChatByInvitationFrom"="[A] s’est joint à la conversation de groupe sur invitation de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] a effacé l’historique de la conversation.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] a été changé en [B] par [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] a changé le nom de la conversation de groupe en « [B] »";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1896,10 +1878,6 @@
 "Send This Location"="Envoyer cette position";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Paramètres de la carte";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybride";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Précise à %d mètres près";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="L’activité récente est cachée";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Afficher l’activité";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 images";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 vidéos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modifié par %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2438,6 +2412,8 @@
 "home.images.title"="Images";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="Aucune image n’a été trouvée";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Favoris";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Accueil";
 /* Home Screen: Explorer view card title - Documents */
@@ -2653,7 +2629,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Inscrivez-vous maintenant et profitez gratuitement de fonctions évoluées de collaboration.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new host";
+"meetings.notifications.moderatorPrivilege"="Vous êtes la nouvelle ou le nouvel hôte";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Nous mettons MEGAchat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -2967,15 +2943,15 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="La meilleure";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="File already exists";
+"nameCollision.title.file"="Le fichier existe déjà";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Le dossier existe déjà";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
+"nameCollision.folders.alreadyExists"="Un dossier du même nom « %@ » existe déjà dans cette destination.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="Merge";
+"nameCollision.folders.action.merge.title"="Fusionner";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
+"nameCollision.folders.action.merge.description"="Le nouveau dossier sera fusionné avec le dossier dans cette destination.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Ignorer ce dossier";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
@@ -2983,13 +2959,13 @@
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Remplacer";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
+"nameCollision.files.action.replace.description"="Le fichier dans cette destination sera remplacé par le nouveau fichier.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="Skip this file";
+"nameCollision.files.action.skip.title"="Ignorer ce fichier";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Renommer";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="The file will be renamed as:";
+"nameCollision.files.action.rename.description"="Le fichier sera renommé :";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Mettre à jour";
 /* Text description for the update action when upload and already exists in destination */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="Quitter";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Mettre fin à l’appel pour tous";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Dialogue en ligne";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Réunion";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Commencer une réunion";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Parlez en toute sécurité et confidentialité lors d’appels vocaux ou vidéo avec vos amis et collègues partout dans le monde.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="Nouvelle réunion";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Commencer à dialoguer maintenant";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Dialoguez en toute sécurité et confidentialité avec n’importe qui et sur n’importe quel appareil, en sachant que personne ne peut lire vos conversations, pas même MEGA.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="Nouvelle conversation";
+/* Title for chats section */
+"chat.title"="Conversations";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[B] a attribué un [S]droit lecture[/S] seule à [A]";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[B] a attribué un droit d’[S]hôte[/S] à [A]";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[B] a attribué un droit [S]normal[/S] à [A]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Normal";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Hybride";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="Commencer une réunion";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"="Se joindre à une réunion";
