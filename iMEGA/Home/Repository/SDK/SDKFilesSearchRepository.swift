@@ -60,7 +60,7 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
     
     func cancelSearch() {
         if searchOperationQueue.operationCount > 0 {
-            cancelToken.cancel()
+            cancelToken?.cancel()
             searchOperationQueue.cancelAllOperations()
         }
     }
