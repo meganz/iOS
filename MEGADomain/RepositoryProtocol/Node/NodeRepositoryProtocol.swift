@@ -9,6 +9,7 @@ protocol NodeRepositoryProtocol: RepositoryProtocol {
     func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity?
     func nameForNode(handle: MEGAHandle) -> String?
     func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String?
+    func nodeNameFor(fileLink: FileLinkEntity) async throws -> String
     func sizeForNode(handle: MEGAHandle) -> UInt64?
     func sizeForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> UInt64?
     func base64ForNode(handle: MEGAHandle) -> String?

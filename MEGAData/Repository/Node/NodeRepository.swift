@@ -80,6 +80,23 @@ struct NodeRepository: NodeRepositoryProtocol {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
     }
     
+    func nodeNameFor(fileLink: FileLinkEntity) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.publicNode(forMegaFileLink: fileLink.linkURLString, delegate: RequestDelegate { (result) in
+                switch result {
+                case .success(let request):
+                    guard let name = request.publicNode.name else {
+                        continuation.resume(throwing: NodeErrorEntity.nodeNameNotFound)
+                        return
+                    }
+                    continuation.resume(returning: name)
+                case .failure(_):
+                    continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                }
+            })
+        }
+    }
+    
     func sizeForNode(handle: MEGAHandle) -> UInt64? {
         var megaNode: MEGANode
         if let node = sdk.node(forHandle: handle) {

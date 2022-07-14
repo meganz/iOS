@@ -1021,6 +1021,8 @@
 		835EE44825825F3A00D8E3B8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
 		835EE45125825FFE00D8E3B8 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A124455A4900C160D0 /* libKarere.a */; };
 		835EE45A2582607D00D8E3B8 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
+		83604176287C5FD300B8A927 /* NodeErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83604175287C5FD300B8A927 /* NodeErrorEntity.swift */; };
+		83604177287C600600B8A927 /* NodeErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83604175287C5FD300B8A927 /* NodeErrorEntity.swift */; };
 		8361086325AF156800CAC6E1 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		8361359121074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
@@ -1049,6 +1051,7 @@
 		83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
 		83655B282593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */; };
 		83655B292593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */; };
+		83657ECE287D892E0096163C /* FileLinkEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83657ECD287D892E0096163C /* FileLinkEntity.swift */; };
 		836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */; };
 		836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */; };
 		836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */; };
@@ -1217,6 +1220,9 @@
 		83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */; };
 		83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
+		83D65406287EDF8C00A4176D /* TransferMetaDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D65405287EDF8C00A4176D /* TransferMetaDataEntity.swift */; };
+		83D65407287EDF8C00A4176D /* TransferMetaDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D65405287EDF8C00A4176D /* TransferMetaDataEntity.swift */; };
+		83D6540A287EE29E00A4176D /* FileLinkEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83657ECD287D892E0096163C /* FileLinkEntity.swift */; };
 		83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
 		83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
@@ -3677,6 +3683,7 @@
 		835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPauseTransferRequestDelegate.h; sourceTree = "<group>"; };
 		835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPauseTransferRequestDelegate.m; sourceTree = "<group>"; };
 		835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetEntry.swift; sourceTree = "<group>"; };
+		83604175287C5FD300B8A927 /* NodeErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeErrorEntity.swift; sourceTree = "<group>"; };
 		8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataProperties.h"; sourceTree = "<group>"; };
 		8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataClass.h"; sourceTree = "<group>"; };
 		8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOUploadTransfer+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -3690,6 +3697,7 @@
 		8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAShowPasswordReminderRequestDelegate.h; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.h; sourceTree = "<group>"; };
 		8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAShowPasswordReminderRequestDelegate.m; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.m; sourceTree = "<group>"; };
 		83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineFilesUseCase.swift; sourceTree = "<group>"; };
+		83657ECD287D892E0096163C /* FileLinkEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkEntity.swift; sourceTree = "<group>"; };
 		8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewController.swift; sourceTree = "<group>"; };
 		8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModel.swift; sourceTree = "<group>"; };
 		8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutRouter.swift; sourceTree = "<group>"; };
@@ -3834,6 +3842,7 @@
 		83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileUseCaseHelper.swift; sourceTree = "<group>"; };
 		83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatSDK+Additions.swift"; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
+		83D65405287EDF8C00A4176D /* TransferMetaDataEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferMetaDataEntity.swift; sourceTree = "<group>"; };
 		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
 		83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8439,6 +8448,14 @@
 			path = Offline;
 			sourceTree = "<group>";
 		};
+		83657ECA287D891D0096163C /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				83657ECD287D892E0096163C /* FileLinkEntity.swift */,
+			);
+			path = Links;
+			sourceTree = "<group>";
+		};
 		836651272649374B00BC02F0 /* ParticipantsLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -10736,6 +10753,7 @@
 		BF782D23269BA4BA0001D169 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				83657ECA287D891D0096163C /* Links */,
 				12B1E5762874F05200D23A58 /* StatsEvents */,
 				9428B9952819229800DB7250 /* ContextMenu */,
 				7288547227F711F700EFE506 /* Settings */,
@@ -10774,6 +10792,7 @@
 				BF782D2A269BA4BA0001D169 /* TransferEntity.swift */,
 				BF782D2B269BA4BA0001D169 /* TransferErrorEntity.swift */,
 				BF782D2C269BA4BA0001D169 /* TransferStateEntity.swift */,
+				83D65405287EDF8C00A4176D /* TransferMetaDataEntity.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -10863,6 +10882,7 @@
 				A861B57A27BE7CAD009C29C2 /* CreateSupportTicketErrorEntity.swift */,
 				83C7C84B27EDD4B600CFB5E6 /* SaveMediaToPhotosErrorEntity.swift */,
 				8346CA67283CD6E100462F50 /* CopyOrMoveErrorEntity.swift */,
+				83604175287C5FD300B8A927 /* NodeErrorEntity.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -12668,6 +12688,7 @@
 				5D8DC6A9248CB0390067A4F9 /* BackgroundStyle.swift in Sources */,
 				12F23A58284EA35D007B9821 /* PhotoAlbum.swift in Sources */,
 				B6A16F9F2748C8D6009AB6B4 /* PhotoLibraryYearViewModel.swift in Sources */,
+				83657ECE287D892E0096163C /* FileLinkEntity.swift in Sources */,
 				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
 				B67507C7276852B00034F951 /* PhotoMonthSection.swift in Sources */,
@@ -12799,6 +12820,7 @@
 				0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */,
 				5DD6B17424D6D67900F14515 /* UIView+RoundCornerShadow.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
+				83D65406287EDF8C00A4176D /* TransferMetaDataEntity.swift in Sources */,
 				B646DF4A27713E6900BC543F /* ViewDidLoadModifier.swift in Sources */,
 				12B1E5722874E30200D23A58 /* StatsRepository.swift in Sources */,
 				C4E78E8C272AF59D00DBF926 /* NodeAccess.swift in Sources */,
@@ -12840,6 +12862,7 @@
 				B6E5D248274C2A2D00C8AB96 /* PhotoLibraryMonthViewModel.swift in Sources */,
 				B654BF3924FF123700A3CBC8 /* MVVM-R.swift in Sources */,
 				12BC3E7127B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift in Sources */,
+				83604176287C5FD300B8A927 /* NodeErrorEntity.swift in Sources */,
 				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
@@ -14377,6 +14400,7 @@
 				A82D5CE726BC090500E73D27 /* CredentialRepositoryProtocol.swift in Sources */,
 				B64A71BF287AB2330085087D /* Set+Additions.swift in Sources */,
 				B64A71B5287A5CE20085087D /* NodeEntity+Media.swift in Sources */,
+				83D6540A287EE29E00A4176D /* FileLinkEntity.swift in Sources */,
 				5BE689B62419188D00462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				77C2E07D24BCBC0100B4894A /* ActionSheetCell.swift in Sources */,
 				C42C35762743D8E3004D8BA9 /* BackupRootNodeAccess.swift in Sources */,
@@ -14420,6 +14444,7 @@
 				83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				C4C6A49A27A4632600873165 /* MegaNode+Additions.swift in Sources */,
+				83604177287C600600B8A927 /* NodeErrorEntity.swift in Sources */,
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				A82D5CD726BC075500E73D27 /* PreferenceWrapper.swift in Sources */,
@@ -14444,6 +14469,7 @@
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				8335C648282E7B5700509479 /* Image+Additions.swift in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
+				83D65407287EDF8C00A4176D /* TransferMetaDataEntity.swift in Sources */,
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				83E53D2A282A96E70049DFBE /* URL+FileAttribute.swift in Sources */,
 				A82D5CE026BC080D00E73D27 /* PreferenceUseCase.swift in Sources */,
