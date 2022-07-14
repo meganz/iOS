@@ -45,10 +45,16 @@ extension ExplorerCardConfiguration {
     private static let foregroundColorsDark = [Colors.SharedViews.Explorer.foregroundDark.color, UIColor.black]
     
     static func photosExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
-        let title = Strings.Localizable.Home.Images.title
-        let image = Asset.Images.Home.explorerCardImage.image
-        let borderColors = [Colors.SharedViews.Explorer.photoFirstGradient.color,
-                            Colors.SharedViews.Explorer.photoSecondGradient.color]
+        var title = Strings.Localizable.Home.Images.title
+        var image = Asset.Images.Home.explorerCardImage.image
+        var borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
+                            Colors.SharedViews.Explorer.Gradient.darkBlue.color]
+        if FeatureFlag.shouldRemoveHomeImage {
+            title = Strings.Localizable.Home.Favourites.title
+            image = Asset.Images.Home.explorerCardFavourites.image
+            borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
+                                Colors.SharedViews.Explorer.Gradient.pink.color]
+        }
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -88,10 +94,18 @@ extension ExplorerCardConfiguration {
     
     static func videoExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.videos
-        let iconForegroundImage = Asset.Images.Home.explorerCardVideoPlay.image
-        let iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStrips.image
-        let borderColors = [Colors.SharedViews.Explorer.videoFirstGradient.color,
-                            Colors.SharedViews.Explorer.videoSecondGradient.color]
+        var iconForegroundImage = Asset.Images.Home.explorerCardVideoPlay.image
+        var iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStrips.image
+        var borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
+                            Colors.SharedViews.Explorer.Gradient.pink.color]
+        
+        if FeatureFlag.shouldRemoveHomeImage {
+            iconForegroundImage = Asset.Images.Home.explorerCardVideoPlayBlue.image
+            iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStripsBlue.image
+            borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
+                            Colors.SharedViews.Explorer.Gradient.darkBlue.color]
+        }
+
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: iconForegroundImage,
                                          iconBackgroundImage: iconBackgroundImage,

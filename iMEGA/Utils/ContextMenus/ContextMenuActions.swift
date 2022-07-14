@@ -8,7 +8,7 @@
 ///  you can add new parameters in the ContextMenuBuilder to display the actions correctly in each case.
 ///
 enum ContextMenuType {
-    case uploadAdd, display, quickFolderActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, unknown
+    case uploadAdd, display, quickFolderActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown
 }
 
 //MARK: - Context Menu grouped actions
@@ -43,6 +43,10 @@ enum DNDDisabledAction: String, CaseIterable {
 
 enum MyQRAction: String, CaseIterable {
     case share, settings, resetQR
+}
+
+enum MeetingAction: String, CaseIterable  {
+    case startMeeting, joinMeeting
 }
 
 final class ContextActionSheetAction: BaseAction {

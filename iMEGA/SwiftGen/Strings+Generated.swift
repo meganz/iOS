@@ -37,16 +37,12 @@ public enum Strings {
   public enum Localizable {
     /// %1 and [A]%2 more[/A]
     public static let _1AndA2MoreA = Strings.tr("Localizable", "%1 and [A]%2 more[/A]")
-    /// %1 Images
-    public static let _1Images = Strings.tr("Localizable", "%1 Images")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
     /// %1$d items
     public static func _1DItems(_ p1: Int) -> String {
       return Strings.tr("Localizable", "%1$d items", p1)
     }
-    /// %2 Videos
-    public static let _2Videos = Strings.tr("Localizable", "%2 Videos")
     /// %@ created a chat link
     public static func createdAPublicLinkForTheChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ created a public link for the chat.", String(describing: p1))
@@ -959,8 +955,6 @@ public enum Strings {
     public static let howItWorksTertiary = Strings.tr("Localizable", "howItWorksTertiary")
     /// HTTP Error
     public static let httpError = Strings.tr("Localizable", "HTTP error")
-    /// Hybrid
-    public static let hybrid = Strings.tr("Localizable", "Hybrid")
     /// If enabled, location information will be included with your pictures. Please be careful when sharing them.
     public static let ifEnabledYouWillUploadInformationAboutWhereYourPicturesAndVideosWereTakenSoBeCarefulWhenSharingThem = Strings.tr("Localizable", "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.")
     /// If you do not have the password, contact the creator of the link.
@@ -1191,7 +1185,7 @@ public enum Strings {
     public static let misspelledEmailAddress = Strings.tr("Localizable", "misspelledEmailAddress")
     /// Mobile Data is turned off
     public static let mobileDataIsTurnedOff = Strings.tr("Localizable", "Mobile Data is turned off")
-    /// Moderator
+    /// Host
     public static let moderator = Strings.tr("Localizable", "moderator")
     /// Modified
     public static let modified = Strings.tr("Localizable", "modified")
@@ -1771,8 +1765,6 @@ public enum Strings {
     public static let rubbishBinLabel = Strings.tr("Localizable", "rubbishBinLabel")
     /// Same for All
     public static let sameForAll = Strings.tr("Localizable", "Same for All")
-    /// Satellite
-    public static let satellite = Strings.tr("Localizable", "Satellite")
     /// Save
     public static let save = Strings.tr("Localizable", "save")
     /// Save a copy of the images and videos taken from the MEGA App in your device’s media library.
@@ -1935,10 +1927,6 @@ public enum Strings {
     }
     /// Some items could not be shared with MEGA
     public static let shareExtensionUnsupportedAssets = Strings.tr("Localizable", "shareExtensionUnsupportedAssets")
-    /// Share Folder
-    public static let shareFolder = Strings.tr("Localizable", "shareFolder")
-    /// Share Folders
-    public static let shareFolders = Strings.tr("Localizable", "shareFolders")
     /// Share left
     public static let shareLeft = Strings.tr("Localizable", "shareLeft")
     /// Share removed
@@ -2303,8 +2291,6 @@ public enum Strings {
     public static let voiceAndVideoCalls = Strings.tr("Localizable", "voiceAndVideoCalls")
     /// Warning
     public static let warning = Strings.tr("Localizable", "warning")
-    /// [A] was changed to [B] by [C].
-    public static let wasChangedToBy = Strings.tr("Localizable", "wasChangedToBy")
     /// [A] was removed from the group chat by [B].
     public static let wasRemovedFromTheGroupChatBy = Strings.tr("Localizable", "wasRemovedFromTheGroupChatBy")
     /// We recommend JPG, as it is the most compatible format for photos.
@@ -2890,6 +2876,20 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
+      /// Chats
+      public static let title = Strings.tr("Localizable", "chat.title")
+      public enum Chats {
+        public enum EmptyState {
+          /// Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.
+          public static let description = Strings.tr("Localizable", "chat.chats.emptyState.description")
+          /// Start chatting now
+          public static let title = Strings.tr("Localizable", "chat.chats.emptyState.title")
+          public enum Button {
+            /// New Chat
+            public static let title = Strings.tr("Localizable", "chat.chats.emptyState.button.title")
+          }
+        }
+      }
       public enum Link {
         /// Link removed
         public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")
@@ -2942,13 +2942,49 @@ public enum Strings {
         /// File
         public static let file = Strings.tr("Localizable", "chat.match.file")
       }
+      public enum Meetings {
+        public enum EmptyState {
+          /// Talk securely and privately on audio or video calls with friends and colleagues around the world.
+          public static let description = Strings.tr("Localizable", "chat.meetings.emptyState.description")
+          /// Start a meeting
+          public static let title = Strings.tr("Localizable", "chat.meetings.emptyState.title")
+          public enum Button {
+            /// New Meeting
+            public static let title = Strings.tr("Localizable", "chat.meetings.emptyState.button.title")
+          }
+        }
+      }
       public enum Message {
         /// Message…
         public static let placeholder = Strings.tr("Localizable", "chat.message.placeholder")
+        public enum ChangedRole {
+          /// [A] was changed to [S]host role[/S] by [B]
+          public static let host = Strings.tr("Localizable", "chat.message.changedRole.host")
+          /// [A] was changed to [S]read-only[/S] by [B]
+          public static let readOnly = Strings.tr("Localizable", "chat.message.changedRole.readOnly")
+          /// [A] was changed to [S]standard role[/S] by [B]
+          public static let standard = Strings.tr("Localizable", "chat.message.changedRole.standard")
+        }
       }
       public enum Photos {
         /// To share photos and videos, grant MEGA access to your gallery
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
+      }
+      public enum Selector {
+        /// Chat
+        public static let chat = Strings.tr("Localizable", "chat.selector.chat")
+        /// Meeting
+        public static let meeting = Strings.tr("Localizable", "chat.selector.meeting")
+      }
+      public enum SendLocation {
+        public enum Map {
+          /// Hybrid
+          public static let hybrid = Strings.tr("Localizable", "chat.sendLocation.map.hybrid")
+          /// Satellite
+          public static let satellite = Strings.tr("Localizable", "chat.sendLocation.map.satellite")
+          /// Standard
+          public static let standard = Strings.tr("Localizable", "chat.sendLocation.map.standard")
+        }
       }
       public enum Status {
         public enum Duration {
@@ -2981,16 +3017,6 @@ public enum Strings {
         public static func owner(_ p1: Any) -> String {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
-      }
-      public enum NodeOptions {
-        /// Manage Link
-        public static let manageLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLink")
-        /// Manage Links
-        public static let manageLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.manageLinks")
-        /// Share Link
-        public static let shareLink = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLink")
-        /// Share Links
-        public static let shareLinks = Strings.tr("Localizable", "cloudDrive.nodeOptions.shareLinks")
       }
       public enum Root {
         public enum Backup {
@@ -3278,10 +3304,6 @@ public enum Strings {
       public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
-      /// Export File
-      public static let exportFile = Strings.tr("Localizable", "general.exportFile")
-      /// Export Files
-      public static let exportFiles = Strings.tr("Localizable", "general.exportFiles")
       /// Join Meeting as Guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
       /// Unable to connect to the Internet. Please check your connection and try again.
@@ -3537,6 +3559,18 @@ public enum Strings {
         public static let deletePermanently = Strings.tr("Localizable", "general.menuAction.deletePermanently")
         /// Move to rubbish bin
         public static let moveToRubbishBin = Strings.tr("Localizable", "general.menuAction.moveToRubbishBin")
+        public enum ExportFile {
+          /// Plural format key: "%#@file@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.exportFile.title", p1)
+          }
+        }
+        public enum ManageLink {
+          /// Plural format key: "%#@link@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.manageLink.title", p1)
+          }
+        }
         public enum RemoveLink {
           /// Plural format key: "%#@link@"
           public static func title(_ p1: Int) -> String {
@@ -3547,6 +3581,18 @@ public enum Strings {
             public static func success(_ p1: Int) -> String {
               return Strings.tr("Localizable", "general.menuAction.removeLink.message.success", p1)
             }
+          }
+        }
+        public enum ShareFolder {
+          /// Plural format key: "%#@folder@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.shareFolder.title", p1)
+          }
+        }
+        public enum ShareLink {
+          /// Plural format key: "%#@link@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.menuAction.shareLink.title", p1)
           }
         }
       }
@@ -3606,6 +3652,10 @@ public enum Strings {
       }
     }
     public enum Home {
+      public enum Favourites {
+        /// Favourites
+        public static let title = Strings.tr("Localizable", "home.favourites.title")
+      }
       public enum Images {
         /// No Images Found
         public static let empty = Strings.tr("Localizable", "home.images.empty")
@@ -3863,7 +3913,7 @@ public enum Strings {
         }
       }
       public enum Notifications {
-        /// You are the new call moderator
+        /// You are the new host
         public static let moderatorPrivilege = Strings.tr("Localizable", "meetings.notifications.moderatorPrivilege")
       }
       public enum Panel {
@@ -3877,11 +3927,11 @@ public enum Strings {
         public static let shareLink = Strings.tr("Localizable", "meetings.panel.shareLink")
       }
       public enum Participant {
-        /// Make Moderator
+        /// Make host
         public static let makeModerator = Strings.tr("Localizable", "meetings.participant.makeModerator")
-        /// MODERATOR
+        /// Host
         public static let moderator = Strings.tr("Localizable", "meetings.participant.moderator")
-        /// Remove Moderator
+        /// Remove as host
         public static let removeModerator = Strings.tr("Localizable", "meetings.participant.removeModerator")
       }
       public enum QuickAction {
@@ -3899,6 +3949,14 @@ public enum Strings {
       public enum Sharelink {
         /// Meeting link could not be generated. Please try again.
         public static let error = Strings.tr("Localizable", "meetings.sharelink.Error")
+      }
+      public enum StartConversation {
+        public enum ContextMenu {
+          /// Join Meeting
+          public static let joinMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.joinMeeting")
+          /// Start Meeting
+          public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
+        }
       }
     }
     public enum NameCollision {
@@ -3933,7 +3991,7 @@ public enum Strings {
         }
       }
       public enum Folders {
-        /// The folder %@ already exists at this destination.
+        /// A folder named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {
           return Strings.tr("Localizable", "nameCollision.folders.alreadyExists", String(describing: p1))
         }
@@ -3987,6 +4045,14 @@ public enum Strings {
       public enum Section {
         public enum Thumbnail {
           public enum Count {
+            /// Plural format key: "%#@image@"
+            public static func image(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "recents.section.thumbnail.count.image", p1)
+            }
+            /// Plural format key: "%#@video@"
+            public static func video(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "recents.section.thumbnail.count.video", p1)
+            }
             public enum ImageAndVideo {
               /// Plural format key: "%#@image@"
               public static func image(_ p1: Int) -> String {

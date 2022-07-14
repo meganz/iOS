@@ -1,19 +1,18 @@
 import SwiftUI
 
 struct PhotoBrowser: UIViewControllerRepresentable {
-    var currentNode: MEGANode?
-    var megaNodes: [MEGANode]
-    
-    init(node: MEGANode?, megaNodes: [MEGANode]) {
-        self.currentNode = node
-        self.megaNodes = megaNodes
-    }
+    let currentPhoto: NodeEntity
+    let allPhotos: [NodeEntity]
     
     func makeUIViewController(context: Context) -> MEGAPhotoBrowserViewController {
-        let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: megaNodes), api: MEGASdkManager.sharedMEGASdk(), displayMode: .cloudDrive, presenting: currentNode, preferredIndex: 0)
-        photoBrowserVC?.needsReload = true
-        
-        return photoBrowserVC ?? MEGAPhotoBrowserViewController()
+        let sdk = MEGASdkManager.sharedMEGASdk()
+        let browser = MEGAPhotoBrowserViewController.photoBrowser(
+            with: PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: sdk),
+            api: sdk,
+            displayMode: .cloudDrive
+        )
+        browser.needsReload = true
+        return browser
     }
     
     func updateUIViewController(_ uiViewController: MEGAPhotoBrowserViewController, context: Context) {}

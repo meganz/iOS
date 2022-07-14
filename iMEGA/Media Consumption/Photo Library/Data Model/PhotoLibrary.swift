@@ -2,41 +2,39 @@ import Foundation
 import SwiftUI
 
 struct PhotoLibrary {
-    let allphotoByYearList: [PhotoByYear]
-    var underlyingMEGANodes: [MEGANode]
+    let photoByYearList: [PhotoByYear]
     
-    var allPhotosByMonthList: [PhotoByMonth] {
-        allphotoByYearList.flatMap { $0.contentList }
+    var photosByMonthList: [PhotoByMonth] {
+        photoByYearList.flatMap { $0.contentList }
     }
     
-    var allPhotosByDayList: [PhotoByDay] {
-        allPhotosByMonthList.flatMap { $0.contentList }
+    var photosByDayList: [PhotoByDay] {
+        photosByMonthList.flatMap { $0.contentList }
     }
     
     var allPhotos: [NodeEntity] {
-        allPhotosByDayList.flatMap { $0.contentList }
+        photosByDayList.flatMap { $0.contentList }
     }
     
     var isEmpty: Bool {
-        allphotoByYearList.isEmpty
+        photoByYearList.isEmpty
     }
     
-    init(photoByYearList: [PhotoByYear] = [], underlyingMEGANodes: [MEGANode] = []) {
-        self.allphotoByYearList = photoByYearList
-        self.underlyingMEGANodes = underlyingMEGANodes
+    init(photoByYearList: [PhotoByYear] = []) {
+        self.photoByYearList = photoByYearList
     }
 }
 
 extension PhotoLibrary: Equatable {
     static func == (lhs: PhotoLibrary, rhs: PhotoLibrary) -> Bool {
-        lhs.allphotoByYearList == rhs.allphotoByYearList
+        lhs.photoByYearList == rhs.photoByYearList
     }
 }
 
 extension PhotoLibrary {
-    func allPhotosDateSections(forZoomScaleFactor scaleFactor: Int?) -> [PhotoDateSection] {
+    func photoDateSections(forZoomScaleFactor scaleFactor: Int?) -> [PhotoDateSection] {
         guard let factor = scaleFactor else { return [] }
         
-        return factor == 1 ? allPhotosDaySections : allPhotosMonthSections
+        return factor == 1 ? photosDaySections : photoMonthSections
     }
 }

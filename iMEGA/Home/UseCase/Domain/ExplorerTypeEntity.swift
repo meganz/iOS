@@ -5,4 +5,5 @@ enum ExplorerTypeEntity: Int {
     case audio
     case video
     case document
+    case favourites
 }

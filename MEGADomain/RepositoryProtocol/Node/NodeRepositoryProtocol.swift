@@ -1,5 +1,11 @@
 
 protocol NodeRepositoryProtocol: RepositoryProtocol {
+    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity
+    func labelString(label: NodeLabelTypeEntity) -> String
+    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int)
+    func hasVersions(nodeHandle: MEGAHandle) -> Bool
+    func isDownloaded(nodeHandle: MEGAHandle) -> Bool
+    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool
     func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity?
     func nameForNode(handle: MEGAHandle) -> String?
     func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String?
@@ -15,4 +21,6 @@ protocol NodeRepositoryProtocol: RepositoryProtocol {
     func setNodeCoordinates(nodeHandle: MEGAHandle, latitude: Double, longitude: Double)
     func childNodeNamed(name: String, in parentHandle: MEGAHandle) -> NodeEntity?
     func creationDateForNode(handle: MEGAHandle) -> Date?
+    func images(for parentNode: NodeEntity) -> [NodeEntity]
+    func images(for parentHandle: MEGAHandle) -> [NodeEntity]
 }

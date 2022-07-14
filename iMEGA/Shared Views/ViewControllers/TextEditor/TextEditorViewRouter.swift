@@ -19,7 +19,7 @@ final class TextEditorViewRouter: NSObject {
     ) {
         self.init(textFile: textFile,
                   textEditorMode: textEditorMode,
-                  nodeEntity: node.map { NodeEntity(node: $0) },
+                  nodeEntity: node?.toNodeEntity(),
                   presenter: presenter)
     }
     
@@ -61,7 +61,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             fileSystemRepository: fileSystemRepository,
             nodeRepository: nodeRepository,
             fileCacheRepository: FileCacheRepository.newRepo)
-        let nodeActionUC = NodeActionUseCase(repo: NodeActionRepository(sdk: sdk, nodeHandle: nodeEntity?.handle))
+        let nodeActionUC = NodeActionUseCase(repo: NodeRepository.newRepo)
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,

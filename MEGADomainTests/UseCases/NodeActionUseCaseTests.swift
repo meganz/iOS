@@ -4,8 +4,8 @@ import XCTest
 final class NodeActionUseCaseTests: XCTestCase {
     
     func testSlideShow_withImageNode_shouldReturnNodes() throws {
-        var repo = MockNodeActionRepository()
-        let mockNode = MockNodeWithTypeAndParent(name: "TestImage.png", nodeType: .image, handle: 1, parentHandle: 0)
+        var repo = MockNodeRepository()
+        let mockNode = MockNode(handle: 1, name: "TestImage.png")
         
         repo.images = [mockNode.toNodeEntity()]
         
@@ -17,8 +17,8 @@ final class NodeActionUseCaseTests: XCTestCase {
     }
     
     func testSlideShow_withVideoNode_shouldReturnEmpty() throws {
-        let repo = MockNodeActionRepository()
-        let mockNode = MockNodeWithTypeAndParent(name: "TestVideo.mp4", nodeType: .video, handle: 1, parentHandle: 0)
+        let repo = MockNodeRepository()
+        let mockNode = MockNode(handle: 1, name: "TestVideo.mp4")
         let usecase = NodeActionUseCase(repo: repo)
         
         let images = usecase.slideShowImages(for: mockNode.toNodeEntity())
@@ -27,8 +27,8 @@ final class NodeActionUseCaseTests: XCTestCase {
     }
     
     func testSlideShow_withFileNode_shouldReturnEmpty() throws {
-        let repo = MockNodeActionRepository()
-        let mockNode = MockNodeWithTypeAndParent(name: "TestFile.txt", nodeType: .file, handle: 1, parentHandle: 0)
+        let repo = MockNodeRepository()
+        let mockNode = MockNode(handle: 1, name: "TestFile.txt")
         let usecase = NodeActionUseCase(repo: repo)
         
         let images = usecase.slideShowImages(for: mockNode.toNodeEntity())
@@ -37,10 +37,10 @@ final class NodeActionUseCaseTests: XCTestCase {
     }
     
     func testSlideShow_withFolderContainsImageNode_shouldReturnNodes() throws {
-        var repo = MockNodeActionRepository()
+        var repo = MockNodeRepository()
         repo.images = [NodeEntity()]
         
-        let mockNode = MockNodeWithTypeAndParent(name: "TestFolder", nodeType: .folder, handle: 1, parentHandle: 0)
+        let mockNode = MockNode(handle: 1, name: "TestFolder", nodeType: .folder)
         let usecase = NodeActionUseCase(repo: repo)
         
         let images = usecase.slideShowImages(for: mockNode.toNodeEntity())
@@ -49,8 +49,8 @@ final class NodeActionUseCaseTests: XCTestCase {
     }
     
     func testSlideShow_withFolderNotContainsImageNode_shouldReturnEmpty() throws {
-        let repo = MockNodeActionRepository()
-        let mockNode = MockNodeWithTypeAndParent(name: "TestFolder", nodeType: .folder, handle: 1, parentHandle: 0)
+        let repo = MockNodeRepository()
+        let mockNode = MockNode(handle: 1, name: "TestFolder", nodeType: .folder)
         let usecase = NodeActionUseCase(repo: repo)
         
         let images = usecase.slideShowImages(for: mockNode.toNodeEntity())

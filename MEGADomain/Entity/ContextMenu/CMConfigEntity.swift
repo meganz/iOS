@@ -7,6 +7,7 @@
 ///     - accessLevel: The access level type for the current folder
 ///     - sortType: The selected sort type for this folder
 ///     - isRubbishBinFolder: Indicates whether or not it is the RubbishBin folder
+///     - isOfflineFolder: Indicates whether or not it is the Offline folder
 ///     - isRestorable: Indicates if the current node is restorable
 ///     - isOfflineFolder: Indicates whether or not it is the Offline folder
 ///     - isInVersionsView: Indicates whether or not it is versions view
@@ -26,6 +27,8 @@
 ///     - versionsCount: The number of versions of the current node
 ///     - showMediaDiscovery:  Indicates whether or not it is avaiable to show Media Discovery
 ///     - chatStatus: Indicates the user chat status (online, away, busy, offline...)
+///     - shouldStartMeeting: Indicates whether or not to start a meeting
+///     - shouldJoiningMeeting: Indicated whether or not to join a meeting
 ///
 struct CMConfigEntity {
     let menuType: ContextMenuType
@@ -34,12 +37,14 @@ struct CMConfigEntity {
     var sortType: SortOrderType? = nil
     var isAFolder: Bool = false
     var isRubbishBinFolder: Bool = false
+    var isOfflineFolder: Bool = false
     var isRestorable: Bool = false
     var isInVersionsView: Bool = false
     var isOfflineFolder: Bool = false
     var isSharedItems: Bool = false
     var isIncomingShareChild: Bool = false
     var isHome: Bool = false
+    var isFavouritesExplorer: Bool = false
     var isDocumentExplorer: Bool = false
     var isAudiosExplorer: Bool = false
     var isVideosExplorer: Bool = false
@@ -53,4 +58,6 @@ struct CMConfigEntity {
     var versionsCount: Int = 0
     var showMediaDiscovery: Bool = false
     var chatStatus: ChatStatus = .invalid
+    var shouldStartMeeting = false
+    var shouldJoiningMeeting = false
 }

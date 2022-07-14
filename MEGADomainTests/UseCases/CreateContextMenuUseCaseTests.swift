@@ -2,7 +2,7 @@ import XCTest
 @testable import MEGA
 
 final class CreateContextMenuUseCaseTests: XCTestCase {
-    let repo = CreateContextMenuRepository()
+    let repo = MockCreateContextMenuRepository.newRepo
     var actionIdentifiersArray = [String]()
     
     override func setUp() {

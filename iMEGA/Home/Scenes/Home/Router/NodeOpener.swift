@@ -45,13 +45,12 @@ final class NodeOpener {
         let nodes = allNodes ?? [node]
         let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
         let mediaNodes = NSMutableArray(array: nodes)
-        guard let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
+        let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
             withMediaNodes: mediaNodes,
             api: MEGASdkManager.sharedMEGASdk(),
             displayMode: .cloudDrive,
-            presenting: .none,
             preferredIndex: UInt(truncatingIfNeeded: index)
-        ) else { return }
+        )
         navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
     }
 

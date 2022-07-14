@@ -16,7 +16,7 @@ extension ContactLinkQRViewController: QRMenuDelegate {
     
     @objc func configureContextMenuManager() {
         contextMenuManager = ContextMenuManager(qrMenuDelegate: self,
-                                                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()))
+                                                createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
     @objc private func presentActionSheet(sender: Any) {

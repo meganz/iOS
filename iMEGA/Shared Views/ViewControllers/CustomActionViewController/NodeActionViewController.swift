@@ -11,7 +11,7 @@ import UIKit
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    private let viewModel = NodeActionViewModel(nodeActionUseCase: NodeActionUseCase(repo: NodeActionRepository.newRepo))
+    private let viewModel = NodeActionViewModel(nodeActionUseCase: NodeActionUseCase(repo: NodeRepository.newRepo))
     
     var sender: Any
     var delegate: NodeActionViewControllerDelegate
@@ -91,17 +91,18 @@ class NodeActionViewController: ActionSheetViewController {
             selectionType = .files
         }
         
+        let nodesCount = nodes.count
         if displayMode == .favouriteAlbumSelectionToolBar {
             actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType)
+                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsFavourite(true)
                 .multiselectAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
             actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType)
+                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setLinkedNodeCount(linkedNodeCount)
-                .setIsAllLinkedNode(linkedNodeCount == self.nodes.count)
+                .setIsAllLinkedNode(linkedNodeCount == nodesCount)
                 .multiselectBuild()
         }
     }

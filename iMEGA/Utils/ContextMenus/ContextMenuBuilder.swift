@@ -13,6 +13,7 @@ final class ContextMenuBuilder {
     private var isSharedItems: Bool = false
     private var isIncomingShareChild: Bool = false
     private var isHome: Bool = false
+    private var isFavouritesExplorer: Bool = false
     private var isDocumentExplorer: Bool = false
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
@@ -26,6 +27,8 @@ final class ContextMenuBuilder {
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
     private var chatStatus: ChatStatus = .invalid
+    private var shouldStartMeeting = false
+    private var shouldJoinMeeting = false
     
     func setType(_ menuType: ContextMenuType?) -> ContextMenuBuilder {
         self.menuType = menuType ?? .unknown
@@ -89,6 +92,11 @@ final class ContextMenuBuilder {
     
     func setIsHome(_ isHome: Bool) -> ContextMenuBuilder {
         self.isHome = isHome
+        return self
+    }
+    
+    func setIsFavouritesExplorer(_ isFavouritesExplorer: Bool) -> ContextMenuBuilder {
+        self.isFavouritesExplorer = isFavouritesExplorer
         return self
     }
     
@@ -157,6 +165,17 @@ final class ContextMenuBuilder {
         return self
     }
     
+    func setShouldStartMeeting(_ shouldStartMeeting: Bool) -> ContextMenuBuilder {
+        self.shouldStartMeeting = shouldStartMeeting
+        return self
+    }
+    
+    func setShouldJoinMeeting(_ shouldJoinMeeting: Bool) -> ContextMenuBuilder {
+        self.shouldJoinMeeting = shouldJoinMeeting
+        return self
+    }
+    
+    
     func build() -> CMEntity? {
         switch menuType {
         case .uploadAdd:
@@ -169,6 +188,8 @@ final class ContextMenuBuilder {
             return chatMenu()
         case .qr:
             return myQRCodeMenu()
+        case .meeting:
+            return meetingMenu()
         default:
             return nil
         }
@@ -246,10 +267,14 @@ final class ContextMenuBuilder {
                 
         if isCameraUploadExplorer {
             sortMenuActions = [sortNewest, sortOldest]
-        } else if !isSharedItems {
+        }
+        else if !isSharedItems {
             var list = [sortLargest, sortSmallest, sortNewest, sortOldest]
             if !isOfflineFolder {
-                list.append(contentsOf: [sortLabel, sortFavourite])
+                list.append(sortLabel)
+                if !isFavouritesExplorer {
+                    list.append(sortFavourite)
+                }
             }
             sortMenuActions.append(contentsOf: list)
         }
@@ -366,6 +391,13 @@ final class ContextMenuBuilder {
                         detail: isDoNotDisturbEnabled ? currentTimeRemainingToDeactiveDND() : nil,
                         identifier: ChatAction.doNotDisturb.rawValue,
                         children: doNotDisturbElements)
+    }
+    
+    //MARK:- Meeting Context Actions
+    
+    private func meetingMenu() -> CMEntity {
+        CMEntity(displayInline: true,
+                 children: [startMeeting, joinMeeting])
     }
     
     //MARK: - My QR Code Actions

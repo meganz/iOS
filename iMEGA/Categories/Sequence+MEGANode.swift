@@ -1,13 +1,6 @@
-
 extension Sequence where Element: MEGANode {
     func containsNewNode() -> Bool {
         !filter({ $0.hasChangedType(.new) }).isEmpty
-    }
-    
-    func intersection(_ nodes: [MEGANode]) -> [MEGANode] {
-        return filter { node in
-            return !nodes.filter({ $0 == node}).isEmpty
-        }
     }
     
     func hasModifiedAttributes() -> Bool {
@@ -20,6 +13,10 @@ extension Sequence where Element: MEGANode {
     
     func modifiedFavourites() -> [MEGANode] {
         filter({ $0.hasChangedType(.favourite) })
+    }
+    
+    func removedChangeTypeNodes() -> [MEGANode] {
+        nodes(for: [.removed, .parent])
     }
     
     func hasPublicLink() -> Bool {
@@ -38,5 +35,15 @@ extension Sequence where Element: MEGANode {
     
     func publicLinkedNodes() -> [MEGANode] {
         filter({ $0.isExported() })
+    }
+    
+    func nodes(for changedTypes: [MEGANodeChangeType]) -> [MEGANode] {
+        filter {
+            for type in changedTypes where $0.hasChangedType(type) {
+                return true
+            }
+            
+            return false
+        }
     }
 }

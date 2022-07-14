@@ -45,15 +45,13 @@ extension NodeSearchRepository {
                         completionAction([])
                         return
                     }
-                    let sdkNodes = foundNodes.map { node in
-                        NodeEntity(node: node)
-                    }
+                    let sdkNodes = foundNodes.toNodeEntities()
                     completionAction(sdkNodes)
                 }
 
                 searchQueue.addOperation(searchOperation)
                 return {
-                    cancelToken.cancel(withNewValue: true)
+                    cancelToken.cancel()
                 }
             },
 

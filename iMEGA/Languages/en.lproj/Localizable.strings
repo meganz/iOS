@@ -334,14 +334,6 @@
 "folderInboxError"="Inbox is reserved for use by Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Save Image";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Share Link";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Share Links";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Manage Link";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Manage Links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generating link…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Share";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Export File";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Export Files";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Export";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="1 contact";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacts";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Share Folder";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Share Folders";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Select";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1176,8 +1160,6 @@
 "joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] cleared the chat history.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] changed the group chat name to “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1896,10 +1878,6 @@
 "Send This Location"="Send this location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Map settings";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Accurate to %d meters";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="Recent Activity Hidden";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Show Activity";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Images";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Videos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modified by %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2438,6 +2412,8 @@
 "home.images.title"="Images";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="No Images Found";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Favourites";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Home";
 /* Home Screen: Explorer view card title - Documents */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="Leave";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="End for all";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Chat";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Meeting";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Start a meeting";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="New Meeting";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Start chatting now";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="New Chat";
+/* Title for chats section */
+"chat.title"="Chats";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[A] was changed to [S]read-only[/S] by [B]";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[A] was changed to [S]host role[/S] by [B]";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[A] was changed to [S]standard role[/S] by [B]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Standard";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Hybrid";
+/* Meeting - start converstion context menu text for starting a meeting*/
+"meetings.startConversation.contextMenu.startMeeting"="Start Meeting";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"="Join Meeting";

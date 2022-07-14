@@ -1,6 +1,7 @@
 
 
 final class VideoExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
+    var explorerType: ExplorerTypeEntity
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
     unowned var tableView: UITableView
@@ -9,11 +10,13 @@ final class VideoExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
     init(tableView: UITableView,
          nodes: [MEGANode]?,
          selectedNodes: [MEGANode]?,
+         explorerType: ExplorerTypeEntity,
          delegate: FilesExplorerListSourceDelegate?) {
         self.tableView = tableView
         self.nodes = nodes
         self.selectedNodes = selectedNodes
         self.delegate = delegate
+        self.explorerType = explorerType
         super.init()
         configureTableView(tableView)
     }

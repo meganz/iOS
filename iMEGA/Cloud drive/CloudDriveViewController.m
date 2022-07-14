@@ -712,7 +712,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     DisplayMode displayMode = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner ? self.displayMode : DisplayModeSharedItem;
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node preferredIndex:0];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node];
     
     return photoBrowserVC;
 }
@@ -766,7 +766,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)cancelSearchIfNeeded {
     if (self.searchQueue.operationCount) {
-        [self.cancelToken cancelWithNewValue:YES];
+        [self.cancelToken cancel];
         [self.searchQueue cancelAllOperations];
     }
 }

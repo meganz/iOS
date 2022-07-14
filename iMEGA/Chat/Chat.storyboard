@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,13 +13,13 @@
         <!--Chat Rooms View Controller-->
         <scene sceneID="u3Q-Re-YbU">
             <objects>
-                <viewController storyboardIdentifier="ChatRoomsViewControllerID" automaticallyAdjustsScrollViewInsets="NO" id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatRoomsViewControllerID" extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lqj-pM-q0p">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OEw-WR-Lm7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="648"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatRoomCell" rowHeight="79" id="FcT-ET-3dh" customClass="ChatRoomCell">
@@ -284,7 +285,7 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NLC-Rp-Ah7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="0.0"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouL-g8-Aj6">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -305,7 +306,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" tag="2" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dT2-dr-goT">
-                                                        <rect key="frame" x="325.66666666666669" y="5.6666666666666643" width="58.333333333333314" height="17"/>
+                                                        <rect key="frame" x="325.66666666666669" y="5.6666666666666714" width="58.333333333333314" height="17"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Neh-p3-j5J">
                                                                 <rect key="frame" x="0.0" y="0.0" width="35.333333333333336" height="17"/>
@@ -394,7 +395,7 @@
                                 </constraints>
                             </stackView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="amB-v7-fbf">
-                                <rect key="frame" x="0.0" y="-44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JFV-Ik-ikQ">
                                         <rect key="frame" x="191.66666666666666" y="15" width="31" height="14.333333333333336"/>
@@ -431,22 +432,128 @@
                                     <outletCollection property="gestureRecognizers" destination="5wt-PP-Dja" appends="YES" id="wV9-sg-FWH"/>
                                 </connections>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="En6-lg-TrQ" userLabel="Selector Stack View">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezH-y6-NOp">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Ybi-2V-7jt">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7wn-uj-ada">
+                                                        <rect key="frame" x="0.0" y="0.0" width="207" height="44"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleAspectFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fG5-gT-0wt" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="207" height="44"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                                <state key="normal" title="Chat">
+                                                                    <color key="titleColor" name="515151"/>
+                                                                </state>
+                                                                <state key="selected">
+                                                                    <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="subheadline"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="chatSelectorDidTap:" destination="Li1-XI-VLz" eventType="touchUpInside" id="Pl0-bp-RO8"/>
+                                                                </connections>
+                                                            </button>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F1e-7j-AMc">
+                                                                <rect key="frame" x="0.0" y="43" width="207" height="1"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="1" id="YsA-T4-Yuk"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="F1e-7j-AMc" secondAttribute="trailing" id="0VC-MY-lS2"/>
+                                                            <constraint firstAttribute="bottom" secondItem="fG5-gT-0wt" secondAttribute="bottom" id="13V-JA-awo"/>
+                                                            <constraint firstItem="fG5-gT-0wt" firstAttribute="leading" secondItem="7wn-uj-ada" secondAttribute="leading" id="DkA-FT-pzf"/>
+                                                            <constraint firstAttribute="trailing" secondItem="fG5-gT-0wt" secondAttribute="trailing" id="Osh-45-Gu0"/>
+                                                            <constraint firstAttribute="bottom" secondItem="F1e-7j-AMc" secondAttribute="bottom" id="SLm-38-rea"/>
+                                                            <constraint firstItem="fG5-gT-0wt" firstAttribute="top" secondItem="7wn-uj-ada" secondAttribute="top" id="VvP-se-k6J"/>
+                                                            <constraint firstItem="F1e-7j-AMc" firstAttribute="leading" secondItem="7wn-uj-ada" secondAttribute="leading" id="xZN-Ya-BMx"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVK-4E-hG2">
+                                                        <rect key="frame" x="207" y="0.0" width="207" height="44"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVD-lW-EL3" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="207" height="44"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                                <state key="normal" title="Meeting">
+                                                                    <color key="titleColor" name="515151"/>
+                                                                </state>
+                                                                <state key="selected">
+                                                                    <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="subheadline"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="meetingSelectorDidTap:" destination="Li1-XI-VLz" eventType="touchUpInside" id="2Nm-c9-KN2"/>
+                                                                </connections>
+                                                            </button>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p5w-P8-iiI">
+                                                                <rect key="frame" x="0.0" y="43" width="207" height="1"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="1" id="lAo-Ke-1gz"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="p5w-P8-iiI" secondAttribute="bottom" id="5DT-7S-hmj"/>
+                                                            <constraint firstAttribute="trailing" secondItem="p5w-P8-iiI" secondAttribute="trailing" id="IPD-eD-mvI"/>
+                                                            <constraint firstItem="TVD-lW-EL3" firstAttribute="leading" secondItem="QVK-4E-hG2" secondAttribute="leading" id="Rq9-dV-hFd"/>
+                                                            <constraint firstItem="TVD-lW-EL3" firstAttribute="top" secondItem="QVK-4E-hG2" secondAttribute="top" id="ifx-KH-G6K"/>
+                                                            <constraint firstAttribute="trailing" secondItem="TVD-lW-EL3" secondAttribute="trailing" id="jdK-Ci-A4R"/>
+                                                            <constraint firstAttribute="bottom" secondItem="TVD-lW-EL3" secondAttribute="bottom" id="rw8-rM-bOz"/>
+                                                            <constraint firstItem="p5w-P8-iiI" firstAttribute="leading" secondItem="QVK-4E-hG2" secondAttribute="leading" id="ygp-YV-RLv"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" name="F7F7F7"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Ybi-2V-7jt" secondAttribute="trailing" id="7YT-oJ-Xgr"/>
+                                            <constraint firstItem="Ybi-2V-7jt" firstAttribute="top" secondItem="ezH-y6-NOp" secondAttribute="top" id="AW5-WS-i6p"/>
+                                            <constraint firstItem="Ybi-2V-7jt" firstAttribute="leading" secondItem="ezH-y6-NOp" secondAttribute="leading" id="B23-Dy-HuY"/>
+                                            <constraint firstAttribute="height" constant="44" id="I14-ow-TZ4"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ybi-2V-7jt" secondAttribute="bottom" id="hL3-Ca-I92"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" name="F7F7F7"/>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m3W-p0-Lqo"/>
                         <constraints>
                             <constraint firstItem="amB-v7-fbf" firstAttribute="bottom" secondItem="NLC-Rp-Ah7" secondAttribute="top" id="A2H-O8-ibI"/>
                             <constraint firstItem="NLC-Rp-Ah7" firstAttribute="trailing" secondItem="m3W-p0-Lqo" secondAttribute="trailing" id="FTe-6q-Ufu"/>
                             <constraint firstItem="NLC-Rp-Ah7" firstAttribute="leading" secondItem="m3W-p0-Lqo" secondAttribute="leading" id="UNu-Qs-8bz"/>
-                            <constraint firstItem="amB-v7-fbf" firstAttribute="top" secondItem="m3W-p0-Lqo" secondAttribute="top" constant="-44" id="Udb-mV-iHf"/>
+                            <constraint firstItem="amB-v7-fbf" firstAttribute="top" secondItem="En6-lg-TrQ" secondAttribute="top" id="Udb-mV-iHf"/>
+                            <constraint firstItem="En6-lg-TrQ" firstAttribute="top" secondItem="m3W-p0-Lqo" secondAttribute="top" id="VrN-Mb-kbg"/>
                             <constraint firstItem="m3W-p0-Lqo" firstAttribute="trailing" secondItem="amB-v7-fbf" secondAttribute="trailing" id="Xdg-ti-QIR"/>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="amB-v7-fbf" secondAttribute="bottom" id="YVR-2t-Inw"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="En6-lg-TrQ" secondAttribute="bottom" id="YVR-2t-Inw"/>
                             <constraint firstItem="amB-v7-fbf" firstAttribute="leading" secondItem="m3W-p0-Lqo" secondAttribute="leading" id="a4I-ES-kYh"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="lqj-pM-q0p" secondAttribute="leading" id="cHf-GK-XiU"/>
+                            <constraint firstItem="En6-lg-TrQ" firstAttribute="leading" secondItem="lqj-pM-q0p" secondAttribute="leading" id="h7I-2a-ILK"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="trailing" secondItem="lqj-pM-q0p" secondAttribute="trailing" id="kH0-jQ-WtE"/>
                             <constraint firstAttribute="bottom" secondItem="OEw-WR-Lm7" secondAttribute="bottom" id="mwA-QN-YBH"/>
+                            <constraint firstItem="En6-lg-TrQ" firstAttribute="trailing" secondItem="lqj-pM-q0p" secondAttribute="trailing" id="sY3-E9-4J4"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p5b-7o-fgJ">
                         <barButtonItem key="backBarButtonItem" title=" " id="1Ub-kM-Jrr"/>
@@ -455,8 +562,13 @@
                         <outlet property="archivedChatEmptyState" destination="ouL-g8-Aj6" id="AFd-bR-bJ8"/>
                         <outlet property="archivedChatEmptyStateCount" destination="Neh-p3-j5J" id="9RW-xU-gK1"/>
                         <outlet property="archivedChatEmptyStateTitle" destination="dFA-7b-ajV" id="DVx-Wf-zhh"/>
+                        <outlet property="chatOrMeetingSelectorView" destination="ezH-y6-NOp" id="mnf-2O-pmQ"/>
+                        <outlet property="chatSelectedView" destination="F1e-7j-AMc" id="yQj-qq-bqL"/>
+                        <outlet property="chatSelectorButton" destination="fG5-gT-0wt" id="iFc-Kw-lMI"/>
                         <outlet property="contactsOnMegaEmptyStateTitle" destination="3ZN-5d-SgR" id="SfE-ku-j31"/>
                         <outlet property="contactsOnMegaEmptyStateView" destination="Trx-xU-y0T" id="dZo-8p-n1b"/>
+                        <outlet property="meetingSelectedView" destination="p5w-P8-iiI" id="SZb-jh-20L"/>
+                        <outlet property="meetingSelectorButton" destination="TVD-lW-EL3" id="rEH-CF-uBb"/>
                         <outlet property="tableView" destination="OEw-WR-Lm7" id="4K9-2w-rBx"/>
                         <outlet property="topBannerCameraEnabledImageView" destination="24l-2s-x7s" id="ZMV-bu-uX6"/>
                         <outlet property="topBannerLabel" destination="hDV-mu-alE" id="vEJ-kV-4OG"/>
@@ -1838,11 +1950,17 @@
         <designable name="TEb-uk-GYv">
             <size key="intrinsicContentSize" width="38.333333333333336" height="18"/>
         </designable>
+        <designable name="TVD-lW-EL3">
+            <size key="intrinsicContentSize" width="40" height="24"/>
+        </designable>
         <designable name="W71-dB-C1l">
             <size key="intrinsicContentSize" width="43.666666666666664" height="19.333333333333332"/>
         </designable>
         <designable name="XXx-W5-s4E">
             <size key="intrinsicContentSize" width="31" height="18"/>
+        </designable>
+        <designable name="fG5-gT-0wt">
+            <size key="intrinsicContentSize" width="30" height="24"/>
         </designable>
         <designable name="kJn-hd-tqh">
             <size key="intrinsicContentSize" width="36" height="17"/>
@@ -1868,6 +1986,12 @@
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
         <image name="userMuted-banner" width="16" height="16"/>
         <image name="video_list" width="22" height="22"/>
+        <namedColor name="515151">
+            <color red="0.31799998879432678" green="0.31799998879432678" blue="0.31799998879432678" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="F7F7F7">
+            <color red="0.96899998188018799" green="0.96899998188018799" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

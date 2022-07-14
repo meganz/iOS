@@ -1,6 +1,30 @@
 import Foundation
 
 extension NodeEntity {
+    func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
+        sdk.node(forHandle: handle)
+    }
+}
+
+extension Array where Element == NodeEntity {
+    func toMEGANodes(in sdk: MEGASdk) -> [MEGANode] {
+        compactMap { $0.toMEGANode(in: sdk) }
+    }
+}
+
+extension Array where Element: MEGANode {
+    func toNodeEntities() -> [NodeEntity] {
+        map { $0.toNodeEntity() }
+    }
+}
+
+extension MEGANode {
+    func toNodeEntity() -> NodeEntity {
+        NodeEntity(node: self)
+    }
+}
+
+fileprivate extension NodeEntity {
     init(node: MEGANode) {
         self.init(
             // MARK: - Types
@@ -63,17 +87,5 @@ extension NodeEntity {
             latitude                           : node.latitude?.doubleValue,
             longitude                          : node.longitude?.doubleValue
         )
-    }
-}
-
-extension MEGANode {
-    func toNodeEntity() -> NodeEntity {
-        NodeEntity(node: self)
-    }
-}
-
-extension NodeEntity {
-    func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
-        sdk.node(forHandle: handle)
     }
 }

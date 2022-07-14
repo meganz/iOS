@@ -14,7 +14,7 @@ struct AccountRepository: AccountRepositoryProtocol {
                 return
             }
             
-            completion(.success(NodeEntity(node: myChatFilesFolderNode)))
+            completion(.success(myChatFilesFolderNode.toNodeEntity()))
         }
     }
     

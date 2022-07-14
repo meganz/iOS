@@ -51,7 +51,6 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     func photoBrowser(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoBrowser {
-        let node = photo.toMEGANode(in: MEGASdkManager.sharedMEGASdk())
-        return PhotoBrowser(node: node, megaNodes: viewModel.libraryViewModel.library.underlyingMEGANodes)
+        PhotoBrowser(currentPhoto: photo, allPhotos: viewModel.libraryViewModel.library.allPhotos)
     }
 }
