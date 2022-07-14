@@ -2885,7 +2885,7 @@ public enum Strings {
           /// Start chatting now
           public static let title = Strings.tr("Localizable", "chat.chats.emptyState.title")
           public enum Button {
-            /// New Chat
+            /// New chat
             public static let title = Strings.tr("Localizable", "chat.chats.emptyState.button.title")
           }
         }
@@ -2949,7 +2949,7 @@ public enum Strings {
           /// Start a meeting
           public static let title = Strings.tr("Localizable", "chat.meetings.emptyState.title")
           public enum Button {
-            /// New Meeting
+            /// New meeting
             public static let title = Strings.tr("Localizable", "chat.meetings.emptyState.button.title")
           }
         }
@@ -3952,9 +3952,9 @@ public enum Strings {
       }
       public enum StartConversation {
         public enum ContextMenu {
-          /// Join Meeting
+          /// Join meeting
           public static let joinMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.joinMeeting")
-          /// Start Meeting
+          /// Start meeting
           public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
         }
       }

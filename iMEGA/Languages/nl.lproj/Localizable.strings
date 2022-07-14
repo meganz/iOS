@@ -334,14 +334,6 @@
 "folderInboxError"="Het label Inbox is gereserveerd voor gebruik door Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Afbeelding opslaan";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Link Delen";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Links Delen";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Link Beheren";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Links Beheren";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link Genereren";
 /* Message shown when some links to files and/or folders are being generated */
@@ -447,7 +439,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Vul de nieuwe naam in";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="De volgende tekens zijn niet toegestaan: ” * / : < > ? |";
+"general.error.charactersNotAllowed"="De volgende tekens zijn niet toegestaan: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Bestand %@ Hernoemen?";
 /* Title for the action that allows you to replace a file. */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Weet u zeker dat u deze delingen wilt verlaten?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Delen";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Bestand Exporteren";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Exporteer Bestanden";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Exporteren";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="1 contact";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contacten";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Map Delen";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Mappen Delen";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selecteren";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1176,8 +1160,6 @@
 "joinedTheGroupChatByInvitationFrom"="[A] is toegevoegd aan de groepsoproep op uitnodiging van [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] heeft de gespreksgeschiedenis verwijderd.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] is veranderd naar [B] door [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] Wijzigt de groepchat naam naar “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1896,10 +1878,6 @@
 "Send This Location"="Deze locatie versturen";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Map instellingen";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satelliet";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybride";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Nauwkeurig tot %d meter";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="Recente Activiteit Verborgen";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Activiteit Weergeven";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Afbeeldingen";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Video's";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Gewijzigd door %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2438,6 +2412,8 @@
 "home.images.title"="Afbeeldingen";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="Geen Afbeeldingen Gevonden";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Favorieten";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Thuis";
 /* Home Screen: Explorer view card title - Documents */
@@ -2623,7 +2599,7 @@
 /* Meetings: Action on a meeting that change participant's role to moderator */
 "meetings.participant.makeModerator"="Gastheer/gastvrouw maken";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Remove as host";
+"meetings.participant.removeModerator"="Verwijderen als gastvrouw/gastheer";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Hernoem Vergadering";
 /* Action of a call/meeting to share its link */
@@ -2653,7 +2629,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Meld u nu aan en profiteer gratis van geavanceerde samenwerkingsfuncties.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new host";
+"meetings.notifications.moderatorPrivilege"="U bent de nieuwe gastvrouw/gastheer";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="We upgraden MEGAchat. Uw gesprekken zijn mogelijk niet verbonden vanwege incompatibiliteit met versies, tenzij alle partijen hun MEGA-applicaties updaten naar de nieuwste versie.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="Verlaten";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Beëindigen voor iedereen ";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Gesprek";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Vergadering";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Begin vergadering";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Praat veilig en privé tijdens audio- of videogesprekken met vrienden en collega's over de hele wereld.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="Nieuwe vergadering";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Begin nu met chatten";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Chat veilig en privé, met iedereen en op elk apparaat, wetende dat niemand uw chats kan lezen, zelfs MEGA niet.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="Nieuw gesprek";
+/* Title for chats section */
+"chat.title"="Gesprekken";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[A]was gewijzigd naar [S]alleen-lezen[/S] door [B]";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[A]was gewijzigd naar [S]gastheer/gastvrouw rol[/S] door [B]";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[A] was gewijzigd naar [S] standaard rol[/S] door [B]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Standaard";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Satelliet";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Hybride";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="Begin vergadering";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"=" Vergadering aansluiten";

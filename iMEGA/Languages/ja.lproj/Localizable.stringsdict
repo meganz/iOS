@@ -198,6 +198,34 @@
         <string>• %d個のファイル</string>
       </dict>
     </dict>
+    <key>recents.section.thumbnail.count.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個の画像</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個の動画</string>
+      </dict>
+    </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -280,6 +308,62 @@
         <string>d</string>
         <key>other</key>
         <string>リンクが削除されました</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolder.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>フォルダの共有</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>リンクの共有</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.manageLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>リンクの管理</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.exportFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ファイルのエクスポート</string>
       </dict>
     </dict>
     <key>call.duration.second</key>

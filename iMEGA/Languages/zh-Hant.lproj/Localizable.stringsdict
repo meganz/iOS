@@ -198,6 +198,34 @@
         <string>• %d個檔案</string>
       </dict>
     </dict>
+    <key>recents.section.thumbnail.count.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d張圖片</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個影片</string>
+      </dict>
+    </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -280,6 +308,62 @@
         <string>d</string>
         <key>other</key>
         <string>連結已移除</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolder.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>共享資料夾</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>共享連結</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.manageLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>管理連結</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.exportFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>匯出檔案</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
