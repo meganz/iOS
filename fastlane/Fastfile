@@ -249,11 +249,10 @@ platform :ios do
       export_method: "ad-hoc",
       output_name: "MEGA",
       output_directory: BUILD_DIR,
-      configuration: 'Release',
+      configuration: 'QA',
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       disable_package_automatic_updates: true,
-      xcargs: "GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS FIREBASE_BUILD=1'",
       export_options: {
         iCloudContainerEnvironment: "Production"
       }
