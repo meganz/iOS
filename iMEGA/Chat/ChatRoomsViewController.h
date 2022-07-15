@@ -7,12 +7,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ChatRoomsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+
 @property (assign, nonatomic) ChatRoomsType chatRoomsType;
 @property (nonatomic, strong, nullable) MyAvatarManager *myAvatarManager;
-@property (nonatomic) GlobalDNDNotificationControl *globalDNDNotificationControl;
-
-@property (strong, nonatomic) UIBarButtonItem *addBarButtonItem;
-@property (strong, nonatomic) UIBarButtonItem *moreBarButtonItem;
+@property (nonatomic, nullable) GlobalDNDNotificationControl *globalDNDNotificationControl;
 
 @property (nonatomic, strong, nullable) ContextMenuManager *contextMenuManager;
 
