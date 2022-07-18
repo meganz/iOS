@@ -37,7 +37,7 @@ extension ChatRoomsViewController {
         meetingSelectorButton?.isSelected = chatType == .meeting
         updateSelector(forChatType: chatType)
         reloadData()
-        setNavigationBarButtons()
+        configureNavigationBarButtons()
     }
     
     private func updateSelector(forChatType chatType: MEGAChatType) {
