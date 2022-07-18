@@ -3,8 +3,8 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     
     private func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(menuType: .chat,
-                       isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
-                       timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND,
+                       isDoNotDisturbEnabled: globalDNDNotificationControl?.isGlobalDNDEnabled ?? false,
+                       timeRemainingToDeactiveDND: globalDNDNotificationControl?.timeRemainingToDeactiveDND ?? "",
                        chatStatus: ChatStatus(rawValue: MEGASdkManager.sharedMEGAChatSdk().onlineStatus().rawValue) ?? .invalid)
     }
     
@@ -21,35 +21,20 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         button.addTarget(self, action: #selector(showStartConversation), for: .touchUpInside)
     }
     
-    private func setContextMenuBarButton() {
-        if #available(iOS 14.0, *) {
-            moreBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
-        } else {
-            moreBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                style: .plain,
-                                                target: self,
-                                                action: #selector(presentActionSheet(sender:)))
-        }
-    }
-    
     private func setAddBarButtonWithMeetingsOptions() {
         if #available(iOS 14.0, *) {
-            addBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                               menu: contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .meeting)))
+            addBarButtonItem?.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .meeting))
+            addBarButtonItem?.target = nil
+            addBarButtonItem?.action = nil
         } else {
-            addBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                               style: .plain,
-                                               target: self,
-                                               action: #selector(presentMeetingActionSheet(sender:)))
+            addBarButtonItem?.target = self
+            addBarButtonItem?.action = #selector(presentMeetingActionSheet(sender:))
         }
     }
     
     private func setAddBarButtonWithChatOptions() {
-        addBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(showStartConversation))
+        addBarButtonItem?.target = self
+        addBarButtonItem?.action = #selector(showStartConversation)
     }
     
     private func changeTo(onlineStatus: MEGAChatStatus) {
@@ -63,17 +48,21 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         
         if dndSwitch.isOn {
             dismiss(animated: true, completion: nil)
-            globalDNDNotificationControl.turnOnDND(moreBarButtonItem)
+            globalDNDNotificationControl?.turnOnDND(moreBarButtonItem as Any)
         } else {
-            globalDNDNotificationControl.turnOffDND { [weak self] in
+            globalDNDNotificationControl?.turnOffDND { [weak self] in
                 self?.refreshContextMenuBarButton()
             }
         }
     }
     
     @objc func refreshContextMenuBarButton() {
-        setContextMenuBarButton()
-        navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
+        if #available(iOS 14.0, *) {
+            moreBarButtonItem?.menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration())
+        } else {
+            moreBarButtonItem?.target = self
+            moreBarButtonItem?.action = #selector(presentActionSheet(sender:))
+        }
     }
     
     @objc func changeToOnlineStatus(_ status: MEGAChatStatus) {
@@ -82,16 +71,14 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         }
     }
     
-    @objc func setNavigationBarButtons() {
-        setContextMenuBarButton()
-                
+    @objc func configureNavigationBarButtons() {
         if chatTypeSelected == .meeting {
             setAddBarButtonWithMeetingsOptions()
         } else {
             setAddBarButtonWithChatOptions()
         }
         
-        navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
+        refreshContextMenuBarButton()
     }
     
     @objc func configureContextMenuManager() {
@@ -117,7 +104,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     private func convertToSwitchAction(action: ContextActionSheetAction) -> ActionSheetSwitchAction {
         let dndSwitch = UISwitch(frame: .zero)
         dndSwitch.addTarget(self, action: #selector(changeDNDStatus(sender:)), for: .valueChanged)
-        dndSwitch.setOn(globalDNDNotificationControl.isGlobalDNDEnabled, animated: false)
+        dndSwitch.setOn(globalDNDNotificationControl?.isGlobalDNDEnabled ?? false, animated: false)
         
         return ActionSheetSwitchAction(title: action.title,
                                        detail: action.detail,
@@ -155,7 +142,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
-        globalDNDNotificationControl.turnOnDND(dndTurnOnOption: option) { [weak self] in
+        globalDNDNotificationControl?.turnOnDND(dndTurnOnOption: option) { [weak self] in
             if #available(iOS 14, *) {
                 self?.refreshContextMenuBarButton()
             }
@@ -163,9 +150,9 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     func chatDisableDoNotDisturb() {
-        guard globalDNDNotificationControl.isGlobalDNDEnabled else { return }
+        guard globalDNDNotificationControl?.isGlobalDNDEnabled ?? false else { return }
         
-        globalDNDNotificationControl.turnOffDND { [weak self] in
+        globalDNDNotificationControl?.turnOffDND { [weak self] in
             if #available(iOS 14, *) {
                 self?.refreshContextMenuBarButton()
             }

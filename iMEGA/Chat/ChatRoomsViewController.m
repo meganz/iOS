@@ -84,7 +84,10 @@
     
     [self customNavigationBarLabel];
     
-    [self configureContextMenuManager];
+    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+        [self configureContextMenuManager];
+        [self configureNavigationBarButtons];
+    }
     
     self.chatIdIndexPathDictionary = [[NSMutableDictionary alloc] init];
     self.chatListItemArray = [[NSMutableArray alloc] init];
@@ -187,7 +190,7 @@
 
 - (void)pushNotificationSettingsLoaded {
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        [self setNavigationBarButtons];
+        [self refreshContextMenuBarButton];
     }
 }
 
@@ -1351,6 +1354,7 @@
     
     if (userHandle == api.myUserHandle) {
         [self customNavigationBarLabel];
+        [self refreshContextMenuBarButton];
     } else {
         uint64_t chatId = [api chatIdByUserHandle:userHandle];
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
@@ -1359,8 +1363,6 @@
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:userHandle]];
         }
     }
-    
-    [self refreshContextMenuBarButton];
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
