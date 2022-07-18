@@ -492,6 +492,8 @@
 "cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Timeline title within CU tab */
 "cameraUploads.timeline.title"="Timeline";
+/* Timeline empty with all media filter enable */
+"cameraUploads.timeline.allMedia.empty.title"="No media found";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */

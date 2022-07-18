@@ -23,12 +23,24 @@ extension EmptyStateView {
             
         case .videos:
             return videoEmptyState()
+            
+        case .allMedia:
+            return allMediaEmptyState()
         }
     }
     
     private class func photosEmptyState() -> EmptyStateView {
         let view = EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
                                   title: Strings.Localizable.Home.Images.empty,
+                                  description: nil,
+                                  buttonTitle: nil)
+        
+        return view
+    }
+    
+    private class func allMediaEmptyState() -> EmptyStateView {
+        let view = EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
+                                  title: Strings.Localizable.CameraUploads.Timeline.AllMedia.Empty.title,
                                   description: nil,
                                   buttonTitle: nil)
         

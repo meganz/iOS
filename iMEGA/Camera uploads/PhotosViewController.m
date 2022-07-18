@@ -98,7 +98,7 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self.viewModel loadAllPhotosWith:FeatureFlag.shouldRemoveHomeImage];
+    [self.viewModel loadAllPhotosWithFeatureFlag:FeatureFlag.shouldRemoveHomeImage];
     [self refreshMyAvatar];
     
     if (@available(iOS 14.0, *)) {
@@ -854,13 +854,10 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView createFor:EmptyStateTypeTimeline
-                                                         image:[self imageForEmptyState]
-                                                         title:[self titleForEmptyState]
-                                                   description:[self descriptionForEmptyState]
-                                                   buttonTitle:[self buttonTitleForEmptyState]];
-    
-    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    EmptyStateView *emptyStateView = [self emptyStateViewWithImage:[self imageForEmptyState]
+                                                             title:[self titleForEmptyState]
+                                                       description:[self descriptionForEmptyState]
+                                                       buttonTitle:[self buttonTitleForEmptyState]];
     
     return emptyStateView;
 }

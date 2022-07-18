@@ -2867,6 +2867,12 @@ public enum Strings {
       public enum Timeline {
         /// Timeline
         public static let title = Strings.tr("Localizable", "cameraUploads.timeline.title")
+        public enum AllMedia {
+          public enum Empty {
+            /// No media found
+            public static let title = Strings.tr("Localizable", "cameraUploads.timeline.allMedia.empty.title")
+          }
+        }
       }
       public enum Warning {
         /// ⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.
