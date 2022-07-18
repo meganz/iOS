@@ -119,7 +119,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         meetingNameInputTextfield.delegate = self
         meetingNameInputTextfield.addTarget(self, action: #selector(textFieldTextChanged(textField:)), for: .editingChanged)
         
-        startMeetingButton.setTitle(Strings.Localizable.Meetings.CreateMeeting.startMeeting.localizedCapitalized, for: .normal)
+        startMeetingButton.setTitle(Strings.Localizable.Meetings.CreateMeeting.startMeeting, for: .normal)
         startMeetingButton.mnz_setupPrimary(traitCollection)
         startMeetingButton.titleLabel?.font = Constants.bottomBarButtonText
         

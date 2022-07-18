@@ -334,14 +334,6 @@
 "folderInboxError"="A etiqueda desta caixa de entrada é de uso reservado pela Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Salvar imagem";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Compartilhar link";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Compartilhar links";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Gerenciar link";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Gerenciar links";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Gerando link…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Você tem certeza de que quer sair destes compartilhamentos?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Compartilhar";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Exportar arquivo";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Exportar arquivo";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Exportar";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="1 contato";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] contatos";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Compartilhar pasta";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Compartilhar pastas";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Selecionar";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1176,8 +1160,6 @@
 "joinedTheGroupChatByInvitationFrom"="[A] juntou-se ao grupo de chat por convite de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] deletou o histórico do chat.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] foi alterado para [B] por [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] mudou o nome do grupo de chat para '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1641,15 +1623,15 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Você perdeu o seu dispositivo de autenticação?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Salvar imagens no Fotos";
+"Save Images in Photos"="Salvar imagens em Fotos";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Salvar vídeos no Fotos";
+"Save Videos in Photos"="Salvar vídeos em Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imagens e/ou vídeos baixados serão armazenados na biblioteca multimídia do seu dispositivo, em vez da seção Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Câmera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Salvar no Fotos";
+"Save in Photos"="Salvar em Fotos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salve uma cópia das fotos tiradas e dos vídeos gravados com o aplicativo do MEGA na biblioteca multimídia do seu dispositivo.";
 /* Title of the Spotlight Search section */
@@ -1745,7 +1727,7 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salvar no Fotos";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Salvando no Fotos…";
+"Saving to Photos…"="Salvando em Fotos…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="Todos os arquivos";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -1896,10 +1878,6 @@
 "Send This Location"="Enviar esta localização";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Configurações de mapa";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satélite";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Híbrido";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Precisão de %d metros";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="Atividade recente oculta";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Mostrar atividade";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 imagens";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 vídeos";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Alterado por %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2438,6 +2412,8 @@
 "home.images.title"="Imagens";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="Não há imagens";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Favoritos";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Início";
 /* Home Screen: Explorer view card title - Documents */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="Sair";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Finalizar para todos";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Chat";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Meeting";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Fazer uma reunião";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Converse com segurança e privacidade por meio de chamadas de áudio ou de vídeo com amigos e colegas do mundo inteiro.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="Nova reunião";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Comece já a usar o chat";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Converse com segurança e privacidade, com qualquer pessoa e em qualquer dispositivo, sabendo que ninguém pode ler os seus chats, nem mesmo o MEGA.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="Novo chat";
+/* Title for chats section */
+"chat.title"="Chats";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[B] mudou a permissão de [A] a [S]somente leitura[/S]";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[B] mudou a permissão de [A] a [S]anfitrião[/S]";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[B] mudou a permissão de [A] a [S]predeterminado[/S]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Predeterminado";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Satélite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Híbrido";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="Fazer uma reunião";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"="Entrar na reunião";

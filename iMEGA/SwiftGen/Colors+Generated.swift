@@ -119,6 +119,9 @@ internal enum Colors {
   internal enum MediaDiscovery {
     internal static let exitButtonTint = ColorAsset(name: "exitButtonTint")
   }
+  internal enum Meeting {
+    internal static let startConversationImageBackground = ColorAsset(name: "startConversationImageBackground")
+  }
   internal enum PROAccount {
     internal static let proLITE = ColorAsset(name: "proLITE")
     internal static let redProI = ColorAsset(name: "redProI")
@@ -136,15 +139,17 @@ internal enum Colors {
   }
   internal enum SharedViews {
     internal enum Explorer {
+      internal enum Gradient {
+        internal static let darkBlue = ColorAsset(name: "darkBlue")
+        internal static let lightBlue = ColorAsset(name: "lightBlue")
+        internal static let pink = ColorAsset(name: "pink")
+        internal static let red = ColorAsset(name: "red")
+      }
       internal static let audioFirstGradient = ColorAsset(name: "audioFirstGradient")
       internal static let audioSecondGradient = ColorAsset(name: "audioSecondGradient")
       internal static let documentsFirstGradient = ColorAsset(name: "documentsFirstGradient")
       internal static let documentsSecondGradient = ColorAsset(name: "documentsSecondGradient")
       internal static let foregroundDark = ColorAsset(name: "foregroundDark")
-      internal static let photoFirstGradient = ColorAsset(name: "photoFirstGradient")
-      internal static let photoSecondGradient = ColorAsset(name: "photoSecondGradient")
-      internal static let videoFirstGradient = ColorAsset(name: "videoFirstGradient")
-      internal static let videoSecondGradient = ColorAsset(name: "videoSecondGradient")
     }
     internal enum VerifyEmail {
       internal static let firstGradient = ColorAsset(name: "firstGradient")

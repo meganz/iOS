@@ -98,7 +98,7 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self.viewModel loadAllPhotos];
+    [self.viewModel loadAllPhotosWith:FeatureFlag.shouldRemoveHomeImage];
     [self refreshMyAvatar];
     
     if (@available(iOS 14.0, *)) {
@@ -750,7 +750,7 @@
     if (![self.photosCollectionView allowsMultipleSelection]) {
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
-        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:[self.viewModel.mediaNodesArray mutableCopy] api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:[self.viewModel.mediaNodesArray mutableCopy] api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node];
         photoBrowserVC.originFrame = cellFrame;
         photoBrowserVC.delegate = self;
         
@@ -979,7 +979,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
+        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList with:FeatureFlag.shouldRemoveHomeImage];
     });
 }
 

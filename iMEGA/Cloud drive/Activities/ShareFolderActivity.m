@@ -24,15 +24,13 @@
 }
 
 - (NSString *)activityTitle {
-    if ([self.nodes count] > 1) {
-        return NSLocalizedString(@"shareFolders", nil);
-    }
-    
     if ([self.nodes count] == 1 && (self.nodes.firstObject).isShared) {
         return NSLocalizedString(@"Manage Share", @"Text indicating to the user the action that will be executed on tap.");
     }
     
-    return NSLocalizedString(@"shareFolder", nil);
+    NSString *titleFormat = NSLocalizedString(@"general.menuAction.shareFolder.title", @"Title of folder menu action that allows sharing of folder/s to selected contacts e.g Share folder, Share folders");
+    NSString *title = [NSString stringWithFormat:titleFormat, self.nodes.count];
+    return title;
 }
 
 - (UIImage *)activityImage {

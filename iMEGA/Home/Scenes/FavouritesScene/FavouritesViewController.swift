@@ -101,7 +101,7 @@ extension FavouritesViewController: UITableViewDataSource {
         cell = tableView.dequeueReusableCell(withIdentifier: "GenericNodeTableViewCellID", for: indexPath) as? GenericNodeTableViewCell
         
         let nodeOpener = NodeOpener(navigationController: navigationController)
-        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository(sdk: MEGASdkManager.sharedMEGASdk(), nodeHandle: nodeModel.handle))
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeRepository.newRepo)
         let accountUseCase = AccountUseCase(repository: AccountRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
         let cellViewModel = NodeCellViewModel(

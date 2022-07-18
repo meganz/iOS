@@ -2,10 +2,21 @@
 class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
     override func showContent() {
         super.showContent()
-        let gridViewController = FilesExplorerGridViewController(
-            viewModel: viewModel,
-            delegate: self
-        )
+        
+        var gridViewController: FilesExplorerViewController
+        
+        switch viewModel.getExplorerType() {
+        case .favourites:
+            gridViewController = FavouritesExplorerGridViewController(
+                viewModel: viewModel,
+                delegate: self)
+        default:
+            gridViewController = FilesExplorerGridViewController(
+                viewModel: viewModel,
+                delegate: self
+            )
+        }
+        
         add(content: gridViewController)
         updateTitle()
         setViewModePreference(.thumbnail)

@@ -3,13 +3,13 @@ extension OfflineViewController: DisplayMenuDelegate {
     //MARK: - Context Menus configuration
     func contextMenuConfiguration() -> CMConfigEntity {
         return CMConfigEntity(menuType: .display,
-                              viewMode: isListViewModeSelected() ? ViewModePreference.list : ViewModePreference.thumbnail,
+                              viewMode: .list,
                               sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: currentOfflinePath)),
                               isOfflineFolder: true)
     }
     
     @objc func setNavigationBarButtons() {
-        contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository()))
+        contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         
         if #available(iOS 14.0, *) {
             contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,

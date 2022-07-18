@@ -1,6 +1,10 @@
 import Foundation
 
 final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
+    static var newRepo: FavouriteNodesRepository {
+        FavouriteNodesRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     private var onNodesUpdate: (([NodeEntity]) -> Void)?
     private var favouritesNodesEntityArray: [NodeEntity]?
@@ -35,7 +39,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
                     guard let node = self.sdk.node(forHandle: handle.uint64Value) else {
                         return nil
                     }
-                    return NodeEntity(node: node)
+                    return node.toNodeEntity()
                 }
                 
                 self.favouritesNodesEntityArray = favouritesNodesArray
@@ -46,6 +50,21 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
                 completion(.failure(.sdk))
             }
         })
+    }
+    
+    func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+        getFavouriteNodes(limitCount: 0) { result in
+            switch result {
+            case .success(let nodes):
+                var filteredNodes = nodes
+                if let searchString = searchString {
+                    filteredNodes = filteredNodes.filter { $0.name.localizedCaseInsensitiveContains(searchString) == true }
+                }
+                completion(.success(filteredNodes))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {

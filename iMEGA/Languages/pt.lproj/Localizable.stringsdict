@@ -254,6 +254,42 @@
         <string>• %d arquivos</string>
       </dict>
     </dict>
+    <key>recents.section.thumbnail.count.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d imagem</string>
+        <key>many</key>
+        <string>%d de imagens</string>
+        <key>other</key>
+        <string>%d imagens</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d vídeo</string>
+        <key>many</key>
+        <string>%d de vídeos</string>
+        <key>other</key>
+        <string>%d vídeos</string>
+      </dict>
+    </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -360,6 +396,78 @@
         <string>Links removidos</string>
         <key>other</key>
         <string>Links removidos</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolder.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Compartilhar pasta</string>
+        <key>many</key>
+        <string>Compartilhar pastas</string>
+        <key>other</key>
+        <string>Compartilhar pastas</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Compartilhar link</string>
+        <key>many</key>
+        <string>Compartilhar links</string>
+        <key>other</key>
+        <string>Compartilhar links</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.manageLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Gerenciar link</string>
+        <key>many</key>
+        <string>Gerenciar links</string>
+        <key>other</key>
+        <string>Gerenciar links</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.exportFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Exportar arquivo</string>
+        <key>many</key>
+        <string>Exportar arquivos</string>
+        <key>other</key>
+        <string>Exportar arquivos</string>
       </dict>
     </dict>
     <key>call.duration.second</key>

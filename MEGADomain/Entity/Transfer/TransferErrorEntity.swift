@@ -5,6 +5,7 @@ enum TransferErrorEntity: Error {
     case nodeNameUndefined
     case createDirectory
     case couldNotFindNodeByHandle
+    case couldNotFindNodeByLink
     case overquota
     case noInternetConnection
     case notEnoughSpace

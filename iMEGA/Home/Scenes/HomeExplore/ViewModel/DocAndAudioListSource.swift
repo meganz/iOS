@@ -5,6 +5,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
 
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
+    var explorerType: ExplorerTypeEntity
     var tableView: UITableView
     weak var delegate: FilesExplorerListSourceDelegate?
     
@@ -13,10 +14,12 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     init(tableView: UITableView,
          nodes: [MEGANode]?,
          selectedNodes: [MEGANode]?,
+         explorerType: ExplorerTypeEntity,
          delegate: FilesExplorerListSourceDelegate?) {
         self.tableView = tableView
         self.nodes = nodes
         self.selectedNodes = selectedNodes
+        self.explorerType = explorerType
         self.delegate = delegate
         super.init()
         configureTableView(tableView)
