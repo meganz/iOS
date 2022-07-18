@@ -1,7 +1,7 @@
 import Foundation
 
 protocol PhotoChronologicalCategory: Identifiable, PhotoScrollPositioning, Refreshable, Equatable {
-    associatedtype Content: Equatable
+    associatedtype Content: PhotoChronologicalCategory
     var contentList: [Content] { get }
     
     var categoryDate: Date { get }
@@ -20,6 +20,10 @@ extension PhotoChronologicalCategory {
     var id: PhotoScrollPosition? {
         position
     }
+    
+    var coverPhoto: NodeEntity? {
+        contentList.first?.coverPhoto
+    }
 }
 
 extension PhotoChronologicalCategory {
@@ -30,57 +34,21 @@ extension PhotoChronologicalCategory {
 
 struct PhotoByYear: PhotoChronologicalCategory {
     let categoryDate: Date
-    private(set) var contentList = [PhotoByMonth]()
-    
-    var coverPhoto: NodeEntity? {
-        contentList.first?.coverPhoto
-    }
-    
-    init(categoryDate: Date) {
-        self.categoryDate = categoryDate
-    }
-    
-    mutating func append(_ photoByMonth: PhotoByMonth) {
-        contentList.append(photoByMonth)
-    }
+    let contentList: [PhotoByMonth]
 }
 
 struct PhotoByMonth: PhotoChronologicalCategory {
     let categoryDate: Date
-    private(set) var contentList = [PhotoByDay]()
+    let contentList: [PhotoByDay]
     
     var allPhotos: [NodeEntity] {
         contentList.flatMap { $0.contentList }
-    }
-    
-    var coverPhoto: NodeEntity? {
-        contentList.first?.coverPhoto
-    }
-    
-    init(categoryDate: Date) {
-        self.categoryDate = categoryDate
-    }
-    
-    mutating func append(_ photoByDay: PhotoByDay) {
-        contentList.append(photoByDay)
     }
 }
 
 struct PhotoByDay: PhotoChronologicalCategory {
     let categoryDate: Date
-    private(set) var contentList = [NodeEntity]()
-    
-    var coverPhoto: NodeEntity? {
-        contentList.first
-    }
-    
-    init(categoryDate: Date) {
-        self.categoryDate = categoryDate
-    }
-    
-    mutating func append(_ photo: NodeEntity) {
-        contentList.append(photo)
-    }
+    let contentList: [NodeEntity]
 }
 
 extension NodeEntity: PhotoChronologicalCategory {
