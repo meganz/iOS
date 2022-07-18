@@ -15,7 +15,7 @@ final class NodeShareRouter: NSObject {
         guard let presenter = viewController else {
             return
         }
-        ExportFileRouter(presenter: presenter, sender: sender).export(node: NodeEntity(node: node))
+        ExportFileRouter(presenter: presenter, sender: sender).export(node: node.toNodeEntity())
     }
 
     func showSharingFolder(for node: MEGANode) {

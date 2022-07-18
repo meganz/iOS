@@ -499,6 +499,10 @@ extension UIColor {
         }
     }
     
+    class func meetingStartConversationImageBackgroundColor() -> UIColor {
+        return Colors.Meeting.startConversationImageBackground.color
+    }
+    
     // MARK: - Tints
     
     // MARK: Black

@@ -14,9 +14,11 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
     var selectedNodes: [MEGANode]? { get set }
     var tableView: UITableView { get set }
     var delegate: FilesExplorerListSourceDelegate? { get set }
+    var explorerType: ExplorerTypeEntity { get set }
     init(tableView: UITableView,
          nodes: [MEGANode]?,
          selectedNodes: [MEGANode]?,
+         explorerType: ExplorerTypeEntity,
          delegate: FilesExplorerListSourceDelegate?)
     func reloadCell(withNode node: MEGANode)
     func updateCells(forNodes nodes: [MEGANode])
@@ -45,7 +47,7 @@ extension FilesExplorerListSourceProtocol {
     
     func isAnyNodeBeingDisplayed(inNodes nodes: [MEGANode]) -> Bool {
         guard let storedNodes = self.nodes else { return false }
-        return !nodes.intersection(storedNodes).isEmpty
+        return Set(nodes).intersection(Set(storedNodes)).isNotEmpty
     }
     
     func updateCells(forNodes nodes: [MEGANode]) {
@@ -88,7 +90,13 @@ extension FilesExplorerListSourceProtocol {
             }
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
-            delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
+            
+            guard explorerType == .favourites,
+                  node.name?.mnz_isVisualMediaPathExtension == true else {
+                delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
+                return
+            }
+            delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes.multiMediaNodeList())
         }
     }
     

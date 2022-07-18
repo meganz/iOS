@@ -13,12 +13,59 @@ struct NodeRepository: NodeRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
+    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
+        guard let node = sdk.node(forHandle: nodeHandle) else {
+            return .unknown
+        }
+        return NodeAccessTypeEntity(shareAccess: sdk.accessLevel(for: node)) ?? .unknown
+    }
+    
+    func labelString(label: NodeLabelTypeEntity) -> String {
+        let nodeLabel = MEGANodeLabel(nodeLabelTypeEntity: label) ?? .unknown
+        return MEGANode.string(for: nodeLabel) ?? "" + "Small"
+    }
+    
+    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
+        guard let node = sdk.node(forHandle: nodeHandle) else {
+            return (0, 0)
+        }
+        
+        let numberOfFiles = sdk.numberChildFiles(forParent: node)
+        let numberOfFolders = sdk.numberChildFolders(forParent: node)
+        
+        return (numberOfFiles, numberOfFolders)
+    }
+    
+    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
+        guard let node = sdk.node(forHandle: nodeHandle) else {
+            return false
+        }
+        
+        return sdk.hasVersions(for: node)
+    }
+    
+    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
+        guard let node = sdk.node(forHandle: nodeHandle) else {
+            return false
+        }
+        
+        return (MEGAStore.shareInstance().offlineNode(with: node) != nil)
+    }
+    
+    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
+        guard let node = sdk.node(forHandle: nodeHandle) else {
+            return false
+        }
+        
+        return sdk.isNode(inRubbish: node)
+    }
+    
     func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity? {
         guard let node = sdk.node(forHandle: handle) else {
             return nil
         }
         
-        return NodeEntity(node: node)
+        return node.toNodeEntity()
     }
 
     func nameForNode(handle: MEGAHandle) -> String? {
@@ -31,6 +78,23 @@ struct NodeRepository: NodeRepositoryProtocol {
     
     func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String? {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
+    }
+    
+    func nodeNameFor(fileLink: FileLinkEntity) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.publicNode(forMegaFileLink: fileLink.linkURLString, delegate: RequestDelegate { (result) in
+                switch result {
+                case .success(let request):
+                    guard let name = request.publicNode.name else {
+                        continuation.resume(throwing: NodeErrorEntity.nodeNameNotFound)
+                        return
+                    }
+                    continuation.resume(returning: name)
+                case .failure(_):
+                    continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                }
+            })
+        }
     }
     
     func sizeForNode(handle: MEGAHandle) -> UInt64? {
@@ -182,7 +246,7 @@ struct NodeRepository: NodeRepositoryProtocol {
             return nil
         }
         
-        return NodeEntity(node: node)
+        return node.toNodeEntity()
     }
 
     func creationDateForNode(handle: MEGAHandle) -> Date? {
@@ -191,5 +255,27 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
         
         return node.creationTime
+    }
+    
+    func images(for parentNode: NodeEntity) -> [NodeEntity] {
+        guard let parent = parentNode.toMEGANode(in: sdk) else { return [] }
+        
+        return images(forParentNode: parent)
+    }
+    
+    func images(for parentHandle: MEGAHandle) -> [NodeEntity] {
+        guard let parent = sdk.node(forHandle: parentHandle) else { return [] }
+        
+        return images(forParentNode: parent)
+    }
+    
+    // MARK: - Private
+    
+    private func images(forParentNode node: MEGANode) -> [NodeEntity] {
+        let nodeList = sdk.children(forParent: node)
+        let mediaNodes = (nodeList.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
+        let imageNodes = mediaNodes.filter({ $0.name?.mnz_isImagePathExtension == true })
+        
+        return imageNodes.toNodeEntities()
     }
 }

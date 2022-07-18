@@ -178,17 +178,17 @@
 - (IBAction)infoButtonTouchUpInside:(UIButton *)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Map settings", @"Title of the alert that allows change between different maps: Standar, Satellite or Hybrid.") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     if (self.mapView.mapType != MKMapTypeStandard) {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"chat.sendLocation.map.standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeStandard;
         }]];
     }
     if (self.mapView.mapType != MKMapTypeSatellite) {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Satellite", @"Satellite") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"chat.sendLocation.map.satellite", @"Satellite") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeSatellite;
         }]];
     }
     if (self.mapView.mapType != MKMapTypeHybrid) {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Hybrid", @"Hybrid") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"chat.sendLocation.map.hybrid", @"Hybrid") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.mapView.mapType = MKMapTypeHybrid;
         }]];
     }

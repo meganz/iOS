@@ -123,7 +123,11 @@ final class TextEditorViewModel: ViewModelType {
     
     //MARK: - Private functions
     private func setupView(shallUpdateContent:Bool) {
-        let isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin()
+        var isNodeInRubbishBin = false
+        if let nodeHandle = nodeEntity?.handle {
+            isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
+        }
+        
         if textEditorMode == .load {
             invokeCommand?(.setupLoadViews)
             invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin))
@@ -321,7 +325,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func nodeAccessLevel() -> NodeAccessTypeEntity {
-        return nodeActionUseCase.nodeAccessLevel()
+        return nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     
     private func uploadTo(_ parentHandle: MEGAHandle) {
@@ -357,7 +361,7 @@ extension TextEditorViewModel: NodeActionViewControllerDelegate {
         case .editTextFile:
             editFile(shallUpdateContent: false)
         case .download:
-            router.showDownloadTransfer(node: NodeEntity(node: node))
+            router.showDownloadTransfer(node: node.toNodeEntity())
         case .import:
             router.importNode(nodeHandle: node.handle)
         case .sendToChat:

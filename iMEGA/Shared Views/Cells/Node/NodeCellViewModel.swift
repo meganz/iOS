@@ -97,7 +97,7 @@ final class NodeCellViewModel: ViewModelType {
     }
     
     func getFilesAndFolders() -> String {
-        let numberOfFilesAndFolders = nodeActionUseCase.getFilesAndFolders()
+        let numberOfFilesAndFolders = nodeActionUseCase.getFilesAndFolders(nodeHandle: nodeModel.handle)
         let numberOfFiles = numberOfFilesAndFolders.0
         let numberOfFolders = numberOfFilesAndFolders.1
         let numberOfFilesAndFoldersString = NSString.mnz_string(byFiles: numberOfFiles, andFolders: numberOfFolders)
@@ -105,12 +105,12 @@ final class NodeCellViewModel: ViewModelType {
     }
     
     private func hasVersions() {
-        let hasVersions = nodeActionUseCase.hasVersions()
+        let hasVersions = nodeActionUseCase.hasVersions(nodeHandle: nodeModel.handle)
         invokeCommand?(.setVersions(hasVersions))
     }
     
     private func isDownloaded() {
-        let isDownloaded = nodeModel.isFile && nodeActionUseCase.isDownloaded()
+        let isDownloaded = nodeModel.isFile && nodeActionUseCase.isDownloaded(nodeHandle: nodeModel.handle)
         invokeCommand?(.setDownloaded(isDownloaded))
     }
     

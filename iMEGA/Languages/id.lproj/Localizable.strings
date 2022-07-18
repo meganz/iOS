@@ -334,14 +334,6 @@
 "folderInboxError"="Label inbox telah disediakan khusus untuk Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Simpan Gambar";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Bagikan Tautan";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Bagikan Tautan";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Kelola Link";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Kelola Link";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Membuat link…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Bagikan";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Ekspor File";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Ekspor File";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Ekspor";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="1 kontak";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] kontak";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Bagikan Folder";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Bagikan Folder";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Pilih";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -1176,8 +1160,6 @@
 "joinedTheGroupChatByInvitationFrom"="[A] bergabung ke percakapan grup oleh undangan dari [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] menghapus riwayat percakapan.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] telah diganti menjadi [B] oleh [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] mengganti nama percakapan grup menjadi '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1273,7 +1255,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Partisipan";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Host";
+"moderator"="Tuan rumah";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standar";
 /* A button title which removes a participant from a chat. */
@@ -1896,10 +1878,6 @@
 "Send This Location"="Kirim lokasi ini";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Pengaturan peta";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satelit";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Akurat hingga %d meter";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="Aktivitas Terbaru Tersembunyi";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Tampilkan Aktivitas";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Gambar";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Video";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Diubah oleh %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2438,6 +2412,8 @@
 "home.images.title"="Gambar-gambar";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="Tidak Ada Gambar yang Ditemukan";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Favorit";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Beranda";
 /* Home Screen: Explorer view card title - Documents */
@@ -2619,11 +2595,11 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Peserta (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="Host";
+"meetings.participant.moderator"="Tuan rumah";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Make host";
+"meetings.participant.makeModerator"="Jadikan tuan rumah";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Remove as host";
+"meetings.participant.removeModerator"="Hapus sebagai tuan rumah";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Ganti Nama Rapat";
 /* Action of a call/meeting to share its link */
@@ -2653,7 +2629,7 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Daftar sekarang dan nikmati fitur kolaborasi lanjutan secara gratis.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new host";
+"meetings.notifications.moderatorPrivilege"="Anda adalah tuan rumah baru";
 /* This message is shown when calling and the receiver is not picking up the call */
 "meetings.incompatibility.warningMessage"="Kami sedang meningkatkan MEGAchat. Panggilan anda mungkin tidak terhubung karena ketidakcocokan versi kecuali semua pihak memperbarui aplikasi MEGA mereka ke versi terbaru.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="Tinggalkan";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Akhiri untuk semua";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Obrolan";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Pertemuan";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Start a meeting";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="Buat pertemuan";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Start chatting now";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="Obrolan baru";
+/* Title for chats section */
+"chat.title"="Obrolan";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[A] was changed to [S]read-only[/S] by [B]";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[A] was changed to [S]host role[/S] by [B]";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[A] was changed to [S]standard role[/S] by [B]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Standar";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Satelit";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Hybrid";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="Mulai pertemuan";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"="Gabung rapat";

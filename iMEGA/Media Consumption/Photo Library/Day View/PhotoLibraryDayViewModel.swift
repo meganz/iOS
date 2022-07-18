@@ -6,7 +6,7 @@ final class PhotoLibraryDayViewModel: PhotoLibraryModeCardViewModel<PhotoByDay> 
         super.init(libraryViewModel: libraryViewModel) {
             $0.removeTimestamp()
         } categoryListTransformation: {
-            $0.allPhotosByDayList
+            $0.photosByDayList
         }
     }
     

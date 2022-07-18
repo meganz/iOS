@@ -334,14 +334,6 @@
 "folderInboxError"="Hộp thư được bảo lưu cho Apple sử dụng.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Lưu Hình Ảnh";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="Chia Sẻ Đường Liên Kết";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="Chia Sẻ Liên Kết";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="Quản Lý Đường Liên Kết";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="Quản Lý Liên Kết";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Đang tạo đường liên kết…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -447,7 +439,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Nhập tên mới";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Các ký tự không được phép sử dụng: ” * / : < > ? \\ |";
+"general.error.charactersNotAllowed"="The following characters are not allowed: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Đổi Tên %@?";
 /* Title for the action that allows you to replace a file. */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các mục chia sẻ này không?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Chia sẻ";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="Xuất Tệp Tin";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="Xuất Tệp Tin";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="Xuất ra";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="1 tên liên lạc";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="[X] tên liên lạc";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Chia Sẻ Thư Mục";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Chia Sẻ Thư Mục";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="Chọn";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -743,7 +727,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Phiên bản MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Phiên bản SDK MEGAchát";
+"megachatSdkVersion"="Phiên bản SDK MEGAchat";
 /* Link to the public code of the app */
 "View Source Code"="Xem Mã Nguồn";
 /* Title for the section "Acknowledgements" of the app */
@@ -1176,8 +1160,6 @@
 "joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chát từ lời mời của [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] đã xóa lịch sử cuộc trò chuyện.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] được đổi thành [B] bởi [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chát thành “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1896,10 +1878,6 @@
 "Send This Location"="Gửi vị trí nơi này";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Tùy chỉnh bản đồ";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Ảnh vệ tinh";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Kết hợp";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Chính xác xấp xỉ %d mét";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="Hoạt Động Gần Đây Đã Ẩn Đi";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Hiển Thị Hoạt Động";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 tệp Hình Ảnh";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 tệp Video";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Chỉnh sửa bởi %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2438,6 +2412,8 @@
 "home.images.title"="Hình Ảnh";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="Không Có Hình Nào";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="Ưa Thích";
 /* Accessibility label for Home section in tabbar item */
 "Home"="Trang Chủ";
 /* Home Screen: Explorer view card title - Documents */
@@ -2653,9 +2629,9 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Đăng ký ngay và tận hưởng các tính năng cộng tác hữu dụng và miễn phí.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new host";
+"meetings.notifications.moderatorPrivilege"="Bạn đã được chọn là người chủ trì mới";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchát. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";
+"meetings.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchat. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Loa ngoài";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2967,33 +2943,33 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="Tốt nhất";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="File already exists";
+"nameCollision.title.file"="Tệp tin đã tồn tại sẵn";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Thư mục đã tồn tại";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
+"nameCollision.folders.alreadyExists"="Đã có một thư mục mang tên %@ ở tại chỗ này rồi.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="Merge";
+"nameCollision.folders.action.merge.title"="Hợp nhất";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
+"nameCollision.folders.action.merge.description"="Thư mục mới sẽ được hợp nhất với thư mục có sẵn tại chỗ này.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Bỏ qua thư mục này";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
+"nameCollision.files.alreadyExists"="Đã có một tệp tin mang tên %@ ở tại chỗ này rồi.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Thay thế";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
+"nameCollision.files.action.replace.description"="Tệp tin có sẵn tại chỗ này sẽ được thay thế bằng tệp tin mới.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="Skip this file";
+"nameCollision.files.action.skip.title"="Bỏ qua tệp tin này";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="Đổi tên";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="The file will be renamed as:";
+"nameCollision.files.action.rename.description"="Tệp tin sẽ được đổi tên thành:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Cập nhật";
 /* Text description for the update action when upload and already exists in destination */
-"nameCollision.files.action.update.description"="The file will be updated with a new version.";
+"nameCollision.files.action.update.description"="Tệp tin sẽ được cập nhật với phiên bản mới.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Bạn là người duy nhất ở đây";
 /* Meetings end call dialog description */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="Rời khỏi";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Gác tất cả";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="Chát";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="Gọi họp mặt";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="Start a meeting";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="Cuộc meeting mới";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="Start chatting now";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="Cuộc chát mới";
+/* Title for chats section */
+"chat.title"="Mở chát";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[B] đã đổi quyền hạn của [A] thành [S]chỉ-được-xem[/S]";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[B] đã đổi quyền hạn của [A] thành [S]người chủ trì[/S]";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[B] đã đổi quyền hạn của [A] thành [S]bình thường[/S]";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="Thường";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="Ảnh vệ tinh";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="Kết hợp";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="Bắt đầu cuộc họp";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"="Tham gia họp mặt";

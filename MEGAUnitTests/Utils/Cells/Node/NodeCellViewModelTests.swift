@@ -259,7 +259,7 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .hasVersions,
-             expectedCommands: [.setVersions(mockNodeActionUC.hasVersions())])
+             expectedCommands: [.setVersions(mockNodeActionUC.hasVersions(nodeHandle: .invalid))])
     }
     
     func testAction_hasVersions_true() {
@@ -278,7 +278,7 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .hasVersions,
-             expectedCommands: [.setVersions(mockNodeActionUC.hasVersions())])
+             expectedCommands: [.setVersions(mockNodeActionUC.hasVersions(nodeHandle: .invalid))])
     }
     
     func testAction_isDownloaded_false() {
@@ -296,7 +296,7 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .isDownloaded,
-             expectedCommands: [.setDownloaded(mockNodeActionUC.isDownloaded())])
+             expectedCommands: [.setDownloaded(mockNodeActionUC.isDownloaded(nodeHandle: .invalid))])
     }
     
     func testAction_isDownloaded_true() {
@@ -315,7 +315,7 @@ final class NodeCellViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .isDownloaded,
-             expectedCommands: [.setDownloaded(mockNodeActionUC.isDownloaded())])
+             expectedCommands: [.setDownloaded(mockNodeActionUC.isDownloaded(nodeHandle: .invalid))])
     }
     
     func testAction_moreTouchUpInside() {

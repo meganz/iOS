@@ -61,6 +61,18 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.dispatch(.onViewDidAppear)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        viewModel.dispatch(.onViewWillDisAppear)
+    }
 
     // MARK: - Private
     

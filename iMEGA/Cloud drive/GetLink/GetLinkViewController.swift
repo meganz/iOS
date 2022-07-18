@@ -109,7 +109,7 @@ class GetLinkViewController: UIViewController {
         
         processNodes()
         
-        shareBarButton.title = getLinkVM.multilink ? Strings.Localizable.CloudDrive.NodeOptions.shareLinks : Strings.Localizable.CloudDrive.NodeOptions.shareLink
+        shareBarButton.title = Strings.Localizable.General.MenuAction.ShareLink.title(nodesToExportCount)
         copyLinkBarButton.title = getLinkVM.multilink ? Strings.Localizable.copyAll : Strings.Localizable.copyLink
         copyKeyBarButton.title = Strings.Localizable.copyKey
         
@@ -144,11 +144,9 @@ class GetLinkViewController: UIViewController {
     private func configureNavigation() {
         navigationController?.setToolbarHidden(false, animated: true)
         
-        if getLinkVM.multilink {
-            title = nodes.filter { !$0.isExported() }.count == 0 ? Strings.Localizable.CloudDrive.NodeOptions.manageLinks : Strings.Localizable.CloudDrive.NodeOptions.shareLinks
-        } else {
-            title = nodes[0].isExported() ? Strings.Localizable.CloudDrive.NodeOptions.manageLink : Strings.Localizable.CloudDrive.NodeOptions.shareLink
-        }
+        title = nodes.filter { !$0.isExported() }.count == 0 ?
+                    Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count) :
+                    Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
         
         setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
         let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))

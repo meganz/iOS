@@ -207,7 +207,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="휴지통 비우기";
 /* Slideshow Menu Option */
-"sharedItems.menu.slideshow.title"="슬라이드쇼";
+"sharedItems.menu.slideshow.title"="Slideshow";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="오프라인용으로 저장된 파일 없음";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -334,14 +334,6 @@
 "folderInboxError"="수신함 라벨은 Apple에 의해 사용이 예약되었습니다.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="이미지 저장";
-/* Title shown under the action that allows you to get a link to file or folder */
-"cloudDrive.nodeOptions.shareLink"="링크 공유";
-/* Title shown under the action that allows you to get several links to files and/or folders */
-"cloudDrive.nodeOptions.shareLinks"="링크 공유";
-/* Item menu option upon right click on one or multiple files. */
-"cloudDrive.nodeOptions.manageLink"="링크 관리";
-/* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
-"cloudDrive.nodeOptions.manageLinks"="링크 관리";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="링크 생성 중…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -447,7 +439,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="새 이름을 입력하세요";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="다음의 문자는 허용되지 않습니다: ” * / : < > ? |";
+"general.error.charactersNotAllowed"="다음의 문자는 허용되지 않습니다: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="%@ 파일의 이름을 바꿀까요?";
 /* Title for the action that allows you to replace a file. */
@@ -598,10 +590,6 @@
 "leaveSharesAlertMessage"="이 공유들에서 떠나시겠습니까?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="공유";
-/* Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu */
-"general.exportFile"="파일 내보내기";
-/* Button title which, if tapped, will trigger the action of downloading the nodes and after that the user will be able to share through the iOS share menu */
-"general.exportFiles"="파일 내보내기";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
 "general.export"="내보내기";
 /* Select all items/elements on the list */
@@ -610,10 +598,6 @@
 "oneContact"="연락처 1명";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
 "XContactsSelected"="연락처 [X]명";
-/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="폴더 공유";
-/* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="폴더 공유";
 /* Button that allows you to select something (a folder, a message...) */
 "select"="선택";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -933,11 +917,11 @@
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="모든 전송을 취소하시겠습니까?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="모든 전송";
+"allInUppercaseTransfers"="ALL transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="업로드 전송";
+"uploadInUppercaseTransfers"="UPLOAD transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="다운로드 전송";
+"downloadInUppercaseTransfers"="DOWNLOAD transfers";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="업그레이드";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1176,14 +1160,12 @@
 "joinedTheGroupChatByInvitationFrom"="[A]님이 [B]님의 초대로 단체 대화에 입장했습니다.";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A]님이 대화 기록을 삭제했습니다.";
-/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A]가 [C]님에 의해 [B]로 변경되었습니다.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]님이 단체 대화 이름을 '[B]'로 변경하였습니다.";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="참가자 추가";
+"addParticipant"="참여자 추가";
 /* Menu item to add participants to a chat */
-"addParticipants"="참가자 추가";
+"addParticipants"="참여자 추가";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="상태";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -1277,7 +1259,7 @@
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="기본";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="참가자 제거";
+"removeParticipant"="참여자 제거";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="대화중인 사람";
 /* Explanation when loading voice message error */
@@ -1783,9 +1765,9 @@
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@님이 단체 대화에 참여하였습니다.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="이 통화가 최대 참가자 수에 도달했기 때문에 참여할 수 없습니다.";
+"Error. No more participants are allowed in this group call."="이 통화가 최대 참여자 수에 도달했기 때문에 참여할 수 없습니다.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="이 통화의 최대 영상 사용 참가자 수에 도달했기 때문에 영상을 활성화할 수 없습니다.";
+"Error. No more video are allowed in this group call."="이 통화의 최대 영상 사용 참여자 수에 도달했기 때문에 영상을 활성화할 수 없습니다.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="참여자 한도를 초과하였기 때문에 통화를 시작할 수 없습니다.";
 /* Label shown while joining a public chat */
@@ -1896,10 +1878,6 @@
 "Send This Location"="이 위치 전송";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="지도 설정";
-/* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="위성";
-/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="혼합";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="%d 미터 수준에서 정확";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1909,9 +1887,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="고정된 위치";
 /* Plural of participant. 2 participants */
-"%d participants"="참가자 %d명";
+"%d participants"="참여자 %d명";
 /* Singular of participant. 1 participant */
-"%d participant"="참가자 %d명";
+"%d participant"="참여자 %d명";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 취소하려면 슬라이드";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -1946,10 +1924,6 @@
 "recents.emptyState.activityHidden.title"="최근 활동 숨겨짐";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="활동 보기";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="이미지 %1개";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="동영상 %2개";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@님이 수정";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2003,7 +1977,7 @@
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="지인을 초대하고 MEGA의 암호화된 대화로 안전하게 대화를 시작하세요.";
 /* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="[X]명의 지인 초대";
+"Invite [X] contacts"="[X]명의 연락처 초대";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="여러 이메일을 입력하려면 스페이스를 탭하세요";
 /* Text used as a section title or similar */
@@ -2123,9 +2097,9 @@
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="이 링크는 이 계정과 연결되어 있지 않습니다. 올바른 계정으로 로그인 하세요.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="지금 지인 초대";
+"Invite contact now"="지금 연락처 초대";
 /* Text showing the user one contact would be invited */
-"Invite 1 contact"="1명의 지인 초대";
+"Invite 1 contact"="1명의 연락처 초대";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="유효한 전화번호를 입력하세요.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2438,6 +2412,8 @@
 "home.images.title"="이미지";
 /* Photo Explorer Screen: No images in the account */
 "home.images.empty"="검색된 이미지 없음";
+/* Title of Favourites explorer view card on Home */
+"home.favourites.title"="즐겨찾기";
 /* Accessibility label for Home section in tabbar item */
 "Home"="홈";
 /* Home Screen: Explorer view card title - Documents */
@@ -2613,11 +2589,11 @@
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="참가하려는 회의가 이미 종료되었습니다. 여전히 회의 대화 기록을 볼 수 있습니다.";
 /* Contacts selection screen header: Invite contacts to meetings */
-"meetings.panel.InviteParticipants"="참가자 초대";
+"meetings.panel.InviteParticipants"="참여자 초대";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="링크 공유";
 /* Meetings: Floating panel participants count header */
-"meetings.panel.ParticipantsCount"="참가자 (%d)";
+"meetings.panel.ParticipantsCount"="참여자 (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="주최자";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3020,3 +2996,37 @@
 "meetings.leaveCall.buttonTitle"="떠나기";
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="모두 통화 종료";
+/* Chat section selector tab for chats */
+"chat.selector.chat"="대화";
+/* Chat section selector tab for meetings */
+"chat.selector.meeting"="회의";
+/* Ttile for empty meetings tab */
+"chat.meetings.emptyState.title"="회의 시작";
+/* Description for empty meetings tab */
+"chat.meetings.emptyState.description"="전세계의 친구 및 동료들과 안전하고 비밀스럽게 음성 또는 영상 통화를 하세요.";
+/* Text button for empty meetings tab */
+"chat.meetings.emptyState.button.title"="새 회의";
+/* Ttile for empty chats tab */
+"chat.chats.emptyState.title"="지금 대화 시작";
+/* Description for empty chats tab */
+"chat.chats.emptyState.description"="그 누구도, 심지어는 MEGA도 당신의 대화를 읽을 수 없다는 것을 알고 어느 누구와 어느 기기에서든 안전하고 비밀스럽게 대화하세요.";
+/* Text button for empty chats tab */
+"chat.chats.emptyState.button.title"="새 대화";
+/* Title for chats section */
+"chat.title"="대화";
+/* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
+"chat.message.changedRole.readOnly"="[A]님이 [B]님에 의해 [S]읽기만 가능[/S]하게 변경되었습니다";
+/* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
+"chat.message.changedRole.host"="[A]님이 [B]님에 의해 [S]주최자 역할[/S]로 변경되었습니다";
+/* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
+"chat.message.changedRole.standard"="[A]님이 [B]님에 의해 [S]일반 역할[/S]로 변경되었습니다";
+/* Type of data displayed in a map view. Standard imagery of the area. */
+"chat.sendLocation.map.standard"="기본";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"chat.sendLocation.map.satellite"="위성";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"chat.sendLocation.map.hybrid"="혼합";
+/* Meeting - start converstion context menu text for starting a meeting */
+"meetings.startConversation.contextMenu.startMeeting"="회의 시작";
+/* Meeting - start conversation context menu text for joining a meeting */
+"meetings.startConversation.contextMenu.joinMeeting"="회의 참가";

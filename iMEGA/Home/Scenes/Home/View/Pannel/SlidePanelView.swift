@@ -215,11 +215,14 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         let recentsTitle = Strings.Localizable.recents
         let favouritesTitle = Strings.Localizable.favourites
         let offlineTitle = Strings.Localizable.offline
-        titleView.setSegmentTitleViewModel(model: .init(titles: [
-            .init(text: recentsTitle, index: 0),
-            .init(text: favouritesTitle, index: 1),
-            .init(text: offlineTitle, index: 2),
-        ]))
+        
+        let segmentModel: SegmentTitleView.SegmentTitleViewModel = FeatureFlag.shouldRemoveHomeImage ?
+                                                                                .init(titles: [.init(text: recentsTitle, index: 0),
+                                                                                                .init(text: offlineTitle, index: 1)]) :
+                                                                                .init(titles: [.init(text: recentsTitle, index: 0),
+                                                                                                .init(text: favouritesTitle, index: 1),
+                                                                                                .init(text: offlineTitle, index: 2)])
+        titleView.setSegmentTitleViewModel(model: segmentModel)
 
         titleView.selectAction = { [weak self] title in
             guard let self = self else { return }

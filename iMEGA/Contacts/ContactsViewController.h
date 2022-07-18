@@ -12,6 +12,12 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeInviteParticipants = 8
 };
 
+typedef NS_ENUM(NSUInteger, ChatOptionType) {
+    ChatOptionTypeNone = 0,
+    ChatOptionTypeMeeting = 1,
+    ChatOptionTypeNonMeeting = 2
+};
+
 @protocol ContatctsViewControllerDelegate <NSObject>
 @optional
 - (void)nodeEditCompleted:(BOOL)complete;
@@ -22,6 +28,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 @interface ContactsViewController : UIViewController
 
 @property (nonatomic) ContactsMode contactsMode;
+@property (nonatomic) ChatOptionType chatOptionType;
+
 @property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
 @property (nonatomic) BOOL getChatLinkEnabled;
 

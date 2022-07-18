@@ -2,6 +2,8 @@ import Foundation
 
 enum MediaDiscoveryAction: ActionType {
     case onViewReady
+    case onViewDidAppear
+    case onViewWillDisAppear
     case onNodesUpdate(nodeList: MEGANodeList)
 }
 
@@ -18,14 +20,18 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType {
     private let parentNode: MEGANode
     private var nodes: [MEGANode] = []
     private let router: MediaDiscoveryRouter
+    private var statsUseCase: MediaDiscoveryStatsUseCaseProtocol
     
     var invokeCommand: ((Command) -> Void)?
     
+    lazy var pageStayTimeTracker = PageStayTimeTracker()
+    
     // MARK: - Init
     
-    @objc init(parentNode: MEGANode, router: MediaDiscoveryRouter) {
+    init(parentNode: MEGANode, router: MediaDiscoveryRouter, statsUseCase: MediaDiscoveryStatsUseCaseProtocol) {
         self.parentNode = parentNode
         self.router = router
+        self.statsUseCase = statsUseCase
         
         super.init()
     }
@@ -35,6 +41,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType {
     func dispatch(_ action: MediaDiscoveryAction) {
         switch action {
         case .onViewReady:
+            sendPageVisitedStats()
             loadNodes()
             invokeCommand?(.loadMedia(nodes: nodes))
         case .onNodesUpdate(let nodeList):
@@ -44,6 +51,12 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType {
                     self?.invokeCommand?(.loadMedia(nodes: self?.nodes ?? []))
                 }
             }
+        case .onViewDidAppear:
+            startTracking()
+            sendPageVisitedStats()
+        case .onViewWillDisAppear:
+            endTracking()
+            sendPageStayStats()
         }
     }
     
@@ -77,5 +90,23 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType {
     private func loadNodes() {
         let nodelist = MEGASdkManager.sharedMEGASdk().children(forParent: parentNode, order: MEGASortOrderType.modificationDesc.rawValue)
         nodes = (nodelist.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
+    }
+    
+    private func startTracking() {
+        pageStayTimeTracker.start()
+    }
+    
+    private func endTracking() {
+        pageStayTimeTracker.end()
+    }
+    
+    private func sendPageVisitedStats() {
+        statsUseCase.sendPageVisitedStats()
+    }
+    
+    private func sendPageStayStats() {
+        let duration = Int(pageStayTimeTracker.duration)
+        
+        statsUseCase.sendPageStayStats(with: duration)
     }
 }

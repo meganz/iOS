@@ -24,7 +24,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel)
         
-        photoCategoryList = libraryViewModel.library.allPhotosMonthSections
+        photoCategoryList = libraryViewModel.library.photoMonthSections
         
         subscribeToLibraryChange()
         subscribeToSelectedModeChange()
@@ -38,7 +38,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
             .dropFirst()
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .map { [weak self] in
-                $0.allPhotosDateSections(forZoomScaleFactor: self?.zoomState.scaleFactor)
+                $0.photoDateSections(forZoomScaleFactor: self?.zoomState.scaleFactor)
             }
             .filter { [weak self] in
                 self?.shouldRefreshTo($0) == true
@@ -74,7 +74,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     
     private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
         if shouldReloadPhotoCategoryList(onNewState: newState) {
-            photoCategoryList = libraryViewModel.library.allPhotosDateSections(forZoomScaleFactor: newState.scaleFactor)
+            photoCategoryList = libraryViewModel.library.photoDateSections(forZoomScaleFactor: newState.scaleFactor)
         }
         
         calculateLastScrollPosition()

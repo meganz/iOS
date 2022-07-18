@@ -43,7 +43,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     override func toggleSelectAllNodes() {
         listSource?.toggleSelectAllNodes()
-        configureToolbarButtons()
+        configureExplorerToolbarButtons()
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
     }
     
@@ -66,7 +66,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         tableView.visibleCells.forEach {
             $0.setSelectedBackgroundView(withColor: .clear)
         }
-        configureToolbarButtons()
+        configureExplorerToolbarButtons()
         showToolbar()
         if listSource?.selectedNodes == nil {
             listSource?.setEditingMode()
@@ -89,6 +89,13 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
     }
     
+    private func configureExplorerToolbarButtons() {
+        switch viewModel.getExplorerType() {
+        case .favourites: configureFavouriteToolbarButtons()
+        default: configureToolbarButtons()
+        }
+    }
+    
     // MARK: - Execute command
     private func executeCommand(_ command: FilesExplorerViewModel.Command) {
         switch command {
@@ -98,6 +105,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
                 tableView: tableView,
                 nodes: nodes,
                 selectedNodes: listSource?.selectedNodes,
+                explorerType: viewModel.getExplorerType(),
                 delegate: self
             )
         case .onNodesUpdate(let updatedNodes):
@@ -145,7 +153,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
 extension FilesExplorerListViewController: FilesExplorerListSourceDelegate {
     func didSelect(node: MEGANode, atIndexPath indexPath: IndexPath, allNodes: [MEGANode]) {
         guard !tableView.isEditing else {
-            configureToolbarButtons()
+            configureFavouriteToolbarButtons()
             delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
             return
         }
@@ -157,7 +165,7 @@ extension FilesExplorerListViewController: FilesExplorerListSourceDelegate {
         guard tableView.isEditing else {
             return
         }
-        configureToolbarButtons()
+        configureFavouriteToolbarButtons()
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
     }
     

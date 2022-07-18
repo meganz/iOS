@@ -6,7 +6,7 @@ final class PhotoLibraryYearViewModel: PhotoLibraryModeCardViewModel<PhotoByYear
         super.init(libraryViewModel: libraryViewModel) {
             $0.removeMonth()
         } categoryListTransformation: {
-            $0.allphotoByYearList
+            $0.photoByYearList
         }
     }
     

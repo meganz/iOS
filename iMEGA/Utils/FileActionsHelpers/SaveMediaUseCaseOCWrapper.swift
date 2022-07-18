@@ -17,8 +17,7 @@
             if granted {
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
-                let nodeEntity = NodeEntity(node: node)
-                saveMediaUseCase.saveToPhotos(node: nodeEntity, completion: completionBlock)
+                saveMediaUseCase.saveToPhotos(node: node.toNodeEntity(), completion: completionBlock)
             } else {
                 DevicePermissionsHelper.alertPhotosPermission()
             }

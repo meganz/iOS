@@ -91,20 +91,12 @@ class NodeAction: BaseAction {
 // MARK: - Node Actions Factory
 
 extension NodeAction {
-    class func exportFileAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.General.exportFile, detail: nil, image: Asset.Images.NodeActions.export.image, type: .exportFile)
+    class func exportFileAction(nodeCount: Int = 1) -> NodeAction {
+        return NodeAction(title: Strings.Localizable.General.MenuAction.ExportFile.title(nodeCount), detail: nil, image: Asset.Images.NodeActions.export.image, type: .exportFile)
     }
     
-    class func exportFilesAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.General.exportFiles, detail: nil, image: Asset.Images.NodeActions.export.image, type: .exportFile)
-    }
-    
-    class func shareFolderAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.shareFolder, detail: nil, image: Asset.Images.NodeActions.shareFolder.image, type: .shareFolder)
-    }
-    
-    class func shareFoldersAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.shareFolders, detail: nil, image: Asset.Images.NodeActions.shareFolder.image, type: .shareFolder)
+    class func shareFolderAction(nodeCount: Int = 1) -> NodeAction {
+        return NodeAction(title: Strings.Localizable.General.MenuAction.ShareFolder.title(nodeCount), detail: nil, image: Asset.Images.NodeActions.shareFolder.image, type: .shareFolder)
     }
     
     class func manageFolderAction() -> NodeAction {
@@ -143,24 +135,16 @@ extension NodeAction {
         return NodeAction(title: Strings.Localizable.leaveFolder, detail: nil, image: Asset.Images.NodeActions.leaveShare.image, type: .leaveSharing)
     }
     
-    class func shareLinkAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.CloudDrive.NodeOptions.shareLink, detail: nil, image: Asset.Images.Generic.link.image, type: .shareLink)
-    }
-    
-    class func shareLinksAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.CloudDrive.NodeOptions.shareLinks, detail: nil, image: Asset.Images.Generic.link.image, type: .shareLink)
+    class func shareLinkAction(nodeCount: Int = 1) -> NodeAction {
+        return NodeAction(title: Strings.Localizable.General.MenuAction.ShareLink.title(nodeCount), detail: nil, image: Asset.Images.Generic.link.image, type: .shareLink)
     }
     
     class func retryAction() -> NodeAction {
         return NodeAction(title: Strings.Localizable.retry, detail: nil, image: Asset.Images.Generic.link.image, type: .retry)
     }
     
-    class func manageLinkAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.CloudDrive.NodeOptions.manageLink, detail: nil, image: Asset.Images.Generic.link.image, type: .manageLink)
-    }
-    
-    class func manageLinksAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.CloudDrive.NodeOptions.manageLinks, detail: nil, image: Asset.Images.Generic.link.image, type: .manageLink)
+    class func manageLinkAction(nodeCount: Int = 1) -> NodeAction {
+        return NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), detail: nil, image: Asset.Images.Generic.link.image, type: .manageLink)
     }
     
     class func removeLinkAction(nodeCount: Int = 1) -> NodeAction {

@@ -15,7 +15,7 @@ class QuickAccessWidgetManager: NSObject {
         self.recentItemsUseCase = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
         self.recentNodesUseCase = RecentNodesUseCase(repo: RecentNodesRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         self.favouriteItemsUseCase = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
-        self.favouriteNodesUseCase = FavouriteNodesUseCase(repo: FavouriteNodesRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        self.favouriteNodesUseCase = FavouriteNodesUseCase(repo: FavouriteNodesRepository.newRepo)
     }
 
     @objc public static func reloadAllWidgetsContent() {

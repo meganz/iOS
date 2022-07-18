@@ -53,7 +53,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *allMediaToolBarItem;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
-@property (nonatomic) NSUInteger currentIndex;
 @property (nonatomic) UIImageView *targetImageView;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
@@ -65,28 +64,27 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (nonatomic) UIWindow *secondWindow;
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
+@property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 
 @end
 
 @implementation MEGAPhotoBrowserViewController
 
-+ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node preferredIndex:(NSUInteger)preferredIndex {
-    NSUInteger index = preferredIndex;
-    if (node) {
-        for (NSUInteger i = 0; i < mediaNodesArray.count; i++) {
-            MEGANode *mediaNode = [mediaNodesArray objectOrNilAtIndex:i];
-            if (mediaNode.handle == node.handle) {
-                index = i;
-                break;
-            }
-        }
-    }
-    
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node {
+    PhotoBrowserDataProvider *provider = [[PhotoBrowserDataProvider alloc] initWithCurrentPhoto:node allPhotos:mediaNodesArray sdk:api];
+    return [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
+}
+
++ (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode preferredIndex:(NSUInteger)preferredIndex {
+    PhotoBrowserDataProvider *provider  = [[PhotoBrowserDataProvider alloc] initWithCurrentIndex:preferredIndex allPhotos:mediaNodesArray sdk:api];
+    return [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
+}
+
++ (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]];
     MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
+    photoBrowserVC.dataProvider = provider;
     photoBrowserVC.api = api;
-    photoBrowserVC.mediaNodes = mediaNodesArray;
-    photoBrowserVC.preferredIndex = index;
     photoBrowserVC.displayMode = displayMode;
     
     return photoBrowserVC;
@@ -98,8 +96,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewDidLoad];
     
     self.modalPresentationCapturesStatusBarAppearance = YES;
-    
-    self.currentIndex = self.preferredIndex;
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
     
@@ -276,40 +272,26 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
-    
-    if (self.currentIndex >= self.mediaNodes.count) {
-        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
-        if (self.mediaNodes.count > 0) {
-            self.currentIndex = self.mediaNodes.count - 1;
-        } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            return;
-        }
+    if (self.dataProvider.count == 0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
     }
     
-    [self loadNearbyImagesFromIndex:self.currentIndex];
-    self.scrollView.contentOffset = CGPointMake(self.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.dataProvider.count, self.scrollView.frame.size.height);
+
+    [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
+    self.scrollView.contentOffset = CGPointMake(self.dataProvider.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
-        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectOrNilAtIndex:self.currentIndex]];
+        [self.delegate photoBrowser:self didPresentNode:self.dataProvider.currentPhoto];
     }
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
-        [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
+        [self.delegate photoBrowser:self didPresentNodeAtIndex:self.dataProvider.currentIndex];
     }
 }
 
 - (void)reloadTitle {
-    [self reloadTitleForIndex:self.currentIndex];
-}
-
-- (void)reloadTitleForIndex:(NSUInteger)newIndex {
-    if (newIndex >= self.mediaNodes.count) {
-        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", newIndex, self.mediaNodes.count);
-        return;
-    }
-    
     NSString *subtitle;
     
     switch (self.displayMode) {
@@ -318,21 +300,21 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
             break;
         case DisplayModeChatAttachment: {
-            MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+            MEGANode *node = self.dataProvider.currentPhoto;
             subtitle = [self subtitleFromDate:node.creationTime];
         }
             break;
             
         default: {
             NSString *format = NSLocalizedString(@"media.photo.browser.indexOfTotalFiles", @"The index of file from the total number of files. e.g. 1 of 1 file, 1 of 3 files");
-            NSString *subtitleString = [NSString stringWithFormat:format, (unsigned long)self.mediaNodes.count];
+            NSString *subtitleString = [NSString stringWithFormat:format, (unsigned long)self.dataProvider.count];
             subtitle = [subtitleString stringByReplacingOccurrencesOfString:@"[A]"
-                                                      withString:[NSString stringWithFormat:@"%lu", (unsigned long)newIndex+1]];
+                                                                 withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.dataProvider.currentIndex+1]];
             break;
         }
     }
     
-    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:UIColor.mnz_label];
+    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:self.dataProvider.currentPhoto.name subtitle:subtitle color:UIColor.mnz_label];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
@@ -340,7 +322,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)resetZooms {
-    for (NSUInteger i = 0; i < self.mediaNodes.count; i++) {
+    for (NSUInteger i = 0; i < self.dataProvider.count; i++) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
         if (zoomableView && zoomableView.zoomScale != 1.0f) {
             zoomableView.zoomScale = 1.0f;
@@ -354,14 +336,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.view.superview.superview.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
-    // Toggle the play button:
-    if (self.currentIndex >= self.mediaNodes.count) {
-        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
-        return;
-    }
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node.name.mnz_isVideoPathExtension) {
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
         if (zoomableView) {
             zoomableView.subviews.lastObject.hidden = transparent;
         }
@@ -428,18 +405,18 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)didInvokeLeftArrowCommand:(UIKeyCommand *)keyCommand {
-    NSInteger newIndex = self.currentIndex - 1;
+    NSInteger newIndex = self.dataProvider.currentIndex - 1;
     [self showPhotoAtIndex:newIndex];
 }
 
 - (void)didInvokeRightArrowCommand:(UIKeyCommand *)keyCommand {
-    NSInteger newIndex = self.currentIndex + 1;
+    NSInteger newIndex = self.dataProvider.currentIndex + 1;
     [self showPhotoAtIndex:newIndex];
 }
 
 - (void)showPhotoAtIndex:(NSInteger)index {
-    if (index != self.currentIndex && index >= 0 && index < self.mediaNodes.count) {
-        self.currentIndex = index;
+    if ([self.dataProvider shouldUpdateCurrentIndexToIndex:index]) {
+        self.dataProvider.currentIndex = index;
         [self reloadUI];
     }
 }
@@ -459,16 +436,16 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         NSInteger newIndex = (scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
-        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-            self.currentIndex = newIndex;
+        if ([self.dataProvider shouldUpdateCurrentIndexToIndex:newIndex]) {
+            self.dataProvider.currentIndex = newIndex;
             [self resetZooms];
             [self reloadTitle];
             [self airplayDisplayCurrentImage];
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
-                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectOrNilAtIndex:self.currentIndex]];
+                [self.delegate photoBrowser:self didPresentNode:self.dataProvider.currentPhoto];
             }
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
-                [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
+                [self.delegate photoBrowser:self didPresentNodeAtIndex:self.dataProvider.currentIndex];
             }
         }
     }
@@ -481,7 +458,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
         
         NSUInteger newIndex = floor(scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
-        if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
+        if ([self.dataProvider shouldUpdateCurrentIndexToIndex:newIndex]) {
             [self loadNearbyImagesFromIndex:newIndex];
         }
     }
@@ -497,7 +474,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     if (scrollView.tag != 1) {
-        MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+        MEGANode *node = self.dataProvider.currentPhoto;
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
@@ -514,7 +491,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     if (scrollView.tag != 1) {
-        MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+        MEGANode *node = self.dataProvider.currentPhoto;
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
@@ -525,9 +502,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - Getting the images
 
 - (void)loadNearbyImagesFromIndex:(NSUInteger)index {
-    if (self.mediaNodes.count > 0) {
+    if (self.dataProvider.count > 0) {
         NSUInteger initialIndex = index == 0 ? 0 : index-1;
-        NSUInteger finalIndex = index >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : index + 1;
+        NSUInteger finalIndex = index >= self.dataProvider.count - 1 ? self.dataProvider.count - 1 : index + 1;
         for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
             if ([self.imageViewsCache objectForKey:@(i)]) {
                 continue;
@@ -536,7 +513,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
-            MEGANode *node = [self.mediaNodes objectOrNilAtIndex:i];
+            MEGANode *node = self.dataProvider[i];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
@@ -625,7 +602,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-            MEGANode *mediaNode = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+            MEGANode *mediaNode = self.dataProvider.currentPhoto;
             if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
                 self.pieChartView.alpha = 0.0f;
             }
@@ -636,7 +613,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        MEGANode *mediaNode = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+        MEGANode *mediaNode = self.dataProvider.currentPhoto;
         if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
             self.transferProgress = transfer.transferredBytes.doubleValue / transfer.totalBytes.doubleValue;
             [self.pieChartView reloadData];
@@ -738,7 +715,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
     
@@ -746,19 +723,18 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
     
-    [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView: [self isPreviewingVersion] sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender {
     MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
-    pickerVC.mediaNodes = self.mediaNodes;
+    pickerVC.mediaNodes = self.dataProvider.allPhotos;
     pickerVC.delegate = self;
     pickerVC.api = self.api;
     pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -768,7 +744,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -786,7 +762,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressImportbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -800,7 +776,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressSaveToPhotobarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -808,7 +784,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressForwardbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -816,7 +792,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressExportFile:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -843,7 +819,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressRightToolbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -861,7 +837,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (IBAction)didPressCenterToolbarButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -879,7 +855,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - Gesture recognizers
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
     if (zoomableView.zoomScale > 1.0f) {
         return;
     }
@@ -934,11 +910,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node.name.mnz_isVideoPathExtension) {
         return;
     }
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
     UIView *imageView = zoomableView.subviews.firstObject;
     if (zoomableView) {
         CGFloat newScale;
@@ -992,7 +968,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - Targets
 
 - (void)playVideo:(UIButton *)sender {
-    MEGANode *node = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+    MEGANode *node = self.dataProvider.currentPhoto;
     if (node == nil) {
         return;
     }
@@ -1033,7 +1009,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.secondWindow.hidden = NO;
         }
         
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
         UIImageView *imageView = (UIImageView *)zoomableView.subviews.firstObject;
         UIImageView *airplayImageView = [[UIImageView alloc] initWithFrame:self.secondWindow.frame];
         airplayImageView.image = imageView.image;
@@ -1070,8 +1046,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
-        self.currentIndex = newIndex;
+    if ([self.dataProvider shouldUpdateCurrentIndexToIndex:newIndex]) {
+        self.dataProvider.currentIndex = newIndex;
         self.needsReload = YES;
     }
 }
@@ -1142,7 +1118,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeInfo: {
-            MEGANode *currentNode = [self.mediaNodes objectOrNilAtIndex:self.currentIndex];
+            MEGANode *currentNode = self.dataProvider.currentPhoto;
             if (!currentNode) {
                 return;
             }
@@ -1197,7 +1173,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
         case MegaNodeActionTypeRename: {
             [node mnz_renameNodeInViewController:self completion:^(MEGARequest *request) {
-                [self.mediaNodes replaceObjectAtIndex:self.currentIndex withObject:[self.api nodeForHandle:request.nodeHandle]];
+                [self.dataProvider updatePhotoBy:request];
                 [self reloadUI];
             }];
             break;
@@ -1268,7 +1244,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
     
@@ -1289,41 +1265,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (nodeList) {
-        NSArray<MEGANode *> *updatedNodesArray = nodeList.mnz_nodesArrayFromNodeList;
-        NSMutableArray<MEGANode *> *nodesToRemoveArray = NSMutableArray.new;
-        NSMutableArray<MEGANode *> *nodesToUpdateArray = NSMutableArray.new;
-        
-        NSMutableSet* updatedNodeSet = [NSMutableSet setWithArray:updatedNodesArray];
-        NSSet* oldNodeSet = [NSSet setWithArray:self.mediaNodes];
-        [updatedNodeSet intersectSet:oldNodeSet];
-        for (MEGANode *node in updatedNodeSet) {
-            if ([node hasChangedType:MEGANodeChangeTypeRemoved] ||
-                [node hasChangedType:MEGANodeChangeTypeParent]) {
-                if ([self.mediaNodes indexOfObject:node] < self.currentIndex) {
-                    self.currentIndex--;
-                }
-                [nodesToRemoveArray addObject:node];
-            } else if ([node hasChangedType:MEGANodeChangeTypeAttributes] ||
-                       [node hasChangedType:MEGANodeChangeTypePublicLink]) {
-                [nodesToUpdateArray addObject:node];
-            }
-        }
-        
-        if (nodesToRemoveArray.count) {
-            [self.mediaNodes removeObjectsInArray:nodesToRemoveArray];
-            if (self.mediaNodes.count) {
-                if (self.currentIndex >= self.mediaNodes.count) {
-                    self.currentIndex = self.mediaNodes.count - 1;
-                }
-                [self reloadUI];
-            } else {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        }
-        
-        for (MEGANode *node in nodesToUpdateArray) {
-            NSInteger nodeIndex = [self.mediaNodes indexOfObject:node];
-            self.mediaNodes[nodeIndex] = node;
+        [self.dataProvider removePhotosIn:nodeList];
+        if (self.dataProvider.count == 0) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [self.dataProvider updatePhotosIn:nodeList];
+            [self reloadUI];
         }
     } else {
         [self reloadUI];
@@ -1333,7 +1280,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - Private methods.
 
 - (UIImageView *)placeholderCurrentImageView {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
     UIImageView *animatedImageView  = zoomableView.subviews.firstObject;
     
     UIImageView *imageview = UIImageView.new;
@@ -1345,14 +1292,16 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (nullable UIImageView *)placeholderPlayImageView {
-    if (self.mediaNodes.count > self.currentIndex) {
-        MEGANode *node = self.mediaNodes[self.currentIndex];
-        if (node.name.mnz_isVideoPathExtension) {
-            UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
-            imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
-            
-            return imageview;
-        }
+    MEGANode *node = self.dataProvider.currentPhoto;
+    if (node == nil) {
+        return nil;
+    }
+    
+    if (node.name.mnz_isVideoPathExtension) {
+        UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
+        imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
+        
+        return imageview;
     }
     
     return nil;

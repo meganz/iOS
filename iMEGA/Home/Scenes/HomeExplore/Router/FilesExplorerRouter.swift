@@ -23,10 +23,14 @@ struct FilesExplorerRouter {
                                          nodesUpdateListenerRepo: nodesUpdateListenerRepo)
         let nodeClipboardOperationUseCase = NodeClipboardOperationUseCase(repo: clipboardOperationRepo)
         let fileDownloadUseCase = FilesDownloadUseCase(repo: transferListenerRepo)
-        let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository())
+        let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+        let favouriteRepository = FavouriteNodesRepository.newRepo
+        let favouritesUseCase = FavouriteNodesUseCase(repo: favouriteRepository)
+        
         let viewModel = FilesExplorerViewModel(explorerType: explorerType,
                                                router: self,
                                                useCase: useCase,
+                                               favouritesUseCase: favouritesUseCase,
                                                filesDownloadUseCase: fileDownloadUseCase,
                                                nodeClipboardOperationUseCase: nodeClipboardOperationUseCase,
                                                createContextMenuUseCase: createContextMenuUseCase)
