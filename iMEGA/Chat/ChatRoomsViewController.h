@@ -9,18 +9,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (assign, nonatomic) ChatRoomsType chatRoomsType;
 @property (nonatomic, strong, nullable) MyAvatarManager *myAvatarManager;
-@property (nonatomic) GlobalDNDNotificationControl *globalDNDNotificationControl;
-
-@property (strong, nonatomic) UIBarButtonItem *addBarButtonItem;
-@property (strong, nonatomic) UIBarButtonItem *moreBarButtonItem;
-
+@property (nonatomic, nullable) GlobalDNDNotificationControl *globalDNDNotificationControl;
 @property (nonatomic, strong, nullable) ContextMenuManager *contextMenuManager;
 
 - (void)openChatRoomWithID:(uint64_t)chatID;
 - (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatID;
 - (void)showStartConversation;
 
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIView *chatOrMeetingSelectorView;
 @property (weak, nonatomic) IBOutlet MEGAVerticalButton *chatSelectorButton;
 @property (weak, nonatomic) IBOutlet UIView *chatSelectedView;

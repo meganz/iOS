@@ -556,9 +556,13 @@
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p5b-7o-fgJ">
-                        <barButtonItem key="backBarButtonItem" title=" " id="1Ub-kM-Jrr"/>
+                        <rightBarButtonItems>
+                            <barButtonItem image="moreNavigationBar" id="dxa-cb-74c"/>
+                            <barButtonItem image="add" id="yj7-Ih-LHC"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButtonItem" destination="yj7-Ih-LHC" id="xxh-fc-muV"/>
                         <outlet property="archivedChatEmptyState" destination="ouL-g8-Aj6" id="AFd-bR-bJ8"/>
                         <outlet property="archivedChatEmptyStateCount" destination="Neh-p3-j5J" id="9RW-xU-gK1"/>
                         <outlet property="archivedChatEmptyStateTitle" destination="dFA-7b-ajV" id="DVx-Wf-zhh"/>
@@ -569,6 +573,7 @@
                         <outlet property="contactsOnMegaEmptyStateView" destination="Trx-xU-y0T" id="dZo-8p-n1b"/>
                         <outlet property="meetingSelectedView" destination="p5w-P8-iiI" id="SZb-jh-20L"/>
                         <outlet property="meetingSelectorButton" destination="TVD-lW-EL3" id="rEH-CF-uBb"/>
+                        <outlet property="moreBarButtonItem" destination="dxa-cb-74c" id="SPA-Lr-mIO"/>
                         <outlet property="tableView" destination="OEw-WR-Lm7" id="4K9-2w-rBx"/>
                         <outlet property="topBannerCameraEnabledImageView" destination="24l-2s-x7s" id="ZMV-bu-uX6"/>
                         <outlet property="topBannerLabel" destination="hDV-mu-alE" id="vEJ-kV-4OG"/>
@@ -1967,6 +1972,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="add" width="33.333332061767578" height="33.333332061767578"/>
         <image name="archiveChat" width="28" height="28"/>
         <image name="backArrow" width="13" height="21"/>
         <image name="callSlots-banner" width="16" height="16"/>
@@ -1976,6 +1982,7 @@
         <image name="inviteToChat" width="40" height="40"/>
         <image name="location" width="28" height="28"/>
         <image name="locationPin" width="40" height="40"/>
+        <image name="moreNavigationBar" width="28" height="28"/>
         <image name="mutedChat" width="28" height="28"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
