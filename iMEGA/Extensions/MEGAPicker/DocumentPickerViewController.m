@@ -53,6 +53,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+    [MEGAChatSdk setCatchException:false];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
+    
     [MEGASdk setLogToConsole:YES];
     
     MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
@@ -101,12 +109,6 @@
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
-
-#ifdef DEBUG
-    [MEGASdk setLogLevel:MEGALogLevelMax];
-#else
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
-#endif
     
     self.lastProgressChange = [NSDate new];
     
