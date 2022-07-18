@@ -23,16 +23,20 @@ extension Array where Element == NodeEntity {
             dayDict[day] = photoByDay
         }
         
+        let sortedDayDict = dayDict.lazy.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key })
+        
         var monthDict = [Date: PhotoByMonth]()
-        for (day, photosByDate) in dayDict.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key }) {
+        for (day, photosByDate) in sortedDayDict {
             guard let month = day.removeDay() else { continue }
             var photoByMonth = monthDict[month] ?? PhotoByMonth(categoryDate: month)
             photoByMonth.append(photosByDate)
             monthDict[month] = photoByMonth
         }
         
+        let sortedMonthDict = monthDict.lazy.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key })
+        
         var yearDict = [Date: PhotoByYear]()
-        for (month, photoByMonth) in monthDict.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key }) {
+        for (month, photoByMonth) in sortedMonthDict {
             guard let year = month.removeMonth() else { continue }
             var photoByYear = yearDict[year] ?? PhotoByYear(categoryDate: year)
             photoByYear.append(photoByMonth)

@@ -28,7 +28,7 @@ extension PhotosViewController {
                                                       headerTitle: nil,
                                                       dismissCompletion: nil,
                                                       sender: nil)
-
+        
         present(actionSheetVC, animated: true)
     }
     
@@ -54,7 +54,7 @@ extension PhotosViewController {
             editBarButtonItem?.isEnabled = true
             editBarButtonItem?.target = self
             editBarButtonItem?.action = #selector(onSelect)
-        
+            
             objcWrapper_parent.navigationItem.rightBarButtonItem = editBarButtonItem
             objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
             )

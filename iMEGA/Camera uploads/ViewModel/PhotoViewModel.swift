@@ -21,6 +21,7 @@ final class PhotoViewModel: NSObject {
     enum SortingKeys: String {
         case cameraUploadExplorerFeed
     }
+    
     private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]
     
     var filterType: PhotosFilterOptions = .allMedia
@@ -50,16 +51,18 @@ final class PhotoViewModel: NSObject {
         }
     }
     
-    @objc func loadAllPhotos(with featureFlag: Bool) {
-        Task {
+    @MainActor
+    @objc func loadAllPhotos(withFeatureFlag flag: Bool) {
+        Task.detached(priority: .userInitiated) { [weak self] in
             do {
-                let photos = try await featureFlag ? loadFilteredPhotos() : photoLibraryUseCase.cameraUploadPhotos()
-                self.mediaNodesArray = photos
+                let photos = try await flag ? self?.loadFilteredPhotos() : self?.photoLibraryUseCase.cameraUploadPhotos()
+                self?.mediaNodesArray = photos ?? []
             }
             catch {}
         }
     }
     
+    @MainActor
     func loadFilteredPhotos() async throws -> [MEGANode] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
         var nodes: [MEGANode]
