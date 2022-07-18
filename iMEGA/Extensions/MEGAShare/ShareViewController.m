@@ -80,6 +80,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+    [MEGAChatSdk setCatchException:false];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
@@ -99,13 +106,6 @@
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
-    
-#ifdef DEBUG
-    [MEGASdk setLogLevel:MEGALogLevelMax];
-    [MEGAChatSdk setCatchException:false];
-#else
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
-#endif
         
     [MEGASdk setLogToConsole:YES];
     
