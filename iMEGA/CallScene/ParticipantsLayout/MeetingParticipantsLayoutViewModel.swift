@@ -89,7 +89,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var call: CallEntity
     private var timer: Timer?
     private var callDurationInfo: CallDurationInfo?
-    private var callParticipants = [CallParticipantEntity]()
+    private var callParticipants = [CallParticipantEntity]() {
+        didSet {
+            if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
+                requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
+            } else {
+                requestAvatarChanges(forParticipants: callParticipants, chatId: call.chatId)
+            }
+        }
+    }
     private var indexOfVisibleParticipants = [Int]()
     private var hasParticipantJoinedBefore = false
     private var speakerParticipant: CallParticipantEntity? {
@@ -127,8 +135,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
-    private let userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: UserImageUseCaseProtocol
     
+    private var avatarChangeSubscription: AnyCancellable?
+    private var avatarRefetchTasks: [Task<Void, Never>]?
+
     private var callEndCountDownSubscription: AnyCancellable?
     private lazy var dateComponentsFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -182,6 +193,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     deinit {
         cancelReconnecting1on1Subscription()
         callUseCase.stopListeningForCall()
+        avatarRefetchTasks?.forEach { $0.cancel() }
     }
     
     private func initTimerIfNeeded(with duration: Int) {
@@ -386,6 +398,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
                     self?.invokeCommand?(.updateMyAvatar(image))
                 }
+                
+                requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
             }
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
         case .tapOnView(let onParticipantsView):
@@ -638,6 +652,58 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 self.callTerminated(self.call)
                 self.containerViewModel?.dispatch(.dismissCall(completion: nil))
             }
+    }
+    
+    private func requestAvatarChanges(forParticipants participants: [CallParticipantEntity], chatId: MEGAHandle) {
+        avatarChangeSubscription?.cancel()
+        avatarRefetchTasks?.forEach { $0.cancel() }
+        
+        avatarChangeSubscription = userImageUseCase
+            .requestAvatarChangeNotification(forUserHandles:participants.map(\.participantId))
+            .sink { error in
+                MEGALogDebug("error fetching the changed avatar \(error)")
+            } receiveValue: { [weak self] handles in
+                guard let self = self else { return }
+                self.avatarRefetchTasks = handles.map {
+                    self.createRefetchAvatarTask(forHandle: $0, chatId: chatId)
+                }
+            }
+    }
+    
+    private func createRefetchAvatarTask(forHandle handle: MEGAHandle, chatId: MEGAHandle) -> Task<Void, Never> {
+        Task { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                guard let name = try await self.chatRoomUseCase.userDisplayNames(forPeerIds: [handle], chatId: chatId).first else {
+                    MEGALogDebug("Unable to find the name for handle \(handle)")
+                    return
+                }
+                                
+                let image = try await self.userImageUseCase.createAvatar(usingUserHandle: handle, name: name)
+                await self.updateAvatar(handle: handle, image: image)
+                
+                let avatar = try await self.userImageUseCase.downloadAvatar(forUserHandle: handle)
+                await self.updateAvatar(handle: handle, image: avatar)
+            } catch {
+                MEGALogDebug("Failed to fetch avatar for \(handle) with \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    private func updateAvatar(handle: MEGAHandle, image: UIImage) {
+        guard let myself = CallParticipantEntity.myself(chatId: call.chatId) else {
+            return
+        }
+        
+        if handle == myself.participantId {
+            invokeCommand?(.updateMyAvatar(image))
+        } else {
+            if let participant = callParticipants.filter({ $0.participantId == handle }).first{
+                invokeCommand?(.updateAvatar(image, participant))
+            }
+        }
     }
 }
 

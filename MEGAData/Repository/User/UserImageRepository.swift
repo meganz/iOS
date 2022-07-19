@@ -1,8 +1,10 @@
+import Combine
 
 struct UserImageRepository: UserImageRepositoryProtocol {
    
     private let sdk: MEGASdk
-    
+    private var userAvatarChangeSubscriber: UserAvatarChangeSubscriber?
+
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
@@ -22,5 +24,99 @@ struct UserImageRepository: UserImageRepositoryProtocol {
         sdk.getAvatarUser(withEmailOrHandle: handle,
                           destinationFilePath: destinationPath,
                           delegate: thumbnailRequestDelegate)
+    }
+    
+    func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> UIImage {
+        try await withThrowingTaskGroup(of: UIImage.self) { group in
+            group.addTask {
+                try userAvatar(forUserHandle: handle, destinationPath: destinationPath)
+            }
+            
+            group.addTask {
+                try await Task.sleep(nanoseconds: 20_000_000_000)
+                try Task.checkCancellation()
+                throw UserImageLoadErrorEntity.timeout
+            }
+            
+            let avatar = try await group.next()
+            group.cancelAll()
+            
+            if let avatar = avatar {
+                return avatar
+            }
+            
+            throw UserImageLoadErrorEntity.unableToFetch
+        }
+    }
+    
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never> {
+        let userAvatarChangeSubscriber = UserAvatarChangeSubscriber(sdk: sdk, handles: handles)
+        self.userAvatarChangeSubscriber = userAvatarChangeSubscriber
+        return userAvatarChangeSubscriber.monitor
+    }
+    
+    private func userAvatar(forUserHandle handle: String?, destinationPath: String) throws -> UIImage {
+        let group = DispatchGroup()
+        var result: Result<UIImage, UserImageLoadErrorEntity>?
+        
+        group.enter()
+        let thumbnailRequestDelegate = MEGAGetThumbnailRequestDelegate { request in
+            if let filePath = request.file, let image = UIImage(contentsOfFile: filePath) {
+                result = .success(image)
+            } else {
+                result = .failure(UserImageLoadErrorEntity.unableToFetch)
+            }
+            
+            group.leave()
+        }
+        
+        sdk.getAvatarUser(withEmailOrHandle: handle,
+                          destinationFilePath: destinationPath,
+                          delegate: thumbnailRequestDelegate)
+        
+        group.wait()
+        if let result = result {
+            switch result {
+            case.success(let image):
+                return image
+            case .failure(let error):
+                throw error
+            }
+        }
+        
+        throw UserImageLoadErrorEntity.unableToFetch
+    }
+}
+
+fileprivate final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
+    
+    private let sdk: MEGASdk
+    private let handles: [MEGAHandle]
+    private let source: PassthroughSubject<[MEGAHandle], Never>
+
+    var monitor: AnyPublisher<[MEGAHandle], Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGASdk, handles: [MEGAHandle]) {
+        self.sdk = sdk
+        self.handles = handles
+        source = PassthroughSubject<[MEGAHandle], Never>()
+        super.init()
+        self.sdk.add(self)
+    }
+    
+    func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
+        let users = (0..<userList.size.intValue)
+            .compactMap(userList.user)
+            .filter {
+                $0.isOwnChange == 0 &&
+                $0.hasChangedType(.avatar)
+                && handles.contains($0.handle)
+            }
+        
+        if users.isEmpty == false {
+            source.send(users.map(\.handle))
+        }
     }
 }

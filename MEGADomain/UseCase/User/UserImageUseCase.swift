@@ -1,13 +1,22 @@
+import Combine
+import UIKit
 
 protocol UserImageUseCaseProtocol {
     func fetchUserAvatar(withUserHandle handle: UInt64,
                          name: String,
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
+    @discardableResult
+    func clearAvatarCache(forUserHandle handle: MEGAHandle) -> Bool
+    
+    func downloadAvatar(forUserHandle handle: MEGAHandle) async throws -> UIImage
+    func createAvatar(usingUserHandle handle: MEGAHandle, name: String) async throws -> UIImage
+
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never>
 }
 
 struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryProtocol, V: ThumbnailRepositoryProtocol>: UserImageUseCaseProtocol {
     
-    private let userImageRepo: T
+    private var userImageRepo: T
     private let userStoreRepo: U
     private let thumbnailRepo: V
     
@@ -35,9 +44,19 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             return
         } else {
             MEGALogDebug("UserImageUseCase: avatar image for \(base64Handle) at path \(destinationURLPath) started")
-            if let image = getAvatarImage(withUserHandle: handle, name: name) {
+            let displayName = userStoreRepo.getDisplayName(forUserHandle: handle)
+            
+            do {
+                let image = try createAvatar(usingName: displayName ?? name, handle: handle)
                 MEGALogDebug("UserImageUseCase: avatar image for \(base64Handle) at path \(destinationURLPath) success")
                 completion(.success(image))
+            } catch {
+                MEGALogDebug("UserImageUseCase: avatar image creation for \(base64Handle) at path \(destinationURLPath) failed with error \(error)")
+                if let error = error as? UserImageLoadErrorEntity {
+                    completion(.failure(error))
+                } else {
+                    completion(.failure(.generic))
+                }
             }
         }
 
@@ -47,10 +66,61 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                                     completion: completion)
     }
     
-    private func getAvatarImage(withUserHandle handle: UInt64, name: String, size: CGSize = CGSize(width: 100.0, height: 100.0)) -> UIImage? {
+    @discardableResult func clearAvatarCache(forUserHandle handle: MEGAHandle) -> Bool {
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
+            MEGALogDebug("UserImageUseCase: base64 handle not found for handle \(handle)")
+            return false
+        }
+        
+        let destinationURLPath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail).path
+        if FileManager.default.fileExists(atPath: destinationURLPath) {
+            do {
+                try FileManager.default.removeItem(atPath: destinationURLPath)
+                return true
+            } catch {
+                MEGALogDebug("UserImageUseCase: Unable to delete the avatar image")
+                return false
+            }
+        }
+        
+        MEGALogDebug("UserImageUseCase: File does not exists at destination path")
+        return false
+    }
+    
+    func downloadAvatar(forUserHandle handle: MEGAHandle) async throws -> UIImage {
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
+            MEGALogDebug("UserImageUseCase: base64 handle not found for handle \(handle)")
+            throw UserImageLoadErrorEntity.base64EncodingError
+        }
+        
+        let destinationURLPath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail).path
+        MEGALogDebug("UserImageUseCase: load image for \(base64Handle) at path \(destinationURLPath) started")
+        return try await userImageRepo.avatar(forUserHandle: base64Handle, destinationPath: destinationURLPath)
+
+    }
+    
+    func createAvatar(usingUserHandle handle: MEGAHandle, name: String) async throws -> UIImage {
+        let displayName = await userStoreRepo.displayName(forUserHandle: handle)
+        return try await createAvatarImage(usingName: displayName ?? name, handle: handle)
+    }
+    
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never> {
+        userImageRepo.requestAvatarChangeNotification(forUserHandles: handles)
+    }
+    
+    @MainActor
+    private func createAvatarImage(usingName name: String, handle: MEGAHandle) throws -> UIImage {
+        try createAvatar(usingName: name, handle: handle)
+    }
+    
+    private func createAvatar(
+        usingName name: String,
+        handle: MEGAHandle,
+        size: CGSize = CGSize(width: 100.0, height: 100.0)
+    ) throws -> UIImage {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
               let avatarBackgroundColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
-            return nil
+            throw UserImageLoadErrorEntity.base64EncodingError
         }
         
         let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
@@ -58,12 +128,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             return image
         }
         
-        let initials: String
-        if let dispalyName = userStoreRepo.getDisplayName(forUserHandle: handle) {
-            initials = (dispalyName as NSString).mnz_initialForAvatar()
-        } else {
-            initials = (name as NSString).mnz_initialForAvatar()
-        }
+        let initials = (name as NSString).mnz_initialForAvatar()
         
         let image = UIImage(forName: initials,
                             size: size,
@@ -72,10 +137,14 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0))
         
         if let imageData = image?.jpegData(compressionQuality: 1.0) {
-            try? imageData.write(to: destinationURL, options: .atomic)
+            try imageData.write(to: destinationURL, options: .atomic)
+        }
+        
+        if let image = image {
+            return image
         }
 
-        return image
+        throw UserImageLoadErrorEntity.unableToCreateImage
     }
     
     private func fetchImage(fromPath path: String) -> UIImage? {
