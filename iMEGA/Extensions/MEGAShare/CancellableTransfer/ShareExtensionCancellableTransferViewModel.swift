@@ -70,13 +70,12 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
             return
         }
         
-        guard folderTransfers.count != 0 else {
-            manageTransfersCompletion()
-            return
-        }
-        
         if fileTransfersFinished() {
-            startShareExtensionFolderUploads()
+            if folderTransfers.count == 0 {
+                manageTransfersCompletion()
+            } else {
+                startShareExtensionFolderUploads()
+            }
         }
     }
     
@@ -103,7 +102,6 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          cancelToken: cancelToken)
             { transferEntity in
                 transferViewEntity.state = transferEntity.state
-                self.continueFolderTransfersIfNeeded()
             } update: { _ in } completion: { [weak self] result in
                 switch result {
                 case .success:
