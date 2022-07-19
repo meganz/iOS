@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21179.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -195,7 +195,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="AYF-Zw-NBw" secondAttribute="width" multiplier="1:1" id="69b-9T-rh0"/>
                                                                         <constraint firstItem="AYF-Zw-NBw" firstAttribute="centerX" secondItem="B0V-WX-o62" secondAttribute="centerX" id="BkQ-fC-Ss7"/>
@@ -225,7 +225,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstItem="bxb-jD-ZWg" firstAttribute="centerX" secondItem="Sja-D4-03U" secondAttribute="centerX" id="69W-7e-mga"/>
                                                                         <constraint firstAttribute="width" secondItem="bxb-jD-ZWg" secondAttribute="width" multiplier="1:1" id="aRc-u5-0M6"/>
@@ -340,7 +340,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstItem="GFM-ag-2Vj" firstAttribute="centerY" secondItem="crP-qp-sSE" secondAttribute="centerY" id="9HZ-4J-NSu"/>
                                                                         <constraint firstAttribute="width" secondItem="GFM-ag-2Vj" secondAttribute="width" multiplier="1:1" id="J90-Wz-Nph"/>
