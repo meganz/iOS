@@ -253,6 +253,7 @@ static TransfersWidgetViewController* instance = nil;
     if (self.inProgressButton.selected) {
         
         TransferTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+        cell.selectedBackgroundView = UIView.new;
         
         switch (indexPath.section) {
             case 0: {
