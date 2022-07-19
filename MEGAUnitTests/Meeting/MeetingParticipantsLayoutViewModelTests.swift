@@ -756,6 +756,68 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.outgoingRingingStopReceived()
         XCTAssert(callUseCase.hangCall_CalledTimes == 0)
     }
+    
+    func testAction_participantAdded_createAvatar() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("test"), userDisplayNamesCompletion: .success([(handle: 100, name: "test")]))
+        
+        let expectation = expectation(description: "Awaiting publisher")
+        let userUseCase = MockUserImageUseCase(result: .success(UIImage()), createAvatarCompletion: { handle in
+            XCTAssert(handle == 100, "handle should match")
+            expectation.fulfill()
+        })
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: chatRoomUseCase,
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: userUseCase,
+                                      chatRoom: chatRoom,
+                                      call: call)
+        viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
+        userUseCase.avatarChangePublisher.send([100])
+        waitForExpectations(timeout: 20)
+    }
+    
+    func testAction_participantAdded_downloadAvatar() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        callUseCase.chatRoom = chatRoom
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("test"), userDisplayNamesCompletion: .success([(handle: 100, name: "test")]))
+        
+        let expectation = expectation(description: "Awaiting publisher")
+        let userUseCase = MockUserImageUseCase(result: .success(UIImage()), downloadAvatarCompletion: { handle in
+            XCTAssert(handle == 100, "handle should match")
+            expectation.fulfill()
+        })
+        
+        let viewModel = MeetingParticipantsLayoutViewModel(router: MockCallViewRouter(),
+                                      containerViewModel: containerViewModel,
+                                      callUseCase: callUseCase,
+                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                      remoteVideoUseCase: remoteVideoUseCase,
+                                      chatRoomUseCase: chatRoomUseCase,
+                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                      userImageUseCase: userUseCase,
+                                      chatRoom: chatRoom,
+                                      call: call)
+        viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
+        userUseCase.avatarChangePublisher.send([100])
+        waitForExpectations(timeout: 20)
+    }
 }
 
 final class MockCallViewRouter: MeetingParticipantsLayoutRouting {
