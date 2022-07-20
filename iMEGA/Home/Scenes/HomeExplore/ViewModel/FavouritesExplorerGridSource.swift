@@ -1,8 +1,4 @@
 
-protocol FavouritesExplorerGridSourceDelegate: UIViewController {
-    func showMoreNodeOptions(for node: MEGANode, sender: UIView)
-}
-
 final class FavouritesExplorerGridSource: NSObject {
     
     private enum FavouritesSection: Int {
@@ -39,7 +35,7 @@ final class FavouritesExplorerGridSource: NSObject {
     private(set) var selectedNodes: [MEGANode]?
     private var fileNodes: [MEGANode] = []
     private var folderNodes: [MEGANode] = []
-    weak var delegate: FavouritesExplorerGridSourceDelegate?
+    weak var delegate: FilesExplorerGridSourceDelegate?
     var allowsMultipleSelection: Bool {
         didSet {
             guard oldValue != allowsMultipleSelection else { return }
@@ -53,7 +49,7 @@ final class FavouritesExplorerGridSource: NSObject {
          nodes: [MEGANode]?,
          allowsMultipleSelection: Bool,
          selectedNodes: [MEGANode]?,
-         delegate: FavouritesExplorerGridSourceDelegate?) {
+         delegate: FilesExplorerGridSourceDelegate?) {
         self.collectionView = collectionView
         self.allNodes = nodes
         self.allowsMultipleSelection = allowsMultipleSelection
