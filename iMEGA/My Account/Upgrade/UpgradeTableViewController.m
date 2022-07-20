@@ -122,14 +122,12 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     [self getIndexPositionsForProLevels];
     
     [self initCurrentPlan];
-    
-    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationController.toolbarHidden = NO;
+    [self updateAppearance];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -168,6 +166,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 #pragma mark - Private
 
 - (void)updateAppearance {
+    self.navigationController.toolbarHidden = YES;
     self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
@@ -178,6 +177,10 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     self.chooseFromOneOfThePlansLabel.textColor = self.chooseFromOneOfThePlansProLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     [self setupTableViewHeaderAndFooter];
+    self.navigationController.toolbarHidden = NO;
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody],
+                                                                     NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}
+                                                          forState:UIControlStateNormal];
 }
 
 - (void)setupCurrentPlanView {
