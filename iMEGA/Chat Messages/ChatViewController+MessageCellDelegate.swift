@@ -208,7 +208,13 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                     photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId)
                     present(viewController: photoBrowserVC)
                 } else {
-                    node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
+                    if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
+                        viewController.chatId = chatRoom.chatId
+                        viewController.messageId = megaMessage.messageId
+                        navigationController?.present(navController, animated: true)
+                    } else {
+                        node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
+                    }
                 }
             } else {
                 let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController

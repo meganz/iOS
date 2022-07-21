@@ -251,6 +251,8 @@
     if (self.isLink && self.fileLink) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
         [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+    } else if (self.chatId && self.messageId) {
+        [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[self.node] messageId:self.messageId chatId:self.chatId presenter:self];
     } else if (self.node != nil) {
         [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.node] presenter:self isFolderLink:NO];
     }
