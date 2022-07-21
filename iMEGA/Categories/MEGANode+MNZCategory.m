@@ -495,10 +495,15 @@
 #pragma mark - File links
 
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
+    if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+        return;
+    }
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            NSString *localPath = [Helper.relativePathForOffline stringByAppendingPathComponent:self.name];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:self localPath:localPath fileName:nil appData:nil startFirst:YES cancelToken:nil];
             [viewController dismissViewControllerAnimated:YES completion:^{
-                [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self] presenter:viewController.presentingViewController isFolderLink:isFolderLink];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
             }];
         } else {
             if (isFolderLink) {
