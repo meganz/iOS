@@ -33,10 +33,10 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
             configureHeaderView(email: email)
             self.actions = actions
         case .updateAvatarImage(let image):
-            guard let meetingContactInfoHeaderView = headerView?.subviews.filter({ $0 is MeetingContactInfoHeaderView }).first as? MeetingContactInfoHeaderView else { return }
+            guard let meetingContactInfoHeaderView = headerView?.subviews.first(where: { $0 is MeetingContactInfoHeaderView }) as? MeetingContactInfoHeaderView else { return }
             meetingContactInfoHeaderView.avatarImageView.image = image
         case .updateName(let name):
-            guard let meetingContactInfoHeaderView = headerView?.subviews.filter({ $0 is MeetingContactInfoHeaderView }).first as? MeetingContactInfoHeaderView else { return }
+            guard let meetingContactInfoHeaderView = headerView?.subviews.first(where: { $0 is MeetingContactInfoHeaderView }) as? MeetingContactInfoHeaderView else { return }
             meetingContactInfoHeaderView.nameLabel.text = name
         }
     }

@@ -96,10 +96,8 @@ class ChatInputBar: UIView {
                 }
             } else {
                 voiceRecordingViewCanBeDismissed = false
-                guard let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
-                    .filter({ $0.firstAttribute == .height })
-                    .first else {
-                        return
+                guard let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height }) else {
+                    return
                 }
                 
                 voiceClipInputBar.startRecordingView.isHidden = true
@@ -169,9 +167,7 @@ class ChatInputBar: UIView {
             
             if let voiceClipInputBar = voiceClipInputBar,
                 voiceClipInputBar.superview != nil,
-                let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
-                    .filter({ $0.firstAttribute == .height })
-                    .first {
+                let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height }) {
                 voiceClipInputBarHeightConstraint.constant = (traitCollection.verticalSizeClass == .compact) ? voiceClipInputBarRegularHeight - 100: voiceClipInputBarRegularHeight
             }
         }

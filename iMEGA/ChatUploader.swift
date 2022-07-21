@@ -166,7 +166,7 @@ extension ChatUploader: MEGATransferDelegate {
             
             context.performAndWait {
                 let allTransfers = self.store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
-                if let transferTask = allTransfers.filter({ $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}).first {
+                if let transferTask = allTransfers.first(where: { $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}) {
                     transferTask.transferTag = String(transfer.tag)
                     MEGALogInfo("[ChatUploader] updating existing row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
                 } else {

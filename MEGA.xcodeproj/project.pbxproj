@@ -1714,6 +1714,9 @@
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F05E82514C022005133C2 /* XCTestCase+Addition.swift */; };
 		B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = B611E174286165ED00F360CF /* AppDelegate+SDK.swift */; };
+		B61414BA2888FBBF0014989C /* Sequence+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61414B92888FBBF0014989C /* Sequence+Additions.swift */; };
+		B61414BB2888FBBF0014989C /* Sequence+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61414B92888FBBF0014989C /* Sequence+Additions.swift */; };
+		B61414BC2888FBBF0014989C /* Sequence+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61414B92888FBBF0014989C /* Sequence+Additions.swift */; };
 		B616D808254DFBA300712012 /* CameraUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */; };
 		B616D8342550C16700712012 /* NodeHandle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616D8332550C16700712012 /* NodeHandle+Additions.swift */; };
 		B61814AA27865AB8007715B3 /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61814A927865AB8007715B3 /* CustomOperators.swift */; };
@@ -4213,6 +4216,7 @@
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
 		B60F05E82514C022005133C2 /* XCTestCase+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Addition.swift"; sourceTree = "<group>"; };
 		B611E174286165ED00F360CF /* AppDelegate+SDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SDK.swift"; sourceTree = "<group>"; };
+		B61414B92888FBBF0014989C /* Sequence+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Additions.swift"; sourceTree = "<group>"; };
 		B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadNodeAccess.swift; sourceTree = "<group>"; };
 		B616D8332550C16700712012 /* NodeHandle+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeHandle+Additions.swift"; sourceTree = "<group>"; };
 		B61814A927865AB8007715B3 /* CustomOperators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
@@ -6577,6 +6581,7 @@
 				B64A71C6287B88020085087D /* Collection+Additions.swift */,
 				B64A71BC287AA9AB0085087D /* Set+Additions.swift */,
 				B64A71C2287AB71A0085087D /* OptionSet+Additions.swift */,
+				B61414B92888FBBF0014989C /* Sequence+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -13766,6 +13771,7 @@
 				A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */,
 				5D166B8D252198EF004F4F4A /* HomeSearchHintViewModel.swift in Sources */,
 				B6ADE4D52731E54E00C19F36 /* PhotoYearCardViewModel.swift in Sources */,
+				B61414BA2888FBBF0014989C /* Sequence+Additions.swift in Sources */,
 				5D64660424890A34006030A5 /* ThemeColor.swift in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
@@ -14136,6 +14142,7 @@
 				5B9F33672444907900E2A15B /* NSDate+MNZCategory.m in Sources */,
 				77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */,
 				B68ED08B27D0591B00713850 /* ThumbnailTypeEntity.swift in Sources */,
+				B61414BB2888FBBF0014989C /* Sequence+Additions.swift in Sources */,
 				83FB143D219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				B64A71B4287A5CE10085087D /* NodeEntity+Media.swift in Sources */,
 				77F0522222CB8BBE00032138 /* MEGAGenericRequestDelegate.m in Sources */,
@@ -14536,6 +14543,7 @@
 				B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */,
 				B6F8CE17262823240074CBBF /* CoreDataErrorHandler.m in Sources */,
 				831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
+				B61414BC2888FBBF0014989C /* Sequence+Additions.swift in Sources */,
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				8335C648282E7B5700509479 /* Image+Additions.swift in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
