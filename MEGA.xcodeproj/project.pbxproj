@@ -1884,6 +1884,7 @@
 		B695B60C264B43160050DF09 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */; };
 		B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B695B5FD264B43160050DF09 /* SVProgressHUD.bundle */; };
 		B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
+		B6963A792888ECE200705A2B /* Collection+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71C6287B88020085087D /* Collection+Additions.swift */; };
 		B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
 		B699016F262F91D200176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
 		B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */; };
@@ -13965,6 +13966,7 @@
 				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				A81DF35D2508FDAD009C8B60 /* Date+Formatting.swift in Sources */,
 				77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */,
+				B6963A792888ECE200705A2B /* Collection+Additions.swift in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
 				A81DF35C2508FD86009C8B60 /* DateFormatting.swift in Sources */,

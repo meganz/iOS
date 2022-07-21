@@ -180,7 +180,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             stateBadge.image = nil
         }
         
-        if transfers.count > 0 {
+        if transfers.isNotEmpty {
             self.isHidden = false
             self.alpha = 1
             self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
@@ -282,7 +282,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     @objc func dismissWidget() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-            guard self.transfers.count == 0 else {
+            guard self.transfers.isEmpty else {
                 self.showWidgetIfNeeded()
                 return
             }

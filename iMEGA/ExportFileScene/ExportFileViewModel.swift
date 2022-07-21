@@ -47,7 +47,7 @@ final class ExportFileViewModel: ViewModelType {
             }
         case .exportFilesFromNodes(let nodes):
             exportFileUseCase.export(nodes: nodes) { urls in
-                if urls.count > 0 {
+                if urls.isNotEmpty {
                     self.router.exportedFiles(urls: urls)
                     self.router.hideProgressView()
                 } else {
@@ -56,7 +56,7 @@ final class ExportFileViewModel: ViewModelType {
             }
         case .exportFilesFromMessages(let messages):
             exportFileUseCase.export(messages: messages) { urls in
-                if urls.count > 0 {
+                if urls.isNotEmpty {
                     self.router.exportedFiles(urls: urls)
                     self.router.hideProgressView()
                 } else {

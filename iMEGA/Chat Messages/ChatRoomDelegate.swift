@@ -168,7 +168,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             }
         } else {
             awaitingLoad = false
-            if chatMessages.count == 0 {
+            if chatMessages.isEmpty {
                 loadingState = false
 
                 chatMessages = historyMessages
@@ -253,7 +253,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                     return localChatMessage.message.temporalId == message.temporalId
                 }
 
-                if filteredArray.count > 0 {
+                if filteredArray.isNotEmpty {
                     guard let oldMessage = filteredArray.first as? ChatMessage,
                         let index = chatMessages.firstIndex(where: { message -> Bool in
                             guard let localChatMessage = message as? ChatMessage else {
@@ -284,7 +284,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                             return node.handle == chatMessage.transfer?.nodeHandle
                         }
 
-                        if filteredArray.count > 0, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
+                        if filteredArray.isNotEmpty, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
                             let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                             chatMessages.append(receivedMessage)
                             transfers.remove(at: index)
@@ -318,7 +318,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
                     return localChatMessage.message.messageId == message.messageId
                 }
-                if filteredArray.count > 0 {
+                if filteredArray.isNotEmpty {
                     guard let oldMessage = filteredArray.first as? ChatMessage,
                         let index = chatMessages.firstIndex(where: { chatMessage -> Bool in
                             guard let localChatMessage = chatMessage as? ChatMessage else {
@@ -389,7 +389,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             return localChatMessage.message.temporalId == message.temporalId
         }
         
-        if filteredArray.count > 0 {
+        if filteredArray.isNotEmpty {
             guard let oldMessage = filteredArray.first as? ChatMessage,
                 let index = chatMessages.firstIndex(where: { message -> Bool in
                     guard let localChatMessage = message as? ChatMessage else {
@@ -563,7 +563,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     private func reloadTransferData() {
-        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk().transfers.mnz_transfersArrayFromTranferList(), allTransfers.count > 0 else {
+        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk().transfers.mnz_transfersArrayFromTranferList(), allTransfers.isNotEmpty else {
             return
         }
         chatViewController?.checkTransferPauseStatus()
@@ -575,7 +575,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 return false
             }
             let appDataComponentsArray = transfer.appData.components(separatedBy: ">")
-            if appDataComponentsArray.count > 0 {
+            if appDataComponentsArray.isNotEmpty {
                 for appDataComponent in appDataComponentsArray {
                     let appDataComponentComponentsArray = appDataComponent.components(separatedBy: "=")
                     guard let appDataType = appDataComponentComponentsArray.first else {

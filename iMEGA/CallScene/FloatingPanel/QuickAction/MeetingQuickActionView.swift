@@ -88,7 +88,7 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
     }
 
     func addRoutingView() {
-        guard subviews.filter({ $0 is AVRoutePickerView }).count == 0 else {
+        guard subviews.lazy.filter({ $0 is AVRoutePickerView }).isEmpty else {
             return
         }
         

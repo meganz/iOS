@@ -559,7 +559,7 @@ extension ChatViewController: ChatInputBarDelegate {
     func showTapAndHoldMessage() {
         let myViews = view.subviews.filter { $0 is TapAndHoldMessageView }
         guard let inputAccessoryView = inputAccessoryView,
-            myViews.count == 0  else {
+            myViews.isEmpty  else {
             return
         }
         

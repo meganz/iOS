@@ -120,7 +120,7 @@ extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPag
         guard let menuViewController = viewController as? AddToChatMenuViewController,
             let index = menuPages.firstIndex(of: menuViewController),
             index > 0,
-            menuPages.count > 0 else {
+            menuPages.isNotEmpty else {
             return nil
         }
         

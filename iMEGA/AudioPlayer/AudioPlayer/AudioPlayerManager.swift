@@ -23,7 +23,7 @@ import Foundation
     }
     
     func isPlayerEmpty() -> Bool {
-        player?.tracks.count == 0
+        player?.tracks.isEmpty == true
     }
     
     func isPlayerPlaying() -> Bool {

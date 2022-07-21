@@ -40,13 +40,13 @@ final class CancellableTransferViewModel: ViewModelType {
         case .onViewReady:
             switch transferType {
             case .upload:
-                if fileTransfers.count != 0 {
+                if fileTransfers.isNotEmpty {
                     startFileUploads()
                 } else {
                     startFolderUploads()
                 }
             case .download:
-                if fileTransfers.count != 0 {
+                if fileTransfers.isNotEmpty {
                     startFileDownloads()
                 } else {
                     startFolderDownloads()
@@ -81,7 +81,7 @@ final class CancellableTransferViewModel: ViewModelType {
             return
         }
         
-        guard folderTransfers.count != 0 else {
+        guard folderTransfers.isNotEmpty else {
             manageTransfersCompletion()
             return
         }

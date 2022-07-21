@@ -76,7 +76,7 @@ class ContactsGroupsViewController: UIViewController {
     }
     
     func showGroupChatRoom(at indexPath: IndexPath) {
-        let chatListItem = searchingGroupChats.count != 0 ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
+        let chatListItem = searchingGroupChats.isNotEmpty ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
@@ -136,7 +136,7 @@ extension ContactsGroupsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let chatListItem = searchingGroupChats.count != 0 ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
+        let chatListItem = searchingGroupChats.isNotEmpty ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as? ContactsGroupTableViewCell else {
             fatalError("Could not dequeue cell with identifier groupCell")
         }
@@ -163,7 +163,7 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     }
     
     private func imageForEmptyDataSet() -> UIImage? {
-        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+        if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
             return Asset.Images.EmptyStates.searchEmptyState.image
         } else {
             return Asset.Images.EmptyStates.chatEmptyState.image
@@ -171,7 +171,7 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     }
     
     private func titleForEmptyDataSet() -> String? {
-        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+        if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
             return Strings.Localizable.noResults
         } else {
             return Strings.Localizable.noConversations
