@@ -82,12 +82,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             flexibleItem,
             moreItem
         ]
-        
-        if let nodes = nodes, nodes.count > 0 {
-            return enable(true, barButtonItems: barButtonItems)
-        }
-        else {
-            return enable(false, barButtonItems: barButtonItems)
-        }
+
+        return enable(nodes?.isNotEmpty == true, barButtonItems: barButtonItems)
     }
 }

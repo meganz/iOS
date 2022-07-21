@@ -148,7 +148,7 @@ final class PhotoCellViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] updatedNodes in
                 guard let self = self,
-                      let updateNode = updatedNodes.filter({ $0.id == self.photo.id }).first else {
+                      let updateNode = updatedNodes.first(where: { $0 == self.photo }) else {
                     return
                 }
                 self.isFavorite = updateNode.isFavourite
