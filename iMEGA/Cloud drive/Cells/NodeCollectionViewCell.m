@@ -255,8 +255,9 @@ static NSString *kDuration = @"kDuration";
         }
     }
 }
+
 - (IBAction)optionButtonAction:(id)sender {
-    [self.delegate infoTouchUpInside:sender];
+    [self.delegate showMoreMenuForNode:self.node from:sender];
 }
 
 #pragma mark: - Private

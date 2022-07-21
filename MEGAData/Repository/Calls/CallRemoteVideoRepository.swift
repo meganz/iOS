@@ -23,7 +23,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
     }
     
     func disableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool) {
-        guard let remoteVideo = remoteVideos.filter({ $0.chatId == chatId && $0.clientId == clientId }).first else {
+        guard let remoteVideo = remoteVideos.first(where: { $0.chatId == chatId && $0.clientId == clientId }) else {
             MEGALogDebug("Video for clientId \(clientId) already disabled")
             return
         }

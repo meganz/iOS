@@ -165,3 +165,4 @@
 #import "AssetResourceUploadOperation.h"
 #import "AssetUploadStatus.h"
 #import "AboutTableViewController.h"
+#import "SettingsTableViewController.h"

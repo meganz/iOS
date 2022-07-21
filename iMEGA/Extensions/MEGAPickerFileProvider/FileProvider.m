@@ -68,6 +68,12 @@
 }
 
 - (void)itemChangedAtURL:(NSURL *)url {
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+    [MEGAChatSdk setCatchException:false];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
     [MEGASdk setLogToConsole:YES];
     
     if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
@@ -84,12 +90,6 @@
     // Called at some point after the file has changed; the provider may then trigger an upload
     self.url = url;
     self.semaphore = dispatch_semaphore_create(0);
-
-#ifdef DEBUG
-    [MEGASdk setLogLevel:MEGALogLevelMax];
-#else
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
-#endif
     
     NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if(session) {

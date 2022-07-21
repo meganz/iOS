@@ -1,7 +1,9 @@
-
 import Photos
 
 struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
+    static var newRepo: PhotosLibraryRepository {
+        PhotosLibraryRepository()
+    }
     
     var completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?
     let options: PHAssetResourceCreationOptions = {

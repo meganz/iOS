@@ -35,7 +35,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     
     func resetPlayerItems() {
         guard let queuePlayer = queuePlayer,
-              queuePlayer.items().count == 0,
+              queuePlayer.items().isEmpty,
               queuePlayer.currentItem == nil else { return }
             
         resetPlaylist()

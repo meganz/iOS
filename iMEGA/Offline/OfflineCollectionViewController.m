@@ -199,7 +199,7 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
 
 #pragma mark - NodeCollectionViewCell
 
-- (void)infoTouchUpInside:(UIButton *)sender {
+- (void)showMoreMenuForNode:(MEGANode *)node from:(UIButton *)sender {
     if (self.collectionView.allowsMultipleSelection) {
         return;
     }

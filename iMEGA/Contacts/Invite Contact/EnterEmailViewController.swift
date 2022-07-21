@@ -159,7 +159,7 @@ class EnterEmailViewController: UIViewController {
             tagsField.addTag(text)
         }
 
-        guard MEGAReachabilityManager.isReachableHUDIfNot(), tagsField.tags.count > 0 else {
+        guard MEGAReachabilityManager.isReachableHUDIfNot(), tagsField.tags.isNotEmpty else {
             return
         }
 
@@ -202,7 +202,7 @@ extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
             instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             
-            if tagsField.tags.count == 0 {
+            if tagsField.tags.isEmpty {
                 disableInviteContactsButton()
             } else {
                 enableInviteContactsButton()
@@ -225,7 +225,7 @@ extension EnterEmailViewController {
 
     private func configureTagFieldEvents() {
         tagsField.onDidAddTag = { field, tag in
-            if self.tagsField.tags.count > 0 {
+            if self.tagsField.tags.isNotEmpty {
                 self.enableInviteContactsButton()
             }
         }
@@ -233,7 +233,7 @@ extension EnterEmailViewController {
         tagsField.onDidRemoveTag = { field, tag in
             self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             
-            if self.tagsField.tags.count > 0 {
+            if self.tagsField.tags.isNotEmpty {
                 self.enableInviteContactsButton()
             } else {
                 self.disableInviteContactsButton()
@@ -241,7 +241,7 @@ extension EnterEmailViewController {
         }
 
         tagsField.onDidChangeText = { _, text in
-            if text!.mnz_isValidEmail() || self.tagsField.tags.count > 0 {
+            if text!.mnz_isValidEmail() || self.tagsField.tags.isNotEmpty {
                 self.tagsField.textField.textColor = .mnz_label()
                 self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
                 self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)

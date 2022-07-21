@@ -17,7 +17,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         if let email = sdk.myEmail,
             let user = MEGAStore.shareInstance().fetchUser(withEmail: email),
             case let userName = user.displayName,
-            userName.count > 0 {
+            userName.isNotEmpty {
             return userName
         }
         

@@ -133,7 +133,7 @@
     
     if (collectionView.allowsMultipleSelection) {
         MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
-
+        
         NSMutableArray *tempArray = [self.cloudDrive.selectedNodesArray copy];
         for (MEGANode *tempNode in tempArray) {
             if (tempNode.handle == node.handle) {
@@ -211,20 +211,10 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
 }
 
 #pragma mark - NodeCollectionViewCellDelegate
-
-- (void)infoTouchUpInside:(UIButton *)sender {
+- (void)showMoreMenuForNode:(MEGANode *)node from:(UIButton *)sender {
     if (self.collectionView.allowsMultipleSelection) {
         return;
     }
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
-    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
-    
-    MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
-    if (node == nil) {
-        return;
-    }
-    
     [self.cloudDrive showCustomActionsForNode:node sender:sender];
 }
 

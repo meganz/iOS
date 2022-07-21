@@ -2867,6 +2867,12 @@ public enum Strings {
       public enum Timeline {
         /// Timeline
         public static let title = Strings.tr("Localizable", "cameraUploads.timeline.title")
+        public enum AllMedia {
+          public enum Empty {
+            /// No media found
+            public static let title = Strings.tr("Localizable", "cameraUploads.timeline.allMedia.empty.title")
+          }
+        }
       }
       public enum Warning {
         /// ⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.
@@ -4107,6 +4113,16 @@ public enum Strings {
         public static let termsAndPolicies = Strings.tr("Localizable", "settings.section.termsAndPolicies")
         /// User Interface
         public static let userInterface = Strings.tr("Localizable", "settings.section.userInterface")
+        public enum Calls {
+          /// Calls
+          public static let title = Strings.tr("Localizable", "settings.section.calls.title")
+          public enum SoundNotifications {
+            /// Hear a sound when someone joins or leaves a call.
+            public static let description = Strings.tr("Localizable", "settings.section.calls.soundNotifications.description")
+            /// Sound Notifications
+            public static let title = Strings.tr("Localizable", "settings.section.calls.soundNotifications.title")
+          }
+        }
       }
       public enum UserInterface {
         /// Hide Recent Activity
