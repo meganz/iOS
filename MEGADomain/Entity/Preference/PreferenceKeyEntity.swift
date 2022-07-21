@@ -19,4 +19,5 @@ enum PreferenceKeyEntity: String {
     case favouritesIndexed
     case savePhotoToGallery = "IsSavePhotoToGalleryEnabled"
     case saveVideoToGallery = "IsSaveVideoToGalleryEnabled"
+    case callsSoundNotification
 }

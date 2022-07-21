@@ -136,6 +136,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
+    @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
+    private var callsSoundNotificationPreference: Bool
     
     private var avatarChangeSubscription: AnyCancellable?
     private var avatarRefetchTasks: [Task<Void, Never>]?
@@ -173,7 +175,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          userUseCase: UserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatRoom: ChatRoomEntity,
-         call: CallEntity) {
+         call: CallEntity,
+         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
         self.router = router
         self.containerViewModel = containerViewModel
@@ -188,6 +191,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.call = call
 
         super.init()
+        self.$callsSoundNotificationPreference.useCase = preferenceUseCase
     }
     
     deinit {
@@ -324,10 +328,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             .sink { [weak self] handlerCollectionType in
                 guard let self = self else { return }
                 
-                if handlerCollectionType.removedHandlers.isEmpty == false {
-                    self.tonePlayer.play(tone: .participantLeft)
-                } else if handlerCollectionType.addedHandlers.isEmpty == false {
-                    self.tonePlayer.play(tone: .participantJoined)
+                if self.callsSoundNotificationPreference {
+                    if handlerCollectionType.removedHandlers.isEmpty == false {
+                        self.tonePlayer.play(tone: .participantLeft)
+                    } else if handlerCollectionType.addedHandlers.isEmpty == false {
+                        self.tonePlayer.play(tone: .participantJoined)
+                    }
                 }
                 
                 self.namesFetchingTask?.cancel()

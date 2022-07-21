@@ -4113,6 +4113,16 @@ public enum Strings {
         public static let termsAndPolicies = Strings.tr("Localizable", "settings.section.termsAndPolicies")
         /// User Interface
         public static let userInterface = Strings.tr("Localizable", "settings.section.userInterface")
+        public enum Calls {
+          /// Calls
+          public static let title = Strings.tr("Localizable", "settings.section.calls.title")
+          public enum SoundNotifications {
+            /// Hear a sound when someone joins or leaves a call.
+            public static let description = Strings.tr("Localizable", "settings.section.calls.soundNotifications.description")
+            /// Sound Notifications
+            public static let title = Strings.tr("Localizable", "settings.section.calls.soundNotifications.title")
+          }
+        }
       }
       public enum UserInterface {
         /// Hide Recent Activity
