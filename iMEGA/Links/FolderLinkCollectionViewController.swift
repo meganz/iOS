@@ -233,15 +233,8 @@ extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfall
 }
 
 extension FolderLinkCollectionViewController: NodeCollectionViewCellDelegate {
-    func infoTouchUp(inside sender: UIButton) {
-        if collectionView.allowsMultipleSelection {
-            return
-        }
-        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
-              let node = getNode(at: indexPath) else {
-            return
-        }
-        
+    func showMoreMenu(for node: MEGANode, from sender: UIButton) {
+        guard !collectionView.allowsMultipleSelection else { return }
         folderLink.showActions(for: node, from: sender)
     }
 }

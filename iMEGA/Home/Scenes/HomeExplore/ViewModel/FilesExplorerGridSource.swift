@@ -145,12 +145,8 @@ extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
 
 //MARK: - NodeCollectionViewCellDelegate
 extension FilesExplorerGridSource: NodeCollectionViewCellDelegate {
-    func infoTouchUp(inside sender: UIButton) {
-        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
-              let node = nodes?[indexPath.item],
-              !collectionView.allowsMultipleSelection else {
-            return
-        }
+    func showMoreMenu(for node: MEGANode, from sender: UIButton) {
+        guard !collectionView.allowsMultipleSelection else { return }
         delegate?.showMoreNodeOptions(for: node, sender: sender)
     }
 }
