@@ -90,10 +90,6 @@ class GiphySelectionView: UIView {
         let viewNib = UINib(nibName: "MEGAGiphyCollectionViewCell", bundle: nil)
         collectionView.register(viewNib, forCellWithReuseIdentifier: "cell")
         contentView.flex.define { flex in
-            // Category bar
-            // TODO: Add stickers when webclient and android add them
-            // flex.addItem(categoryView).vertically(0)
-            // Collection View
             flex.addItem(collectionView).grow(1).shrink(1)
         }
 

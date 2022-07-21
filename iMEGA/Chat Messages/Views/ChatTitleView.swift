@@ -63,7 +63,6 @@ class ChatTitleView: UIView {
             }
             
         } else {
-            //TODO: lastGreenString
             if let status = chatRoom.onlineStatus {
                 subtitleLabel.isHidden = (status == .invalid)
                 subtitleLabel.text = NSString.chatStatusString(status)
