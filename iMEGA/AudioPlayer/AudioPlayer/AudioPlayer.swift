@@ -170,7 +170,7 @@ final class AudioPlayer: NSObject {
             
             CrashlyticsLogger.log("[AudioPlayer] Player replaced Items: \(String(describing: self.queuePlayer?.items()))")
             self.secureReplaceCurrentItem(with: tracks.first)
-            self.queuePlayer?.items().filter({$0 != self.queuePlayer?.items().first}).forEach {
+            self.queuePlayer?.items().lazy.filter({$0 != self.queuePlayer?.items().first}).forEach {
                 self.queuePlayer?.remove($0)
             }
             self.tracks.forEach { self.queuePlayer?.secureInsert($0, after: self.queuePlayer?.items().last) }
@@ -269,7 +269,7 @@ final class AudioPlayer: NSObject {
     }
     
     @objc func add(listener: AudioPlayerObserversProtocol) {
-        if listenerManager.listeners.filter({ $0 === listener }).isEmpty {
+        if listenerManager.listeners.isEmpty(where: { $0 === listener }) {
             listenerManager.add(listener)
         }
     }

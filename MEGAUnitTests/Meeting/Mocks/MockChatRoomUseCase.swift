@@ -34,7 +34,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         switch userDisplayNamesCompletion {
         case .success(let handleNamePairArray):
             return peerIds.compactMap { handle in
-                return handleNamePairArray.filter({ $0.handle == handle }).first?.name
+                return handleNamePairArray.first(where: { $0.handle == handle })?.name
             }
         case .failure(let error):
             throw error

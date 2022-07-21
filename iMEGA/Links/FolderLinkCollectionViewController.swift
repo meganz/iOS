@@ -126,13 +126,13 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
     
     private func showErrorViewIfRequired() {
-        guard view.subviews.filter({ $0 is EmptyStateView}).isEmpty,
+        guard view.subviews.isEmpty(where: { $0 is EmptyStateView}),
               let customView = folderLink.customView(forEmptyDataSet: collectionView) else { return }
         view.wrap(customView)
     }
     
     private func removeErrorViewIfRequired() {
-        view.subviews.filter({ $0 is EmptyStateView}).forEach({ $0.removeFromSuperview() })
+        view.subviews.lazy.filter({ $0 is EmptyStateView}).forEach({ $0.removeFromSuperview() })
     }
 }
 
@@ -180,7 +180,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
                 return
             }
             
-            let isSelected = selectedNodesCopy.lazy.filter { $0.handle == node.handle }.isNotEmpty
+            let isSelected = selectedNodesCopy.isNotEmpty { $0.handle == node.handle }
             if isSelected {
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
             }

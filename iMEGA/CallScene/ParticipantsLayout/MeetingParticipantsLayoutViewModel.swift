@@ -706,7 +706,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         if handle == myself.participantId {
             invokeCommand?(.updateMyAvatar(image))
         } else {
-            if let participant = callParticipants.filter({ $0.participantId == handle }).first{
+            if let participant = callParticipants.first(where: { $0.participantId == handle }) {
                 invokeCommand?(.updateAvatar(image, participant))
             }
         }
@@ -775,7 +775,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func updateParticipant(_ participant: CallParticipantEntity) {
-        guard let participantUpdated = callParticipants.filter({$0 == participant}).first else {
+        guard let participantUpdated = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant updated")
             return
         }
@@ -789,7 +789,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func highResolutionChanged(for participant: CallParticipantEntity) {
-        guard let participantUpdated = callParticipants.filter({$0 == participant}).first else {
+        guard let participantUpdated = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant updated with video high resolution")
             return
         }
@@ -804,7 +804,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func lowResolutionChanged(for participant: CallParticipantEntity) {
-        guard let participantUpdated = callParticipants.filter({$0 == participant}).first else {
+        guard let participantUpdated = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant updated with video low resolution")
             return
         }
@@ -822,7 +822,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         if isSpeakerParticipantPinned || layoutMode == .grid {
             return
         }
-        guard let participantWithAudio = callParticipants.filter({$0 == participant}).first else {
+        guard let participantWithAudio = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant with audio")
             return
         }
@@ -952,7 +952,7 @@ extension MeetingParticipantsLayoutViewModel: CallLocalVideoCallbacksUseCaseProt
 
 extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProtocol {
     func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data) {
-        guard let participant = callParticipants.filter({ $0.clientId == clientId }).first else {
+        guard let participant = callParticipants.first(where: { $0.clientId == clientId }) else {
             MEGALogError("Error getting participant from remote video frame")
             return
         }

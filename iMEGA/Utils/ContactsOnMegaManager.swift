@@ -67,7 +67,7 @@ struct ContactOnMega: Codable {
         //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
         if contactEmailsToFilter.isNotEmpty {
             for contact in contactsOnMega {
-                if contactEmailsToFilter.lazy.filter({$0 == contact.email.lowercased()}).isEmpty {
+                if contactEmailsToFilter.isEmpty(where: {$0 == contact.email.lowercased()}) {
                     contactsOnMegaFiltered.append(contact)
                 }
             }
