@@ -7,8 +7,8 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     
     private let store: MEGAStore
     private let sdk: MEGASdk
-    
-    let relativeOfflinePath: String = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])?.lastPathComponent ?? ""
+        
+    let offlineURL: URL? = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? "")
     
     init(store: MEGAStore, sdk: MEGASdk) {
         self.store = store
