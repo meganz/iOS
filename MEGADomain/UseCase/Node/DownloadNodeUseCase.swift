@@ -50,7 +50,7 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
                     }
                 }
             } else {
-                guard (nodeName != "Inbox" && localPath == offlineFilesRepository.relativeOfflinePath) else {
+                guard (nodeName != "Inbox") else {
                     completion?(.failure(.inboxFolderNameNotAllowed))
                     return
                 }
