@@ -85,7 +85,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         var selectionType: NodeSelectionType = .filesAndFolders
         let fileNodes = nodes.filter { $0.isFile() }
-        if fileNodes.count == 0 {
+        if fileNodes.isEmpty {
             selectionType = .folders
         } else if fileNodes.count == nodes.count {
             selectionType = .files

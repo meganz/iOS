@@ -182,7 +182,7 @@ class PhotoExplorerViewModel: NSObject {
                 }
             }
             
-            if resultNodes.count > 0 {
+            if resultNodes.isNotEmpty {
                 invokeCommand?(.modified(nodes: resultNodes, indexPaths: resultIndexPaths))
             }
         }

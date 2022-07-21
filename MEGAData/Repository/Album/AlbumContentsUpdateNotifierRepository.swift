@@ -17,10 +17,10 @@ final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRe
     }
     
     private func isAnyNodeMovedIntoTrash(_ nodes: [MEGANode]) -> Bool {
-        let trashedNodes = nodes.filter {
-            sdk.rubbishNode == $0
+        let trashedNodes = nodes.lazy.filter {
+            self.sdk.rubbishNode == $0
         }
-        return !trashedNodes.isEmpty
+        return trashedNodes.isNotEmpty
     }
     
     private func checkAlbumForReload(_ nodes: [MEGANode]) {

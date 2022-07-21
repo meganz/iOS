@@ -112,7 +112,7 @@ extension PhotoLibraryAllViewModel {
                 return photoPosition
             }
             
-            let photoByDayList: [PhotoByDay] = photoCategoryList.flatMap {
+            let photoByDayList: [PhotoByDay] = photoCategoryList.lazy.flatMap {
                 $0.photoByDayList
             }
             

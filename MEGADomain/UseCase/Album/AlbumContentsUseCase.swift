@@ -32,8 +32,10 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
         async let nodes = try favouriteRepo.allFavouritesNodes()
         let container = await photoUseCase.photoLibraryContainer()
         
-        var filteredNodes = try await nodes.filter { isNodeInContainer($0, container: container) }
-        filteredNodes = filteredNodes.filter { $0.name.mnz_isVisualMediaPathExtension }
+        var filteredNodes = try await nodes.filter {
+            self.isNodeInContainer($0, container: container) && $0.name.mnz_isVisualMediaPathExtension
+        }
+        
         filteredNodes.sort { $0.modificationTime >= $1.modificationTime }
         
         return filteredNodes

@@ -31,8 +31,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         addCollectionView()
         configureLayout()
         collectionView.register(
-            FileExplorerGridCell.nib,
-            forCellWithReuseIdentifier: FileExplorerGridCell.reuseIdentifier
+            NodeCollectionViewCell.fileNib,
+            forCellWithReuseIdentifier: NodeCollectionViewCell.fileReuseIdentifier
         )
         
         viewModel.invokeCommand = { [weak self] command in
@@ -140,10 +140,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
                 collectionView: collectionView,
                 nodes: nodes,
                 allowsMultipleSelection: gridSource?.allowsMultipleSelection ?? false,
-                selectedNodes: gridSource?.selectedNodes
-            ) { [weak self] node, button in
-                self?.showMoreOptions(forNode: node, sender: button)
-            }
+                selectedNodes: gridSource?.selectedNodes,
+                delegate: self)
         case .onNodesUpdate(let updatedNodes):
             gridSource?.updateCells(forNodes: updatedNodes)
         case .reloadData:
@@ -173,8 +171,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             delegate?.changeCurrentViewType()
         case .didSelect(let action):
             delegate?.didSelect(action: action)
-        default:
-            break
+        case .onTransferCompleted(let node):
+            gridSource?.onTransferCompleted(forNode: node)
         }
     }
 }
@@ -235,5 +233,12 @@ extension FilesExplorerGridViewController: CHTCollectionViewDelegateWaterfallLay
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // create a cell size from the image size, and return the size
         return dtCollectionManager?.currentItemSize(for: indexPath) ?? .zero
+    }
+}
+
+//MARK: - FilesExplorerGridSourceDelegate
+extension FilesExplorerGridViewController: FilesExplorerGridSourceDelegate {
+    func showMoreNodeOptions(for node: MEGANode, sender: UIView) {
+        showMoreOptions(forNode: node, sender: sender)
     }
 }

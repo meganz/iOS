@@ -22,6 +22,11 @@ final class PhotoViewModel: NSObject {
         case cameraUploadExplorerFeed
     }
     
+    private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]
+    
+    var filterType: PhotosFilterOptions = .allMedia
+    var filterLocation: PhotosFilterOptions = .allLocations
+    
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol
@@ -32,37 +37,53 @@ final class PhotoViewModel: NSObject {
         loadSortOrderType()
     }
     
-    @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
+    @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList, with featureFlag: Bool) {
         Task {
             do {
                 let container = await photoLibraryUseCase.photoLibraryContainer()
                 
-                guard FeatureFlag.shouldRemoveHomeImage || shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
+                guard featureFlag || shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
                 
-                let photos = try await FeatureFlag.shouldRemoveHomeImage ? photoLibraryUseCase.allPhotos() : photoLibraryUseCase.cameraUploadPhotos()
-                
-                updateMediaNodesArray(photos)
+                let photos = try await featureFlag ? loadFilteredPhotos() : photoLibraryUseCase.cameraUploadPhotos()
+                self.mediaNodesArray = photos
             }
             catch {}
         }
     }
     
-    @objc func loadAllPhotos() {
-        Task {
+    @MainActor
+    @objc func loadAllPhotos(withFeatureFlag flag: Bool) {
+        Task.detached(priority: .userInitiated) { [weak self] in
             do {
-                let photos = try await FeatureFlag.shouldRemoveHomeImage ? photoLibraryUseCase.allPhotos() : photoLibraryUseCase.cameraUploadPhotos()
-                updateMediaNodesArray(photos)
+                let photos = try await flag ? self?.loadFilteredPhotos() : self?.photoLibraryUseCase.cameraUploadPhotos()
+                self?.mediaNodesArray = photos ?? []
             }
             catch {}
         }
     }
     
-    func sortOrderType(forKey key: SortingKeys) -> SortOrderType {
-        let sortType = SortOrderType(megaSortOrderType: Helper.sortType(for: key.rawValue))
-        return sortType != .newest && sortType != .oldest ? .newest : sortType
+    @MainActor
+    func loadFilteredPhotos() async throws -> [MEGANode] {
+        let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
+        var nodes: [MEGANode]
+        
+        switch filterOptions {
+        case .allVisualFiles, .allImages, .allVideos:
+            nodes = try await photoLibraryUseCase.allPhotos()
+        case .cloudDriveAll, .cloudDriveImages, .cloudDriveVideos:
+            nodes = try await photoLibraryUseCase.allPhotosFromCloudDriveOnly()
+        case .cameraUploadAll, .cameraUploadImages, .cameraUploadVideos:
+            nodes = try await photoLibraryUseCase.allPhotosFromCameraUpload()
+        default: nodes = []
+        }
+        
+        filter(nodes: &nodes, with: filterType)
+        
+        return nodes
     }
     
     // MARK: - Private
+    
     private func shouldProcessOnNodesUpdate(
         nodeList: MEGANodeList,
         container: PhotoLibraryContainerEntity
@@ -83,18 +104,6 @@ final class PhotoViewModel: NSObject {
     private func loadSortOrderType() {
         let sortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
         cameraUploadExplorerSortOrderType = sortOrderType
-    }
-    
-    private func reorderPhotos(_ sortType: SortOrderType?, mediaNodes: [MEGANode]) -> [MEGANode] {
-        guard let sortType = sortType,
-              sortType == .newest || sortType == .oldest else { return mediaNodes }
-    
-        return mediaNodes.sorted { node1, node2 in
-            guard let date1 = node1.modificationTime,
-                  let date2 = node2.modificationTime else { return node1.name ?? "" < node2.name ?? "" }
-
-            return sortType == .newest ? date1 > date2 : date1 < date2
-        }
     }
     
     private func updateMediaNodesArray(_ photos: [MEGANode]){

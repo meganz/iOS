@@ -283,6 +283,6 @@ extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     }
 
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
-        return datasource.count == 0 || requestTask?.state == .running
+        return datasource.isEmpty || requestTask?.state == .running
     }
 }

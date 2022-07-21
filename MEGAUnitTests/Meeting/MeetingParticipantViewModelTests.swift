@@ -103,8 +103,19 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .contextMenuTapped(button: UIButton()), expectedCommands: [])
         XCTAssert(completionBlockCalled, "Context menu completion block not called")
     }
+    
+    func testAction_onViewReady_clearCache() {
+        let particpant = CallParticipantEntity(participantId: 100)
+        let userUseCase = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false)
+        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("Test"))
+        let expectation = expectation(description: "Awaiting publisher")
+        let userImageUseCase = MockUserImageUseCase(clearAvatarCacheCompletion: { handle in
+            XCTAssert(handle == 100, "Handle should match")
+            expectation.fulfill()
+        })
+        let viewModel = MeetingParticipantViewModel(participant: particpant, userImageUseCase: userImageUseCase, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase) { _,_ in }
+        viewModel.dispatch(.onViewReady)
+        userImageUseCase.avatarChangePublisher.send([100])
+        waitForExpectations(timeout: 20)
+    }
 }
-
-
-
-

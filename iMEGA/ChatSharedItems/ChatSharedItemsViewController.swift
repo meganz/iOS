@@ -169,7 +169,7 @@ class ChatSharedItemsViewController: UIViewController {
     
     private func updateToolbarButtonsState() {
         if let selectedMessages = tableView.indexPathsForSelectedRows {
-            toolbarItems?.forEach { $0.isEnabled = selectedMessages.count > 0 }
+            toolbarItems?.forEach { $0.isEnabled = selectedMessages.isNotEmpty }
         } else {
             toolbarItems?.forEach { $0.isEnabled = false }
         }
@@ -252,7 +252,7 @@ class ChatSharedItemsViewController: UIViewController {
             }
         }
         
-        if userHandles.count > 0 {
+        if userHandles.isNotEmpty {
             MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: userHandles as [NSNumber], delegate: self)
         }
     }
@@ -271,7 +271,7 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
             return
         }
         
-        if messagesArray.count == 0 {
+        if messagesArray.isEmpty {
             navigationItem.rightBarButtonItem = selectBarButton
         }
         
@@ -287,7 +287,7 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
     func onAttachmentReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
         MEGALogDebug("[ChatSharedFiles] onAttachmentReceived messageId: \(String(describing: message.messageId)), node handle: \(String(describing: message.nodeList?.node(at: 0)?.handle)), node name: \(String(describing: message.nodeList?.node(at: 0)?.name))")
         
-        if messagesArray.count == 0 {
+        if messagesArray.isEmpty {
             navigationItem.rightBarButtonItem = selectBarButton
         }
     
@@ -315,7 +315,7 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
             self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             self.messagesArray.remove(at: index)
         }) { _ in
-            if self.messagesArray.count == 0 {
+            if self.messagesArray.isEmpty {
                 self.navigationItem.rightBarButtonItem = nil
                 self.tableView.reloadEmptyDataSet()
             }

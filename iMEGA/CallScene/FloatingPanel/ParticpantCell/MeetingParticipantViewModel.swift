@@ -1,10 +1,11 @@
+import Combine
 
 enum MeetingParticipantViewAction: ActionType {
     case onViewReady
     case contextMenuTapped(button: UIButton)
 }
 
-struct MeetingParticipantViewModel: ViewModelType {
+final class MeetingParticipantViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool)
         case updateAvatarImage(image: UIImage)
@@ -12,10 +13,12 @@ struct MeetingParticipantViewModel: ViewModelType {
     }
     
     private let participant: CallParticipantEntity
-    private let userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: UserImageUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     private var shouldHideContextMenu: Bool {
         if userUseCase.isGuest {
@@ -56,8 +59,10 @@ struct MeetingParticipantViewModel: ViewModelType {
                             isVideoOn: participant.video == .on,
                             shouldHideContextMenu: shouldHideContextMenu)
             )
-            fetchName(forParticipant: participant) { name in
-                fetchUserAvatar(forParticipant: participant, name: name)
+            fetchName(forParticipant: participant) { [weak self] name in
+                guard let self = self else { return }
+                self.fetchUserAvatar(forParticipant: self.participant, name: name)
+                self.requestAvatarChange(forParticipant: self.participant, name: name)
             }
         case .contextMenuTapped(let button):
             contextMenuTappedHandler(participant, button)
@@ -65,12 +70,13 @@ struct MeetingParticipantViewModel: ViewModelType {
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
-        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatId: participant.chatId) { result in
+        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatId: participant.chatId) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let name):
-                invokeCommand?(
+                self.invokeCommand?(
                     .updateName(
-                        name: isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name
+                        name: self.isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name
                     )
                 )
                 completion(name)
@@ -81,14 +87,28 @@ struct MeetingParticipantViewModel: ViewModelType {
     }
 
     private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { result in
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let image):
-                invokeCommand?(.updateAvatarImage(image: image))
+                self.invokeCommand?(.updateAvatarImage(image: image))
             case .failure(let error):
                 MEGALogDebug("ChatRoom: failed to fetch avatar for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name") - \(error)")
             }
         }
+    }
+    
+    private func requestAvatarChange(forParticipant participant: CallParticipantEntity, name: String) {
+        userImageUseCase
+            .requestAvatarChangeNotification(forUserHandles: [participant.participantId])
+            .sink(receiveCompletion: { error in
+                MEGALogDebug("error fetching the changed avatar \(error)")
+            }, receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.userImageUseCase.clearAvatarCache(forUserHandle: participant.participantId)
+                self.fetchUserAvatar(forParticipant: participant, name: name)
+            })
+            .store(in: &subscriptions)
     }
 }
 

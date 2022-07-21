@@ -238,8 +238,8 @@ extension FavouritesExplorerGridViewController: CHTCollectionViewDelegateWaterfa
     }
 }
 
-//MARK: - FavouritesExplorerGridSourceDelegate
-extension FavouritesExplorerGridViewController: FavouritesExplorerGridSourceDelegate {
+//MARK: - FilesExplorerGridSourceDelegate
+extension FavouritesExplorerGridViewController: FilesExplorerGridSourceDelegate {
     func showMoreNodeOptions(for node: MEGANode, sender: UIView) {
         showMoreOptions(forNode: node, sender: sender)
     }
