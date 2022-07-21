@@ -15,6 +15,8 @@ struct CallsSettingsSoundNotificationsView: View {
             }
             .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
             Text(Strings.Localizable.Settings.Section.Calls.SoundNotifications.description)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
                 .font(.footnote)
                 .foregroundColor(colorScheme == .dark ? .white.opacity(0.54) : .black.opacity(0.54))
         }
