@@ -6248,7 +6248,6 @@
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
 				C4E78E99272B4F5100DBF926 /* NodeAccess */,
 				B66E806F2759FF5F00502601 /* FeatureFlag.swift */,
-				A871EF9C281C35C000443810 /* LocalPath */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -9215,13 +9214,6 @@
 				837DC7A4256D196300CA289E /* GetLinkSwitchOptionTableViewCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		A871EF9C281C35C000443810 /* LocalPath */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LocalPath;
 			sourceTree = "<group>";
 		};
 		A873E84226E117A400CBB174 /* FirstLaunchCheck */ = {
