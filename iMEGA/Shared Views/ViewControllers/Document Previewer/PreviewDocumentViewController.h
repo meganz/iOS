@@ -10,5 +10,7 @@
 @property (nonatomic) BOOL isLink;
 @property (nonatomic) NSString *fileLink;
 @property (nonatomic) BOOL showUnknownEncodeHud;
+@property (nonatomic) MEGAHandle chatId;
+@property (nonatomic) MEGAHandle messageId;
 
 @end
