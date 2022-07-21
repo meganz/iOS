@@ -61,7 +61,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     
     private func offlineUrl(for base64Handle: MEGABase64Handle) -> URL? {
         guard let offlinePath = offlineFilesRepository.offlineFile(for: base64Handle)?.localPath else { return nil }
-        return URL(fileURLWithPath: offlineFilesRepository.relativeOfflinePath.append(pathComponent: offlinePath))
+        return URL(fileURLWithPath: offlineFilesRepository.offlineURL?.path.append(pathComponent: offlinePath) ?? "")
     }
     
     private func processDownloadThenShareResult(result: Result<TransferEntity, TransferErrorEntity>, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {

@@ -3,7 +3,7 @@
 struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static let newRepo = MockOfflineFilesRepository()
     
-    var relativeOfflinePath: String = "Documents/"
+    var offlineURL: URL?
     var offlineFilesMock: [OfflineFileEntity] = []
     var offlineFileMock: OfflineFileEntity?
     
