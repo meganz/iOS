@@ -104,7 +104,9 @@
     
     [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
     [self providePlaceholderAtURL:url completionHandler:^(NSError * __nullable error) {
-        // TODO: handle any error, do any necessary cleanup
+        if (error) {
+            MEGALogError(@"NSFileProviderManager failed to providePlaceholderAtURL with error: %@", error);
+        }
     }];
 }
 

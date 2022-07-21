@@ -1491,7 +1491,6 @@
     return numberOfSections;
 }
 
-//TODO: Method candidate to be on the UITableViewCell+Additions.swift?
 - (id)dequeueOrInitCellWithIdentifier:(NSString *)identifier indexPath:(NSIndexPath *)indexPath {
     id cell = [self.tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     if (cell == nil) {
@@ -1577,7 +1576,6 @@
             cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
             user = [self getUserAndSetIndexPath:indexPath];
             [cell configureDefaultCellForUser:user newUser:NO];
-            //TODO: Tag as new? => Method to check the ts
             break;
         }
     }
