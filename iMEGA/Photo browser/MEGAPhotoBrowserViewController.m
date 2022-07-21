@@ -1109,6 +1109,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
                     break;
                     
+                case DisplayModeChatAttachment:
+                    [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[node] messageId:self.messageId chatId:self.chatId presenter:self];
+                    break;
+                    
                 default:
                     if (node != nil) {
                         [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
