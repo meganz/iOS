@@ -211,12 +211,8 @@ extension FavouritesExplorerGridSource: DynamicTypeCollectionViewSizing {
 
 //MARK: - NodeCollectionViewCellDelegate
 extension FavouritesExplorerGridSource: NodeCollectionViewCellDelegate {
-    func infoTouchUp(inside sender: UIButton) {
-        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
-              let node = getNode(at: indexPath),
-              !collectionView.allowsMultipleSelection else {
-            return
-        }
+    func showMoreMenu(for node: MEGANode, from sender: UIButton) {
+        guard !collectionView.allowsMultipleSelection else { return }
         delegate?.showMoreNodeOptions(for: node, sender: sender)
     }
 }

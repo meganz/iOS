@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol NodeCollectionViewCellDelegate <NSObject>
-- (void)infoTouchUpInside:(UIButton *)sender;
+- (void)showMoreMenuForNode:(MEGANode *)node from:(UIButton *)sender;
 @end
 
 @interface NodeCollectionViewCell : UICollectionViewCell
