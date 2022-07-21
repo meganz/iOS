@@ -654,6 +654,7 @@ internal enum Asset {
     internal enum Settings {
       internal static let aboutSettings = ImageAsset(name: "aboutSettings")
       internal static let advancedSettings = ImageAsset(name: "advancedSettings")
+      internal static let callsSettings = ImageAsset(name: "callsSettings")
       internal static let cameraUploadsSettings = ImageAsset(name: "cameraUploadsSettings")
       internal static let changeLaunchTab = ImageAsset(name: "changeLaunchTab")
       internal static let chatSettings = ImageAsset(name: "chatSettings")

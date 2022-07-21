@@ -3032,3 +3032,9 @@
 "meetings.startConversation.contextMenu.startMeeting"="Start meeting";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Join meeting";
+/* Title of the Settings section where you can configure calls options of your MEGA account */
+"settings.section.calls.title"="Calls";
+/* Title of the sound notifications choice for calls when users join or left a call  */
+"settings.section.calls.soundNotifications.title"="Sound Notifications";
+/* Description of the sound notifications choice for calls when users join or left a call  */
+"settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
