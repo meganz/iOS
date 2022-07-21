@@ -36,7 +36,7 @@ struct QuickAccessWidgetView: View {
     
     func detailView() -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            if entry.value.items.count == 0 {
+            if entry.value.items.isEmpty {
                 switch entry.link {
                 case SectionDetail.recents.link:
                     emptyView(Asset.Images.EmptyStates.recentsEmptyState.name, Strings.Localizable.noRecentActivity)

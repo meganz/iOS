@@ -31,7 +31,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     func dispatch(_ action: CancellableTransferViewAction) {
         switch action {
         case .onViewReady:
-            if fileTransfers.count != 0 {
+            if fileTransfers.isNotEmpty {
                 startShareExtensionFileUploads()
             } else {
                 startShareExtensionFolderUploads()
@@ -71,7 +71,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
         }
         
         if fileTransfersFinished() {
-            if folderTransfers.count == 0 {
+            if folderTransfers.isEmpty {
                 manageTransfersCompletion()
             } else {
                 startShareExtensionFolderUploads()

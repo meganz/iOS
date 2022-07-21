@@ -5,7 +5,7 @@ extension CloudDriveViewController {
     @objc func shouldShowMediaDiscovery() -> Bool {
         guard let parent = parentNode else { return false }
         
-        return parent.type != .root && mediaNodes().count > 0 && !isFromSharedItem
+        return parent.type != .root && mediaNodes().isNotEmpty && !isFromSharedItem
     }
     
     @objc func mediaDiscoveryAction() -> ActionSheetAction? {

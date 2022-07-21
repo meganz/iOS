@@ -15,6 +15,6 @@ struct NodeActionViewModel {
             return true
         }
         
-        return nodeActionUseCase.slideShowImages(for: node).count > 0
+        return nodeActionUseCase.slideShowImages(for: node).isNotEmpty
     }
 }

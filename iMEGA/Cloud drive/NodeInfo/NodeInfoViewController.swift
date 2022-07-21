@@ -286,10 +286,10 @@ class NodeInfoViewController: UIViewController {
             }
             if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
                 sections.append(.sharing)
-                if pendingOutShares().count > 0 {
+                if pendingOutShares().isNotEmpty {
                     sections.append(.pendingSharing)
                 }
-                if activeOutShares().count > 0 {
+                if activeOutShares().isNotEmpty {
                     sections.append(.removeSharing)
                 }
             }
@@ -610,7 +610,7 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                     currentVersionRemoved()
                     break
                 } else {
-                    if nodeVersions.filter({$0.handle == nodeUpdated.handle }).count > 0 {
+                    if nodeVersions.lazy.filter({$0.handle == nodeUpdated.handle }).isNotEmpty {
                        nodeVersionRemoved()
                     }
                     break

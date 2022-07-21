@@ -101,9 +101,9 @@ class FolderLinkCollectionViewController: UIViewController  {
     @objc func reloadData() {
         fileList = buildNodeListFor(fileType: .file)
         folderList = buildNodeListFor(fileType: .folder)
+        let isEmpty = fileList.isEmpty && folderList.isEmpty
         
-        if MEGAReachabilityManager.isReachable(),
-           folderList.count + fileList.count > 0 {
+        if MEGAReachabilityManager.isReachable(), !isEmpty {
             removeErrorViewIfRequired()
             diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
         } else {
@@ -180,7 +180,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
                 return
             }
             
-            let isSelected = selectedNodesCopy.filter { $0.handle == node.handle }.count > 0
+            let isSelected = selectedNodesCopy.lazy.filter { $0.handle == node.handle }.isNotEmpty
             if isSelected {
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
             }
