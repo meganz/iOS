@@ -676,6 +676,9 @@
 }
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
+    if (!title) {
+        title = @"";
+    }
     NSMutableAttributedString *titleMutableAttributedString = [NSMutableAttributedString.alloc initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName:color}];
     
     UIColor *colorWithAlpha = [color colorWithAlphaComponent:0.8];
