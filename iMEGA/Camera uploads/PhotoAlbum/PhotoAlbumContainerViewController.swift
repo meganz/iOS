@@ -44,7 +44,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         updatePageViewControllerLayout()
         
         coordinator.animate(alongsideTransition: nil) { _ in
-            self.pageTabViewModel.tabOffset = Double(self.pageController.currentPage.index) * self.pageController.view.bounds.size.width / 2
+            self.pageTabViewModel.tabOffset = CGFloat(self.pageController.currentPage.index) * self.pageController.view.bounds.size.width / 2
             self.pageController.canScroll = true
         }
     }
