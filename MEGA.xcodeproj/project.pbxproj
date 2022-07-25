@@ -6306,7 +6306,6 @@
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
 				C4E78E99272B4F5100DBF926 /* NodeAccess */,
-				B66E806F2759FF5F00502601 /* FeatureFlag.swift */,
 				B66E806F2759FF5F00502601 /* FeatureToggle.swift */,
 			);
 			path = Utils;
