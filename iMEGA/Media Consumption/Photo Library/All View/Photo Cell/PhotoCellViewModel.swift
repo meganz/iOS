@@ -30,7 +30,7 @@ final class PhotoCellViewModel: ObservableObject {
     @Published var thumbnailContainer: ImageContainer
     @Published var isSelected: Bool = false {
         didSet {
-            if isSelected != oldValue {
+            if isSelected != oldValue && selection.isPhotoSelected(photo) != isSelected {
                 selection.photos[photo.handle] = isSelected ? photo : nil
             }
         }
