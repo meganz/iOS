@@ -50,6 +50,7 @@ internal enum Asset {
         internal static let sortLabel = ImageAsset(name: "sortLabel")
       }
       internal static let capture = ImageAsset(name: "capture")
+      internal static let filter = ImageAsset(name: "filter")
       internal static let gridThin = ImageAsset(name: "gridThin")
       internal static let mediaDiscovery = ImageAsset(name: "mediaDiscovery")
       internal static let newFolder = ImageAsset(name: "newFolder")

@@ -867,6 +867,8 @@ public enum Strings {
     public static let fileTooBigMessage = Strings.tr("Localizable", "fileTooBigMessage")
     /// The file you are trying to open is bigger than the available memory.
     public static let fileTooBigMessageOpen = Strings.tr("Localizable", "fileTooBigMessage_open")
+    /// Filter
+    public static let filter = Strings.tr("Localizable", "filter")
     /// First Name
     public static let firstName = Strings.tr("Localizable", "firstName")
     /// Folder
@@ -2871,6 +2873,28 @@ public enum Strings {
           public enum Empty {
             /// No media found
             public static let title = Strings.tr("Localizable", "cameraUploads.timeline.allMedia.empty.title")
+          }
+        }
+        public enum Filter {
+          /// Choose type
+          public static let chooseType = Strings.tr("Localizable", "cameraUploads.timeline.filter.chooseType")
+          /// Show items from
+          public static let showItemsFrom = Strings.tr("Localizable", "cameraUploads.timeline.filter.showItemsFrom")
+          public enum Location {
+            /// All locations
+            public static let allLocations = Strings.tr("Localizable", "cameraUploads.timeline.filter.location.allLocations")
+            /// Camera uploads
+            public static let cameraUploads = Strings.tr("Localizable", "cameraUploads.timeline.filter.location.cameraUploads")
+            /// Cloud drive
+            public static let cloudDrive = Strings.tr("Localizable", "cameraUploads.timeline.filter.location.cloudDrive")
+          }
+          public enum MediaType {
+            /// All media
+            public static let allMedia = Strings.tr("Localizable", "cameraUploads.timeline.filter.mediaType.allMedia")
+            /// Images
+            public static let images = Strings.tr("Localizable", "cameraUploads.timeline.filter.mediaType.images")
+            /// Videos
+            public static let videos = Strings.tr("Localizable", "cameraUploads.timeline.filter.mediaType.videos")
           }
         }
       }

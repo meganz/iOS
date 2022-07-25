@@ -1,5 +1,41 @@
 import Foundation
 
+struct PhotosFilterOptionKeys {
+    static let cameraUploadTimeline = "cameraUploadTimeline"
+}
+
+enum PhotosFilterType: CaseIterable {
+    case allMedia
+    case images
+    case videos
+    
+    var localization: String {
+        var type = ""
+        switch self {
+        case .allMedia: type = Strings.Localizable.CameraUploads.Timeline.Filter.MediaType.allMedia
+        case .images: type = Strings.Localizable.CameraUploads.Timeline.Filter.MediaType.images
+        case .videos: type = Strings.Localizable.CameraUploads.Timeline.Filter.MediaType.videos
+        }
+        return type
+    }
+}
+
+enum PhotosFilterLocation: CaseIterable {
+    case allLocations
+    case cloudDrive
+    case cameraUploads
+    
+    var localization: String {
+        var location = ""
+        switch self {
+        case .allLocations: location = Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations
+        case .cloudDrive: location = Strings.Localizable.CameraUploads.Timeline.Filter.Location.cloudDrive
+        case .cameraUploads: location = Strings.Localizable.CameraUploads.Timeline.Filter.Location.cameraUploads
+        }
+        return location
+    }
+}
+
 struct PhotosFilterOptions: OptionSet {
     static let allMedia = PhotosFilterOptions(rawValue: 1)
     static let images = PhotosFilterOptions(rawValue: 1 << 1)

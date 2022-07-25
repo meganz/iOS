@@ -42,10 +42,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setSortType(.nameAscending)
                                                 .build())
         
-        compare(menuEntity: menuEntity, menuActionIdentifiers: DisplayAction
-                                                                        .allCases
-                                                                        .filter{$0 != .clearRubbishBin && $0 != .mediaDiscovery}
-                                                                        .compactMap{$0.rawValue})
+        compare(
+            menuEntity: menuEntity, menuActionIdentifiers:
+            DisplayAction
+                .allCases
+                .filter{$0 != .clearRubbishBin && $0 != .mediaDiscovery && $0 != .filter}
+                .compactMap{$0.rawValue})
     }
     
     func testDisplayMenuRubbishBin() throws {
@@ -56,10 +58,11 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsRubbishBinFolder(true)
                                                 .build())
         
-        compare(menuEntity: menuEntity, menuActionIdentifiers: DisplayAction
-                                                                        .allCases
-                                                                        .filter{$0 != .mediaDiscovery}
-                                                                        .compactMap{$0.rawValue})
+        compare(menuEntity: menuEntity, menuActionIdentifiers:
+            DisplayAction
+                .allCases
+                .filter{$0 != .mediaDiscovery && $0 != .filter}
+                .compactMap{$0.rawValue})
     }
     
     func testDisplayMenuOffline() throws {
@@ -70,10 +73,11 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsOfflineFolder(true)
                                                 .build())
         
-        compare(menuEntity: menuEntity, menuActionIdentifiers: DisplayAction
-                                                                            .allCases
-                                                                            .filter{$0 != .clearRubbishBin && $0 != .mediaDiscovery}
-                                                                            .compactMap{$0.rawValue})
+        compare(menuEntity: menuEntity, menuActionIdentifiers:
+            DisplayAction
+                .allCases
+                .filter{$0 != .clearRubbishBin && $0 != .mediaDiscovery && $0 != .filter}
+                .compactMap{$0.rawValue})
     }
     
     func testRubbishBinSubFoldersMenu() throws {
@@ -107,7 +111,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             .compactMap{$0.rawValue},
                                                                 DisplayAction
                                                                             .allCases
-                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .filter{$0 != .clearRubbishBin && $0 != .filter}
                                                                             .compactMap{$0.rawValue}].reduce([], +))
     }
     
@@ -127,7 +131,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             .compactMap{$0.rawValue},
                                                                 DisplayAction
                                                                             .allCases
-                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .filter{$0 != .clearRubbishBin && $0 != .filter}
                                                                             .compactMap{$0.rawValue}].reduce([], +))
     }
     
@@ -147,7 +151,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             .compactMap{$0.rawValue},
                                                                 DisplayAction
                                                                             .allCases
-                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .filter{$0 != .clearRubbishBin && $0 != .filter}
                                                                             .compactMap{$0.rawValue}].reduce([], +))
     }
     
@@ -169,7 +173,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             .compactMap{$0.rawValue},
                                                                 DisplayAction
                                                                             .allCases
-                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .filter{$0 != .clearRubbishBin && $0 != .filter}
                                                                             .compactMap{$0.rawValue}].reduce([], +))
     }
     
@@ -192,7 +196,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                             .compactMap{$0.rawValue},
                                                                 DisplayAction
                                                                             .allCases
-                                                                            .filter{$0 != .clearRubbishBin}
+                                                                            .filter{$0 != .clearRubbishBin && $0 != .filter}
                                                                             .compactMap{$0.rawValue}].reduce([], +))
     }
     

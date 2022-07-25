@@ -82,6 +82,19 @@ final class PhotoViewModel: NSObject {
         return nodes
     }
     
+    @MainActor
+    func updateFilter(
+        filterType: PhotosFilterOptions,
+        filterLocation: PhotosFilterOptions,
+        featureFlag: Bool
+    ) {
+        guard self.filterType != filterType || self.filterLocation != filterLocation else { return }
+        
+        self.filterType = filterType
+        self.filterLocation = filterLocation
+        loadAllPhotos(withFeatureFlag: featureFlag)
+    }
+    
     // MARK: - Private
     
     private func shouldProcessOnNodesUpdate(
