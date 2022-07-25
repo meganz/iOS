@@ -102,7 +102,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             guard let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection else { return }
             setEditMode(!enableEditing)
         case .thumbnailView, .listView:
-            changeViewModePreference()
+            if isListViewModeSelected() && action == .thumbnailView || !isListViewModeSelected() && action == .listView {
+                changeViewModePreference()
+            }
+            
         case .clearRubbishBin:
             let alertController = UIAlertController(title: Strings.Localizable.emptyRubbishBinAlertTitle, message: nil, preferredStyle: .alert)
             

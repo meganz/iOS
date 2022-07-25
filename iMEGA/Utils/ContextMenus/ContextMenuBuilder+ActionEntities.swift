@@ -73,6 +73,12 @@ extension ContextMenuBuilder {
                        identifier: DisplayAction.mediaDiscovery.rawValue)
     }
     
+    var filter: CMActionEntity {
+        CMActionEntity(title: "Filter",
+                       image: Asset.Images.ActionSheetIcons.filter.image,
+                       identifier: DisplayAction.filter.rawValue)
+    }
+    
     //MARK: - Sort Actions
     
     var sortNameAscending: CMActionEntity {

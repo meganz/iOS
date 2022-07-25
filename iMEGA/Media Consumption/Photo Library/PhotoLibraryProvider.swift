@@ -6,7 +6,7 @@ import SwiftUI
 protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
-    func configPhotoLibraryView(in container: UIView)
+    func configPhotoLibraryView(in container: UIView, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)?)
     func updatePhotoLibrary<T: PhotoLibraryNodeProtocol>(by nodes: [T], withSortType type: SortOrderType)
     func hideNavigationEditBarButton(_ hide: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
@@ -16,10 +16,11 @@ protocol PhotoLibraryProvider: UIViewController {
 
 @available(iOS 14.0, *)
 extension PhotoLibraryProvider {
-    func configPhotoLibraryView(in container: UIView) {
+    func configPhotoLibraryView(in container: UIView, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)? = nil) {
         let content = PhotoLibraryContentView(
             viewModel: photoLibraryContentViewModel,
-            router: PhotoLibraryContentViewRouter()
+            router: PhotoLibraryContentViewRouter(),
+            onFilterUpdate: onFilterUpdate
         )
         
         let host = UIHostingController(rootView: content)

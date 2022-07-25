@@ -88,7 +88,7 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
     }
 
     func addRoutingView() {
-        guard subviews.filter({ $0 is AVRoutePickerView }).count == 0 else {
+        guard subviews.isEmpty(where: { $0 is AVRoutePickerView }) else {
             return
         }
         
@@ -99,7 +99,7 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
     }
     
     func removeRoutingView() {
-        guard let routePickerView = subviews.filter({ $0 is AVRoutePickerView }).first as? AVRoutePickerView else {
+        guard let routePickerView = subviews.first(where: { $0 is AVRoutePickerView }) as? AVRoutePickerView else {
             return
         }
         

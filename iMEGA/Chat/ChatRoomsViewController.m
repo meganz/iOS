@@ -251,7 +251,7 @@
     }
     
     EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
-    
+            
     if (self.chatTypeSelected == MEGAChatTypeMeeting) {
         [self setEmptyViewButtonWithMeetingsOptionsWithButton:emptyStateView.button];
     } else {

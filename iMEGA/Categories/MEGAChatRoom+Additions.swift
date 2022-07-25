@@ -56,7 +56,7 @@ extension MEGAChatRoom {
         let user = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)
 
         if let userName = user?.displayName,
-            userName.count > 0 {
+            userName.isNotEmpty {
             return userName
         }
 
@@ -128,7 +128,7 @@ extension MEGAChatRoom {
             }
         }
         
-        if handlesToLoad.count > 0 {
+        if handlesToLoad.isNotEmpty {
             MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatId, usersHandles: handlesToLoad as [NSNumber])
         }
         

@@ -4,5 +4,6 @@
     case documents
     case audio
     case videos
+    case allMedia
     case favourites
 }

@@ -734,9 +734,7 @@
     
     if (self.browserAction == BrowserActionSendFromCloudDrive) {
         [self.selectedNodesMutableDictionary objectForKey:node.base64Handle] ? [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone] : [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    } else if (self.browserAction == BrowserActionDocumentProvider) {
-        //TODO: Document Provider
-    } else {
+    } else if (self.browserAction != BrowserActionDocumentProvider) {
         if (node.isFile || (self.browserAction == BrowserActionMove && [self.selectedNodesArray containsObject:node])) {
             [self setNodeTableViewCell:cell enabled:NO];
         } else {

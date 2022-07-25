@@ -65,9 +65,9 @@ struct ContactOnMega: Codable {
         }
 
         //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
-        if contactEmailsToFilter.count > 0 {
+        if contactEmailsToFilter.isNotEmpty {
             for contact in contactsOnMega {
-                if contactEmailsToFilter.filter({$0 == contact.email.lowercased()}).count == 0 {
+                if contactEmailsToFilter.isEmpty(where: {$0 == contact.email.lowercased()}) {
                     contactsOnMegaFiltered.append(contact)
                 }
             }
@@ -110,7 +110,7 @@ struct ContactOnMega: Codable {
                 }
                 
                 let deviceContacts = deviceContactsOperation.fetchedContacts.map( { [$0.contactDetail:$0.name] } )
-                if deviceContacts.count == 0 {
+                if deviceContacts.isEmpty {
                     self.contactsFetched()
                 } else {
                     self.deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
@@ -144,11 +144,11 @@ struct ContactOnMega: Codable {
                 self.state = .error
             }
 
-            if self.deviceContactsChunked.count > 0 {
+            if self.deviceContactsChunked.isNotEmpty {
                 self.deviceContactsChunked.removeFirst()
             }
 
-            if self.deviceContactsChunked.count == 0 {
+            if self.deviceContactsChunked.isEmpty {
                 self.fetchContactsOnMegaEmails(self.contactsOnMegaDictionary)
             } else {
                 self.getContactsOnMega()

@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
+@property (weak, nonatomic) IBOutlet UILabel *callsLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *securityLabel;
 
@@ -64,7 +65,8 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
     self.cameraUploadsLabel.text = NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
     self.chatLabel.text = NSLocalizedString(@"chat", @"Chat section header");
-    
+    self.callsLabel.text = NSLocalizedString(@"settings.section.calls.title", @"Title of the Settings section where you can configure calls options of your MEGA account");
+
     self.securityLabel.text = NSLocalizedString(@"settings.section.security", @"Title of the Settings section where you can configure security details of your MEGA account");
     
     self.userInterfaceLabel.text = NSLocalizedString(@"settings.section.userInterface", @"Title of one of the Settings sections where you can customise the 'User Interface' of the app.");
@@ -89,13 +91,29 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
 
 #pragma mark - UITableViewDelegate
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#ifdef QA_CONFIG
+    return 6;
+#else
+    return 5;
+#endif
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 0: //Camera Uploads, Chat
+        case 0:
+            switch (indexPath.row) {
+                case 2:
+                    [self presentCallsSettings];
+                    break;
+                    
+                default: //Camera Uploads, Chat
+                    break;
+            }
         case 1: //Security Options
         case 2: //File management - User Interface - Advanced
         case 3: //Help
@@ -117,6 +135,11 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
                 }
             }
         }
+        break;
+        
+        case 5: // QA settings.
+            [self showQASettingsView];
+            break;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

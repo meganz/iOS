@@ -391,10 +391,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 #pragma mark - IBActions
 
-- (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
-    //TODO: Enable/disable notifications
-}
-
 - (IBAction)didTapPermissionsButton:(UIButton *)sender {
     NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (sender.tag - 1) : sender.tag;
     

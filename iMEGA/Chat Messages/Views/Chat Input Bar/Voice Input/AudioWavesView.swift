@@ -24,7 +24,7 @@ class AudioWavesView: UIView {
             let balance = numberOfViews - stackView.arrangedSubviews.count
             var level = 1
             
-            if stackView.arrangedSubviews.count > 0,
+            if stackView.arrangedSubviews.isNotEmpty,
                 let audioWaveView = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1] as? AudioWaveView {
                 level = audioWaveView.level
             }

@@ -36,7 +36,7 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        if textField.text?.count == 0 {
+        if textField.text?.isEmpty == true {
             guard let originalFileName = originalFilename else {
                 return true
             }
@@ -52,7 +52,7 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
             return
         }
         
-        if textField.text?.count == 0 {
+        if textField.text?.isEmpty == true {
             guard let originalFileName = originalFilename else {
                 return
             }

@@ -101,9 +101,9 @@ class FolderLinkCollectionViewController: UIViewController  {
     @objc func reloadData() {
         fileList = buildNodeListFor(fileType: .file)
         folderList = buildNodeListFor(fileType: .folder)
+        let isEmpty = fileList.isEmpty && folderList.isEmpty
         
-        if MEGAReachabilityManager.isReachable(),
-           folderList.count + fileList.count > 0 {
+        if MEGAReachabilityManager.isReachable(), !isEmpty {
             removeErrorViewIfRequired()
             diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
         } else {
@@ -126,13 +126,13 @@ class FolderLinkCollectionViewController: UIViewController  {
     }
     
     private func showErrorViewIfRequired() {
-        guard view.subviews.filter({ $0 is EmptyStateView}).isEmpty,
+        guard view.subviews.isEmpty(where: { $0 is EmptyStateView}),
               let customView = folderLink.customView(forEmptyDataSet: collectionView) else { return }
         view.wrap(customView)
     }
     
     private func removeErrorViewIfRequired() {
-        view.subviews.filter({ $0 is EmptyStateView}).forEach({ $0.removeFromSuperview() })
+        view.subviews.lazy.filter({ $0 is EmptyStateView}).forEach({ $0.removeFromSuperview() })
     }
 }
 
@@ -180,7 +180,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
                 return
             }
             
-            let isSelected = selectedNodesCopy.filter { $0.handle == node.handle }.count > 0
+            let isSelected = selectedNodesCopy.isNotEmpty { $0.handle == node.handle }
             if isSelected {
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
             }
@@ -233,15 +233,8 @@ extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfall
 }
 
 extension FolderLinkCollectionViewController: NodeCollectionViewCellDelegate {
-    func infoTouchUp(inside sender: UIButton) {
-        if collectionView.allowsMultipleSelection {
-            return
-        }
-        guard let indexPath = collectionView.indexPathForItem(at: sender.convert(CGPoint.zero, to: collectionView)),
-              let node = getNode(at: indexPath) else {
-            return
-        }
-        
+    func showMoreMenu(for node: MEGANode, from sender: UIButton) {
+        guard !collectionView.allowsMultipleSelection else { return }
         folderLink.showActions(for: node, from: sender)
     }
 }

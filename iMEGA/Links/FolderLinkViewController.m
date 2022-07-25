@@ -678,7 +678,6 @@
 }
     
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (self.selectedNodesArray.count) {
             [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:YES];

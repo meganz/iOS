@@ -57,6 +57,7 @@ final class SegmentTitleView: UIView {
         }
 
         self.buttons = buttons
+        horizontalStackContainer?.removeFromSuperview()
         horizontalStackContainer = createStackView(with: buttons)
     }
 

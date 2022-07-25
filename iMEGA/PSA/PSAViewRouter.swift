@@ -40,7 +40,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     }
 
     func currentPSAView() -> PSAView? {
-        return tabBarController?.view.subviews.filter { $0 is PSAView }.first as? PSAView
+        return tabBarController?.view.subviews.first { $0 is PSAView } as? PSAView
     }
     
     func isPSAViewAlreadyShown() -> Bool {

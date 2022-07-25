@@ -68,7 +68,7 @@ final class NameCollisionViewModel: ObservableObject {
     
     func checkNameCollisions() {
         collisions = nameCollisionUseCase.resolveNameCollisions(for: collisions)
-        if (collisions.filter { $0.collisionNodeHandle != nil }).count > 0 {
+        if collisions.isNotEmpty(where: { $0.collisionNodeHandle != nil }) {
             router.showNameCollisionsView()
         } else {
             processCollisions()
@@ -84,7 +84,7 @@ final class NameCollisionViewModel: ObservableObject {
         
         switch collisionType {
         case .upload:
-            guard var transfers = transfers, let transfer = (transfers.filter { $0.path == collision.fileUrl?.path }).first else {
+            guard var transfers = transfers, let transfer = transfers.first(where: { $0.path == collision.fileUrl?.path }) else {
                 return
             }
             switch action {
@@ -97,7 +97,7 @@ final class NameCollisionViewModel: ObservableObject {
             }
             self.transfers = transfers
         case .copy, .move:
-            guard var nodes = nodes, let node = (nodes.filter { $0.handle == collision.nodeHandle }).first  else {
+            guard var nodes = nodes, let node = nodes.first(where: { $0.handle == collision.nodeHandle }) else {
                 return
             }
 
@@ -135,7 +135,7 @@ final class NameCollisionViewModel: ObservableObject {
     //MARK: - Private
     private func loadNextCollision() {
         guard let collision = collisions.first(where: { $0.collisionAction == nil && $0.collisionNodeHandle != nil }) else {
-            if (collisions.filter{ $0.collisionAction != .cancel || $0.collisionNodeHandle == nil }).count != 0 {
+            if collisions.isNotEmpty(where: { $0.collisionAction != .cancel || $0.collisionNodeHandle == nil }) {
                 processCollisions()
             } else {
                 router.dismiss()

@@ -236,7 +236,7 @@ extension ContactsPickerViewController: UITableViewDelegate {
         }
                
         selectedContacts.remove(contact)
-        if selectedContacts.count == 0 {
+        if selectedContacts.isEmpty {
             navigationController?.setToolbarHidden(true, animated: true)
         }
         updateToolbar()
@@ -257,7 +257,7 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     }
     
     func imageForEmptyDataSet() -> UIImage? {
-        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+        if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
             return Asset.Images.EmptyStates.searchEmptyState.image
         } else {
             return Asset.Images.EmptyStates.contactsEmptyState.image
@@ -266,7 +266,7 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     
     func titleForEmptyDataSet() -> String? {
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
                 return Strings.Localizable.noResults
             } else {
                 return Strings.Localizable.contactsEmptyStateTitle
@@ -318,7 +318,7 @@ extension ContactsPickerViewController: UISearchBarDelegate {
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        contacts.count > 0
+        contacts.isNotEmpty
     }
 }
 
@@ -326,7 +326,7 @@ extension ContactsPickerViewController: UISearchBarDelegate {
 
 extension ContactsPickerViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
-        selectedContacts.count == 0
+        selectedContacts.isEmpty
     }
     
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {

@@ -5,7 +5,9 @@ import SwiftUI
 extension PhotosViewController: PhotoLibraryProvider {
     // MARK: - config views
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
-        configPhotoLibraryView(in: container)
+        configPhotoLibraryView(in: container) { type, location, featureFlag in
+            self.viewModel.updateFilter(filterType: type, filterLocation: location, featureFlag: featureFlag)
+        }
     }
     
     @objc func objcWrapper_updatePhotoLibrary(by nodes: [MEGANode]) {

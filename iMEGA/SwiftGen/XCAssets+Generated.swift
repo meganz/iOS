@@ -50,6 +50,7 @@ internal enum Asset {
         internal static let sortLabel = ImageAsset(name: "sortLabel")
       }
       internal static let capture = ImageAsset(name: "capture")
+      internal static let filter = ImageAsset(name: "filter")
       internal static let gridThin = ImageAsset(name: "gridThin")
       internal static let mediaDiscovery = ImageAsset(name: "mediaDiscovery")
       internal static let newFolder = ImageAsset(name: "newFolder")
@@ -654,6 +655,7 @@ internal enum Asset {
     internal enum Settings {
       internal static let aboutSettings = ImageAsset(name: "aboutSettings")
       internal static let advancedSettings = ImageAsset(name: "advancedSettings")
+      internal static let callsSettings = ImageAsset(name: "callsSettings")
       internal static let cameraUploadsSettings = ImageAsset(name: "cameraUploadsSettings")
       internal static let changeLaunchTab = ImageAsset(name: "changeLaunchTab")
       internal static let chatSettings = ImageAsset(name: "chatSettings")

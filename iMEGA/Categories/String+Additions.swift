@@ -22,7 +22,7 @@ extension String {
 
     var trim: String? {
         let trimmedString = trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmedString.count > 0 ? trimmedString : nil
+        return trimmedString.isNotEmpty ? trimmedString : nil
     }
 
     var mnz_isDecimalNumber: Bool {

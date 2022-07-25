@@ -135,7 +135,7 @@ extension ChatViewController {
                         
                         return localChatMessage.message.temporalId == message.temporalId
                     }
-                    if filteredArray.count > 0 {
+                    if filteredArray.isNotEmpty {
                         MEGALogWarning("Forwarded message was already added to the array, probably onMessageUpdate received before now.")
                     } else {
                         message.chatId = self.chatRoom.chatId
@@ -181,7 +181,7 @@ extension ChatViewController {
     }
     
     func updateToolbarState() {
-        let isEnabled = selectedMessages.count > 0
+        let isEnabled = selectedMessages.isNotEmpty
         var hasGiphy = selectedMessages.contains {
             $0.message.type == .containsMeta && $0.message.containsMeta?.type == .giphy
         }

@@ -44,6 +44,10 @@ extension PhotosViewController {
         cancelEditing()
     }
     
+    @objc func shouldRemoveHomeImage() -> Bool {
+        FeatureToggle.removeHomeImage.isEnabled        
+    }
+    
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
         let entityNodes = nodes.toNodeEntities()
         ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)

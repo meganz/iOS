@@ -39,10 +39,10 @@ public extension AVAsset {
                 return
             }
             
-            completion(metadata.filter { $0.commonKey == AVMetadataKey.commonKeyTitle }.first?.value as? String,
-                       metadata.filter { $0.commonKey == AVMetadataKey.commonKeyArtist }.first?.value as? String,
-                       metadata.filter { $0.commonKey == AVMetadataKey.commonKeyAlbumName }.first?.value as? String,
-                       metadata.filter { $0.commonKey == AVMetadataKey.commonKeyArtwork }.first?.value as? Data)
+            completion(metadata.first { $0.commonKey == AVMetadataKey.commonKeyTitle }?.value as? String,
+                       metadata.first { $0.commonKey == AVMetadataKey.commonKeyArtist }?.value as? String,
+                       metadata.first { $0.commonKey == AVMetadataKey.commonKeyAlbumName }?.value as? String,
+                       metadata.first { $0.commonKey == AVMetadataKey.commonKeyArtwork }?.value as? Data)
         }
     }
 }
