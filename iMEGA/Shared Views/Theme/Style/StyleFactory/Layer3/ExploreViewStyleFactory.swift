@@ -49,7 +49,7 @@ extension ExplorerCardConfiguration {
         var image = Asset.Images.Home.explorerCardImage.image
         var borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
                             Colors.SharedViews.Explorer.Gradient.darkBlue.color]
-        if FeatureFlag.shouldRemoveHomeImage {
+        if FeatureToggle.removeHomeImage.isEnabled {
             title = Strings.Localizable.Home.Favourites.title
             image = Asset.Images.Home.explorerCardFavourites.image
             borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
@@ -99,7 +99,7 @@ extension ExplorerCardConfiguration {
         var borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
                             Colors.SharedViews.Explorer.Gradient.pink.color]
         
-        if FeatureFlag.shouldRemoveHomeImage {
+        if FeatureToggle.removeHomeImage.isEnabled {
             iconForegroundImage = Asset.Images.Home.explorerCardVideoPlayBlue.image
             iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStripsBlue.image
             borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,

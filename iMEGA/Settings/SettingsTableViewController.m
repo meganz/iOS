@@ -91,6 +91,14 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
 
 #pragma mark - UITableViewDelegate
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#ifdef QA_CONFIG
+    return 6;
+#else
+    return 5;
+#endif
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
@@ -127,6 +135,11 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
                 }
             }
         }
+        break;
+        
+        case 5: // QA settings.
+            [self showQASettingsView];
+            break;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
