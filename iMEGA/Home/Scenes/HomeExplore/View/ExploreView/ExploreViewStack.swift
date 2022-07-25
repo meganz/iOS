@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 protocol ExploreViewStackDelegate: AnyObject {
     func tappedCard(_ card: MEGAExploreViewStyle)
@@ -10,17 +11,21 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     @IBOutlet var cards: [ExplorerView]!
     weak var delegate: ExploreViewStackDelegate?
     
+    var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addStackView()
+        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         addStackView()
+        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
     
@@ -34,6 +39,18 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     }
     
     // MARK: - Privates
+    
+    private func addRemoveHomeImageFeatureToggleSubscription() {
+        FeatureToggle
+            .removeHomeImage
+            .$isEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.setupView(with: self.traitCollection)
+            }
+            .store(in: &subscriptions)
+    }
     
     private func addStackView() {
         guard let contentview = loadedViewFromNibContent() else { return }

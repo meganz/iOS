@@ -30,7 +30,7 @@ final class PhotoCellViewModel: ObservableObject {
     @Published var thumbnailContainer: ImageContainer
     @Published var isSelected: Bool = false {
         didSet {
-            if isSelected != oldValue {
+            if isSelected != oldValue && selection.isPhotoSelected(photo) != isSelected {
                 selection.photos[photo.handle] = isSelected ? photo : nil
             }
         }
@@ -77,27 +77,25 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     // MARK: Private
-    @MainActor
     private func loadThumbnail() async {
         let type: ThumbnailTypeEntity = currentZoomScaleFactor == 1 ? .preview : .thumbnail
         
-        if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: type) {
-            thumbnailContainer = ImageContainer(image: image)
-        } else {
-            if type != .thumbnail, let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .thumbnail) {
-                thumbnailContainer = ImageContainer(image: image)
+        switch type {
+        case .thumbnail:
+            guard let image = try? await thumbnailUseCase.loadThumbnailImage(for: photo, type: .thumbnail) else { return }
+            await updateThumbail(image)
+        case .preview:
+            if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .thumbnail) {
+                await updateThumbail(image)
             }
-
-            switch type {
-            case .thumbnail:
-                guard let url = try? await thumbnailUseCase.loadThumbnail(for: photo, type: .thumbnail) else { return }
-                if let image = Image(contentsOfFile: url.path) {
-                    thumbnailContainer = ImageContainer(image: image)
-                }
-            case .preview:
-                requestPreview()
-            }
+            
+            requestPreview()
         }
+    }
+    
+    @MainActor
+    private func updateThumbail(_ image: Image) {
+        thumbnailContainer = ImageContainer(image: image)
     }
     
     private func requestPreview() {
@@ -148,7 +146,7 @@ final class PhotoCellViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] updatedNodes in
                 guard let self = self,
-                      let updateNode = updatedNodes.filter({ $0.id == self.photo.id }).first else {
+                      let updateNode = updatedNodes.first(where: { $0 == self.photo }) else {
                     return
                 }
                 self.isFavorite = updateNode.isFavourite

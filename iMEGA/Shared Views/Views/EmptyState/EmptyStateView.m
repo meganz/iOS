@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYTimelineConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYHomeConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYHomePlusBannerConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomStackViewTopCompactConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomStackViewTopRegularConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topStackViewCenterConstraint;
 
 @property (nullable, weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nullable, weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -84,6 +87,13 @@
     self.imageViewYTimelineConstraint.active = YES;
 }
 
+- (void)adjustLayoutWhenThereIsNoImage {
+    self.imageViewYDefaultConstraint.active = NO;
+    self.bottomStackViewTopCompactConstraint.active = NO;
+    self.bottomStackViewTopRegularConstraint.active = NO;
+    self.topStackViewCenterConstraint.active = YES;
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -112,6 +122,10 @@
     
     if (self.type == EmptyStateTypeTimeline) {
         [self updateLayoutForTimeline];
+    }
+    
+    if (self.imageView.image == nil && !self.topStackViewCenterConstraint.active) {
+        [self adjustLayoutWhenThereIsNoImage];
     }
 }
 

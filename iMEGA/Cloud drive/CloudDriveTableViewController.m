@@ -31,6 +31,7 @@
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
+    self.tableView.tableHeaderView = UIView.alloc.init;
     
     [self updateAppearance];
 }

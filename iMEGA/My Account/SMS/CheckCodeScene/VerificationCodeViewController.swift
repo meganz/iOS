@@ -165,7 +165,7 @@ extension VerificationCodeViewController: UITextFieldDelegate {
             return false
         }
 
-        if string.count > 0 {
+        if string.isNotEmpty {
             textField.text = String(string[string.startIndex])
             makeNextCodeFieldBecomeFirstResponder(for: textField)
             didEditingChangeInTextField(textField)

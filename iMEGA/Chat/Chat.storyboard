@@ -1061,7 +1061,6 @@
                                                     <rect key="frame" x="351" y="5.3333333333333321" width="51" height="30.999999999999996"/>
                                                     <connections>
                                                         <action selector="notificationSwitchValueChanged:" destination="n0y-k4-J86" eventType="valueChanged" id="cZU-cW-Ee5"/>
-                                                        <action selector="notificationsSwitchValueChanged:" destination="0sZ-aU-4Bm" eventType="valueChanged" id="8xZ-fs-A2I"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>

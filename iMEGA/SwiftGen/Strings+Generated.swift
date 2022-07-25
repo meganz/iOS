@@ -867,6 +867,8 @@ public enum Strings {
     public static let fileTooBigMessage = Strings.tr("Localizable", "fileTooBigMessage")
     /// The file you are trying to open is bigger than the available memory.
     public static let fileTooBigMessageOpen = Strings.tr("Localizable", "fileTooBigMessage_open")
+    /// Filter
+    public static let filter = Strings.tr("Localizable", "filter")
     /// First Name
     public static let firstName = Strings.tr("Localizable", "firstName")
     /// Folder
@@ -2867,6 +2869,34 @@ public enum Strings {
       public enum Timeline {
         /// Timeline
         public static let title = Strings.tr("Localizable", "cameraUploads.timeline.title")
+        public enum AllMedia {
+          public enum Empty {
+            /// No media found
+            public static let title = Strings.tr("Localizable", "cameraUploads.timeline.allMedia.empty.title")
+          }
+        }
+        public enum Filter {
+          /// Choose type
+          public static let chooseType = Strings.tr("Localizable", "cameraUploads.timeline.filter.chooseType")
+          /// Show items from
+          public static let showItemsFrom = Strings.tr("Localizable", "cameraUploads.timeline.filter.showItemsFrom")
+          public enum Location {
+            /// All locations
+            public static let allLocations = Strings.tr("Localizable", "cameraUploads.timeline.filter.location.allLocations")
+            /// Camera uploads
+            public static let cameraUploads = Strings.tr("Localizable", "cameraUploads.timeline.filter.location.cameraUploads")
+            /// Cloud drive
+            public static let cloudDrive = Strings.tr("Localizable", "cameraUploads.timeline.filter.location.cloudDrive")
+          }
+          public enum MediaType {
+            /// All media
+            public static let allMedia = Strings.tr("Localizable", "cameraUploads.timeline.filter.mediaType.allMedia")
+            /// Images
+            public static let images = Strings.tr("Localizable", "cameraUploads.timeline.filter.mediaType.images")
+            /// Videos
+            public static let videos = Strings.tr("Localizable", "cameraUploads.timeline.filter.mediaType.videos")
+          }
+        }
       }
       public enum Warning {
         /// ⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.
@@ -4107,6 +4137,16 @@ public enum Strings {
         public static let termsAndPolicies = Strings.tr("Localizable", "settings.section.termsAndPolicies")
         /// User Interface
         public static let userInterface = Strings.tr("Localizable", "settings.section.userInterface")
+        public enum Calls {
+          /// Calls
+          public static let title = Strings.tr("Localizable", "settings.section.calls.title")
+          public enum SoundNotifications {
+            /// Hear a sound when someone joins or leaves a call.
+            public static let description = Strings.tr("Localizable", "settings.section.calls.soundNotifications.description")
+            /// Sound Notifications
+            public static let title = Strings.tr("Localizable", "settings.section.calls.soundNotifications.title")
+          }
+        }
       }
       public enum UserInterface {
         /// Hide Recent Activity

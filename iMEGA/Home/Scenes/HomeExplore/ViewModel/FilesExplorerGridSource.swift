@@ -1,19 +1,18 @@
+protocol FilesExplorerGridSourceDelegate: UIViewController {
+    func showMoreNodeOptions(for node: MEGANode, sender: UIView)
+}
 
 final class FilesExplorerGridSource: NSObject {
     private unowned let collectionView: UICollectionView
     private(set) var nodes: [MEGANode]?
     private(set) var selectedNodes: [MEGANode]?
-    private let moreInfoAction: ((MEGANode, UIButton) -> Void)
+    weak var delegate: FilesExplorerGridSourceDelegate?
     var allowsMultipleSelection: Bool {
         didSet {
             guard oldValue != allowsMultipleSelection else { return }
             selectedNodes = allowsMultipleSelection ? [] : nil
-            collectionView.visibleCells.forEach { cell in
-                guard let gridCell = cell as? FileExplorerGridCell, let viewModel = gridCell.viewModel else { return }
-                viewModel.markSelection = false
-                viewModel.allowsSelection = allowsMultipleSelection
-            }
             collectionView.allowsMultipleSelection = allowsMultipleSelection
+            collectionView.reloadData()
         }
     }
     
@@ -21,24 +20,20 @@ final class FilesExplorerGridSource: NSObject {
          nodes: [MEGANode]?,
          allowsMultipleSelection: Bool,
          selectedNodes: [MEGANode]?,
-         moreInfoAction: @escaping ((MEGANode, UIButton) -> Void)) {
+         delegate: FilesExplorerGridSourceDelegate?) {
         self.collectionView = collectionView
         self.nodes = nodes
         self.allowsMultipleSelection = allowsMultipleSelection
         self.selectedNodes = selectedNodes
-        self.moreInfoAction = moreInfoAction
+        self.delegate = delegate
         super.init()
     }
     
     func toggleIndexPathSelection(_ indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
-              let viewModel = cell.viewModel,
-              let node = nodes?[indexPath.item]  else {
+        guard let node = nodes?[indexPath.item] else {
             return
         }
-        
-        viewModel.markSelection = !viewModel.markSelection
-        
+
         if selectedNodes?.contains(node) ?? false {
             selectedNodes?.removeAll(where: { $0 == node })
         } else {
@@ -47,27 +42,19 @@ final class FilesExplorerGridSource: NSObject {
     }
     
     func select(indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
-              let viewModel = cell.viewModel,
-              let node = nodes?[indexPath.item]  else {
+        guard let node = nodes?[indexPath.item] else {
             return
         }
-        
-        viewModel.markSelection = true
-        
+
         if !(selectedNodes?.contains(node) ?? false) {
             selectedNodes?.append(node)
         }
     }
     
     func deselect(indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? FileExplorerGridCell,
-              let viewModel = cell.viewModel,
-              let node = nodes?[indexPath.item]  else {
+        guard let node = nodes?[indexPath.item] else {
             return
         }
-        
-        viewModel.markSelection = false
         
         if selectedNodes?.contains(node) ?? false {
             selectedNodes?.removeAll(where: { $0 == node })
@@ -84,12 +71,14 @@ final class FilesExplorerGridSource: NSObject {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        guard let gridCell = cell as? FileExplorerGridCell,
-              let node = nodes?[indexPath.item]
-              else { return }
-        gridCell.viewModel?.allowsSelection = allowsMultipleSelection
-        gridCell.viewModel?.markSelection = selectedNodes?.contains(node) ?? false
-        gridCell.viewModel?.updateSelection()
+        if collectionView.allowsMultipleSelection,
+           !cell.isSelected,
+           let node = nodes?[indexPath.item],
+           let selectedNodes = selectedNodes,
+           selectedNodes.contains(node) {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+            cell.isSelected = true
+        }
     }
     
     func updateCells(forNodes nodes: [MEGANode]) {
@@ -97,25 +86,24 @@ final class FilesExplorerGridSource: NSObject {
     }
     
     private func reloadCell(withNode node: MEGANode) {
-        collectionView.visibleCells.forEach { cell in
-            guard let gridCell = cell as? FileExplorerGridCell,
-                  gridCell.viewModel?.nodeHandle == node.handle else {
-                return
-            }
-            
-            gridCell.viewModel = viewModel(forNode: node, cell: gridCell)
+        guard let index = nodes?.firstIndex(of: node) else { return }
+        
+        if let originalNode = nodes?[index],
+           let selectedIndex = selectedNodes?.firstIndex(of: originalNode) {
+            selectedNodes?[selectedIndex] = node
+        }
+        
+        nodes?[index] = node
+        
+        let indexPath = IndexPath(item: index, section: 0)
+        let visibleCellsIndexPath = collectionView.indexPathsForVisibleItems
+        if visibleCellsIndexPath.contains(indexPath) {
+            collectionView.reloadItems(at: [indexPath])
         }
     }
     
-    private func viewModel(forNode node: MEGANode,
-                           cell: FileExplorerGridCell) -> FileExplorerGridCellViewModel {
-        return FileExplorerGridCellViewModel(
-            node: node,
-            allowsSelection: allowsMultipleSelection,
-            markSelection: selectedNodes?.contains(node) ?? false,
-            delegate: cell) { [weak self] node, button in
-            self?.moreInfoAction(node, button)
-        }
+    func onTransferCompleted(forNode node: MEGANode) {
+        reloadCell(withNode: node)
     }
 }
 
@@ -127,21 +115,17 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: FileExplorerGridCell.reuseIdentifier,
-                for: indexPath
-        ) as? FileExplorerGridCell,
-        let nodes = nodes else {
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NodeCollectionViewCell.fileReuseIdentifier,
+                                                            for: indexPath) as? NodeCollectionViewCell,
+              let node = nodes?[indexPath.item] else {
             return UICollectionViewCell()
         }
         
-        cell.viewModel = viewModel(forNode: nodes[indexPath.item], cell: cell)
-        
-        if cell.viewModel?.markSelection ?? false {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
-        }
-        
+        cell.configureCell(for: node,
+                           allowedMultipleSelection: collectionView.allowsMultipleSelection,
+                           sdk: MEGASdkManager.sharedMEGASdk(),
+                           delegate: self)
         return cell
     }
 }
@@ -149,11 +133,20 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
 //MARK: - Manage CollectionViewCells size with
 extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
-        guard let nodes = nodes else { return nil }
-        
-        let cell = FileExplorerGridCell.instanceFromNib
-        cell.viewModel = viewModel(forNode: nodes[indexPath.item], cell: cell)
-        
+        guard let node = nodes?[indexPath.item] else { return nil }
+        let cell = NodeCollectionViewCell.instantiateFromFileNib
+        cell.configureCell(for: node,
+                           allowedMultipleSelection: collectionView.allowsMultipleSelection,
+                           sdk: MEGASdkManager.sharedMEGASdk(),
+                           delegate: self)
         return cell
+    }
+}
+
+//MARK: - NodeCollectionViewCellDelegate
+extension FilesExplorerGridSource: NodeCollectionViewCellDelegate {
+    func showMoreMenu(for node: MEGANode, from sender: UIButton) {
+        guard !collectionView.allowsMultipleSelection else { return }
+        delegate?.showMoreNodeOptions(for: node, sender: sender)
     }
 }

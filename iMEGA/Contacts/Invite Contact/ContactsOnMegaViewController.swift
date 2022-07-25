@@ -102,7 +102,7 @@ import UIKit
     }
     
     private func showSearch() {
-        let shouldSearchBarBeHidden = inviteContactView.isHidden || contacts().count == 0 || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
+        let shouldSearchBarBeHidden = inviteContactView.isHidden || contacts().isEmpty || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
         searchFixedView?.isHidden = true
         navigationItem.searchController = shouldSearchBarBeHidden ? nil : searchController
     }
@@ -242,7 +242,7 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     
     func imageForEmptyDataSet() -> UIImage? {
         if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
                 return Asset.Images.EmptyStates.searchEmptyState.image
             } else {
                 return nil
@@ -254,7 +254,7 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     
     func titleForEmptyDataSet() -> String? {
         if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
                 return Strings.Localizable.noResults
             } else {
                 return nil
@@ -271,7 +271,7 @@ extension ContactsOnMegaViewController: ContactOnMegaTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         contactsOnMega.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        if contactsOnMega.count == 0 {
+        if contactsOnMega.isEmpty {
             tableView.reloadEmptyDataSet()
         }
     }

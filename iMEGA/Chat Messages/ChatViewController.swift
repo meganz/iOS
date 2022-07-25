@@ -760,7 +760,7 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc func setLastMessageAsSeen() {
-        if messages.count > 0 {
+        if messages.isNotEmpty {
             let chatMessages = messages.filter { (message) -> Bool in
                 guard let message = message as? ChatMessage, message.transfer == nil else {
                     return false
@@ -832,7 +832,7 @@ class ChatViewController: MessagesViewController {
         showOrHideJumpToBottom()
 
         // When there are no messages and the introduction text is shown and the keyboard appears the content inset is not added automatically and we do need to add the inset to the collection
-        guard chatRoomDelegate.chatMessages.count == 0,
+        guard chatRoomDelegate.chatMessages.isEmpty,
             let inputView = inputAccessoryView as? ChatInputBar,
             inputView.isTextViewTheFirstResponder() else {
             return

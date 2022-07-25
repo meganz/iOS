@@ -253,7 +253,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                     let placemark = MKPlacemark(coordinate: location.coordinate)
                     let mapItem = MKMapItem(placemark: placemark)
                     
-                    if (error == nil && placemarks!.count > 0) {
+                    if (error == nil && placemarks?.isNotEmpty == true) {
                         mapItem.name = placemarks?.first?.name
                     }
                     mapItem.openInMaps(launchOptions: nil)

@@ -22,7 +22,7 @@ final class PhotoCarouselViewController: UIViewController {
     private let selectedPhotoIndexPath: IndexPath
     private var selectedAssets: [PHAsset] {
         didSet {
-            sendBarButtonItem?.isEnabled = selectedAssets.count > 0
+            sendBarButtonItem?.isEnabled = selectedAssets.isNotEmpty
             sendBarButtonItem?.title = senderBarButtonText
         }
     }
@@ -37,7 +37,7 @@ final class PhotoCarouselViewController: UIViewController {
     private var collectionViewDelegate: PhotoCarouselDelegate?
     
     private var senderBarButtonText: String {
-        return selectedAssets.count > 0 ? selectionActionType.localizedTextWithCount(selectedAssets.count) : selectionActionDisabledText
+        return selectedAssets.isNotEmpty ? selectionActionType.localizedTextWithCount(selectedAssets.count) : selectionActionDisabledText
     }
     
     private lazy var titleLabel: UILabel = {
@@ -235,7 +235,7 @@ final class PhotoCarouselViewController: UIViewController {
             action: #selector(selectBarButtonTapped)
         )
         
-        sendBarButtonItem.isEnabled = selectedAssets.count > 0
+        sendBarButtonItem.isEnabled = selectedAssets.isNotEmpty
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         
         toolbarItems = [selectDeselectBarButtonItem, spacer, sendBarButtonItem]

@@ -17,6 +17,7 @@
 ///     - isAudiosExplorer: Indicates whether or not it is the home audios explorer
 ///     - isVideosExplorer: Indicates whether or not it is the home videos explorer
 ///     - isCameraUploadExplorer: Indicates whether or not it is the camera upload explorer
+///     - isFilterEnabled: Indicates whether or not if the filter is enabled
 ///     - isDoNotDisturbEnabled: Indicates wether or not the notifications are disabled
 ///     - isShareAvailable: Indicates if the share action is available
 ///     - isSharedItemsChild: Indicates if the current node is a shared items child
@@ -47,6 +48,7 @@ struct CMConfigEntity {
     var isAudiosExplorer: Bool = false
     var isVideosExplorer: Bool = false
     var isCameraUploadExplorer: Bool = false
+    var isFilterEnabled: Bool = false
     var isDoNotDisturbEnabled: Bool = false
     var isShareAvailable: Bool = false
     var isSharedItemsChild: Bool = false

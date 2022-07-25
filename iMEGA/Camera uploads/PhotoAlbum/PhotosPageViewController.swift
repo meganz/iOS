@@ -9,7 +9,7 @@ final class PhotosPageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scrollView = view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
+        let scrollView = view.subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
         scrollView?.delegate = self
     }
 }
