@@ -5,8 +5,8 @@ extension PhotosViewController {
         CMConfigEntity(
             menuType: .display,
             sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
-            isSharedItems: true,
-            isCameraUploadExplorer: true
+            isCameraUploadExplorer: true,
+            isFilterEnabled: FeatureToggle.filterMenuOnCameraUploadExplorer.isEnabled
         )
     }
     
@@ -127,6 +127,10 @@ extension PhotosViewController {
             disableContextMenuOnCameraUploaderOnSelect()
         }
     }
+    
+    private func onFilter() {
+        photoLibraryContentViewModel.showFilter.toggle()
+    }
 }
 
 // MARK: - DisplayMenuDelegate
@@ -134,6 +138,8 @@ extension PhotosViewController: DisplayMenuDelegate {
     func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
         if action == .select {
             onSelect()
+        } else if action == .filter {
+            onFilter()
         }
     }
     

@@ -132,6 +132,15 @@ internal enum Colors {
     internal static let imageBackground = ColorAsset(name: "imageBackground")
   }
   internal enum Photos {
+    internal static let filterBackground = ColorAsset(name: "filterBackground")
+    internal static let filterLocationItemBackground = ColorAsset(name: "filterLocationItemBackground")
+    internal static let filterLocationItemForeground = ColorAsset(name: "filterLocationItemForeground")
+    internal static let filterLocationItemTickForeground = ColorAsset(name: "filterLocationItemTickForeground")
+    internal static let filterNormalTextForeground = ColorAsset(name: "filterNormalTextForeground")
+    internal static let filterTextForeground = ColorAsset(name: "filterTextForeground")
+    internal static let filterTypeNormalBackground = ColorAsset(name: "filterTypeNormalBackground")
+    internal static let filterTypeSelectionBackground = ColorAsset(name: "filterTypeSelectionBackground")
+    internal static let filterTypeSelectionForeground = ColorAsset(name: "filterTypeSelectionForeground")
     internal static let pageTabForeground = ColorAsset(name: "pageTabForeground")
     internal static let photoSeletionBorder = ColorAsset(name: "photoSeletionBorder")
     internal static let rightBarButtonForeground = ColorAsset(name: "rightBarButtonForeground")

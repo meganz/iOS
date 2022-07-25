@@ -18,7 +18,7 @@ enum UploadAddAction: String, CaseIterable {
 }
 
 enum DisplayAction: String, CaseIterable {
-    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin
+    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter
 }
 
 enum QuickFolderAction: String, CaseIterable {

@@ -498,6 +498,24 @@
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favourites";
+/* Filter headline in the Filter UI on Camera Upload Timeline Screen  */
+"filter"="Filter";
+/* Choose type headline within filter UI */
+"cameraUploads.timeline.filter.chooseType"="Choose type";
+/* Show items from headline within filter UI */
+"cameraUploads.timeline.filter.showItemsFrom"="Show items from";
+/* Filter UI media type option */
+"cameraUploads.timeline.filter.mediaType.allMedia"="All media";
+/* Filter UI media type option */
+"cameraUploads.timeline.filter.mediaType.images"="Images";
+/* Filter UI media type option */
+"cameraUploads.timeline.filter.mediaType.videos"="Videos";
+/* Filter UI media location option */
+"cameraUploads.timeline.filter.location.allLocations"="All locations";
+/* Filter UI media location option */
+"cameraUploads.timeline.filter.location.cloudDrive"="Cloud drive";
+/* Filter UI media location option */
+"cameraUploads.timeline.filter.location.cameraUploads"="Camera uploads";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */

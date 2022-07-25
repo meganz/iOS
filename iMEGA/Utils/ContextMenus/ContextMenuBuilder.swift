@@ -18,6 +18,7 @@ final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
+    private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
     private var isSharedItemsChild: Bool = false
@@ -117,6 +118,11 @@ final class ContextMenuBuilder {
     
     func setIsCameraUploadExplorer(_ isCameraUploadExplorer: Bool) -> ContextMenuBuilder {
         self.isCameraUploadExplorer = isCameraUploadExplorer
+        return self
+    }
+    
+    func setIsFilterEnabled(_ isFilterEnabled: Bool) -> ContextMenuBuilder {
+        self.isFilterEnabled = isFilterEnabled
         return self
     }
     
@@ -287,6 +293,12 @@ final class ContextMenuBuilder {
                         children: sortMenuActions)
     }
     
+    private func filterMenu() -> CMEntity {
+        CMEntity(displayInline: true,
+                 children: [filter]
+        )
+    }
+    
     private func displayMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         
@@ -298,6 +310,11 @@ final class ContextMenuBuilder {
             displayActionsMenuChildren.append(contentsOf: [selectMenu(), sortMenu()])
         } else if isVideosExplorer {
             displayActionsMenuChildren.append(contentsOf: [sortMenu()])
+        } else if isCameraUploadExplorer {
+            displayActionsMenuChildren = [selectMenu(), sortMenu()]
+            if isFilterEnabled {
+                displayActionsMenuChildren.append(filterMenu())
+            }
         } else {
             displayActionsMenuChildren.append(contentsOf: [selectMenu(), viewTypeMenu(), sortMenu()])
         }

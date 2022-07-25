@@ -4,8 +4,10 @@ import SwiftUI
 struct PhotoLibraryContentView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     var router: PhotoLibraryContentViewRouting
+    let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)?
     
     @State private var editMode: EditMode = .inactive
+    @StateObject private var filterViewModel = PhotoLibraryFilterViewModel()
     
     var body: some View {
         if viewModel.library.isEmpty {
@@ -26,6 +28,14 @@ struct PhotoLibraryContentView: View {
             .environment(\.editMode, $editMode)
             .onReceive(viewModel.selection.$editMode) {
                 editMode = $0
+            }
+            .popover(isPresented: $viewModel.showFilter) {
+                PhotoLibraryFilterView(
+                    viewModel,
+                    filterViewModel: filterViewModel,
+                    forScreen: PhotosFilterOptionKeys.cameraUploadTimeline,
+                    onFilterUpdate: onFilterUpdate
+                )
             }
         }
     }
