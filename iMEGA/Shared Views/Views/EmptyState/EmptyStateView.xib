@@ -90,6 +90,7 @@
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="K3f-lP-shF" secondAttribute="centerY" multiplier="0.6" id="EMV-5Y-jnB"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="centerX" secondItem="0sb-yg-ZOf" secondAttribute="centerX" id="J5Q-lw-Uys"/>
                 <constraint firstItem="jOP-gA-9dj" firstAttribute="centerX" secondItem="K3f-lP-shF" secondAttribute="centerX" id="L9P-PX-5Iu"/>
+                <constraint firstItem="jOP-gA-9dj" firstAttribute="centerY" secondItem="2jk-LD-Uqt" secondAttribute="centerY" id="MuU-DP-meP"/>
                 <constraint firstItem="jOP-gA-9dj" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="5" id="VeY-F6-IAN"/>
                 <constraint firstItem="K3f-lP-shF" firstAttribute="bottom" secondItem="XtC-yn-6bx" secondAttribute="bottom" constant="35" id="YYc-3T-9XX"/>
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="centerY" secondItem="K3f-lP-shF" secondAttribute="centerY" multiplier="0.5" id="gJF-Lu-DXi" userLabel="Image ViewY Timeline Constraint"/>
@@ -102,6 +103,7 @@
                     <exclude reference="1yy-54-HyZ"/>
                     <exclude reference="EMV-5Y-jnB"/>
                     <exclude reference="gJF-Lu-DXi"/>
+                    <exclude reference="MuU-DP-meP"/>
                     <exclude reference="VeY-F6-IAN"/>
                     <exclude reference="C82-1b-37E"/>
                 </mask>
@@ -118,6 +120,8 @@
             </variation>
             <connections>
                 <outlet property="audioPlayerShownView" destination="O5O-Y5-Tzr" id="XdS-Ck-yhr"/>
+                <outlet property="bottomStackViewTopCompactConstraint" destination="C82-1b-37E" id="pXc-kg-eEp"/>
+                <outlet property="bottomStackViewTopRegularConstraint" destination="0T9-9L-mwL" id="FaB-pN-88N"/>
                 <outlet property="button" destination="jPP-OE-nyG" id="hQ9-iZ-ePe"/>
                 <outlet property="descriptionButton" destination="1UQ-rI-V75" id="0On-xd-fED"/>
                 <outlet property="descriptionLabel" destination="jU8-Oa-6ip" id="YZG-Dl-Ojh"/>
@@ -128,6 +132,7 @@
                 <outlet property="imageViewYTimelineConstraint" destination="gJF-Lu-DXi" id="tKi-nT-O2V"/>
                 <outlet property="imageWidthConstraint" destination="5mD-Fn-8Zs" id="N3e-g3-2FJ"/>
                 <outlet property="titleLabel" destination="hIq-3x-tfh" id="lif-cg-IAh"/>
+                <outlet property="topStackViewCenterConstraint" destination="MuU-DP-meP" id="yfb-0X-APj"/>
             </connections>
             <point key="canvasLocation" x="29" y="42"/>
         </view>
