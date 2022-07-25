@@ -7,7 +7,7 @@ struct NodeActionViewModel {
         self.nodeActionUseCase = nodeActionUseCase
     }
     
-    func shouldShowSlideShow(with node: NodeEntity, featureFlag enable: Bool = FeatureFlag.shouldEnableSlideShow) -> Bool {
+    func shouldShowSlideShow(with node: NodeEntity, featureFlag enable: Bool = FeatureToggle.slideShow.isEnabled) -> Bool {
         guard enable else { return false }
         guard node.isImage || node.isFolder else { return false }
         

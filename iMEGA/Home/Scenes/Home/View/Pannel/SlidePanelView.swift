@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 protocol SlidePanelDelegate: AnyObject {
 
@@ -44,6 +45,8 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     @IBOutlet private var offlineContainerView: UIView!
     
     public var offlineScrollView: UIScrollView?
+    
+    private var subscriptions = Set<AnyCancellable>()
 
     // MARK: - Tab Control
 
@@ -89,12 +92,14 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadNibContent()
+        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadNibContent()
+        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
     
@@ -185,6 +190,20 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
 
     // MARK: - Privates
     
+    private func addRemoveHomeImageFeatureToggleSubscription() {
+        FeatureToggle
+            .removeHomeImage
+            .$isEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.setupSegmentTitle()
+                self.updateTabVisiblity(to: .recents)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    
     private func setupView(with trait: UITraitCollection) {
         setupSegmentTitle()
         updateTabVisiblity(to: .recents)
@@ -216,7 +235,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         let favouritesTitle = Strings.Localizable.favourites
         let offlineTitle = Strings.Localizable.offline
         
-        let segmentModel: SegmentTitleView.SegmentTitleViewModel = FeatureFlag.shouldRemoveHomeImage ?
+        let segmentModel: SegmentTitleView.SegmentTitleViewModel = FeatureToggle.removeHomeImage.isEnabled ?
                                                                                 .init(titles: [.init(text: recentsTitle, index: 0),
                                                                                                 .init(text: offlineTitle, index: 1)]) :
                                                                                 .init(titles: [.init(text: recentsTitle, index: 0),

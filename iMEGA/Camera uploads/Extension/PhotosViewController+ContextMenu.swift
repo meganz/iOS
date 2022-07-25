@@ -38,6 +38,8 @@ extension PhotosViewController {
             editBarButtonItem?.image = Asset.Images.NavigationBar.moreNavigationBar.image
             editBarButtonItem?.menu = contextMenuManager?.contextMenu(with: menuConfig)
             editBarButtonItem?.isEnabled = true
+            editBarButtonItem?.target = nil
+            editBarButtonItem?.action = nil
             
             objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem
             objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
@@ -64,7 +66,7 @@ extension PhotosViewController {
     }
     
     @objc func setRightNavigationBarButtons() {
-        if FeatureFlag.shouldEnableContextMenuOnCameraUploadExplorer {
+        if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
             enableContextMenuOnCameraUploader()
         } else {
             disableContextMenuOnCameraUploader()
@@ -75,7 +77,7 @@ extension PhotosViewController {
         setEditing(!isEditing, animated: true)
         setRightNavigationBarButtons()
         
-        if FeatureFlag.shouldEnableContextMenuOnCameraUploadExplorer {
+        if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
             editBarButtonItem?.action = nil
         }
     }
@@ -119,7 +121,7 @@ extension PhotosViewController {
     }
     
     @objc private func onSelect() {
-        if FeatureFlag.shouldEnableContextMenuOnCameraUploadExplorer {
+        if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
             enableContextMenuOnCameraUploaderOnSelect()
         } else {
             disableContextMenuOnCameraUploaderOnSelect()

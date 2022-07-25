@@ -489,7 +489,7 @@ extension HomeViewController: ExploreViewStackDelegate {
 
         switch card {
         case .images:
-            guard FeatureFlag.shouldRemoveHomeImage else {
+            guard FeatureToggle.removeHomeImage.isEnabled else {
                 router.photosExplorerSelected()
                 return
             }
