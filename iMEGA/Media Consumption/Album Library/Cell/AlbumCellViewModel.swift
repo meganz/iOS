@@ -43,19 +43,19 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         }
         
         loadingTask = Task {
-            do {
-                let nodes = try await albumContentsUseCase.favouriteAlbumNodes()
-                
-                let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
-                numberOfNodes = albumEntity.numberOfNodes
-                
-                if let node = albumEntity.coverNode {
-                    await loadThumbnail(for: node)
-                } else {
-                    isLoading = false
-                    thumbnailContainer = placeholderThumbnail
-                }
-            } catch {}
+            guard let nodes = try? await albumContentsUseCase.favouriteAlbumNodes() else {
+                isLoading = false
+                return
+            }
+            
+            let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
+            numberOfNodes = albumEntity.numberOfNodes
+            
+            if let node = albumEntity.coverNode {
+                await loadThumbnail(for: node)
+            } else {
+                isLoading = false
+            }
         }
     }
     
@@ -69,25 +69,12 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
-        if let image = thumbnailUseCase.cachedThumbnailImage(for: node, type: .thumbnail) {
-            thumbnailContainer = ImageContainer(image: image)
-        } else {
-            do {
-                try await loadThumbnailFromRemote(for: node)
-            } catch {}
+        guard let image = try? await thumbnailUseCase.loadThumbnailImage(for: node, type: .thumbnail) else {
+            isLoading = false
+            return
         }
         
-        isLoading = false
-    }
-    
-    @MainActor
-    private func loadThumbnailFromRemote(for node: NodeEntity) async throws {
-        let url = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
-        
-        if let image = Image(contentsOfFile: url.path) {
-            thumbnailContainer = ImageContainer(image: image)
-        }
-        
+        thumbnailContainer = ImageContainer(image: image)
         isLoading = false
     }
     
