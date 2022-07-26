@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "filter-light-1.pdf",
+      "filename" : "filterLight.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "filter-dark.pdf",
+      "filename" : "filterDark.pdf",
       "idiom" : "universal"
     }
   ],

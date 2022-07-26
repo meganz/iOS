@@ -56,6 +56,7 @@ struct PhotoLibraryFilterView: View {
             btnCancel
             Spacer()
             Text(filterViewModel.filterTitle)
+                .bold()
             Spacer()
             btnDone
         }
