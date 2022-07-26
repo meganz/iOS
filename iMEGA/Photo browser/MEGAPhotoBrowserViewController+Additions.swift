@@ -35,7 +35,7 @@ extension MEGAPhotoBrowserViewController {
     @objc func saveToPhotos(node: MEGANode) {
         DevicePermissionsHelper.photosPermission { granted in
             if granted {
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: self.api), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
                 let completionBlock: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
                     SVProgressHUD.dismiss()
                     
