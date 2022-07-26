@@ -1,9 +1,7 @@
 
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {
-        let sdk = isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
-        
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
         let completionBlock: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
             SVProgressHUD.dismiss()

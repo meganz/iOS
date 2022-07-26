@@ -14,12 +14,23 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
     
     func download(nodeHandle: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let node = sdk.node(forHandle: nodeHandle) else {
-            completion(.failure(.couldNotFindNodeByHandle))
-            return
+        var megaNode: MEGANode
+        
+        if let sharedFolderSdk = sharedFolderSdk {
+            guard let node = sharedFolderSdk.node(forHandle: nodeHandle), let sharedNode = sharedFolderSdk.authorizeNode(node) else {
+                completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
+                return
+            }
+            megaNode = sharedNode
+        } else {
+            guard let node = sdk.node(forHandle: nodeHandle) else {
+                completion(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
+                return
+            }
+            megaNode = node
         }
         
-        sdk.startDownloadNode(node, localPath: path, fileName: nil, appData: appData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: completion))
+        sdk.startDownloadNode(megaNode, localPath: path, fileName: nil, appData: appData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: completion))
     }
     
     func downloadChat(nodeHandle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, to path: String, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
