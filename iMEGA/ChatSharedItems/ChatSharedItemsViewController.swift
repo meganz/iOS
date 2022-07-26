@@ -388,6 +388,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             }
             
             if let selectedNodeName = selectedNode.name, selectedNodeName.mnz_isVisualMediaPathExtension {
+                var messagesIdsArray = [MEGAHandle]()
                 let nodes = NSMutableArray()
                 messagesArray.forEach { message in
                     guard let node = message.nodeList?.node(at: 0),
@@ -402,6 +403,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                         } else {
                             nodes.add(node)
                         }
+                        messagesIdsArray.append(message.messageId )
                     }
                 }
                 
@@ -410,7 +412,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                 }
                 
                 let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdkManager.sharedMEGASdk(), displayMode: .chatSharedFiles, presenting: selectedNode)
-                photoBrowserVC.configureMediaAttachment(forMessageId: message.messageId, inChatId: chatRoom.chatId)
+                photoBrowserVC.configureMediaAttachment(forMessageId: message.messageId, inChatId: chatRoom.chatId, messagesIds: messagesIdsArray)
                 navigationController?.present(photoBrowserVC, animated: true, completion: nil)
             } else {
                 if chatRoom.isPreview {

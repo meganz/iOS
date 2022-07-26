@@ -39,6 +39,9 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) BOOL needsReload;
 @property (nonatomic) MEGAHandle chatId;
 @property (nonatomic) MEGAHandle messageId;
+@property (nonatomic) NSArray *messagesIds;
+
+@property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 
 @end
 

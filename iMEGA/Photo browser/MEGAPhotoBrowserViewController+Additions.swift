@@ -27,9 +27,10 @@ extension MEGAPhotoBrowserViewController {
         return prePesentingVC
     }
     
-    @objc func configureMediaAttachment(forMessageId messageId: MEGAHandle, inChatId chatId: MEGAHandle) {
+    @objc func configureMediaAttachment(forMessageId messageId: MEGAHandle, inChatId chatId: MEGAHandle, messagesIds: [MEGAHandle]) {
         self.chatId = chatId
         self.messageId = messageId
+        self.messagesIds = messagesIds
     }
     
     @objc func saveToPhotos(node: MEGANode) {
@@ -66,6 +67,23 @@ extension MEGAPhotoBrowserViewController {
             } else {
                 DevicePermissionsHelper.alertPhotosPermission()
             }
+        }
+    }
+    
+    @objc func updateMessageId(to newIndex: UInt) {
+        if messagesIds.isNotEmpty {
+            guard let newMessageId = messagesIds[safe: Int(newIndex)] as? MEGAHandle else { return }
+            messageId = newMessageId
+        }
+    }
+}
+
+extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
+    public func updateCurrentIndex(to newIndex: UInt) {
+        if dataProvider.shouldUpdateCurrentIndex(toIndex: Int(newIndex)) {
+            dataProvider.currentIndex = Int(newIndex)
+            needsReload = true
+            updateMessageId(to: newIndex)
         }
     }
 }

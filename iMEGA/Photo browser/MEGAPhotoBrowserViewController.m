@@ -31,7 +31,7 @@ static const CGFloat GapBetweenPages = 10.0;
 static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
 static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Don't request the preview and download the original if the photo is smaller than 1 MB
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -64,7 +64,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (nonatomic) UIWindow *secondWindow;
 
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
-@property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 
 @end
 
@@ -447,6 +446,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
                 [self.delegate photoBrowser:self didPresentNodeAtIndex:self.dataProvider.currentIndex];
             }
+            [self updateMessageIdTo:newIndex];
         }
     }
 }
@@ -1040,15 +1040,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return nil;
     } else {
         return [[MEGAPhotoBrowserAnimator alloc] initWithMode:MEGAPhotoBrowserAnimatorModeDismiss originFrame:self.originFrame targetImageView:self.targetImageView];
-    }
-}
-
-#pragma mark - MEGAPhotoBrowserPickerDelegate
-
-- (void)updateCurrentIndexTo:(NSUInteger)newIndex {
-    if ([self.dataProvider shouldUpdateCurrentIndexToIndex:newIndex]) {
-        self.dataProvider.currentIndex = newIndex;
-        self.needsReload = YES;
     }
 }
 
