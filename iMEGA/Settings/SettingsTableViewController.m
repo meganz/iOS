@@ -31,6 +31,8 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
 @property (weak, nonatomic) IBOutlet UILabel *termsAndPoliciesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cookieSettingsLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *deleteAccountLabel;
+
 @end
 
 @implementation SettingsTableViewController
@@ -78,10 +80,13 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
     self.aboutLabel.text = NSLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
     self.termsAndPoliciesLabel.text = NSLocalizedString(@"settings.section.termsAndPolicies", @"Title of one of the Settings sections where you can see the MEGA's 'Terms and Policies'");
     self.cookieSettingsLabel.text = NSLocalizedString(@"general.cookieSettings", @"Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings'");
+    
+    self.deleteAccountLabel.text = NSLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
 }
 
 - (void)updateAppearance {
     self.cameraUploadsDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.deleteAccountLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
@@ -93,9 +98,9 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #ifdef QA_CONFIG
-    return 6;
+    return 7;
 #else
-    return 5;
+    return 6;
 #endif
 }
 
@@ -134,10 +139,14 @@ typedef NS_ENUM(NSUInteger, LastSectionRow) {
                         break;
                 }
             }
+            break;
         }
-        break;
-        
-        case 5: // QA settings.
+
+        case 5: //Delete Account
+            [self showDeleteAccountAlert];
+            break;
+            
+        case 6: // QA settings
             [self showQASettingsView];
             break;
     }

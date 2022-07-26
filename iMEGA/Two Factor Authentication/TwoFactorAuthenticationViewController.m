@@ -322,8 +322,7 @@
         case MEGARequestTypeGetChangeEmailLink:
         case MEGARequestTypeGetCancelLink: {
             [self.navigationController popViewControllerAnimated:YES];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"processStarted" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MEGAAwaitingEmailConfirmationNotification object:nil];
             break;
         }
             

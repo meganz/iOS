@@ -166,3 +166,6 @@
 #import "AssetUploadStatus.h"
 #import "AboutTableViewController.h"
 #import "SettingsTableViewController.h"
+#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
+#import "AwaitingEmailConfirmationView.h"
+#import "TwoFactorAuthenticationViewController.h"

@@ -5,14 +5,9 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
-#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
-
-#import "AwaitingEmailConfirmationView.h"
-#import "TwoFactorAuthenticationViewController.h"
 
 @interface AdvancedTableViewController () <MEGARequestDelegate>
 
@@ -22,15 +17,11 @@
 @property (weak, nonatomic) IBOutlet UISwitch *saveImagesSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *saveVideosSwitch;
 
-@property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *dontUseHttpLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useHttpsOnlySwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
-
-@property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
 @end
 
@@ -43,14 +34,7 @@
     
     [self.navigationItem setTitle:NSLocalizedString(@"advanced", nil)];
     
-     self.cancelAccountLabel.text = NSLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
-    
     [self checkAuthorizationStatus];
-    
-    MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-        self.twoFactorAuthenticationEnabled = request.flag;
-    }];
-    [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
     
     [self updateAppearance];
 }
@@ -88,8 +72,6 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.cancelAccountLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
@@ -121,16 +103,6 @@
         default:
             break;
     }
-}
-
-- (void)processStarted {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"processStarted" object:nil];
-    
-    AwaitingEmailConfirmationView *awaitingEmailConfirmationView = [[[NSBundle mainBundle] loadNibNamed:@"AwaitingEmailConfirmationView" owner:self options: nil] firstObject];
-    awaitingEmailConfirmationView.titleLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-    awaitingEmailConfirmationView.descriptionLabel.text = NSLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
-    awaitingEmailConfirmationView.frame = self.view.bounds;
-    self.view = awaitingEmailConfirmationView;
 }
 
 - (void)checkPhotosPermissionForUserDefaultSetting:(NSString *)userDefaultSetting settingSwitch:(UISwitch *)settingSwitch {
@@ -168,11 +140,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        return 3;
-    }
-    
-    return 4;
+    return 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -221,54 +189,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 3: { //Cancel account
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    if (self.isTwoFactorAuthenticationEnabled) {
-                        TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
-                        twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationCancelAccount;
-                        
-                        [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
-                        
-                        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processStarted) name:@"processStarted" object:nil];
-                    } else {
-                        [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
-                    }
-                }]];
-                [self presentViewController:cancelAccountAlertController animated:YES completion:nil];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type) {
-        return;
-    }
-    
-    switch (request.type) {
-        case MEGARequestTypeGetCancelLink: {
-            [self processStarted];
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end

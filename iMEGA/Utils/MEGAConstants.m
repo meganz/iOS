@@ -23,6 +23,8 @@ uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
 
 NSString * const MEGAVoiceMessagesFolderName = @"My voice messages";
 
+NSString * const MEGAAwaitingEmailConfirmationNotification = @"processStarted";
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";
