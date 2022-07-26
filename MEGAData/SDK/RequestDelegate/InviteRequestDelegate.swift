@@ -22,7 +22,7 @@ final class InviteRequestDelegate: NSObject, MEGARequestDelegate {
                     let contactRequests = (0..<outgoingContactRequests.size.intValue).compactMap {
                         outgoingContactRequests.contactRequest(at: $0)
                     }
-                    let isInOutgoingContactRequest = contactRequests.isNotEmpty { $0.targetEmail == request.email }
+                    let isInOutgoingContactRequest = contactRequests.contains { $0.targetEmail == request.email }
                     let errorString = String(format: "%@ %@", request.requestString ?? "", error.name ?? "")
                     completion(.failure(isInOutgoingContactRequest ? .isInOutgoingContactRequest : .generic(errorString)))
                 }

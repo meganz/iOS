@@ -269,7 +269,7 @@ final class AudioPlayer: NSObject {
     }
     
     @objc func add(listener: AudioPlayerObserversProtocol) {
-        if listenerManager.listeners.isEmpty(where: { $0 === listener }) {
+        if listenerManager.listeners.notContains(where: { $0 === listener }) {
             listenerManager.add(listener)
         }
     }

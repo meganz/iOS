@@ -610,7 +610,7 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                     currentVersionRemoved()
                     break
                 } else {
-                    if nodeVersions.isNotEmpty(where: { $0.handle == nodeUpdated.handle }) {
+                    if nodeVersions.contains(where: { $0.handle == nodeUpdated.handle }) {
                         nodeVersionRemoved()
                     }
                     break

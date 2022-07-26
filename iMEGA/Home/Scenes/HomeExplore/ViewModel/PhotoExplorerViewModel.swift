@@ -148,7 +148,7 @@ class PhotoExplorerViewModel: NSObject {
     private func isAnyNodeMovedToTrash(nodes: [MEGANode], updatedNodes: [MEGANode]) -> Bool {
         let nodesRemoved = updatedNodes.filter { node in
             if node.hasChangedType(.parent),
-               nodes.isNotEmpty(where: { $0 == node }),
+               nodes.contains(where: { $0 == node }),
                MEGASdkManager.sharedMEGASdk().rubbishNode == node {
                 return true
             }

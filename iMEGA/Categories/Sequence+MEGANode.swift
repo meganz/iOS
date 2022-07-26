@@ -1,14 +1,14 @@
 extension Sequence where Element: MEGANode {
     func containsNewNode() -> Bool {
-        isNotEmpty { $0.hasChangedType(.new) }
+        contains { $0.hasChangedType(.new) }
     }
     
     func hasModifiedAttributes() -> Bool {
-        isNotEmpty { $0.hasChangedType(.attributes)}
+        contains { $0.hasChangedType(.attributes)}
     }
     
     func hasModifiedParent() -> Bool {
-        isNotEmpty { $0.hasChangedType(.parent) }
+        contains { $0.hasChangedType(.parent) }
     }
     
     func modifiedFavourites() -> [MEGANode] {
@@ -20,14 +20,14 @@ extension Sequence where Element: MEGANode {
     }
     
     func hasPublicLink() -> Bool {
-        isNotEmpty {
+        contains {
             $0.hasChangedType(.publicLink) &&
             $0.publicLink != nil
         }
     }
     
     func isPublicLinkRemoved() -> Bool {
-        isNotEmpty {
+        contains {
             $0.hasChangedType(.publicLink) &&
             $0.publicLink == nil
         }
