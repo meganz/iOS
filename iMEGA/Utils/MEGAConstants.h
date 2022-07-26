@@ -22,6 +22,8 @@ extern uint64_t const MEGAInvalidHandle;
 
 extern NSString * const MEGAVoiceMessagesFolderName;
 
+extern NSString * const MEGAAwaitingEmailConfirmationNotification;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotification;
