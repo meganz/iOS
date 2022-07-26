@@ -68,7 +68,7 @@ final class NameCollisionViewModel: ObservableObject {
     
     func checkNameCollisions() {
         collisions = nameCollisionUseCase.resolveNameCollisions(for: collisions)
-        if collisions.isNotEmpty(where: { $0.collisionNodeHandle != nil }) {
+        if collisions.contains(where: { $0.collisionNodeHandle != nil }) {
             router.showNameCollisionsView()
         } else {
             processCollisions()
@@ -135,7 +135,7 @@ final class NameCollisionViewModel: ObservableObject {
     //MARK: - Private
     private func loadNextCollision() {
         guard let collision = collisions.first(where: { $0.collisionAction == nil && $0.collisionNodeHandle != nil }) else {
-            if collisions.isNotEmpty(where: { $0.collisionAction != .cancel || $0.collisionNodeHandle == nil }) {
+            if collisions.contains(where: { $0.collisionAction != .cancel || $0.collisionNodeHandle == nil }) {
                 processCollisions()
             } else {
                 router.dismiss()

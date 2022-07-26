@@ -88,7 +88,7 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
     }
 
     func addRoutingView() {
-        guard subviews.isEmpty(where: { $0 is AVRoutePickerView }) else {
+        guard subviews.notContains(where: { $0 is AVRoutePickerView }) else {
             return
         }
         

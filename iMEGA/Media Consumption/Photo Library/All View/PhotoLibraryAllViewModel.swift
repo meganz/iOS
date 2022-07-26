@@ -121,7 +121,7 @@ extension PhotoLibraryAllViewModel {
                 return cardPosition
             }
             
-            guard dayCategory.contentList.isNotEmpty(where: { $0.handle == photoPosition.handle }) else {
+            guard dayCategory.contentList.contains(where: { $0.handle == photoPosition.handle }) else {
                 MEGALogDebug("[Photos] all position - photo position \(String(describing: photoPosition.date)) is not in card: \(String(describing: cardPosition.date))")
                 return cardPosition
             }

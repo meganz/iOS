@@ -144,7 +144,7 @@ class GetLinkViewController: UIViewController {
     private func configureNavigation() {
         navigationController?.setToolbarHidden(false, animated: true)
         
-        title = nodes.isEmpty { !$0.isExported() } ?
+        title = nodes.notContains { !$0.isExported() } ?
                     Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count) :
                     Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
         
