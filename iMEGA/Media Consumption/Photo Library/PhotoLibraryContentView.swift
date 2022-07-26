@@ -46,10 +46,17 @@ struct PhotoLibraryContentView: View {
         if viewModel.contentMode == .library {
             photoContent()
                 .safeAreaInset(edge: .bottom) {
-                    PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
+                    if editMode.isEditing {
+                        EmptyView()
+                    } else {
+                        PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
+                    }
                 }
         } else {
             photoContent()
+                .safeAreaInset(edge: .bottom) {
+                    EmptyView().frame(height: 64)
+                }
         }
     }
     
