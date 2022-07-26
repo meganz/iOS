@@ -172,6 +172,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                    (name.mnz_isVisualMediaPathExtension) {
                     var mediaNodesArrayIndex = 0
                     var foundIndex: Int?
+                    var mediaMessagesArray = [MEGAHandle]()
                     let mediaNodesArray = messages.compactMap { message -> MEGANode? in
                         guard let localChatMessage = message as? ChatMessage,
                               localChatMessage.message.type == .attachment,
@@ -187,6 +188,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                                     foundIndex = mediaNodesArrayIndex
                                 }
                                 mediaNodesArrayIndex += 1
+                                mediaMessagesArray.append(localChatMessage.message.messageId)
                                 return authorizedNode
                             } else {
                                 return nil
@@ -197,6 +199,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                             foundIndex = mediaNodesArrayIndex
                         }
                         mediaNodesArrayIndex += 1
+                        mediaMessagesArray.append(localChatMessage.message.messageId)
                         return node
                     }
                     
@@ -205,7 +208,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                                                                                      displayMode: .chatAttachment,
                                                                                      preferredIndex: UInt(foundIndex ?? 0))
                     photoBrowserVC.delegate = self
-                    photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId)
+                    photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
                     present(viewController: photoBrowserVC)
                 } else {
                     if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
