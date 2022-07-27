@@ -1097,7 +1097,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
             switch (self.displayMode) {
                 case DisplayModeFileLink:
-                    [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+                    [self downloadFileLink];
                     break;
                     
                 case DisplayModeChatAttachment:

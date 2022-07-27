@@ -54,7 +54,8 @@ extension MEGAPhotoBrowserViewController {
                 case .fileLink:
                     Task {
                         do {
-                            let fileLink = FileLinkEntity(linkURLString: self.publicLink)
+                            guard let linkUrl = URL(string: self.publicLink) else { return }
+                            let fileLink = FileLinkEntity(linkURL: linkUrl)
                             try await saveMediaUseCase.saveToPhotos(fileLink: fileLink)
                         } catch {
                             MEGALogDebug("Failed to saveToPhotosFileLink \(error)")
@@ -68,6 +69,11 @@ extension MEGAPhotoBrowserViewController {
                 DevicePermissionsHelper.alertPhotosPermission()
             }
         }
+    }
+    
+    @objc func downloadFileLink() {
+        guard let linkUrl = URL(string: publicLink) else { return }
+        DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()
     }
     
     @objc func updateMessageId(to newIndex: UInt) {

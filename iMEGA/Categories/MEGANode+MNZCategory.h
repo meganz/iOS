@@ -31,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - File links
 
-- (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink;
 - (void)mnz_fileLinkImportFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink;
 
 #pragma mark - Utils

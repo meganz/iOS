@@ -60,11 +60,18 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
     }
     
     //MARK: - Tempfolder
-    func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
-        let directory = NSTemporaryDirectory().append(pathComponent: base64Handle)
-        try? fileManager.createDirectory(atPath: directory, withIntermediateDirectories: true)
+    func tempURL(for base64Handle: MEGABase64Handle) -> URL {
+        let directoryURL = fileManager.temporaryDirectory.appendingPathComponent(base64Handle)
+        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         
-        return URL(fileURLWithPath: directory).appendingPathComponent(name)
+        return directoryURL
+    }
+    
+    func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+        let directoryURL = fileManager.temporaryDirectory.appendingPathComponent(base64Handle)
+        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+        
+        return directoryURL.appendingPathComponent(name)
     }
     
     //MARK: - Offline

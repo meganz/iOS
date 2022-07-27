@@ -24,7 +24,8 @@ struct MockNodeRepository: NodeRepositoryProtocol {
     var copiedNodeHandle: UInt64?
     var movedNodeHandle: UInt64?
     var images: [NodeEntity] = []
-
+    var fileLinkNode: NodeEntity?
+    
     func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity? {
         node
     }
@@ -68,6 +69,13 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         return name
     }
     
+    func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
+        guard let node = fileLinkNode else {
+            throw NodeErrorEntity.nodeNotFound
+        }
+        return node
+    }
+
     func sizeForNode(handle: MEGAHandle) -> UInt64? {
         size
     }

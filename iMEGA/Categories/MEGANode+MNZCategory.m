@@ -495,38 +495,6 @@
 
 #pragma mark - File links
 
-- (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
-    if (![Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-        return;
-    }
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            NSString *localPath = [Helper.relativePathForOffline stringByAppendingPathComponent:self.name];
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:self localPath:localPath fileName:nil appData:nil startFirst:YES cancelToken:nil];
-            [viewController dismissViewControllerAnimated:YES completion:^{
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", nil)];
-            }];
-        } else {
-            if (isFolderLink) {
-                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
-                MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
-            } else {
-                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
-                MEGALinkManager.selectedOption = LinkOptionDownloadNode;
-            }
-            
-            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
-            if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:onboardingVC animated:YES];
-            } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
-                [navigationController addRightCancelButton];
-                [viewController presentViewController:navigationController animated:YES completion:nil];
-            }
-        }
-    }
-}
-
 - (void)presentBrowserViewControllerWithBrowserAction:(BrowserAction)browserAction {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;

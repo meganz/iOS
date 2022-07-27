@@ -3,4 +3,5 @@
     case download
     case upload
     case downloadChat
+    case downloadFileLink
 }

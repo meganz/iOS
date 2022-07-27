@@ -4,19 +4,22 @@ protocol TransfersUseCaseProtocol {
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
+    func documentsDirectory() -> URL
 }
 
 // MARK: - Use case implementation -
-struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtocol {
+struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryProtocol>: TransfersUseCaseProtocol {
     
-    private let repo: T
+    private let transfersRepository: T
+    private let fileSystemRepository: U
     
-    init(repo: T) {
-        self.repo = repo
+    init(transfersRepository: T, fileSystemRepository: U) {
+        self.transfersRepository = transfersRepository
+        self.fileSystemRepository = fileSystemRepository
     }
     
     func transfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = repo.transfers()
+        let transfers = transfersRepository.transfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -25,7 +28,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     }
 
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = repo.downloadTransfers()
+        let transfers = transfersRepository.downloadTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -34,7 +37,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     }
     
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = repo.uploadTransfers()
+        let transfers = transfersRepository.uploadTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -43,7 +46,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     }
     
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = repo.completedTransfers()
+        let transfers = transfersRepository.completedTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -58,7 +61,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     }
     
     private func isOfflineTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.path?.hasPrefix(Helper.relativePathForOffline()) ?? false
+        transfer.path?.hasPrefix(fileSystemRepository.documentsDirectory().path) ?? false
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
@@ -67,5 +70,9 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol>: TransfersUseCaseProtoco
     
     private func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
         transfer.appData?.contains(NSString().mnz_appDataToSaveInPhotosApp()) ?? false
+    }
+    
+    func documentsDirectory() -> URL {
+        fileSystemRepository.documentsDirectory()
     }
 }

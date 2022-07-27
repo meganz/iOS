@@ -1,4 +1,4 @@
 
 struct FileLinkEntity {
-    let linkURLString: String
+    let linkURL: URL
 }

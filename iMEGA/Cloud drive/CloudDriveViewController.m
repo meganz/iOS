@@ -1042,7 +1042,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSMutableArray *transfers = [NSMutableArray<CancellableTransfer *> new];
         for (NSURL* url in urls) {
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:url.path.mnz_coordinatesOfPhotoOrVideo];
-            [transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle path:url.path name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload]];
+            [transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil path:url.path name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload]];
         }
         [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:transfers presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
     }
@@ -1075,7 +1075,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         return;
     }
     
-    if (transfer.type == MEGATransferTypeDownload && [transfer.path hasPrefix:Helper.relativePathForOffline]) {
+    if (transfer.type == MEGATransferTypeDownload && [transfer.path hasPrefix:[[FileSystemHelperOCWrapper new] documentsDirectory].path]) {
         switch (self.viewModePreference) {
             case ViewModePreferenceList:
                 [self.cdTableView.tableView reloadData];
