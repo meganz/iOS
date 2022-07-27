@@ -439,7 +439,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introdu numele nou";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="The following characters are not allowed: ” * / : < > ? \\ |";
+"general.error.charactersNotAllowed"="Următoarele caractere nu sunt permise: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rename File %@ ?";
 /* Title for the action that allows you to replace a file. */
@@ -492,10 +492,30 @@
 "cameraUploadsPendingFiles"="Încărcare în curs, %lu fișiere în așteptare";
 /* Timeline title within CU tab */
 "cameraUploads.timeline.title"="Cronologie";
+/* Timeline empty with all media filter enable */
+"cameraUploads.timeline.allMedia.empty.title"="No media found";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albume";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favorite";
+/* Filter headline in the Filter UI on Camera Upload Timeline Screen */
+"filter"="Filtru";
+/* Choose type headline within filter UI */
+"cameraUploads.timeline.filter.chooseType"="Choose type";
+/* Show items from headline within filter UI */
+"cameraUploads.timeline.filter.showItemsFrom"="Show items from:";
+/* Filter UI media type option */
+"cameraUploads.timeline.filter.mediaType.allMedia"="All media";
+/* Filter UI media type option */
+"cameraUploads.timeline.filter.mediaType.images"="Imagini";
+/* Filter UI media type option */
+"cameraUploads.timeline.filter.mediaType.videos"="Videoclipuri";
+/* Filter UI media location option */
+"cameraUploads.timeline.filter.location.allLocations"="All locations";
+/* Filter UI media location option */
+"cameraUploads.timeline.filter.location.cloudDrive"="Unitate cloud";
+/* Filter UI media location option */
+"cameraUploads.timeline.filter.location.cameraUploads"="Camera uploads";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, 1 fișier în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -3030,3 +3050,9 @@
 "meetings.startConversation.contextMenu.startMeeting"="Începe o întâlnire";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Alătură-te întâlnirii";
+/* Title of the Settings section where you can configure calls options of your MEGA account */
+"settings.section.calls.title"="Calls";
+/* Title of the sound notifications choice for calls when users join or left a call */
+"settings.section.calls.soundNotifications.title"="Sound notifications";
+/* Description of the sound notifications choice for calls when users join or left a call */
+"settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";

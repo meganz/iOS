@@ -2878,7 +2878,7 @@ public enum Strings {
         public enum Filter {
           /// Choose type
           public static let chooseType = Strings.tr("Localizable", "cameraUploads.timeline.filter.chooseType")
-          /// Show items from
+          /// Show items from:
           public static let showItemsFrom = Strings.tr("Localizable", "cameraUploads.timeline.filter.showItemsFrom")
           public enum Location {
             /// All locations
@@ -4143,7 +4143,7 @@ public enum Strings {
           public enum SoundNotifications {
             /// Hear a sound when someone joins or leaves a call.
             public static let description = Strings.tr("Localizable", "settings.section.calls.soundNotifications.description")
-            /// Sound Notifications
+            /// Sound notifications
             public static let title = Strings.tr("Localizable", "settings.section.calls.soundNotifications.title")
           }
         }

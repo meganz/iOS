@@ -498,12 +498,12 @@
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favourites";
-/* Filter headline in the Filter UI on Camera Upload Timeline Screen  */
+/* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
 "cameraUploads.timeline.filter.chooseType"="Choose type";
 /* Show items from headline within filter UI */
-"cameraUploads.timeline.filter.showItemsFrom"="Show items from";
+"cameraUploads.timeline.filter.showItemsFrom"="Show items from:";
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.allMedia"="All media";
 /* Filter UI media type option */
@@ -3052,7 +3052,7 @@
 "meetings.startConversation.contextMenu.joinMeeting"="Join meeting";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
 "settings.section.calls.title"="Calls";
-/* Title of the sound notifications choice for calls when users join or left a call  */
-"settings.section.calls.soundNotifications.title"="Sound Notifications";
-/* Description of the sound notifications choice for calls when users join or left a call  */
+/* Title of the sound notifications choice for calls when users join or left a call */
+"settings.section.calls.soundNotifications.title"="Sound notifications";
+/* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";

@@ -293,9 +293,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d zdjęcie</string>
+        <key>few</key>
+        <string>%d zdjęcia</string>
+        <key>many</key>
+        <string>%d zdjęcia</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d zdjęcia</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -309,9 +313,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d video</string>
+        <string>%d film</string>
+        <key>few</key>
+        <string>%d filmy</string>
+        <key>many</key>
+        <string>%d filmy</string>
         <key>other</key>
-        <string>%d videos</string>
+        <string>%d filmy</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -445,9 +453,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share folder</string>
+        <string>Udostępniony katalog</string>
+        <key>few</key>
+        <string>Udostępnione katalogi</string>
+        <key>many</key>
+        <string>Udostępnione katalogi</string>
         <key>other</key>
-        <string>Share folders</string>
+        <string>Udostępnione katalogi</string>
       </dict>
     </dict>
     <key>general.menuAction.shareLink.title</key>
@@ -461,9 +473,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share link</string>
+        <string>Udostępniony link</string>
+        <key>few</key>
+        <string>Udostępnione linki</string>
+        <key>many</key>
+        <string>Udostępnione linki</string>
         <key>other</key>
-        <string>Share links</string>
+        <string>Udostępnione linki</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -477,9 +493,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Manage link</string>
+        <string>Zarządzaj linkiem</string>
+        <key>few</key>
+        <string>Zarządzaj linkami</string>
+        <key>many</key>
+        <string>Zarządzaj linkami</string>
         <key>other</key>
-        <string>Manage links</string>
+        <string>Zarządzaj linkami</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -493,9 +513,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Export file</string>
+        <string>Eksport pliku</string>
+        <key>few</key>
+        <string>Eksport plików</string>
+        <key>many</key>
+        <string>Eksport plików</string>
         <key>other</key>
-        <string>Export files</string>
+        <string>Eksport plików</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
@@ -509,9 +533,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d second</string>
+        <string>%d sekunda</string>
+        <key>few</key>
+        <string>%d sekund</string>
+        <key>many</key>
+        <string>%d sekund</string>
         <key>other</key>
-        <string>%d seconds</string>
+        <string>%d sekund</string>
       </dict>
     </dict>
     <key>call.duration.minute</key>
@@ -525,9 +553,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d minuta</string>
+        <key>few</key>
+        <string>%d minut</string>
+        <key>many</key>
+        <string>%d minut</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d minut</string>
       </dict>
     </dict>
     <key>call.duration.hour</key>
@@ -541,9 +573,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d godzina</string>
+        <key>few</key>
+        <string>%d godzin</string>
+        <key>many</key>
+        <string>%d godzin</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d godzin</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.hour</key>
@@ -557,9 +593,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d godzina</string>
+        <key>few</key>
+        <string>%d godzin</string>
+        <key>many</key>
+        <string>%d godzin</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d godzin</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.minute</key>
@@ -573,9 +613,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>, %d minute</string>
+        <string>, %d minuta</string>
+        <key>few</key>
+        <string>, %d minut</string>
+        <key>many</key>
+        <string>, %d minut</string>
         <key>other</key>
-        <string>, %d minutes</string>
+        <string>, %d minut</string>
       </dict>
     </dict>
     <key>dnd.duration.minute</key>
@@ -589,9 +633,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d minuta</string>
+        <key>few</key>
+        <string>%d minut</string>
+        <key>many</key>
+        <string>%d minut</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d minut</string>
       </dict>
     </dict>
     <key>dnd.duration.hour</key>
@@ -605,9 +653,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d godzina</string>
+        <key>few</key>
+        <string>%d godzin</string>
+        <key>many</key>
+        <string>%d godzin</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d godzin</string>
       </dict>
     </dict>
     <key>chat.status.duration.minute</key>
@@ -621,9 +673,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d minuta</string>
+        <key>few</key>
+        <string>%d minut</string>
+        <key>many</key>
+        <string>%d minut</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d minut</string>
       </dict>
     </dict>
   </dict>

@@ -265,9 +265,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d imagen</string>
+        <key>many</key>
+        <string>%d de imágenes</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d imágenes</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -281,9 +283,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d video</string>
+        <string>%d vídeo</string>
+        <key>many</key>
+        <string>%d de vídeos</string>
         <key>other</key>
-        <string>%d videos</string>
+        <string>%d vídeos</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -405,9 +409,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share folder</string>
+        <string>Compartir carpeta</string>
+        <key>many</key>
+        <string>Compartir carpetas</string>
         <key>other</key>
-        <string>Share folders</string>
+        <string>Compartir carpetas</string>
       </dict>
     </dict>
     <key>general.menuAction.shareLink.title</key>
@@ -421,9 +427,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share link</string>
+        <string>Compartir enlace</string>
+        <key>many</key>
+        <string>Compartir enlaces</string>
         <key>other</key>
-        <string>Share links</string>
+        <string>Compartir enlaces</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -437,9 +445,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Manage link</string>
+        <string>Gestionar enlace</string>
+        <key>many</key>
+        <string>Gestionar enlaces</string>
         <key>other</key>
-        <string>Manage links</string>
+        <string>Gestionar enlaces</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -453,9 +463,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Export file</string>
+        <string>Exportar archivo</string>
+        <key>many</key>
+        <string>Exportar archivos</string>
         <key>other</key>
-        <string>Export files</string>
+        <string>Exportar archivos</string>
       </dict>
     </dict>
     <key>call.duration.second</key>

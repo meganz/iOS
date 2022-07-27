@@ -208,10 +208,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d image</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d gambar</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -224,10 +222,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d video</string>
         <key>other</key>
-        <string>%d videos</string>
+        <string>%d video</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -324,10 +320,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Share folder</string>
         <key>other</key>
-        <string>Share folders</string>
+        <string>Bagikan folder</string>
       </dict>
     </dict>
     <key>general.menuAction.shareLink.title</key>
@@ -340,10 +334,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Share link</string>
         <key>other</key>
-        <string>Share links</string>
+        <string>Bagikan link</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -356,10 +348,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Manage link</string>
         <key>other</key>
-        <string>Manage links</string>
+        <string>Kelola link</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -372,10 +362,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Export file</string>
         <key>other</key>
-        <string>Export files</string>
+        <string>Ekspor file</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
