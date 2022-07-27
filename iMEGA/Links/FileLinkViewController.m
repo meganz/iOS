@@ -334,10 +334,6 @@
     [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
-- (void)download {
-    [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
-}
-
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {

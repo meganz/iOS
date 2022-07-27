@@ -5,7 +5,7 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
     
     init(
         start: ((TransferEntity) -> Void)? = nil,
-        progress: @escaping (TransferEntity) -> Void,
+        progress: ((TransferEntity) -> Void)? = nil,
         completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void
     ) {
         self.start = start

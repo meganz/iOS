@@ -53,6 +53,13 @@ final class CancellableTransferViewModel: ViewModelType {
                 }
             case .downloadChat:
                 startChatFileDownloads()
+            case .downloadFileLink:
+                Task {
+                    await startFileLinkDownload()
+                    DispatchQueue.main.async { [weak self] in
+                        self?.manageTransfersCompletion()
+                    }
+                }
             }
         case .didTapCancelButton:
             if processingComplete {
@@ -95,7 +102,7 @@ final class CancellableTransferViewModel: ViewModelType {
             if fileTransfersStarted() {
                 startFolderUploads()
             }
-        case .downloadChat:
+        default:
             break
         }
     }
@@ -114,7 +121,7 @@ final class CancellableTransferViewModel: ViewModelType {
         processingComplete = true
         if transferErrors.isEmpty {
             switch self.transferType {
-            case .download, .downloadChat:
+            case .download, .downloadChat, .downloadFileLink:
                 router.transferSuccess(with: Strings.Localizable.downloadStarted)
             case .upload:
                 router.transferSuccess(with: Strings.Localizable.uploadStartedMessage)
@@ -190,7 +197,6 @@ final class CancellableTransferViewModel: ViewModelType {
             downloadNodeUseCase.downloadChatFileToOffline(forNodeHandle: transferViewEntity.handle,
                                                           messageId: transferViewEntity.messageId,
                                                           chatId: transferViewEntity.chatId,
-                                                          toPath: transferViewEntity.path,
                                                           filename: transferViewEntity.name,
                                                           appdata: transferViewEntity.appData,
                                                           startFirst: transferViewEntity.priority,
@@ -216,7 +222,6 @@ final class CancellableTransferViewModel: ViewModelType {
     private func startFileDownloads() {
         fileTransfers.forEach { transferViewEntity in
             downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
-                                                      toPath: transferViewEntity.path,
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
                                                       startFirst: transferViewEntity.priority,
@@ -239,10 +244,30 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
+    private func startFileLinkDownload() async {
+        guard let transferViewEntity = fileTransfers[safe: 0], let linkUrl = transferViewEntity.fileLinkURL else {
+            return
+        }
+        
+        do {
+            let fileLink = FileLinkEntity(linkURL: linkUrl)
+            _ = try await downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
+                                                                    filename: transferViewEntity.name,
+                                                                    transferMetaData: nil,
+                                                                    startFirst: transferViewEntity.priority,
+                                                                    cancelToken: cancelToken)
+        } catch {
+            if let error = error as? TransferErrorEntity {
+                if error != .alreadyDownloaded && error != .copiedFromTempFolder {
+                    transferErrors.append(error)
+                }
+            }
+        }
+    }
+    
     private func startFolderDownloads() {
         folderTransfers.forEach { transferViewEntity in
             downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
-                                                      toPath: transferViewEntity.path,
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
                                                       startFirst: transferViewEntity.priority,

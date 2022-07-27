@@ -23,15 +23,15 @@ struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         completion(completionResult)
     }
     
-    func downloadFile(forNodeHandle handle: MEGAHandle, toPath localPath: String, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    func downloadFile(forNodeHandle handle: MEGAHandle, toUrl url: URL, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         completion?(completionResult)
     }
     
-    func downloadChatFile(forNodeHandle handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, toPath localPath: String, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    func downloadChatFile(forNodeHandle handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, toUrl url: URL, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         completion?(completionResult)
     }
     
-    func downloadFileLink(_ fileLink: FileLinkEntity, toURL url: URL, transferMetaData: TransferMetaDataEntity?, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
+    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, toUrl url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
         if let transferEntity = transferEntity {
             return transferEntity
         } else {

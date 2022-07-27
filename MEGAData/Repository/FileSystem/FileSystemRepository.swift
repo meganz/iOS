@@ -11,6 +11,12 @@ struct FileSystemRepository: FileSystemRepositoryProtocol {
         self.fileManager = fileManager
     }
 
+    func documentsDirectory() -> URL {
+        let paths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let documentsDirectory = URL(string: paths[0].lastPathComponent) else { return paths[0] }
+        return documentsDirectory
+    }
+    
     func fileExists(at url: URL) -> Bool {
         fileManager.fileExists(atPath: url.path)
     }

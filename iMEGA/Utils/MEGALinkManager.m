@@ -45,6 +45,7 @@ static NSString *emailOfNewSignUpLink;
 
 static NSMutableArray *nodesFromLinkMutableArray;
 static LinkOption selectedOption;
+static NSString *linkSavedString;
 
 static NSString *nodeToPresentBase64Handle;
 
@@ -109,6 +110,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     selectedOption = option;
 }
 
++ (NSString *)linkSavedString {
+    return linkSavedString;
+}
+
++ (void)setLinkSavedString:(NSString *)link {
+    linkSavedString = link;
+}
+
 + (void)resetUtilsForLinksWithoutSession {
     [MEGALinkManager.nodesFromLinkMutableArray removeAllObjects];
     
@@ -133,7 +142,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case LinkOptionDownloadNode: {
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:MEGALinkManager.nodesFromLinkMutableArray presenter:UIApplication.mnz_visibleViewController isFolderLink:NO];
+            [MEGALinkManager downloadFileLinkAfterLogin];
             break;
         }
             
@@ -148,8 +157,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case LinkOptionDownloadFolderOrNodes: {
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:MEGALinkManager.nodesFromLinkMutableArray presenter:UIApplication.mnz_visibleViewController isFolderLink:YES];
-
+            [self downloadFolderLinkAfterLogin];
             break;
         }
             
@@ -520,7 +528,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     if ([Helper hasSession_alertIfNot]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
-        browserVC.localpath = linkURL.path; // "file://" = 7 characters
+        browserVC.localpath = linkURL.absoluteString; // "file://" = 7 characters
         browserVC.browserAction = BrowserActionOpenIn;
         
         [UIApplication.mnz_visibleViewController presentViewController:browserNavigationController animated:YES completion:nil];

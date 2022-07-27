@@ -37,7 +37,6 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         
         switch (action) {
         case .download:
-            SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: Strings.Localizable.downloadStarted)
             download([node])
         case .exportFile:
             exportFile(from: node, sender: sender)

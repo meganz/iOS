@@ -19,6 +19,7 @@
 
 @property (class, nonatomic) LinkOption selectedOption;
 @property (class, nonatomic, readonly) NSMutableArray *nodesFromLinkMutableArray;
+@property (class, nonatomic) NSString *linkSavedString;
 
 + (void)resetUtilsForLinksWithoutSession;
 

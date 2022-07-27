@@ -34,6 +34,10 @@ struct MockFileCacheRepository: FileCacheRepositoryProtocol {
         URL(fileURLWithPath: "temp/" + self.name)
     }
     
+    func tempURL(for base64Handle: MEGABase64Handle) -> URL {
+        URL(fileURLWithPath: "temp/" + self.base64Handle)
+    }
+
     func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
         URL(fileURLWithPath: "Library/Caches/" + self.base64Handle)
     }

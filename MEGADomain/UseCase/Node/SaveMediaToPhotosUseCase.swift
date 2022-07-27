@@ -50,9 +50,8 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
     }
     
     func saveToPhotos(fileLink: FileLinkEntity) async throws {
-        let name = try await nodeRepository.nodeNameFor(fileLink: fileLink)
-        let tempUrl = fileCacheRepository.cachedFileURL(for: (fileLink.linkURLString as NSString).lastPathComponent, name: name)
+        let node = try await nodeRepository.nodeFor(fileLink: fileLink)
         let transferMetaData = TransferMetaDataEntity(metaData: NSString().mnz_appDataToSaveInPhotosApp())
-        _ = try await downloadFileRepository.downloadFileLink(fileLink, toURL: tempUrl, transferMetaData: transferMetaData, cancelToken: nil)
+        _ = try await downloadFileRepository.downloadFileLink(fileLink, named: node.name, toUrl: fileCacheRepository.tempURL(for: node.base64Handle), transferMetaData: transferMetaData, startFirst: true, cancelToken: nil)
     }
 }

@@ -10,10 +10,9 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         self.viewController = viewController
     }
     
-     private func download(node: MEGANode) {
-        guard let vc = viewController else { return }
-        
-        node.mnz_fileLinkDownload(from: vc, isFolderLink: false)
+    private func download(node: MEGANode) {
+        guard let vc = viewController, let linkUrl = URL(string: link) else { return }
+        DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: vc).start()
     }
     
     func importNode(_ node: MEGANode) {

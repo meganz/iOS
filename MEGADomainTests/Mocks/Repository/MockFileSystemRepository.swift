@@ -11,6 +11,10 @@ struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     var fileSize: UInt64 = 0
     var creationDate: Date = Date()
 
+    func documentsDirectory() -> URL {
+        return URL(fileURLWithPath: "Documents")
+    }
+
     func fileExists(at url: URL) -> Bool {
         fileExists
     }

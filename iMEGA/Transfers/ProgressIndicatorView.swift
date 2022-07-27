@@ -39,8 +39,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     
-    private let transfersUseCase = TransfersUseCase(repo: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()))
-    private let sharedFolderTransfersUseCase = TransfersUseCase(repo: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()))
+    private let transfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
+    private let sharedFolderTransfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)
 
     @objc func animate(progress: CGFloat, duration: TimeInterval) {
         guard let progressLayer = progressLayer else {
@@ -232,7 +232,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     }
     
     private func filterUserManualDownloads(_ transfers: [MEGATransfer]) -> [MEGATransfer] {
-        return transfers.filter { $0.path.hasPrefix(Helper.relativePathForOffline()) }
+        return transfers.filter { $0.path.hasPrefix(FileSystemRepository.newRepo.documentsDirectory().path) }
     }
     
     private func addBackgroundLayer() {
@@ -318,7 +318,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
         
         
-        guard transfer.path?.hasPrefix(Helper.relativePathForOffline()) ?? false ||
+        guard transfer.path?.hasPrefix(transfersUseCase.documentsDirectory().path) ?? false ||
                 transfer.type == .upload ||
                 isExportFile || isSaveToPhotos else {
                     return

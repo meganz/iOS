@@ -678,29 +678,12 @@
 }
     
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (self.selectedNodesArray.count) {
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:YES];
-        } else if (self.parentNode != nil) {
-            [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.parentNode] presenter:self isFolderLink:YES];
-        }
-        
-        [self setEditMode:NO];
+    if (self.selectedNodesArray.count != 0) {
+        [self download:self.selectedNodesArray];
     } else {
-        if (self.selectedNodesArray.count != 0) {
-            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
-        } else {
-            if (self.parentNode == nil) {
-                return;
-            }
-            
-            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
-        }
-        
-        MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
-        
-        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
+        [self download:@[self.parentNode]];
     }
+    [self setEditMode:NO];
 }
 
 - (void)openNode:(MEGANode *)node {
