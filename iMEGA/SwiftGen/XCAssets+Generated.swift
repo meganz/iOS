@@ -535,6 +535,7 @@ internal enum Asset {
       internal static let audioSourceMeetingAction = ImageAsset(name: "audioSourceMeetingAction")
       internal static let cameraxMeetingAction = ImageAsset(name: "cameraxMeetingAction")
       internal static let endCallMeetingAction = ImageAsset(name: "endCallMeetingAction")
+      internal static let expandLocalVideo = ImageAsset(name: "expandLocalVideo")
       internal static let flipCameraMeetingAction = ImageAsset(name: "flipCameraMeetingAction")
       internal static let galleryView = ImageAsset(name: "galleryView")
       internal static let hangCallMeetingAction = ImageAsset(name: "hangCallMeetingAction")

@@ -48,7 +48,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case switchMenusVisibility
         case enableLayoutButton(Bool)
         case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
-        case switchLocalVideo
+        case switchLocalVideo(Bool)
         case updateName(String)
         case updateDuration(String)
         case updatePageControl(Int)
@@ -897,7 +897,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 localVideoUseCase.addLocalVideo(for: chatRoom.chatId, callbacksDelegate: self)
             }
             localVideoEnabled = video
-            invokeCommand?(.switchLocalVideo)
+            invokeCommand?(.switchLocalVideo(localVideoEnabled))
         }
         invokeCommand?(.updateHasLocalAudio(audio))
     }

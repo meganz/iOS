@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -145,6 +145,13 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </imageView>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expandLocalVideo" translatesAutoresizingMaskIntoConstraints="NO" id="Nbg-cl-Pdc">
+                            <rect key="frame" x="22.5" y="47" width="30" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="959-a4-tgZ"/>
+                                <constraint firstAttribute="height" constant="40" id="AAz-HC-8rd"/>
+                            </constraints>
+                        </imageView>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1UJ-un-b31" customClass="MEGALocalImageView">
                             <rect key="frame" x="0.0" y="0.0" width="75" height="134"/>
                             <userDefinedRuntimeAttributes>
@@ -165,10 +172,12 @@
                     </subviews>
                     <color key="backgroundColor" red="0.2274509804" green="0.2274509804" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="Nbg-cl-Pdc" firstAttribute="centerY" secondItem="zKP-u0-Mn5" secondAttribute="centerY" id="CwB-P5-pd9"/>
                         <constraint firstAttribute="bottom" secondItem="t5t-mb-xEL" secondAttribute="bottom" constant="4" id="LW9-7c-d47"/>
                         <constraint firstItem="1UJ-un-b31" firstAttribute="top" secondItem="zKP-u0-Mn5" secondAttribute="top" id="OcT-IO-FFS"/>
                         <constraint firstItem="lvo-6Q-0zI" firstAttribute="centerX" secondItem="zKP-u0-Mn5" secondAttribute="centerX" id="ThT-TU-Tql"/>
                         <constraint firstItem="lvo-6Q-0zI" firstAttribute="centerY" secondItem="zKP-u0-Mn5" secondAttribute="centerY" id="Xid-2u-Byt"/>
+                        <constraint firstItem="Nbg-cl-Pdc" firstAttribute="centerX" secondItem="zKP-u0-Mn5" secondAttribute="centerX" id="b6X-PT-tyW"/>
                         <constraint firstAttribute="bottom" secondItem="1UJ-un-b31" secondAttribute="bottom" id="eyg-zr-oHp"/>
                         <constraint firstAttribute="trailing" secondItem="1UJ-un-b31" secondAttribute="trailing" id="hu0-n7-Omf"/>
                         <constraint firstItem="1UJ-un-b31" firstAttribute="leading" secondItem="zKP-u0-Mn5" secondAttribute="leading" id="kxt-zR-ptz"/>
@@ -181,6 +190,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="avatarImageView" destination="lvo-6Q-0zI" id="Opc-RQ-9RH"/>
+                        <outlet property="expandImageView" destination="Nbg-cl-Pdc" id="goJ-iU-FIH"/>
                         <outlet property="mutedImageView" destination="t5t-mb-xEL" id="F6C-z9-GD4"/>
                         <outlet property="videoImageView" destination="1UJ-un-b31" id="C9L-0b-VgL"/>
                     </connections>
@@ -199,7 +209,7 @@
             <connections>
                 <outletCollection property="gestureRecognizers" destination="WAH-dH-DYg" appends="YES" id="Ts8-n5-vDk"/>
             </connections>
-            <point key="canvasLocation" x="-209" y="-522"/>
+            <point key="canvasLocation" x="-210.1449275362319" y="-522.32142857142856"/>
         </view>
         <tapGestureRecognizer cancelsTouchesInView="NO" id="WAH-dH-DYg">
             <connections>
@@ -209,6 +219,7 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="expandLocalVideo" width="40" height="40"/>
         <image name="userMutedBig" width="25" height="24"/>
     </resources>
 </document>
