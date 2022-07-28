@@ -24,6 +24,7 @@ final class ContextMenuBuilder {
     private var isSharedItemsChild: Bool = false
     private var isOutShare: Bool = false
     private var isExported: Bool = false
+    private var isEmptyState: Bool = false
     private var timeRemainingToDeactiveDND: String? = nil
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
@@ -151,6 +152,11 @@ final class ContextMenuBuilder {
         return self
     }
     
+    func setIsEmptyState(_ isEmptyState: Bool) -> ContextMenuBuilder {
+        self.isEmptyState = isEmptyState
+        return self
+    }
+    
     func setTimeRemainingToDeactiveDND(_ timeRemainingToDeactiveDND: String?) -> ContextMenuBuilder {
         self.timeRemainingToDeactiveDND = timeRemainingToDeactiveDND
         return self
@@ -239,8 +245,14 @@ final class ContextMenuBuilder {
     
     //MARK: - Display Context Actions grouping functions
     private func selectMenu() -> CMEntity {
-        CMEntity(displayInline: true,
-                 children: [select]
+        let selectAction = select
+        
+        if isEmptyState {
+            selectAction.updateActionStyle(isEnabled: false)
+        }
+        
+        return CMEntity(displayInline: true,
+                        children: [selectAction]
         )
     }
     
@@ -268,29 +280,32 @@ final class ContextMenuBuilder {
         )
     }
     
-    private func sortMenu() -> CMEntity {
-        var sortMenuActions = [sortNameAscending, sortNameDescending]
-                
-        if isCameraUploadExplorer {
-            sortMenuActions = [sortNewest, sortOldest]
-        }
-        else if !isSharedItems {
-            var list = [sortLargest, sortSmallest, sortNewest, sortOldest]
-            if !isOfflineFolder {
-                list.append(sortLabel)
-                if !isFavouritesExplorer {
-                    list.append(sortFavourite)
+    private func sortMenu() -> CMElement {
+        if isEmptyState {
+            return CMActionEntity(title: Strings.Localizable.sortTitle,
+                                  image: Asset.Images.ActionSheetIcons.sort.image,
+                                  identifier: DisplayAction.sort.rawValue,
+                                  isEnabled: false)
+        } else {
+            var sortMenuActions = [sortNameAscending, sortNameDescending]
+                    
+            if isCameraUploadExplorer {
+                sortMenuActions = [sortNewest, sortOldest]
+            } else if !isSharedItems {
+                sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])
+                if !isOfflineFolder {
+                    sortMenuActions.append(sortLabel)
+                    if !isFavouritesExplorer {
+                        sortMenuActions.append(sortFavourite)
+                    }
                 }
             }
-            sortMenuActions.append(contentsOf: list)
+            return CMEntity(title: Strings.Localizable.sortTitle,
+                            detail: sortType.localizedString,
+                            image: Asset.Images.ActionSheetIcons.sort.image,
+                            identifier: DisplayAction.sort.rawValue,
+                            children: sortMenuActions)
         }
-        
-        
-        return CMEntity(title: Strings.Localizable.sortTitle,
-                        detail: sortType.localizedString,
-                        image: Asset.Images.ActionSheetIcons.sort.image,
-                        identifier: DisplayAction.sort.rawValue,
-                        children: sortMenuActions)
     }
     
     private func filterMenu() -> CMEntity {

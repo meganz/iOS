@@ -33,8 +33,6 @@
     BOOL allNodesSelected;
 }
 
-@property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
-
 @property (nonatomic) CGSize cellSize;
 @property (nonatomic) CGFloat cellInset;
 
