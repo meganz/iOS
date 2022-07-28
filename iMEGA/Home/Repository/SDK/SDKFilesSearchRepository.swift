@@ -38,7 +38,7 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
                 inNode node: MEGANode?,
                 sortOrderType: MEGASortOrderType,
                 formatType: MEGANodeFormatType) async throws -> [MEGANode] {
-        try await withCheckedThrowingContinuation({ continuation in
+        return try await withCheckedThrowingContinuation({ continuation in
             search(string: string, inNode: node, sortOrderType: sortOrderType, formatType: formatType) {
                 continuation.resume(with: $0)
             }
@@ -54,7 +54,7 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
         guard let inNode = node ?? sdk.rootNode else {
             return completionBlock(nil, true)
         }
-
+        
         addSearchOperation(string: string, inNode: inNode, sortOrderType: sortOrderType, formatType: formatType, completionBlock: completionBlock)
     }
     

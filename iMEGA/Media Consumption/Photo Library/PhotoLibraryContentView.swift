@@ -43,10 +43,10 @@ struct PhotoLibraryContentView: View {
     @ViewBuilder
     @available(iOS 15.0, *)
     private func content() -> some View {
-        if viewModel.contentMode == .library {
+        if viewModel.contentMode != .album {
             photoContent()
                 .safeAreaInset(edge: .bottom) {
-                    if editMode.isEditing {
+                    if editMode.isEditing && viewModel.contentMode == .library {
                         EmptyView()
                     } else {
                         PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)

@@ -18,7 +18,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                                                  action: #selector(exitButtonTapped(_:))
     )
     
-    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: .mediaDiscovery)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
     

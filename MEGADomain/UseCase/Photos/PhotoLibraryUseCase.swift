@@ -106,16 +106,16 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
     }
     
     private func loadAllPhotos() async throws -> [MEGANode] {
-        async let photosFromCloudDrive = searchRepository.search(string: "", inNode: nil, sortOrderType: .defaultDesc, formatType: .photo)
-        async let videosFromCloudDrive = searchRepository.search(string: "", inNode: nil, sortOrderType: .defaultDesc, formatType: .video)
+        let photosFromCloudDrive = try? await searchRepository.search(string: "", inNode: nil, sortOrderType: .defaultDesc, formatType: .photo)
+        let videosFromCloudDrive = try? await searchRepository.search(string: "", inNode: nil, sortOrderType: .defaultDesc, formatType: .video)
         
         var nodes: [MEGANode] = []
         
-        if let photos = try? await photosFromCloudDrive {
+        if let photos = photosFromCloudDrive {
             nodes.append(contentsOf: photos)
         }
         
-        if let videos = try? await videosFromCloudDrive {
+        if let videos = videosFromCloudDrive {
             nodes.append(contentsOf: videos)
         }
         
