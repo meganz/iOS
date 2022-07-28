@@ -23,6 +23,7 @@
 ///     - isSharedItemsChild: Indicates if the current node is a shared items child
 ///     - isOutShare: Indicates if the current node is being shared with other users
 ///     - isExported: Indicates if the currrent node has been exported
+///     - isEmptyState: Indicates whether an empty state is currently being displayed
 ///     - timeRemainingToDeactiveDND: Indicates the remaining time to active again the notifications
 ///     - versionsCount: The number of versions of the current node
 ///     - showMediaDiscovery:  Indicates whether or not it is avaiable to show Media Discovery
@@ -54,6 +55,7 @@ struct CMConfigEntity {
     var isSharedItemsChild: Bool = false
     var isOutShare: Bool = false
     var isExported: Bool = false
+    var isEmptyState: Bool = false
     var timeRemainingToDeactiveDND: String? = nil
     var versionsCount: Int = 0
     var showMediaDiscovery: Bool = false

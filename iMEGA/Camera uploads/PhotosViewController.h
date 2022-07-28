@@ -19,6 +19,8 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 
 @interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate>
 
+@property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
+
 @property (nonatomic, nullable, strong) MyAvatarManager *myAvatarManager;
 @property (strong, nonatomic) PhotoSelectionAdapter *selection;
 @property (strong, nonatomic) PhotoLibraryContentViewModel *photoLibraryContentViewModel;

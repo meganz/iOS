@@ -275,6 +275,7 @@ final class ContextMenuManager: NSObject {
                 return UIAction(title: action.title ?? "",
                                 image: action.image,
                                 identifier: UIAction.Identifier(rawValue: action.identifier ?? ""),
+                                attributes: action.isEnabled ? [] : .disabled,
                                 state: action.state == .on ? .on : .off) { [weak self] action in
                     guard let `self` = self else { return }
                     self.actionHandler(action.identifier.rawValue, contextType: self.actionContextType(identifier: action.identifier.rawValue))
@@ -300,10 +301,11 @@ final class ContextMenuManager: NSObject {
                           options: menu.displayInline ? [.displayInline] : [],
                           children: convertToMenuElements(items: menu.children))
         } else {
-            return UIMenu(title: menu.title ?? "",
+            let menu =  UIMenu(title: menu.title ?? "",
                           image: menu.image,
                           options: menu.displayInline ? [.displayInline] : [],
                           children: convertToMenuElements(items: menu.children))
+            return menu
         }
     }
     
