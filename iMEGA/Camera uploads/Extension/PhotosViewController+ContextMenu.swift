@@ -7,7 +7,7 @@ extension PhotosViewController {
             sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
             isCameraUploadExplorer: true,
             isFilterEnabled: FeatureToggle.filterMenuOnCameraUploadExplorer.isEnabled,
-            isEmptyState: photosByMonthYearArray.count == 0 || !MEGAReachabilityManager.isReachable()
+            isEmptyState: viewModel.mediaNodesArray.isEmpty
         )
     }
     
