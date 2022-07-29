@@ -149,6 +149,7 @@ extension PhotosViewController: DisplayMenuDelegate {
         } else if action == .filter {
             onFilter()
         }
+        setRightNavigationBarButtons()
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
