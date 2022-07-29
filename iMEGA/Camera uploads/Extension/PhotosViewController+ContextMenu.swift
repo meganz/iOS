@@ -33,18 +33,25 @@ extension PhotosViewController {
         present(actionSheetVC, animated: true)
     }
     
+    private var filterActiveBarButtonItem: UIBarButtonItem {
+        let image = UIImage(named: Asset.Images.ActionSheetIcons.filterActive.name)?.withRenderingMode(.alwaysOriginal)
+        return UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onFilter))
+    }
+    
     private func enableContextMenuOnCameraUploader() {
         if #available(iOS 14.0, *) {
-            guard let menuConfig = contextMenuConfiguration() else { return }
-            editBarButtonItem?.image = Asset.Images.NavigationBar.moreNavigationBar.image
-            editBarButtonItem?.menu = contextMenuManager?.contextMenu(with: menuConfig)
-            editBarButtonItem?.isEnabled = true
-            editBarButtonItem?.target = nil
-            editBarButtonItem?.action = nil
+            guard let menuConfig = contextMenuConfiguration(), let editBarButtonItem = editBarButtonItem else { return }
+            editBarButtonItem.image = Asset.Images.NavigationBar.moreNavigationBar.image
+            editBarButtonItem.menu = contextMenuManager?.contextMenu(with: menuConfig)
+            editBarButtonItem.isEnabled = true
+            editBarButtonItem.target = nil
+            editBarButtonItem.action = nil
             
-            objcWrapper_parent.navigationItem.rightBarButtonItem = self.editBarButtonItem
-            objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-            )
+            var rightBarButtonItems = [editBarButtonItem]
+            if viewModel.isFilterActive {
+                rightBarButtonItems.append(filterActiveBarButtonItem)
+            }
+            objcWrapper_parent.navigationItem.rightBarButtonItems = rightBarButtonItems
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
         }
@@ -129,7 +136,7 @@ extension PhotosViewController {
         }
     }
     
-    private func onFilter() {
+    @objc private func onFilter() {
         photoLibraryContentViewModel.showFilter.toggle()
     }
 }

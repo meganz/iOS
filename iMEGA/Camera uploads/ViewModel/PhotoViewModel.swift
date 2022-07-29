@@ -27,6 +27,10 @@ final class PhotoViewModel: NSObject {
     var filterType: PhotosFilterOptions = .allMedia
     var filterLocation: PhotosFilterOptions = .allLocations
     
+    var isFilterActive: Bool {
+        filterType != .allMedia || filterLocation != .allLocations
+    }
+    
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol
