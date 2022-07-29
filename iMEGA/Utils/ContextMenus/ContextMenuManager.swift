@@ -273,7 +273,7 @@ final class ContextMenuManager: NSObject {
         items.compactMap {
             if let action = $0 as? CMActionEntity {
                 return UIAction(title: action.title ?? "",
-                                image: action.image,
+                                image: action.image?.alpha(value: action.isEnabled ? 1.0 : 0.5),
                                 identifier: UIAction.Identifier(rawValue: action.identifier ?? ""),
                                 attributes: action.isEnabled ? [] : .disabled,
                                 state: action.state == .on ? .on : .off) { [weak self] action in
