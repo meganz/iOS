@@ -54,4 +54,12 @@ extension UIImage {
         return self.resize(to: CGSize(width: newWidth / UIScreen.main.scale, height: newHeight / UIScreen.main.scale)).jpegData(compressionQuality: CGFloat(docScanQuality.rawValue))
         
     }
+    
+    func alpha(value: CGFloat) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(at: .zero, blendMode: .normal, alpha: value)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }
