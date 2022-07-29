@@ -205,7 +205,7 @@
 
 - (void)showEditBarButton:(BOOL)show {
     if (@available(iOS 14.0, *)) {
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
+        self.objcWrapper_parent.navigationItem.rightBarButtonItems = nil;
     }
     else {
         self.navigationItem.rightBarButtonItem = nil;
