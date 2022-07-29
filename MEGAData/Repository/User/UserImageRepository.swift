@@ -88,35 +88,58 @@ struct UserImageRepository: UserImageRepositoryProtocol {
     }
 }
 
-fileprivate final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
+fileprivate final class UserAvatarChangeSubscriber {
+    private class UserUpdateListener: NSObject, MEGAGlobalDelegate {
+        private let sdk: MEGASdk
+        private let handles: [MEGAHandle]
+        private let source: PassthroughSubject<[MEGAHandle], Never>
+        
+        var monitor: AnyPublisher<[MEGAHandle], Never> {
+            source.eraseToAnyPublisher()
+        }
+        
+        init(sdk: MEGASdk, handles: [MEGAHandle]) {
+            self.sdk = sdk
+            self.handles = handles
+            source = PassthroughSubject<[MEGAHandle], Never>()
+            super.init()
+        }
+        
+        func start() {
+            sdk.add(self)
+        }
+        
+        func stop() {
+            sdk.remove(self)
+        }
+        
+        func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
+            let users = (0..<userList.size.intValue)
+                .compactMap(userList.user)
+                .filter {
+                    $0.isOwnChange == 0 &&
+                    $0.hasChangedType(.avatar)
+                    && handles.contains($0.handle)
+                }
+            
+            if users.isEmpty == false {
+                source.send(users.map(\.handle))
+            }
+        }
+    }
     
-    private let sdk: MEGASdk
-    private let handles: [MEGAHandle]
-    private let source: PassthroughSubject<[MEGAHandle], Never>
+    private let userUpdateListener: UserUpdateListener
 
     var monitor: AnyPublisher<[MEGAHandle], Never> {
-        source.eraseToAnyPublisher()
+        userUpdateListener.monitor
     }
     
     init(sdk: MEGASdk, handles: [MEGAHandle]) {
-        self.sdk = sdk
-        self.handles = handles
-        source = PassthroughSubject<[MEGAHandle], Never>()
-        super.init()
-        self.sdk.add(self)
+        userUpdateListener = UserUpdateListener(sdk: sdk, handles: handles)
+        userUpdateListener.start()
     }
     
-    func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
-        let users = (0..<userList.size.intValue)
-            .compactMap(userList.user)
-            .filter {
-                $0.isOwnChange == 0 &&
-                $0.hasChangedType(.avatar)
-                && handles.contains($0.handle)
-            }
-        
-        if users.isEmpty == false {
-            source.send(users.map(\.handle))
-        }
+    deinit {
+        userUpdateListener.stop()
     }
 }
