@@ -18,6 +18,8 @@ extension ChatRoomEntity {
         self.isactive = chatRoom.isActive
         self.isArchived = chatRoom.isArchived
         
+        self.peerHandles = (0..<chatRoom.peerCount).compactMap(chatRoom.peerHandle)
+        
         if chatRoom.isMeeting {
             self.chatType = .meeting
         } else if chatRoom.isGroup {

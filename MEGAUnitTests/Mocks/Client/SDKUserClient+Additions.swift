@@ -11,6 +11,8 @@ extension SDKUserClient {
             return nil
         }, isGuest: {
             false
+        }, contacts: {
+            []
         })
     }
 
@@ -23,6 +25,8 @@ extension SDKUserClient {
             return UserSDKEntity.mockUser
         }, isGuest: {
             false
+        }, contacts: {
+            [UserSDKEntity.mockContact]
         })
     }
 }
@@ -31,6 +35,14 @@ extension UserSDKEntity {
     static var mockUser: Self {
         return UserSDKEntity(email: "user@mock.com",
                              handle: UInt64(),
+                             base64Handle: "",
+                             change: nil,
+                             contact: nil)
+    }
+    
+    static var mockContact: Self {
+        return UserSDKEntity(email: "contact@mock.com",
+                             handle: 1001,
                              base64Handle: "",
                              change: nil,
                              contact: nil)

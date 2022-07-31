@@ -35,6 +35,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private let router: MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
+    private var recentlyAddedHandles = [MEGAHandle]()
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }
@@ -45,6 +46,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
+    private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var isSpeakerEnabled: Bool {
@@ -70,7 +72,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         userUseCase: UserUseCaseProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
@@ -82,6 +85,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.localVideoUseCase = localVideoUseCase
         self.isSpeakerEnabled = isSpeakerEnabled
         self.userUseCase = userUseCase
+        self.chatRoomUseCase = chatRoomUseCase
     }
     
     deinit {
@@ -129,14 +133,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .shareLink(let presenter, let sender):
             containerViewModel?.dispatch(.shareLink(presenter: presenter, sender: sender, completion: nil))
         case .inviteParticipants:
-            let participantsIDs = callParticipants.map({ $0.participantId })
-            let excludeParticpantsDict = NSMutableDictionary(dictionary: participantsIDs.reduce(into: [:]) { result, element in
-                result[NSNumber(value: element)] = NSNumber(value: element)
-            })
-            router.inviteParticipants(excludeParticpants: excludeParticpantsDict) { [weak self] userHandles in
-                guard let self = self, let call = self.call else { return }
-                userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
-            }
+            inviteParticipants()
         case .onContextMenuTap(let presenter, let sender, let participant):
             router.showContextMenu(presenter: presenter,
                                    sender: sender,
@@ -193,6 +190,31 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     //MARK:- Private methods
+    private func inviteParticipants() {
+        var peerHandles = chatRoomUseCase.peerHandles(forChatId: chatRoom.chatId)
+        recentlyAddedHandles.removeAll(where: peerHandles.contains)
+        peerHandles.append(contentsOf: recentlyAddedHandles)
+        recentlyAddedHandles = []
+        
+        let contacts = userUseCase.contacts
+        let hasNoVisibleContacts = contacts.contains(where: { $0.contact?.contactVisibility == .visible }) == false
+        let hasNonAddedVisibleContacts = contacts
+            .lazy
+            .filter({ $0.contact?.contactVisibility == .visible })
+            .contains { peerHandles.contains($0.handle) == false }
+        
+        guard hasNoVisibleContacts || hasNonAddedVisibleContacts else {
+            router.showAllContactsAlreadyAddedAlert()
+            return
+        }
+                
+        router.inviteParticipants(excludeParticpantsId: peerHandles) { [weak self] userHandles in
+            guard let self = self, let call = self.call else { return }
+            self.recentlyAddedHandles.append(contentsOf: userHandles)
+            userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
+        }
+    }
+    
     private func enableLoudSpeaker() {
         audioSessionUseCase.enableLoudSpeaker { [weak self] _ in
             self?.updateSpeakerInfo()

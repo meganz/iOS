@@ -23,6 +23,11 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         return nil
     }
     
+    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle] {
+        guard let chatRoom = chatRoom(forChatId: chatId) else { return [] }
+        return chatRoom.peerHandles
+    }
+    
     func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         if let chatRoom = chatRoom(forUserHandle: userHandle) {
             completion(.success(chatRoom))

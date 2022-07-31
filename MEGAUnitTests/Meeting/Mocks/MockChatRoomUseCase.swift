@@ -7,6 +7,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var createChatRoomCompletion: Result<ChatRoomEntity, ChatRoomErrorEntity>?
     var chatRoomEntity: ChatRoomEntity?
     var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
+    var myPeerHandles: [MEGAHandle] = []
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -14,6 +15,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
+    }
+    
+    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle] {
+        myPeerHandles
     }
     
     func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {

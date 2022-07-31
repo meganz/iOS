@@ -2,6 +2,7 @@
 protocol ChatRoomUseCaseProtocol {
     func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity?
+    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle]
     func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
@@ -28,6 +29,10 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
     
     func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.createChatRoom(forUserHandle: userHandle, completion: completion)
+    }
+    
+    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle] {
+        chatRoomRepo.peerHandles(forChatId: chatId)
     }
     
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {

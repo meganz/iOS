@@ -3792,6 +3792,11 @@ public enum Strings {
         /// Share Meeting Link
         public static let shareLink = Strings.tr("Localizable", "meetings.action.shareLink")
       }
+      public enum AddContacts {
+        /// You’ve already added all your MEGA contacts to this chat.
+        /// If you want to add more people to your contact list, send them an invite.
+        public static let allContactsAlreadyAddedMessage = Strings.tr("Localizable", "meetings.addContacts.AllContactsAlreadyAddedMessage")
+      }
       public enum Alert {
         /// Meeting Ended
         public static let end = Strings.tr("Localizable", "meetings.alert.end")

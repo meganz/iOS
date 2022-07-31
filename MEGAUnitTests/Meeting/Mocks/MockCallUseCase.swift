@@ -21,7 +21,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var chatSession: ChatSessionEntity?
     var participantHandle: MEGAHandle = .invalid
     
-    init(call: CallEntity) {
+    init(call: CallEntity = CallEntity()) {
         self.call = call
     }
 

@@ -3056,3 +3056,5 @@
 "settings.section.calls.soundNotifications.title"="Sound notifications";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
+/* Contacts selection screen: Message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.AllContactsAlreadyAddedMessage"= "You’ve already added all your MEGA contacts to this chat.\nIf you want to add more people to your contact list, send them an invite.";

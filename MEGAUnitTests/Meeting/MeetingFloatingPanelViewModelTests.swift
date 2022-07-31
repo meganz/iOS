@@ -330,25 +330,101 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     }
     
     func testAction_inviteParticipants() {
-        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let callUseCase = MockCallUseCase(call: CallEntity())
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let router = MockMeetingFloatingPanelRouter()
-        let viewModel = MeetingFloatingPanelViewModel(router: router,
-                                                      containerViewModel: containerViewModel,
-                                                      chatRoom: chatRoom,
-                                                      isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
-                                                      callUseCase: callUseCase,
-                                                      audioSessionUseCase: MockAudioSessionUseCase(),
-                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
-                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+        let viewModel = MeetingFloatingPanelViewModel(router: router)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
+    
+    func testAction_inviteParticipants_showAllContactsAlreadyAddedAlert() {
+        let router = MockMeetingFloatingPanelRouter()
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            )
+        ])
+        let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
+        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase)
+        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
+    }
+    
+    func testAction_inviteParticipants_singleContactBlocked() {
+        let router = MockMeetingFloatingPanelRouter()
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .blocked
+                )
+            )
+        ])
+        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        XCTAssert(router.inviteParticpants_calledTimes == 1)
+    }
+    
+    func testAction_inviteParticipants_singleContactVisible() {
+        let router = MockMeetingFloatingPanelRouter()
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            )
+        ])
+        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        XCTAssert(router.inviteParticpants_calledTimes == 1)
+    }
+    
+    func testAction_inviteParticipants_singleAddedContactAndABlockedContact() {
+        let router = MockMeetingFloatingPanelRouter()
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            ),
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 102,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .blocked
+                )
+            )
+        ])
+        
+        let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
+        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase)
+        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
+    }
+    
     
     func testAction_contextMenuTap() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
@@ -697,6 +773,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var shareLink_calledTimes = 0
     var inviteParticpants_calledTimes = 0
     var showContextMenu_calledTimes = 0
+    var showAllContactsAlreadyAddedAlert_CalledTimes = 0
 
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
@@ -711,10 +788,14 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func inviteParticipants(
-        excludeParticpants: NSMutableDictionary,
+        excludeParticpantsId: [MEGAHandle],
         selectedUsersHandler: @escaping (([UInt64]) -> Void)
     ) {
         inviteParticpants_calledTimes += 1
+    }
+    
+    func showAllContactsAlreadyAddedAlert() {
+        showAllContactsAlreadyAddedAlert_CalledTimes += 1
     }
     
     func showContextMenu(presenter: UIViewController,
@@ -750,5 +831,13 @@ extension DevicePermissionCheckingProtocol {
         }, getVideoAuthorizationStatus: { callback in
             callback(videoAccessAuthorized)
         })
+    }
+    
+    static func mock() -> DevicePermissionCheckingProtocol {
+        mock(
+            albumAuthorizationStatus: .authorized,
+            audioAccessAuthorized: true,
+            videoAccessAuthorized: true
+        )
     }
 }
