@@ -3793,9 +3793,15 @@ public enum Strings {
         public static let shareLink = Strings.tr("Localizable", "meetings.action.shareLink")
       }
       public enum AddContacts {
-        /// You’ve already added all your MEGA contacts to this chat.
-        /// If you want to add more people to your contact list, send them an invite.
-        public static let allContactsAlreadyAddedMessage = Strings.tr("Localizable", "meetings.addContacts.AllContactsAlreadyAddedMessage")
+        public enum AllContactsAdded {
+          /// Invite
+          public static let confirmationButtonTitle = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.confirmationButtonTitle")
+          /// You’ve already added all your contacts to this chat.
+          /// If you want to add more participants, first invite them to your contact list.
+          public static let description = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.description")
+          /// All contacts added
+          public static let title = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.title")
+        }
       }
       public enum Alert {
         /// Meeting Ended

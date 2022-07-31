@@ -106,11 +106,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func showAllContactsAlreadyAddedAlert() {
-        let title = Strings.Localizable.Meetings.Panel.inviteParticipants
-        let message = Strings.Localizable.Meetings.AddContacts.allContactsAlreadyAddedMessage
+        let title = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.title
+        let message = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.description
+        let inviteButtonTitle = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.confirmationButtonTitle
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
-        let inviteAction = UIAlertAction(title: Strings.Localizable.invite, style: .default) { [weak self] _ in
+        let inviteAction = UIAlertAction(title: inviteButtonTitle, style: .default) { [weak self] _ in
             self?.showInviteToMega()
         }
         alertController.addAction(inviteAction)
