@@ -3,9 +3,10 @@ import PanModal
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
     func inviteParticipants(
-        excludeParticpants: NSMutableDictionary,
+        excludeParticpantsId: [MEGAHandle],
         selectedUsersHandler: @escaping (([UInt64]) -> Void)
     )
+    func showAllContactsAlreadyAddedAlert()
     func showContextMenu(presenter: UIViewController,
                          sender: UIButton,
                          participant: CallParticipantEntity,
@@ -30,6 +31,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private let chatRoom: ChatRoomEntity
     private let isSpeakerEnabled: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
+    private var inviteToMegaNavigationController: MEGANavigationController?
     
     init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
         self.presenter = presenter
@@ -54,7 +56,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                                                       localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
-                                                      userUseCase: UserUseCase(repo: .live))
+                                                      userUseCase: UserUseCase(repo: .live),
+                                                      chatRoomUseCase: chatRoomUseCase)
         
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
@@ -83,19 +86,37 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         baseViewController?.dismiss(animated: animated)
     }
     
-    func inviteParticipants(excludeParticpants: NSMutableDictionary, selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
+    func inviteParticipants(excludeParticpantsId: [MEGAHandle], selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
         guard let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { fatalError("no contacts navigation view controller found") }
         contactsNavigationController.overrideUserInterfaceStyle = .dark
         guard let contactController = contactsNavigationController.viewControllers.first as? ContactsViewController else { fatalError("no contact view controller found") }
         contactController.contactsMode = .inviteParticipants
-        contactController.participantsMutableDictionary = excludeParticpants
+        
+        let participantsDict = excludeParticpantsId.reduce(into: [NSNumber: NSNumber]()) {
+            $0[NSNumber(value: $1)] = NSNumber(value: $1)
+        }
+        contactController.participantsMutableDictionary = participantsDict as? NSMutableDictionary
         contactController.userSelected = { selectedUsers in
             guard let users = selectedUsers else { return }
             selectedUsersHandler(users.map({ $0.handle }))
         }
         
         baseViewController?.present(contactsNavigationController, animated: true)
+    }
+    
+    func showAllContactsAlreadyAddedAlert() {
+        let title = Strings.Localizable.Meetings.Panel.inviteParticipants
+        let message = Strings.Localizable.Meetings.AddContacts.allContactsAlreadyAddedMessage
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
+        let inviteAction = UIAlertAction(title: Strings.Localizable.invite, style: .default) { [weak self] _ in
+            self?.showInviteToMega()
+        }
+        alertController.addAction(inviteAction)
+        alertController.preferredAction = inviteAction
+        alertController.overrideUserInterfaceStyle = .dark
+        baseViewController?.present(alertController, animated: true)
     }
     
     func showContextMenu(presenter: UIViewController,
@@ -127,5 +148,32 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showAudioPermissionError() {
         DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+    }
+    
+    // MARK: - Private methods.
+    
+    private func showInviteToMega() {
+        let storyboard = UIStoryboard(name: "InviteContact", bundle: nil)
+        guard let inviteContactsViewController = storyboard.instantiateViewController(identifier: "InviteContactViewControllerID") as? InviteContactViewController else {
+            return
+        }
+        
+        let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
+        
+        let backBarButton = UIBarButtonItem(
+            image: Asset.Images.Chat.backArrow.image,
+            style: .plain,
+            target: self,
+            action: #selector(self.dismissInviteContactsScreen)
+        )
+        
+        navigationController.addLeftDismissBarButton(backBarButton)
+        self.inviteToMegaNavigationController = navigationController
+        baseViewController?.present(navigationController, animated: true)
+    }
+    
+    @objc private func dismissInviteContactsScreen() {
+        self.inviteToMegaNavigationController?.dismiss(animated: true)
+        self.inviteToMegaNavigationController = nil
     }
 }

@@ -10,6 +10,7 @@
 
 - (void)addRightCancelButton;
 - (void)addLeftDismissButtonWithText:(NSString *)text;
+- (void)addLeftDismissBarButton:(UIBarButtonItem *)barButton;
 
 @property (weak, nonatomic) id<MEGANavigationControllerDelegate> navigationDelegate;
 
