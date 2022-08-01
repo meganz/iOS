@@ -1,13 +1,13 @@
 import Foundation
 
-enum StatsEventEntity {
+public enum StatsEventEntity {
     case clickMediaDiscovery
     case stayOnMediaDiscoveryOver10s
     case stayOnMediaDiscoveryOver30s
     case stayOnMediaDiscoveryOver60s
     case stayOnMediaDiscoveryOver180s
     
-    var message: String {
+    public var message: String {
         let value: String
         
         switch self {

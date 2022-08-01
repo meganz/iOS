@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol FavouriteNodesRepositoryProtocol: RepositoryProtocol {
     func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)

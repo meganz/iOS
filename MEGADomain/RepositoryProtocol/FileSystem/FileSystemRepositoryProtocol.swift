@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol FileSystemRepositoryProtocol: RepositoryProtocol {
     func documentsDirectory() -> URL

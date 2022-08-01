@@ -1,3 +1,5 @@
+import MEGADomain
+
 protocol FilesSearchRepositoryProtocol: RepositoryProtocol {
     func search(string: String?,
                 inNode node: MEGANode?,

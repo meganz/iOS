@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol FileCacheRepositoryProtocol: RepositoryProtocol {
     func tempFileURL(for node: NodeEntity) -> URL

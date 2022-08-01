@@ -1,22 +1,22 @@
 import Foundation
 
-protocol MediaDiscoveryStatsUseCaseProtocol {
+public protocol MediaDiscoveryStatsUseCaseProtocol {
     func sendPageStayStats(with duration: Int)
     func sendPageVisitedStats()
 }
 
-struct MediaDiscoveryStatsUseCase<T: StatsRepositoryProtocol>: MediaDiscoveryStatsUseCaseProtocol {
+public struct MediaDiscoveryStatsUseCase<T: StatsRepositoryProtocol>: MediaDiscoveryStatsUseCaseProtocol {
     private let repo: T
     
-    init(repository: T) {
+    public init(repository: T) {
         repo = repository
     }
     
-    func sendPageVisitedStats() {
+    public func sendPageVisitedStats() {
         repo.sendStatsEvent(StatsEventEntity.clickMediaDiscovery)
     }
     
-    func sendPageStayStats(with duration: Int) {
+    public func sendPageStayStats(with duration: Int) {
         guard duration > 10 else { return }
         
         let type = mediaDiscoveryStatsEventType(with: duration)

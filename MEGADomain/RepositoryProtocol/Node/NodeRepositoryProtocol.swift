@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol NodeRepositoryProtocol: RepositoryProtocol {
     func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity
