@@ -113,8 +113,6 @@ extension ChatViewController {
                 }
             }
         }
-        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .downloadChat).start()
     }
     
@@ -174,6 +172,8 @@ extension ChatViewController {
                 }
                 
                 let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+                TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
                 
