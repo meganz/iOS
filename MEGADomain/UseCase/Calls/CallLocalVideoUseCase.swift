@@ -10,7 +10,7 @@ protocol CallLocalVideoUseCaseProtocol {
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
 
-protocol CallLocalVideoCallbacksUseCaseProtocol {
+protocol CallLocalVideoCallbacksUseCaseProtocol: AnyObject {
     func localVideoFrameData(width: Int, height: Int, buffer: Data)
     func localVideoChangedCameraPosition()
 }
@@ -18,7 +18,7 @@ protocol CallLocalVideoCallbacksUseCaseProtocol {
 final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject, CallLocalVideoUseCaseProtocol {
     
     private let repository: T
-    private var localVideoCallbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol?
+    private weak var localVideoCallbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol?
     
     init(repository: T) {
         self.repository = repository
