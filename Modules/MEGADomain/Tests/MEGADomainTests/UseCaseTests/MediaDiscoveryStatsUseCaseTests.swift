@@ -1,5 +1,5 @@
 import XCTest
-@testable import MEGA
+@testable import MEGADomain
 
 final class MediaDiscoveryStatsUseCaseTests: XCTestCase {
     

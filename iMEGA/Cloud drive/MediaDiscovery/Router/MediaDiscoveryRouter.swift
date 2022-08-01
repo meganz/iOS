@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 @available(iOS 14.0, *)
 @objc final class MediaDiscoveryRouter: NSObject, Routing {

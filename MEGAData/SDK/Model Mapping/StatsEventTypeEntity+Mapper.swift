@@ -1,4 +1,4 @@
-import Foundation
+import MEGADomain
 
 extension StatsEventEntity {
     func toMEGAEventCode() -> Int {

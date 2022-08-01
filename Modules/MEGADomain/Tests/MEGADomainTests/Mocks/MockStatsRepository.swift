@@ -1,4 +1,5 @@
 import Foundation
+@testable import MEGADomain
 
 final class MockStatsRepository: StatsRepositoryProtocol {
     static var newRepo: MockStatsRepository {
