@@ -247,7 +247,6 @@
 }
 
 - (void)download {
-    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
     if (self.isLink && self.fileLink) {
         [self downloadFileLink];
     } else if (self.chatId && self.messageId) {

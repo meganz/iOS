@@ -796,9 +796,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (node == nil) {
         return;
     }
-    
-    [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
-    
+        
     if (self.displayMode == DisplayModeChatAttachment) {
         [self exportMessageFileFrom:node sender:sender];
     } else {
@@ -1094,7 +1092,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
             
         case MegaNodeActionTypeDownload:
-            [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
             switch (self.displayMode) {
                 case DisplayModeFileLink:
                     [self downloadFileLink];
