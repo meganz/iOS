@@ -7,7 +7,7 @@ protocol HomeRouterProtocol {
     
     func showFavourites(navigationController: UINavigationController, homeViewController: HomeViewController, slidePanelView: SlidePanelView)
     
-    func showNode(_ base64Handle: MEGABase64Handle)
+    func showNode(_ base64Handle: Base64HandleEntity)
     
     func showDownloadTransfer(node: MEGANode)
 }
@@ -143,7 +143,7 @@ final class HomeRouter: HomeRouterProtocol {
         FavouritesRouter(navigationController: self.navigationController ?? UINavigationController(), homeViewController: homeViewController, slidePanelView: slidePanelView).start()
     }
     
-    func showNode(_ base64Handle: MEGABase64Handle) {
+    func showNode(_ base64Handle: Base64HandleEntity) {
         navigationController?.popToRootViewController(animated: false)
         let handle = MEGASdk.handle(forBase64Handle: base64Handle)
         NodeOpener(navigationController: navigationController).openNode(handle)

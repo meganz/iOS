@@ -12,7 +12,7 @@ final class CameraUploadHeartbeat: NSObject {
     private let recorder: BackupRecorder
     private var activeTimer: DispatchSourceTimer?
     private var statusTimer: DispatchSourceTimer?
-    private var lastHeartbeatNodeHandle: MEGAHandle?
+    private var lastHeartbeatNodeHandle: HandleEntity?
     
     @objc override init() {
         sdk = MEGASdkManager.sharedMEGASdk()
@@ -159,7 +159,7 @@ final class CameraUploadHeartbeat: NSObject {
         sendHeartbeat(forBackupId: backupId, lastNode: lastNode, lastActionDate: lastRecord.date)
     }
     
-    private func sendHeartbeat(forBackupId backupId: MEGAHandle, lastNode: MEGANode, lastActionDate: Date) {
+    private func sendHeartbeat(forBackupId backupId: HandleEntity, lastNode: MEGANode, lastActionDate: Date) {
         MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(type(of: sdk).base64Handle(forHandle: backupId) ?? "")")
         CameraUploadManager.shared().loadCurrentUploadStats { [sdk] stats, error in
             guard let stats = stats else {

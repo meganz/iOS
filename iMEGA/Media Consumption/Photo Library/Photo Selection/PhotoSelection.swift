@@ -11,7 +11,7 @@ final class PhotoSelection: ObservableObject {
         }
     }
     
-    @Published var photos = [MEGAHandle: NodeEntity]()
+    @Published var photos = [HandleEntity: NodeEntity]()
     
     @Published var allSelected = false {
         willSet {

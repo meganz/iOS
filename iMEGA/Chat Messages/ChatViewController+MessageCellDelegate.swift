@@ -172,7 +172,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                    (name.mnz_isVisualMediaPathExtension) {
                     var mediaNodesArrayIndex = 0
                     var foundIndex: Int?
-                    var mediaMessagesArray = [MEGAHandle]()
+                    var mediaMessagesArray = [HandleEntity]()
                     let mediaNodesArray = messages.compactMap { message -> MEGANode? in
                         guard let localChatMessage = message as? ChatMessage,
                               localChatMessage.message.type == .attachment,

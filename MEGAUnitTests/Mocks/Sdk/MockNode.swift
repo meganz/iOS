@@ -4,15 +4,15 @@ import Foundation
 final class MockNode: MEGANode {
     private let nodeType: MEGANodeType
     private let nodeName: String
-    private let nodeParentHandle: MEGAHandle
-    private let nodeHandle: MEGAHandle
+    private let nodeParentHandle: HandleEntity
+    private let nodeHandle: HandleEntity
     private let changeType: MEGANodeChangeType
     private var nodeModificationTime: Date?
     
-    init(handle: MEGAHandle,
+    init(handle: HandleEntity,
          name: String = "",
          nodeType: MEGANodeType = .file,
-         parentHandle: MEGAHandle = .invalid,
+         parentHandle: HandleEntity = .invalid,
          changeType: MEGANodeChangeType = .new,
          modificationTime: Date? = nil ) {
         nodeHandle = handle
@@ -24,7 +24,7 @@ final class MockNode: MEGANode {
         super.init()
     }
     
-    override var handle: MEGAHandle { nodeHandle }
+    override var handle: HandleEntity { nodeHandle }
     
     override var type: MEGANodeType { nodeType }
     
@@ -40,7 +40,7 @@ final class MockNode: MEGANode {
     
     override var name: String! { nodeName }
     
-    override var parentHandle: MEGAHandle { nodeParentHandle }
+    override var parentHandle: HandleEntity { nodeParentHandle }
     
     override var modificationTime: Date? { nodeModificationTime }
 }

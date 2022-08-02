@@ -8,7 +8,7 @@ struct MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
         passthroughSubject.eraseToAnyPublisher()
     }
     
-    func start(timerDuration duration: TimeInterval, chatId: MEGAHandle) {
+    func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {
         passthroughSubject.send()
     }
 }

@@ -2,8 +2,8 @@
 
 struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
     var nameCollisions: [NameCollisionEntity]?
-    var copiedNodes: [NodeHandle]?
-    var movedNodes: [NodeHandle]?
+    var copiedNodes: [HandleEntity]?
+    var movedNodes: [HandleEntity]?
     var nodeSize: String?
     var nodeCrationDate: String?
     var fileSize: String?
@@ -16,19 +16,19 @@ struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
         nameCollisions ?? []
     }
     
-    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [NodeHandle] {
+    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity] {
         copiedNodes ?? []
     }
     
-    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [NodeHandle] {
+    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity] {
         movedNodes ?? []
     }
     
-    func sizeForNode(handle: MEGAHandle) -> String {
+    func sizeForNode(handle: HandleEntity) -> String {
         nodeSize ?? ""
     }
     
-    func creationDateForNode(handle: MEGAHandle) -> String {
+    func creationDateForNode(handle: HandleEntity) -> String {
         nodeCrationDate ?? ""
     }
     
@@ -40,11 +40,11 @@ struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
         fileCrationDate ?? ""
     }
     
-    func renameNode(named name: NSString, inParent parentHandle: MEGAHandle) -> String {
+    func renameNode(named name: NSString, inParent parentHandle: HandleEntity) -> String {
         nodeRename ?? ""
     }
     
-    func node(for handle: MEGAHandle) -> NodeEntity? {
+    func node(for handle: HandleEntity) -> NodeEntity? {
         node
     }
 }

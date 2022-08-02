@@ -3,7 +3,7 @@ import PanModal
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
     func inviteParticipants(
-        excludeParticpantsId: [MEGAHandle],
+        excludeParticpantsId: [HandleEntity],
         selectedUsersHandler: @escaping (([UInt64]) -> Void)
     )
     func showAllContactsAlreadyAddedAlert()
@@ -86,7 +86,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         baseViewController?.dismiss(animated: animated)
     }
     
-    func inviteParticipants(excludeParticpantsId: [MEGAHandle], selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
+    func inviteParticipants(excludeParticpantsId: [HandleEntity], selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
         guard let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { fatalError("no contacts navigation view controller found") }
         contactsNavigationController.overrideUserInterfaceStyle = .dark

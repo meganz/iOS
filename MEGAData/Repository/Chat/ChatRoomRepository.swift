@@ -7,7 +7,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity? {
+    func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity? {
         if let megaChatRoom = sdk.chatRoom(forChatId: chatId) {
             return ChatRoomEntity(with: megaChatRoom)
         }
@@ -15,7 +15,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         return nil
     }
     
-    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity? {
+    func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity? {
         if let megaChatRoom = sdk.chatRoom(byUser: userHandle) {
             return ChatRoomEntity(with: megaChatRoom)
         }
@@ -23,12 +23,12 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         return nil
     }
     
-    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle] {
+    func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity] {
         guard let chatRoom = chatRoom(forChatId: chatId) else { return [] }
         return chatRoom.peerHandles
     }
     
-    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
+    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         if let chatRoom = chatRoom(forUserHandle: userHandle) {
             completion(.success(chatRoom))
         }
@@ -38,7 +38,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
     }
     
-    func createPublicLink(forChatId chatId: MEGAHandle, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
+    func createPublicLink(forChatId chatId: HandleEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         let publicChatLinkCreationDelegate = MEGAChatGenericRequestDelegate { (request, error) in
             guard error.type == .MEGAChatErrorTypeOk else {
                 completion(.failure(.generic))
@@ -51,7 +51,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.createChatLink(chatId, delegate: publicChatLinkCreationDelegate)
     }
     
-    func queryChatLink(forChatId chatId: MEGAHandle, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
+    func queryChatLink(forChatId chatId: HandleEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         let publicChatLinkCreationDelegate = ChatRequestListener { (request, error) in
             guard let error = error, error.type == .MEGAChatErrorTypeOk else {
                 if let error = error, error.type == .MEGAChatErrorTypeNoEnt {
@@ -72,7 +72,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.queryChatLink(chatId, delegate: publicChatLinkCreationDelegate)
     }
     
-    func userFullName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
             MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
             completion(.success(name))
@@ -94,7 +94,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
     }
     
-    func userFullName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle) async throws -> String {
+    func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity) async throws -> String {
         if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
             MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
             return name
@@ -118,7 +118,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
     }
 
-    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "No name") with title \(title)")
         sdk.setChatTitle(chatId, title: title, delegate: MEGAChatGenericRequestDelegate { (request, error) in
             guard error.type == .MEGAChatErrorTypeOk else {

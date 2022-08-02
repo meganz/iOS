@@ -26,11 +26,11 @@ struct MockNodeRepository: NodeRepositoryProtocol {
     var images: [NodeEntity] = []
     var fileLinkNode: NodeEntity?
     
-    func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity? {
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
         node
     }
 
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
+    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         nodeAccessLevel
     }
     
@@ -38,27 +38,27 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         labelString
     }
     
-    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
+    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         filesAndFoldersCount
     }
     
-    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
+    func hasVersions(nodeHandle: HandleEntity) -> Bool {
         hasVersions
     }
     
-    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
+    func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         isDownloaded
     }
     
-    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
+    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         isInRubbishBin
     }
     
-    func nameForNode(handle: MEGAHandle) -> String? {
+    func nameForNode(handle: HandleEntity) -> String? {
         name
     }
     
-    func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String? {
+    func nameForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String? {
         name
     }
     
@@ -76,38 +76,38 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         return node
     }
 
-    func sizeForNode(handle: MEGAHandle) -> UInt64? {
+    func sizeForNode(handle: HandleEntity) -> UInt64? {
         size
     }
     
-    func sizeForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> UInt64? {
+    func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
         size
     }
     
-    func base64ForNode(handle: MEGAHandle) -> String? {
+    func base64ForNode(handle: HandleEntity) -> String? {
         base64Handle
     }
     
-    func base64ForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String? {
+    func base64ForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String? {
         base64Handle
     }
     
-    func isFileNode(handle: MEGAHandle) -> Bool {
+    func isFileNode(handle: HandleEntity) -> Bool {
         isFile
     }
     
-    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: MEGAHandle, newName: String?) -> Bool {
+    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: HandleEntity, newName: String?) -> Bool {
         copiedNodeIfExists
     }
     
-    func copyNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?, isFolderLink: Bool) async throws -> NodeHandle {
+    func copyNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?, isFolderLink: Bool) async throws -> HandleEntity {
         guard let copiedNodeHandle = copiedNodeHandle else {
             throw CopyOrMoveErrorEntity.generic
         }
         return copiedNodeHandle
     }
     
-    func moveNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?) async throws -> NodeHandle {
+    func moveNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?) async throws -> HandleEntity {
         guard let movedNodeHandle = movedNodeHandle else {
             throw CopyOrMoveErrorEntity.generic
         }
@@ -118,17 +118,17 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         fingerprint
     }
     
-    func setNodeCoordinates(nodeHandle: MEGAHandle, latitude: Double, longitude: Double) {    }
+    func setNodeCoordinates(nodeHandle: HandleEntity, latitude: Double, longitude: Double) {    }
     
-    func existChildNodeNamed(name: String, in parentHandle: MEGAHandle) -> Bool {
+    func existChildNodeNamed(name: String, in parentHandle: HandleEntity) -> Bool {
         existsChildNode
     }
     
-    func childNodeNamed(name: String, in parentHandle: MEGAHandle) -> NodeEntity? {
+    func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity? {
         childNode
     }
     
-    func creationDateForNode(handle: MEGAHandle) -> Date? {
+    func creationDateForNode(handle: HandleEntity) -> Date? {
         modificationDate
     }
     
@@ -136,7 +136,7 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         images
     }
     
-    func images(for parentHandle: MEGAHandle) -> [NodeEntity] {
+    func images(for parentHandle: HandleEntity) -> [NodeEntity] {
         images
     }
 }

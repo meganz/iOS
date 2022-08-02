@@ -163,7 +163,7 @@ extension AppDelegate {
             guard error.type == .apiOk else { return }
             guard let stringDictionary = request.megaStringDictionary else { return }
             
-            let names = stringDictionary.compactMap { (key, value) -> (MEGAHandle, String)? in
+            let names = stringDictionary.compactMap { (key, value) -> (HandleEntity, String)? in
                 guard let nickname = value.base64URLDecoded else { return nil }
                 return (MEGASdk.handle(forBase64UserHandle: key), nickname)
             }

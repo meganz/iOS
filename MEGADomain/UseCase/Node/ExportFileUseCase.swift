@@ -59,7 +59,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         }
     }
     
-    private func offlineUrl(for base64Handle: MEGABase64Handle) -> URL? {
+    private func offlineUrl(for base64Handle: Base64HandleEntity) -> URL? {
         guard let offlinePath = offlineFilesRepository.offlineFile(for: base64Handle)?.localPath else { return nil }
         return URL(fileURLWithPath: offlineFilesRepository.offlineURL?.path.append(pathComponent: offlinePath) ?? "")
     }

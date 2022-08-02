@@ -2,11 +2,11 @@ import Foundation
 
 protocol NodeFavouriteActionUseCaseProtocol {
 
-    func addNodeToFavourite(nodeHandle: MEGAHandle, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void)
+    func addNodeToFavourite(nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void)
 
-    func removeNodeFromFavourite(nodeHandle: MEGAHandle, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void)
+    func removeNodeFromFavourite(nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void)
 
-    func isNodeFavourite(nodeHandle: MEGAHandle) -> Result<Bool, NodeFavouriteDomainError>
+    func isNodeFavourite(nodeHandle: HandleEntity) -> Result<Bool, NodeFavouriteDomainError>
 }
 
 final class NodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol {
@@ -17,15 +17,15 @@ final class NodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol {
         self.nodeFavouriteRepository = nodeFavouriteRepository
     }
 
-    func addNodeToFavourite(nodeHandle: MEGAHandle, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
+    func addNodeToFavourite(nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
         return nodeFavouriteRepository.markFavourite(of: nodeHandle, completion: completion)
     }
 
-    func removeNodeFromFavourite(nodeHandle: MEGAHandle, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
+    func removeNodeFromFavourite(nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
          nodeFavouriteRepository.unmarkFavourite(of: nodeHandle, completion: completion)
     }
 
-    func isNodeFavourite(nodeHandle: MEGAHandle) -> Result<Bool, NodeFavouriteDomainError> {
+    func isNodeFavourite(nodeHandle: HandleEntity) -> Result<Bool, NodeFavouriteDomainError> {
         return nodeFavouriteRepository.isMarkedFavourte(of: nodeHandle)
     }
 }

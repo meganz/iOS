@@ -18,7 +18,7 @@ struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
         }
     }
     
-    func info(fromHandle: MEGAHandle) -> MEGANode? {
+    func info(fromHandle: HandleEntity) -> MEGANode? {
         switch result {
         case .failure: return nil
         case .success: return MEGANode()

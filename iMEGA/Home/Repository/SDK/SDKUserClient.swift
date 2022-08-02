@@ -10,7 +10,7 @@ struct SDKUserClient {
     /// Will return the owner user of specified shared node in `MEGASDK`.
     /// - Parameter: Shared node's node handle.
     var userForSharedNode: (
-        _ nodeHandle: MEGAHandle
+        _ nodeHandle: HandleEntity
     ) -> UserSDKEntity?
     
     var isGuest: () -> Bool

@@ -2,10 +2,10 @@ import Foundation
 
 protocol NodeDetailUseCaseProtocol {
 
-    func ownerFolder(of node: MEGAHandle) -> NodeEntity?
+    func ownerFolder(of node: HandleEntity) -> NodeEntity?
 
     func loadThumbnail(
-        of node: MEGAHandle,
+        of node: HandleEntity,
         completion: @escaping (UIImage?) -> Void
     )
 }
@@ -24,13 +24,13 @@ final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
         self.nodeThumbnailHomeUseCase = nodeThumbnailHomeUseCase
     }
 
-    func ownerFolder(of node: MEGAHandle) -> NodeEntity? {
+    func ownerFolder(of node: HandleEntity) -> NodeEntity? {
         sdkNodeClient.findOwnerNode(node)?.toNodeEntity()
     }
 
     
     func loadThumbnail(
-        of node: MEGAHandle,
+        of node: HandleEntity,
         completion: @escaping (UIImage?) -> Void
     ) {
         return nodeThumbnailHomeUseCase.loadThumbnail(of: node, completion: completion)

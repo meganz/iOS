@@ -2,7 +2,7 @@
 extension CallParticipantEntity {
     convenience init(
         session: ChatSessionEntity,
-        chatId: MEGAHandle,
+        chatId: HandleEntity,
         sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
         chatSDK: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()
     ) {
@@ -33,7 +33,7 @@ extension CallParticipantEntity {
     }
     
     static func myself(
-        chatId: MEGAHandle,
+        chatId: HandleEntity,
         sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
         chatSDK: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()
     ) -> CallParticipantEntity? {

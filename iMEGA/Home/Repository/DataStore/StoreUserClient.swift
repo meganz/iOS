@@ -3,7 +3,7 @@ import Foundation
 struct StoreUserClient {
 
     /// Will return the `StoreUser` in `Core Data` by user's handle.
-    var getUser: (_ userHandle: MEGAHandle) -> StoreUser?
+    var getUser: (_ userHandle: HandleEntity) -> StoreUser?
 }
 
 extension StoreUserClient {

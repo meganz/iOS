@@ -1,7 +1,7 @@
 
 protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(node: NodeEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void)
-    func saveToPhotosChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void)
+    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void)
     func saveToPhotos(fileLink: FileLinkEntity) async throws
 }
         
@@ -31,7 +31,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         }
     }
     
-    func saveToPhotosChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void) {
+    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void) {
         guard let base64Handle = nodeRepository.base64ForChatNode(handle: handle, messageId: messageId, chatId: chatId), let name = nodeRepository.nameForChatNode(handle: handle, messageId: messageId, chatId: chatId) else {
             completion(.downloadFailed)
             return

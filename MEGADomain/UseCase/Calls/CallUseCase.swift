@@ -1,18 +1,18 @@
 
 protocol CallUseCaseProtocol {
-    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: MEGAHandle, callbacksDelegate: T)
+    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T)
     func stopListeningForCall()
-    func call(for chatId: MEGAHandle) -> CallEntity?
-    func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
-    func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
-    func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func call(for chatId: HandleEntity) -> CallEntity?
+    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func createActiveSessions()
-    func hangCall(for callId: MEGAHandle)
-    func endCall(for callId: MEGAHandle)
-    func addPeer(toCall call: CallEntity, peerId: MEGAHandle)
-    func removePeer(fromCall call: CallEntity, peerId: MEGAHandle)
-    func makePeerAModerator(inCall call: CallEntity, peerId: MEGAHandle)
-    func removePeerAsModerator(inCall call: CallEntity, peerId: MEGAHandle)
+    func hangCall(for callId: HandleEntity)
+    func endCall(for callId: HandleEntity)
+    func addPeer(toCall call: CallEntity, peerId: HandleEntity)
+    func removePeer(fromCall call: CallEntity, peerId: HandleEntity)
+    func makePeerAModerator(inCall call: CallEntity, peerId: HandleEntity)
+    func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity)
 }
 
 protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -25,8 +25,8 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
     func audioLevel(for participant: CallParticipantEntity)
     func callTerminated(_ call: CallEntity)
     func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
-    func participantAdded(with handle: MEGAHandle)
-    func participantRemoved(with handle: MEGAHandle)
+    func participantAdded(with handle: HandleEntity)
+    func participantRemoved(with handle: HandleEntity)
     func connecting()
     func inProgress()
     func localAvFlagsUpdated(video: Bool, audio: Bool)
@@ -42,8 +42,8 @@ extension CallCallbacksUseCaseProtocol {
     func lowResolutionChanged(for participant: CallParticipantEntity) { }
     func audioLevel(for attende: CallParticipantEntity) { }
     func callTerminated(_ call: CallEntity) { }
-    func participantAdded(with handle: MEGAHandle) { }
-    func participantRemoved(with handle: MEGAHandle) { }
+    func participantAdded(with handle: HandleEntity) { }
+    func participantRemoved(with handle: HandleEntity) { }
     func connecting() { }
     func inProgress() { }
     func localAvFlagsUpdated(video: Bool, audio: Bool) { }
@@ -61,7 +61,7 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
         self.repository = repository
     }
     
-    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: MEGAHandle, callbacksDelegate: T) {
+    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
         repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
         self.callbacksDelegate = callbacksDelegate
     }
@@ -71,19 +71,19 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
         repository.stopListeningForCall()
     }
     
-    func call(for chatId: MEGAHandle) -> CallEntity? {
+    func call(for chatId: HandleEntity) -> CallEntity? {
         repository.call(for: chatId)
     }
     
-    func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         repository.answerCall(for: chatId, completion: completion)
     }
     
-    func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
     }
     
-    func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         repository.joinCall(for: chatId, enableVideo: enableVideo, enableAudio: true, completion: completion)
     }
     
@@ -91,46 +91,46 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
         repository.createActiveSessions()
     }
     
-    func hangCall(for callId: MEGAHandle) {
+    func hangCall(for callId: HandleEntity) {
         repository.hangCall(for: callId)
     }
     
-    func endCall(for callId: MEGAHandle) {
+    func endCall(for callId: HandleEntity) {
         repository.endCall(for: callId)
     }
     
-    func addPeer(toCall call: CallEntity, peerId: MEGAHandle) {
+    func addPeer(toCall call: CallEntity, peerId: HandleEntity) {
         repository.addPeer(toCall: call, peerId: peerId)
     }
     
-    func removePeer(fromCall call: CallEntity, peerId: MEGAHandle) {
+    func removePeer(fromCall call: CallEntity, peerId: HandleEntity) {
         repository.removePeer(fromCall: call, peerId: peerId)
     }
     
-    func makePeerAModerator(inCall call: CallEntity, peerId: MEGAHandle) {
+    func makePeerAModerator(inCall call: CallEntity, peerId: HandleEntity) {
         repository.makePeerAModerator(inCall: call, peerId: peerId)
     }
     
-    func removePeerAsModerator(inCall call: CallEntity, peerId: MEGAHandle) {
+    func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity) {
         repository.removePeerAsModerator(inCall: call, peerId: peerId)
     }
 }
 
 extension CallUseCase: CallCallbacksRepositoryProtocol {
 
-    func createdSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func createdSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: session, chatId: chatId))
     }
     
-    func destroyedSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func destroyedSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: session, chatId: chatId))
     }
     
-    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: HandleEntity) {
         callbacksDelegate?.updateParticipant(CallParticipantEntity(session: session, chatId: chatId))
     }
     
-    func audioLevel(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func audioLevel(for session: ChatSessionEntity, in chatId: HandleEntity) {
         callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     
@@ -142,11 +142,11 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.ownPrivilegeChanged(to: privilege, in: chatRoom)
     }
     
-    func participantAdded(with handle: MEGAHandle) {
+    func participantAdded(with handle: HandleEntity) {
         callbacksDelegate?.participantAdded(with: handle)
     }
     
-    func participantRemoved(with handle: MEGAHandle) {
+    func participantRemoved(with handle: HandleEntity) {
         callbacksDelegate?.participantRemoved(with: handle)
     }
     
@@ -158,11 +158,11 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.inProgress()
     }
     
-    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     
-    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
     }
     

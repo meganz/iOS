@@ -3,12 +3,12 @@ import Foundation
 struct SDKAvatarClient {
 
     var loadUserAvatar: (
-        _ handle: MEGAHandle,
+        _ handle: HandleEntity,
         _ destinationPathURL: URL,
         _ completion: @escaping (UIImage?) -> Void
     ) -> Void
 
-    var avatarBackgroundColorHex: (_ handle: MEGAHandle) -> String?
+    var avatarBackgroundColorHex: (_ handle: HandleEntity) -> String?
 }
 
 extension SDKAvatarClient {

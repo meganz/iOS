@@ -12,8 +12,8 @@ struct TransferEntity {
     let totalBytes: Int
     let path: String?
     let parentPath: String?
-    let nodeHandle: MEGAHandle
-    let parentHandle: MEGAHandle
+    let nodeHandle: HandleEntity
+    let parentHandle: HandleEntity
     let startPos: Int?
     let endPos: Int?
     let fileName: String?

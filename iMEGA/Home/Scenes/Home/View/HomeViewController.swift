@@ -11,7 +11,7 @@ protocol HomeRouting: NSObjectProtocol {
     func showRecents()
     
     func showFavourites()
-    func showFavouritesNode(_ base64Handle: MEGABase64Handle)
+    func showFavouritesNode(_ base64Handle: Base64HandleEntity)
 }
 
 final class HomeViewController: UIViewController {
@@ -527,7 +527,7 @@ extension HomeViewController: HomeRouting {
         quickAccessWidgetViewModel.dispatch(.showFavourites)
     }
     
-    func showFavouritesNode(_ base64Handle: MEGABase64Handle) {
+    func showFavouritesNode(_ base64Handle: Base64HandleEntity) {
         quickAccessWidgetViewModel.dispatch(.showFavouritesNode(base64Handle))
     }
 }

@@ -4,7 +4,7 @@ protocol StreamingInfoRepositoryProtocol {
     func serverStart()
     func serverStop()
     func info(fromFolderLinkNode: MEGANode) -> AudioPlayerItem?
-    func info(fromHandle: MEGAHandle) -> MEGANode?
+    func info(fromHandle: HandleEntity) -> MEGANode?
     func path(fromNode: MEGANode) -> URL?
     func isLocalHTTPProxyServerRunning() -> Bool
 }
@@ -33,7 +33,7 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
         return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: node.hasThumbnail())
     }
     
-    func info(fromHandle: MEGAHandle) -> MEGANode? {
+    func info(fromHandle: HandleEntity) -> MEGANode? {
         guard let nodeHandled = sdk.node(forHandle: fromHandle),
               let node = sdk.authorizeNode(nodeHandled) else { return nil }
         

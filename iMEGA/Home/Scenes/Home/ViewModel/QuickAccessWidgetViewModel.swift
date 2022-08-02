@@ -4,7 +4,7 @@ enum QuickAccessWidgetAction: ActionType {
     case managePendingAction
     case showRecents
     case showFavourites
-    case showFavouritesNode(MEGABase64Handle)
+    case showFavouritesNode(Base64HandleEntity)
     case showOffline
     case showOfflineFile(String)
 }
@@ -14,7 +14,7 @@ final class QuickAccessWidgetViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case selectRecentsTab
         case selectFavouritesTab
-        case presentFavouritesNode(MEGABase64Handle)
+        case presentFavouritesNode(Base64HandleEntity)
         case selectOfflineTab
         case presentOfflineFileWithPath(String)
     }

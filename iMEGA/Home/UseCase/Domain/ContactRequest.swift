@@ -2,7 +2,7 @@ import Foundation
 
 struct ContactRequest {
 
-    let handle: MEGAHandle
+    let handle: HandleEntity
 
     let sourceEmail: String?
 

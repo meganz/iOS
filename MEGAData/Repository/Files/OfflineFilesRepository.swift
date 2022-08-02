@@ -25,7 +25,7 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
         }
     }
     
-    func offlineFile(for base64Handle: MEGABase64Handle) -> OfflineFileEntity? {
+    func offlineFile(for base64Handle: Base64HandleEntity) -> OfflineFileEntity? {
         if let offlineNode = store.offlineNode(withHandle: base64Handle) {
             return OfflineFileEntity(with: offlineNode)
         } else {
@@ -33,7 +33,7 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
         }
     }
     
-    func createOfflineFile(name: String, for handle: MEGAHandle) {
+    func createOfflineFile(name: String, for handle: HandleEntity) {
         guard let node = sdk.node(forHandle: handle) else {
             return
         }

@@ -29,7 +29,7 @@ struct ChatRoomEntity {
         case moderator = 3
     }
     
-    let chatId: MEGAHandle
+    let chatId: HandleEntity
     let ownPrivilege: Privilege
     let changeType: ChangeType?
 
@@ -37,7 +37,7 @@ struct ChatRoomEntity {
     let authorizationToken: String
     let title: String?
     let unreadCount: Int
-    let userTypingHandle: MEGAHandle
+    let userTypingHandle: HandleEntity
     let retentionTime: UInt
     let creationTimeStamp: UInt64
     
@@ -47,5 +47,5 @@ struct ChatRoomEntity {
     let isactive: Bool
     let isArchived: Bool
     let chatType: ChatType
-    let peerHandles: [MEGAHandle]
+    let peerHandles: [HandleEntity]
 }

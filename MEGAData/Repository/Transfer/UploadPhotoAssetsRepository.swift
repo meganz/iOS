@@ -8,7 +8,7 @@ struct UploadPhotoAssetsRepository: UploadPhotoAssetsRepositoryProtocol {
         self.store = store
     }
     
-    func upload(assets: [String], toParent parentHandle: MEGAHandle) {
+    func upload(assets: [String], toParent parentHandle: HandleEntity) {
         assets.forEach { identifier in
             store.insertUploadTransfer(withLocalIdentifier: identifier, parentNodeHandle: parentHandle)
         }

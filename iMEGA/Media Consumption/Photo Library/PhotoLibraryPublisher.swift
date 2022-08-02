@@ -19,7 +19,7 @@ final class PhotoLibraryPublisher {
             .store(in: &subscriptions)
     }
     
-    func subscribeToSelectedPhotosChange(observer: @escaping ([MEGAHandle: NodeEntity]) -> Void) {
+    func subscribeToSelectedPhotosChange(observer: @escaping ([HandleEntity: NodeEntity]) -> Void) {
         viewModel
             .selection
             .$photos

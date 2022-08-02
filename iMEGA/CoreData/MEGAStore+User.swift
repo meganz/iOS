@@ -1,7 +1,7 @@
 import Foundation
 
 extension MEGAStore {
-    func updateUserNicknames(by names:[(handle: MEGAHandle, nickname: String)]) {
+    func updateUserNicknames(by names:[(handle: HandleEntity, nickname: String)]) {
         guard let context = stack.newBackgroundContext() else { return }
         
         context.performAndWait {

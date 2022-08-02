@@ -3,23 +3,23 @@ import Combine
 
 struct MockUserImageUseCase: UserImageUseCaseProtocol {
     var result: Result<UIImage, UserImageLoadErrorEntity> = .failure(.generic)
-    var clearAvatarCacheCompletion: ((MEGAHandle) -> Void)?
-    var downloadAvatarCompletion: ((MEGAHandle) -> Void)?
-    var createAvatarCompletion: ((MEGAHandle) -> Void)?
+    var clearAvatarCacheCompletion: ((HandleEntity) -> Void)?
+    var downloadAvatarCompletion: ((HandleEntity) -> Void)?
+    var createAvatarCompletion: ((HandleEntity) -> Void)?
     var clearAvatarCache = false
-    var avatarChangePublisher = PassthroughSubject<[MEGAHandle], Never>()
+    var avatarChangePublisher = PassthroughSubject<[HandleEntity], Never>()
     
     func fetchUserAvatar(withUserHandle handle: UInt64, name: String, completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
         completion(result)
     }
     
     @discardableResult
-    func clearAvatarCache(forUserHandle handle: MEGAHandle) -> Bool {
+    func clearAvatarCache(forUserHandle handle: HandleEntity) -> Bool {
         clearAvatarCacheCompletion?(handle)
         return clearAvatarCache
     }
     
-    func downloadAvatar(forUserHandle handle: MEGAHandle) async throws -> UIImage {
+    func downloadAvatar(forUserHandle handle: HandleEntity) async throws -> UIImage {
         downloadAvatarCompletion?(handle)
         switch result {
         case .success(let image):
@@ -29,7 +29,7 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         }
     }
     
-    func createAvatar(usingUserHandle handle: MEGAHandle, name: String) async throws -> UIImage {
+    func createAvatar(usingUserHandle handle: HandleEntity, name: String) async throws -> UIImage {
         createAvatarCompletion?(handle)
         switch result {
         case .success(let image):
@@ -39,7 +39,7 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         }
     }
 
-    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never> {
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         avatarChangePublisher.eraseToAnyPublisher()
     }
 }

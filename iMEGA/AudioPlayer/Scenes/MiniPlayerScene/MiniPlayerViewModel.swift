@@ -197,7 +197,7 @@ final class MiniPlayerViewModel: ViewModelType {
         playerHandler.refreshCurrentItemState()
     }
     
-    private func loadNode(from handle: NodeHandle, url: String?, completion: ((MEGANode?) -> Void)? = nil) {
+    private func loadNode(from handle: HandleEntity, url: String?, completion: ((MEGANode?) -> Void)? = nil) {
         if let fileLink = fileLink {
             nodeInfoUseCase?.publicNode(fromFileLink: fileLink) { [weak self] node in
                 self?.node = node

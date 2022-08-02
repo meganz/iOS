@@ -1,13 +1,13 @@
 
 protocol ChatRoomUseCaseProtocol {
-    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity?
-    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity?
-    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle]
-    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
+    func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
+    func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
+    func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity]
+    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
-    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
-    func userDisplayNames(forPeerIds peerIds: [MEGAHandle], chatId: MEGAHandle) async throws -> [String]
-    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String]
+    func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
 }
 
 struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -19,19 +19,19 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         self.userStoreRepo = userStoreRepo
     }
     
-    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity? {
+    func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity? {
         chatRoomRepo.chatRoom(forChatId: chatId)
     }
     
-    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity? {
+    func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity? {
         chatRoomRepo.chatRoom(forUserHandle: userHandle)
     }
     
-    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
+    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.createChatRoom(forUserHandle: userHandle, completion: completion)
     }
     
-    func peerHandles(forChatId chatId: MEGAHandle) -> [MEGAHandle] {
+    func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity] {
         chatRoomRepo.peerHandles(forChatId: chatId)
     }
     
@@ -56,7 +56,7 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         }
     }
     
-    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         if let displayName = userStoreRepo.getDisplayName(forUserHandle: peerId) {
             completion(.success(displayName))
             return
@@ -65,7 +65,7 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         chatRoomRepo.userFullName(forPeerId: peerId, chatId: chatId, completion: completion)
     }
     
-    func userDisplayNames(forPeerIds peerIds: [MEGAHandle], chatId: MEGAHandle) async throws -> [String] {
+    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String] {
         try await withThrowingTaskGroup(of: String.self, returning: [String].self) { group in
             for peerId in peerIds {
                 group.addTask {
@@ -83,7 +83,7 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         }
     }
 
-    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.renameChatRoom(chatId: chatId, title: title, completion: completion)
     }
 }

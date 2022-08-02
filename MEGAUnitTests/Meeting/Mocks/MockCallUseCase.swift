@@ -19,13 +19,13 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var video: Bool = false
     var audio: Bool = false
     var chatSession: ChatSessionEntity?
-    var participantHandle: MEGAHandle = .invalid
+    var participantHandle: HandleEntity = .invalid
     
     init(call: CallEntity = CallEntity()) {
         self.call = call
     }
 
-    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: MEGAHandle, callbacksDelegate: T) {
+    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
         startListeningForCall_CalledTimes += 1
     }
     
@@ -33,19 +33,19 @@ final class MockCallUseCase: CallUseCaseProtocol {
         stopListeningForCall_CalledTimes += 1
     }
     
-    func call(for chatId: MEGAHandle) -> CallEntity? {
+    func call(for chatId: HandleEntity) -> CallEntity? {
         return call
     }
     
-    func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
     
-    func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
     
-    func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
     
@@ -53,11 +53,11 @@ final class MockCallUseCase: CallUseCaseProtocol {
         createActiveSessions_calledTimes += 1
     }
     
-    func hangCall(for callId: MEGAHandle) {
+    func hangCall(for callId: HandleEntity) {
         hangCall_CalledTimes += 1
     }
     
-    func endCall(for callId: MEGAHandle) {
+    func endCall(for callId: HandleEntity) {
         endCall_CalledTimes += 1
     }
     
@@ -80,7 +80,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
 
 extension MockCallUseCase: CallCallbacksRepositoryProtocol {
 
-    func createdSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func createdSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
@@ -88,7 +88,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
     }
     
-    func destroyedSession(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func destroyedSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
@@ -96,7 +96,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
     }
     
-    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
@@ -104,7 +104,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
     }
     
-    func audioLevel(for session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func audioLevel(for session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
@@ -124,11 +124,11 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.ownPrivilegeChanged(to: chatRoom.ownPrivilege, in: chatRoom)
     }
     
-    func participantAdded(with handle: MEGAHandle) {
+    func participantAdded(with handle: HandleEntity) {
         callbacksDelegate?.participantAdded(with: participantHandle)
     }
     
-    func participantRemoved(with handle: MEGAHandle) {
+    func participantRemoved(with handle: HandleEntity) {
         callbacksDelegate?.participantRemoved(with: participantHandle)
     }
     
@@ -140,7 +140,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.inProgress()
     }
     
-    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
@@ -148,7 +148,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
     }
     
-    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: MEGAHandle) {
+    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return

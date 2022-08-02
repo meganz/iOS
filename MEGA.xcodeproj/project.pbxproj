@@ -584,7 +584,6 @@
 		5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D667EEF24ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift */; };
 		5D66F8C624E507900088E5FF /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D66F8C524E507900088E5FF /* BadgeButton.swift */; };
 		5D66F8C824E510510088E5FF /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D66F8C724E510510088E5FF /* PaddingLabel.swift */; };
-		5D69E2342511A0EA00A61195 /* MEGAHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D69E2332511A0EA00A61195 /* MEGAHandle.swift */; };
 		5D6D0F4F252702C2002A777D /* UserSDKEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6D0F4E252702C2002A777D /* UserSDKEntity.swift */; };
 		5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6D0F5125270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift */; };
 		5D6D0F5425270357002A777D /* DevicePermissionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6D0F5225270357002A777D /* DevicePermissionUseCase.swift */; };
@@ -853,7 +852,6 @@
 		830C274B25E51F4600E9B56E /* DateFormatter+SystemDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0B24BFE2B100D7D13B /* DateFormatter+SystemDateFormatter.swift */; };
 		830C275425E51FEC00E9B56E /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0A24BFE2B100D7D13B /* DateFormatting.swift */; };
 		830C275D25E5200A00E9B56E /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D92DD0C24BFE2B100D7D13B /* Date+Formatting.swift */; };
-		830C279D25E6473900E9B56E /* MEGAHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D69E2332511A0EA00A61195 /* MEGAHandle.swift */; };
 		830C27B025E64D5F00E9B56E /* MOOfflineNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */; };
 		830C27C125E64DF000E9B56E /* MOOfflineNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */; };
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
@@ -1217,7 +1215,6 @@
 		83C7C84F27EDE7E800CFB5E6 /* PhotosLibraryRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C84E27EDE7E700CFB5E6 /* PhotosLibraryRepositoryProtocol.swift */; };
 		83C7C85227EDE81F00CFB5E6 /* PhotosLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C85127EDE81F00CFB5E6 /* PhotosLibraryRepository.swift */; };
 		83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */; };
-		83C8372A27D7891A00AACDE1 /* MEGAHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D69E2332511A0EA00A61195 /* MEGAHandle.swift */; };
 		83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */; };
 		83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */; };
@@ -2068,6 +2065,10 @@
 		B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */; };
 		B6FCBFD527121AB600B3599F /* PhotoLibraryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */; };
 		B6FCBFD727121B4500B3599F /* PhotosViewController+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCBFD627121B4500B3599F /* PhotosViewController+PhotoLibrary.swift */; };
+		B6FCDAAE28988E1000319754 /* HandleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCDAAD28988E1000319754 /* HandleEntity.swift */; };
+		B6FCDAAF28988E1000319754 /* HandleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCDAAD28988E1000319754 /* HandleEntity.swift */; };
+		B6FCDAB028988E1000319754 /* HandleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCDAAD28988E1000319754 /* HandleEntity.swift */; };
+		B6FCDAB128988F7500319754 /* HandleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCDAAD28988E1000319754 /* HandleEntity.swift */; };
 		B6FD64EA2689E29300988A17 /* FavouriteItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD327F25DD3C7200F8B91D /* FavouriteItemsUseCase.swift */; };
 		B6FD64EB2689E29300988A17 /* RecentItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345B925B59FB4006F2AD6 /* RecentItemsUseCase.swift */; };
 		B6FD64EE2689E2BD00988A17 /* FavouriteItemsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD328C25DD3CDA00F8B91D /* FavouriteItemsRepositoryProtocol.swift */; };
@@ -3379,7 +3380,6 @@
 		5D667EEF24ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarLoadingUseCaseTests.swift; sourceTree = "<group>"; };
 		5D66F8C524E507900088E5FF /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		5D66F8C724E510510088E5FF /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
-		5D69E2332511A0EA00A61195 /* MEGAHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAHandle.swift; sourceTree = "<group>"; };
 		5D6D0F4E252702C2002A777D /* UserSDKEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSDKEntity.swift; sourceTree = "<group>"; };
 		5D6D0F5125270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicePermissionRequestUseCaseProtocol.swift; sourceTree = "<group>"; };
 		5D6D0F5225270357002A777D /* DevicePermissionUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicePermissionUseCase.swift; sourceTree = "<group>"; };
@@ -4583,6 +4583,7 @@
 		B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+User.swift"; sourceTree = "<group>"; };
 		B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentView.swift; sourceTree = "<group>"; };
 		B6FCBFD627121B4500B3599F /* PhotosViewController+PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+PhotoLibrary.swift"; sourceTree = "<group>"; };
+		B6FCDAAD28988E1000319754 /* HandleEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleEntity.swift; sourceTree = "<group>"; };
 		B6FD64F22689E87F00988A17 /* MEGASortOrderType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B6FD64F4268AABC000988A17 /* MEGAShareList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAShareList+Mapper.swift"; sourceTree = "<group>"; };
 		B6FD6501268B391800988A17 /* AccountRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -7805,7 +7806,6 @@
 				5DA32DC024EA923D0075B613 /* UserAlert.swift */,
 				5D44BDC42508669200F24069 /* ContactRequest.swift */,
 				5D667EEB24ECF9400092474D /* StoreUser.swift */,
-				5D69E2332511A0EA00A61195 /* MEGAHandle.swift */,
 				BF6D309D25390AEA00BD4653 /* ExplorerTypeEntity.swift */,
 				5D8303E6256270800082CA18 /* BannerEntity.swift */,
 			);
@@ -10926,6 +10926,7 @@
 		BF782D37269BA4BA0001D169 /* Node */ = {
 			isa = PBXGroup;
 			children = (
+				B6FCDAAD28988E1000319754 /* HandleEntity.swift */,
 				BF782D38269BA4BA0001D169 /* NodeChangeTypeEntity.swift */,
 				5B8B3DDA26FE47FA00882245 /* NodeLabelTypeEntity.swift */,
 				BF782D39269BA4BA0001D169 /* NodeAccessTypeEntity.swift */,
@@ -13467,7 +13468,6 @@
 				BF782D65269BA4BB0001D169 /* NodeAccessTypeEntity.swift in Sources */,
 				5DC0FD4B24D8FB94004DB649 /* SegmentTitleView.swift in Sources */,
 				C44947762652A466004B4C8E /* BannerType.swift in Sources */,
-				5D69E2342511A0EA00A61195 /* MEGAHandle.swift in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				B6E5D24D274C2E8600C8AB96 /* PhotoDayCardViewModel.swift in Sources */,
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
@@ -13579,6 +13579,7 @@
 				2F53F84F2612B8860027A5EF /* NSURL+Deeplinking.swift in Sources */,
 				BFAB114223CEA5C300BCE72D /* PhotoCarouselVideoIcon.swift in Sources */,
 				BF90C7B926040AC6006061F8 /* UserStoreRepositoryProtocol.swift in Sources */,
+				B6FCDAAE28988E1000319754 /* HandleEntity.swift in Sources */,
 				BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */,
 				7764AAB3246EE18E00134C88 /* MegaAvatarView.swift in Sources */,
 				5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */,
@@ -14114,7 +14115,6 @@
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
 				830C27B025E64D5F00E9B56E /* MOOfflineNode+Mapper.swift in Sources */,
 				BF782D7E269BA5C60001D169 /* FavouriteItemEntity.swift in Sources */,
-				830C279D25E6473900E9B56E /* MEGAHandle.swift in Sources */,
 				8334508C258B5EFE0052DB3C /* NSDate+MNZCategory.m in Sources */,
 				8393CD2025E8EF980012F505 /* Array+Additions.swift in Sources */,
 				836924D72582728100658F6C /* MEGAGenericRequestDelegate.m in Sources */,
@@ -14171,6 +14171,7 @@
 				83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */,
 				83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */,
 				A82D5CDE26BC07AB00E73D27 /* PreferenceRepositoryProtocol.swift in Sources */,
+				B6FCDAB128988F7500319754 /* HandleEntity.swift in Sources */,
 				83655ABA2593854D001A0846 /* MOMediaDestination+CoreDataClass.m in Sources */,
 				8375B76E25EFC7FF00B70F6B /* FavouritesQuickAccessWidgetViewModel.swift in Sources */,
 				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
@@ -14252,6 +14253,7 @@
 				A868EF5824E163650022B56F /* MEGASdk+MNZCategory.m in Sources */,
 				5BC3D061242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				2FBBE78925E4544C00B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */,
+				B6FCDAAF28988E1000319754 /* HandleEntity.swift in Sources */,
 				5BE689BA2419189400462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
@@ -14416,6 +14418,7 @@
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				A81DF35E2508FDE3009C8B60 /* DateFormatter+SystemDateFormatter.swift in Sources */,
 				BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */,
+				B6FCDAB028988E1000319754 /* HandleEntity.swift in Sources */,
 				A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */,
 				B5300AF42754A09C001E516B /* Strings+Generated.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
@@ -14549,7 +14552,6 @@
 				C460506F27282F9500D67A44 /* MEGAOperation.m in Sources */,
 				8335C645282E7B2100509479 /* ThumbnailRepository.swift in Sources */,
 				C4E78E9D272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
-				83C8372A27D7891A00AACDE1 /* MEGAHandle.swift in Sources */,
 				83CCBC4F279599F700B90EF2 /* TransferStateEntity+Mapper.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
 				B6D0B348283CD9210020C64D /* AppFirstLaunchUseCase.swift in Sources */,

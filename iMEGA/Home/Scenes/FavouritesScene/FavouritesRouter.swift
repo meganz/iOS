@@ -32,12 +32,12 @@ extension FavouritesRouter: FavouritesRouting {
         favouritesVC.didMove(toParent: homeViewController)
     }
     
-    func openNode(_ nodeHandle: MEGAHandle) {
+    func openNode(_ nodeHandle: HandleEntity) {
         let nodeOpener = NodeOpener(navigationController: navigationController)
         nodeOpener.openNode(nodeHandle)
     }
     
-    func openNodeActions(nodeHandle: MEGAHandle, sender: Any) {
+    func openNodeActions(nodeHandle: HandleEntity, sender: Any) {
         let nodeOpener = NodeOpener(navigationController: navigationController)
         nodeOpener.openNodeActions(nodeHandle, sender: sender)
     }

@@ -4,8 +4,8 @@ import Combine
 
 final class MeetingParticipantStatusPipeline {
     struct HandlerCollectionType {
-        var addedHandlers = [MEGAHandle]()
-        var removedHandlers = [MEGAHandle]()
+        var addedHandlers = [HandleEntity]()
+        var removedHandlers = [HandleEntity]()
     }
     
     let statusPublisher = PassthroughSubject<HandlerCollectionType, Never>()
@@ -23,7 +23,7 @@ final class MeetingParticipantStatusPipeline {
         self.resetCollectionDurationUptoCount = resetCollectionDurationUptoCount
     }
     
-    func addParticipant(withHandle handle: MEGAHandle) {
+    func addParticipant(withHandle handle: HandleEntity) {
         if let index = handlerCollectionType.removedHandlers.firstIndex(of: handle) {
             handlerCollectionType.removedHandlers.remove(at: index)
             cancelTimerSubscriptionIfNeeded()
@@ -36,7 +36,7 @@ final class MeetingParticipantStatusPipeline {
         resetTimerSubscriptionIfNeeded()
     }
     
-    func removeParticipant(withHandle handle: MEGAHandle) {
+    func removeParticipant(withHandle handle: HandleEntity) {
         if let index = handlerCollectionType.addedHandlers.firstIndex(of: handle) {
             handlerCollectionType.addedHandlers.remove(at: index)
             cancelTimerSubscriptionIfNeeded()

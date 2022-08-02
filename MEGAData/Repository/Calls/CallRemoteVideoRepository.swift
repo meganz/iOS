@@ -3,14 +3,14 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
     
     private let chatSdk: MEGAChatSdk
     private var remoteVideos = [RemoteVideoData]()
-    private var requestingLowResolutionIds = [MEGAHandle]()
-    private var requestingHighResolutionIds = [MEGAHandle]()
+    private var requestingLowResolutionIds = [HandleEntity]()
+    private var requestingHighResolutionIds = [HandleEntity]()
     
     init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
     }
     
-    func enableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
+    func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
         guard remoteVideos.notContains(where: { $0.chatId == chatId && $0.clientId == clientId }) else {
             MEGALogDebug("Video for clientId \(clientId) already enabled")
             return
@@ -22,7 +22,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         MEGALogDebug("Number of videos after enable remote video: \(remoteVideos.count)")
     }
     
-    func disableRemoteVideo(for chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool) {
+    func disableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool) {
         guard let remoteVideo = remoteVideos.first(where: { $0.chatId == chatId && $0.clientId == clientId }) else {
             MEGALogDebug("Video for clientId \(clientId) already disabled")
             return
@@ -41,7 +41,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         MEGALogDebug("Removed all remote video listeners")
     }
     
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
+    func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion? = nil) {
         
         if requestingHighResolutionIds.contains(clientId) {
             MEGALogDebug("High resolution for \(clientId) already requested")
@@ -65,7 +65,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         })
     }
     
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
+    func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion? = nil) {
 
         chatSdk.stopHiResVideo(forChatId: chatId, clientIds: [NSNumber(value: clientId)], delegate: MEGAChatResultRequestDelegate { result in
             switch result {
@@ -79,7 +79,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         })
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
+    func requestLowResolutionVideos(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion? = nil) {
         
         if requestingLowResolutionIds.contains(clientId) {
             MEGALogDebug("Low resolution for \(clientId) already requested")
@@ -103,7 +103,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         })
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion? = nil) {
+    func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion? = nil) {
         chatSdk.stopLowResVideo(forChatId: chatId, clientIds: [NSNumber(value: clientId)], delegate: MEGAChatResultRequestDelegate { result in
             switch result {
             case .success(_):
@@ -118,12 +118,12 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
 }
 
 final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
-    let chatId: MEGAHandle
-    let clientId: MEGAHandle
+    let chatId: HandleEntity
+    let clientId: HandleEntity
     var hiRes: Bool = false
     var remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol?
     
-    init(chatId: MEGAHandle, clientId: MEGAHandle, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
+    init(chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
         self.chatId = chatId
         self.clientId = clientId
         self.hiRes = hiRes
