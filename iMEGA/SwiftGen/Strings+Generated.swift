@@ -3001,9 +3001,9 @@ public enum Strings {
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
       }
       public enum Selector {
-        /// Chat
+        /// Chats
         public static let chat = Strings.tr("Localizable", "chat.selector.chat")
-        /// Meeting
+        /// Meetings
         public static let meeting = Strings.tr("Localizable", "chat.selector.meeting")
       }
       public enum SendLocation {

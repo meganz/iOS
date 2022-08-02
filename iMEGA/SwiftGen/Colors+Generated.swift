@@ -34,6 +34,12 @@ internal enum Colors {
       internal static let selectedLight = ColorAsset(name: "selectedLight")
       internal static let unselectedDefault = ColorAsset(name: "unselectedDefault")
     }
+    internal enum Tabs {
+      internal static let chatTabNormalBackground = ColorAsset(name: "chatTabNormalBackground")
+      internal static let chatTabNormalText = ColorAsset(name: "chatTabNormalText")
+      internal static let chatTabSelectedBackground = ColorAsset(name: "chatTabSelectedBackground")
+      internal static let chatTabSelectedText = ColorAsset(name: "chatTabSelectedText")
+    }
   }
   internal enum General {
     internal enum Black {

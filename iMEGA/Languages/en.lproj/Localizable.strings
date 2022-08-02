@@ -3017,9 +3017,9 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="End for all";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="Chat";
+"chat.selector.chat"="Chats";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Meeting";
+"chat.selector.meeting"="Meetings";
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Start a meeting";
 /* Description for empty meetings tab */
