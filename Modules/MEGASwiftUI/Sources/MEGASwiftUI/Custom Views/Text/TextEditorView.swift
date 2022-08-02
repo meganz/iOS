@@ -1,12 +1,18 @@
-
 import SwiftUI
 
 @available(iOS 14.0, *)
-struct TextEditorView: View {
+public struct TextEditorView: View {
     @Binding var text: String
     var placeholder: String?
     var isShowingPlaceholder: Bool?
-    var body: some View {
+    
+    public init(text: Binding<String>, placeholder: String? = nil, isShowingPlaceholder: Bool? = nil) {
+        _text = text
+        self.placeholder = placeholder
+        self.isShowingPlaceholder = isShowingPlaceholder
+    }
+    
+    public var body: some View {
         TextEditor(text: $text)
             .foregroundColor(isShowingPlaceholder ?? false ? Color(.placeholderText) : .primary)
             .font(.body)

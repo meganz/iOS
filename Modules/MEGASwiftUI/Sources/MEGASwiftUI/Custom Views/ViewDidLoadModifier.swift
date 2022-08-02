@@ -1,4 +1,3 @@
-import Foundation
 import SwiftUI
 
 struct ViewDidLoadModifier: ViewModifier {
@@ -20,7 +19,7 @@ struct ViewDidLoadModifier: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func onLoad(perform action: (() -> Void)? = nil) -> some View {
         modifier(ViewDidLoadModifier(perform: action))
     }

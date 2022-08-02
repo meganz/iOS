@@ -28,7 +28,7 @@ struct PhotoCellFavoriteBadge: ViewModifier {
 }
 
 @available(iOS 14.0, *)
-extension View {
+public extension View {
     func favorite(_ isFavorite: Bool) -> some View {
         modifier(PhotoCellFavoriteBadge(isFavorite: isFavorite))
     }
