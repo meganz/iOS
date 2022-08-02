@@ -1,5 +1,6 @@
 import Combine
 import SwiftUI
+import MEGASwiftUI
 
 @available(iOS 14.0, *)
 final class AlbumCellViewModel: NSObject, ObservableObject {

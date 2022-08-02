@@ -1,16 +1,15 @@
-import Foundation
 import SwiftUI
 
-struct FramePreferenceKey: PreferenceKey {
-    static var defaultValue = CGRect.zero
+public struct FramePreferenceKey: PreferenceKey {
+    public static var defaultValue = CGRect.zero
     
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { }
+    public static func reduce(value: inout CGRect, nextValue: () -> CGRect) { }
 }
 
-struct FramePreferenceView: ViewModifier {
+public struct FramePreferenceView: ViewModifier {
     let space: CoordinateSpace
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .background(
                 GeometryReader { proxy in
@@ -21,7 +20,7 @@ struct FramePreferenceView: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func frame(in space: CoordinateSpace) -> some View {
         modifier(FramePreferenceView(space: space))
     }

@@ -1,10 +1,15 @@
-
 import SwiftUI
 
-struct TextWithToggleView: View {
+public struct TextWithToggleView: View {
     var text: String
     @Binding var toggle: Bool
-    var body: some View {
+    
+    public init(text: String, toggle: Binding<Bool>) {
+        self.text = text
+        _toggle = toggle
+    }
+    
+    public var body: some View {
         VStack(alignment: .leading) {
             Divider()
             Toggle(isOn: $toggle) {

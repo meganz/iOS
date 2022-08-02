@@ -1,18 +1,17 @@
-import Foundation
 import SwiftUI
 
-struct OffsetPreferenceKey: PreferenceKey {
-    static var defaultValue = CGFloat.zero
+public struct OffsetPreferenceKey: PreferenceKey {
+    public static var defaultValue = CGFloat.zero
     
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    public static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value += nextValue()
     }
 }
 
-struct OffsetPreferenceView: ViewModifier {
+public struct OffsetPreferenceView: ViewModifier {
     let space: CoordinateSpace
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .background(
                 GeometryReader { proxy in
@@ -23,7 +22,7 @@ struct OffsetPreferenceView: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func offset(in space: CoordinateSpace) -> some View {
         modifier(OffsetPreferenceView(space: space))
     }
