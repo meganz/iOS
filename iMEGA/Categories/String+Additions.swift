@@ -1,3 +1,5 @@
+import MEGASwift
+
 extension String {
     
     var base64Decoded: String? {

@@ -1,4 +1,5 @@
 import Foundation
+import MEGASwift
 
 extension PhotoChronologicalCategory {
     static func ↻↻ (lhs: Self, rhs: Self) -> Bool {
