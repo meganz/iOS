@@ -1,6 +1,4 @@
-import Foundation
-
-extension OptionSet {
+public extension Set {
     var isNotEmpty: Bool {
         !isEmpty
     }

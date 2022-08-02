@@ -1,6 +1,7 @@
 
 import WidgetKit
 import SwiftUI
+import MEGASwift
 
 struct ShortcutsProvider: IntentTimelineProvider {
 

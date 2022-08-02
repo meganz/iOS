@@ -1,13 +1,11 @@
-import Foundation
-
 infix operator ↻↻: ComparisonPrecedence
 infix operator !↻: ComparisonPrecedence
 
-protocol Refreshable {
+public protocol Refreshable {
     static func ↻↻(lhs: Self, rhs: Self) -> Bool
 }
 
-extension Refreshable {
+public extension Refreshable {
     static func !↻(lhs: Self, rhs: Self) -> Bool {
         !(lhs ↻↻ rhs)
     }
