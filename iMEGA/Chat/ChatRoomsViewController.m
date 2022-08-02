@@ -1071,7 +1071,7 @@
             
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault: {
-                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[[UIImage imageNamed:@"archiveChat_menu"] imageWithTintColor:UIColor.whiteColor] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                         [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
                     }];
                     [menus addObject:archiveChatAction];
