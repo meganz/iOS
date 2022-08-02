@@ -13,11 +13,12 @@ let package = Package(
             targets: ["MEGASwiftUI"]),
     ],
     dependencies: [
+        .package(path: "../MEGAUI"),
     ],
     targets: [
         .target(
             name: "MEGASwiftUI",
-            dependencies: []),
+            dependencies: ["MEGAUI"]),
         .testTarget(
             name: "MEGASwiftUITests",
             dependencies: ["MEGASwiftUI"]),
