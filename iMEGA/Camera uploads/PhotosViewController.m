@@ -379,6 +379,8 @@
     self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    
+    [self updateRightNavigationBarButtons];
 }
 
 - (void)reloadPhotos {

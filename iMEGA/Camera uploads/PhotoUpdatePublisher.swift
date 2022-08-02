@@ -26,7 +26,12 @@ import Combine
         subscribleToPhotoLibraryUpdate()
         
         photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] in
-            self?.photosVC?.showToolbar($0 == .all)
+            if $0 != .all {
+               self?.photosVC?.showfilterActiveBarButtonItem($0)
+            }
+            else {
+                self?.photosVC?.showToolbar($0 == .all)
+            }
         }
         
         photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
