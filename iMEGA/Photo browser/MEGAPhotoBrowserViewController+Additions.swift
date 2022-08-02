@@ -27,7 +27,7 @@ extension MEGAPhotoBrowserViewController {
         return prePesentingVC
     }
     
-    @objc func configureMediaAttachment(forMessageId messageId: MEGAHandle, inChatId chatId: MEGAHandle, messagesIds: [MEGAHandle]) {
+    @objc func configureMediaAttachment(forMessageId messageId: HandleEntity, inChatId chatId: HandleEntity, messagesIds: [HandleEntity]) {
         self.chatId = chatId
         self.messageId = messageId
         self.messagesIds = messagesIds
@@ -78,7 +78,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func updateMessageId(to newIndex: UInt) {
         if messagesIds.isNotEmpty {
-            guard let newMessageId = messagesIds[safe: Int(newIndex)] as? MEGAHandle else { return }
+            guard let newMessageId = messagesIds[safe: Int(newIndex)] as? HandleEntity else { return }
             messageId = newMessageId
         }
     }

@@ -6,7 +6,7 @@ final class BackupRegister {
     private let sdk: MEGASdk
     
     @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil)
-    var cachedBackupId: MEGAHandle?
+    var cachedBackupId: HandleEntity?
     
     @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false)
     var hasUpdatedBackup: Bool

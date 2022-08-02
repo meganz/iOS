@@ -3,14 +3,14 @@
 import Foundation
 protocol NameCollisionUseCaseProtocol {
     func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity]
-    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [NodeHandle]
-    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [NodeHandle]
-    func sizeForNode(handle: MEGAHandle) -> String
-    func creationDateForNode(handle: MEGAHandle) -> String
+    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity]
+    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity]
+    func sizeForNode(handle: HandleEntity) -> String
+    func creationDateForNode(handle: HandleEntity) -> String
     func sizeForFile(at url: URL) -> String
     func creationDateForFile(at url: URL) -> String
-    func renameNode(named name: NSString, inParent parentHandle: MEGAHandle) -> String
-    func node(for handle: MEGAHandle) -> NodeEntity?
+    func renameNode(named name: NSString, inParent parentHandle: HandleEntity) -> String
+    func node(for handle: HandleEntity) -> NodeEntity?
 }
 
 // MARK: - Use case implementation -
@@ -36,37 +36,37 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return collisions
     }
     
-    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [NodeHandle] {
-        try await withThrowingTaskGroup(of: NodeHandle.self, returning: [NodeHandle].self) { group in
+    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity] {
+        try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
             for collision in collisions {
                 group.addTask {
                     return try await nodeRepository.copyNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed, isFolderLink: isFolderLink)
                 }
             }
             
-            return try await group.reduce(into: [NodeHandle](), { result, handle in
+            return try await group.reduce(into: [HandleEntity](), { result, handle in
                 result.append(handle)
             })
 
         }
     }
     
-    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [NodeHandle] {
-        try await withThrowingTaskGroup(of: NodeHandle.self, returning: [NodeHandle].self) { group in
+    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity] {
+        try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
             for collision in collisions {
                 group.addTask {
                     return try await nodeRepository.moveNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed)
                 }
             }
             
-            return try await group.reduce(into: [NodeHandle](), { result, handle in
+            return try await group.reduce(into: [HandleEntity](), { result, handle in
                 result.append(handle)
             })
 
         }
     }
     
-    func sizeForNode(handle: MEGAHandle) -> String {
+    func sizeForNode(handle: HandleEntity) -> String {
         guard let size = nodeRepository.sizeForNode(handle: handle) else {
             return ""
         }
@@ -74,7 +74,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return formatter.string(fromByteCount: Int64(size))
     }
 
-    func creationDateForNode(handle: MEGAHandle) -> String {
+    func creationDateForNode(handle: HandleEntity) -> String {
         guard let date = nodeRepository.creationDateForNode(handle: handle) else {
             return ""
         }
@@ -98,7 +98,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return DateFormatter.dateMedium().localisedString(from: date)
     }
     
-    func renameNode(named name: NSString, inParent parentHandle: MEGAHandle) -> String {
+    func renameNode(named name: NSString, inParent parentHandle: HandleEntity) -> String {
         let counterPattern = #"\(\d+\)"#
         var filename = name.deletingPathExtension
         if let counterRange = filename.range(of: counterPattern, options: .regularExpression) {
@@ -123,7 +123,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         }
     }
     
-    func node(for handle: MEGAHandle) -> NodeEntity? {
+    func node(for handle: HandleEntity) -> NodeEntity? {
         nodeRepository.nodeForHandle(handle)
     }
 }

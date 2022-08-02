@@ -3,7 +3,7 @@
 struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     static let newRepo = MockFileCacheRepository()
     
-    var base64Handle: MEGABase64Handle = ""
+    var base64Handle: Base64HandleEntity = ""
     var name: String = ""
     
     func tempFileURL(for node: NodeEntity) -> URL {
@@ -26,7 +26,7 @@ struct MockFileCacheRepository: FileCacheRepositoryProtocol {
         URL(fileURLWithPath: "originalV3/" + base64Handle)
     }
     
-    func cachedOriginalURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+    func cachedOriginalURL(for base64Handle: Base64HandleEntity, name: String) -> URL {
         URL(fileURLWithPath: "originalV3/" + self.base64Handle)
     }
     
@@ -34,11 +34,11 @@ struct MockFileCacheRepository: FileCacheRepositoryProtocol {
         URL(fileURLWithPath: "temp/" + self.name)
     }
     
-    func tempURL(for base64Handle: MEGABase64Handle) -> URL {
+    func tempURL(for base64Handle: Base64HandleEntity) -> URL {
         URL(fileURLWithPath: "temp/" + self.base64Handle)
     }
 
-    func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+    func cachedFileURL(for base64Handle: Base64HandleEntity, name: String) -> URL {
         URL(fileURLWithPath: "Library/Caches/" + self.base64Handle)
     }
     

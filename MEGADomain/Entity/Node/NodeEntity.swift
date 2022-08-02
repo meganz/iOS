@@ -11,11 +11,11 @@ struct NodeEntity {
     
     // MARK: - Handles
     
-    let handle: MEGAHandle
+    let handle: HandleEntity
     let base64Handle: String
-    let restoreParentHandle: MEGAHandle
-    let ownerHandle: MEGAHandle
-    let parentHandle: MEGAHandle
+    let restoreParentHandle: HandleEntity
+    let ownerHandle: HandleEntity
+    let parentHandle: HandleEntity
     
     // MARK: - Attributes
     
@@ -36,7 +36,7 @@ struct NodeEntity {
     
     // MARK: - Link
     
-    let publicHandle: MEGAHandle
+    let publicHandle: HandleEntity
     let expirationTime: Date?
     let publicLinkCreationTime: Date?
     
@@ -71,5 +71,5 @@ extension NodeEntity: Hashable {
 }
 
 extension NodeEntity: Identifiable {
-    var id: MEGAHandle { handle }
+    var id: HandleEntity { handle }
 }

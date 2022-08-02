@@ -12,8 +12,8 @@ class SearchResultFileTableViewCell: UITableViewCell {
     }
     
     private var uuid: UUID = UUID()
-    private var handle: MEGAHandle?
-    private var moreAction: ((MEGAHandle, UIButton) -> Void)?
+    private var handle: HandleEntity?
+    private var moreAction: ((HandleEntity, UIButton) -> Void)?
 
     override func prepareForReuse() {
         super.prepareForReuse()

@@ -3,7 +3,7 @@ import Combine
 
 protocol MeetingNoUserJoinedUseCaseProtocol {
     var monitor: AnyPublisher<Void, Never> { get }
-    func start(timerDuration duration: TimeInterval, chatId: MEGAHandle)
+    func start(timerDuration duration: TimeInterval, chatId: HandleEntity)
 }
 
 struct MeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
@@ -21,7 +21,7 @@ struct MeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
         self.repository = repository
     }
     
-    func start(timerDuration duration: TimeInterval = Constants.timerDuration, chatId: MEGAHandle) {
+    func start(timerDuration duration: TimeInterval = Constants.timerDuration, chatId: HandleEntity) {
         repository.start(timerDuration: duration, chatId: chatId)
     }
 }

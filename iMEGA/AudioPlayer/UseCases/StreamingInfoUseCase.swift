@@ -3,7 +3,7 @@ protocol StreamingInfoUseCaseProtocol {
     func startServer()
     func stopServer()
     func info(from folderLinkNode: MEGANode) -> AudioPlayerItem?
-    func info(from handle: MEGAHandle) -> MEGANode?
+    func info(from handle: HandleEntity) -> MEGANode?
     func isLocalHTTPProxyServerRunning() -> Bool
 }
 
@@ -27,7 +27,7 @@ final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
         streamingInfoRepository.info(fromFolderLinkNode: folderLinkNode)
     }
     
-    func info(from handle: MEGAHandle) -> MEGANode? {
+    func info(from handle: HandleEntity) -> MEGANode? {
         streamingInfoRepository.info(fromHandle: handle)
     }
     

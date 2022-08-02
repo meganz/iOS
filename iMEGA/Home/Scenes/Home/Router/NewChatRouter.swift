@@ -70,7 +70,7 @@ final class NewChatRouter {
 
     private func chatRequestDelegate(
         ofShouldGetChatLink getChatLink: Bool,
-        completion: @escaping (MEGAHandle, String?) -> Void
+        completion: @escaping (HandleEntity, String?) -> Void
     ) -> MEGAChatGenericRequestDelegate {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
         return MEGAChatGenericRequestDelegate { (request, error) in
@@ -91,7 +91,7 @@ final class NewChatRouter {
         forUsers users: [MEGAUser],
         chatRoomName: String?,
         shouldGetChatLink: Bool,
-        completion: @escaping (MEGAHandle, String?) -> Void
+        completion: @escaping (HandleEntity, String?) -> Void
     ) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
         let chatPeers = MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users)
@@ -107,7 +107,7 @@ final class NewChatRouter {
         chatSDK.mnz_createChatRoom(usersArray: users, title: groupName, completion: completion)
     }
 
-    private func chatRoom(byUserHandle userHandle: MEGAHandle,
+    private func chatRoom(byUserHandle userHandle: HandleEntity,
                           completion: @escaping (MEGAChatRoom) -> Void) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
         if let chatRoom = chatSDK.chatRoom(byUser: userHandle) {
@@ -119,11 +119,11 @@ final class NewChatRouter {
         }
     }
 
-    private func switchToChat(withChatID chatID: MEGAHandle) {
+    private func switchToChat(withChatID chatID: HandleEntity) {
         tabBarController?.openChatRoomNumber(NSNumber(value: chatID))
     }
 
-    private func switchToChat(withPublicLink publicLink: String, chatID: MEGAHandle) {
+    private func switchToChat(withPublicLink publicLink: String, chatID: HandleEntity) {
         tabBarController?.openChatRoom(withPublicLink: publicLink, chatID: chatID)
     }
 }

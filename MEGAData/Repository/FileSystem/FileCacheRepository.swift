@@ -46,7 +46,7 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
         return fileManager.fileExists(atPath: url.path) ? url : nil
     }
     
-    func cachedOriginalURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+    func cachedOriginalURL(for base64Handle: Base64HandleEntity, name: String) -> URL {
         let directory = cachedOriginalImageDirectoryURL.appendingPathComponent(base64Handle, isDirectory: true)
         try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory.appendingPathComponent(name)
@@ -60,14 +60,14 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
     }
     
     //MARK: - Tempfolder
-    func tempURL(for base64Handle: MEGABase64Handle) -> URL {
+    func tempURL(for base64Handle: Base64HandleEntity) -> URL {
         let directoryURL = fileManager.temporaryDirectory.appendingPathComponent(base64Handle)
         try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         
         return directoryURL
     }
     
-    func cachedFileURL(for base64Handle: MEGABase64Handle, name: String) -> URL {
+    func cachedFileURL(for base64Handle: Base64HandleEntity, name: String) -> URL {
         let directoryURL = fileManager.temporaryDirectory.appendingPathComponent(base64Handle)
         try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         

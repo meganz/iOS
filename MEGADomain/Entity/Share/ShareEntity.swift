@@ -2,7 +2,7 @@ import Foundation
 
 struct ShareEntity {
     let sharedUserEmail: String?
-    let nodeHandle: MEGAHandle
+    let nodeHandle: HandleEntity
     let accessLevel: ShareAccessLevelEntity
     let createdDate: Date
     let isPending: Bool

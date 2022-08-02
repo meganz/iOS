@@ -2,7 +2,7 @@ import Foundation
 
 enum SearchFileRootPath {
     case root
-    case specific(MEGAHandle)
+    case specific(HandleEntity)
 }
 
 protocol SearchFileUseCaseProtocol {

@@ -16,7 +16,7 @@ final class HomeSearchResultRouter {
         self.nodeActionViewControllerDelegate = nodeActionViewControllerDelegate
     }
 
-    func didTapMoreAction(on node: MEGAHandle, button: UIButton) {
+    func didTapMoreAction(on node: HandleEntity, button: UIButton) {
         guard let nodeActionViewController = NodeActionViewController(
             node: node,
             delegate: nodeActionViewControllerDelegate,
@@ -27,7 +27,7 @@ final class HomeSearchResultRouter {
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 
-    func didTapNode(_ nodeHandle: MEGAHandle) {
+    func didTapNode(_ nodeHandle: HandleEntity) {
         nodeOpener.openNode(nodeHandle)
     }
 }

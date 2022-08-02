@@ -3,9 +3,9 @@
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     
-    private var parentHandle: MEGAHandle?
+    private var parentHandle: HandleEntity?
     
-    @objc init(presenter: UIViewController?, parentHandle: MEGAHandle) {
+    @objc init(presenter: UIViewController?, parentHandle: HandleEntity) {
         self.presenter = presenter
         self.parentHandle = parentHandle
     }

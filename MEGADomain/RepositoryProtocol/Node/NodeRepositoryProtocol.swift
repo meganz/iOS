@@ -1,28 +1,28 @@
 import MEGADomain
 
 protocol NodeRepositoryProtocol: RepositoryProtocol {
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity
+    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
-    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int)
-    func hasVersions(nodeHandle: MEGAHandle) -> Bool
-    func isDownloaded(nodeHandle: MEGAHandle) -> Bool
-    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool
-    func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity?
-    func nameForNode(handle: MEGAHandle) -> String?
-    func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String?
+    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
+    func hasVersions(nodeHandle: HandleEntity) -> Bool
+    func isDownloaded(nodeHandle: HandleEntity) -> Bool
+    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
+    func nameForNode(handle: HandleEntity) -> String?
+    func nameForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String?
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
-    func sizeForNode(handle: MEGAHandle) -> UInt64?
-    func sizeForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> UInt64?
-    func base64ForNode(handle: MEGAHandle) -> String?
-    func base64ForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String?
-    func isFileNode(handle: MEGAHandle) -> Bool
-    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: MEGAHandle, newName: String?) -> Bool
-    func copyNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?, isFolderLink: Bool) async throws -> NodeHandle
-    func moveNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?) async throws -> NodeHandle
+    func sizeForNode(handle: HandleEntity) -> UInt64?
+    func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64?
+    func base64ForNode(handle: HandleEntity) -> String?
+    func base64ForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String?
+    func isFileNode(handle: HandleEntity) -> Bool
+    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: HandleEntity, newName: String?) -> Bool
+    func copyNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?, isFolderLink: Bool) async throws -> HandleEntity
+    func moveNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?) async throws -> HandleEntity
     func fingerprintForFile(at path: String) -> String?
-    func setNodeCoordinates(nodeHandle: MEGAHandle, latitude: Double, longitude: Double)
-    func childNodeNamed(name: String, in parentHandle: MEGAHandle) -> NodeEntity?
-    func creationDateForNode(handle: MEGAHandle) -> Date?
+    func setNodeCoordinates(nodeHandle: HandleEntity, latitude: Double, longitude: Double)
+    func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity?
+    func creationDateForNode(handle: HandleEntity) -> Date?
     func images(for parentNode: NodeEntity) -> [NodeEntity]
-    func images(for parentHandle: MEGAHandle) -> [NodeEntity]
+    func images(for parentHandle: HandleEntity) -> [NodeEntity]
 }

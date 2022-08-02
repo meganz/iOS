@@ -12,9 +12,9 @@ struct UserAlert {
 
     var alertTypeString: String
 
-    var userHandle: MEGAHandle?
+    var userHandle: HandleEntity?
 
-    var nodeHandle: MEGAHandle?
+    var nodeHandle: HandleEntity?
 
     var email: String?
 

@@ -5,5 +5,5 @@ protocol UserImageRepositoryProtocol {
                        destinationPath: String,
                        completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
     func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> UIImage
-    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never>
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never>
 }

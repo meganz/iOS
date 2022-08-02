@@ -35,7 +35,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private let router: MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
-    private var recentlyAddedHandles = [MEGAHandle]()
+    private var recentlyAddedHandles = [HandleEntity]()
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }

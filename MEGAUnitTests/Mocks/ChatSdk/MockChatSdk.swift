@@ -9,7 +9,7 @@ final class MockChatSDK: MEGAChatSdk {
         super.init()
     }
     
-    override func chatRoom(forChatId chatId: MEGAHandle) -> MEGAChatRoom? {
+    override func chatRoom(forChatId chatId: HandleEntity) -> MEGAChatRoom? {
         chatRoom
     }
 }

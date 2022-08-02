@@ -15,5 +15,5 @@ struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
         offlineFileMock
     }
     
-    func createOfflineFile(name: String, for handle: MEGAHandle) {    }
+    func createOfflineFile(name: String, for handle: HandleEntity) {    }
 }

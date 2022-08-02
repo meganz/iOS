@@ -1,7 +1,7 @@
 protocol ThumbnailRepositoryProtocol {
     func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool
     func cachedThumbnailURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL
-    func cachedThumbnailURL(for base64Handle: MEGABase64Handle, type: ThumbnailTypeEntity) -> URL
+    func cachedThumbnailURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void)
     
     /// Load thumbnail for a `NodeEntity`

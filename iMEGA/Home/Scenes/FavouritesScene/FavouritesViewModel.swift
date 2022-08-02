@@ -1,12 +1,12 @@
 enum FavouritesViewAction: ActionType {
     case viewWillAppear
     case viewWillDisappear
-    case didSelectRow(MEGAHandle)
+    case didSelectRow(HandleEntity)
 }
 
 protocol FavouritesRouting: Routing {
-    func openNode(_ nodeHandle: MEGAHandle)
-    func openNodeActions(nodeHandle: MEGAHandle, sender: Any)
+    func openNode(_ nodeHandle: HandleEntity)
+    func openNodeActions(nodeHandle: HandleEntity, sender: Any)
 }
 
 final class FavouritesViewModel: ViewModelType {
@@ -62,7 +62,7 @@ final class FavouritesViewModel: ViewModelType {
         favouritesUseCase.unregisterOnNodesUpdate()
     }
     
-    private func didSelectRow(_ nodeHandle: MEGAHandle) {
+    private func didSelectRow(_ nodeHandle: HandleEntity) {
         router.openNode(nodeHandle)
     }
 }

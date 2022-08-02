@@ -3,7 +3,7 @@ import UIKit
 
 protocol NodeThumbnailHomeUseCaseProtocol {
     func loadThumbnail(
-        of nodeHandle: MEGAHandle,
+        of nodeHandle: HandleEntity,
         completion: @escaping (UIImage?) -> Void
     )
 }
@@ -25,7 +25,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
     }
 
     func loadThumbnail(
-        of nodeHandle: MEGAHandle,
+        of nodeHandle: HandleEntity,
         completion: @escaping (UIImage?) -> Void
     ) {
         guard let node = sdkNodeClient.findNode(nodeHandle) else {
@@ -47,8 +47,8 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
     }
 
     private func loadThumbnailForThumbnailedNode(
-        of nodeHandle: MEGAHandle,
-        base64Handle: MEGABase64Handle,
+        of nodeHandle: HandleEntity,
+        base64Handle: Base64HandleEntity,
         completion: @escaping (UIImage?) -> Void
     ) {
         let destinationThumbnailCachePath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
@@ -72,7 +72,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
     }
 
     private func loadThumbnailForNonThumbnailedNode(
-        of nodeHandle: MEGAHandle,
+        of nodeHandle: HandleEntity,
         completion: @escaping (UIImage?) -> Void
     ) {
         guard let node = sdkNodeClient.findNode(nodeHandle) else {

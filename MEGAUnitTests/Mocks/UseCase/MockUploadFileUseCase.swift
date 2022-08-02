@@ -8,12 +8,12 @@ final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     var cancelTransferResult: (Result<Void, TransferErrorEntity>) = .failure(.generic)
     
     
-    func hasExistFile(name: String, parentHandle: MEGAHandle) -> Bool {
+    func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
         newName = name
         return duplicate
     }
     
-    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
+    func uploadFile(withLocalPath path: String, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
     {
         guard let result = uploadFileResult else { return }
         completion?(result)

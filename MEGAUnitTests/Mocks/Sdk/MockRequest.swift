@@ -2,12 +2,12 @@ import Foundation
 @testable import MEGA
 
 final class MockRequest: MEGARequest {
-    private let handle: MEGAHandle
+    private let handle: HandleEntity
     
-    init(handle: MEGAHandle) {
+    init(handle: HandleEntity) {
         self.handle = handle
         super.init()
     }
     
-    override var nodeHandle: MEGAHandle { handle }
+    override var nodeHandle: HandleEntity { handle }
 }

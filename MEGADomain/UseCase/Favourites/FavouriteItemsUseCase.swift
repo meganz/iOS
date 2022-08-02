@@ -7,7 +7,7 @@ protocol FavouriteItemsUseCaseProtocol {
     func insertFavouriteItem(_ item: FavouriteItemEntity)
     @available(iOS 14.0, *)
     func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
-    func deleteFavouriteItem(with base64Handle: MEGABase64Handle)
+    func deleteFavouriteItem(with base64Handle: Base64HandleEntity)
     func fetchAllFavouriteItems() -> [FavouriteItemEntity]
     func fetchFavouriteItems(upTo count: Int) -> [FavouriteItemEntity]
 }
@@ -34,7 +34,7 @@ struct FavouriteItemsUseCase<T: FavouriteItemsRepositoryProtocol>: FavouriteItem
         }
     }
     
-    func deleteFavouriteItem(with base64Handle: MEGABase64Handle) {
+    func deleteFavouriteItem(with base64Handle: Base64HandleEntity) {
         repo.deleteFavouriteItem(with: base64Handle)
     }
     

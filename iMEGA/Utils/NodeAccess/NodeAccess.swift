@@ -7,7 +7,7 @@ struct NodeAccessConfiguration {
     let updateInMemoryNotificationName: Notification.Name?
     let updateInRemoteNotificationName: Notification.Name?
     let loadNodeRequest: (MEGARequestDelegate) -> Void
-    var setNodeRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)? = nil
+    var setNodeRequest: ((HandleEntity, MEGARequestDelegate) -> Void)? = nil
     var nodeName: String? = nil
     var createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)? = nil
 }
@@ -20,7 +20,7 @@ class NodeAccess: NSObject {
     var nodeAccessConfiguration: NodeAccessConfiguration
     
     /// All changes in the SDK and in memory are notified so that the handle value is always up to date. This handle is the single source of truth on target node handle check.
-    private var handle: NodeHandle? {
+    private var handle: HandleEntity? {
         didSet {
             if handle != oldValue && oldValue != nil, let updateInMemoryNotificationName = nodeAccessConfiguration.updateInMemoryNotificationName {
                 NotificationCenter.default.post(name: updateInMemoryNotificationName, object: nil)

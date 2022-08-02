@@ -27,7 +27,7 @@ class NodeActionViewController: ActionSheetViewController {
     // MARK: - NodeActionViewController initializers
     
     convenience init?(
-        node: MEGAHandle,
+        node: HandleEntity,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isIncoming: Bool = false,
@@ -37,7 +37,7 @@ class NodeActionViewController: ActionSheetViewController {
         }
     
     init?(
-        nodeHandle: MEGAHandle,
+        nodeHandle: HandleEntity,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         sender: Any) {
