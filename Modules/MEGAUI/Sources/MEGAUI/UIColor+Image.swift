@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIColor {
+public extension UIColor {
 
     /// Will generate an `UIImage` with given size filled by invoker `UIColor`(self).
     /// - Parameter size: `CGSize` instance, size of the image. Image will fill from point (0, 0) - origin.
