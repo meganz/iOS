@@ -1,6 +1,6 @@
 import UIKit
 
-extension UITextField {
+public extension UITextField {
 
     func setLeftImage(_ image: UIImage, padding: CGFloat = 8) {
         self.leftView = imageIconView(with: image, padding: padding)

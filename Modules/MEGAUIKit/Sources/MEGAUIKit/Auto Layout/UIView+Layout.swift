@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
-extension UIView {
+public extension UIView {
     func wrap(_ view: UIView, edgeInsets insets: UIEdgeInsets = .zero) {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)

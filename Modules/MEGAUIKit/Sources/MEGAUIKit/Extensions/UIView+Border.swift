@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIView {
+public extension UIView {
 
     @discardableResult
     func border(withWidth width: CGFloat) -> Self {

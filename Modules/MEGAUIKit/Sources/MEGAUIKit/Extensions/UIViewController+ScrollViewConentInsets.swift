@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
 
     /// Disable given scrollView's adjusting content inset behavior.
     /// - Parameter scrollView: The scrollView whose `contentInset` would not be automatically adjusted by current view controller.

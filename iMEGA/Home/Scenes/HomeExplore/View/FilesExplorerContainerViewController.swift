@@ -1,3 +1,4 @@
+import MEGAUIKit
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     //MARK:- Private variables

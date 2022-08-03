@@ -1,4 +1,5 @@
 import Foundation
+import MEGAUIKit
 
 struct FontStyle: Codable {
     let style: TextStyle

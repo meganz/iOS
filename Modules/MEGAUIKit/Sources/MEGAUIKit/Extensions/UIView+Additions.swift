@@ -1,5 +1,6 @@
+import UIKit
 
-extension UIView {
+public extension UIView {
     @IBInspectable var mnz_cornerRadius: CGFloat {
         get {
             return layer.cornerRadius

@@ -1,4 +1,5 @@
 import UIKit
+import MEGAUIKit
 
 final class BannerCarouselCollectionViewCell: UICollectionViewCell {
 

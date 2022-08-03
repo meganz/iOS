@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
-extension Array where Element == NSLayoutConstraint {
+public extension Array where Element == NSLayoutConstraint {
     func activate() {
         NSLayoutConstraint.activate(self)
     }
@@ -10,7 +10,7 @@ extension Array where Element == NSLayoutConstraint {
     }
 }
 
-extension NSLayoutConstraint {
+public extension NSLayoutConstraint {
     func using(priority: Float) -> NSLayoutConstraint {
         self.priority = UILayoutPriority(rawValue: priority)
         return self
