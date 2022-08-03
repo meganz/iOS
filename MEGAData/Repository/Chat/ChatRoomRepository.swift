@@ -1,7 +1,8 @@
-
+import Combine
 
 struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     private let sdk: MEGAChatSdk
+    private var participantsUpdateListener: ChatRoomUpdateListener?
     
     init(sdk: MEGAChatSdk) {
         self.sdk = sdk
@@ -136,6 +137,15 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
             completion(.success(text))
         })
     }
+    
+    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
+        let participantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .participants)
+        self.participantsUpdateListener = participantsUpdateListener
+        return participantsUpdateListener
+            .monitor
+            .map(\.peerHandles)
+            .eraseToAnyPublisher()
+    }
 }
 
 fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
@@ -149,5 +159,37 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     
     func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
         completion(request, error)
+    }
+}
+
+fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
+    private let sdk: MEGAChatSdk
+    private let changeType: ChatRoomEntity.ChangeType
+    private let chatId: HandleEntity
+    
+    private let source = PassthroughSubject<ChatRoomEntity, Never>()
+    
+    var monitor: AnyPublisher<ChatRoomEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk, chatId: HandleEntity, changeType: ChatRoomEntity.ChangeType) {
+        self.sdk = sdk
+        self.changeType = changeType
+        self.chatId = chatId
+        super.init()
+        sdk.addChatRoomDelegate(chatId, delegate: self)
+    }
+    
+    deinit {
+        sdk.removeChatRoomDelegate(chatId, delegate: self)
+    }
+    
+    func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+        guard case let chatRoom = ChatRoomEntity(with: chat),
+              chatRoom.changeType == changeType else {
+            return
+        }
+        source.send(chatRoom)
     }
 }

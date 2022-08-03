@@ -425,6 +425,32 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
+    func testAction_inviteParticipants_reAddParticipantScenario() {
+        let router = MockMeetingFloatingPanelRouter()
+        router.invitedParticipantHandles = [101]
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            )
+        ])
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: router,
+            userUseCase: userUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
+        viewModel.dispatch(.inviteParticipants)
+        XCTAssert(router.inviteParticpants_calledTimes == 1)
+        viewModel.dispatch(.inviteParticipants)
+        XCTAssert(router.inviteParticpants_calledTimes == 1)
+    }
     
     func testAction_contextMenuTap() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
@@ -774,6 +800,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var inviteParticpants_calledTimes = 0
     var showContextMenu_calledTimes = 0
     var showAllContactsAlreadyAddedAlert_CalledTimes = 0
+    var invitedParticipantHandles: [HandleEntity]?
 
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
@@ -792,6 +819,9 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         selectedUsersHandler: @escaping (([UInt64]) -> Void)
     ) {
         inviteParticpants_calledTimes += 1
+        if let invitedParticipantHandles = invitedParticipantHandles {
+            selectedUsersHandler(invitedParticipantHandles)
+        }
     }
     
     func showAllContactsAlreadyAddedAlert() {

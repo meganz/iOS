@@ -1,3 +1,4 @@
+import Combine
 
 protocol ChatRoomUseCaseProtocol {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
@@ -8,10 +9,11 @@ protocol ChatRoomUseCaseProtocol {
     func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String]
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
 }
 
 struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
-    private let chatRoomRepo: T
+    private var chatRoomRepo: T
     private let userStoreRepo: U
     
     init(chatRoomRepo: T, userStoreRepo: U) {
@@ -85,5 +87,9 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
 
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.renameChatRoom(chatId: chatId, title: title, completion: completion)
+    }
+    
+    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
+        chatRoomRepo.participantsUpdated(forChatId: chatId)
     }
 }

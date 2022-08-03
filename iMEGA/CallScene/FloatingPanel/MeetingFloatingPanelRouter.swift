@@ -96,7 +96,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let participantsDict = excludeParticpantsId.reduce(into: [NSNumber: NSNumber]()) {
             $0[NSNumber(value: $1)] = NSNumber(value: $1)
         }
-        contactController.participantsMutableDictionary = participantsDict as? NSMutableDictionary
+        contactController.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsDict)
         contactController.userSelected = { selectedUsers in
             guard let users = selectedUsers else { return }
             selectedUsersHandler(users.map({ $0.handle }))
