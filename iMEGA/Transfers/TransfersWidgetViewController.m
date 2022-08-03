@@ -456,6 +456,7 @@ static TransfersWidgetViewController* instance = nil;
     [self getAllTransfers];
     [self updateSelector];
     [self updateViewState];
+    [self updateNavBarButtonAppearance];
     [self.tableView reloadData];
 }
 
