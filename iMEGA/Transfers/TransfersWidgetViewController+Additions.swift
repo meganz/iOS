@@ -121,4 +121,15 @@ extension TransfersWidgetViewController {
             navigationController?.pushViewController(offlineVC, animated: true)
         }
     }
+    
+    //MARK: - NavigationBarButtons
+    @objc func updateNavBarButtonAppearance() {
+        let barButtons = [navigationItem.rightBarButtonItems,
+                          navigationItem.leftBarButtonItems].compactMap { $0 }.flatMap{ $0 }
+        barButtons.forEach { barButton in
+            let attribute = [NSAttributedString.Key.font: UIFont.preferredFont(style: .body, weight: .regular),
+                             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: self.traitCollection)]
+            barButton.setTitleTextAttributes(attribute, for: .normal)
+        }
+    }
 }
