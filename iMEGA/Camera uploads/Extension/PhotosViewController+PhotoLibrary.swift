@@ -7,7 +7,7 @@ extension PhotosViewController: PhotoLibraryProvider {
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
         configPhotoLibraryView(in: container) { type, location, featureFlag in
             self.viewModel.updateFilter(filterType: type, filterLocation: location, featureFlag: featureFlag)
-            self.setRightNavigationBarButtons()
+            self.updateMenuBarButtonItems(self.photoLibraryContentViewModel.selectedMode)
         }
     }
     

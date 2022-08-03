@@ -4,12 +4,7 @@ import SwiftUI
 
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary
-    @Published var selectedMode: PhotoLibraryViewMode = .all {
-        willSet {
-            selectedModeNewVal = newValue
-        }
-    }
-    var selectedModeNewVal: PhotoLibraryViewMode = .all
+    @Published var selectedMode: PhotoLibraryViewMode = .all
     @Published var showFilter = false
     
     var cardScrollPosition: PhotoScrollPosition?
