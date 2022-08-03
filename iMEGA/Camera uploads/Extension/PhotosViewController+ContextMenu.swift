@@ -2,13 +2,23 @@ import UIKit
 
 extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
-        CMConfigEntity(
-            menuType: .display,
-            sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
-            isCameraUploadExplorer: true,
-            isFilterEnabled: FeatureToggle.filterMenuOnCameraUploadExplorer.isEnabled,
-            isEmptyState: viewModel.mediaNodesArray.isEmpty
-        )
+        if #available(iOS 14.0, *) {
+            return CMConfigEntity(
+                menuType: .display,
+                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+                isCameraUploadExplorer: true,
+                isFilterEnabled: FeatureToggle.filterMenuOnCameraUploadExplorer.isEnabled,
+                isEmptyState: viewModel.mediaNodesArray.isEmpty
+            )
+        } else {
+            return CMConfigEntity(
+                menuType: .display,
+                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+                isCameraUploadExplorer: true,
+                isFilterEnabled: false,
+                isEmptyState: viewModel.mediaNodesArray.isEmpty
+            )
+        }
     }
     
     @objc func configureContextMenuManager() {
@@ -29,12 +39,13 @@ extension PhotosViewController {
         setRightNavigationBarButtons()
     }
     
-    func showfilterActiveBarButtonItem(_ selectedMode: PhotoLibraryViewMode) {
-        if selectedMode != .all && viewModel.isFilterActive {
-            objcWrapper_parent.navigationItem.rightBarButtonItems = nil
+    func updateMenuBarButtonItems(_ activeTabSelectionMode: PhotoLibraryViewMode) {
+        objcWrapper_parent.navigationItem.rightBarButtonItems = nil
+        
+        if activeTabSelectionMode == .all {
+            enableContextMenuOnCameraUploader()
+        } else if activeTabSelectionMode != .all && viewModel.isFilterActive {
             objcWrapper_parent.navigationItem.rightBarButtonItem = filterActiveBarButtonItem
-        } else {
-            objcWrapper_parent.navigationItem.rightBarButtonItems = nil
         }
     }
     
@@ -55,11 +66,6 @@ extension PhotosViewController {
     private func enableContextMenuOnCameraUploader() {
         if #available(iOS 14.0, *) {
             guard let menuConfig = contextMenuConfiguration(), let editBarButtonItem = editBarButtonItem else { return }
-            
-            guard photoLibraryContentViewModel.selectedModeNewVal == .all else {
-                showfilterActiveBarButtonItem(photoLibraryContentViewModel.selectedMode)
-                return
-            }
 
             editBarButtonItem.image = Asset.Images.NavigationBar.moreNavigationBar.image
             editBarButtonItem.menu = contextMenuManager?.contextMenu(with: menuConfig)
@@ -97,7 +103,7 @@ extension PhotosViewController {
     
     @objc func setRightNavigationBarButtons() {
         if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
-            enableContextMenuOnCameraUploader()
+            updateMenuBarButtonItems(photoLibraryContentViewModel.selectedMode)
         } else {
             disableContextMenuOnCameraUploader()
         }
