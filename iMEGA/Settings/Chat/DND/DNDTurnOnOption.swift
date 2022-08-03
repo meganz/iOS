@@ -1,4 +1,5 @@
 import Foundation
+import MEGAFoundation
 
 enum DNDTurnOnOption: String, CaseIterable {
     case thirtyMinutes

@@ -1,11 +1,10 @@
 import Foundation
 
-enum DateStyle {
-
-    static var dateStyleFactory: DateStyleFactory = DateStyleFactoryImpl()
+public enum DateStyle {
+    public static var dateStyleFactory: DateStyleFactory = DateStyleFactoryImpl()
 }
 
-protocol DateStyleFactory {
+public protocol DateStyleFactory {
 
     func templateStyle(
         fromTemplate template: String,
@@ -37,7 +36,7 @@ private struct DateStyleFactoryImpl: DateStyleFactory {
 /// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a cache pool to hold popular
 /// date formatters saving time.
 /// NOTE: This shared object is *NOT* thread safe.
-final class DateFormatterPool {
+public final class DateFormatterPool {
 
     // MARK: - Cache for date formatter
 
@@ -91,7 +90,7 @@ private protocol DateFormatterProvidable {
     func buildDateFormatter() -> DateFormatter
 }
 
-extension DateStyle {
+public extension DateStyle {
     /// A template string style configuration
     struct StringTemplateStyle: Hashable {
         typealias FormatString = String
@@ -115,7 +114,7 @@ extension DateStyle.StringTemplateStyle: DateFormatterProvidable {
     }
 }
 
-extension DateStyle {
+public extension DateStyle {
     /// A formatter provided style configuration
     struct DateFormatStyle: Hashable {
 

@@ -1,11 +1,11 @@
 import Foundation
 
-protocol DispatchQueueProtocol {
+public protocol DispatchQueueProtocol {
     func async(qos: DispatchQoS, closure: @escaping () -> Void)
 }
 
 extension DispatchQueue: DispatchQueueProtocol {
-    func async(qos: DispatchQoS, closure: @escaping () -> Void) {
+    public func async(qos: DispatchQoS, closure: @escaping () -> Void) {
         async(group: nil, qos: qos, flags: [], execute: closure)
     }
 }

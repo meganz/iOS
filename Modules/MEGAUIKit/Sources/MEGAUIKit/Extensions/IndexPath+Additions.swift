@@ -1,5 +1,7 @@
+import Foundation
+import UIKit
 
-extension IndexPath {
+public extension IndexPath {
     var previousSectionIndexPath: IndexPath? {
         guard !isEmpty, section > 0 else { return nil }
 

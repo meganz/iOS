@@ -1,6 +1,6 @@
 import Foundation
 
-extension NSDate {
+public extension NSDate {
     @objc func isToday() -> Bool {
         (self as Date).isToday(on: Calendar.autoupdatingCurrent)
     }

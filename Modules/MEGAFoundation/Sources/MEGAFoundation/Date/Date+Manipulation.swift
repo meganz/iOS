@@ -1,8 +1,8 @@
 import Foundation
 
-typealias Timestamp = Date
+public typealias Timestamp = Date
 
-extension Date {
+public extension Date {
 
     /// Will return the starting time of current date on given calendar.
     /// - Parameter calendar: Calendar on which the starting time of current instance based.

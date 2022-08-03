@@ -1,6 +1,7 @@
 
 import Foundation
 import WidgetKit
+import MEGAFoundation
 
 @available(iOS 14.0, *)
 class QuickAccessWidgetManager: NSObject {

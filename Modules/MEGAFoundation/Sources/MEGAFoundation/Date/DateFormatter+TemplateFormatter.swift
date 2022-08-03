@@ -1,6 +1,6 @@
 import Foundation
 
-extension DateFormatter {
+public extension DateFormatter {
 
     // MARK: - Formatter Custom Template Style
 

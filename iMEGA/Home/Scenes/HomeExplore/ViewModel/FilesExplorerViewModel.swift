@@ -1,3 +1,4 @@
+import MEGAFoundation
 
 enum FilesExplorerAction: ActionType {
     case onViewReady

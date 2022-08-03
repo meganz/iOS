@@ -25,6 +25,8 @@
 #import "MEGAUser+MNZCategory.h"
 #import "MEGA-Swift.h"
 
+@import MEGAUIKit;
+
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionDonotDisturb = 0,
     ContactDetailsSectionNicknameVerifyCredentials,

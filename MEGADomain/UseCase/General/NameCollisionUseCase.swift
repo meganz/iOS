@@ -1,6 +1,7 @@
-// MARK: - Use case protocol -
-
 import Foundation
+import MEGAFoundation
+
+// MARK: - Use case protocol -
 protocol NameCollisionUseCaseProtocol {
     func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity]
     func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity]
