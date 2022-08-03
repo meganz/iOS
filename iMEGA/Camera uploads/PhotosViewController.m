@@ -28,6 +28,7 @@
 
 @import StoreKit;
 @import Photos;
+@import MEGAUIKit;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;

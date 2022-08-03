@@ -1,6 +1,6 @@
 import UIKit
 
-extension Array where Iterator.Element: UIView {
+public extension Array where Iterator.Element: UIView {
 
     func embedInStackView(
         axis: NSLayoutConstraint.Axis = .horizontal,

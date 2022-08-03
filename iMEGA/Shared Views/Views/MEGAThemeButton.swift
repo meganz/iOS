@@ -1,5 +1,7 @@
 import Foundation
 
+extension UIControl.State: Hashable {}
+
 protocol ButtonBackgroundStateAware {
 
     var statedColor: [UIControl.State: UIColor]  { get }

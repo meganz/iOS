@@ -1,7 +1,7 @@
 import SwiftUI
 
 @available(iOS, introduced: 14.0, deprecated: 15.0, message: "From iOS 15.0, please go for material ShapeStyle 😺")
-struct BlurryView: View {
+public struct BlurryView: View {
     @Environment(\.colorScheme) private var colorScheme
     let singleColorTheme: Bool
     
@@ -9,7 +9,7 @@ struct BlurryView: View {
         self.singleColorTheme = singleColorTheme
     }
     
-    var body: some View {
+    public var body: some View {
         Image(singleColorTheme ? .white : colorScheme == .dark ? .black : .white)
             .resizable()
             .blur(radius: 2, opaque: true)

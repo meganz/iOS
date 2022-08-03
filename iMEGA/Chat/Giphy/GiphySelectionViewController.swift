@@ -1,4 +1,5 @@
 import UIKit
+import MEGAUIKit
 
 class GiphySelectionViewController: UIViewController {
     

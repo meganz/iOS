@@ -1,15 +1,13 @@
 import UIKit
 
-extension UIImageView{
+public extension UIImageView {
     func renderImage(withColor color: UIColor) {
         guard let image =  self.image else { return }
         
         self.image = image.withRenderingMode(.alwaysTemplate)
         self.tintColor = color
     }
-}
-
-extension UIImageView {
+    
     func applyShadow(in container: UIView, color: UIColor = .black, alpha: Float, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
         container.layer.masksToBounds = false
         clipsToBounds = true

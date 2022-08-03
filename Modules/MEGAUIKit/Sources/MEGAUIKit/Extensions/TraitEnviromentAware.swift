@@ -1,7 +1,7 @@
 import UIKit
 
 /// A protocol that traces application's trait enviroment updating.
-protocol TraitEnviromentAware {
+public protocol TraitEnviromentAware {
 
     /// Handles TraitCollection updating.
     /// If the update is a `UIInterfaceStyle` updates, then `colorAppearanceDidChang(to:from:)` will be called.
@@ -25,7 +25,7 @@ protocol TraitEnviromentAware {
     )
 }
 
-extension TraitEnviromentAware {
+public extension TraitEnviromentAware {
 
     func traitCollectionChanged(
         to currentTrait: UITraitCollection,

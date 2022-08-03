@@ -1,5 +1,6 @@
 import UIKit
 import SwiftUI
+import MEGAUIKit
 
 @available(iOS 14.0, *)
 final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {

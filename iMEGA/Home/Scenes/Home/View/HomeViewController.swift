@@ -1,4 +1,5 @@
 import UIKit
+import MEGAUIKit
 
 @objc(HomeRouting)
 protocol HomeRouting: NSObjectProtocol {
