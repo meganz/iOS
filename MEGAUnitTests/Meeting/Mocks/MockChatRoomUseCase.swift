@@ -1,4 +1,5 @@
 @testable import MEGA
+import Combine
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
@@ -8,6 +9,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var chatRoomEntity: ChatRoomEntity?
     var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var myPeerHandles: [HandleEntity] = []
+    var participantsUpdatedSubject = PassthroughSubject<[HandleEntity], Never>()
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -48,5 +50,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(renameChatRoomCompletion)
+    }
+    
+    func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
+        participantsUpdatedSubject.eraseToAnyPublisher()
     }
 }

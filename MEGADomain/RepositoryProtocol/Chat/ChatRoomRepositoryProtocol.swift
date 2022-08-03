@@ -1,4 +1,4 @@
-
+import Combine
 
 protocol ChatRoomRepositoryProtocol {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
@@ -10,5 +10,6 @@ protocol ChatRoomRepositoryProtocol {
     func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity) async throws -> String
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
 }
 

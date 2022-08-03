@@ -1,3 +1,4 @@
+import Combine
 
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
@@ -36,6 +37,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let router: MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
     private var recentlyAddedHandles = [HandleEntity]()
+    private var chatRoomParticipantsUpdatedTask: Task<Void, Never>?
+    private var subscriptions = Set<AnyCancellable>()
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }
@@ -46,7 +49,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var isSpeakerEnabled: Bool {
@@ -90,6 +93,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     deinit {
         callUseCase.stopListeningForCall()
+        chatRoomParticipantsUpdatedTask?.cancel()
     }
     
     func dispatch(_ action: MeetingFloatingPanelAction) {
@@ -128,6 +132,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             } else {
                 updateSpeakerInfo()
             }
+            addChatRoomParticipantsChangedListener()
         case .hangCall(let presenter, let sender):
             manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
@@ -207,12 +212,31 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             router.showAllContactsAlreadyAddedAlert()
             return
         }
-                
+                        
         router.inviteParticipants(excludeParticpantsId: peerHandles) { [weak self] userHandles in
             guard let self = self, let call = self.call else { return }
             self.recentlyAddedHandles.append(contentsOf: userHandles)
             userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
         }
+    }
+    
+    private func addChatRoomParticipantsChangedListener() {
+        chatRoomUseCase
+            .participantsUpdated(forChatId: chatRoom.chatId)
+            .sink() { [weak self] peerHandles in
+                guard let self = self else { return }
+                
+                self.chatRoomParticipantsUpdatedTask?.cancel()
+                self.chatRoomParticipantsUpdatedTask = Task {
+                    await self.updateRecentlyAddedHandles(removing: peerHandles)
+                }
+            }
+            .store(in: &subscriptions)
+    }
+    
+    @MainActor
+    func updateRecentlyAddedHandles(removing peerHandles: [HandleEntity]) {
+        recentlyAddedHandles.removeAll(where: peerHandles.contains)
     }
     
     private func enableLoudSpeaker() {
