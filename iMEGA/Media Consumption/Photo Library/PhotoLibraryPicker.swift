@@ -20,7 +20,7 @@ struct PhotoLibraryPicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .blurryBackground(radius: 7)
+        .blurryBackground(radius: 7, singleColorTheme: true)
         .padding(16)
         .onAppear {
             configSegmentedControlAppearance()
@@ -31,8 +31,8 @@ struct PhotoLibraryPicker: View {
         UISegmentedControl
             .appearance()
             .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 15, weight: .semibold),
-                 .foregroundColor: UIColor.systemBackground],
+                [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
+                 .foregroundColor: UIColor.white],
                 for: .selected
             )
         
@@ -40,12 +40,16 @@ struct PhotoLibraryPicker: View {
             .appearance()
             .setTitleTextAttributes(
                 [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                 .foregroundColor: UIColor.label],
+                 .foregroundColor: UIColor.black],
                 for: .normal
             )
+
+        UISegmentedControl
+            .appearance()
+            .backgroundColor = Colors.MediaConsumption.timelineYMDATabs.color
         
         UISegmentedControl
             .appearance()
-            .selectedSegmentTintColor = UIColor.label.withAlphaComponent(0.4)
+            .selectedSegmentTintColor = Colors.MediaConsumption.timelineYMDATabsSelected.color
     }
 }

@@ -121,6 +121,8 @@ internal enum Colors {
   }
   internal enum MediaConsumption {
     internal static let photoNumbersBackground = ColorAsset(name: "photoNumbersBackground")
+    internal static let timelineYMDATabs = ColorAsset(name: "timelineYMDATabs")
+    internal static let timelineYMDATabsSelected = ColorAsset(name: "timelineYMDATabsSelected")
   }
   internal enum MediaDiscovery {
     internal static let exitButtonTint = ColorAsset(name: "exitButtonTint")
