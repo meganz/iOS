@@ -1,6 +1,6 @@
-
 import SwiftUI
 import Foundation
+import MEGAFoundation
 
 final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     

@@ -1,7 +1,6 @@
-
 import Foundation
 
-@objc final class Throttler: NSObject {
+@objc public final class Throttler: NSObject {
     private var dispatchQueue: DispatchQueue
     private var dispatchWork: DispatchWorkItem?
     private let workQueue = DispatchQueue(label: "ThrottlerWorkQueue")
@@ -14,13 +13,13 @@ import Foundation
 
     private var timeInterval: TimeInterval
     
-    @objc init(timeInterval: TimeInterval, dispatchQueue: DispatchQueue) {
+    @objc public init(timeInterval: TimeInterval, dispatchQueue: DispatchQueue) {
         self.timeInterval = timeInterval
         self.dispatchQueue = dispatchQueue
     }
     
 
-    @objc func start(action: @escaping () -> Void) {
+    @objc public func start(action: @escaping () -> Void) {
         workQueue.async {
             self.dispatchWork?.cancel()
             let dispatchWork = DispatchWorkItem { [weak self] in

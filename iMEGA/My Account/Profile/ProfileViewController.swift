@@ -1,6 +1,7 @@
 
 import UIKit
 import PhoneNumberKit
+import MEGAFoundation
 
 enum TwoFactorAuthStatus {
     case unknown

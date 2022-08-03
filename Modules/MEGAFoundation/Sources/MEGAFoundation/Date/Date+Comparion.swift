@@ -1,6 +1,6 @@
 import Foundation
 
-extension Date {
+public extension Date {
 
     typealias NumberOfDays = Int
 
@@ -37,7 +37,7 @@ extension Date {
     }
 }
 
-extension Date {
+public extension Date {
 
     /// Indicates the invoker on the given calendar is *Today*.
     /// - Parameter calendar: The calendar which is used to consult *Today* information from.
@@ -88,5 +88,20 @@ extension Date {
     /// - Returns: The date that is earlier
     func earlierDate(_ date: Date) -> Date {
         (timeIntervalSince1970 <= date.timeIntervalSince1970) ? self : date
+    }
+    
+    func isSameDay(date: Date) -> Bool {
+        return isSame(date: date, components: [.day, .month, .year])
+    }
+    
+    func isSameMinute(date: Date) -> Bool {
+        return isSame(date: date, components: [.minute, .day, .month, .year])
+    }
+    
+    func isSame(date: Date, components: Set<Calendar.Component>) -> Bool {
+        let thisDateComponents = Calendar.current.dateComponents(components, from: self)
+        let otherDateComponents = Calendar.current.dateComponents(components, from: date)
+        let results = components.map { thisDateComponents.value(for: $0) == otherDateComponents.value(for: $0) }
+        return !results.contains(false)
     }
 }

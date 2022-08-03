@@ -1,4 +1,5 @@
 import UIKit
+import MEGAFoundation
 
 class StorageFullModalAlertViewController: CustomModalAlertViewController {
     

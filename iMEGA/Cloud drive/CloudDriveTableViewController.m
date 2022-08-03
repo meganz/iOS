@@ -14,6 +14,8 @@
 #import "CloudDriveViewController.h"
 #import "NodeTableViewCell.h"
 
+@import MEGAFoundation;
+
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource>
 @end
 

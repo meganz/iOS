@@ -1,6 +1,6 @@
 import Foundation
 
-extension DateFormatter {
+public extension DateFormatter {
     
     // MARK: - Relative date formatter, e.g. date in the next day will be "Tomorrow" etc.
     

@@ -1,5 +1,6 @@
 import Foundation
 import StoreKit
+import MEGAFoundation
 
 @objc final class RatingRequestMonitor: NSObject {
     private let sdk: MEGASdk

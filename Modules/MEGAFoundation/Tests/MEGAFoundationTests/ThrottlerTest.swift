@@ -1,6 +1,6 @@
  
 import XCTest
-@testable import MEGA
+@testable import MEGAFoundation
 
 class ThrottlerTest: XCTestCase {
     func test_runThreeTimesCountOnce() {
