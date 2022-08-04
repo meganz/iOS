@@ -2065,6 +2065,7 @@
 		BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164BF27F6A74D00E5C5A4 /* PureLayout */; };
 		BF1164C627F6A81600E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164C527F6A81600E5C5A4 /* PureLayout */; };
 		BF1164CA27F6A81F00E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164C927F6A81F00E5C5A4 /* PureLayout */; };
+		BF14A144289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		BF15891F2435EF85007AF9EC /* ChatViewCallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */; };
 		BF1589222435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */; };
@@ -4498,6 +4499,7 @@
 		BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNotificationMessage.swift; sourceTree = "<group>"; };
 		BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUnreadMessagesLabelCollectionCell.swift; sourceTree = "<group>"; };
 		BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatUnreadMessagesLabelCollectionCell.xib; sourceTree = "<group>"; };
+		BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+TabSelection.swift"; sourceTree = "<group>"; };
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
 		BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewCallCollectionCell.swift; sourceTree = "<group>"; };
 		BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewMessagesFlowLayout.swift; sourceTree = "<group>"; };
@@ -11577,6 +11579,7 @@
 				C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */,
 				A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */,
 				942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */,
+				BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */,
 				A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */,
 				A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */,
 			);
@@ -12428,6 +12431,7 @@
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				2FDDC6242630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift in Sources */,
+				BF14A144289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
 				B6D0B357283CE48C0020C64D /* Helper+Additions.swift in Sources */,

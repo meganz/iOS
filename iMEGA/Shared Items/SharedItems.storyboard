@@ -57,10 +57,10 @@
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="footnote"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="bold"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="incomingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="3wR-mu-5d1"/>
@@ -94,10 +94,10 @@
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="footnote"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="bold"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="outgoingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="EDT-nq-skb"/>
@@ -131,10 +131,10 @@
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="footnote"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="footnote"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="bold"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="linksTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="tut-1z-P85"/>
