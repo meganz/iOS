@@ -37,6 +37,8 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
             avatarImageView.image = image
         case .updateName(let name):
             nameLabel.text = name
+        case .updatePrivilege(let isModerator):
+            moderatorTextLabel.isHidden = !isModerator
         }
     }
     

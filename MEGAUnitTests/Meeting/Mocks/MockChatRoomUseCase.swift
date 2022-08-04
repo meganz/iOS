@@ -10,7 +10,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var myPeerHandles: [HandleEntity] = []
     var participantsUpdatedSubject = PassthroughSubject<[HandleEntity], Never>()
-
+    var privilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
+    var peerPrivilege: ChatRoomEntity.Privilege = .unknown
+    
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
     }
@@ -19,6 +21,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         return chatRoomEntity
     }
     
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege? {
+        peerPrivilege
+    }
+
     func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity] {
         myPeerHandles
     }
@@ -54,5 +60,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
         participantsUpdatedSubject.eraseToAnyPublisher()
+    }
+    
+    mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        privilegeChangedSubject.eraseToAnyPublisher()
     }
 }

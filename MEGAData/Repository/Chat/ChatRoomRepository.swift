@@ -29,6 +29,13 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         return chatRoom.peerHandles
     }
     
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege? {
+        guard let chatRoom = sdk.chatRoom(forChatId: chatId), let privilege = ChatRoomEntity.Privilege(rawValue: chatRoom.peerPrivilege(byHandle: userHandle)) else {
+            return nil
+        }
+        return privilege
+    }
+    
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         if let chatRoom = chatRoom(forUserHandle: userHandle) {
             completion(.success(chatRoom))
@@ -144,6 +151,15 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         return participantsUpdateListener
             .monitor
             .map(\.peerHandles)
+            .eraseToAnyPublisher()
+    }
+    
+    mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        let participantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .participants)
+        self.participantsUpdateListener = participantsUpdateListener
+        return participantsUpdateListener
+            .monitor
+            .map(\.userHandle)
             .eraseToAnyPublisher()
     }
 }

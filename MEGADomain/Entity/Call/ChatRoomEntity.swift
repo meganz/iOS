@@ -48,4 +48,5 @@ struct ChatRoomEntity {
     let isArchived: Bool
     let chatType: ChatType
     let peerHandles: [HandleEntity]
+    let userHandle: HandleEntity
 }
