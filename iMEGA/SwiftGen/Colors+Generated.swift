@@ -154,6 +154,16 @@ internal enum Colors {
     internal static let rightBarButtonForeground = ColorAsset(name: "rightBarButtonForeground")
     internal static let zoomButtonForeground = ColorAsset(name: "zoomButtonForeground")
   }
+  internal enum SharedItems {
+    internal enum Tabs {
+      internal static let sharedItemsTabNormalBackground = ColorAsset(name: "sharedItemsTabNormalBackground")
+      internal static let sharedItemsTabNormalIconTint = ColorAsset(name: "sharedItemsTabNormalIconTint")
+      internal static let sharedItemsTabNormalText = ColorAsset(name: "sharedItemsTabNormalText")
+      internal static let sharedItemsTabSelectedBackground = ColorAsset(name: "sharedItemsTabSelectedBackground")
+      internal static let sharedItemsTabSelectedIconTint = ColorAsset(name: "sharedItemsTabSelectedIconTint")
+      internal static let sharedItemsTabSelectedText = ColorAsset(name: "sharedItemsTabSelectedText")
+    }
+  }
   internal enum SharedViews {
     internal enum Explorer {
       internal enum Gradient {
