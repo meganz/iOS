@@ -1,5 +1,6 @@
 import Foundation
 import MEGAFoundation
+import MEGADomain
 
 // MARK: - Use case protocol -
 protocol NameCollisionUseCaseProtocol {

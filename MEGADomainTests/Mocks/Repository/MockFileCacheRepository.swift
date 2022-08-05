@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     static let newRepo = MockFileCacheRepository()

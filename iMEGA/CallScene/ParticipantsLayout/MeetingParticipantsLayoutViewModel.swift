@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGADomain
 
 enum CallViewAction: ActionType {
     case onViewLoaded

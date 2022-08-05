@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
     var nameCollisions: [NameCollisionEntity]?

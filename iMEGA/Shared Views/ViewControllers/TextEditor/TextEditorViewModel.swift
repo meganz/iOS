@@ -1,3 +1,5 @@
+import MEGADomain
+
 enum TextEditorViewAction: ActionType {
     case setUpView
     case saveText(content: String)

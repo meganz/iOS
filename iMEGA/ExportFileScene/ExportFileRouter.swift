@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MEGADomain
 
 final class ExportFileRouter: ExportFileViewRouting {
     private weak var presenter: UIViewController?

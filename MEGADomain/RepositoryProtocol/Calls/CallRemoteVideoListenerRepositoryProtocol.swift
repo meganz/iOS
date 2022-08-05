@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallRemoteVideoRepositoryProtocol {
     func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol)

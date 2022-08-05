@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct PhotoAlbum {
     var handle: HandleEntity?

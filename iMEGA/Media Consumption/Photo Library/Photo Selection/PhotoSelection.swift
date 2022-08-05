@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import MEGADomain
 
 final class PhotoSelection: ObservableObject {
     @Published var editMode: EditMode = .inactive {

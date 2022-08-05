@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol TransferWidgetRouting: Routing {
     func prepareTransfersWidget()

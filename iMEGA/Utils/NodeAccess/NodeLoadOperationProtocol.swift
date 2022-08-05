@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol NodeLoadOperationProtocol where Self: MEGAOperation {
     func loadNodeFromRemote()

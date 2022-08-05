@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct ChatRoomEntity {
     enum ChatType {
         case oneToOne

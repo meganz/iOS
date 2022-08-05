@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGADomain
 
 typealias MEGAChatResultDelegateCompletion = (_ api: MEGAChatSdk, _ chatId: HandleEntity, _ newState: MEGAChatConnection) -> Void
 

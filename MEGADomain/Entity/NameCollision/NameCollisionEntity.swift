@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class NameCollisionEntity: NSObject {
     let parentHandle: HandleEntity

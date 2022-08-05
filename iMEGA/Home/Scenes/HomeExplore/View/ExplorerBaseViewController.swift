@@ -1,4 +1,5 @@
 import MEGAUIKit
+import MEGADomain
 
 class ExplorerBaseViewController: UIViewController {
     lazy var toolbar = UIToolbar()

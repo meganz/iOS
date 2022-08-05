@@ -1,6 +1,6 @@
-
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 class DownloadNodeUseCaseTests: XCTestCase {
     func testDownloadNode_fileAlreadyInOfflineError() {

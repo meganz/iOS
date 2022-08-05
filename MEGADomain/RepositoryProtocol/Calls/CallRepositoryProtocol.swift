@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallRepositoryProtocol {
     func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: CallCallbacksRepositoryProtocol)

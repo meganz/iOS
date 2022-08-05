@@ -1,3 +1,5 @@
+import MEGADomain
+
 extension MEGANodeLabel {
     init?(nodeLabelTypeEntity: NodeLabelTypeEntity) {
         switch nodeLabelTypeEntity {

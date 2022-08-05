@@ -1,3 +1,5 @@
+import MEGADomain
+
 // MARK: - Use case protocol -
 protocol NodeActionUseCaseProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity

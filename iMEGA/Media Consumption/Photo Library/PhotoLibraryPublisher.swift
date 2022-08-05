@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import MEGADomain
 
 final class PhotoLibraryPublisher {
     private var subscriptions = Set<AnyCancellable>()

@@ -1,5 +1,6 @@
 @testable import MEGA
 import Combine
+import MEGADomain
 
 struct MockUserImageUseCase: UserImageUseCaseProtocol {
     var result: Result<UIImage, UserImageLoadErrorEntity> = .failure(.generic)

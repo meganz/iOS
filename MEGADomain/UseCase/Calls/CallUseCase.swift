@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallUseCaseProtocol {
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T)

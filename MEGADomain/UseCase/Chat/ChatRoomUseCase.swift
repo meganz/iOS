@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 protocol ChatRoomUseCaseProtocol {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?

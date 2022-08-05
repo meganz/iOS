@@ -1,3 +1,5 @@
+import MEGADomain
+
 @objc final class CreateTextFileAlertViewRouter: NSObject, CreateTextFileAlertViewRouting {
 
     private weak var baseViewController: UIViewController?

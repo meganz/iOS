@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension HandleEntity {
     func validNode(in sdk: MEGASdk) -> MEGANode? {

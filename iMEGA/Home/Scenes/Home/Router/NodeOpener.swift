@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class NodeOpener {
 
     private weak var navigationController: UINavigationController?

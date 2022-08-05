@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     var duplicate: Bool = true

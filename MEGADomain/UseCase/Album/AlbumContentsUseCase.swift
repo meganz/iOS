@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 protocol AlbumContentsUseCaseProtocol {
     var updatePublisher: AnyPublisher<Void, Never> { get }

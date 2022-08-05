@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 enum NodeInfoError: Error {
     case generic

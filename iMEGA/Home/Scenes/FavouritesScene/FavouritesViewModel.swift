@@ -1,3 +1,5 @@
+import MEGADomain
+
 enum FavouritesViewAction: ActionType {
     case viewWillAppear
     case viewWillDisappear

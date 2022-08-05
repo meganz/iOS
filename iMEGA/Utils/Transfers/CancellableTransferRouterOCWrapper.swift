@@ -1,3 +1,4 @@
+import MEGADomain
 
 @objc final class CancellableTransferRouterOCWrapper: NSObject {
     @objc func downloadNodes(_ nodes: [MEGANode], presenter: UIViewController, isFolderLink: Bool = false) {

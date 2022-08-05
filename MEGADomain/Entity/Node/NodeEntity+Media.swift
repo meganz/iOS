@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension NodeEntity {
     var isVideo: Bool {

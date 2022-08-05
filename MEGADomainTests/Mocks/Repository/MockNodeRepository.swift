@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockNodeRepository: NodeRepositoryProtocol {
     static let newRepo = MockNodeRepository()

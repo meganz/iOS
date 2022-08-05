@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 protocol UserImageRepositoryProtocol {
     func loadUserImage(withUserHandle handle: String?,

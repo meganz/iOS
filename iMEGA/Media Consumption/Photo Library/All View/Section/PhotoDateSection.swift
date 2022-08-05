@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol PhotoSection: PhotoChronologicalCategory where Content == NodeEntity {
     var title: String { get }

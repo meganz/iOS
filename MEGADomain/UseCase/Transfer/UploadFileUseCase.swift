@@ -1,3 +1,5 @@
+import MEGADomain
+
 // MARK: - Use case protocol -
 protocol UploadFileUseCaseProtocol {
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool

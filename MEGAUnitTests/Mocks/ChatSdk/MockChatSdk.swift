@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 final class MockChatSDK: MEGAChatSdk {
     private let chatRoom: MEGAChatRoom?

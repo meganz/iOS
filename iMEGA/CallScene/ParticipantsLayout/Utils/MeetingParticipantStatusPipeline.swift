@@ -1,6 +1,6 @@
-
 import Foundation
 import Combine
+import MEGADomain
 
 final class MeetingParticipantStatusPipeline {
     struct HandlerCollectionType {

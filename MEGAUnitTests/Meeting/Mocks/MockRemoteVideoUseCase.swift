@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 class MockCallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
     var addRemoteVideoListener_CalledTimes = 0

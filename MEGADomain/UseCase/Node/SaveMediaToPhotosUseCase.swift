@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(node: NodeEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void)

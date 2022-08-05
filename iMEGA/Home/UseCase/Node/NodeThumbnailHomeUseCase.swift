@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MEGADomain
 
 protocol NodeThumbnailHomeUseCaseProtocol {
     func loadThumbnail(

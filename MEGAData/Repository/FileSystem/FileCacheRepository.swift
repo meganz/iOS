@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class FileCacheRepository: FileCacheRepositoryProtocol {
     static var newRepo: FileCacheRepository {

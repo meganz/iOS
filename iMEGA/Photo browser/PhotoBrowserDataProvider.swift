@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class PhotoBrowserDataProvider: NSObject {
     private var megaNodes: [MEGANode]?

@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 final class MockRecentActionBucket: MEGARecentActionBucket {
     private let _timestamp: Date

@@ -1,3 +1,5 @@
+import MEGADomain
+import MEGADomain
 
 protocol StreamingInfoUseCaseProtocol {
     func startServer()

@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol SaveNodeUseCaseProtocol {
     func saveNodeIfNeeded(from transfer: TransferEntity)

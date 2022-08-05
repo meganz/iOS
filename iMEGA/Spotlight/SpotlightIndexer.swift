@@ -1,6 +1,7 @@
 import CoreSpotlight
 import MobileCoreServices
 import Combine
+import MEGADomain
 
 final class SpotlightIndexer: NSObject {
     private let sdk: MEGASdk

@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 final class StreamingInfoUseCaseTests: XCTestCase {
     let nodeStreamingInfoSuccessRepository = MockStreamingInfoRepository(result: .success(()))

@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
     

@@ -1,5 +1,6 @@
 @testable import MEGA
 import Combine
+import MEGADomain
 
 struct MockMeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
     private let passthroughSubject = PassthroughSubject<Void, Never>()

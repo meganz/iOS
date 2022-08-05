@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static let newRepo = MockOfflineFilesRepository()

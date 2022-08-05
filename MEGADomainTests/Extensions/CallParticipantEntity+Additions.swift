@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 extension CallParticipantEntity {
     ///Init method with default values (0, false, nil, [], ...)

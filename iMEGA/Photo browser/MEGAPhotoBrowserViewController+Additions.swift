@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 extension MEGAPhotoBrowserViewController {
     @objc func subtitle(fromDate date: Date) -> String {

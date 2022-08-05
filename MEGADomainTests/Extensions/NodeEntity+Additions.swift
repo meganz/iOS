@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 extension NodeEntity {
     init(changeTypes: ChangeTypeEntity = .attributes,

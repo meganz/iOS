@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 extension ChatRoomEntity {
     ///Init method with default values (0, false, nil, [], ...)

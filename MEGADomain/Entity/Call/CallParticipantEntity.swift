@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallParticipantVideoDelegate: AnyObject {
     func frameData(width: Int, height: Int, buffer: Data!)

@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 enum MeetingParticipantViewAction: ActionType {
     case onViewReady

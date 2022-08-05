@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static var newRepo: OfflineFilesRepository {
