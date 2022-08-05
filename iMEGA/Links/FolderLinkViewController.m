@@ -681,6 +681,9 @@
     if (self.selectedNodesArray.count != 0) {
         [self download:self.selectedNodesArray];
     } else {
+        if (self.parentNode == nil) {
+            return;
+        }
         [self download:@[self.parentNode]];
     }
     [self setEditMode:NO];
