@@ -43,18 +43,18 @@ public extension Date {
     /// - Parameter calendar: The calendar which is used to consult *Today* information from.
     /// - Returns: True if invoker is today on calendar, else false.
     func isToday(on calendar: Calendar) -> Bool {
-        return calendar.isDateInToday(self)
+        calendar.isDateInToday(self)
     }
 
     /// Indicates the invoker on the given calendar is *Tomorrow*.
     /// - Parameter calendar: The calendar which is used to consult  *Tomorrow* information from.
     /// - Returns: True if invoker is tomorrow on calendar, else false.
     func isTomorrow(on calendar: Calendar) -> Bool {
-        return calendar.isDateInTomorrow(self)
+        calendar.isDateInTomorrow(self)
     }
     
     var isThisYear: Bool {
-        return Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
+        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
     }
     
     /// Returns the number of days the receiver's date is earlier than the provided
@@ -91,11 +91,11 @@ public extension Date {
     }
     
     func isSameDay(date: Date) -> Bool {
-        return isSame(date: date, components: [.day, .month, .year])
+        isSame(date: date, components: [.day, .month, .year])
     }
     
     func isSameMinute(date: Date) -> Bool {
-        return isSame(date: date, components: [.minute, .day, .month, .year])
+        isSame(date: date, components: [.minute, .day, .month, .year])
     }
     
     func isSame(date: Date, components: Set<Calendar.Component>) -> Bool {

@@ -1671,17 +1671,10 @@
 		B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */; };
 		B620C05B2845BB99003CEEE7 /* PHAsset+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */; };
 		B620C05E2845BB9A003CEEE7 /* PHAsset+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */; };
-		B620C05F2845BBA2003CEEE7 /* GetFileExtensionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB1E27FD51B50073BA1A /* GetFileExtensionUseCase.swift */; };
-		B620C0602845BBA3003CEEE7 /* GetFileExtensionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB1E27FD51B50073BA1A /* GetFileExtensionUseCase.swift */; };
-		B620C0612845BBFC003CEEE7 /* MediaTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB2327FD51DF0073BA1A /* MediaTypeEntity.swift */; };
-		B620C0622845BBFC003CEEE7 /* MediaTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB2327FD51DF0073BA1A /* MediaTypeEntity.swift */; };
-		B620C0632845BC05003CEEE7 /* FileExtensionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB2527FD5D530073BA1A /* FileExtensionEntity.swift */; };
-		B620C0642845BC06003CEEE7 /* FileExtensionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB2527FD5D530073BA1A /* FileExtensionEntity.swift */; };
 		B620C0652845BC36003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD4F2845AAD000A298EE /* PHAssetMediaSubtype+CU.swift */; };
 		B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD4F2845AAD000A298EE /* PHAssetMediaSubtype+CU.swift */; };
 		B620C0672845BC3A003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD512845B79100A298EE /* PHAssetMediaType+Mapper.swift */; };
 		B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD512845B79100A298EE /* PHAssetMediaType+Mapper.swift */; };
-		B630CD4C284583D000A298EE /* GetFileExtensionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD4B284583D000A298EE /* GetFileExtensionUseCaseTests.swift */; };
 		B630CD502845AAD100A298EE /* PHAssetMediaSubtype+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD4F2845AAD000A298EE /* PHAssetMediaSubtype+CU.swift */; };
 		B630CD522845B79100A298EE /* PHAssetMediaType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B630CD512845B79100A298EE /* PHAssetMediaType+Mapper.swift */; };
 		B63995362898CBEB00EA88F1 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63995332898CBEB00EA88F1 /* WarningView.swift */; };
@@ -1925,9 +1918,6 @@
 		B6C959702689C3D400CF73A8 /* ShareRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9596F2689C3D400CF73A8 /* ShareRepository.swift */; };
 		B6C9CB0927FBBB9D0073BA1A /* RawPhotoUploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0827FBBB9D0073BA1A /* RawPhotoUploadOperation.swift */; };
 		B6C9CB0D27FBC2220073BA1A /* PHAsset+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */; };
-		B6C9CB1F27FD51B50073BA1A /* GetFileExtensionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB1E27FD51B50073BA1A /* GetFileExtensionUseCase.swift */; };
-		B6C9CB2427FD51DF0073BA1A /* MediaTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB2327FD51DF0073BA1A /* MediaTypeEntity.swift */; };
-		B6C9CB2627FD5D530073BA1A /* FileExtensionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB2527FD5D530073BA1A /* FileExtensionEntity.swift */; };
 		B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
 		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
@@ -4128,7 +4118,6 @@
 		B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadAdvancedOptionsViewController.m; sourceTree = "<group>"; };
 		B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskSpaceDetector.h; sourceTree = "<group>"; };
 		B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiskSpaceDetector.m; sourceTree = "<group>"; };
-		B630CD4B284583D000A298EE /* GetFileExtensionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFileExtensionUseCaseTests.swift; sourceTree = "<group>"; };
 		B630CD4F2845AAD000A298EE /* PHAssetMediaSubtype+CU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAssetMediaSubtype+CU.swift"; sourceTree = "<group>"; };
 		B630CD512845B79100A298EE /* PHAssetMediaType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAssetMediaType+Mapper.swift"; sourceTree = "<group>"; };
 		B63995332898CBEB00EA88F1 /* WarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
@@ -4376,9 +4365,6 @@
 		B6C9596F2689C3D400CF73A8 /* ShareRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRepository.swift; sourceTree = "<group>"; };
 		B6C9CB0827FBBB9D0073BA1A /* RawPhotoUploadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPhotoUploadOperation.swift; sourceTree = "<group>"; };
 		B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+CU.swift"; sourceTree = "<group>"; };
-		B6C9CB1E27FD51B50073BA1A /* GetFileExtensionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFileExtensionUseCase.swift; sourceTree = "<group>"; };
-		B6C9CB2327FD51DF0073BA1A /* MediaTypeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeEntity.swift; sourceTree = "<group>"; };
-		B6C9CB2527FD5D530073BA1A /* FileExtensionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionEntity.swift; sourceTree = "<group>"; };
 		B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsTableViewController.h; sourceTree = "<group>"; };
 		B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoUploadsTableViewController.m; sourceTree = "<group>"; };
@@ -9787,7 +9773,6 @@
 			children = (
 				9428B99A281922B100DB7250 /* ContextMenu */,
 				129D51CE2821D58200A4D4D3 /* Album */,
-				B6C9CAED27E96B9A0073BA1A /* CameraUploads */,
 				A84E92E426FB706E00606AA7 /* Versions */,
 				BFAC87B2260006E5009CA3F6 /* AudioVideo */,
 				838A7B5225D55EE200767DB0 /* Calls */,
@@ -10064,7 +10049,6 @@
 				A81BD5D127EB6CEB00234902 /* HistoryRetentionUseCaseTests.swift */,
 				72718980280054F900B2DB08 /* GetFeedbackInfoUseCaseTests.swift */,
 				943EC224282D70B800E8F3A9 /* CreateContextMenuUseCaseTests.swift */,
-				B630CD4B284583D000A298EE /* GetFileExtensionUseCaseTests.swift */,
 				83B5E87F27F70DF20073C870 /* DownloadNodeUseCaseTests.swift */,
 				1209CD99286E76FE00D5C079 /* NodeActionUseCaseTests.swift */,
 				12BCECD9287FAC2D00F98E33 /* PhotoLibraryUseCaseTests.swift */,
@@ -10236,23 +10220,6 @@
 				83293C542806CAE700369A86 /* NameCollisionUseCase.swift */,
 			);
 			path = General;
-			sourceTree = "<group>";
-		};
-		B6C9CAED27E96B9A0073BA1A /* CameraUploads */ = {
-			isa = PBXGroup;
-			children = (
-				B6C9CB1E27FD51B50073BA1A /* GetFileExtensionUseCase.swift */,
-			);
-			path = CameraUploads;
-			sourceTree = "<group>";
-		};
-		B6C9CB2227FD51CE0073BA1A /* Media */ = {
-			isa = PBXGroup;
-			children = (
-				B6C9CB2327FD51DF0073BA1A /* MediaTypeEntity.swift */,
-				B6C9CB2527FD5D530073BA1A /* FileExtensionEntity.swift */,
-			);
-			path = Media;
 			sourceTree = "<group>";
 		};
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
@@ -10614,7 +10581,6 @@
 				83657ECA287D891D0096163C /* Links */,
 				9428B9952819229800DB7250 /* ContextMenu */,
 				7288547227F711F700EFE506 /* Settings */,
-				B6C9CB2227FD51CE0073BA1A /* Media */,
 				838B976426B15318000E480E /* Call */,
 				BF782D25269BA4BA0001D169 /* General */,
 				BF782D28269BA4BA0001D169 /* Transfer */,
@@ -12637,7 +12603,6 @@
 				32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */,
 				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
 				B662B87524F70A570089376A /* GetSMSUseCase.swift in Sources */,
-				B6C9CB1F27FD51B50073BA1A /* GetFileExtensionUseCase.swift in Sources */,
 				A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */,
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
@@ -12800,7 +12765,6 @@
 				C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
 				BF782D56269BA4BB0001D169 /* CallEntity.swift in Sources */,
-				B6C9CB2427FD51DF0073BA1A /* MediaTypeEntity.swift in Sources */,
 				BFAB115523CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
@@ -13378,7 +13342,6 @@
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				C473097526FC93BB00DC9D55 /* CrashlyticsLogger.swift in Sources */,
-				B6C9CB2627FD5D530073BA1A /* FileExtensionEntity.swift in Sources */,
 				BF782D5F269BA4BB0001D169 /* ChatRoomEntity.swift in Sources */,
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
 				BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */,
@@ -14027,8 +13990,6 @@
 				C482B7C7271EFCA00074CFC4 /* MVVM-R.swift in Sources */,
 				B695B606264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
-				B620C0632845BC05003CEEE7 /* FileExtensionEntity.swift in Sources */,
-				B620C0612845BBFC003CEEE7 /* MediaTypeEntity.swift in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				BF6E8F6425C0C768003A125A /* MEGANode+Additions.swift in Sources */,
 				B6A6E1C0287CDE6600179806 /* MEGANode+Array.swift in Sources */,
@@ -14042,7 +14003,6 @@
 				C46517A3272C9DC8004F27A0 /* MEGANodeList+Mapper.swift in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
 				8361359121074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
-				B620C05F2845BBA2003CEEE7 /* GetFileExtensionUseCase.swift in Sources */,
 				C460506E27282F9400D67A44 /* MEGAOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14079,7 +14039,6 @@
 				943AFB5B283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */,
-				B620C0642845BC06003CEEE7 /* FileExtensionEntity.swift in Sources */,
 				BF943E9323554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */,
 				8335C647282E7B4400509479 /* Publisher+Additions.swift in Sources */,
@@ -14140,7 +14099,6 @@
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,
 				77D7E853243719E0005D2795 /* MEGAFunctions.swift in Sources */,
-				B620C0602845BBA3003CEEE7 /* GetFileExtensionUseCase.swift in Sources */,
 				5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */,
 				72991F0C27E1E32400BB00D5 /* MEGANode+Backup.swift in Sources */,
 				0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */,
@@ -14167,7 +14125,6 @@
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
-				B620C0622845BBFC003CEEE7 /* MediaTypeEntity.swift in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
 				83438A69281AB00A006C9285 /* NodeRepositoryProtocol.swift in Sources */,
 				B64A71AF287943BA0085087D /* NodeEntity+Mapper.swift in Sources */,
@@ -14448,7 +14405,6 @@
 				BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */,
 				83AE36B32886A07B002F1755 /* MockReachabilityUseCase.swift in Sources */,
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
-				B630CD4C284583D000A298EE /* GetFileExtensionUseCaseTests.swift in Sources */,
 				BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
 				B6FD6522268D8F3600988A17 /* ShareEntity+Additions.swift in Sources */,

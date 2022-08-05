@@ -1,6 +1,7 @@
 import Foundation
 import Photos
 import MobileCoreServices
+import MEGADomain
 
 extension PHAsset {
     

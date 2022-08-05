@@ -1,5 +1,6 @@
 import XCTest
-@testable import MEGA
+import UniformTypeIdentifiers
+@testable import MEGADomain
 
 class GetFileExtensionUseCaseTests: XCTestCase {
     let sut = GetFileExtensionUseCase()
@@ -8,7 +9,6 @@ class GetFileExtensionUseCaseTests: XCTestCase {
                                  "public.heic": "heic",
                                  "public.heif": "heif",
                                  "public.png": "png",
-                                 "public.camera-raw-image": "dng",
                                  "com.apple.quicktime-movie": "mov",
                                  "public.mpeg-4": "mp4",
                                  "com.compuserve.gif": "gif",
