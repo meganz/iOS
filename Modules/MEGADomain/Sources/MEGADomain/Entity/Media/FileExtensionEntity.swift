@@ -1,8 +1,6 @@
-import Foundation
+public typealias FileExtension = String
 
-typealias FileExtension = String
-
-enum FileExtensionEntity: FileExtension {
+public enum FileExtensionEntity: FileExtension {
     case unknown = ""
     case jpg = "jpg"
     case png = "png"

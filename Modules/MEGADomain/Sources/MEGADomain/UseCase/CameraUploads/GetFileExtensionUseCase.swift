@@ -1,18 +1,20 @@
 import Foundation
 import UniformTypeIdentifiers
-import MobileCoreServices
 import AVFoundation
+import CoreServices
 
-protocol GetFileExtensionUseCaseProtocol {
+public protocol GetFileExtensionUseCaseProtocol {
     @available(iOS 14.0, *)
     func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension
     
     func fileExtension(for type: MediaTypeEntity, url: URL?, uniformTypeIdentifier uti: String?) -> FileExtension
 }
 
-struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
+public struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
+    public init() { }
+    
     @available(iOS 14.0, *)
-    func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension {
+    public func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension {
         if let fileExtension = fileExtension(for: url) {
             return fileExtension
         } else if let fileExtension = fileExtension(for: uti)  {
@@ -22,7 +24,7 @@ struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
         return fileExtension(for: type)
     }
     
-    func fileExtension(for type: MediaTypeEntity, url: URL?, uniformTypeIdentifier uti: String?) -> FileExtension {
+    public func fileExtension(for type: MediaTypeEntity, url: URL?, uniformTypeIdentifier uti: String?) -> FileExtension {
         if let fileExtension = fileExtension(for: url) {
             return fileExtension
         } else if let fileExtension = fileExtension(forUTI: uti)  {

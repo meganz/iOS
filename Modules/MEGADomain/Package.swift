@@ -13,11 +13,12 @@ let package = Package(
             targets: ["MEGADomain"]),
     ],
     dependencies: [
+        .package(path: "../MEGASwift")
     ],
     targets: [
         .target(
             name: "MEGADomain",
-            dependencies: []),
+            dependencies: ["MEGASwift"]),
         .testTarget(
             name: "MEGADomainTests",
             dependencies: ["MEGADomain"]),
