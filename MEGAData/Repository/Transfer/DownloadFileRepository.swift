@@ -112,9 +112,12 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     
     func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, toUrl url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
         try await withCheckedThrowingContinuation { continuation in
+            var nillableContinuation: CheckedContinuation<TransferEntity, Error>? = continuation
+
             sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
                 guard let error = error, error.type == .apiOk, let node = request?.publicNode else {
-                    continuation.resume(throwing: TransferErrorEntity.couldNotFindNodeByLink)
+                    nillableContinuation?.resume(throwing: TransferErrorEntity.couldNotFindNodeByLink)
+                    nillableContinuation = nil
                     return
                 }
                 
@@ -123,10 +126,12 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                     case .success(_):
                         break
                     case .failure(let error):
-                        continuation.resume(throwing: error)
+                        nillableContinuation?.resume(throwing: error)
+                        nillableContinuation = nil
                     }
                 }, start: { transferEntity in
-                    continuation.resume(returning: transferEntity)
+                    nillableContinuation?.resume(returning: transferEntity)
+                    nillableContinuation = nil
                 }, update: nil, filename: nil, appdata: transferMetaData?.metaData, startFirst: startFirst, cancelToken: cancelToken)
             }))
         }
