@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct NodeRepository: NodeRepositoryProtocol {
     static var newRepo: NodeRepository {
         NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())

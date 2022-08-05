@@ -1,5 +1,5 @@
-
 import Combine
+import MEGADomain
 
 protocol MeetingNoUserJoinedUseCaseProtocol {
     var monitor: AnyPublisher<Void, Never> { get }

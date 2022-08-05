@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGADomain
 
 extension ThumbnailUseCaseProtocol {
     func cachedThumbnailImage(for node: NodeEntity, type: ThumbnailTypeEntity) -> Image? {

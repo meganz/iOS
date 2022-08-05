@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol NodeInfoRepositoryProtocol {
     func path(fromHandle: HandleEntity) -> URL?

@@ -1,5 +1,6 @@
 import Foundation
 import MEGASwift
+import MEGADomain
 
 extension Sequence where Element == NodeEntity {
     func removedChangeTypeNodes() -> [NodeEntity] {

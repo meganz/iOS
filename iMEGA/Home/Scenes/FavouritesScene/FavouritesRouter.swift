@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class FavouritesRouter: NSObject, Routing {
     private weak var navigationController: UINavigationController?

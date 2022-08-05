@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
     var result: Result<Void, NodeInfoError>

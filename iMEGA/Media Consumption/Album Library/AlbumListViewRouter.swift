@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import MEGADomain
 
 @available(iOS 14.0, *)
 protocol AlbumListViewRouting {

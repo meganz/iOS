@@ -1,3 +1,5 @@
+import MEGADomain
+
 @objc protocol TextFileEditable { }
 
 final class TextEditorViewRouter: NSObject {

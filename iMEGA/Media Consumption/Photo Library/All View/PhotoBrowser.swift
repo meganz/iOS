@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGADomain
 
 struct PhotoBrowser: UIViewControllerRepresentable {
     let currentPhoto: NodeEntity

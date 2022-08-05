@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import MEGADomain
 
 typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity>) -> Void
 

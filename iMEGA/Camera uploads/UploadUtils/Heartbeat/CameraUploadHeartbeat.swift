@@ -1,6 +1,8 @@
 import Foundation
 import FirebaseCrashlytics
 
+import MEGADomain
+
 final class CameraUploadHeartbeat: NSObject {
     private enum Constants {
         static let activeTimerInterval: Double = 30

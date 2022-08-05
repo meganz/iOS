@@ -1,3 +1,4 @@
+import MEGADomain
 
 @objc final class NameCollisionRouterOCWrapper: NSObject {
     @objc func uploadFiles(_ transfers: [CancellableTransfer], presenter: UIViewController, type: CancellableTransferType) {

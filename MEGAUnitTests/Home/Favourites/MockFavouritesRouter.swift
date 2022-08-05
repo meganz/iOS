@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 final class MockFavouritesRouter: FavouritesRouting {
     var openNode_calledTimes = 0

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 @objc final class PhotoSelectionAdapter: NSObject {
     private var megaNodes = [HandleEntity: MEGANode]()

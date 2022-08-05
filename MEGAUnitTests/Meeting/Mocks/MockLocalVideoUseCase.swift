@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)

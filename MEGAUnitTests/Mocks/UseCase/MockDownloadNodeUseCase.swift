@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
     var transferEntity: TransferEntity? = nil

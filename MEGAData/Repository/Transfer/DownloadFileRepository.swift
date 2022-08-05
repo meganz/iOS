@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     static var newRepo: DownloadFileRepository {
         DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: nil, chatSdk: MEGASdkManager.sharedMEGAChatSdk())

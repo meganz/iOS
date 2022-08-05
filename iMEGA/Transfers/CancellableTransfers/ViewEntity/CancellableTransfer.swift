@@ -1,3 +1,4 @@
+import MEGADomain
 
 @objc final class CancellableTransfer: NSObject {
     let handle: HandleEntity

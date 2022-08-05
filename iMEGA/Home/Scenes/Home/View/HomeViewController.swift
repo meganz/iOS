@@ -1,5 +1,6 @@
 import UIKit
 import MEGAUIKit
+import MEGADomain
 
 @objc(HomeRouting)
 protocol HomeRouting: NSObjectProtocol {

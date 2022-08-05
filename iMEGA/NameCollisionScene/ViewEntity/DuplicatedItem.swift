@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct DuplicatedItem {
     var name: String

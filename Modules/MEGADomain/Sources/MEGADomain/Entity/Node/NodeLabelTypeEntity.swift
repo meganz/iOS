@@ -1,4 +1,4 @@
-enum NodeLabelTypeEntity {
+public enum NodeLabelTypeEntity {
     case unknown
     case red
     case orange

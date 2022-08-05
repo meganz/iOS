@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 struct MockAccountRepository: AccountRepositoryProtocol {
     let nodesCount: UInt

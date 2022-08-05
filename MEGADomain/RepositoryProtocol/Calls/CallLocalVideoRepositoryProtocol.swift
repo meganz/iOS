@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallLocalVideoRepositoryProtocol {
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)

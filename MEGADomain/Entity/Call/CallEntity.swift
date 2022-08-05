@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 struct CallEntity {
     enum CallStatusType: Int {

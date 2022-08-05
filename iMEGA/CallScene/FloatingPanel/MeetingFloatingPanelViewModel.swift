@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady

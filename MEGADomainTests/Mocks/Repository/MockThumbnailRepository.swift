@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
     var hasCachedThumbnail = false

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension MEGAStore {
     func updateUserNicknames(by names:[(handle: HandleEntity, nickname: String)]) {

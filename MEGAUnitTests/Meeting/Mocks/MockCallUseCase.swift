@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockCallUseCase: CallUseCaseProtocol {
     var startListeningForCall_CalledTimes = 0

@@ -1,5 +1,6 @@
 import Combine
 import UIKit
+import MEGADomain
 
 protocol UserImageUseCaseProtocol {
     func fetchUserAvatar(withUserHandle handle: UInt64,

@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct RecentActionBucketEntity {
     let date: Date
     let userEmail: String?

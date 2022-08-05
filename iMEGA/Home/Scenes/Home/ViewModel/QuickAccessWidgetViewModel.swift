@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 enum QuickAccessWidgetAction: ActionType {
     case managePendingAction

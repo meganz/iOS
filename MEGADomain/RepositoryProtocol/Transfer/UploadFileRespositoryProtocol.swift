@@ -1,3 +1,5 @@
+import MEGADomain
+
 protocol UploadFileRepositoryProtocol {
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool
 func uploadFile(withLocalPath path: String, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?)

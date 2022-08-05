@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     var nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown

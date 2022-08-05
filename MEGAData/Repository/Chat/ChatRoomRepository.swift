@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     private let sdk: MEGAChatSdk

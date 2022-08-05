@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol AlbumRepositoryProtocol {
     func loadCameraUploadNode() async throws -> NodeEntity?

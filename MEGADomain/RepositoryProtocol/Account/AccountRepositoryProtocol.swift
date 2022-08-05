@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol AccountRepositoryProtocol {
     func totalNodesCount() -> UInt

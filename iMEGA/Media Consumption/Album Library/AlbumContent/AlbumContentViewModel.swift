@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import MEGADomain
 
 enum AlbumContentAction: ActionType {
     case onViewReady

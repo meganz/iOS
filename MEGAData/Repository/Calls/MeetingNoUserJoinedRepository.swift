@@ -1,5 +1,5 @@
-
 import Combine
+import MEGADomain
 
 final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
     static var newRepo: MeetingNoUserJoinedRepository {

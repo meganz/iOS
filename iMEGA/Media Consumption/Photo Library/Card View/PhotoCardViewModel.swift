@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import SwiftUI
 import MEGASwiftUI
+import MEGADomain
 
 @available(iOS 14.0, *)
 class PhotoCardViewModel: ObservableObject {

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     static var newRepo: ThumbnailRepository {

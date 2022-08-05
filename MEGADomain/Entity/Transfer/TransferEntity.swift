@@ -1,3 +1,6 @@
+import MEGADomain
+
+
 struct TransferEntity {
     
     // MARK: - Types

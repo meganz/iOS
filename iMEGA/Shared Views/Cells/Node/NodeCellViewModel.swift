@@ -1,3 +1,5 @@
+import MEGADomain
+
 enum NodeCellAction: ActionType {
     case initForReuse
     case manageLabel

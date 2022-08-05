@@ -1,5 +1,6 @@
 @testable import MEGA
 import Combine
+import MEGADomain
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)

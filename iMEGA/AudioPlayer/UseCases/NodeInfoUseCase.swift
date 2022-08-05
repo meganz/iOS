@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol NodeInfoUseCaseProtocol {
     func node(fromHandle: HandleEntity) -> MEGANode?
