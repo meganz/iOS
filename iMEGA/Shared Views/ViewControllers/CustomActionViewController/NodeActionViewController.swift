@@ -280,7 +280,6 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .setIsMediaFile(isMediaFile)
-            .setShowSlideshow(viewModel.shouldShowSlideShow(with: node.toNodeEntity()))
             .setIsEditableTextFile(isEditableTextFile)
             .setIsFile(node.isFile())
             .setVersionCount(node.mnz_numberOfVersions())

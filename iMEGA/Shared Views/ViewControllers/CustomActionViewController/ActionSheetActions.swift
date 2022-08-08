@@ -189,13 +189,6 @@ extension NodeAction {
         return NodeAction(title: Strings.Localizable.restore, detail: nil, image: Asset.Images.NodeActions.restore.image, type: .restore)
     }
     
-    class func slideShowAction() -> NodeAction {
-        return NodeAction(title: Strings.Localizable.SharedItems.Menu.Slideshow.title,
-                          detail: nil,
-                          image: Asset.Images.NodeActions.slideshow.image,
-                          type: .slideShow)
-    }
-    
     class func saveToPhotosAction() -> NodeAction {
         return NodeAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: Asset.Images.NodeActions.saveToPhotos.image, type: .saveToPhotos)
     }

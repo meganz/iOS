@@ -37,18 +37,6 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testSlideShowWithCloudDriveNodeContainsImageFile() {
-        actions = NodeActionBuilder()
-            .setDisplayMode(.cloudDrive)
-            .setAccessLevel(.accessOwner)
-            .setShowSlideshow(true)
-            .setIsMediaFile(true)
-            .setIsFile(true)
-            .build()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .slideShow, .saveToPhotos, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
-    }
-    
     func testCloudDriveNodeMediaFileExported() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
@@ -945,23 +933,5 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
-    }
-    
-    func testSlideShowEnabled_withReadAccess_shouldReturnTrue() throws {
-        actions = NodeActionBuilder()
-            .setShowSlideshow(true)
-            .setAccessLevel(.accessRead)
-            .build()
-        
-        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .slideShow, .download, .copy]))
-    }
-    
-    func testSlideShowDisabled_withReadAccess_shouldReturnFalse() throws {
-        actions = NodeActionBuilder()
-            .setShowSlideshow(false)
-            .setAccessLevel(.accessRead)
-            .build()
-        
-        XCTAssertFalse(isEqual(nodeActionTypes: [.info, .slideShow, .download, .copy]))
     }
 }

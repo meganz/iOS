@@ -18,7 +18,6 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeRevertVersion,
     MegaNodeActionTypeSelect,
     MegaNodeActionTypeRestore,
-    MegaNodeActionTypeSlideShow,
     MegaNodeActionTypeSaveToPhotos,
     MegaNodeActionTypeManageShare,
     MegaNodeActionTypeShareFolder,

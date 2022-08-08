@@ -2,7 +2,6 @@ final class NodeActionBuilder {
     private var displayMode: DisplayMode = .unknown
     private var accessLevel: MEGAShareType = .accessUnknown
     private var isMediaFile = false
-    private var showSlideshow = false
     private var isEditableTextFile = false
     private var isFile = false
     private var versionCount = 0
@@ -37,11 +36,6 @@ final class NodeActionBuilder {
     
     func setIsMediaFile(_ isMediaFile: Bool) -> NodeActionBuilder {
         self.isMediaFile = isMediaFile
-        return self
-    }
-    
-    func setShowSlideshow(_ showSlideshow: Bool) -> NodeActionBuilder {
-        self.showSlideshow = showSlideshow
         return self
     }
     
@@ -314,10 +308,6 @@ final class NodeActionBuilder {
             }
         }
         
-        if showSlideshow {
-            nodeActions.append(NodeAction.slideShowAction())
-        }
-        
         if isMediaFile {
             nodeActions.append(NodeAction.saveToPhotosAction())
         }
@@ -349,10 +339,6 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
             nodeActions.append(NodeAction.labelAction(label: label))
-        }
-        
-        if showSlideshow {
-            nodeActions.append(NodeAction.slideShowAction())
         }
         
         if isMediaFile {
@@ -459,10 +445,6 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
             nodeActions.append(NodeAction.labelAction(label: label))
-        }
-        
-        if showSlideshow {
-            nodeActions.append(NodeAction.slideShowAction())
         }
         
         if isMediaFile {
