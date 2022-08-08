@@ -29,19 +29,27 @@ final class CMEntity: CMElement {
 /// Define an action inside a CMEntity.
 ///
 ///  - Parameters:
+///     - isEnabled: Define the action style depending on if is enabled (default value) or not (adopting the hidden style).
 ///     - state: Define the state of an action, on/off to represent the ✅, in case it's a selected action.
 ///
 final class CMActionEntity: CMElement {
     var state: ActionState
+    var isEnabled: Bool
     
     init(title: String? = nil,
          detail: String? = nil,
          image: UIImage? = nil,
          identifier: String? = nil,
+         isEnabled: Bool = true,
          state: ActionState = .off) {
         
+        self.isEnabled = isEnabled
         self.state = state
         super.init(title: title, detail: detail, image: image, identifier: identifier)
+    }
+    
+    func updateActionStyle(isEnabled: Bool) {
+        self.isEnabled = isEnabled
     }
 }
 

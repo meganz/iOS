@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol SaveNodeUseCaseProtocol {
     func saveNodeIfNeeded(from transfer: TransferEntity)
@@ -61,7 +62,7 @@ struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRepository
         }
     }
     
-    private func setCoordinates(nodeHandle: MEGAHandle, fromFileAt path: String) {
+    private func setCoordinates(nodeHandle: HandleEntity, fromFileAt path: String) {
         guard let mediaCoordinates = path.mnz_coordinatesOfPhotoOrVideo() else {
             return
         }

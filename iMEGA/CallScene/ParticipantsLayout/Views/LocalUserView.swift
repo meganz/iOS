@@ -8,18 +8,26 @@ enum Corner {
     case bottomRight
 }
 
-let fixedMargin: CGFloat = 16.0
 
 class LocalUserView: UIView {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var videoImageView: UIImageView!
     @IBOutlet private weak var mutedImageView: UIImageView!
+    @IBOutlet private weak var expandImageView: UIImageView!
+
+    private enum Constants {
+        static let fixedMargin: CGFloat = 16.0
+        static let collapsedViewWidthAndHeight: CGFloat = 46.0
+        static let expandedViewWidth: CGFloat = 134.0
+        static let expandedViewHeight: CGFloat = 75.0
+        static let cornerRadius: CGFloat = 8.0
+        static let animationDurations: CGFloat = 0.3
+        static let iPhoneXOffset: CGFloat = 30.0
+    }
     
     private lazy var blurEffectView : UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blurEffectView.frame = bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurEffectView.layer.cornerRadius = 8
+        blurEffectView.layer.cornerRadius = Constants.cornerRadius
         blurEffectView.clipsToBounds = true
         return blurEffectView
     }()
@@ -27,7 +35,9 @@ class LocalUserView: UIView {
     private var offset: CGPoint = .zero
     private var corner: Corner = .topRight
     private var navigationHidden: Bool = false
-    
+    private var isVideoEnabled: Bool = false
+    private var isCollapsed: Bool = false
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -50,8 +60,13 @@ class LocalUserView: UIView {
         guard let touch = touches.first else {
             return
         }
-        let location = touch.location(in: superview)
-        positionView(by: location)
+
+        if touch.tapCount > 0 {
+            toggleViewLayout()
+        } else {
+            let location = touch.location(in: superview)
+            positionView(by: location)
+        }
     }
 
     //MARK: - Public
@@ -60,7 +75,7 @@ class LocalUserView: UIView {
             return
         }
         
-        layoutToOrientation()
+        frame.size = sizeForView()
         videoImageView.transform = (position == .front) ?  CGAffineTransform(scaleX: -1, y: 1) : CGAffineTransform(scaleX: 1, y: 1)
         
         positionView(by: CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: false)
@@ -78,11 +93,19 @@ class LocalUserView: UIView {
         avatarImageView.image = image
     }
     
-    func switchVideo() {
-        videoImageView.isHidden = !videoImageView.isHidden
+    func switchVideo(to enabled: Bool) {
+        isVideoEnabled = enabled
+        if isCollapsed {
+            return
+        }
+        avatarImageView.isHidden = isVideoEnabled
+        videoImageView.isHidden = !isVideoEnabled
     }
     
     func frameData(width: Int, height: Int, buffer: Data!) {
+        if isCollapsed {
+            return
+        }
         videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
     }
     
@@ -95,9 +118,8 @@ class LocalUserView: UIView {
     }
     
     func repositionView() {
-        layoutToOrientation()
-        let point = startingPoint()
-        self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
+        frame.size = sizeForView()
+        frame.origin = originPointForView()
     }
     
     func updateOffsetWithNavigation(hidden: Bool) {
@@ -106,10 +128,17 @@ class LocalUserView: UIView {
     }
     
     func addBlurEffect() {
+        if isCollapsed {
+            return
+        }
+        blurEffectView.frame.size = sizeForView()
         addSubview(blurEffectView)
     }
     
     func removeBlurEffect() {
+        if isCollapsed {
+            return
+        }
         blurEffectView.removeFromSuperview()
     }
     
@@ -130,51 +159,66 @@ class LocalUserView: UIView {
                     corner = .topLeft
                 }
             }
-            let point = startingPoint()
             
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                guard let self = self else { return }                
-                self.center = CGPoint(x: point.x + self.frame.size.width / 2, y: point.y + self.frame.size.height / 2)
+            UIView.animate(withDuration: Constants.animationDurations) { [weak self] in
+                guard let self = self else { return }
+                self.frame.origin = self.originPointForView()
             }
         } else {
-            let point = startingPoint()
-            self.center = CGPoint(x: point.x + frame.size.width / 2, y: point.y + frame.size.height / 2)
+            frame.origin = originPointForView()
         }
     }
     
-    private func startingPoint() -> CGPoint {
+    private func originPointForView() -> CGPoint {
         var x: CGFloat = 0.0
         var y: CGFloat = 0.0
         var iPhoneXOffset: CGFloat = 0.0
         
         if UIDevice.current.iPhoneX && UIScreen.main.bounds.size.height < UIScreen.main.bounds.size.width {
-            iPhoneXOffset = 30.0
+            iPhoneXOffset = Constants.iPhoneXOffset
         }
         guard let superview = superview else { return .zero }
 
         switch corner {
         case .topLeft:
-            x = fixedMargin + iPhoneXOffset
-            y = fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top + (navigationHidden ? 0 : 44)
+            x = Constants.fixedMargin + iPhoneXOffset
+            y = Constants.fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top + (navigationHidden ? 0 : 44)
         case .topRight:
-            x = superview.frame.size.width - frame.size.width - fixedMargin - iPhoneXOffset
-            y = fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top  + (navigationHidden ? 0 : 44)
+            x = superview.frame.size.width - frame.size.width - Constants.fixedMargin - iPhoneXOffset
+            y = Constants.fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top  + (navigationHidden ? 0 : 44)
         case .bottomLeft:
-            x = fixedMargin + iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - fixedMargin
+            x = Constants.fixedMargin + iPhoneXOffset
+            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - Constants.fixedMargin
         case .bottomRight:
-            x = superview.frame.size.width - frame.size.width - fixedMargin - iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - fixedMargin
+            x = superview.frame.size.width - frame.size.width - Constants.fixedMargin - iPhoneXOffset
+            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - Constants.fixedMargin
         }
         
         return CGPoint(x: x, y: y)
     }
     
-    private func layoutToOrientation() {
-        if UIDevice.current.orientation.isLandscape {
-            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: 134, height: 75)
+    private func sizeForView() -> CGSize {
+        if isCollapsed {
+            return CGSize(width: Constants.collapsedViewWidthAndHeight, height: Constants.collapsedViewWidthAndHeight)
+        } else if UIDevice.current.orientation.isLandscape {
+            return CGSize(width: Constants.expandedViewWidth, height: Constants.expandedViewHeight)
         } else {
-            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: 75, height: 134)
+            return CGSize(width: Constants.expandedViewHeight, height: Constants.expandedViewWidth)
+        }
+    }
+    
+    private func toggleViewLayout() {
+        isCollapsed.toggle()
+        UIView.animate(withDuration: Constants.animationDurations) { [weak self] in
+            guard let self = self else { return }
+            self.frame.size = self.sizeForView()
+            self.frame.origin = self.originPointForView()
+            self.layoutIfNeeded()
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
+            self.expandImageView.isHidden = !self.isCollapsed
+            self.avatarImageView.isHidden = self.isCollapsed ? true : self.isVideoEnabled
+            self.videoImageView.isHidden = self.isCollapsed ? true : !self.isVideoEnabled
         }
     }
 }

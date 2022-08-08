@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol FileVersionsRepositoryProtocol: RepositoryProtocol {
     func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)

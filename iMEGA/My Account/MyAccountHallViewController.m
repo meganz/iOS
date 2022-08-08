@@ -16,7 +16,6 @@
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersWidgetViewController.h"
-#import "TransfersWidgetViewController.h"
 #import "UIImage+MNZCategory.h"
 #import "UsageViewController.h"
 

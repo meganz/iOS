@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 enum ExportFileAction: ActionType {
     case exportFileFromNode(NodeEntity)

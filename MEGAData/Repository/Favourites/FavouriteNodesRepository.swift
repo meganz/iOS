@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
     static var newRepo: FavouriteNodesRepository {

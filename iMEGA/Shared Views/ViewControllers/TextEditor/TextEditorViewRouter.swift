@@ -1,3 +1,5 @@
+import MEGADomain
+
 @objc protocol TextFileEditable { }
 
 final class TextEditorViewRouter: NSObject {
@@ -7,7 +9,7 @@ final class TextEditorViewRouter: NSObject {
     
     private var textFile: TextFile
     private let textEditorMode: TextEditorMode
-    private var parentHandle: MEGAHandle?
+    private var parentHandle: HandleEntity?
     private var nodeEntity: NodeEntity?
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     
@@ -39,7 +41,7 @@ final class TextEditorViewRouter: NSObject {
     convenience init(
         textFile: TextFile,
         textEditorMode: TextEditorMode,
-        parentHandle: MEGAHandle? = nil,
+        parentHandle: HandleEntity? = nil,
         presenter: UIViewController
     ) {
         self.init(textFile: textFile, textEditorMode: textEditorMode, nodeEntity: nil, presenter: presenter)
@@ -87,7 +89,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     //MARK: - TextEditorViewRouting
-    func chooseParentNode(completion: @escaping (MEGAHandle) -> Void) {
+    func chooseParentNode(completion: @escaping (HandleEntity) -> Void) {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         guard let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController
         else { return }
@@ -117,7 +119,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func showActions(nodeHandle: MEGAHandle, delegate: NodeActionViewControllerDelegate, sender button: Any) {
+    func showActions(nodeHandle: HandleEntity, delegate: NodeActionViewControllerDelegate, sender button: Any) {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
             return
         }
@@ -142,7 +144,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         })
     }
     
-    func importNode(nodeHandle: MEGAHandle?) {
+    func importNode(nodeHandle: HandleEntity?) {
         guard let nodeHandle = nodeHandle,
               let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
             return
@@ -201,7 +203,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         node.mnz_remove(in: controller, completion: nil)
     }
     
-    func shareLink(from nodeHandle: MEGAHandle) {
+    func shareLink(from nodeHandle: HandleEntity) {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
             return
         }
@@ -209,7 +211,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: baseViewController)
     }
     
-    func removeLink(from nodeHandle: MEGAHandle) {
+    func removeLink(from nodeHandle: HandleEntity) {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
             return
         }

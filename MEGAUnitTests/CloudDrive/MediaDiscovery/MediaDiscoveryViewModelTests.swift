@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 @available(iOS 14.0, *)
 class MediaDiscoveryViewModelTests: XCTestCase {

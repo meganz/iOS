@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension NodeEntity {
     func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
@@ -28,17 +29,14 @@ fileprivate extension NodeEntity {
     init(node: MEGANode) {
         self.init(
             // MARK: - Types
-            
             changeTypes                        : ChangeTypeEntity(rawValue: node.getChanges().rawValue),
             nodeType                           : NodeTypeEntity(nodeType: node.type),
             
             // MARK: - Identification
-            
             name                               : node.name ?? "",
             fingerprint                        : node.fingerprint,
             
             // MARK: - Handles
-            
             handle                             : node.handle,
             base64Handle                       : node.base64Handle ?? "",
             restoreParentHandle                : node.restoreHandle,
@@ -46,7 +44,6 @@ fileprivate extension NodeEntity {
             parentHandle                       : node.parentHandle,
             
             // MARK: - Attributes
-            
             isFile                             : node.isFile(),
             isFolder                           : node.isFolder(),
             isRemoved                          : node.isRemoved(),
@@ -63,19 +60,16 @@ fileprivate extension NodeEntity {
             label                              : node.label.toNodeLabelTypeEntity(),
             
             // MARK: - Links
-
             publicHandle                       : node.publicHandle,
             expirationTime                     : Date(timeIntervalSince1970: TimeInterval(node.expirationTime)),
             publicLinkCreationTime             : node.publicLinkCreationTime,
 
             // MARK: - Files
-
             size                               : node.size?.uint64Value ?? 0,
             creationTime                       : node.creationTime ?? Date(),
             modificationTime                   : node.modificationTime ?? Date(),
 
             // MARK: - Media
-
             width                              : node.width,
             height                             : node.height,
             shortFormat                        : node.shortFormat,
@@ -83,7 +77,6 @@ fileprivate extension NodeEntity {
             duration                           : node.duration,
 
             // MARK: - Photo
-
             latitude                           : node.latitude?.doubleValue,
             longitude                          : node.longitude?.doubleValue
         )

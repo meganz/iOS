@@ -11,6 +11,8 @@
 #import "ReferralBonusesTableViewController.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAUIKit;
+
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *inviteYourFriendsView;

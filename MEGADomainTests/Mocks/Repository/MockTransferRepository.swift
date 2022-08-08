@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockTransferRepository: TransfersRepositoryProtocol {
     func transfers() -> [TransferEntity] {

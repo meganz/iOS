@@ -47,7 +47,11 @@
 }
 
 - (void)addLeftDismissButtonWithText:(NSString *)text {
-    self.viewControllers.firstObject.navigationItem.leftBarButtonItem = [self dismissBarButtonItemWithText:text];
+    [self addLeftDismissBarButton:[self dismissBarButtonItemWithText:text]];
+}
+
+- (void)addLeftDismissBarButton:(UIBarButtonItem *)barButton {
+    self.viewControllers.firstObject.navigationItem.leftBarButtonItem = barButton;
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

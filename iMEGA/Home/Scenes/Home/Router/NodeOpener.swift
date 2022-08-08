@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class NodeOpener {
 
     private weak var navigationController: UINavigationController?
@@ -6,7 +8,7 @@ final class NodeOpener {
         self.navigationController = navigationController
     }
 
-    func openNode(_ nodeHandle: MEGAHandle) {
+    func openNode(_ nodeHandle: HandleEntity) {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return }
         switch node.isFolder() {
         case true: openFolderNode(node)
@@ -21,7 +23,7 @@ final class NodeOpener {
         }
     }
     
-    func openNodeActions(_ nodeHandle: MEGAHandle, sender: Any) {
+    func openNodeActions(_ nodeHandle: HandleEntity, sender: Any) {
         guard let navigationController = navigationController else { return }
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return }
         

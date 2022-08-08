@@ -1,3 +1,4 @@
+import MEGADomain
 
 extension MEGALinkManager {
     @objc class func downloadFileLinkAfterLogin() {

@@ -1,8 +1,9 @@
 import Foundation
+import MEGADomain
 
 struct ContactRequest {
 
-    let handle: MEGAHandle
+    let handle: HandleEntity
 
     let sourceEmail: String?
 

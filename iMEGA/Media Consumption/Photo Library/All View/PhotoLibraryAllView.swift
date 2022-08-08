@@ -1,4 +1,6 @@
 import SwiftUI
+import MEGASwiftUI
+import MEGADomain
 
 @available(iOS 14.0, *)
 struct PhotoLibraryAllView: View {
@@ -25,9 +27,9 @@ struct PhotoLibraryAllView: View {
             
             PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
         }
-        .fullScreenCover(item: $viewModel.selectedNode) {
-            router.photoBrowser(for: $0, viewModel: viewModel)
-                .ignoresSafeArea()
+        .onReceive(viewModel.$selectedNode) { photo in
+            guard let photo = photo else { return }
+            router.openPhotoBrowser(for: photo, allPhotos: viewModel.libraryViewModel.library.allPhotos)
         }
     }
     

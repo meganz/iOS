@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static let newRepo = MockOfflineFilesRepository()
@@ -15,5 +16,5 @@ struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
         offlineFileMock
     }
     
-    func createOfflineFile(name: String, for handle: MEGAHandle) {    }
+    func createOfflineFile(name: String, for handle: HandleEntity) {    }
 }

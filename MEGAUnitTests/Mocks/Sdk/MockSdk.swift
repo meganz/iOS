@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 final class MockSdk: MEGASdk {
     private var nodes: [MEGANode]
@@ -29,7 +30,7 @@ final class MockSdk: MEGASdk {
     
     override var myEmail: String? { email }
     
-    override func node(forHandle handle: MEGAHandle) -> MEGANode? {
+    override func node(forHandle handle: HandleEntity) -> MEGANode? {
         nodes.first { $0.handle == handle }
     }
     

@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import MEGASwiftUI
 
 @available(iOS 14.0, *)
 struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: PhotoChronologicalCategory, VM: PhotoLibraryModeCardViewModel<Category>, Content: View, Content: Equatable {

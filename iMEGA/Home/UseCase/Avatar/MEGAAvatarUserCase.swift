@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol MEGAAvatarUseCaseProtocol {
 
@@ -33,7 +34,7 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
 
     // MARK: - Shared Avatar Caching Path
 
-    private func cachedAvatarFilePath(of userBase64Handle: MEGABase64Handle) -> URL {
+    private func cachedAvatarFilePath(of userBase64Handle: Base64HandleEntity) -> URL {
         thumbnailRepo.cachedThumbnailURL(for: userBase64Handle, type: .thumbnail)
     }
 

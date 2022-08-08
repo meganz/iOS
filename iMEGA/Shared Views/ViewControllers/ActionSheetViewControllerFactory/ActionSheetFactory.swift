@@ -1,8 +1,9 @@
 import Foundation
+import MEGADomain
 
 protocol ActionSheetFactoryProtocol {
 
-    func nodeLabelColorView(forNode nodeHandle: MEGAHandle,
+    func nodeLabelColorView(forNode nodeHandle: HandleEntity,
                             completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?)
 }
 
@@ -17,7 +18,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
         self.nodeLabelActionUseCase = nodeLabelActionUseCase
     }
 
-    func nodeLabelColorView(forNode nodeHandle: MEGAHandle,
+    func nodeLabelColorView(forNode nodeHandle: HandleEntity,
                             completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?) {
         nodeLabelColorActions(forNode: nodeHandle) { (actionsResult) in
             let viewControllerResult = actionsResult.map {
@@ -28,7 +29,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
     }
 
     private func nodeLabelColorActions(
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion:((Result<[BaseAction], NodeLabelActionDomainError>) -> Void)?
     ) {
         nodeLabelActionUseCase.nodeLabelColor(forNode: nodeHandle) { (colorResult) in
@@ -50,7 +51,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
     }
 
     private func nodeLabelActions(
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         ofColor labelColor: NodeLabelColor,
         currentLabelColor: NodeLabelColor
     ) -> BaseAction? {

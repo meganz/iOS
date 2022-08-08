@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallParticipantVideoDelegate: AnyObject {
     func frameData(width: Int, height: Int, buffer: Data!)
@@ -10,9 +11,9 @@ final class CallParticipantEntity: Equatable {
         case unknown
     }
     
-    let chatId: MEGAHandle
-    let participantId: MEGAHandle
-    let clientId: MEGAHandle
+    let chatId: HandleEntity
+    let participantId: HandleEntity
+    let clientId: HandleEntity
     var name: String?
     var email: String?
     var isModerator: Bool
@@ -28,9 +29,9 @@ final class CallParticipantEntity: Equatable {
     var isSpeakerPinned: Bool = false
     var sessionRecoverable: Bool
     
-    init(chatId: MEGAHandle,
-         participantId: MEGAHandle,
-         clientId: MEGAHandle,
+    init(chatId: HandleEntity,
+         participantId: HandleEntity,
+         clientId: HandleEntity,
          networkQuality: Int,
          email: String?,
          isModerator: Bool,

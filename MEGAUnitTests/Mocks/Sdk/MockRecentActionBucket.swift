@@ -1,10 +1,11 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 final class MockRecentActionBucket: MEGARecentActionBucket {
     private let _timestamp: Date
     private let _email: String
-    private let _parentHandle: MEGAHandle
+    private let _parentHandle: HandleEntity
     private let _isUpdate: Bool
     private let _isMedia: Bool
     private let _nodeList: MEGANodeList
@@ -12,7 +13,7 @@ final class MockRecentActionBucket: MEGARecentActionBucket {
     init(
         timestamp: Date = Date(),
         email: String = "name@email.com",
-        parentHandle: MEGAHandle = 1,
+        parentHandle: HandleEntity = 1,
         isUpdate: Bool = false,
         isMedia: Bool = false,
         nodeList: MEGANodeList = MockNodeList()

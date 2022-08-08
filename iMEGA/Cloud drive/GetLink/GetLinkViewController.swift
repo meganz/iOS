@@ -432,6 +432,7 @@ class GetLinkViewController: UIViewController {
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         getLinkVM.date = sender.date
         guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else { return }
+        setExpiryDate()
         tableView.reloadSections([expiryDateSection], with: .automatic)
     }
     
@@ -736,9 +737,6 @@ extension GetLinkViewController: UITableViewDelegate {
                 case .activateExpiryDate, .pickExpiryDate:
                     break
                 case .configureExpiryDate:
-                    if getLinkVM.selectDate {
-                        setExpiryDate()
-                    }
                     getLinkVM.selectDate = !getLinkVM.selectDate
                     guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else { return }
                     tableView.reloadSections([expiryDateSection], with: .automatic)

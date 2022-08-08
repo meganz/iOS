@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGADomain
 
 final class NameCollisionViewRouter: NameCollisionViewRouting {
     

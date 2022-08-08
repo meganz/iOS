@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGADomain
 
 protocol CopyDataBasesRepositoryProtocol {
     func applicationSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void)

@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 final class MockRatingRequestBaseConditionsUseCase: RatingRequestBaseConditionsUseCaseProtocol {
     var hasMet: Bool

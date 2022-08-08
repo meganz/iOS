@@ -1,11 +1,13 @@
+import MEGADomain
+
 // MARK: - Use case protocol -
 protocol NodeActionUseCaseProtocol {
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity
+    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
-    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int)
-    func hasVersions(nodeHandle: MEGAHandle) -> Bool
-    func isDownloaded(nodeHandle: MEGAHandle) -> Bool
-    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool
+    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
+    func hasVersions(nodeHandle: HandleEntity) -> Bool
+    func isDownloaded(nodeHandle: HandleEntity) -> Bool
+    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
     func slideShowImages(for node: NodeEntity) -> [NodeEntity]
 }
 
@@ -18,7 +20,7 @@ struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
         self.nodeRepository = repo
     }
     
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
+    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         nodeRepository.nodeAccessLevel(nodeHandle: nodeHandle)
     }
     
@@ -26,19 +28,19 @@ struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
         return nodeRepository.labelString(label: label)
     }
     
-    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
+    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         nodeRepository.getFilesAndFolders(nodeHandle: nodeHandle)
     }
     
-    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
+    func hasVersions(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.hasVersions(nodeHandle: nodeHandle)
     }
     
-    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
+    func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.isDownloaded(nodeHandle: nodeHandle)
     }
     
-    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
+    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.isInRubbishBin(nodeHandle: nodeHandle)
     }
 

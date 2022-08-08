@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol DownloadLinkRouterProtocol {
     func downloadFileLink()

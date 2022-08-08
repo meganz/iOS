@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 struct CallEntity {
     enum CallStatusType: Int {
@@ -53,8 +53,8 @@ struct CallEntity {
     }
     
     let status: CallStatusType?
-    let chatId: MEGAHandle
-    let callId: MEGAHandle
+    let chatId: HandleEntity
+    let callId: HandleEntity
     let changeTye: ChangeType?
     let duration: Int64
     let initialTimestamp: Int64
@@ -66,8 +66,8 @@ struct CallEntity {
     let callCompositionChange: CompositionChangeType?
     let numberOfParticipants: Int
     let isOnHold: Bool
-    let sessionClientIds: [MEGAHandle]
+    let sessionClientIds: [HandleEntity]
     let clientSessions: [ChatSessionEntity]
-    let participants: [MEGAHandle]
+    let participants: [HandleEntity]
     let uuid: UUID
 }

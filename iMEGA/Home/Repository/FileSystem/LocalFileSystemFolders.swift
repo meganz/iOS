@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct TemporaryDirectoryFinding {
 
@@ -22,7 +23,7 @@ extension TemporaryDirectoryFinding {
         })
     }
 
-    private static func urlForNode(_ nodeHandle: MEGABase64Handle, name: String, in directory: String?) -> URL? {
+    private static func urlForNode(_ nodeHandle: Base64HandleEntity, name: String, in directory: String?) -> URL? {
         guard let directory = directory else { return nil }
         return URL(fileURLWithPath: directory, isDirectory: true)
             .appendingPathComponent(nodeHandle)
@@ -32,6 +33,6 @@ extension TemporaryDirectoryFinding {
 
 extension TemporaryDirectoryFinding {
     enum SearchType {
-        case node(handle: MEGABase64Handle, name: String, fingerprint: String)
+        case node(handle: Base64HandleEntity, name: String, fingerprint: String)
     }
 }

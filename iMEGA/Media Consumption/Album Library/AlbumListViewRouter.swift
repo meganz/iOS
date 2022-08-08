@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import MEGADomain
 
 @available(iOS 14.0, *)
 protocol AlbumListViewRouting {
@@ -45,7 +46,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     }
     
     func build() -> UIViewController {
-        let vm = AlbumListViewModel(usecase: AlbumListUseCase(repository: AlbumRepository()))
+        let vm = AlbumListViewModel(usecase: AlbumListUseCase(repository: AlbumRepository.newRepo))
         let content = AlbumListView(viewModel: vm, router: self)
         
         return UIHostingController(rootView: content)

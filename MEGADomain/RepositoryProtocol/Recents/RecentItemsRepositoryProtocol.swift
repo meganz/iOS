@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol RecentItemsRepositoryProtocol {
     func deleteAllRecentItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)

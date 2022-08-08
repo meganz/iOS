@@ -1,3 +1,5 @@
+import MEGADomain
+
 enum TextEditorViewAction: ActionType {
     case setUpView
     case saveText(content: String)
@@ -23,12 +25,12 @@ enum TextEditorViewAction: ActionType {
 }
 
 protocol TextEditorViewRouting: Routing {
-    func chooseParentNode(completion: @escaping (MEGAHandle) -> Void)
+    func chooseParentNode(completion: @escaping (HandleEntity) -> Void)
     func dismissTextEditorVC()
     func dismissBrowserVC()
-    func showActions(nodeHandle: MEGAHandle, delegate: NodeActionViewControllerDelegate, sender button: Any)
+    func showActions(nodeHandle: HandleEntity, delegate: NodeActionViewControllerDelegate, sender button: Any)
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool)
-    func importNode(nodeHandle: MEGAHandle?)
+    func importNode(nodeHandle: HandleEntity?)
     func exportFile(from node: NodeEntity, sender button: Any)
     func showDownloadTransfer(node: NodeEntity)
     func sendToChat(node: MEGANode)
@@ -36,8 +38,8 @@ protocol TextEditorViewRouting: Routing {
     func viewInfo(node: MEGANode)
     func viewVersions(node: MEGANode)
     func removeTextFile(node: MEGANode)
-    func shareLink(from nodeHandle: MEGAHandle)
-    func removeLink(from nodeHandle: MEGAHandle)
+    func shareLink(from nodeHandle: HandleEntity)
+    func removeLink(from nodeHandle: HandleEntity)
 }
 
 final class TextEditorViewModel: ViewModelType {
@@ -59,7 +61,7 @@ final class TextEditorViewModel: ViewModelType {
     private var router: TextEditorViewRouting
     private var textFile: TextFile
     private var textEditorMode: TextEditorMode
-    private var parentHandle: MEGAHandle?
+    private var parentHandle: HandleEntity?
     private var nodeEntity: NodeEntity?
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
@@ -74,7 +76,7 @@ final class TextEditorViewModel: ViewModelType {
         uploadFileUseCase: UploadFileUseCaseProtocol,
         downloadNodeUseCase: DownloadNodeUseCaseProtocol,
         nodeActionUseCase: NodeActionUseCaseProtocol,
-        parentHandle: MEGAHandle? = nil,
+        parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil
     ) {
         self.router = router
@@ -328,7 +330,7 @@ final class TextEditorViewModel: ViewModelType {
         return nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     
-    private func uploadTo(_ parentHandle: MEGAHandle) {
+    private func uploadTo(_ parentHandle: HandleEntity) {
         self.parentHandle = parentHandle
         let isFileNameDuplicated = uploadFileUseCase.hasExistFile(name: textFile.fileName, parentHandle: parentHandle)
         if isFileNameDuplicated {

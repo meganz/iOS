@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct ShareRepository: ShareRepositoryProtocol {
     private let sdk: MEGASdk

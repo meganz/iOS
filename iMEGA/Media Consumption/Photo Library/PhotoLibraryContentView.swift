@@ -10,43 +10,45 @@ struct PhotoLibraryContentView: View {
     @StateObject private var filterViewModel = PhotoLibraryFilterViewModel()
     
     var body: some View {
-        if viewModel.library.isEmpty {
-            ProgressView()
-                .scaleEffect(1.5)
-        } else {
-            Group {
-                if #available(iOS 15.0, *) {
-                    content()
-                } else {
-                    ZStack(alignment: .bottom) {
-                        photoContent()
-                        PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
-                            .opacity(viewModel.contentMode == .library ? 1 : 0)
+        Group {
+            if viewModel.library.isEmpty {
+                ProgressView()
+                    .scaleEffect(1.5)
+            } else {
+                Group {
+                    if #available(iOS 15.0, *) {
+                        content()
+                    } else {
+                        ZStack(alignment: .bottom) {
+                            photoContent()
+                            PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
+                                .opacity(viewModel.contentMode == .library ? 1 : 0)
+                        }
                     }
                 }
+                .environment(\.editMode, $editMode)
+                .onReceive(viewModel.selection.$editMode) {
+                    editMode = $0
+                }
             }
-            .environment(\.editMode, $editMode)
-            .onReceive(viewModel.selection.$editMode) {
-                editMode = $0
-            }
-            .popover(isPresented: $viewModel.showFilter) {
-                PhotoLibraryFilterView(
-                    viewModel,
-                    filterViewModel: filterViewModel,
-                    forScreen: PhotosFilterOptionKeys.cameraUploadTimeline,
-                    onFilterUpdate: onFilterUpdate
-                )
-            }
+        }
+        .popover(isPresented: $viewModel.showFilter) {
+            PhotoLibraryFilterView(
+                viewModel,
+                filterViewModel: filterViewModel,
+                forScreen: PhotosFilterOptionKeys.cameraUploadTimeline,
+                onFilterUpdate: onFilterUpdate
+            )
         }
     }
     
     @ViewBuilder
     @available(iOS 15.0, *)
     private func content() -> some View {
-        if viewModel.contentMode == .library {
+        if viewModel.contentMode != .album {
             photoContent()
                 .safeAreaInset(edge: .bottom) {
-                    if editMode.isEditing {
+                    if editMode.isEditing && viewModel.contentMode == .library {
                         EmptyView()
                     } else {
                         PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)

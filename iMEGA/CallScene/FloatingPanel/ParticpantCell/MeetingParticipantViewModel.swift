@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 enum MeetingParticipantViewAction: ActionType {
     case onViewReady
@@ -10,12 +11,13 @@ final class MeetingParticipantViewModel: ViewModelType {
         case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool)
         case updateAvatarImage(image: UIImage)
         case updateName(name: String)
+        case updatePrivilege(isModerator: Bool)
     }
     
     private let participant: CallParticipantEntity
     private var userImageUseCase: UserImageUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
     private var subscriptions = Set<AnyCancellable>()

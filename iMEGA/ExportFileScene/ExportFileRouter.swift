@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MEGADomain
 
 final class ExportFileRouter: ExportFileViewRouting {
     private weak var presenter: UIViewController?
@@ -58,7 +59,7 @@ final class ExportFileRouter: ExportFileViewRouting {
         guard let presenter = presenter else {
             return
         }
-        
+        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
         TransfersWidgetViewController.sharedTransfer().showProgress(view: presenter.view, bottomAnchor: -100)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }

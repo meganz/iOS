@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGADomain
 
 // MARK: - Use case protocol -
 protocol RecentItemsUseCaseProtocol {

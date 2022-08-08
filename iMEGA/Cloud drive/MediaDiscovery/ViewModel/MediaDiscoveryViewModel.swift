@@ -1,4 +1,6 @@
 import Foundation
+import MEGADomain
+import MEGAFoundation
 
 enum MediaDiscoveryAction: ActionType {
     case onViewReady

@@ -1,3 +1,4 @@
+import MEGADomain
 
 // MARK: - Use case protocol
 protocol AccountUseCaseProtocol {

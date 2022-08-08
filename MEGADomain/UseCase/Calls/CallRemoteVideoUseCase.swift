@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import MEGADomain
 
 typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity>) -> Void
 
@@ -8,24 +9,24 @@ protocol CallRemoteVideoUseCaseProtocol {
     func enableRemoteVideo(for participant: CallParticipantEntity)
     func disableRemoteVideo(for participant: CallParticipantEntity)
     func disableAllRemoteVideos()
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
+    func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+    func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+    func requestLowResolutionVideos(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+    func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
 }
 
 protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
-    func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data)
+    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data)
 }
 
 final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRemoteVideoUseCaseProtocol {
     enum VideoRequestType {
         case enableVideo(CallParticipantEntity)
         case disableVideo(CallParticipantEntity)
-        case requestHighResolutionVideo(chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
-        case stopHighResolutionVideo(chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
-        case requestLowResolutionVideos(chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
-        case stopLowResolutionVideo(chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?)
+        case requestHighResolutionVideo(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+        case stopHighResolutionVideo(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+        case requestLowResolutionVideos(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+        case stopLowResolutionVideo(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
     }
     
     private let repository: T
@@ -83,25 +84,25 @@ final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRe
         repository.disableAllRemoteVideos()
     }
     
-    func requestHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
+    func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.requestHighResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
     }
 
-    func stopHighResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
+    func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.stopHighResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
     }
     
-    func requestLowResolutionVideos(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
+    func requestLowResolutionVideos(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.requestLowResolutionVideos(chatId: chatId, clientId: clientId, completion: completion))
     }
     
-    func stopLowResolutionVideo(for chatId: MEGAHandle, clientId: MEGAHandle, completion: ResolutionVideoChangeCompletion?) {
+    func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.stopLowResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
     }
 }
 
 extension CallRemoteVideoUseCase: CallRemoteVideoListenerRepositoryProtocol {
-    func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data) {
+    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data) {
         remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer)
     }
 }

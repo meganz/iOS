@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 actor PhotoLibraryMapper {
     func buildPhotoLibrary(with nodes: [PhotoLibraryNodeProtocol], withSortType type: SortOrderType) -> PhotoLibrary {

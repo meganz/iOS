@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 enum NodeLoadError: Error {
     case noRootNode
@@ -12,7 +13,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     private let loadNodeRequest: (MEGARequestDelegate) -> Void
     private let newNodeName: String?
     private let createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)?
-    private let setFolderHandleRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)?
+    private let setFolderHandleRequest: ((HandleEntity, MEGARequestDelegate) -> Void)?
     private let completion: NodeLoadCompletion
     private let sdk: MEGASdk
     private let autoCreate: (() -> Bool)?
@@ -23,7 +24,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
          loadNodeRequest: @escaping (MEGARequestDelegate) -> Void,
          newNodeName: String? = nil,
          createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)? = nil,
-         setFolderHandleRequest: ((MEGAHandle, MEGARequestDelegate) -> Void)? = nil,
+         setFolderHandleRequest: ((HandleEntity, MEGARequestDelegate) -> Void)? = nil,
          completion: @escaping NodeLoadCompletion) {
         self.autoCreate = autoCreate
         self.sdk = sdk
@@ -57,7 +58,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     }
     
     // MARK: - Check loaded node handle
-    func validateLoadedHandle(_ handle: NodeHandle) {
+    func validateLoadedHandle(_ handle: HandleEntity) {
         guard let node = handle.validNode(in: sdk) else {
             createNode()
             return
@@ -86,7 +87,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
         })
     }
     
-    func setTargetFolder(forHandle handle: NodeHandle) {
+    func setTargetFolder(forHandle handle: HandleEntity) {
         setFolderHandleRequest?(handle, RequestDelegate(completion: validate))
     }
     

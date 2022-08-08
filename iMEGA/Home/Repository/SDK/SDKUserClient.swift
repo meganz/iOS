@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct SDKUserClient {
     
@@ -10,10 +11,12 @@ struct SDKUserClient {
     /// Will return the owner user of specified shared node in `MEGASDK`.
     /// - Parameter: Shared node's node handle.
     var userForSharedNode: (
-        _ nodeHandle: MEGAHandle
+        _ nodeHandle: HandleEntity
     ) -> UserSDKEntity?
     
     var isGuest: () -> Bool
+    
+    var contacts: () -> [UserSDKEntity]
 }
 
 extension SDKUserClient {
@@ -38,6 +41,14 @@ extension SDKUserClient {
             },
             isGuest: {
                 api.isGuestAccount
+            },
+            contacts: {
+                let userList = api.contacts()
+                return (0..<userList.size.intValue).compactMap { index in
+                    guard let user = userList.user(at: index) else { return nil }
+                    let base64Handle = MEGASdk.base64Handle(forUserHandle: user.handle)
+                    return UserSDKEntity(with: user, base64Handle: base64Handle)
+                }
             }
         )
     }

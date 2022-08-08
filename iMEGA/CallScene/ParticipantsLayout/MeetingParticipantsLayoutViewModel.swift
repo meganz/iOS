@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGADomain
 
 enum CallViewAction: ActionType {
     case onViewLoaded
@@ -19,8 +20,8 @@ enum CallViewAction: ActionType {
     case particpantIsVisible(_ participant: CallParticipantEntity, index: Int)
     case indexVisibleParticipants([Int])
     case pinParticipantAsSpeaker(CallParticipantEntity)
-    case addParticipant(withHandle: MEGAHandle)
-    case removeParticipant(withHandle: MEGAHandle)
+    case addParticipant(withHandle: HandleEntity)
+    case removeParticipant(withHandle: HandleEntity)
     case startCallEndCountDownTimer
     case endCallEndCountDownTimer
     case didEndDisplayLastPeerLeftStatusMessage
@@ -48,7 +49,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case switchMenusVisibility
         case enableLayoutButton(Bool)
         case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
-        case switchLocalVideo
+        case switchLocalVideo(Bool)
         case updateName(String)
         case updateDuration(String)
         case updatePageControl(Int)
@@ -288,7 +289,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func participantName(for userHandle: MEGAHandle, completion: @escaping (String?) -> Void) {
+    private func participantName(for userHandle: HandleEntity, completion: @escaping (String?) -> Void) {
         chatRoomUseCase.userDisplayName(forPeerId: userHandle, chatId: chatRoom.chatId) { result in
             switch result {
             case .success(let displayName):
@@ -538,8 +539,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callEndCountDownSubscription = nil
     }
     
-    private func handlersSubsetToFetch(forHandlers handlers: [MEGAHandle]) -> [MEGAHandle] {
-        var handlersSubset = [MEGAHandle]()
+    private func handlersSubsetToFetch(forHandlers handlers: [HandleEntity]) -> [HandleEntity] {
+        var handlersSubset = [HandleEntity]()
         if handlers.count > 2 {
             handlersSubset.append(handlers[0])
         } else if handlers.count == 2 {
@@ -619,7 +620,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         tappedParticipant(callParticipants[participantIndex], at: IndexPath(item: participantIndex, section: 0))
     }
     
-    private func switchVideoResolutionHighToLow(for clientId: MEGAHandle, in chatId: MEGAHandle) {
+    private func switchVideoResolutionHighToLow(for clientId: HandleEntity, in chatId: HandleEntity) {
         
         remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientId: clientId) {  [weak self] result in
             switch result {
@@ -631,7 +632,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func switchVideoResolutionLowToHigh(for clientId: MEGAHandle, in chatId: MEGAHandle) {
+    private func switchVideoResolutionLowToHigh(for clientId: HandleEntity, in chatId: HandleEntity) {
         remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientId: clientId) { [weak self] result in
             switch result {
             case .success:
@@ -660,7 +661,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
     }
     
-    private func requestAvatarChanges(forParticipants participants: [CallParticipantEntity], chatId: MEGAHandle) {
+    private func requestAvatarChanges(forParticipants participants: [CallParticipantEntity], chatId: HandleEntity) {
         avatarChangeSubscription?.cancel()
         avatarRefetchTasks?.forEach { $0.cancel() }
         
@@ -676,7 +677,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
     }
     
-    private func createRefetchAvatarTask(forHandle handle: MEGAHandle, chatId: MEGAHandle) -> Task<Void, Never> {
+    private func createRefetchAvatarTask(forHandle handle: HandleEntity, chatId: HandleEntity) -> Task<Void, Never> {
         Task { [weak self] in
             guard let self = self else { return }
             
@@ -698,7 +699,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     @MainActor
-    private func updateAvatar(handle: MEGAHandle, image: UIImage) {
+    private func updateAvatar(handle: HandleEntity, image: UIImage) {
         guard let myself = CallParticipantEntity.myself(chatId: call.chatId) else {
             return
         }
@@ -860,12 +861,12 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
-    func participantAdded(with handle: MEGAHandle) {
+    func participantAdded(with handle: HandleEntity) {
         dispatch(.addParticipant(withHandle: handle))
         containerViewModel?.dispatch(.participantAdded)
     }
     
-    func participantRemoved(with handle: MEGAHandle) {
+    func participantRemoved(with handle: HandleEntity) {
         dispatch(.removeParticipant(withHandle: handle))
         containerViewModel?.dispatch(.participantRemoved)
     }
@@ -897,7 +898,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 localVideoUseCase.addLocalVideo(for: chatRoom.chatId, callbacksDelegate: self)
             }
             localVideoEnabled = video
-            invokeCommand?(.switchLocalVideo)
+            invokeCommand?(.switchLocalVideo(localVideoEnabled))
         }
         invokeCommand?(.updateHasLocalAudio(audio))
     }
@@ -951,7 +952,7 @@ extension MeetingParticipantsLayoutViewModel: CallLocalVideoCallbacksUseCaseProt
 }
 
 extension MeetingParticipantsLayoutViewModel: CallRemoteVideoListenerUseCaseProtocol {
-    func remoteVideoFrameData(clientId: MEGAHandle, width: Int, height: Int, buffer: Data) {
+    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data) {
         guard let participant = callParticipants.first(where: { $0.clientId == clientId }) else {
             MEGALogError("Error getting participant from remote video frame")
             return

@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 struct UserImageRepository: UserImageRepositoryProtocol {
    
@@ -49,7 +50,7 @@ struct UserImageRepository: UserImageRepositoryProtocol {
         }
     }
     
-    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never> {
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         let userAvatarChangeSubscriber = UserAvatarChangeSubscriber(sdk: sdk, handles: handles)
         self.userAvatarChangeSubscriber = userAvatarChangeSubscriber
         return userAvatarChangeSubscriber.monitor
@@ -91,17 +92,17 @@ struct UserImageRepository: UserImageRepositoryProtocol {
 fileprivate final class UserAvatarChangeSubscriber {
     private class UserUpdateListener: NSObject, MEGAGlobalDelegate {
         private let sdk: MEGASdk
-        private let handles: [MEGAHandle]
-        private let source: PassthroughSubject<[MEGAHandle], Never>
+        private let handles: [HandleEntity]
+        private let source: PassthroughSubject<[HandleEntity], Never>
         
-        var monitor: AnyPublisher<[MEGAHandle], Never> {
+        var monitor: AnyPublisher<[HandleEntity], Never> {
             source.eraseToAnyPublisher()
         }
         
-        init(sdk: MEGASdk, handles: [MEGAHandle]) {
+        init(sdk: MEGASdk, handles: [HandleEntity]) {
             self.sdk = sdk
             self.handles = handles
-            source = PassthroughSubject<[MEGAHandle], Never>()
+            source = PassthroughSubject<[HandleEntity], Never>()
             super.init()
         }
         
@@ -130,11 +131,11 @@ fileprivate final class UserAvatarChangeSubscriber {
     
     private let userUpdateListener: UserUpdateListener
 
-    var monitor: AnyPublisher<[MEGAHandle], Never> {
+    var monitor: AnyPublisher<[HandleEntity], Never> {
         userUpdateListener.monitor
     }
     
-    init(sdk: MEGASdk, handles: [MEGAHandle]) {
+    init(sdk: MEGASdk, handles: [HandleEntity]) {
         userUpdateListener = UserUpdateListener(sdk: sdk, handles: handles)
         userUpdateListener.start()
     }

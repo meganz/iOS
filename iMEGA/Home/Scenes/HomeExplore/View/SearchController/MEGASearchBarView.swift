@@ -1,4 +1,5 @@
 import UIKit
+import MEGAUIKit
 
 /// A protocol defines `SearchBarView`'s search session.
 protocol MEGASearchBarViewDelegate: AnyObject {

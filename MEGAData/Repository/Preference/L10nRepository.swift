@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct L10nRepository: L10nRepositoryProtocol {
     var appLanguage: String {

@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGADomain
 
 enum TurnOnNotificationsViewAction: ActionType {
     case onViewLoaded

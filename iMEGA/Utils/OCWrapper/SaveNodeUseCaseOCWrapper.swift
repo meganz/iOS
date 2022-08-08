@@ -1,3 +1,4 @@
+import MEGADomain
 
 @objc class SaveNodeUseCaseOCWrapper: NSObject {
     let saveNodeUseCase = SaveNodeUseCase(
@@ -7,6 +8,6 @@
         photosLibraryRepository: PhotosLibraryRepository.newRepo)
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
-        saveNodeUseCase.saveNodeIfNeeded(from: TransferEntity(transfer: transfer))
+        saveNodeUseCase.saveNodeIfNeeded(from: transfer.toTransferEntity())
     }
 }

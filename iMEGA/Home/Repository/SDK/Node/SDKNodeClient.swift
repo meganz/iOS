@@ -1,19 +1,20 @@
 import Foundation
+import MEGADomain
 
 struct SDKNodeClient {
 
     var findNode: (
-        _ nodeHandle: MEGAHandle
+        _ nodeHandle: HandleEntity
     ) -> NodeEntity?
 
     var loadThumbnail: (
-        _ nodeHandle: MEGAHandle,
+        _ nodeHandle: HandleEntity,
         _ destinationPath: URL,
         _ completion: @escaping (Bool) -> Void
     ) -> Void
 
     var findOwnerNode: (
-        _ nodeHandle: MEGAHandle
+        _ nodeHandle: HandleEntity
     ) -> MEGANode?
 
     var findChatFolderNode: (

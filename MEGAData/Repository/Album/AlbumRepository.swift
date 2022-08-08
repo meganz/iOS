@@ -1,10 +1,10 @@
 import Foundation
-
-protocol AlbumRepositoryProtocol {
-    func loadCameraUploadNode() async throws -> NodeEntity?
-}
+import MEGADomain
 
 struct AlbumRepository: AlbumRepositoryProtocol {
+    static var newRepo: AlbumRepository {
+        AlbumRepository()
+    }
     
     func loadCameraUploadNode() async throws -> NodeEntity? {
         try await withCheckedThrowingContinuation { continuation in

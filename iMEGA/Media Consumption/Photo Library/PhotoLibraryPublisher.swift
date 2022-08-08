@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import MEGADomain
 
 final class PhotoLibraryPublisher {
     private var subscriptions = Set<AnyCancellable>()
@@ -19,7 +20,7 @@ final class PhotoLibraryPublisher {
             .store(in: &subscriptions)
     }
     
-    func subscribeToSelectedPhotosChange(observer: @escaping ([MEGAHandle: NodeEntity]) -> Void) {
+    func subscribeToSelectedPhotosChange(observer: @escaping ([HandleEntity: NodeEntity]) -> Void) {
         viewModel
             .selection
             .$photos

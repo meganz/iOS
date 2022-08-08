@@ -1,5 +1,5 @@
-
 import UIKit
+import MEGADomain
 
 class ChatSharedItemsViewController: UIViewController {
     
@@ -388,7 +388,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             }
             
             if let selectedNodeName = selectedNode.name, selectedNodeName.mnz_isVisualMediaPathExtension {
-                var messagesIdsArray = [MEGAHandle]()
+                var messagesIdsArray = [HandleEntity]()
                 let nodes = NSMutableArray()
                 messagesArray.forEach { message in
                     guard let node = message.nodeList?.node(at: 0),

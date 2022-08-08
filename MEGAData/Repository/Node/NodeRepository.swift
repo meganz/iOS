@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct NodeRepository: NodeRepositoryProtocol {
     static var newRepo: NodeRepository {
         NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
@@ -13,7 +15,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
+    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return .unknown
         }
@@ -25,7 +27,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return MEGANode.string(for: nodeLabel) ?? "" + "Small"
     }
     
-    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
+    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return (0, 0)
         }
@@ -36,7 +38,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return (numberOfFiles, numberOfFolders)
     }
     
-    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
+    func hasVersions(nodeHandle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return false
         }
@@ -44,7 +46,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return sdk.hasVersions(for: node)
     }
     
-    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
+    func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return false
         }
@@ -52,7 +54,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return (MEGAStore.shareInstance().offlineNode(with: node) != nil)
     }
     
-    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
+    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return false
         }
@@ -60,7 +62,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return sdk.isNode(inRubbish: node)
     }
     
-    func nodeForHandle(_ handle: MEGAHandle) -> NodeEntity? {
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
         guard let node = sdk.node(forHandle: handle) else {
             return nil
         }
@@ -68,7 +70,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.toNodeEntity()
     }
 
-    func nameForNode(handle: MEGAHandle) -> String? {
+    func nameForNode(handle: HandleEntity) -> String? {
         guard let node = sdk.node(forHandle: handle) else {
             return nil
         }
@@ -76,7 +78,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.name
     }
     
-    func nameForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String? {
+    func nameForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String? {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
     }
     
@@ -93,7 +95,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
     }
     
-    func sizeForNode(handle: MEGAHandle) -> UInt64? {
+    func sizeForNode(handle: HandleEntity) -> UInt64? {
         var megaNode: MEGANode
         if let node = sdk.node(forHandle: handle) {
             megaNode = node
@@ -110,11 +112,11 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
     }
     
-    func sizeForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> UInt64? {
+    func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size?.uint64Value
     }
     
-    func base64ForNode(handle: MEGAHandle) -> String? {
+    func base64ForNode(handle: HandleEntity) -> String? {
         guard let node = sdk.node(forHandle: handle) else {
             return nil
         }
@@ -122,11 +124,11 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.base64Handle
     }
     
-    func base64ForChatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> String? {
+    func base64ForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String? {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.base64Handle
     }
     
-    private func chatNode(handle: MEGAHandle, messageId: MEGAHandle, chatId: MEGAHandle) -> MEGANode? {
+    private func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> MEGANode? {
         guard let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle else {
             return nil
         }
@@ -134,7 +136,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node
     }
     
-    func isFileNode(handle: MEGAHandle) -> Bool {
+    func isFileNode(handle: HandleEntity) -> Bool {
         guard let node = sdk.node(forHandle: handle) else {
             return false
         }
@@ -142,7 +144,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.isFile()
     }
     
-    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: MEGAHandle, newName: String?) -> Bool {
+    func copyNodeIfExistsWithSameFingerprint(at path: String, parentHandle: HandleEntity, newName: String?) -> Bool {
         guard let fileFingerprint = sdk.fingerprint(forFilePath: path),
               let parentNode = sdk.node(forHandle: parentHandle),
               let node = sdk.node(forFingerprint: fileFingerprint) else {
@@ -160,7 +162,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return true
     }
     
-    func copyNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?, isFolderLink: Bool) async throws -> NodeHandle {
+    func copyNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?, isFolderLink: Bool) async throws -> HandleEntity {
         try await withCheckedThrowingContinuation { continuation in
             var megaNode: MEGANode
             guard let parentNode = sdk.node(forHandle: parentHandle) else {
@@ -198,7 +200,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
     }
     
-    func moveNode(handle: NodeHandle, in parentHandle: NodeHandle, newName: String?) async throws -> NodeHandle {
+    func moveNode(handle: HandleEntity, in parentHandle: HandleEntity, newName: String?) async throws -> HandleEntity {
         try await withCheckedThrowingContinuation { continuation in
             guard let parentNode = sdk.node(forHandle: parentHandle),
                   let node = sdk.node(forHandle: handle) else {
@@ -227,7 +229,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         sdk.fingerprint(forFilePath: path)
     }
     
-    func setNodeCoordinates(nodeHandle: MEGAHandle, latitude: Double, longitude: Double) {
+    func setNodeCoordinates(nodeHandle: HandleEntity, latitude: Double, longitude: Double) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             return
         }
@@ -237,7 +239,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         sdk.setNodeCoordinates(node, latitude: latitude as NSNumber, longitude: longitude as NSNumber)
     }
     
-    func childNodeNamed(name: String, in parentHandle: MEGAHandle) -> NodeEntity? {
+    func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity? {
         guard let parent = sdk.node(forHandle: parentHandle), let node = sdk.childNode(forParent: parent, name: name) else {
             return nil
         }
@@ -245,7 +247,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.toNodeEntity()
     }
 
-    func creationDateForNode(handle: MEGAHandle) -> Date? {
+    func creationDateForNode(handle: HandleEntity) -> Date? {
         guard let node = sdk.node(forHandle: handle) else {
             return nil
         }
@@ -259,7 +261,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return images(forParentNode: parent)
     }
     
-    func images(for parentHandle: MEGAHandle) -> [NodeEntity] {
+    func images(for parentHandle: HandleEntity) -> [NodeEntity] {
         guard let parent = sdk.node(forHandle: parentHandle) else { return [] }
         
         return images(forParentNode: parent)

@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGADomain
 
 @available(iOS 14.0, *)
 final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {

@@ -7,6 +7,7 @@ extension PhotosViewController: PhotoLibraryProvider {
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
         configPhotoLibraryView(in: container) { type, location, featureFlag in
             self.viewModel.updateFilter(filterType: type, filterLocation: location, featureFlag: featureFlag)
+            self.updateMenuBarButtonItems(self.photoLibraryContentViewModel.selectedMode)
         }
     }
     
@@ -32,9 +33,7 @@ extension PhotosViewController: PhotoLibraryProvider {
         enablePhotoLibraryEditMode(enable)
     }
     
-    func hideNavigationEditBarButton(_ hide: Bool) {
-        objcWrapper_parent.navigationItem.rightBarButtonItem = hide ? nil : editBarButtonItem
-    }
+    func hideNavigationEditBarButton(_ hide: Bool) { }
     
     // Mark: - override
     

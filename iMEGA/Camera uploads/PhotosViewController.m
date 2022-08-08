@@ -28,12 +28,11 @@
 
 @import StoreKit;
 @import Photos;
+@import MEGAUIKit;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
 }
-
-@property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 
 @property (nonatomic) CGSize cellSize;
 @property (nonatomic) CGFloat cellInset;
@@ -207,7 +206,7 @@
 
 - (void)showEditBarButton:(BOOL)show {
     if (@available(iOS 14.0, *)) {
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = nil;
+        self.objcWrapper_parent.navigationItem.rightBarButtonItems = nil;
     }
     else {
         self.navigationItem.rightBarButtonItem = nil;
@@ -225,7 +224,7 @@
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
     self.shouldShowRightBarButton = !shouldHide;
     
-    if (self.shouldShowRightBarButton && self.showToolBar && self.viewModel.mediaNodesArray.count > 0) {
+    if (self.shouldShowRightBarButton && self.showToolBar) {
         [self showEditBarButton:YES];
     } else {
         [self showEditBarButton:NO];
@@ -381,6 +380,8 @@
     self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    
+    [self updateRightNavigationBarButtons];
 }
 
 - (void)reloadPhotos {
@@ -390,6 +391,10 @@
     if (@available(iOS 14.0, *)) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
+            
+            if (self.viewModel.mediaNodesArray.count == 0) {
+                [self reloadPhotosCollectionView];
+            }
         });
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -421,15 +426,13 @@
 }
 
 - (void)updateEditBarButton {
-    if (self.viewModel.mediaNodesArray.count == 0) {
-        [self showEditBarButton: NO];
-    } else if (self.viewModel.mediaNodesArray.count > 0 && !self.isEditing) {
+    if (!self.isEditing) {
         if (self.showToolBar && self.shouldShowRightBarButton) {
             [self showEditBarButton: YES];
         } else {
             [self showEditBarButton: NO];
         }
-        
+
         if (@available(iOS 14.0, *)) {}
         else {
             [self setRightNavigationBarButtons];
@@ -441,21 +444,17 @@
 }
 
 - (void)updateNavigationTitleBar {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (@available(iOS 14.0, *)) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateEditBarButton];
-            });
+    if (@available(iOS 14.0, *)) {
+        [self updateEditBarButton];
+    } else {
+        if ([self.photosCollectionView allowsMultipleSelection]) {
+            self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
         } else {
-            if ([self.photosCollectionView allowsMultipleSelection]) {
-                self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
-            } else {
-                self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-            }
-            
-            [self updateEditBarButton];
+            self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         }
-    });
+        
+        [self updateEditBarButton];
+    }
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {

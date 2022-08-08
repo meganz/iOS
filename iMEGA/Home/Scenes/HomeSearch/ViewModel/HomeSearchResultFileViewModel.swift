@@ -1,8 +1,9 @@
 import Foundation
+import MEGADomain
 
 struct HomeSearchResultFileViewModel {
 
-    let handle: MEGAHandle
+    let handle: HandleEntity
 
     let name: String
 
@@ -12,7 +13,7 @@ struct HomeSearchResultFileViewModel {
 
     let thumbnail: ((@escaping (UIImage?) -> Void) -> Void)?
 
-    let moreAction: (MEGAHandle, UIButton) -> Void
+    let moreAction: (HandleEntity, UIButton) -> Void
 }
 
 extension HomeSearchResultFileViewModel {

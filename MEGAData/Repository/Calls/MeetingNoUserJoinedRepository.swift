@@ -1,5 +1,5 @@
-
 import Combine
+import MEGADomain
 
 final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
     static var newRepo: MeetingNoUserJoinedRepository {
@@ -9,7 +9,7 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
     private var subscription: AnyCancellable?
         
     private let chatSDK: MEGAChatSdk
-    private(set) var chatId: MEGAHandle?
+    private(set) var chatId: HandleEntity?
     private let source = PassthroughSubject<Void, Never>()
         
     var monitor: AnyPublisher<Void, Never> {
@@ -26,7 +26,7 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
         chatSDK.remove(self as MEGAChatCallDelegate)
     }
 
-    func start(timerDuration duration: TimeInterval, chatId: MEGAHandle) {
+    func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {
         self.chatId = chatId
         subscription = Just(Void.self)
             .delay(for: .seconds(duration), scheduler: DispatchQueue.global())

@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 struct MockShareUseCase: ShareUseCaseProtocol {
     let nodes: [NodeEntity]

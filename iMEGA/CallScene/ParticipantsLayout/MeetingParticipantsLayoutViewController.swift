@@ -147,8 +147,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             layoutModeBarButton.isEnabled = enabled
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
-        case .switchLocalVideo:
-            localUserView.switchVideo()
+        case .switchLocalVideo(let isVideoEnabled):
+            localUserView.switchVideo(to: isVideoEnabled)
         case .updateName(let name):
             titleView.configure(title: name, subtitle: nil)
         case .updateDuration(let duration):
@@ -247,6 +247,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     @IBAction func didTapBagkgroundView(_ sender: UITapGestureRecognizer) {
+        guard view?.hitTest(sender.location(in: view), with: nil) != localUserView else {
+            return
+        }
+        
         let yPosition = sender.location(in: callCollectionView).y
         viewModel.dispatch(.tapOnView(onParticipantsView: yPosition > 0 && yPosition < callCollectionView.frame.height))
     }

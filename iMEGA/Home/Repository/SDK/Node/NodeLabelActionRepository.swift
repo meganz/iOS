@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol NodeLabelActionRepositoryProtocol {
 
@@ -6,17 +7,17 @@ protocol NodeLabelActionRepositoryProtocol {
 
     func setNodeLabelColor(
         _ labelColor: NodeLabelColor,
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
     )
 
     func resetNodeLabelColor(
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
     )
 
     func nodeLabelColor(
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion: ((Result<NodeLabelColor, NodeLabelActionDomainError>) -> Void)?
     )
 }
@@ -31,7 +32,7 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
 
     func setNodeLabelColor(
         _ labelColor: NodeLabelColor,
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
@@ -56,7 +57,7 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
     }
 
     func resetNodeLabelColor(
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
@@ -78,7 +79,7 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
     }
 
     func nodeLabelColor(
-        forNode nodeHandle: MEGAHandle,
+        forNode nodeHandle: HandleEntity,
         completion: ((Result<NodeLabelColor, NodeLabelActionDomainError>) -> Void)?
     ) {
         guard let node = sdk.node(forHandle: nodeHandle) else {

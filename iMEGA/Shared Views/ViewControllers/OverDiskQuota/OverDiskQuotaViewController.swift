@@ -1,4 +1,6 @@
 import UIKit
+import MEGAUIKit
+import MEGAFoundation
 
 final class OverDiskQuotaViewController: UIViewController {
 

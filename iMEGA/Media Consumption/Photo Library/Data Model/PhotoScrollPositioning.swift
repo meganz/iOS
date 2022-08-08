@@ -1,7 +1,8 @@
 import Foundation
+import MEGADomain
 
 struct PhotoScrollPosition: Hashable {
-    let handle: MEGAHandle
+    let handle: HandleEntity
     let date: Date
 }
 

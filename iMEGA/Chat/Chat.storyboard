@@ -68,16 +68,25 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privateChat" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-4s-gmS">
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EDe-N2-F5U">
                                                                             <rect key="frame" x="48" y="0.0" width="24" height="24"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="24" id="OSi-gd-cyG"/>
-                                                                                <constraint firstAttribute="height" constant="24" id="tDZ-xY-dbG"/>
-                                                                            </constraints>
-                                                                        </imageView>
-                                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mutedChat" translatesAutoresizingMaskIntoConstraints="NO" id="9Bu-tm-jlh">
-                                                                            <rect key="frame" x="74" y="-2" width="0.0" height="28"/>
-                                                                        </imageView>
+                                                                            <subviews>
+                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privateChat" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-4s-gmS">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="24" id="OSi-gd-cyG"/>
+                                                                                        <constraint firstAttribute="height" constant="24" id="tDZ-xY-dbG"/>
+                                                                                    </constraints>
+                                                                                </imageView>
+                                                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mutedChat" translatesAutoresizingMaskIntoConstraints="NO" id="9Bu-tm-jlh">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="24" id="Bwc-PN-llc"/>
+                                                                                        <constraint firstAttribute="height" constant="24" id="jwW-SF-xRq"/>
+                                                                                    </constraints>
+                                                                                </imageView>
+                                                                            </subviews>
+                                                                        </stackView>
                                                                         <view contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0ef-yO-BBV">
                                                                             <rect key="frame" x="76" y="0.0" width="241" height="24"/>
                                                                         </view>
@@ -1982,7 +1991,7 @@
         <image name="location" width="28" height="28"/>
         <image name="locationPin" width="40" height="40"/>
         <image name="moreNavigationBar" width="28" height="28"/>
-        <image name="mutedChat" width="28" height="28"/>
+        <image name="mutedChat" width="24" height="24"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>

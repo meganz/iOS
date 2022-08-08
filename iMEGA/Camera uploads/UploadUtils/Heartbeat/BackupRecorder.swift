@@ -1,9 +1,11 @@
 import Foundation
 import FirebaseCrashlytics
+import MEGAFoundation
+import MEGADomain
 
 struct NodeBackupRecord: Codable {
     let date: Date
-    let nodeHandle: MEGAHandle
+    let nodeHandle: HandleEntity
 }
 
 final class BackupRecorder: NSObject {
@@ -57,7 +59,7 @@ final class BackupRecorder: NSObject {
     }
     
     // MARK: - last backup node
-    private func recordLastBackupNode(handle: MEGAHandle) {
+    private func recordLastBackupNode(handle: HandleEntity) {
         let record = NodeBackupRecord(date: Date(), nodeHandle: handle)
         do {
             let data = try JSONEncoder().encode(record)

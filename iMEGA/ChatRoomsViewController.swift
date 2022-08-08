@@ -41,14 +41,15 @@ extension ChatRoomsViewController {
     }
     
     private func updateSelector(forChatType chatType: MEGAChatType) {
-        meetingSelectorButton?.tintColor = chatType == .meeting ?
-        .mnz_red(for: traitCollection) : .mnz_primaryGray(for: traitCollection)
-        meetingSelectedView?.backgroundColor = chatType == .meeting ?
-        UIColor.mnz_red(for: traitCollection) : .black.withAlphaComponent(0.3)
+        let (selectedButton, normalButton, selectedView, normalView) = chatType == .meeting ?
+        (meetingSelectorButton, chatSelectorButton, meetingSelectedView, chatSelectedView) :
+        (chatSelectorButton, meetingSelectorButton, chatSelectedView, meetingSelectedView)
         
-        chatSelectorButton?.tintColor = chatType == .nonMeeting ?
-        .mnz_red(for: traitCollection) : .mnz_primaryGray(for: traitCollection)
-        chatSelectedView?.backgroundColor = chatType == .nonMeeting ?
-        UIColor.mnz_red(for: traitCollection) : .black.withAlphaComponent(0.3)
+        selectedButton?.setTitleColor(Colors.Chat.Tabs.chatTabSelectedText.color, for: .normal)
+        selectedButton?.titleLabel?.font = .preferredFont(style: .subheadline, weight: .medium)
+        normalButton?.setTitleColor(Colors.Chat.Tabs.chatTabNormalText.color, for: .normal)
+        normalButton?.titleLabel?.font = .preferredFont(style: .subheadline, weight: .regular)
+        selectedView?.backgroundColor = Colors.Chat.Tabs.chatTabSelectedBackground.color
+        normalView?.backgroundColor = Colors.Chat.Tabs.chatTabNormalBackground.color
     }
 }

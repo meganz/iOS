@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension MEGANodeList {
     func toPhotoLibrary(withSortType type: SortOrderType) -> PhotoLibrary {
