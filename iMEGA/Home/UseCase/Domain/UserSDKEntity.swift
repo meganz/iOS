@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct UserSDKEntity {
 
@@ -6,10 +7,10 @@ struct UserSDKEntity {
     let email: String
 
     /// The handle associated with the contact.
-    let handle: MEGAHandle
+    let handle: HandleEntity
 
     /// The base64Handle associated with the contact.
-    let base64Handle: MEGABase64Handle?
+    let base64Handle: Base64HandleEntity?
 
     /// If not nil, it represents the changes / updates from this user.
     let change: Change?
@@ -101,7 +102,7 @@ struct UserSDKEntity {
 
 extension UserSDKEntity {
 
-    init(with megaUser: MEGAUser, base64Handle: MEGABase64Handle?) {
+    init(with megaUser: MEGAUser, base64Handle: Base64HandleEntity?) {
         self.email = megaUser.email
         self.handle = megaUser.handle
         self.base64Handle = base64Handle

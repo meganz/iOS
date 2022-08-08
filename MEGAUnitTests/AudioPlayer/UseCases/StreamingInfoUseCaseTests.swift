@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 final class StreamingInfoUseCaseTests: XCTestCase {
     let nodeStreamingInfoSuccessRepository = MockStreamingInfoRepository(result: .success(()))
@@ -14,8 +15,8 @@ final class StreamingInfoUseCaseTests: XCTestCase {
     }
     
     func testGetInfoFromHandleNode() {
-        XCTAssertNotNil(nodeStreamingInfoSuccessRepository.info(fromHandle: MEGAHandle()))
-        XCTAssertNil(nodeStreamingInfoFailureRepository.info(fromHandle: MEGAHandle()))
+        XCTAssertNotNil(nodeStreamingInfoSuccessRepository.info(fromHandle: HandleEntity()))
+        XCTAssertNil(nodeStreamingInfoFailureRepository.info(fromHandle: HandleEntity()))
     }
     
     func testGetPathFromNode() throws {

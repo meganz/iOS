@@ -1,11 +1,12 @@
 import Foundation
+import MEGADomain
 
 protocol NodeInfoUseCaseProtocol {
-    func node(fromHandle: MEGAHandle) -> MEGANode?
-    func folderAuthNode(fromHandle: MEGAHandle) -> MEGANode?
-    func path(fromHandle: MEGAHandle) -> URL?
-    func childrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]?
-    func folderChildrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]?
+    func node(fromHandle: HandleEntity) -> MEGANode?
+    func folderAuthNode(fromHandle: HandleEntity) -> MEGANode?
+    func path(fromHandle: HandleEntity) -> URL?
+    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
+    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
     func info(fromNode: MEGANode) -> AudioPlayerItem?
     func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void))
     func loginToFolder(link: String)
@@ -19,23 +20,23 @@ final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
         self.nodeInfoRepository = nodeInfoRepository
     }
     
-    func node(fromHandle: MEGAHandle) -> MEGANode? {
+    func node(fromHandle: HandleEntity) -> MEGANode? {
         nodeInfoRepository.node(fromHandle: fromHandle)
     }
     
-    func folderAuthNode(fromHandle: MEGAHandle) -> MEGANode? {
+    func folderAuthNode(fromHandle: HandleEntity) -> MEGANode? {
         nodeInfoRepository.folderNode(fromHandle: fromHandle)
     }
     
-    func path(fromHandle: MEGAHandle) -> URL? {
+    func path(fromHandle: HandleEntity) -> URL? {
         nodeInfoRepository.path(fromHandle: fromHandle)
     }
     
-    func childrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]? {
+    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
         nodeInfoRepository.childrenInfo(fromParentHandle: fromParentHandle)
     }
     
-    func folderChildrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]? {
+    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
         nodeInfoRepository.folderChildrenInfo(fromParentHandle: fromParentHandle)
     }
     

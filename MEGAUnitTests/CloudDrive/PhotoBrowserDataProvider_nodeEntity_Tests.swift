@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
     func test_init_currentPhoto_partOfAllPhotos() {

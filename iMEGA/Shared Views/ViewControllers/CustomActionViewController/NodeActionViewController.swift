@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 @objc protocol NodeActionViewControllerDelegate {
     // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions
@@ -27,7 +28,7 @@ class NodeActionViewController: ActionSheetViewController {
     // MARK: - NodeActionViewController initializers
     
     convenience init?(
-        node: MEGAHandle,
+        node: HandleEntity,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isIncoming: Bool = false,
@@ -37,7 +38,7 @@ class NodeActionViewController: ActionSheetViewController {
         }
     
     init?(
-        nodeHandle: MEGAHandle,
+        nodeHandle: HandleEntity,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         sender: Any) {

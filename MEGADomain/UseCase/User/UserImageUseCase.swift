@@ -1,17 +1,18 @@
 import Combine
 import UIKit
+import MEGADomain
 
 protocol UserImageUseCaseProtocol {
     func fetchUserAvatar(withUserHandle handle: UInt64,
                          name: String,
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
     @discardableResult
-    func clearAvatarCache(forUserHandle handle: MEGAHandle) -> Bool
+    func clearAvatarCache(forUserHandle handle: HandleEntity) -> Bool
     
-    func downloadAvatar(forUserHandle handle: MEGAHandle) async throws -> UIImage
-    func createAvatar(usingUserHandle handle: MEGAHandle, name: String) async throws -> UIImage
+    func downloadAvatar(forUserHandle handle: HandleEntity) async throws -> UIImage
+    func createAvatar(usingUserHandle handle: HandleEntity, name: String) async throws -> UIImage
 
-    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never>
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never>
 }
 
 struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryProtocol, V: ThumbnailRepositoryProtocol>: UserImageUseCaseProtocol {
@@ -66,7 +67,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                                     completion: completion)
     }
     
-    @discardableResult func clearAvatarCache(forUserHandle handle: MEGAHandle) -> Bool {
+    @discardableResult func clearAvatarCache(forUserHandle handle: HandleEntity) -> Bool {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             MEGALogDebug("UserImageUseCase: base64 handle not found for handle \(handle)")
             return false
@@ -87,7 +88,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         return false
     }
     
-    func downloadAvatar(forUserHandle handle: MEGAHandle) async throws -> UIImage {
+    func downloadAvatar(forUserHandle handle: HandleEntity) async throws -> UIImage {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             MEGALogDebug("UserImageUseCase: base64 handle not found for handle \(handle)")
             throw UserImageLoadErrorEntity.base64EncodingError
@@ -99,23 +100,23 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
 
     }
     
-    func createAvatar(usingUserHandle handle: MEGAHandle, name: String) async throws -> UIImage {
+    func createAvatar(usingUserHandle handle: HandleEntity, name: String) async throws -> UIImage {
         let displayName = await userStoreRepo.displayName(forUserHandle: handle)
         return try await createAvatarImage(usingName: displayName ?? name, handle: handle)
     }
     
-    mutating func requestAvatarChangeNotification(forUserHandles handles: [MEGAHandle]) -> AnyPublisher<[MEGAHandle], Never> {
+    mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         userImageRepo.requestAvatarChangeNotification(forUserHandles: handles)
     }
     
     @MainActor
-    private func createAvatarImage(usingName name: String, handle: MEGAHandle) throws -> UIImage {
+    private func createAvatarImage(usingName name: String, handle: HandleEntity) throws -> UIImage {
         try createAvatar(usingName: name, handle: handle)
     }
     
     private func createAvatar(
         usingName name: String,
-        handle: MEGAHandle,
+        handle: HandleEntity,
         size: CGSize = CGSize(width: 100.0, height: 100.0)
     ) throws -> UIImage {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),

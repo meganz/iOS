@@ -15,6 +15,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAUIKit;
+
 static NSString *kFileName = @"kFileName";
 static NSString *kPath = @"kPath";
 

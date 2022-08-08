@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 final class MockChatRoom: MEGAChatRoom {
     private let peerPrivilage: MEGAChatRoomPrivilege
@@ -9,7 +10,7 @@ final class MockChatRoom: MEGAChatRoom {
         super.init()
     }
     
-    override func peerPrivilege(byHandle userHande: MEGAHandle) -> Int {
+    override func peerPrivilege(byHandle userHande: HandleEntity) -> Int {
         peerPrivilage.rawValue
     }
     

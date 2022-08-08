@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 final class TextEditorViewModelTests: XCTestCase {
 
@@ -264,7 +265,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
         
-        let mockParentHandle: MEGAHandle = 123
+        let mockParentHandle: HandleEntity = 123
         let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
@@ -316,7 +317,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         
-        let mockParentHandle: MEGAHandle = 123
+        let mockParentHandle: HandleEntity = 123
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -347,7 +348,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
-        let mockParentHandle: MEGAHandle = 123
+        let mockParentHandle: HandleEntity = 123
         
         let duplicateNameAlertModel = TextEditorDuplicateNameAlertModel(
             alertTitle: Strings.Localizable.renameFileAlertTitle(textFile.fileName),
@@ -385,7 +386,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
-        let mockParentHandle: MEGAHandle = 123
+        let mockParentHandle: HandleEntity = 123
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -417,7 +418,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
-        let mockParentHandle: MEGAHandle = 123
+        let mockParentHandle: HandleEntity = 123
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -575,7 +576,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
-        let mockParentHandle: MEGAHandle = 123
+        let mockParentHandle: HandleEntity = 123
         
         let newName = "new name"
 
@@ -1032,7 +1033,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     var shareLink_calledTimes = 0
     var removeLink_calledTimes = 0
 
-    func chooseParentNode(completion: @escaping (MEGAHandle) -> Void) {
+    func chooseParentNode(completion: @escaping (HandleEntity) -> Void) {
         chooseDestination_calledTimes += 1
         completion(123)
     }
@@ -1045,7 +1046,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         dismissBrowserVC_calledTimes += 1
     }
     
-    func showActions(nodeHandle: MEGAHandle, delegate: NodeActionViewControllerDelegate, sender button: Any) {
+    func showActions(nodeHandle: HandleEntity, delegate: NodeActionViewControllerDelegate, sender button: Any) {
         showActions_calledTimes += 1
     }
     
@@ -1053,7 +1054,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         presentPreviewDocVC_calledTimes += 1
     }
     
-    func importNode(nodeHandle: MEGAHandle?) {
+    func importNode(nodeHandle: HandleEntity?) {
         importNode_calledTimes += 1
     }
     
@@ -1085,11 +1086,11 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         removeTextFile_calledTimes += 1
     }
     
-    func shareLink(from nodeHandle: MEGAHandle) {
+    func shareLink(from nodeHandle: HandleEntity) {
         shareLink_calledTimes += 1
     }
     
-    func removeLink(from nodeHandle: MEGAHandle) {
+    func removeLink(from nodeHandle: HandleEntity) {
         removeLink_calledTimes += 1
     }
 }

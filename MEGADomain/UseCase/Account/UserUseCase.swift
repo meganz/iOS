@@ -3,6 +3,7 @@ protocol UserUseCaseProtocol {
     var myHandle: UInt64? { get }
     var isLoggedIn: Bool { get }
     var isGuest: Bool { get }
+    var contacts: [UserSDKEntity] { get }
     func user(withHandle handle: UInt64) -> UserSDKEntity?
 }
 
@@ -19,6 +20,10 @@ struct UserUseCase: UserUseCaseProtocol {
     
     var isGuest: Bool {
         repo.isGuest()
+    }
+    
+    var contacts: [UserSDKEntity] {
+        return repo.contacts()
     }
     
     init(repo: SDKUserClient) {

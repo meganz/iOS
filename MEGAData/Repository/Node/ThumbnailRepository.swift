@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     static var newRepo: ThumbnailRepository {
@@ -47,7 +48,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         }
     }
     
-    func cachedThumbnailURL(for base64Handle: MEGABase64Handle, type: ThumbnailTypeEntity) -> URL {
+    func cachedThumbnailURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
         let directory: String
         switch type {
         case .thumbnail:

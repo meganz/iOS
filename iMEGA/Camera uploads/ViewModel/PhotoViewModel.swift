@@ -27,6 +27,10 @@ final class PhotoViewModel: NSObject {
     var filterType: PhotosFilterOptions = .allMedia
     var filterLocation: PhotosFilterOptions = .allLocations
     
+    var isFilterActive: Bool {
+        filterType != .allMedia || filterLocation != .allLocations
+    }
+    
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol
@@ -38,27 +42,20 @@ final class PhotoViewModel: NSObject {
     }
     
     @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList, with featureFlag: Bool) {
-        Task {
+        Task { [weak self] in
             do {
-                let container = await photoLibraryUseCase.photoLibraryContainer()
-                
-                guard featureFlag || shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) else { return }
-                
-                let photos = try await featureFlag ? loadFilteredPhotos() : photoLibraryUseCase.cameraUploadPhotos()
-                self.mediaNodesArray = photos
+                guard let container = await self?.photoLibraryUseCase.photoLibraryContainer() else { return }
+                guard featureFlag || self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
+
+                await self?.loadPhotos(withFeatureFlag: featureFlag)
             }
-            catch {}
         }
     }
     
     @MainActor
     @objc func loadAllPhotos(withFeatureFlag flag: Bool) {
         Task.detached(priority: .userInitiated) { [weak self] in
-            do {
-                let photos = try await flag ? self?.loadFilteredPhotos() : self?.photoLibraryUseCase.cameraUploadPhotos()
-                self?.mediaNodesArray = photos ?? []
-            }
-            catch {}
+            await self?.loadPhotos(withFeatureFlag: flag)
         }
     }
     
@@ -96,6 +93,11 @@ final class PhotoViewModel: NSObject {
     }
     
     // MARK: - Private
+    
+    private func loadPhotos(withFeatureFlag flag: Bool) async {
+        let photos = try? await flag ? loadFilteredPhotos() : photoLibraryUseCase.cameraUploadPhotos()
+        mediaNodesArray = photos ?? []
+    }
     
     private func shouldProcessOnNodesUpdate(
         nodeList: MEGANodeList,

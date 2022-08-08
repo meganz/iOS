@@ -3001,9 +3001,9 @@ public enum Strings {
         public static let allowPhotoAccessMessage = Strings.tr("Localizable", "chat.photos.allowPhotoAccessMessage")
       }
       public enum Selector {
-        /// Chat
+        /// Chats
         public static let chat = Strings.tr("Localizable", "chat.selector.chat")
-        /// Meeting
+        /// Meetings
         public static let meeting = Strings.tr("Localizable", "chat.selector.meeting")
       }
       public enum SendLocation {
@@ -3791,6 +3791,17 @@ public enum Strings {
         public static let rename = Strings.tr("Localizable", "meetings.action.rename")
         /// Share Meeting Link
         public static let shareLink = Strings.tr("Localizable", "meetings.action.shareLink")
+      }
+      public enum AddContacts {
+        public enum AllContactsAdded {
+          /// Invite
+          public static let confirmationButtonTitle = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.confirmationButtonTitle")
+          /// You’ve already added all your contacts to this chat.
+          /// If you want to add more participants, first invite them to your contact list.
+          public static let description = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.description")
+          /// All contacts added
+          public static let title = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.title")
+        }
       }
       public enum Alert {
         /// Meeting Ended

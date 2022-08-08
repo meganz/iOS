@@ -972,7 +972,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
     if (self.selectedNodesArray != nil) {
         [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
     }

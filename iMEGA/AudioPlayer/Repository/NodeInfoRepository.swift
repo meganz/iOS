@@ -1,13 +1,14 @@
 import Foundation
+import MEGADomain
 
 protocol NodeInfoRepositoryProtocol {
-    func path(fromHandle: MEGAHandle) -> URL?
+    func path(fromHandle: HandleEntity) -> URL?
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]?
     func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]?
-    func childrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]?
-    func folderChildrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]?
-    func node(fromHandle: MEGAHandle) -> MEGANode?
-    func folderNode(fromHandle: MEGAHandle) -> MEGANode?
+    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
+    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
+    func node(fromHandle: HandleEntity) -> MEGANode?
+    func folderNode(fromHandle: HandleEntity) -> MEGANode?
     func folderAuthNode(fromNode: MEGANode) -> MEGANode?
     func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void))
     func loginToFolder(link: String)
@@ -21,10 +22,10 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private var streamingInfoRepository = StreamingInfoRepository()
     private var offlineFileInfoRepository = OfflineInfoRepository()
    
-    @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder)
+    @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
     private var sortingPreference: SortingPreference
     
-    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc)
+    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
     private var sortingType: MEGASortOrderType
     
     init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(), folderSDK: MEGASdk = MEGASdkManager.sharedMEGASdkFolder(), megaStore: MEGAStore = MEGAStore.shareInstance()) {
@@ -34,7 +35,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     }
     
     //MARK: - Private functions
-    private func playableChildren(of parent: MEGAHandle) -> [MEGANode]? {
+    private func playableChildren(of parent: HandleEntity) -> [MEGANode]? {
         guard let parentNode = sdk.node(forHandle: parent) else { return nil }
         
         return sdk.children(forParent: parentNode, order: sortType(for: parent)).toNodeArray()
@@ -43,7 +44,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
                 $0.mnz_isPlayable() }
     }
     
-    private func folderPlayableChildren(of parent: MEGAHandle) -> [MEGANode]? {
+    private func folderPlayableChildren(of parent: HandleEntity) -> [MEGANode]? {
         guard let parentNode = folderNode(fromHandle: parent) else { return nil }
         
         return folderSDK.children(forParent: parentNode, order: sortType(for: parent)).toNodeArray()
@@ -52,7 +53,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
                 $0.mnz_isPlayable() }
     }
     
-    private func sortType(for parent: MEGAHandle) -> Int {
+    private func sortType(for parent: HandleEntity) -> Int {
         guard let context = megaStore.stack.newBackgroundContext() else { return MEGASortOrderType.defaultAsc.rawValue }
         
         var sortType: Int = MEGASortOrderType.defaultAsc.rawValue
@@ -67,11 +68,11 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     }
     
     //MARK: - Public functions
-    func node(fromHandle: MEGAHandle) -> MEGANode? { sdk.node(forHandle: fromHandle) }
-    func folderNode(fromHandle: MEGAHandle) -> MEGANode? { folderSDK.node(forHandle: fromHandle) }
+    func node(fromHandle: HandleEntity) -> MEGANode? { sdk.node(forHandle: fromHandle) }
+    func folderNode(fromHandle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: fromHandle) }
     func folderAuthNode(fromNode: MEGANode) -> MEGANode? { folderSDK.authorizeNode(fromNode) }
     
-    func path(fromHandle: MEGAHandle) -> URL? {
+    func path(fromHandle: HandleEntity) -> URL? {
         guard let node = node(fromHandle: fromHandle) else { return nil }
         
         return offlineFileInfoRepository.localPath(fromNode: node) ?? streamingInfoRepository.path(fromNode: node)
@@ -94,11 +95,11 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
-    func childrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]? {
+    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
         playableChildren(of: fromParentHandle).flatMap(info)
     }
     
-    func folderChildrenInfo(fromParentHandle parent: MEGAHandle) -> [AudioPlayerItem]? {
+    func folderChildrenInfo(fromParentHandle parent: HandleEntity) -> [AudioPlayerItem]? {
         folderPlayableChildren(of: parent).flatMap(authInfo)
     }
     

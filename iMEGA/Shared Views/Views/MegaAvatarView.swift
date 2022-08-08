@@ -1,6 +1,7 @@
 
 import UIKit
 import GKContactImage
+import MEGADomain
 
 @objc enum MegaAvatarViewMode: Int {
     case single
@@ -98,8 +99,8 @@ class MegaAvatarView: UIView {
         }
     }
     
-    func userFullName(forPeerId peerId: MEGAHandle,
-                      chatId: MEGAHandle,
+    func userFullName(forPeerId peerId: HandleEntity,
+                      chatId: HandleEntity,
                       sdk: MEGAChatSdk,
                       completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {

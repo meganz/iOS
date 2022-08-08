@@ -1,8 +1,10 @@
 import Foundation
+import MEGAFoundation
+import MEGADomain
 
 enum SearchFileRootPath {
     case root
-    case specific(MEGAHandle)
+    case specific(HandleEntity)
 }
 
 protocol SearchFileUseCaseProtocol {

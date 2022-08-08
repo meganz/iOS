@@ -1,7 +1,8 @@
 import Foundation
+import MEGASwift
 
 extension PhotoChronologicalCategory {
-    static func ↻↻ (lhs: Self, rhs: Self) -> Bool {
+    public static func ↻↻ (lhs: Self, rhs: Self) -> Bool {
         lhs.categoryDate != rhs.categoryDate ||
         lhs.coverPhoto != rhs.coverPhoto ||
         lhs.coverPhoto?.hasThumbnail != rhs.coverPhoto?.hasThumbnail ||

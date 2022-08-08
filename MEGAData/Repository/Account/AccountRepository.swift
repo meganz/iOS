@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct AccountRepository: AccountRepositoryProtocol {
     private let sdk: MEGASdk

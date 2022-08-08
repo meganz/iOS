@@ -1,8 +1,9 @@
 import Foundation
+import MEGADomain
 
 @objc final class PhotoSelectionAdapter: NSObject {
-    private var megaNodes = [MEGAHandle: MEGANode]()
-    private var nodeEntities = [MEGAHandle: NodeEntity]()
+    private var megaNodes = [HandleEntity: MEGANode]()
+    private var nodeEntities = [HandleEntity: NodeEntity]()
     private let sdk: MEGASdk
     
     @objc init(sdk: MEGASdk) {
@@ -33,7 +34,7 @@ import Foundation
         }
     }
     
-    @objc subscript(handle: MEGAHandle) -> MEGANode? {
+    @objc subscript(handle: HandleEntity) -> MEGANode? {
         get {
             if #available(iOS 14.0, *) {
                 return nodeEntities[handle]?.toMEGANode(in: self.sdk)
@@ -58,7 +59,7 @@ import Foundation
         }
     }
     
-    @objc func removeNode(by handle: MEGAHandle) {
+    @objc func removeNode(by handle: HandleEntity) {
         if #available(iOS 14.0, *) {
             nodeEntities[handle] = nil
         } else {
@@ -71,6 +72,6 @@ import Foundation
     }
     
     @objc func setSelectedNodes(_ nodes: [MEGANode]) {
-        megaNodes = Dictionary<MEGAHandle, MEGANode>(uniqueKeysWithValues: nodes.map { ($0.handle, $0) })
+        megaNodes = Dictionary<HandleEntity, MEGANode>(uniqueKeysWithValues: nodes.map { ($0.handle, $0) })
     }
 }

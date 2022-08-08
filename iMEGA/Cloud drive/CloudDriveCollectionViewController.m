@@ -13,6 +13,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAUIKit;
+
 @interface CloudDriveCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, NodeCollectionViewCellDelegate>
 
 @property (nonatomic, strong) NSArray<MEGANode *> *fileList;

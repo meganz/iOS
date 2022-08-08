@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class TransferDelegate: NSObject, MEGATransferDelegate {
     var start: ((TransferEntity) -> Void)?
     var progress: ((TransferEntity) -> Void)?
@@ -20,13 +22,13 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
 
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
         if let start = start {
-            start(TransferEntity(transfer: transfer))
+            start(transfer.toTransferEntity())
         }
     }
 
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
         if let progress = progress {
-            progress(TransferEntity(transfer: transfer))
+            progress(transfer.toTransferEntity())
         }
     }
 
@@ -36,7 +38,7 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
                 let transferErrorEntity = transfer.type == .upload ? TransferErrorEntity.upload : TransferErrorEntity.download
                 completion(.failure(transferErrorEntity))
             } else {
-                completion(.success(TransferEntity(transfer: transfer)))
+                completion(.success(transfer.toTransferEntity()))
             }
         }
     }

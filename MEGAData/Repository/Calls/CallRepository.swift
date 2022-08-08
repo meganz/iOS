@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class CallRepository: NSObject, CallRepositoryProtocol {
 
@@ -5,7 +6,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     private let callActionManager: CallActionManager
     private var callbacksDelegate: CallCallbacksRepositoryProtocol?
 
-    private var callId: MEGAHandle?
+    private var callId: HandleEntity?
     private var call: CallEntity?
     
     init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
@@ -13,7 +14,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         self.callActionManager = callActionManager
     }
     
-    func startListeningForCallInChat(_ chatId: MEGAHandle, callbacksDelegate: CallCallbacksRepositoryProtocol) {
+    func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: CallCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = CallEntity(with: call)
             self.callId = call.callId
@@ -32,12 +33,12 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         self.callbacksDelegate = nil
     }
     
-    func call(for chatId: MEGAHandle) -> CallEntity? {
+    func call(for chatId: HandleEntity) -> CallEntity? {
         guard let chatCall = chatSdk.chatCall(forChatId: chatId) else { return nil }
         return CallEntity(with: chatCall)
     }
     
-    func answerCall(for chatId: MEGAHandle, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         let delegate = MEGAChatAnswerCallRequestDelegate { [weak self] (error)  in
             if error.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
@@ -61,7 +62,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         callActionManager.answerCall(chatId: chatId, enableVideo: false, enableAudio: true, delegate: delegate)
     }
     
-    func startCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         let delegate = MEGAChatStartCallRequestDelegate { [weak self] (error) in
             if error.type == .MEGAChatErrorTypeOk {
                 guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
@@ -84,7 +85,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         callActionManager.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
-    func joinCall(for chatId: MEGAHandle, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+    func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         guard let activeCall = chatSdk.chatCall(forChatId: chatId) else {
             completion(.failure(.generic))
             return
@@ -107,11 +108,11 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func hangCall(for callId: MEGAHandle) {
+    func hangCall(for callId: HandleEntity) {
         chatSdk.hangChatCall(callId)
     }
     
-    func endCall(for callId: MEGAHandle) {
+    func endCall(for callId: HandleEntity) {
         chatSdk.endChatCall(callId)
     }
     

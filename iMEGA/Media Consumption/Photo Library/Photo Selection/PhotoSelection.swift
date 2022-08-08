@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import MEGADomain
 
 final class PhotoSelection: ObservableObject {
     @Published var editMode: EditMode = .inactive {
@@ -11,7 +12,7 @@ final class PhotoSelection: ObservableObject {
         }
     }
     
-    @Published var photos = [MEGAHandle: NodeEntity]()
+    @Published var photos = [HandleEntity: NodeEntity]()
     
     @Published var allSelected = false {
         willSet {

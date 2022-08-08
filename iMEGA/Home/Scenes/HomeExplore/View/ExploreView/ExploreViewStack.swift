@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import MEGAUIKit
 
 protocol ExploreViewStackDelegate: AnyObject {
     func tappedCard(_ card: MEGAExploreViewStyle)

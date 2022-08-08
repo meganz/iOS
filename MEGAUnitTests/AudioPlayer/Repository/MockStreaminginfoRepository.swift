@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
     var result: Result<Void, NodeInfoError>
@@ -18,7 +19,7 @@ struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
         }
     }
     
-    func info(fromHandle: MEGAHandle) -> MEGANode? {
+    func info(fromHandle: HandleEntity) -> MEGANode? {
         switch result {
         case .failure: return nil
         case .success: return MEGANode()

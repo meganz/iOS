@@ -1,7 +1,9 @@
+import MEGADomain
+
 // MARK: - Use case protocol -
 protocol UploadFileUseCaseProtocol {
-    func hasExistFile(name: String, parentHandle: MEGAHandle) -> Bool
-    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
+    func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool
+    func uploadFile(withLocalPath path: String, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
     func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
     func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void)
 }
@@ -20,11 +22,11 @@ struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRepositor
         self.fileCacheRepository = fileCacheRepository
     }
     
-    func hasExistFile(name: String, parentHandle: MEGAHandle) -> Bool {
+    func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
         uploadFileRepository.hasExistFile(name: name, parentHandle: parentHandle)
     }
     
-    func uploadFile(withLocalPath path: String, toParent parent: MEGAHandle, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?) {
+    func uploadFile(withLocalPath path: String, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?) {
         
         let originalUrl = URL(fileURLWithPath: path)
         let name = fileName ?? originalUrl.lastPathComponent

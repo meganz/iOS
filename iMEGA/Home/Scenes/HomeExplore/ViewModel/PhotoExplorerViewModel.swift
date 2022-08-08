@@ -1,4 +1,4 @@
-
+import MEGAFoundation
 
 enum PhotoExplorerAction {
     case loadPhotos

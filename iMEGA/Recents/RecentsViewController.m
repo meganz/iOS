@@ -20,6 +20,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAFoundation;
+
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable, RecentsPreferenceProtocol>

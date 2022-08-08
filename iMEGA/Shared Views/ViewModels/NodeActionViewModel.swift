@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct NodeActionViewModel {
     private var nodeActionUseCase: NodeActionUseCaseProtocol

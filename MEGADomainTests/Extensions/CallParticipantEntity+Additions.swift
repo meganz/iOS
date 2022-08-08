@@ -1,11 +1,12 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 extension CallParticipantEntity {
     ///Init method with default values (0, false, nil, [], ...)
-    convenience init(chatId: MEGAHandle = MEGAInvalidHandle,
-         participantId: MEGAHandle = MEGAInvalidHandle,
-         clientId: MEGAHandle = MEGAInvalidHandle,
+    convenience init(chatId: HandleEntity = MEGAInvalidHandle,
+         participantId: HandleEntity = MEGAInvalidHandle,
+         clientId: HandleEntity = MEGAInvalidHandle,
          email: String = "test@email.com",
          isModerator: Bool = false,
          isInContactList: Bool = false,

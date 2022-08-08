@@ -1,16 +1,22 @@
+import Combine
+import MEGADomain
 
 protocol ChatRoomUseCaseProtocol {
-    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity?
-    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity?
-    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
+    func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
+    func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
+    func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity]
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege?
+    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
-    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
-    func userDisplayNames(forPeerIds peerIds: [MEGAHandle], chatId: MEGAHandle) async throws -> [String]
-    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String]
+    func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
+    mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
 }
 
 struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
-    private let chatRoomRepo: T
+    private var chatRoomRepo: T
     private let userStoreRepo: U
     
     init(chatRoomRepo: T, userStoreRepo: U) {
@@ -18,18 +24,26 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         self.userStoreRepo = userStoreRepo
     }
     
-    func chatRoom(forChatId chatId: MEGAHandle) -> ChatRoomEntity? {
+    func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity? {
         chatRoomRepo.chatRoom(forChatId: chatId)
     }
     
-    func chatRoom(forUserHandle userHandle: MEGAHandle) -> ChatRoomEntity? {
+    func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity? {
         chatRoomRepo.chatRoom(forUserHandle: userHandle)
     }
     
-    func createChatRoom(forUserHandle userHandle: MEGAHandle, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
+    func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.createChatRoom(forUserHandle: userHandle, completion: completion)
     }
     
+    func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity] {
+        chatRoomRepo.peerHandles(forChatId: chatId)
+    }
+    
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege? {
+        chatRoomRepo.peerPrivilege(forUserHandle: userHandle, inChatId: chatId)
+    }
+
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         guard chatRoom.chatType != .oneToOne else {
             // Not allowed to create/query chat link
@@ -51,7 +65,7 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         }
     }
     
-    func userDisplayName(forPeerId peerId: MEGAHandle, chatId: MEGAHandle, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         if let displayName = userStoreRepo.getDisplayName(forUserHandle: peerId) {
             completion(.success(displayName))
             return
@@ -60,7 +74,7 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         chatRoomRepo.userFullName(forPeerId: peerId, chatId: chatId, completion: completion)
     }
     
-    func userDisplayNames(forPeerIds peerIds: [MEGAHandle], chatId: MEGAHandle) async throws -> [String] {
+    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String] {
         try await withThrowingTaskGroup(of: String.self, returning: [String].self) { group in
             for peerId in peerIds {
                 group.addTask {
@@ -78,7 +92,15 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         }
     }
 
-    func renameChatRoom(chatId: MEGAHandle, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.renameChatRoom(chatId: chatId, title: title, completion: completion)
+    }
+    
+    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
+        chatRoomRepo.participantsUpdated(forChatId: chatId)
+    }
+    
+    mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        chatRoomRepo.userPrivilegeChanged(forChatId: chatId)
     }
 }

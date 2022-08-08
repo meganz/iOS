@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct StatsRepository: StatsRepositoryProtocol {
     static var newRepo: StatsRepository {

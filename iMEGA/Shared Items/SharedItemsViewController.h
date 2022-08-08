@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MyAvatarManager, ContextMenuManager;
+@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -10,9 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIButton *incomingButton;
-@property (weak, nonatomic) IBOutlet UIButton *outgoingButton;
-@property (weak, nonatomic) IBOutlet UIButton *linksButton;
+@property (weak, nonatomic) IBOutlet MEGAVerticalButton *incomingButton;
+@property (weak, nonatomic) IBOutlet MEGAVerticalButton *outgoingButton;
+@property (weak, nonatomic) IBOutlet MEGAVerticalButton *linksButton;
 
 @property (nonatomic) MEGASortOrderType sortOrderType;
 
@@ -21,6 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
 
 @property (nonatomic) UISearchController *searchController;
+
+@property (weak, nonatomic) IBOutlet UIView *selectorView;
+
+@property (weak, nonatomic) IBOutlet UIView *incomingLineView;
+@property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
+@property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
 - (void)selectSegment:(NSUInteger)index;
 - (void)didTapSelect;

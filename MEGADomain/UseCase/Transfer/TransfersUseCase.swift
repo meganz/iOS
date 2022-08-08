@@ -1,3 +1,5 @@
+import MEGADomain
+
 // MARK: - Use case protocol -
 protocol TransfersUseCaseProtocol {
     func transfers(filteringUserTransfers: Bool) -> [TransferEntity]

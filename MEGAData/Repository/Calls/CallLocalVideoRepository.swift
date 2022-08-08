@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
     
@@ -8,7 +9,7 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
         self.chatSdk = chatSdk
     }
     
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
             if error?.type == .MEGAChatErrorTypeOk {
                 completion(.success)
@@ -18,7 +19,7 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
         }))
     }
     
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
             if error?.type == .MEGAChatErrorTypeOk {
                 completion(.success)
@@ -28,13 +29,13 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
         }))
     }
     
-    func addLocalVideo(for chatId: MEGAHandle, localVideoListener: CallLocalVideoListenerRepositoryProtocol) {
+    func addLocalVideo(for chatId: HandleEntity, localVideoListener: CallLocalVideoListenerRepositoryProtocol) {
         chatSdk.addChatLocalVideo(chatId, delegate: self)
         chatSdk.add(self)
         localVideoCallbacksDelegate = localVideoListener
     }
     
-    func removeLocalVideo(for chatId: MEGAHandle, localVideoListener: CallLocalVideoListenerRepositoryProtocol) {
+    func removeLocalVideo(for chatId: HandleEntity, localVideoListener: CallLocalVideoListenerRepositoryProtocol) {
         chatSdk.removeChatLocalVideo(chatId, delegate: self)
         chatSdk.remove(self)
         localVideoCallbacksDelegate = nil

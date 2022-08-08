@@ -1,14 +1,15 @@
 import Foundation
 import FirebaseCrashlytics
+import MEGADomain
 
 final class BackupRegister {
     
     private let sdk: MEGASdk
     
-    @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil)
-    var cachedBackupId: MEGAHandle?
+    @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
+    var cachedBackupId: HandleEntity?
     
-    @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false)
+    @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
     var hasUpdatedBackup: Bool
     
     init(sdk: MEGASdk) {

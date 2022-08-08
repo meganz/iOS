@@ -1,6 +1,12 @@
+import MEGADomain
+
+protocol TransferWidgetRouting: Routing {
+    func prepareTransfersWidget()
+}
 
 final class CancellableTransferViewModel: ViewModelType {
-    
+    typealias routingProtocols = CancellableTransferRouting & TransferWidgetRouting
+
     private let uploadFileUseCase: UploadFileUseCaseProtocol
     private let downloadNodeUseCase: DownloadNodeUseCaseProtocol
 
@@ -15,12 +21,12 @@ final class CancellableTransferViewModel: ViewModelType {
     private var transferErrors = [TransferErrorEntity]()
     
     // MARK: - Private properties
-    private let router: CancellableTransferRouting
+    private let router: routingProtocols
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: CancellableTransferRouting,
+    init(router: routingProtocols,
          uploadFileUseCase: UploadFileUseCaseProtocol,
          downloadNodeUseCase: DownloadNodeUseCaseProtocol,
          transfers: [CancellableTransfer],
@@ -38,6 +44,7 @@ final class CancellableTransferViewModel: ViewModelType {
     func dispatch(_ action: CancellableTransferViewAction) {
         switch action {
         case .onViewReady:
+            router.prepareTransfersWidget()
             switch transferType {
             case .upload:
                 if fileTransfers.isNotEmpty {

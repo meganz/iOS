@@ -8,6 +8,8 @@
 #import "ProductDetailTableViewCell.h"
 #import "UIApplication+MNZCategory.h"
 
+@import MEGAUIKit;
+
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
 }

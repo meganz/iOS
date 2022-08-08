@@ -1,7 +1,7 @@
 
 import Foundation
 
-final class CancellableTransferRouter: NSObject, CancellableTransferRouting {
+final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
     
     private weak var presenter: UIViewController?
     
@@ -86,5 +86,11 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting {
         presenter?.dismiss(animated: true, completion: {
             self.presenter?.present(wrapper.cancelAlertController(), animated: true)
         })
+    }
+    
+    func prepareTransfersWidget() {
+        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
     }
 }

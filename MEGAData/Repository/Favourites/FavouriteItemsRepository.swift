@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGADomain
 
 class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
     

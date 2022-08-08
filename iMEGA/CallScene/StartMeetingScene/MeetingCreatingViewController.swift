@@ -1,4 +1,5 @@
 import UIKit
+import MEGAUIKit
 
 class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     
@@ -151,7 +152,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             localUserView.updateAvatar(image: image)
         case .updateVideoButton(enabled: let isSelected):
             enableDisableVideoButton.isSelected = isSelected
-            localUserView.switchVideo()
+            localUserView.switchVideo(to: isSelected)
         case .updateMicrophoneButton(enabled: let isSelected):
             muteUnmuteMicrophoneButton.isSelected = !isSelected
         case .loadingStartMeeting:

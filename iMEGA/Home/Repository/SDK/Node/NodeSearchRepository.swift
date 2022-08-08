@@ -1,10 +1,11 @@
 import Foundation
+import MEGADomain
 
 struct NodeSearchRepository {
 
     var search: (
         _ filename: String,
-        _ rootNodeHandle: MEGAHandle?,
+        _ rootNodeHandle: HandleEntity?,
         _ completion: (@escaping ([NodeEntity]) -> Void)
     ) -> () -> Void
 
@@ -21,7 +22,7 @@ extension NodeSearchRepository {
         searchQueue.qualityOfService = .userInteractive
         
         return Self(
-            search: { (searchText: String, nodeHandle: MEGAHandle?, completionAction: (@escaping ([NodeEntity]) -> Void)) -> () -> Void in
+            search: { (searchText: String, nodeHandle: HandleEntity?, completionAction: (@escaping ([NodeEntity]) -> Void)) -> () -> Void in
                 let searchRootNode: MEGANode?
                 if let handle = nodeHandle {
                     searchRootNode = sdk.node(forHandle: handle)

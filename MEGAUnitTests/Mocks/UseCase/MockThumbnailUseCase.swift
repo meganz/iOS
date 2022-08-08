@@ -1,5 +1,6 @@
 @testable import MEGA
 import Combine
+import MEGADomain
 
 struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     var placeholderFileType: MEGAFileType = "generic"

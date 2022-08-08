@@ -16,6 +16,8 @@
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
 
+@import MEGAUIKit;
+
 typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     SubscriptionOrderLite = 0,
     SubscriptionOrderProI,

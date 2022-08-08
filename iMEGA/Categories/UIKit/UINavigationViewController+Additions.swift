@@ -1,3 +1,5 @@
+import UIKit
+
 extension UINavigationController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         if viewControllers.first?.isKind(of: LTHPasscodeViewController.self) ?? false {

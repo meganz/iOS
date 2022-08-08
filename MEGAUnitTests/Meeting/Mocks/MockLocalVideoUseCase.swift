@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
@@ -11,19 +12,19 @@ class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     var openDevice_calledTimes = 0
     var releaseVideoDevice_calledTimes = 0
 
-    func enableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         completion(enableDisableVideoCompletion)
     }
     
-    func disableLocalVideo(for chatId: MEGAHandle, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         completion(enableDisableVideoCompletion)
     }
     
-    func addLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
+    func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
         addLocalVideo_CalledTimes += 1
     }
     
-    func removeLocalVideo(for chatId: MEGAHandle, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
+    func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
         removeLocalVideo_CalledTimes += 1
     }
     

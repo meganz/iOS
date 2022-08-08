@@ -1,10 +1,10 @@
-
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 final class NameCollisionViewModelTests: XCTestCase {
-    let parentHandle: MEGAHandle = 1000
-    let copyMoveHandles: [MEGAHandle] = [1, 2, 3]
+    let parentHandle: HandleEntity = 1000
+    let copyMoveHandles: [HandleEntity] = [1, 2, 3]
     lazy var nameCollisions = [
         NameCollisionEntity(parentHandle: parentHandle, name: "Node1", isFile: Bool.random()),
         NameCollisionEntity(parentHandle: parentHandle, name: "Node2", isFile: Bool.random()),
@@ -50,7 +50,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         let router = MockNameCollisionRouter()
         let collisions = nameCollisions
         collisions.forEach { collision in
-            collision.collisionNodeHandle = MEGAHandle.random(in: 100...1000)
+            collision.collisionNodeHandle = HandleEntity.random(in: 100...1000)
         }
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: collisions)
         

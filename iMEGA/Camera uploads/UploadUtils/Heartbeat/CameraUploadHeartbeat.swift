@@ -1,6 +1,8 @@
 import Foundation
 import FirebaseCrashlytics
 
+import MEGADomain
+
 final class CameraUploadHeartbeat: NSObject {
     private enum Constants {
         static let activeTimerInterval: Double = 30
@@ -12,7 +14,7 @@ final class CameraUploadHeartbeat: NSObject {
     private let recorder: BackupRecorder
     private var activeTimer: DispatchSourceTimer?
     private var statusTimer: DispatchSourceTimer?
-    private var lastHeartbeatNodeHandle: MEGAHandle?
+    private var lastHeartbeatNodeHandle: HandleEntity?
     
     @objc override init() {
         sdk = MEGASdkManager.sharedMEGASdk()
@@ -150,16 +152,14 @@ final class CameraUploadHeartbeat: NSObject {
             return
         }
         
-        guard let lastRecord = recorder.fetchLastBackupRecord(),
-              let lastNode = sdk.node(forHandle: lastRecord.nodeHandle) else {
-            MEGALogDebug("[Camera Upload] heartbeat - skipped as last backup node could not be found")
-            return
-        }
+        let lastRecord = recorder.fetchLastBackupRecord()
+        let lastNode = sdk.node(forHandle: lastRecord?.nodeHandle ?? .invalid)
+        let lastDate = lastRecord?.date
         
-        sendHeartbeat(forBackupId: backupId, lastNode: lastNode, lastActionDate: lastRecord.date)
+        sendHeartbeat(forBackupId: backupId, lastNode: lastNode, lastActionDate: lastDate)
     }
     
-    private func sendHeartbeat(forBackupId backupId: MEGAHandle, lastNode: MEGANode, lastActionDate: Date) {
+    private func sendHeartbeat(forBackupId backupId: HandleEntity, lastNode: MEGANode?, lastActionDate: Date?) {
         MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(type(of: sdk).base64Handle(forHandle: backupId) ?? "")")
         CameraUploadManager.shared().loadCurrentUploadStats { [sdk] stats, error in
             guard let stats = stats else {
@@ -193,7 +193,9 @@ final class CameraUploadHeartbeat: NSObject {
                                                 Crashlytics.crashlytics().record(error: error)
                                                 MEGALogError("[Camera Upload] heartbeat - error when to send heartbeat \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") \(error)")
                                             case .success:
-                                                self?.lastHeartbeatNodeHandle = lastNode.handle
+                                                if let lastNode = lastNode {
+                                                    self?.lastHeartbeatNodeHandle = lastNode.handle
+                                                }
                                                 MEGALogDebug("[Camera Upload] heartbeat - send heartbeat to backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") success")
                                             }
                                          })

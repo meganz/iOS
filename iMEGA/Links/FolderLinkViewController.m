@@ -273,10 +273,13 @@
             [unavailableLinkView configureInvalidFolderLinkByUserCopyrightSuspension];
             break;
     }
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceList && self.flTableView.tableView != nil) {
         [self.flTableView.tableView setBackgroundView:unavailableLinkView];
-    } else {
+    } else if (self.flCollectionView.collectionView != nil){
         [self.flCollectionView.collectionView setBackgroundView:unavailableLinkView];
+    } else {
+        unavailableLinkView.frame = self.view.bounds;
+        [self.view addSubview:unavailableLinkView];
     }
 }
 

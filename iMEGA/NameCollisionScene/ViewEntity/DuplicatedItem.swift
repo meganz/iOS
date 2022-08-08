@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct DuplicatedItem {
     var name: String
@@ -8,5 +9,5 @@ struct DuplicatedItem {
     var itemPlaceholder: String
     var collisionFileSize: String?
     var collisionFileDate: String?
-    var collisionNodeHandle: MEGAHandle?
+    var collisionNodeHandle: HandleEntity?
 }

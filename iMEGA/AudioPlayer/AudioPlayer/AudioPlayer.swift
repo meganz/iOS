@@ -1,5 +1,6 @@
 import Foundation
 import AVFoundation
+import MEGAFoundation
 
 enum PlayerConfiguration: String {
     case loop, shuffle, repeatOne

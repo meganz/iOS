@@ -1,4 +1,5 @@
-
+import MEGAUIKit
+import MEGADomain
 
 class ExplorerBaseViewController: UIViewController {
     lazy var toolbar = UIToolbar()
@@ -100,7 +101,6 @@ class ExplorerBaseViewController: UIViewController {
                   return
               }
 
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
         let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
         endEditingMode()

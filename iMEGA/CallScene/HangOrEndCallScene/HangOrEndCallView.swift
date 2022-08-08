@@ -1,5 +1,6 @@
 
 import SwiftUI
+import MEGASwiftUI
 
 struct HangOrEndCallView: View {
     var viewModel: HangOrEndCallViewModel

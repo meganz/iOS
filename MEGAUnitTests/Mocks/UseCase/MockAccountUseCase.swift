@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct MockAccountUseCase: AccountUseCaseProtocol {
     var totalNodesCountVariable: UInt = 0

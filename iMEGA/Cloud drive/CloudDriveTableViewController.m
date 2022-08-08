@@ -14,6 +14,8 @@
 #import "CloudDriveViewController.h"
 #import "NodeTableViewCell.h"
 
+@import MEGAFoundation;
+
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource>
 @end
 
@@ -306,7 +308,6 @@
 
         rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
             if (node != nil) {
                 [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
             }

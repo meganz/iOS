@@ -34,6 +34,12 @@ internal enum Colors {
       internal static let selectedLight = ColorAsset(name: "selectedLight")
       internal static let unselectedDefault = ColorAsset(name: "unselectedDefault")
     }
+    internal enum Tabs {
+      internal static let chatTabNormalBackground = ColorAsset(name: "chatTabNormalBackground")
+      internal static let chatTabNormalText = ColorAsset(name: "chatTabNormalText")
+      internal static let chatTabSelectedBackground = ColorAsset(name: "chatTabSelectedBackground")
+      internal static let chatTabSelectedText = ColorAsset(name: "chatTabSelectedText")
+    }
   }
   internal enum General {
     internal enum Black {
@@ -115,6 +121,8 @@ internal enum Colors {
   }
   internal enum MediaConsumption {
     internal static let photoNumbersBackground = ColorAsset(name: "photoNumbersBackground")
+    internal static let timelineYMDATabs = ColorAsset(name: "timelineYMDATabs")
+    internal static let timelineYMDATabsSelected = ColorAsset(name: "timelineYMDATabsSelected")
   }
   internal enum MediaDiscovery {
     internal static let exitButtonTint = ColorAsset(name: "exitButtonTint")
@@ -145,6 +153,16 @@ internal enum Colors {
     internal static let photoSeletionBorder = ColorAsset(name: "photoSeletionBorder")
     internal static let rightBarButtonForeground = ColorAsset(name: "rightBarButtonForeground")
     internal static let zoomButtonForeground = ColorAsset(name: "zoomButtonForeground")
+  }
+  internal enum SharedItems {
+    internal enum Tabs {
+      internal static let sharedItemsTabNormalBackground = ColorAsset(name: "sharedItemsTabNormalBackground")
+      internal static let sharedItemsTabNormalIconTint = ColorAsset(name: "sharedItemsTabNormalIconTint")
+      internal static let sharedItemsTabNormalText = ColorAsset(name: "sharedItemsTabNormalText")
+      internal static let sharedItemsTabSelectedBackground = ColorAsset(name: "sharedItemsTabSelectedBackground")
+      internal static let sharedItemsTabSelectedIconTint = ColorAsset(name: "sharedItemsTabSelectedIconTint")
+      internal static let sharedItemsTabSelectedText = ColorAsset(name: "sharedItemsTabSelectedText")
+    }
   }
   internal enum SharedViews {
     internal enum Explorer {

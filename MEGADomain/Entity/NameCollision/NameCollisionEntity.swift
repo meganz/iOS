@@ -1,15 +1,16 @@
+import MEGADomain
 
 final class NameCollisionEntity: NSObject {
-    let parentHandle: MEGAHandle
+    let parentHandle: HandleEntity
     let name: String
     let isFile: Bool
     let fileUrl: URL?
-    let nodeHandle: MEGAHandle?
+    let nodeHandle: HandleEntity?
     var renamed: String?
     var collisionAction: NameCollisionActionType?
-    var collisionNodeHandle: MEGAHandle?
+    var collisionNodeHandle: HandleEntity?
     
-    init(parentHandle: MEGAHandle, name: String, isFile: Bool, fileUrl: URL? = nil, nodeHandle: MEGAHandle? = nil) {
+    init(parentHandle: HandleEntity, name: String, isFile: Bool, fileUrl: URL? = nil, nodeHandle: HandleEntity? = nil) {
         self.parentHandle = parentHandle
         self.name = name
         self.isFile = isFile

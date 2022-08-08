@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomainMock
 
 class AppFirstLaunchUseCaseTests: XCTestCase {
     func isAppFirstLaunch_true() {

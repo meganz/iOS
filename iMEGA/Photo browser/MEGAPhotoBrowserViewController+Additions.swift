@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 extension MEGAPhotoBrowserViewController {
     @objc func subtitle(fromDate date: Date) -> String {
@@ -27,7 +28,7 @@ extension MEGAPhotoBrowserViewController {
         return prePesentingVC
     }
     
-    @objc func configureMediaAttachment(forMessageId messageId: MEGAHandle, inChatId chatId: MEGAHandle, messagesIds: [MEGAHandle]) {
+    @objc func configureMediaAttachment(forMessageId messageId: HandleEntity, inChatId chatId: HandleEntity, messagesIds: [HandleEntity]) {
         self.chatId = chatId
         self.messageId = messageId
         self.messagesIds = messagesIds
@@ -78,7 +79,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func updateMessageId(to newIndex: UInt) {
         if messagesIds.isNotEmpty {
-            guard let newMessageId = messagesIds[safe: Int(newIndex)] as? MEGAHandle else { return }
+            guard let newMessageId = messagesIds[safe: Int(newIndex)] as? HandleEntity else { return }
             messageId = newMessageId
         }
     }
@@ -91,5 +92,18 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
             needsReload = true
             updateMessageId(to: newIndex)
         }
+    }
+}
+
+extension MEGAPhotoBrowserViewController {
+    static func photoBrowser(currentPhoto: NodeEntity, allPhotos: [NodeEntity]) -> MEGAPhotoBrowserViewController {
+        let sdk = MEGASdkManager.sharedMEGASdk()
+        let browser = MEGAPhotoBrowserViewController.photoBrowser(
+            with: PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: sdk),
+            api: sdk,
+            displayMode: .cloudDrive
+        )
+        browser.needsReload = true
+        return browser
     }
 }

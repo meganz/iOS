@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class AppFirstLaunchSecurityChecker: NSObject {
     private let appFirstLaunchUseCase: AppFirstLaunchUseCaseProcotol

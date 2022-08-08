@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import MEGADomain
 
 // MARK: - Use case protocol -
 protocol ThumbnailUseCaseProtocol {

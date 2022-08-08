@@ -1,16 +1,17 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 extension NodeEntity {
     init(changeTypes: ChangeTypeEntity = .attributes,
          nodeType: NodeTypeEntity? = nil,
          name: String = "",
          fingerprint: String? = nil,
-         handle: MEGAHandle = .invalid,
+         handle: HandleEntity = .invalid,
          base64Handle: String = "",
-         restoreParentHandle: MEGAHandle = .invalid,
-         ownerHandle: MEGAHandle = .invalid,
-         parentHandle: MEGAHandle = .invalid,
+         restoreParentHandle: HandleEntity = .invalid,
+         ownerHandle: HandleEntity = .invalid,
+         parentHandle: HandleEntity = .invalid,
          isFile: Bool = false,
          isFolder: Bool = false,
          isRemoved: Bool = false,
@@ -25,7 +26,7 @@ extension NodeEntity {
          isTakenDown: Bool = false,
          isFavourite: Bool = false,
          label: NodeLabelTypeEntity = .unknown,
-         publicHandle: MEGAHandle = .invalid,
+         publicHandle: HandleEntity = .invalid,
          expirationTime: Date? = nil,
          publicLinkCreationTime: Date? = nil,
          size: UInt64 = .zero,

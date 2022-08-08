@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol HomeAccountSearchResultViewModelInputs {
 
@@ -6,7 +7,7 @@ protocol HomeAccountSearchResultViewModelInputs {
 
     func didInputText(text: String)
 
-    func didSelectNode(_ nodeHandle: MEGAHandle)
+    func didSelectNode(_ nodeHandle: HandleEntity)
 
     func didSelectHint(_ hintText: String)
 }
@@ -102,7 +103,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             )
         }
 
-        let moreAction: (MEGAHandle, UIButton) -> Void = { handle, button in
+        let moreAction: (HandleEntity, UIButton) -> Void = { handle, button in
             self.router.didTapMoreAction(on: file.handle, button: button)
         }
 
@@ -130,7 +131,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
     // MARK: - Did Select Node
 
-    func didSelectNode(_ nodeHandle: MEGAHandle) {
+    func didSelectNode(_ nodeHandle: HandleEntity) {
         router.didTapNode(nodeHandle)
     }
 

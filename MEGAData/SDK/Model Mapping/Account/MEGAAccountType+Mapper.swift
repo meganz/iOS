@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension MEGAAccountType {
     func toAccountTypeEntity() -> AccountTypeEntity {

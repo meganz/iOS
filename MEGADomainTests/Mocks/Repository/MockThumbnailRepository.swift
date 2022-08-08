@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGADomain
 
 struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
     var hasCachedThumbnail = false
@@ -27,7 +28,7 @@ struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
         }
     }
     
-    func cachedThumbnailURL(for base64Handle: MEGABase64Handle, type: ThumbnailTypeEntity) -> URL {
+    func cachedThumbnailURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
         switch type {
         case .thumbnail:
             return cachedThumbnailURL

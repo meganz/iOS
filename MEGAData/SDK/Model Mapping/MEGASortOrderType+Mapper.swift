@@ -1,4 +1,4 @@
-import Foundation
+import MEGADomain
 
 extension SortOrderEntity {
     func toSortOrderType() -> MEGASortOrderType {

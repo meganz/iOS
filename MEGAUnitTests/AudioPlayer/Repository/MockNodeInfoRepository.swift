@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 enum NodeInfoError: Error {
     case generic
@@ -12,7 +13,7 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
         self.result = result
     }
     
-    func path(fromHandle: MEGAHandle) -> URL? {
+    func path(fromHandle: HandleEntity) -> URL? {
         switch result {
         case .failure: return nil
         case .success: return URL(string: "www.mega.nz")
@@ -33,28 +34,28 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
-    func childrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]? {
+    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
         switch result {
         case .failure: return nil
         case .success: return AudioPlayerItem.mockArray
         }
     }
     
-    func folderChildrenInfo(fromParentHandle: MEGAHandle) -> [AudioPlayerItem]? {
+    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
         switch result {
         case .failure: return nil
         case .success: return AudioPlayerItem.mockArray
         }
     }
     
-    func node(fromHandle: MEGAHandle) -> MEGANode? {
+    func node(fromHandle: HandleEntity) -> MEGANode? {
         switch result {
         case .failure: return nil
         case .success: return MEGANode()
         }
     }
     
-    func folderNode(fromHandle: MEGAHandle) -> MEGANode? {
+    func folderNode(fromHandle: HandleEntity) -> MEGANode? {
         switch result {
         case .failure: return nil
         case .success: return MEGANode()

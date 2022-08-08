@@ -61,12 +61,6 @@
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
 
-@property (weak, nonatomic) IBOutlet UIView *selectorView;
-
-@property (weak, nonatomic) IBOutlet UIView *incomingLineView;
-@property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
-@property (weak, nonatomic) IBOutlet UIView *linksLineView;
-
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
 @end
@@ -198,7 +192,7 @@
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    [self updateSelector];
+    [self updateTabSelection];
 }
 
 - (void)reloadUI {
@@ -517,26 +511,6 @@
     }
 }
 
-- (void)updateSelector {
-    self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    
-    self.incomingButton.tintColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
-    
-    self.outgoingButton.tintColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.outgoingLineView.backgroundColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
-    
-    self.linksButton.tintColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
-        
-    [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.outgoingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    [self.outgoingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.linksButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    [self.linksButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-}
-
 - (void)startEditingModeAtIndex:(NSIndexPath *)indexPath {
     [self setEditing:YES animated:YES];
     [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
@@ -813,7 +787,7 @@
     sender.selected = !sender.selected;
     self.outgoingButton.selected = self.linksButton.selected = NO;
 
-    [self updateSelector];
+    [self updateTabSelection];
 
     [self disableSearchAndSelection];
     
@@ -829,7 +803,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = self.linksButton.selected = NO;
     
-    [self updateSelector];
+    [self updateTabSelection];
     
     [self disableSearchAndSelection];
     
@@ -845,7 +819,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = self.outgoingButton.selected = NO;
     
-    [self updateSelector];
+    [self updateTabSelection];
     
     [self disableSearchAndSelection];
     

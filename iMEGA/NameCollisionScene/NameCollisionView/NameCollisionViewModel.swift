@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol NameCollisionViewRouting: Routing {
     func showNameCollisionsView()
@@ -171,7 +172,7 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     @MainActor
-    private func finishedTask(for handles: [NodeHandle]) {
+    private func finishedTask(for handles: [HandleEntity]) {
         if handles.count == collisions.count {
             router.showCopyOrMoveSuccess()
         } else {
@@ -255,7 +256,7 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     @MainActor
-    private func loadNodeThumbnail(for handle: MEGAHandle) async -> URL? {
+    private func loadNodeThumbnail(for handle: HandleEntity) async -> URL? {
         guard let node = nameCollisionUseCase.node(for: handle) else { return nil }
         guard let url = try? await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail) else { return nil }
         return url

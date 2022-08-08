@@ -90,6 +90,20 @@
         "identifier" : "B6CED48A22B8AC70009C4861",
         "name" : "MEGAUnitTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGADomain",
+        "identifier" : "MEGADomainTests",
+        "name" : "MEGADomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGAFoundation",
+        "identifier" : "MEGAFoundationTests",
+        "name" : "MEGAFoundationTests"
+      }
     }
   ],
   "version" : 1

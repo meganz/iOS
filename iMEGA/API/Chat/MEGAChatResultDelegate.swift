@@ -1,7 +1,7 @@
-
 import Foundation
+import MEGADomain
 
-typealias MEGAChatResultDelegateCompletion = (_ api: MEGAChatSdk, _ chatId: MEGAHandle, _ newState: MEGAChatConnection) -> Void
+typealias MEGAChatResultDelegateCompletion = (_ api: MEGAChatSdk, _ chatId: HandleEntity, _ newState: MEGAChatConnection) -> Void
 
 class MEGAChatResultDelegate: NSObject, MEGAChatDelegate {
     let completion: MEGAChatResultDelegateCompletion

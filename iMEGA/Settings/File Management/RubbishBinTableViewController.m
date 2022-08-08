@@ -14,6 +14,8 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
 
+@import MEGAUIKit;
+
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *clearRubbishBinLabel;

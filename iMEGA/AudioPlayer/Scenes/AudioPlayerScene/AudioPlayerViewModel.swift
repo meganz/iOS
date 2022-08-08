@@ -1,4 +1,5 @@
 import Foundation
+import MEGAFoundation
 
 enum AudioPlayerAction: ActionType {
     case onViewDidLoad

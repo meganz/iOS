@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     var nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown
@@ -14,29 +15,29 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
         self.slideShowImages = slideShowImages
     }
     
-    func nodeAccessLevel(nodeHandle: MEGAHandle) -> NodeAccessTypeEntity {
+    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         return nodeAccessLevelVariable
     }
     
-    func downloadToOffline(nodeHandle: MEGAHandle) { }
+    func downloadToOffline(nodeHandle: HandleEntity) { }
     
     func labelString(label: NodeLabelTypeEntity) -> String {
         labelString
     }
     
-    func getFilesAndFolders(nodeHandle: MEGAHandle) -> (childFileCount: Int, childFolderCount: Int) {
+    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         filesAndFolders
     }
     
-    func hasVersions(nodeHandle: MEGAHandle) -> Bool {
+    func hasVersions(nodeHandle: HandleEntity) -> Bool {
         versions
     }
     
-    func isDownloaded(nodeHandle: MEGAHandle) -> Bool {
+    func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         downloaded
     }
     
-    func isInRubbishBin(nodeHandle: MEGAHandle) -> Bool {
+    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         inRubbishBin
     }
     
