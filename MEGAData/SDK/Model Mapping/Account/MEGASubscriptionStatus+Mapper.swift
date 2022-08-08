@@ -1,4 +1,4 @@
-import Foundation
+import MEGADomain
 
 extension MEGASubscriptionStatus {
     func toSubscriptionStatusEntity() -> SubscriptionStatusEntity {

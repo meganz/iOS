@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct PreferenceRepository: PreferenceRepositoryProtocol {
     private let userDefaults: UserDefaults

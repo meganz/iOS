@@ -1,3 +1,4 @@
+import MEGADomain
 
 enum PSAViewAction: ActionType {
     case showPSAViewIfNeeded

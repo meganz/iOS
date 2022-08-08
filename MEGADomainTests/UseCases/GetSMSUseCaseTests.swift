@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomainMock
 
 final class GetSMSUseCaseTests: XCTestCase {
     func testVerifiedPhoneNumber_nil() {

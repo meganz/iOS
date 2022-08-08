@@ -1,3 +1,5 @@
+import MEGADomain
+
 enum BannerContainerViewAction: ActionType {
     case onViewWillAppear
     case onViewDidLoad(UITraitCollection)

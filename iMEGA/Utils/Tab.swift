@@ -1,3 +1,5 @@
+import MEGADomain
+
 @objc enum TabType: Int, CaseIterable {
     case cloudDrive
     case cameraUploads
@@ -7,11 +9,11 @@
 }
 
 @objc final class TabManager: NSObject {
-    @PreferenceWrapper(key: .launchTab, defaultValue: TabType.home.rawValue)
+    @PreferenceWrapper(key: .launchTab, defaultValue: TabType.home.rawValue, useCase: PreferenceUseCase.default)
     private static var launchTabPreference: Int
-    @PreferenceWrapper(key: .launchTabSelected, defaultValue: false)
+    @PreferenceWrapper(key: .launchTabSelected, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var launchTabSelected: Bool
-    @PreferenceWrapper(key: .launchTabSuggested, defaultValue: false)
+    @PreferenceWrapper(key: .launchTabSuggested, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var launchTabDialogAlreadySuggested: Bool
 
     @objc static let avaliableTabs = TabType.allCases.count

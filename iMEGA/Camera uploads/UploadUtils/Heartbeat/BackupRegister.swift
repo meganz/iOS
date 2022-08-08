@@ -6,10 +6,10 @@ final class BackupRegister {
     
     private let sdk: MEGASdk
     
-    @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil)
+    @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
     var cachedBackupId: HandleEntity?
     
-    @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false)
+    @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
     var hasUpdatedBackup: Bool
     
     init(sdk: MEGASdk) {

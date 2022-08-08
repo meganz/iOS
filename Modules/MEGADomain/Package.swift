@@ -11,6 +11,9 @@ let package = Package(
         .library(
             name: "MEGADomain",
             targets: ["MEGADomain"]),
+        .library(
+            name: "MEGADomainMock",
+            targets: ["MEGADomainMock"])
     ],
     dependencies: [
         .package(path: "../MEGASwift")
@@ -19,8 +22,11 @@ let package = Package(
         .target(
             name: "MEGADomain",
             dependencies: ["MEGASwift"]),
+        .target(
+            name: "MEGADomainMock",
+            dependencies: ["MEGADomain"]),
         .testTarget(
             name: "MEGADomainTests",
-            dependencies: ["MEGADomain"]),
+            dependencies: ["MEGADomain", "MEGADomainMock"]),
     ]
 )

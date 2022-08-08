@@ -22,10 +22,10 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private var streamingInfoRepository = StreamingInfoRepository()
     private var offlineFileInfoRepository = OfflineInfoRepository()
    
-    @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder)
+    @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
     private var sortingPreference: SortingPreference
     
-    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc)
+    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
     private var sortingType: MEGASortOrderType
     
     init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(), folderSDK: MEGASdk = MEGASdkManager.sharedMEGASdkFolder(), megaStore: MEGAStore = MEGAStore.shareInstance()) {
