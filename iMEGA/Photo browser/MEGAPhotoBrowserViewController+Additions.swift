@@ -94,3 +94,16 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
         }
     }
 }
+
+extension MEGAPhotoBrowserViewController {
+    static func photoBrowser(currentPhoto: NodeEntity, allPhotos: [NodeEntity]) -> MEGAPhotoBrowserViewController {
+        let sdk = MEGASdkManager.sharedMEGASdk()
+        let browser = MEGAPhotoBrowserViewController.photoBrowser(
+            with: PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: sdk),
+            api: sdk,
+            displayMode: .cloudDrive
+        )
+        browser.needsReload = true
+        return browser
+    }
+}
