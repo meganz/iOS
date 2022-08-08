@@ -134,6 +134,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 updateSpeakerInfo()
             }
             addChatRoomParticipantsChangedListener()
+            requestPrivilegeChange(forChatId: chatRoom.chatId)
         case .hangCall(let presenter, let sender):
             manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
@@ -384,6 +385,24 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         } else {
             containerViewModel?.dispatch(.hangCall(presenter: presenter, sender: sender))
         }
+    }
+    
+    private func requestPrivilegeChange(forChatId chatId: HandleEntity) {
+        chatRoomUseCase.userPrivilegeChanged(forChatId: chatId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { error in
+                MEGALogDebug("error fetching the changed privilege \(error)")
+            }, receiveValue: { [weak self] handle in
+                self?.participantPrivilegeChanged(forUserHandle: handle)
+            })
+            .store(in: &subscriptions)
+    }
+    
+    private func participantPrivilegeChanged(forUserHandle handle: HandleEntity) {
+        callParticipants.filter( { $0.participantId == handle} ).forEach { participant in
+            participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, inChatId: participant.chatId) == .moderator
+        }
+        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
 }
 

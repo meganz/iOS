@@ -66,7 +66,6 @@ final class MeetingParticipantViewModel: ViewModelType {
                 self.fetchUserAvatar(forParticipant: self.participant, name: name)
                 self.requestAvatarChange(forParticipant: self.participant, name: name)
             }
-            requestPrivilegeChange(forParticipant: participant)
         case .contextMenuTapped(let button):
             contextMenuTappedHandler(participant, button)
         }
@@ -112,24 +111,6 @@ final class MeetingParticipantViewModel: ViewModelType {
                 self.fetchUserAvatar(forParticipant: participant, name: name)
             })
             .store(in: &subscriptions)
-    }
-    
-    private func requestPrivilegeChange(forParticipant participant: CallParticipantEntity) {
-        chatRoomUseCase.userPrivilegeChanged(forChatId: participant.chatId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { error in
-                MEGALogDebug("error fetching the changed privilege \(error)")
-            }, receiveValue: { [weak self] handle in
-                self?.updateParticipantPrivilegeIfNeeded(forUserHandle: handle)
-            })
-            .store(in: &subscriptions)
-    }
-    
-    private func updateParticipantPrivilegeIfNeeded(forUserHandle handle: HandleEntity) {
-        guard handle == participant.participantId, let privilege = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, inChatId: participant.chatId) else {
-            return
-        }
-        self.invokeCommand?(.updatePrivilege(isModerator: privilege == .moderator))
     }
 }
 
