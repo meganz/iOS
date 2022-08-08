@@ -9,7 +9,7 @@ protocol PhotoLibraryContentViewRouting {
     func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard
     func card(for photoByDay: PhotoByDay) -> PhotoDayCard
     func card(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoCell
-    func photoBrowser(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoBrowser
+    func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity])
 }
 
 @available(iOS 14.0, *)
@@ -51,7 +51,16 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         )
     }
     
-    func photoBrowser(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoBrowser {
-        PhotoBrowser(currentPhoto: photo, allPhotos: viewModel.libraryViewModel.library.allPhotos)
+    func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity]) {
+        guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+        
+        let photoBrowser = MEGAPhotoBrowserViewController.photoBrowser(currentPhoto: photo, allPhotos: allPhotos)
+        
+        topController.modalPresentationStyle = .fullScreen
+        topController.present(photoBrowser, animated: true)
     }
 }
