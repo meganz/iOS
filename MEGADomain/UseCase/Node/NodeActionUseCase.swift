@@ -8,7 +8,6 @@ protocol NodeActionUseCaseProtocol {
     func hasVersions(nodeHandle: HandleEntity) -> Bool
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
-    func slideShowImages(for node: NodeEntity) -> [NodeEntity]
 }
 
 // MARK: - Use case implementation -
@@ -42,11 +41,5 @@ struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
     
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.isInRubbishBin(nodeHandle: nodeHandle)
-    }
-
-    func slideShowImages(for node: NodeEntity) -> [NodeEntity] {
-        let parentHandle = node.isFolder ? node.handle : node.parentHandle
-        
-        return nodeRepository.images(for: parentHandle)
     }
 }

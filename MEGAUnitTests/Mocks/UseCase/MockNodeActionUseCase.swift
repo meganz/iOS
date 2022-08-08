@@ -9,11 +9,6 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     var versions: Bool = false
     var downloaded: Bool = false
     var inRubbishBin: Bool = false
-    let slideShowImages: [NodeEntity]
-    
-    init(slideShowImages: [NodeEntity] = []) {
-        self.slideShowImages = slideShowImages
-    }
     
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         return nodeAccessLevelVariable
@@ -39,9 +34,5 @@ final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         inRubbishBin
-    }
-    
-    func slideShowImages(for node: NodeEntity) -> [NodeEntity] {
-        slideShowImages
     }
 }
