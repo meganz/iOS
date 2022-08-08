@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol RecentNodesRepositoryProtocol {
     func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void)
