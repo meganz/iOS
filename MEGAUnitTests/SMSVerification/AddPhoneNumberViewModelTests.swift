@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomainMock
 
 final class AddPhoneNumberViewModelTests: XCTestCase {
     

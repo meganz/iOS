@@ -1,6 +1,7 @@
 import Foundation
 import StoreKit
 import MEGAFoundation
+import MEGADomain
 
 @objc final class RatingRequestMonitor: NSObject {
     private let sdk: MEGASdk
@@ -31,7 +32,7 @@ import MEGAFoundation
         
         if transfer.type == .download || transfer.type == .upload {
             debouncer.start {
-                if RatingRequesting.transfer.shouldRequestRating(TransferMoment(transfer: TransferEntity(transfer: transfer)), self.baseConditionUseCase) {
+                if RatingRequesting.transfer.shouldRequestRating(TransferMoment(transfer: transfer.toTransferEntity()), self.baseConditionUseCase) {
                     self.requestReview()
                 }
             }

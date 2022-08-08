@@ -1,3 +1,5 @@
+import MEGADomain
+
 extension AccountDetailsEntity {
     init(accountDetails: MEGAAccountDetails) {
         self.init(

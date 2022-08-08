@@ -1,4 +1,4 @@
-import Foundation
+import MEGADomain
 
 extension MEGAShareType {
     func toShareAccessLevelEntity() -> ShareAccessLevelEntity {
