@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import MEGADomain
 
 final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     

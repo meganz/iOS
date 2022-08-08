@@ -1,5 +1,6 @@
+import Foundation
 
-enum GetFavouriteNodesErrorEntity: Error {
+public enum GetFavouriteNodesErrorEntity: Error {
     case generic
     case megaStore
     case sdk

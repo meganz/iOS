@@ -1,6 +1,6 @@
 import Foundation
 
-protocol FavouriteItemsRepositoryProtocol {
+public protocol FavouriteItemsRepositoryProtocol {
     func deleteAllFavouriteItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func insertFavouriteItem(_ item: FavouriteItemEntity)
     @available(iOS 14.0, *)

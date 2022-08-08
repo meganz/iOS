@@ -1,4 +1,5 @@
 import CoreData
+import MEGADomain
 
 extension MEGAStore {
     
