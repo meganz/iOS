@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 final class NameCollisionViewModelTests: XCTestCase {
     let parentHandle: HandleEntity = 1000

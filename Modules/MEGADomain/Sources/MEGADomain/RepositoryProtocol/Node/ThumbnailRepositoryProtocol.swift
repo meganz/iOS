@@ -1,6 +1,6 @@
-import MEGADomain
+import Foundation
 
-protocol ThumbnailRepositoryProtocol {
+public protocol ThumbnailRepositoryProtocol {
     func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool
     func cachedThumbnailURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL
     func cachedThumbnailURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL

@@ -200,7 +200,7 @@ final class NameCollisionViewModel: ObservableObject {
             isFile: collision.isFile,
             size: nameCollisionUseCase.sizeForFile(at: url),
             date: nameCollisionUseCase.creationDateForFile(at: url),
-            itemPlaceholder: collision.isFile ? thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: collision.name) : "folder",
+            itemPlaceholder: collision.isFile ? FileTypes().fileType(forFileName: collision.name) : "folder",
             collisionFileSize: nameCollisionUseCase.sizeForNode(handle: collisionNodeHandle),
             collisionFileDate: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
             collisionNodeHandle: collisionNodeHandle)
@@ -217,7 +217,7 @@ final class NameCollisionViewModel: ObservableObject {
             isFile: collision.isFile,
             size: nameCollisionUseCase.sizeForNode(handle: nodeHandle),
             date: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
-            itemPlaceholder: collision.isFile ? thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: collision.name) : "folder",
+            itemPlaceholder: collision.isFile ? FileTypes().fileType(forFileName: collision.name) : "folder",
             collisionFileSize: nameCollisionUseCase.sizeForNode(handle: collisionNodeHandle),
             collisionFileDate: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
             collisionNodeHandle: collisionNodeHandle)

@@ -52,7 +52,7 @@ final class PhotoCellViewModel: ObservableObject {
         isFavorite = photo.isFavourite
         duration = NSString.mnz_string(fromTimeInterval: Double(photo.duration))
         
-        let placeholderFileType = thumbnailUseCase.thumbnailPlaceholderFileType(forNodeName: photo.name)
+        let placeholderFileType = FileTypes().fileType(forFileName: photo.name)
         placeholderThumbnail = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
         thumbnailContainer = placeholderThumbnail
         
