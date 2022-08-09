@@ -1,14 +1,9 @@
 import Foundation
 import Combine
-import MEGADomain
+import MEGASwift
 
 // MARK: - Use case protocol -
-protocol ThumbnailUseCaseProtocol {
-    
-    /// Get the thumbnail placeholder file type for a node file
-    /// - Parameter name: The name of the node file
-    /// - Returns: A `MEGAFileType`
-    func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType
+public protocol ThumbnailUseCaseProtocol {
     
     /// Check if there is cached thumbnail in thumbnail repository
     /// - Parameters:
@@ -54,38 +49,33 @@ protocol ThumbnailUseCaseProtocol {
     func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity>
 }
 
-struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtocol {
+public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtocol {
     private let repository: T
-    private let fileTypes = FileTypes()
     
-    init(repository: T) {
+    public init(repository: T) {
         self.repository = repository
     }
     
-    func thumbnailPlaceholderFileType(forNodeName name: String) -> MEGAFileType {
-        fileTypes.fileType(forFileName: name)
-    }
-    
-    func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
+    public func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
         repository.hasCachedThumbnail(for: node, type: type)
     }
     
-    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+    public func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
         repository.cachedThumbnailURL(for: node, type: type)
     }
     
-    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {
+    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {
         try Task.checkCancellation()
         return try await repository.loadThumbnail(for: node, type: type)
     }
     
-    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<URL, ThumbnailErrorEntity> {
+    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<URL, ThumbnailErrorEntity> {
         Future { promise in
             repository.loadThumbnail(for: node, type: type, completion: promise)
         }
     }
     
-    func requestPreview(for node: NodeEntity) -> AnyPublisher<URL, ThumbnailErrorEntity> {
+    public func requestPreview(for node: NodeEntity) -> AnyPublisher<URL, ThumbnailErrorEntity> {
         requestThumbnailAndPreview(for: node)
             .combinePrevious((nil, nil))
             .filter { result in
@@ -101,7 +91,7 @@ struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtoco
             .eraseToAnyPublisher()
     }
     
-    func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity> {
+    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity> {
         loadThumbnail(for: node, type: .thumbnail)
             .map(Optional.some)
             .prepend(nil)

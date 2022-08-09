@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 @available(iOS 14.0, *)
 final class PhotoMonthCardViewModel: PhotoCardViewModel {
