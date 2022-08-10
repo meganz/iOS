@@ -114,11 +114,21 @@ platform :ios do
     File.write("version_number.txt", lane_context[SharedValues::VERSION_NUMBER]) 
   end
 
+  desc "build app for simulator"
+  lane :build_simulator do
+    xcodebuild(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      sdk: "iphonesimulator",
+      arch: "x86_64",
+      derivedDataPath: "./derivedData/"
+    )
+  end
+
   desc "archive for app store"
   lane :archive_appstore do
     gym(
       workspace: WORKSPACE,
-      scheme: SCHEME,
       clean: true,
       export_method: "app-store",
       skip_profile_detection: true,
