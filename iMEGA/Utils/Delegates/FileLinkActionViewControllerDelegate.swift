@@ -42,9 +42,9 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
 
         let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
-        saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity()) { error in
-            SVProgressHUD.dismiss()
-            if error != nil {
+        saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
+            if case let .failure(error) = result, error != .cancelled {
+                SVProgressHUD.dismiss()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
             }
         }

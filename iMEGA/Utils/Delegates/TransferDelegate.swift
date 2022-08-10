@@ -35,8 +35,12 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
         if let completion = completion {
             if error.type != .apiOk {
-                let transferErrorEntity = transfer.type == .upload ? TransferErrorEntity.upload : TransferErrorEntity.download
-                completion(.failure(transferErrorEntity))
+                if transfer.state == .cancelled {
+                    completion(.failure(.cancelled))
+                } else {
+                    let transferErrorEntity = transfer.type == .upload ? TransferErrorEntity.upload : TransferErrorEntity.download
+                    completion(.failure(transferErrorEntity))
+                }
             } else {
                 completion(.success(transfer.toTransferEntity()))
             }

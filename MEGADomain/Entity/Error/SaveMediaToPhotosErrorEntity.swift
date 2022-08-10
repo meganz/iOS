@@ -5,4 +5,5 @@ enum SaveMediaToPhotosErrorEntity: Error {
     case wrongExtensionFormat
     case downloadFailed
     case nodeNotFound
+    case cancelled
 }

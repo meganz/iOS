@@ -7,10 +7,9 @@ final class NodeActionViewControllerGenericDelegate:
 
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
-    private let saveToPhotosCompletion: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
-        SVProgressHUD.dismiss()
-
-        if error != nil {
+    private let saveToPhotosCompletion: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
+        if case let .failure(error) = result, error != .cancelled {
+            SVProgressHUD.dismiss()
             SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
         }
     }

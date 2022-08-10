@@ -1,8 +1,8 @@
 import MEGADomain
 
 protocol SaveMediaToPhotosUseCaseProtocol {
-    func saveToPhotos(node: NodeEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void)
-    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void)
+    func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
+    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
     func saveToPhotos(fileLink: FileLinkEntity) async throws
 }
         
@@ -19,22 +19,22 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         self.nodeRepository = nodeRepository
     }
     
-    func saveToPhotos(node: NodeEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void) {
+    func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         let tempUrl = fileCacheRepository.cachedFileURL(for: node.base64Handle, name: node.name)
        
         downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl.path, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
             switch result {
             case .success:
-                completion(nil)
-            case .failure:
-                completion(.downloadFailed)
+                completion(.success)
+            case .failure(let error):
+                completion(.failure(error == TransferErrorEntity.cancelled ? .cancelled : .downloadFailed))
             }
         }
     }
     
-    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (SaveMediaToPhotosErrorEntity?) -> Void) {
+    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         guard let base64Handle = nodeRepository.base64ForChatNode(handle: handle, messageId: messageId, chatId: chatId), let name = nodeRepository.nameForChatNode(handle: handle, messageId: messageId, chatId: chatId) else {
-            completion(.downloadFailed)
+            completion(.failure(.nodeNotFound))
             return
         }
 
@@ -43,9 +43,9 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl.path, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
             switch result {
             case .success:
-                completion(nil)
-            case .failure:
-                completion(.downloadFailed)
+                completion(.success)
+            case .failure(let error):
+                completion(.failure(error == TransferErrorEntity.cancelled ? .cancelled : .downloadFailed))
             }
         }
     }

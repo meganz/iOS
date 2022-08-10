@@ -13,4 +13,5 @@ public enum TransferErrorEntity: Error {
     case alreadyDownloaded
     case copiedFromTempFolder
     case moveFileToUploadsFolderFailed
+    case cancelled
 }
