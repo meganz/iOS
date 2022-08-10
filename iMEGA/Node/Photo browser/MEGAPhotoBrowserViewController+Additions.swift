@@ -38,10 +38,9 @@ extension MEGAPhotoBrowserViewController {
         DevicePermissionsHelper.photosPermission { granted in
             if granted {
                 let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-                let completionBlock: (SaveMediaToPhotosErrorEntity?) -> Void = { error in
-                    SVProgressHUD.dismiss()
-                    
-                    if error != nil {
+                let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
+                    if case let .failure(error) = result, error != .cancelled {
+                        SVProgressHUD.dismiss()
                         SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
                     }
                 }
@@ -58,8 +57,9 @@ extension MEGAPhotoBrowserViewController {
                             guard let linkUrl = URL(string: self.publicLink) else { return }
                             let fileLink = FileLinkEntity(linkURL: linkUrl)
                             try await saveMediaUseCase.saveToPhotos(fileLink: fileLink)
+                        } catch TransferErrorEntity.cancelled {
+                            MEGALogDebug("Failed to saveToPhotosFileLink: download cancelled")
                         } catch {
-                            MEGALogDebug("Failed to saveToPhotosFileLink \(error)")
                             SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
                         }
                     }

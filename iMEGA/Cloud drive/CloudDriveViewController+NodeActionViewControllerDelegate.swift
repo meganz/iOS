@@ -94,10 +94,9 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             
-            saveMediaUseCase.saveToPhotos(node: node.toNodeEntity()) { error in
-                SVProgressHUD.dismiss()
-
-                if error != nil {
+            saveMediaUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
+                if case let .failure(error) = result, error != .cancelled {
+                    SVProgressHUD.dismiss()
                     SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
                 }
             }
