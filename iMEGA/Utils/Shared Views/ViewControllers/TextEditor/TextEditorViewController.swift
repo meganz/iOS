@@ -285,15 +285,17 @@ extension TextEditorViewController: ViewType {
             )
         var toolbarItems = [downloadBarButtonItem, flexibleItem]
         
-        let editBarButtonItem =
-            UIBarButtonItem(
-                image: Asset.Images.NodeActions.edittext.image,
-                style: .plain,
-                target: self,
-                action: #selector(editTapped)
-            )
-        toolbarItems.append(editBarButtonItem)
-        toolbarItems.append(flexibleItem)
+        if accessLevel != .read {
+            let editBarButtonItem =
+                UIBarButtonItem(
+                    image: Asset.Images.NodeActions.edittext.image,
+                    style: .plain,
+                    target: self,
+                    action: #selector(editTapped)
+                )
+            toolbarItems.append(editBarButtonItem)
+            toolbarItems.append(flexibleItem)
+        }
         
         if accessLevel == .owner {
             let exportFileBarButtonItem =
