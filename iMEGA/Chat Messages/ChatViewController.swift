@@ -972,33 +972,6 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    @objc func addParticipant() {
-        let navigationController = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as! UINavigationController
-        let contactsVC = navigationController.viewControllers.first as! ContactsViewController
-        contactsVC.contactsMode = .chatAddParticipant
-        var participantsMutableDictionary: [NSNumber:NSNumber] = [:]
-        
-        if chatRoom.peerCount > 1 {
-            for idx in 0...chatRoom.peerCount - 1 {
-                let peerHandle = chatRoom.peerHandle(at: idx)
-                if chatRoom.peerPrivilege(byHandle: peerHandle) > MEGAChatRoomPrivilege.rm.rawValue {
-                    participantsMutableDictionary[NSNumber(value: peerHandle)] = NSNumber(value: peerHandle)
-                }
-            }
-        }
-        
-        contactsVC.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsMutableDictionary)
-        contactsVC.userSelected = { users in
-            users?.forEach({ [weak self] (user) in
-                guard let `self` = self else {
-                    return
-                }
-                MEGASdkManager.sharedMEGAChatSdk().invite(toChat: self.chatRoom.chatId, user: (user).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
-            })
-        }
-        present(viewController: navigationController)
-    }
-    
     @objc func cancelSelecting() {
         setEditing(false, animated: true)
     }

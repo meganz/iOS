@@ -1,3 +1,5 @@
+import MEGADomain
+
 extension ChatRoomEntity {
     init(with chatRoom: MEGAChatRoom) {
         self.chatId = chatRoom.chatId
@@ -17,8 +19,7 @@ extension ChatRoomEntity {
         self.isPreview = chatRoom.isPreview
         self.isactive = chatRoom.isActive
         self.isArchived = chatRoom.isArchived
-        
-        self.peerHandles = (0..<chatRoom.peerCount).compactMap(chatRoom.peerHandle)
+        self.peers = (0..<chatRoom.peerCount).map { Peer(chatRoom: chatRoom, index: $0) }
         
         self.userHandle = chatRoom.userHandle
         

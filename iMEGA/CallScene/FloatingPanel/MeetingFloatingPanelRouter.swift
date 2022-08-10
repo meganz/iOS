@@ -4,17 +4,18 @@ import MEGADomain
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
     func inviteParticipants(
-        excludeParticpantsId: [HandleEntity],
-        selectedUsersHandler: @escaping (([UInt64]) -> Void)
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        excludeParticpantsId: Set<HandleEntity>,
+        selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     )
-    func showAllContactsAlreadyAddedAlert()
+    func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
     func showContextMenu(presenter: UIViewController,
                          sender: UIButton,
                          participant: CallParticipantEntity,
                          isMyselfModerator: Bool,
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel)
     func showVideoPermissionError()
-    func showAudioPermissionError()
+    func showAudioPermissionError() 
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
 }
@@ -87,38 +88,29 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         baseViewController?.dismiss(animated: animated)
     }
     
-    func inviteParticipants(excludeParticpantsId: [HandleEntity], selectedUsersHandler: @escaping (([UInt64]) -> Void)) {
-        let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
-        guard let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { fatalError("no contacts navigation view controller found") }
-        contactsNavigationController.overrideUserInterfaceStyle = .dark
-        guard let contactController = contactsNavigationController.viewControllers.first as? ContactsViewController else { fatalError("no contact view controller found") }
-        contactController.contactsMode = .inviteParticipants
+    func inviteParticipants(
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        excludeParticpantsId: Set<HandleEntity>,
+        selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
+    ) {
+        guard let contactsNavigationController = participantsAddingViewFactory.addContactsViewController(
+            withContactsMode: .inviteParticipants,
+            additionallyExcludedParticipantsId: excludeParticpantsId,
+            selectedUsersHandler: selectedUsersHandler
+        ) else { return }
         
-        let participantsDict = excludeParticpantsId.reduce(into: [NSNumber: NSNumber]()) {
-            $0[NSNumber(value: $1)] = NSNumber(value: $1)
-        }
-        contactController.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsDict)
-        contactController.userSelected = { selectedUsers in
-            guard let users = selectedUsers else { return }
-            selectedUsersHandler(users.map({ $0.handle }))
-        }
-        
+        contactsNavigationController.overrideUserInterfaceStyle = .dark        
         baseViewController?.present(contactsNavigationController, animated: true)
     }
     
-    func showAllContactsAlreadyAddedAlert() {
-        let title = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.title
-        let message = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.description
-        let inviteButtonTitle = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.confirmationButtonTitle
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
-        let inviteAction = UIAlertAction(title: inviteButtonTitle, style: .default) { [weak self] _ in
-            self?.showInviteToMega()
+    func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
+        let allContactsAlreadyAddedAlert = participantsAddingViewFactory.allContactsAlreadyAddedAlert {
+            guard let inviteContactController = participantsAddingViewFactory.inviteContactController() else { return }
+            self.showInviteToMega(inviteContactController)
         }
-        alertController.addAction(inviteAction)
-        alertController.preferredAction = inviteAction
-        alertController.overrideUserInterfaceStyle = .dark
-        baseViewController?.present(alertController, animated: true)
+        
+        allContactsAlreadyAddedAlert.overrideUserInterfaceStyle = .dark
+        baseViewController?.present(allContactsAlreadyAddedAlert, animated: true)
     }
     
     func showContextMenu(presenter: UIViewController,
@@ -154,12 +146,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     // MARK: - Private methods.
     
-    private func showInviteToMega() {
-        let storyboard = UIStoryboard(name: "InviteContact", bundle: nil)
-        guard let inviteContactsViewController = storyboard.instantiateViewController(identifier: "InviteContactViewControllerID") as? InviteContactViewController else {
-            return
-        }
-        
+    private func showInviteToMega(_ inviteContactsViewController: InviteContactViewController) {
         let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
         
         let backBarButton = UIBarButtonItem(
@@ -170,6 +157,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         )
         
         navigationController.addLeftDismissBarButton(backBarButton)
+        navigationController.overrideUserInterfaceStyle = .dark
         self.inviteToMegaNavigationController = navigationController
         baseViewController?.present(navigationController, animated: true)
     }
