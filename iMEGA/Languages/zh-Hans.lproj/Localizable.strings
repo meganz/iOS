@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="声音通知";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="当有人加入或离开通话时播放提示音。";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="已添加所有联系人";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="您已将所有联系人添加到此聊天中。\n如果您想添加更多参与者，请先邀请他们成为您的联系人。";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="邀请";

@@ -179,7 +179,7 @@
 /* Message shown when a download starts */
 "downloadStarted"="เริ่มต้นดาวน์โหลด";
 /* Title for the folder link view */
-"folderLink"="ลิงก์มายังโฟล์เดอร์";
+"folderLink"="ลิงก์โฟลเดอร์";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ดาวน์โหลด";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1459,7 +1459,7 @@
 /* notification subtitle of incoming calls */
 "Incoming call"="สายเรียกเข้า";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="คุณภาพของวิดีโอที่อัปโหลดไปยังการแชท";
+"qualityOfVideosUploadedToAChat"="คุณภาพของวิดีโอที่อัปโหลดไปยังแชท";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="คุณภาพวีดีโอ";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
@@ -2173,7 +2173,7 @@
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="คุณภาพของรูป";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="เมื่อใช้เน็ตมือถือให้ส่งภาพที่ผ่านการปรับให้เหมาะสมแล้ว แต่ถ้าใช้ Wi-Fi เมื่อไหร่ให้ส่งภาพเป็นขนาดดั้งเดิม";
+"Send smaller size images through cellular networks and original size images through wifi"="เมื่อใช้เน็ตมือถือแอปจะส่งภาพแบบปรับให้เหมาะสม แต่ถ้าใช้ Wi-Fi แอปจะส่งภาพเป็นต้นฉบับ";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="ส่งเป็นภาพที่ผ่านการปรับให้เหมาะสมเสมอ";
 /* Description of High Image Quality option */
@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="แจ้งเตือนด้วยเสียง";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="ให้ส่งเสียงเมื่อมีคนเข้าร่วมหรือวางสาย";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="เพิ่มผู้ติดต่อทั้งหมดแล้ว";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="คุณได้เพิ่มผู้ติดต่อทั้งหมดในแชทนี้แล้ว\nหากคุณต้องการเพิ่มผู้เข้าร่วมคนอื่น ขั้นแรกให้ส่งคำเชิญเพื่อเพิ่มไปที่รายชื่อผู้ติดต่อของคุณก่อน";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="เชิญ";

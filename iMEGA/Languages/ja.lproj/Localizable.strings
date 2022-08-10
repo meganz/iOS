@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="サウンド通知";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="誰かが通話に参加または退出したときに音を聞きます。";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="すべての連絡先が追加されました";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="すでにすべての連絡先をこのチャットに追加しています。\nさらに参加者を追加する場合は、まず連絡先リストに招待してください。";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="招待";

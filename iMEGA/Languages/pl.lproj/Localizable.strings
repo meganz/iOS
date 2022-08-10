@@ -3017,9 +3017,9 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Zakończ dla wszytskich";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="Chat";
+"chat.selector.chat"="Czaty";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Spotkanie";
+"chat.selector.meeting"="Spotkania";
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Rozpocznij spotkanie";
 /* Description for empty meetings tab */
@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="Powiadomienia dźwiękowe";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Generuj dźwięk, gdy ktoś dołącza do połączenia lub je opuszcza.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="Dodano wszystkie kontakty";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="Dodałeś już wszystkie swoje kontakty do tego czatu.\nJeśli chcesz dodać więcej uczestników, najpierw zaproś ich do swojej listy kontaktów.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Zaproszenie";

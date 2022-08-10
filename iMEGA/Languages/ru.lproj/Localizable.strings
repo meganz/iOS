@@ -3017,9 +3017,9 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Завершить для всех";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="Чат";
+"chat.selector.chat"="Чаты";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Встреча";
+"chat.selector.meeting"="Встречи";
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Начните встречу";
 /* Description for empty meetings tab */
@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="Звуковые уведомления";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Проигрывать сигнал, когда кто-то присоединяется к вызову или покидает его.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="Все контакты добавлены";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="Вы уже добавили все свои контакты в этот чат.\nЕсли хотите добавить больше участников, сначала пригласите их в свой список контактов.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Пригласить";

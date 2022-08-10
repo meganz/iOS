@@ -13,9 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>hour</string>
+        <string>oră</string>
+        <key>few</key>
+        <string>ore</string>
         <key>other</key>
-        <string>hours</string>
+        <string>de ore</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -29,9 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>day</string>
+        <string>zi</string>
+        <key>few</key>
+        <string>zile</string>
         <key>other</key>
-        <string>days</string>
+        <string>de zile</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.week</key>
@@ -45,9 +49,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>week</string>
+        <string>săptămână</string>
+        <key>few</key>
+        <string>săptămâni</string>
         <key>other</key>
-        <string>weeks</string>
+        <string>de săptămâni</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.month</key>
@@ -61,9 +67,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>month</string>
+        <string>lună</string>
+        <key>few</key>
+        <string>luni</string>
         <key>other</key>
-        <string>months</string>
+        <string>de luni</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.year</key>
@@ -77,9 +85,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>year</string>
+        <string>an</string>
+        <key>few</key>
+        <string>ani</string>
         <key>other</key>
-        <string>years</string>
+        <string>de ani</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.hour</key>
@@ -93,9 +103,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 hour</string>
+        <string>1 oră</string>
+        <key>few</key>
+        <string>%d ore</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d de ore</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -109,9 +121,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 day</string>
+        <string>1 zi</string>
+        <key>few</key>
+        <string>%d zile</string>
         <key>other</key>
-        <string>%d days</string>
+        <string>%d de zile</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.week</key>
@@ -125,9 +139,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 week</string>
+        <string>1 săptămână</string>
+        <key>few</key>
+        <string>%d săptămâni</string>
         <key>other</key>
-        <string>%d weeks</string>
+        <string>%d de săptămâni</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.month</key>
@@ -141,9 +157,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 month</string>
+        <string>1 lună</string>
+        <key>few</key>
+        <string>%d luni</string>
         <key>other</key>
-        <string>%d months</string>
+        <string>%d de luni</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.year</key>
@@ -157,9 +175,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 year</string>
+        <string>1 an</string>
+        <key>few</key>
+        <string>%d ani</string>
         <key>other</key>
-        <string>%d years</string>
+        <string>%d de ani</string>
       </dict>
     </dict>
     <key>general.format.count.file</key>
@@ -173,9 +193,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file</string>
+        <string>%d fișier</string>
+        <key>few</key>
+        <string>%d fișiere</string>
         <key>other</key>
-        <string>%d files</string>
+        <string>%d de fișiere</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -190,8 +212,10 @@
         <string>d</string>
         <key>one</key>
         <string>%d folder</string>
+        <key>few</key>
+        <string>%d foldere</string>
         <key>other</key>
-        <string>%d folders</string>
+        <string>%d de foldere</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -206,8 +230,10 @@
         <string>d</string>
         <key>one</key>
         <string>%d folder</string>
+        <key>few</key>
+        <string>%d foldere</string>
         <key>other</key>
-        <string>%d folders</string>
+        <string>%d de foldere</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -221,9 +247,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>• %d file</string>
+        <string>• %d fișier</string>
+        <key>few</key>
+        <string>• %d fișiere</string>
         <key>other</key>
-        <string>• %d files</string>
+        <string>• %d de fișiere</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -237,9 +265,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d imagine</string>
+        <key>few</key>
+        <string>%d imagini</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d de imagini</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -253,9 +283,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d video</string>
+        <string>%d videoclip</string>
+        <key>few</key>
+        <string>%d videoclipuri</string>
         <key>other</key>
-        <string>%d videos</string>
+        <string>%d de videoclipuri</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -269,9 +301,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d imagine</string>
+        <key>few</key>
+        <string>%d imagini</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d de imagini</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
@@ -285,9 +319,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>and %d video</string>
+        <string>și %d videoclip</string>
+        <key>few</key>
+        <string>și %d videoclipuri</string>
         <key>other</key>
-        <string>and %d videos</string>
+        <string>și %d de videoclipuri</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -301,9 +337,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] of %d file</string>
+        <string>[A] din %d fișier</string>
+        <key>few</key>
+        <string>[A] din %d fișiere</string>
         <key>other</key>
-        <string>[A] of %d files</string>
+        <string>[A] din %d de fișiere</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -317,9 +355,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file</string>
+        <string> %d fișier</string>
+        <key>few</key>
+        <string> %d fișiere</string>
         <key>other</key>
-        <string>%d files</string>
+        <string> %d de fișiere</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>
@@ -333,9 +373,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Remove link</string>
+        <string>Elimină linkul</string>
+        <key>few</key>
+        <string>Elimină linkurile</string>
         <key>other</key>
-        <string>Remove links</string>
+        <string>Elimină linkurile</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.message.success</key>
@@ -349,9 +391,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Link removed</string>
+        <string>Link eliminat</string>
+        <key>few</key>
+        <string>Linkuri eliminate</string>
         <key>other</key>
-        <string>Links removed</string>
+        <string>Linkuri eliminate</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -365,9 +409,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share folder</string>
+        <string>Partajează folderul</string>
+        <key>few</key>
+        <string>Partajează folderele</string>
         <key>other</key>
-        <string>Share folders</string>
+        <string>Partajează folderele</string>
       </dict>
     </dict>
     <key>general.menuAction.shareLink.title</key>
@@ -381,9 +427,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share link</string>
+        <string>Partajează linkul</string>
+        <key>few</key>
+        <string>Partajează linkurile</string>
         <key>other</key>
-        <string>Share links</string>
+        <string>Partajează linkurile</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -397,9 +445,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Manage link</string>
+        <string>Gestionează linkul</string>
+        <key>few</key>
+        <string>Gestionează linkurile</string>
         <key>other</key>
-        <string>Manage links</string>
+        <string>Gestionează linkurile</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -413,9 +463,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Export file</string>
+        <string>Exportă fișierul</string>
+        <key>few</key>
+        <string>Exportă fișierele</string>
         <key>other</key>
-        <string>Export files</string>
+        <string>Exportă fișierele</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
@@ -429,9 +481,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d second</string>
+        <string>%d secundă</string>
+        <key>few</key>
+        <string>%d secunde</string>
         <key>other</key>
-        <string>%d seconds</string>
+        <string>%d de secunde</string>
       </dict>
     </dict>
     <key>call.duration.minute</key>
@@ -445,9 +499,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
         <string>%d minute</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d de minute</string>
       </dict>
     </dict>
     <key>call.duration.hour</key>
@@ -461,9 +517,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d de ore</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.hour</key>
@@ -477,9 +535,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d</string>
+        <key>few</key>
+        <string>%d ore</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d de ore</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.minute</key>
@@ -493,9 +553,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
+        <string>, %d minut</string>
+        <key>few</key>
         <string>, %d minute</string>
         <key>other</key>
-        <string>, %d minutes</string>
+        <string>, %d de minute</string>
       </dict>
     </dict>
     <key>dnd.duration.minute</key>
@@ -509,9 +571,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
         <string>%d minute</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d de minute</string>
       </dict>
     </dict>
     <key>dnd.duration.hour</key>
@@ -525,9 +589,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d de ore</string>
       </dict>
     </dict>
     <key>chat.status.duration.minute</key>
@@ -541,9 +607,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
         <string>%d minute</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d de minute</string>
       </dict>
     </dict>
   </dict>

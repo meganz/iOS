@@ -348,10 +348,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d صورة</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d صورة</string>
+        <key>two</key>
+        <string>%d صورتان</string>
+        <key>few</key>
+        <string>%d صور</string>
+        <key>many</key>
+        <string>%d صورة</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d  صورة</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -364,10 +372,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d مقطع فيديو</string>
         <key>one</key>
-        <string>%d video</string>
+        <string>%d مقطع فيديو</string>
+        <key>two</key>
+        <string>%d مقطعي فيديو</string>
+        <key>few</key>
+        <string>%d مقاطع فيديو</string>
+        <key>many</key>
+        <string>%d مقطع فيديو</string>
         <key>other</key>
-        <string>%d videos</string>
+        <string>%d مقطع فيديو</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -524,10 +540,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>شارك الملف</string>
         <key>one</key>
-        <string>Share folder</string>
+        <string>شارك الملف</string>
+        <key>two</key>
+        <string>شارك الملفات</string>
+        <key>few</key>
+        <string>شارك الملفات</string>
+        <key>many</key>
+        <string>شارك الملفات</string>
         <key>other</key>
-        <string>Share folders</string>
+        <string>شارك الملفات</string>
       </dict>
     </dict>
     <key>general.menuAction.shareLink.title</key>
@@ -540,10 +564,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>شارك الرابط</string>
         <key>one</key>
-        <string>Share link</string>
+        <string>شارك الرابط</string>
+        <key>two</key>
+        <string>شارك الروابط</string>
+        <key>few</key>
+        <string>شارك الروابط</string>
+        <key>many</key>
+        <string>شارك الروابط</string>
         <key>other</key>
-        <string>Share links</string>
+        <string>شارك الروابط</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -556,10 +588,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>شارك الرابط</string>
         <key>one</key>
-        <string>Manage link</string>
+        <string>شارك الرابط</string>
+        <key>two</key>
+        <string>شارك الروابط</string>
+        <key>few</key>
+        <string>شارك الروابط</string>
+        <key>many</key>
+        <string>شارك الروابط</string>
         <key>other</key>
-        <string>Manage links</string>
+        <string>شارك الروابط</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -572,10 +612,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تصدير الملف</string>
         <key>one</key>
-        <string>Export file</string>
+        <string>تصدير الملف</string>
+        <key>two</key>
+        <string>تصدير الملفات</string>
+        <key>few</key>
+        <string>تصدير الملفات</string>
+        <key>many</key>
+        <string>تصدير الملفات</string>
         <key>other</key>
-        <string>Export files</string>
+        <string>تصدير الملفات</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
