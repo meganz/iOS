@@ -3017,9 +3017,9 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Mettre fin à l’appel pour tous";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="Dialogue en ligne";
+"chat.selector.chat"="Conversations";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Réunion";
+"chat.selector.meeting"="Réunions";
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Commencer une réunion";
 /* Description for empty meetings tab */
@@ -3029,7 +3029,7 @@
 /* Ttile for empty chats tab */
 "chat.chats.emptyState.title"="Commencer à dialoguer maintenant";
 /* Description for empty chats tab */
-"chat.chats.emptyState.description"="Dialoguez en toute sécurité et confidentialité avec n’importe qui et sur n’importe quel appareil, en sachant que personne ne peut lire vos conversations, pas même MEGA.";
+"chat.chats.emptyState.description"="Dialoguez en toute sécurité et confidentialité avec n’importe qui et sur n’importe quel appareil en sachant que personne ne peut lire vos conversations, pas même MEGA.";
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Nouvelle conversation";
 /* Title for chats section */
@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="Notifications sonores";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Émettre un son si quelqu’un se joint à un appel ou le quitte.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="Tous les contacts ont été ajoutés";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="Vous avez déjà ajouté tous vos contacts à cette conversation.\nSi vous voulez ajouter d’autres participants, invitez-les d’abord dans votre liste de contacts.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Inviter";

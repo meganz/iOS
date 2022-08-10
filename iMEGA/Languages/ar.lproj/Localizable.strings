@@ -501,9 +501,9 @@
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="فلتر";
 /* Choose type headline within filter UI */
-"cameraUploads.timeline.filter.chooseType"="Choose type";
+"cameraUploads.timeline.filter.chooseType"="اختر النوع";
 /* Show items from headline within filter UI */
-"cameraUploads.timeline.filter.showItemsFrom"="Show items from:";
+"cameraUploads.timeline.filter.showItemsFrom"="إظهار العناصر من:";
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.allMedia"="كل الوسائط";
 /* Filter UI media type option */
@@ -511,7 +511,7 @@
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.videos"="مقاطع الفيديو";
 /* Filter UI media location option */
-"cameraUploads.timeline.filter.location.allLocations"="All locations";
+"cameraUploads.timeline.filter.location.allLocations"="جميع المواقع";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cloudDrive"="السواقة السحابية";
 /* Filter UI media location option */
@@ -2963,29 +2963,29 @@
 /* Best quality option for exporting file in Scan document. */
 "media.quality.best"="الأفضل";
 /* Text to indicate the user that file already exists when uploading/copying/moving */
-"nameCollision.title.file"="File already exists";
+"nameCollision.title.file"="المجلد موجود مسبقاً";
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="المجلد موجود مسبقاً";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
+"nameCollision.folders.alreadyExists"="يوجد مجلد اسمه %@ بالفعل في هذا الموقع.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.merge.title"="Merge";
+"nameCollision.folders.action.merge.title"="دمج";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
+"nameCollision.folders.action.merge.description"="سيتم دمج المجلد الجديد مع المجلد في هذه الوجهة.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="تخطي هذا المجلد";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="يوجد ملف اسمه %@ بالفعل في هذا الموقع.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.replace.title"="Replace";
+"nameCollision.files.action.replace.title"="استبدال";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
+"nameCollision.files.action.replace.description"="سيتم استبدال الملف الموجود في هذه الوجهة بالملف الجديد.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.skip.title"="Skip this file";
+"nameCollision.files.action.skip.title"="تخطى هذا الملف";
 /* Text of the rename action when trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.rename.title"="إعادة التسمية";
 /* Text description for the rename action when upload/copy/move and already exists in destination */
-"nameCollision.files.action.rename.description"="The file will be renamed as:";
+"nameCollision.files.action.rename.description"="ستتم إعادة تسمية الملف إلى:";
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="تحديث";
 /* Text description for the update action when upload and already exists in destination */
@@ -3017,29 +3017,29 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="إنهاء المكالمة للجميع";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="المحادثة";
+"chat.selector.chat"="محادثات";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="اجتماع";
+"chat.selector.meeting"="الاجتماعات";
 /* Ttile for empty meetings tab */
-"chat.meetings.emptyState.title"="Start a meeting";
+"chat.meetings.emptyState.title"="ابدأ اجتماع";
 /* Description for empty meetings tab */
-"chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
+"chat.meetings.emptyState.description"="تحدث بأمان وخصوصية في مكالمات الصوت أو الفيديو مع الأصدقاء والزملاء في جميع أنحاء العالم.";
 /* Text button for empty meetings tab */
 "chat.meetings.emptyState.button.title"="اجتماع جديد";
 /* Ttile for empty chats tab */
-"chat.chats.emptyState.title"="Start chatting now";
+"chat.chats.emptyState.title"="ابدأ المحادثة الآن";
 /* Description for empty chats tab */
-"chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
+"chat.chats.emptyState.description"="تقوم بالمحادثة مع أي شخص وعلى أي جهاز بأمان وخصوصية مع معرفة أنه لا يمكن لأحد قراءة محادثاتك ولا حتى ميغا MEGA.";
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="محادثة جديدة";
 /* Title for chats section */
 "chat.title"="محادثات";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
-"chat.message.changedRole.readOnly"="[A] was changed to [S]read-only[/S] by [B]";
+"chat.message.changedRole.readOnly"="[A] قد تم تغييره [S]للقراءة فقط[/S] من قبل [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
-"chat.message.changedRole.host"="[A] was changed to [S]host role[/S] by [B]";
+"chat.message.changedRole.host"="[A] قد تم تغيير [S]دوره إلى مُضيف[/S] من قبل [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was changed to [S]standard role[/S] by [B]";
+"chat.message.changedRole.standard"="[A]قد تم تغيير [S]دوره إلى عادي[/S] من قبل [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="معيار";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3053,6 +3053,12 @@
 /* Title of the Settings section where you can configure calls options of your MEGA account */
 "settings.section.calls.title"="اتصالات";
 /* Title of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.title"="Sound notifications";
+"settings.section.calls.soundNotifications.title"="إشعارات صوتية";
 /* Description of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
+"settings.section.calls.soundNotifications.description"="تسمع صوتًا عندما ينضم شخص ما إلى مكالمة أو يغادرها.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="تمت إضافة جميع جهات الاتصال";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="لقد أضفت بالفعل جميع جهات الاتصال الخاصة بك إلى هذه المحادثة.\nإذا كنت ترغب في إضافة المزيد من المشاركين فعليك أولاً بدعوتهم إلى قائمة جهات الاتصال الخاصة بك.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="ادعو";

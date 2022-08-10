@@ -3017,9 +3017,9 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="Beëindigen voor iedereen ";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="Gesprek";
+"chat.selector.chat"="Gesprekken";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Vergadering";
+"chat.selector.meeting"="Vergaderingen";
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Begin vergadering";
 /* Description for empty meetings tab */
@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="Geluid notificaties";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Hoor een geluid wanneer iemand aansluit of de oproep verlaat.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="Alle contacten toegevoegd";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="U heeft al uw  contacten aan deze chat toegevoegd. \nAls u meer deelnemers wilt toevoegen, nodig ze dan eerst uit voor je contactenlijst.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Uitnodigen";

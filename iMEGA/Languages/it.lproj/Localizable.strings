@@ -493,7 +493,7 @@
 /* Timeline title within CU tab */
 "cameraUploads.timeline.title"="Cronologia";
 /* Timeline empty with all media filter enable */
-"cameraUploads.timeline.allMedia.empty.title"="No media found";
+"cameraUploads.timeline.allMedia.empty.title"="Nessun media trovato";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Album";
 /* Favourites album title */
@@ -503,7 +503,7 @@
 /* Choose type headline within filter UI */
 "cameraUploads.timeline.filter.chooseType"="Scegli tipo";
 /* Show items from headline within filter UI */
-"cameraUploads.timeline.filter.showItemsFrom"="Show items from:";
+"cameraUploads.timeline.filter.showItemsFrom"="Mostra oggetti da:";
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.allMedia"="Tutti i media";
 /* Filter UI media type option */
@@ -3053,6 +3053,12 @@
 /* Title of the Settings section where you can configure calls options of your MEGA account */
 "settings.section.calls.title"="Chiamate";
 /* Title of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.title"="Sound notifications";
+"settings.section.calls.soundNotifications.title"="Sono delle notifiche";
 /* Description of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
+"settings.section.calls.soundNotifications.description"="Senti un suono quando un utente entra o esce da una chiamata.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="Tutti i contatti aggiunti";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="Hai già aggiunto tutti i tuoi contatti a questa chat.\nSe vuoi aggiungere altri partecipanti, prima invitali ad unirsi alla tua lista dei contatti.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Invita";

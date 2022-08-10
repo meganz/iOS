@@ -251,9 +251,9 @@
 /* Title of the Cloud Drive section */
 "cloudDrive"="Unitate cloud";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
-"cloudDrive.root.backup.folder.device.subtitle"="%@ device";
+"cloudDrive.root.backup.folder.device.subtitle"="%@ dispozitiv";
 /* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ devices";
+"cloudDrive.root.backup.folder.devices.subtitle"="%@ dispozitive";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="În coada de așteptare";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -443,7 +443,7 @@
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rename File %@ ?";
 /* Title for the action that allows you to replace a file. */
-"replace"="Replace";
+"replace"="Înlocuiește";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 fișier mutat în coșul de gunoi";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -511,11 +511,11 @@
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.videos"="Videoclipuri";
 /* Filter UI media location option */
-"cameraUploads.timeline.filter.location.allLocations"="All locations";
+"cameraUploads.timeline.filter.location.allLocations"="Toate locațiile";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cloudDrive"="Unitate cloud";
 /* Filter UI media location option */
-"cameraUploads.timeline.filter.location.cameraUploads"="Camera uploads";
+"cameraUploads.timeline.filter.location.cameraUploads"="Încărcări cameră";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, 1 fișier în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -637,7 +637,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotografii";
 /* Photo view is empty */
-"photo.empty.title"="No Photos Found";
+"photo.empty.title"="Nicio fotografie găsită";
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="Ani";
 /* Title of Photo's Months tab */
@@ -901,13 +901,13 @@
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="You will be logged out and your offline files will be deleted after 10 failed attempts";
 /* Button text to change the passcode type. */
-"Passcode Options"="Passcode Options";
+"Passcode Options"="Opțiuni pentru codul de acces";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="Cod numeric din 4 cifre";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="Cod numeric din 6 cifre";
 /* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Custom Alphanumeric Code";
+"Custom Alphanumeric Code"="Cod alfanumeric personalizat";
 /* Menu item */
 "help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
@@ -971,13 +971,13 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Cotă de stocare";
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
-"account.storageQuota"="%@ Storage";
+"account.storageQuota"="%@ spațiu de stocare";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Storage";
+"account.storage.freePlan"="[B]20 GB+[/B] spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Cotă de transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
-"account.transferQuota.perMonth"="%@ Transfer";
+"account.transferQuota.perMonth"="%@ transferuri";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]Limited[/B] Transfer";
 /* Cell title shown on the achievements view for registration achievement */
@@ -1001,7 +1001,7 @@
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ days left";
+"account.achievement.complete.valid.cell.subtitle"="%@ zile rămase";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
 "account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
 /* Add Phone Number title */
@@ -1275,7 +1275,7 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Participanți";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Host";
+"moderator"="Gazdă";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standard";
 /* A button title which removes a participant from a chat. */
@@ -1337,7 +1337,7 @@
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Înlătură";
 /* Content of the notification when there is unknown activity on the Chat */
-"You may have new messages"="You have new messages";
+"You may have new messages"="Ai mesaje noi";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Cerere de contact";
 /* Notification text body shown when you have received a new shared folder */
@@ -1367,7 +1367,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu MESAJE NECITITE";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then tap View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge pe pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți să selectezi abonamentul MEGA Pro și să vezi data de reînnoire programată, să alegi un alt pachet de abonament sau să setezi comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului tău.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA și autentifică-te pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1429,7 +1429,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Transferul a eșuat din cauza unei structuri recursive a directoarelor";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Violated Terms of Service";
+"transfer.error.termsOfServiceViolation"="A încălcat Termenii de utilizare a serviciului";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Verificarea SSL a eșuat";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1697,7 +1697,7 @@
 /* Title of the Settings section where you can configure security details of your MEGA account */
 "settings.section.security"="Securitate";
 /* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Terms and Policies";
+"settings.section.termsAndPolicies"="Termeni și politici";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Managementul fișierelor";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -2173,11 +2173,11 @@
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Calitatea imaginilor";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send optimised images when on mobile data but original size images when on Wi-Fi.";
+"Send smaller size images through cellular networks and original size images through wifi"="Trimite imagini optimizate când folosești datele mobile, însă imagini la dimensiunea originală când folosești Wi-Fi-ul.";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Always send optimised images.";
+"Send smaller size images optimised for lower data consumption"="Trimite întotdeauna imagini optimizate.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Always send original size images.";
+"Send original size, increased quality images"="Trimite întotdeauna imagini la dimensiunea originală.";
 /* Setting title for Doc scan view */
 "Save Settings"="Setări pentru salvare";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2615,7 +2615,7 @@
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Participanți (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
-"meetings.participant.moderator"="Host";
+"meetings.participant.moderator"="Gazdă";
 /* Meetings: Action on a meeting that change participant's role to moderator */
 "meetings.participant.makeModerator"="Make host";
 /* Meetings: Action on a meeting that remove participant's moderator role */
@@ -2887,23 +2887,23 @@
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Do you want to attach diagnostic log files to assist with debug?";
 /* Title of the alert shown when you confirm to cancel pending transfers */
-"transfers.cancellable.title"="Cancel transfers?";
+"transfers.cancellable.title"="Anulezi transferurile?";
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Anulează transferul";
 /* Message informing the user about transfers lost */
 "transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
 /* Confirm action of cancelling a transfer */
-"transfers.cancellable.proceed"="Yes, cancel";
+"transfers.cancellable.proceed"="Da, anulează";
 /* Dismiss action of cancelling a transfer */
-"transfers.cancellable.dismiss"="No, continue";
+"transfers.cancellable.dismiss"="Nu, continuă";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
-"transfers.cancellable.scanning"="Scanning…";
+"transfers.cancellable.scanning"="Se scanează…";
 /* Message asking the user to not close the app during a process */
 "transfers.cancellable.donotclose"="Please don’t close the application.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer anulat";
 /* Title of the dialog used to send bug reports to support team. */
-"help.reportIssue.title"="Report Issue";
+"help.reportIssue.title"="Raportează o problemă";
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Discard Report";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
@@ -2977,7 +2977,7 @@
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
-"nameCollision.files.action.replace.title"="Replace";
+"nameCollision.files.action.replace.title"="Înlocuiește";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
 "nameCollision.files.action.replace.description"="The file at this destination will be replaced with the new file.";
 /* Text of the skip action when trying to upload/copy/move a file and already exists in destination */
@@ -3017,9 +3017,9 @@
 /* Label for end a group chat or meeting when the user is moderator */
 "meetings.endForAll.buttonTitle"="End for all";
 /* Chat section selector tab for chats */
-"chat.selector.chat"="Chat";
+"chat.selector.chat"="Chaturi";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Întâlnire";
+"chat.selector.meeting"="Meetings";
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Start a meeting";
 /* Description for empty meetings tab */
@@ -3056,3 +3056,9 @@
 "settings.section.calls.soundNotifications.title"="Sound notifications";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
+/* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.title"="All contacts added";
+/* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.description"="You’ve already added all your contacts to this chat.\nIf you want to add more participants, first invite them to your contact list.";
+/* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
+"meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Invită";

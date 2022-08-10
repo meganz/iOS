@@ -237,9 +237,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d Bild</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d Bilder</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -253,9 +253,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d video</string>
+        <string>%d Video</string>
         <key>other</key>
-        <string>%d videos</string>
+        <string>%d Videos</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -365,9 +365,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share folder</string>
+        <string>Ordner freigeben</string>
         <key>other</key>
-        <string>Share folders</string>
+        <string>Ordner freigeben</string>
       </dict>
     </dict>
     <key>general.menuAction.shareLink.title</key>
@@ -381,9 +381,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Share link</string>
+        <string>Link teilen</string>
         <key>other</key>
-        <string>Share links</string>
+        <string>Links teilen</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -397,9 +397,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Manage link</string>
+        <string>Link verwalten</string>
         <key>other</key>
-        <string>Manage links</string>
+        <string>Links verwalten</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -413,9 +413,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Export file</string>
+        <string>Datei exportieren</string>
         <key>other</key>
-        <string>Export files</string>
+        <string>Dateien exportieren</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
