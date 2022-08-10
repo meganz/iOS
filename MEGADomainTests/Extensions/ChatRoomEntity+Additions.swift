@@ -19,7 +19,9 @@ extension ChatRoomEntity {
          isactive: Bool = false,
          isArchived: Bool = false,
          chatType: ChatType = .oneToOne,
-         peerHandles: [HandleEntity] = []) {
-        self.init(chatId: chatId, ownPrivilege: ownPrivilege, changeType: changeType, peerCount: peerCount, authorizationToken: "", title: title, unreadCount: unreadCount, userTypingHandle: userTypingHandle, retentionTime: retentionTime, creationTimeStamp: creationTimeStamp, hasCustomTitle: hasCustomTitle, isPublicChat: isPublicChat, isPreview: isPreview, isactive: isactive, isArchived: isArchived, chatType: chatType, peerHandles: peerHandles, userHandle: .invalid)
+         peers: [ChatRoomEntity.Peer] = [],
+         userHandle: HandleEntity = .invalid,
+         isTesting: Bool = true) {
+        self.init(chatId: chatId, ownPrivilege: ownPrivilege, changeType: changeType, peerCount: peerCount, authorizationToken: "", title: title, unreadCount: unreadCount, userTypingHandle: userTypingHandle, retentionTime: retentionTime, creationTimeStamp: creationTimeStamp, hasCustomTitle: hasCustomTitle, isPublicChat: isPublicChat, isPreview: isPreview, isactive: isactive, isArchived: isArchived, chatType: chatType, peers: peers, userHandle: userHandle)
     }
 }

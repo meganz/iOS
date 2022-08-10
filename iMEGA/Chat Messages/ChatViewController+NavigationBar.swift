@@ -100,4 +100,44 @@ extension ChatViewController {
         contactDetailsVC.groupChatRoom = chatRoom
         navigationController?.pushViewController(contactDetailsVC, animated: true)
     }
+    
+    @objc func addParticipant() {
+        let participantsAddingViewFactory = createParticipantsAddingViewFactory()
+        
+        guard participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: []) else {
+            present(viewController: participantsAddingViewFactory.allContactsAlreadyAddedAlert {
+                guard let inviteController = participantsAddingViewFactory.inviteContactController() else { return }
+                self.navigationController?.pushViewController(inviteController, animated: true)
+            })
+            return
+        }
+        
+        let contactsNavigationController = participantsAddingViewFactory.addContactsViewController(
+            withContactsMode: .chatAddParticipant,
+            additionallyExcludedParticipantsId: nil
+        ) { [weak self] handles in
+            guard let self = self else { return }
+            for handle in handles {
+                MEGASdkManager.sharedMEGAChatSdk().invite(
+                    toChat: self.chatRoom.chatId,
+                    user: handle,
+                    privilege: MEGAChatRoomPrivilege.standard.rawValue
+                )
+            }
+        }
+        
+        guard let contactsViewController = contactsNavigationController?.viewControllers.first as? ContactsViewController else { return }
+        navigationController?.pushViewController(contactsViewController, animated: true)
+    }
+    
+    private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
+        let chatRoomUseCase = ChatRoomUseCase(
+            chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+            userStoreRepo: UserStoreRepository(store: .shareInstance()))
+        return ParticipantsAddingViewFactory(
+            userUseCase: UserUseCase(repo: .live),
+            chatRoomUseCase: chatRoomUseCase,
+            chatId: chatRoom.chatId
+        )
+    }
 }

@@ -794,6 +794,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
 }
 
 final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
+    
     var videoPermissionError_calledTimes = 0
     var audioPermissionError_calledTimes = 0
     var dismiss_calledTimes = 0
@@ -816,8 +817,9 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func inviteParticipants(
-        excludeParticpantsId: [HandleEntity],
-        selectedUsersHandler: @escaping (([UInt64]) -> Void)
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        excludeParticpantsId: Set<HandleEntity>,
+        selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) {
         inviteParticpants_calledTimes += 1
         if let invitedParticipantHandles = invitedParticipantHandles {
@@ -825,7 +827,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         }
     }
     
-    func showAllContactsAlreadyAddedAlert() {
+    func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
         showAllContactsAlreadyAddedAlert_CalledTimes += 1
     }
     

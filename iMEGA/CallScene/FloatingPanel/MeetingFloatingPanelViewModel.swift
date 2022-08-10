@@ -198,24 +198,26 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     //MARK:- Private methods
     private func inviteParticipants() {
-        var peerHandles = chatRoomUseCase.peerHandles(forChatId: chatRoom.chatId)
-        recentlyAddedHandles.removeAll(where: peerHandles.contains)
-        peerHandles.append(contentsOf: recentlyAddedHandles)
+        let participantsAddingViewFactory = ParticipantsAddingViewFactory(
+            userUseCase: userUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatId: chatRoom.chatId
+        )
+        
+        let excludedHandles = recentlyAddedHandles
         recentlyAddedHandles = []
-        
-        let contacts = userUseCase.contacts
-        let hasNoVisibleContacts = contacts.contains(where: { $0.contact?.contactVisibility == .visible }) == false
-        let hasNonAddedVisibleContacts = contacts
-            .lazy
-            .filter({ $0.contact?.contactVisibility == .visible })
-            .contains { peerHandles.contains($0.handle) == false }
-        
-        guard hasNoVisibleContacts || hasNonAddedVisibleContacts else {
-            router.showAllContactsAlreadyAddedAlert()
+                        
+        guard participantsAddingViewFactory.shouldShowAddParticipantsScreen(
+            withExcludedHandles: Set(excludedHandles)
+        ) else {
+            router.showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory)
             return
         }
                         
-        router.inviteParticipants(excludeParticpantsId: peerHandles) { [weak self] userHandles in
+        router.inviteParticipants(
+            withParticipantsAddingViewFactory: participantsAddingViewFactory,
+            excludeParticpantsId: Set(excludedHandles)
+        ) { [weak self] userHandles in
             guard let self = self, let call = self.call else { return }
             self.recentlyAddedHandles.append(contentsOf: userHandles)
             userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }

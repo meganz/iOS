@@ -259,30 +259,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [self presentViewController:leaveAlertController animated:YES completion:nil];
 }
 
-- (void)addParticipant {
-    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    contactsVC.contactsMode = ContactsModeChatAddParticipant;
-    NSMutableDictionary *participantsMutableDictionary = [[NSMutableDictionary alloc] init];
-    NSUInteger peerCount = self.chatRoom.peerCount;
-    for (NSUInteger i = 0; i < peerCount; i++) {
-        uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:i];
-        if ([self.chatRoom peerPrivilegeByHandle:peerHandle] > MEGAChatRoomPrivilegeRm) {
-            [participantsMutableDictionary setObject:[NSNumber numberWithUnsignedLongLong:peerHandle] forKey:[NSNumber numberWithUnsignedLongLong:peerHandle]];
-        }
-    }
-    contactsVC.participantsMutableDictionary = participantsMutableDictionary.copy;
-    
-    contactsVC.userSelected = ^void(NSArray *users) {
-        for (NSInteger i = 0; i < users.count; i++) {
-            MEGAUser *user = [users objectAtIndex:i];
-            [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
-        }
-    };
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
-
 - (void)renameChatGroup {
     UIAlertController *renameGroupAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.") message:NSLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
     

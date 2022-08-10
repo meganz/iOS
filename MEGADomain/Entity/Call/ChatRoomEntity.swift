@@ -31,6 +31,11 @@ struct ChatRoomEntity {
         case moderator = 3
     }
     
+    struct Peer {
+        let handle: HandleEntity
+        let privilege: Privilege
+    }
+    
     let chatId: HandleEntity
     let ownPrivilege: Privilege
     let changeType: ChangeType?
@@ -49,6 +54,6 @@ struct ChatRoomEntity {
     let isactive: Bool
     let isArchived: Bool
     let chatType: ChatType
-    let peerHandles: [HandleEntity]
+    let peers: [Peer]
     let userHandle: HandleEntity
 }

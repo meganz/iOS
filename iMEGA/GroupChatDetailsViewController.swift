@@ -1,6 +1,7 @@
 import Foundation
 
 extension GroupChatDetailsViewController {
+    
     @objc func addChatCallDelegate() {
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatCallDelegate)
     }
@@ -28,6 +29,47 @@ extension GroupChatDetailsViewController {
         
         endCallDialog.show()
         self.endCallDialog = endCallDialog
+    }
+    
+    private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
+        let chatRoomUseCase = ChatRoomUseCase(
+            chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+            userStoreRepo: UserStoreRepository(store: .shareInstance()))
+        return ParticipantsAddingViewFactory(
+            userUseCase: UserUseCase(repo: .live),
+            chatRoomUseCase: chatRoomUseCase,
+            chatId: chatRoom.chatId
+        )
+    }
+    
+    @objc func addParticipant() {
+        let participantsAddingViewFactory = createParticipantsAddingViewFactory()
+        
+        guard participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: []) else {
+            let allContactsAlreadyAddedAlert = participantsAddingViewFactory.allContactsAlreadyAddedAlert {
+                guard let inviteController = participantsAddingViewFactory.inviteContactController() else { return }
+                self.navigationController?.pushViewController(inviteController, animated: true)
+            }
+            present(allContactsAlreadyAddedAlert, animated: true)
+            return
+        }
+        
+        let contactsNavigationController = participantsAddingViewFactory.addContactsViewController(
+            withContactsMode: .chatAddParticipant,
+            additionallyExcludedParticipantsId: nil
+        ) { [weak self] handles in
+            guard let self = self else { return }
+            for handle in handles {
+                MEGASdkManager.sharedMEGAChatSdk().invite(
+                    toChat: self.chatRoom.chatId,
+                    user: handle,
+                    privilege: MEGAChatRoomPrivilege.standard.rawValue
+                )
+            }
+        }
+        
+        guard let contactsViewController = contactsNavigationController?.viewControllers.first as? ContactsViewController else { return }
+        navigationController?.pushViewController(contactsViewController, animated: true)
     }
 }
 

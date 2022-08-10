@@ -27,7 +27,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity] {
         guard let chatRoom = chatRoom(forChatId: chatId) else { return [] }
-        return chatRoom.peerHandles
+        return chatRoom.peers.map(\.handle)
     }
     
     func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege? {
@@ -151,7 +151,7 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         self.participantsUpdateListener = participantsUpdateListener
         return participantsUpdateListener
             .monitor
-            .map(\.peerHandles)
+            .map({ $0.peers.map({ $0.handle })})
             .eraseToAnyPublisher()
     }
     
