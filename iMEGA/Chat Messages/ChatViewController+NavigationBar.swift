@@ -126,8 +126,8 @@ extension ChatViewController {
             }
         }
         
-        guard let contactsViewController = contactsNavigationController?.viewControllers.first as? ContactsViewController else { return }
-        navigationController?.pushViewController(contactsViewController, animated: true)
+        guard let contactsNavigationController = contactsNavigationController else { return }
+        present(viewController: contactsNavigationController)
     }
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {

@@ -68,8 +68,8 @@ extension GroupChatDetailsViewController {
             }
         }
         
-        guard let contactsViewController = contactsNavigationController?.viewControllers.first as? ContactsViewController else { return }
-        navigationController?.pushViewController(contactsViewController, animated: true)
+        guard let contactsNavigationController = contactsNavigationController else { return }
+        present(contactsNavigationController, animated: true)
     }
 }
 
