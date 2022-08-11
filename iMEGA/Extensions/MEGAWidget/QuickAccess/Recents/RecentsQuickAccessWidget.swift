@@ -1,5 +1,6 @@
 import WidgetKit
 import SwiftUI
+import MEGADomain
 
 struct RecentsTimelineProvider: TimelineProvider {
     typealias Entry = QuickAccessWidgetEntry

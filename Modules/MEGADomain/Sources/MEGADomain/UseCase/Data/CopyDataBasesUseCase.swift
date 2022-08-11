@@ -1,22 +1,20 @@
 import Foundation
-import MEGADomain
 
 // MARK: - Use case protocol -
-protocol CopyDataBasesUseCaseProtocol {
+public protocol CopyDataBasesUseCaseProtocol {
     func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
 }
 
 // MARK: - Use case implementation -
-struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyDataBasesUseCaseProtocol {
+public struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyDataBasesUseCaseProtocol {
     
     private let repo: T
 
-    init(repo: T) {
+    public init(repo: T) {
         self.repo = repo
     }
     
-    func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
-        MEGALogDebug("Copy databases from main app")
+    public func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         
         repo.applicationSupportDirectoryURL { (result) in
             switch result {
