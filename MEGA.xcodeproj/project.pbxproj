@@ -805,7 +805,6 @@
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
 		830C28EB25E69DFE00E9B56E /* CopyDataBasesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */; };
-		830C28FE25E6A1C500E9B56E /* CopyDataBasesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28FD25E6A1C500E9B56E /* CopyDataBasesRepositoryProtocol.swift */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
@@ -872,7 +871,6 @@
 		83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		83344F61258A1CAC0052DB3C /* CredentialRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C852517EABE00B40D89 /* CredentialRepositoryProtocol.swift */; };
 		83344F73258A1CE40052DB3C /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADEC8251896A8009A874C /* AuthRepositoryProtocol.swift */; };
-		83344FDB258A2C6F0052DB3C /* CopyDataBasesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83344FDA258A2C6F0052DB3C /* CopyDataBasesUseCase.swift */; };
 		8334508C258B5EFE0052DB3C /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
@@ -3388,7 +3386,6 @@
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyDataBasesRepository.swift; sourceTree = "<group>"; };
-		830C28FD25E6A1C500E9B56E /* CopyDataBasesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyDataBasesRepositoryProtocol.swift; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
@@ -3447,7 +3444,6 @@
 		83337CAA21009494000F40A7 /* ItemListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListModel.m; sourceTree = "<group>"; };
 		8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoPreviewTableViewCell.swift; sourceTree = "<group>"; };
-		83344FDA258A2C6F0052DB3C /* CopyDataBasesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyDataBasesUseCase.swift; sourceTree = "<group>"; };
 		8334512B258B98E00052DB3C /* YYCategories.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YYCategories.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83345231258CA2E00052DB3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/ShortcutIntents.intentdefinition; sourceTree = "<group>"; };
 		8334523E258CA2F20052DB3C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/ShortcutIntents.strings; sourceTree = "<group>"; };
@@ -7862,14 +7858,6 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		830C28FC25E6A19A00E9B56E /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				830C28FD25E6A1C500E9B56E /* CopyDataBasesRepositoryProtocol.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		83135B262862120F0015AE2F /* HangOrEndCallScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -7999,14 +7987,6 @@
 				83337CAA21009494000F40A7 /* ItemListModel.m */,
 			);
 			path = ItemList;
-			sourceTree = "<group>";
-		};
-		83344FD9258A2C570052DB3C /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				83344FDA258A2C6F0052DB3C /* CopyDataBasesUseCase.swift */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		8337BC56256283AF00F3A81A /* Shortcuts */ = {
@@ -9623,7 +9603,6 @@
 				830C26D625DFDDD400E9B56E /* Recents */,
 				5BC47E2F253F0F8800853323 /* Chat */,
 				83655B262593A1AE001A0846 /* Offline */,
-				83344FD9258A2C570052DB3C /* Data */,
 				B645BC2F252FAF4C00D1D7CF /* Authentication */,
 				B645BC2C252FAF4000D1D7CF /* Account */,
 				32CB490D284EF40B00697BA9 /* Photos */,
@@ -9743,7 +9722,6 @@
 				A8E1CFA126EA655A00EB7D3A /* Versions */,
 				0D213E79263A609D00B43723 /* Node */,
 				0D7E5FB72634E4CA00C5CB2A /* Transfer */,
-				830C28FC25E6A19A00E9B56E /* Data */,
 				830C26C125DFDCC100E9B56E /* Recents */,
 				5BC47E30253F0FAB00853323 /* Chat */,
 				83E3462825B6DDFC006F2AD6 /* Files */,
@@ -13550,7 +13528,6 @@
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
 				83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				8375B74325EFC77500B70F6B /* RecentsQuickAccessWidgetViewModel.swift in Sources */,
-				830C28FE25E6A1C500E9B56E /* CopyDataBasesRepositoryProtocol.swift in Sources */,
 				836813532587C0B800596BBD /* QuickAccessItemModel.swift in Sources */,
 				830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */,
 				83655A7125938492001A0846 /* MOMediaDestination+CoreDataProperties.m in Sources */,
@@ -13580,7 +13557,6 @@
 				B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				835EE45A2582607D00D8E3B8 /* MEGAConstants.m in Sources */,
 				83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */,
-				83344FDB258A2C6F0052DB3C /* CopyDataBasesUseCase.swift in Sources */,
 				8375B76525EFC7FB00B70F6B /* FavouritesQuickAccessWidget.swift in Sources */,
 				B6FD64F02689E2C600988A17 /* RecentItemsRepository.swift in Sources */,
 				83655A7A25938495001A0846 /* MOUploadTransfer+CoreDataProperties.m in Sources */,
