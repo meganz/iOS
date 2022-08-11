@@ -10,7 +10,6 @@ final class QASettingsViewModel {
     
     private let router: QASettingsRouting
     private var checkForUpdateTask: Task<Void, Never>?
-    let featureToggleList: [FeatureToggle] = FeatureToggle.list
     
     init(router: QASettingsRouting) {
         self.router = router
@@ -20,6 +19,7 @@ final class QASettingsViewModel {
         checkForUpdateTask?.cancel()
     }
     
+    //MARK: - Check for Update
     func checkForUpdate() {
         checkForUpdateTask = Task { @MainActor in
             do {
