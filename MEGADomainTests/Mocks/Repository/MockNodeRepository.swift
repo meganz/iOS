@@ -5,7 +5,8 @@ struct MockNodeRepository: NodeRepositoryProtocol {
     static let newRepo = MockNodeRepository()
     
     var node: NodeEntity?
-    
+    var rubbisNode: NodeEntity?
+
     var nodeAccessLevel:NodeAccessTypeEntity = .unknown
     var isDownloaded: Bool = false
     var hasVersions: Bool = false
@@ -140,5 +141,9 @@ struct MockNodeRepository: NodeRepositoryProtocol {
     
     func images(for parentHandle: HandleEntity) -> [NodeEntity] {
         images
+    }
+    
+    func rubbishNode() -> NodeEntity? {
+        rubbisNode
     }
 }

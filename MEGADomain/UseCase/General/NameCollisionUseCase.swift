@@ -42,6 +42,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
             for collision in collisions {
                 group.addTask {
+                    try await removeOriginalDuplicatedItemIfNeeded(for: collision)
                     return try await nodeRepository.copyNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed, isFolderLink: isFolderLink)
                 }
             }
@@ -57,6 +58,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
             for collision in collisions {
                 group.addTask {
+                    try await removeOriginalDuplicatedItemIfNeeded(for: collision)
                     return try await nodeRepository.moveNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed)
                 }
             }
@@ -127,5 +129,12 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
     
     func node(for handle: HandleEntity) -> NodeEntity? {
         nodeRepository.nodeForHandle(handle)
+    }
+    
+    //MARK: - Private
+    private func removeOriginalDuplicatedItemIfNeeded(for collision: NameCollisionEntity) async throws {
+        if (collision.collisionAction == .replace || collision.collisionAction == .update), let collisionHandle = collision.collisionNodeHandle, let rubbish = nodeRepository.rubbishNode() {
+            let _ = try await nodeRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)
+        }
     }
 }
