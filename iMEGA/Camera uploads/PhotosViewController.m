@@ -60,7 +60,7 @@
 @property (nonatomic) MEGACameraUploadsState currentState;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
-
+@property (nonatomic) NSLayoutConstraint *stateViewHeightConstraint;
 @end
 
 @implementation PhotosViewController
@@ -113,6 +113,15 @@
         self.cellSize = cellSize;
         [self.photosCollectionView reloadData];
     }
+    [self setupStateViewHeight];
+}
+
+- (void)setupStateViewHeight {
+    NSLayoutConstraint *heightConstraint = [self configureStackViewHeightWithView:self.stateView perviousConstraint:self.stateViewHeightConstraint];
+    if (heightConstraint != nil) {
+        self.stateViewHeightConstraint = heightConstraint;
+    }
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -157,6 +166,7 @@
     }
     
     [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
+    [self setupStateViewHeight];
 }
 
 #pragma mark - config views
