@@ -111,32 +111,16 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         
         downloadFile(for: node, name: name, toUrl: url, completion: completion, start: start, update: update, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: cancelToken)
     }
-    
-    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, toUrl url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
-        try await withCheckedThrowingContinuation { continuation in
-            var nillableContinuation: CheckedContinuation<TransferEntity, Error>? = continuation
 
-            sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
-                guard let error = error, error.type == .apiOk, let node = request?.publicNode else {
-                    nillableContinuation?.resume(throwing: TransferErrorEntity.couldNotFindNodeByLink)
-                    nillableContinuation = nil
-                    return
-                }
-                
-                downloadFile(for: node, name: name, toUrl: url, completion: { result in
-                    switch result {
-                    case .success(_):
-                        break
-                    case .failure(let error):
-                        nillableContinuation?.resume(throwing: error)
-                        nillableContinuation = nil
-                    }
-                }, start: { transferEntity in
-                    nillableContinuation?.resume(returning: transferEntity)
-                    nillableContinuation = nil
-                }, update: nil, filename: nil, appdata: transferMetaData?.metaData, startFirst: startFirst, cancelToken: cancelToken)
-            }))
-        }
+    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, toUrl url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+        sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
+            guard let error = error, error.type == .apiOk, let node = request?.publicNode else {
+                completion?(.failure(.couldNotFindNodeByLink))
+                return
+            }
+            
+            downloadFile(for: node, name: name, toUrl: url, completion: completion, start: start, update: update, filename: nil, appdata: transferMetaData?.metaData, startFirst: startFirst, cancelToken: cancelToken)
+        }))
     }
     
     //MARK: - Private
@@ -155,26 +139,6 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
         } else {
             sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken)
-        }
-    }
-    
-    func downloadFileLink(_ fileLink: FileLinkEntity, toURL url: URL, transferMetaData: TransferMetaDataEntity?, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
-        try await withCheckedThrowingContinuation { continuation in
-            sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
-                guard let error = error, error.type == .apiOk, let node = request?.publicNode else {
-                    continuation.resume(throwing: TransferErrorEntity.couldNotFindNodeByLink)
-                    return
-                }
-                
-                sdk.startDownloadNode(node, localPath: url.path, fileName: nil, appData: transferMetaData?.metaData, startFirst: true, cancelToken: cancelToken, delegate: TransferDelegate(completion: { result in
-                    switch result {
-                    case .success(let transferEntity):
-                        continuation.resume(returning: transferEntity)
-                    case .failure(_):
-                        continuation.resume(throwing: TransferErrorEntity.download)
-                    }
-                }))
-            }))
         }
     }
 }

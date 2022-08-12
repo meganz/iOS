@@ -82,16 +82,31 @@ struct NodeRepository: NodeRepositoryProtocol {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
     }
     
+    func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
+        sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { (result) in
+            switch result {
+            case .success(let request):
+                guard let node = request.publicNode else {
+                    completion(.failure(.nodeNotFound))
+                    return
+                }
+                completion(.success(node.toNodeEntity()))
+            case .failure(_):
+                completion(.failure(.nodeNotFound))
+            }
+        })
+    }
+    
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
         try await withCheckedThrowingContinuation { continuation in
-            sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { (result) in
+            nodeFor(fileLink: fileLink) { result in
                 switch result {
-                case .success(let request):
-                    continuation.resume(returning: request.publicNode.toNodeEntity())
-                case .failure(_):
-                    continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                case .success(let node):
+                    continuation.resume(returning: node)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-            })
+            }
         }
     }
     
