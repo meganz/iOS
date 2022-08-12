@@ -10,6 +10,7 @@ protocol NodeRepositoryProtocol: RepositoryProtocol {
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func nameForNode(handle: HandleEntity) -> String?
     func nameForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String?
+    func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void)
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
     func sizeForNode(handle: HandleEntity) -> UInt64?
     func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64?

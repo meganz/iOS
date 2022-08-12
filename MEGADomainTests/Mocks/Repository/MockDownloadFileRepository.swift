@@ -32,12 +32,8 @@ struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         completion?(completionResult)
     }
     
-    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, toUrl url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken?) async throws -> TransferEntity {
-        if let transferEntity = transferEntity {
-            return transferEntity
-        } else {
-            throw error
-        }
+    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, toUrl url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+        completion?(completionResult)
     }
 }
 

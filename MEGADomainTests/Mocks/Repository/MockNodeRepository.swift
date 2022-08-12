@@ -63,11 +63,12 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         name
     }
     
-    func nodeNameFor(fileLink: FileLinkEntity) async throws -> String {
-        guard let name = name else {
-            throw NodeErrorEntity.nodeNameNotFound
+    func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
+        guard let node = fileLinkNode else {
+            completion(.failure(.nodeNotFound))
+            return
         }
-        return name
+        completion(.success(node))
     }
     
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
