@@ -41,7 +41,7 @@ extension FeatureFlagViewModel {
         let savedFeatureFlags = useCase.savedFeatureFlags()
         
         featureFlagList.enumerated().forEach { index, featureFlag in
-            if let storedFeatureFlag = savedFeatureFlags.first { $0.name == featureFlag.name } {
+            if let storedFeatureFlag = savedFeatureFlags.first(where: { $0.name == featureFlag.name }) {
                 featureFlagList[index].isEnabled = storedFeatureFlag.isEnabled
             }
         }
