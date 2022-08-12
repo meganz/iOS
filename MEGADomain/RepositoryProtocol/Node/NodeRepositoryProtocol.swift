@@ -26,4 +26,5 @@ protocol NodeRepositoryProtocol: RepositoryProtocol {
     func creationDateForNode(handle: HandleEntity) -> Date?
     func images(for parentNode: NodeEntity) -> [NodeEntity]
     func images(for parentHandle: HandleEntity) -> [NodeEntity]
+    func rubbishNode() -> NodeEntity?
 }

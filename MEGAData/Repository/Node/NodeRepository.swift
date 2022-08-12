@@ -282,6 +282,10 @@ struct NodeRepository: NodeRepositoryProtocol {
         return images(forParentNode: parent)
     }
     
+    func rubbishNode() -> NodeEntity? {
+        MEGASdkManager.sharedMEGASdk().rubbishNode?.toNodeEntity()
+    }
+    
     // MARK: - Private
     
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
