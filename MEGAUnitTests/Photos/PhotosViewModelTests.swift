@@ -1,8 +1,8 @@
 import XCTest
 @testable import MEGA
 
-final class PhotoViewModelTests: XCTestCase {
-    var photoViewModel: PhotoViewModel?
+final class PhotosViewModelTests: XCTestCase {
+    var photosViewModel: PhotosViewModel?
     
     override func setUp() {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
@@ -13,7 +13,7 @@ final class PhotoViewModelTests: XCTestCase {
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
         
-        photoViewModel = PhotoViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
+        photosViewModel = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
     }
     
     private func mediaNodesSorted() -> [MEGANode] {
@@ -39,23 +39,23 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadSortOrderType() throws {
-        guard let sut = photoViewModel else { return }
+        guard let sut = photosViewModel else { return }
         
-        Helper.save(.defaultAsc, for: PhotoViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
+        Helper.save(.defaultAsc, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
         let sortTypeUnknown = sut.sortOrderType(forKey: .cameraUploadExplorerFeed)
         XCTAssert(sortTypeUnknown == .newest)
         
-        Helper.save(.modificationAsc, for: PhotoViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
+        Helper.save(.modificationAsc, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
         let sortTypeOldest = sut.sortOrderType(forKey: .cameraUploadExplorerFeed)
         XCTAssert(sortTypeOldest == .oldest)
         
-        Helper.save(.modificationDesc, for: PhotoViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
+        Helper.save(.modificationDesc, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
         let sortTypeNewest = sut.sortOrderType(forKey: .cameraUploadExplorerFeed)
         XCTAssert(sortTypeNewest == .newest)
     }
     
     func testReorderPhotos() throws {
-        guard let sut = photoViewModel else { return }
+        guard let sut = photosViewModel else { return }
         
         sut.mediaNodesArray = mediaNodesSorted()
         
@@ -72,7 +72,7 @@ final class PhotoViewModelTests: XCTestCase {
     // MARK: - All locations test cases
     
     func testLoadingPhotos_withAllMediaAllLocations_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedPhotos = sampleNodesForAllLocations()
         photoVM.filterType = .allMedia
@@ -87,7 +87,7 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withImagesAllLocations_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedImages = sampleNodesForAllLocations().filter({ $0.name?.mnz_isImagePathExtension == true })
         photoVM.filterType = .images
@@ -102,7 +102,7 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadingVideos_withImagesAllLocations_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedVideos = sampleNodesForAllLocations().filter({ $0.name?.mnz_isVideoPathExtension == true })
         photoVM.filterType = .videos
@@ -119,7 +119,7 @@ final class PhotoViewModelTests: XCTestCase {
     // MARK: - Cloud Drive only test cases
     
     func testLoadingPhotos_withAllMediaFromCloudDrive_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedPhotos = sampleNodesForCloudDriveOnly()
         photoVM.filterType = .allMedia
@@ -134,7 +134,7 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withImagesFromCloudDrive_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedImages = sampleNodesForCloudDriveOnly().filter({ $0.name?.mnz_isImagePathExtension == true })
         photoVM.filterType = .images
@@ -149,7 +149,7 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withVideosFromCloudDrive_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedVideos = sampleNodesForCloudDriveOnly().filter({ $0.name?.mnz_isVideoPathExtension == true })
         photoVM.filterType = .videos
@@ -166,7 +166,7 @@ final class PhotoViewModelTests: XCTestCase {
     // MARK: - Camera Uploads test cases
     
     func testLoadingPhotos_withAllMediaFromCameraUploads_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedPhotos = sampleNodesForCameraUploads()
         photoVM.filterType = .allMedia
@@ -181,7 +181,7 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withImagesFromCameraUploads_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedImages = sampleNodesForCameraUploads().filter({ $0.name?.mnz_isImagePathExtension == true })
         photoVM.filterType = .images
@@ -196,7 +196,7 @@ final class PhotoViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withVideosFromCameraUploads_shouldReturnTrue() async throws {
-        guard let photoVM = photoViewModel else { return }
+        guard let photoVM = photosViewModel else { return }
         
         let expectedVideos = sampleNodesForCameraUploads().filter({ $0.name?.mnz_isVideoPathExtension == true })
         photoVM.filterType = .videos

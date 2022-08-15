@@ -89,7 +89,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
             let photoLibraryRepository = PhotoLibraryRepository.newRepo
             let fileSearchRepository = SDKFilesSearchRepository.newRepo
             let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
-            let viewModel = PhotoViewModel(
+            let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
                 photoLibraryUseCase: photoLibraryUseCase
             )

@@ -1,6 +1,6 @@
 import Combine
 
-final class PhotoViewModel: NSObject {
+final class PhotosViewModel: NSObject {
     @objc var mediaNodesArray: [MEGANode] = [MEGANode]() {
         didSet {
             guard cameraUploadExplorerSortOrderType != nil else { return }
