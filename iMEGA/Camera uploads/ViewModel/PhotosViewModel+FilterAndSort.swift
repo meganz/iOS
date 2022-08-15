@@ -1,6 +1,6 @@
 import Foundation
 
-extension PhotoViewModel {
+extension PhotosViewModel {
     
     // MARK: - Sort
     

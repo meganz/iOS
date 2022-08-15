@@ -186,7 +186,7 @@ extension PhotosViewController: DisplayMenuDelegate {
     func sortMenu(didSelect sortType: SortOrderType) {
         guard sortType != viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed) else { return }
         viewModel.cameraUploadExplorerSortOrderType = sortType
-        Helper.save(sortType.megaSortOrderType, for: PhotoViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
+        Helper.save(sortType.megaSortOrderType, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
         setRightNavigationBarButtons()
     }
     
