@@ -1920,6 +1920,7 @@
 		B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */; };
+		B6DAED3F28AB322800703E28 /* PhotoSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DAED3E28AB322800703E28 /* PhotoSelectionTests.swift */; };
 		B6DC7CBC2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
 		B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
 		B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */; };
@@ -4314,6 +4315,7 @@
 		B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadStatus.h; sourceTree = "<group>"; };
 		B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadStatus.m; sourceTree = "<group>"; };
+		B6DAED3E28AB322800703E28 /* PhotoSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectionTests.swift; sourceTree = "<group>"; };
 		B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGASdkManager+CleanUp.h"; sourceTree = "<group>"; };
 		B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGASdkManager+CleanUp.m"; sourceTree = "<group>"; };
 		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
@@ -5793,6 +5795,7 @@
 			children = (
 				32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */,
 				3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */,
+				B6DAED3E28AB322800703E28 /* PhotoSelectionTests.swift */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -10030,6 +10033,7 @@
 				B6F853482794FB5A00028D51 /* PhotoLibraryPicker.swift */,
 				B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */,
 				B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */,
+				B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */,
 				12B2773527ED162E0008BDEE /* Actors */,
 				B6C444DD274A288B00268D9A /* Data Model */,
 				B67507B027668D6F0034F951 /* Mode View */,
@@ -10040,7 +10044,6 @@
 				B6C444DB274A285700268D9A /* All View */,
 				B6F853452794D22900028D51 /* Photo Selection */,
 				B596A4032810F76D0097254B /* Extension */,
-				B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */,
 			);
 			path = "Photo Library";
 			sourceTree = "<group>";
@@ -14106,6 +14109,7 @@
 				83B5E88A27F71BC70073C870 /* MockPhotosLibraryRepository.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
+				B6DAED3F28AB322800703E28 /* PhotoSelectionTests.swift in Sources */,
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				B64A71D7287BBB250085087D /* MockSdk.swift in Sources */,
