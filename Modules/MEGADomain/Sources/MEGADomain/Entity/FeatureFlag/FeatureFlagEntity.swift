@@ -12,3 +12,13 @@ public struct FeatureFlagEntity: Identifiable {
         self.isEnabled = isEnabled
     }
 }
+
+extension FeatureFlagEntity: Hashable {
+    public static func == (lhs: FeatureFlagEntity, rhs: FeatureFlagEntity) -> Bool {
+        lhs.name == rhs.name
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+}
