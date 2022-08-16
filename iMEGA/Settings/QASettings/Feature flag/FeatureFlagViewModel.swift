@@ -49,11 +49,9 @@ extension FeatureFlagViewModel {
     
     /// Saves new feature flags on data store defined on `featureFlagList`
     private func saveNewFeatureFlags() {
-        let savedFeatureFlags = useCase.savedFeatureFlags()
-        
-        let newFeatures = featureFlagList.filter { feature in
-            savedFeatureFlags.notContains(where: { $0.name == feature.name })
-        }
+        let savedFeatureFlags = Set(useCase.savedFeatureFlags())
+        let featureList = Set(featureFlagList)
+        let newFeatures = featureList.subtracting(savedFeatureFlags)
         
         newFeatures.forEach { featureFlag in
             saveFeatureFlag(featureFlag: featureFlag)
@@ -62,11 +60,9 @@ extension FeatureFlagViewModel {
     
     /// Removes feature flags on data store that are not defined on the `featureFlagList`
     private func cleanSavedFeatureFlags() {
-        let savedFeatureFlags = useCase.savedFeatureFlags()
-        
-        let nonExistingFeatureFlags = savedFeatureFlags.filter { feature in
-            featureFlagList.notContains(where: { $0.name == feature.name })
-        }
+        let savedFeatureFlags = Set(useCase.savedFeatureFlags())
+        let featureList = Set(featureFlagList)
+        let nonExistingFeatureFlags = savedFeatureFlags.subtracting(featureList)
         
         nonExistingFeatureFlags.forEach { feature in
             useCase.removeFeatureFlag(key: feature.name)
