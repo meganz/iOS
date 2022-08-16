@@ -34,6 +34,8 @@ final class HomeViewController: UIViewController {
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
     
+    var featureFlagViewModel: FeatureFlagViewModel?
+    
     // MARK: - Router
 
     var router: HomeRouter!
@@ -100,6 +102,10 @@ final class HomeViewController: UIViewController {
         setupView()
         refreshView(with: traitCollection)
         setupViewModelEventListening()
+        
+#if QA_CONFIG
+        setupFeatureFlag()
+#endif
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -202,6 +208,7 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         myAvatarViewModel.inputs.viewIsAppearing()
+        applyRemoveHomeImageFeatureFlag()
     }
 
     override func viewDidLayoutSubviews() {
@@ -491,7 +498,7 @@ extension HomeViewController: ExploreViewStackDelegate {
 
         switch card {
         case .images:
-            guard FeatureToggle.removeHomeImage.isEnabled else {
+            guard isRemoveHomeImageFeatureFlagEnabled() else {
                 router.photosExplorerSelected()
                 return
             }
@@ -721,12 +728,30 @@ private extension Selector {
     static let didTapNewUpload = #selector(HomeViewController.didTapNewUpload)
 }
 
-
-
-//MARK:- AudioPlayer
+//MARK: - AudioPlayer
 extension HomeViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
         slidePanelView.offlineScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         slidePanelView.recentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+    }
+}
+
+//MARK: - Feature Flag
+extension HomeViewController {
+    func setupFeatureFlag() {
+        self.featureFlagViewModel = FeatureFlagViewModel()
+        applyRemoveHomeImageFeatureFlag()
+    }
+    
+    func applyRemoveHomeImageFeatureFlag() {
+        guard let slidePanelView = slidePanelView,
+                let exploreView = exploreView else { return }
+        slidePanelView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled()
+        exploreView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled()
+    }
+
+    func isRemoveHomeImageFeatureFlagEnabled() -> Bool {
+        guard let viewModel = featureFlagViewModel else { return false }
+        return viewModel.isFeatureFlagEnabled(for: .removeHomeImage)
     }
 }
