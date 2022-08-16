@@ -121,7 +121,7 @@ platform :ios do
       scheme: SCHEME,
       sdk: "iphonesimulator",
       arch: "x86_64",
-      derivedDataPath: "./derivedData/"
+      derivedDataPath: "derivedData"
     )
   end
 
@@ -129,6 +129,7 @@ platform :ios do
   lane :archive_appstore do
     gym(
       workspace: WORKSPACE,
+      scheme: SCHEME,
       clean: true,
       export_method: "app-store",
       skip_profile_detection: true,
@@ -138,6 +139,8 @@ platform :ios do
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       disable_package_automatic_updates: true,
+      derived_data_path: "derivedData",
+      archive_path: "archive",
       export_options: {
         iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
@@ -208,7 +211,8 @@ platform :ios do
       scheme: "MEGA",
       devices: ["iPhone 13 Pro Max"],
       cloned_source_packages_path: "SwiftPackages",
-      disable_package_automatic_updates: true
+      disable_package_automatic_updates: true,
+      derived_data_path: "derivedData"
     )
   end
 
@@ -263,6 +267,8 @@ platform :ios do
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       disable_package_automatic_updates: true,
+      derived_data_path: "derivedData",
+      archive_path: "archive",
       export_options: {
         iCloudContainerEnvironment: "Production"
       }
