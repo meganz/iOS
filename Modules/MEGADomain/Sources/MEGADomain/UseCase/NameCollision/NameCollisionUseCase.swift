@@ -1,9 +1,8 @@
 import Foundation
 import MEGAFoundation
-import MEGADomain
 
 // MARK: - Use case protocol -
-protocol NameCollisionUseCaseProtocol {
+public protocol NameCollisionUseCaseProtocol {
     func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity]
     func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity]
     func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity]
@@ -16,7 +15,7 @@ protocol NameCollisionUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryProtocol>: NameCollisionUseCaseProtocol {
+public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryProtocol>: NameCollisionUseCaseProtocol {
     private let nodeRepository: T
     private let fileSystemRepository: U
     
@@ -26,19 +25,19 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return formatter
     }()
     
-    init(nodeRepository: T, fileSystemRepository: U) {
+    public init(nodeRepository: T, fileSystemRepository: U) {
         self.nodeRepository = nodeRepository
         self.fileSystemRepository = fileSystemRepository
     }
     
-    func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity] {
+    public func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity] {
         collisions.forEach { collision in
             collision.collisionNodeHandle = nodeRepository.childNodeNamed(name: collision.name, in: collision.parentHandle)?.handle
         }
         return collisions
     }
     
-    func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity] {
+    public func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity] {
         try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
             for collision in collisions {
                 group.addTask {
@@ -54,7 +53,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         }
     }
     
-    func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity] {
+    public func moveNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity]) async throws -> [HandleEntity] {
         try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
             for collision in collisions {
                 group.addTask {
@@ -70,7 +69,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         }
     }
     
-    func sizeForNode(handle: HandleEntity) -> String {
+    public func sizeForNode(handle: HandleEntity) -> String {
         guard let size = nodeRepository.sizeForNode(handle: handle) else {
             return ""
         }
@@ -78,7 +77,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return formatter.string(fromByteCount: Int64(size))
     }
 
-    func creationDateForNode(handle: HandleEntity) -> String {
+    public func creationDateForNode(handle: HandleEntity) -> String {
         guard let date = nodeRepository.creationDateForNode(handle: handle) else {
             return ""
         }
@@ -86,7 +85,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return DateFormatter.dateMedium().localisedString(from: date)
     }
     
-    func sizeForFile(at url: URL) -> String {
+    public func sizeForFile(at url: URL) -> String {
         guard let size = fileSystemRepository.fileSize(at: url) else {
             return ""
         }
@@ -94,7 +93,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return formatter.string(fromByteCount: Int64(size))
     }
     
-    func creationDateForFile(at url: URL) -> String {
+    public func creationDateForFile(at url: URL) -> String {
         guard let date = fileSystemRepository.fileCreationDate(at: url) else {
             return ""
         }
@@ -102,7 +101,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         return DateFormatter.dateMedium().localisedString(from: date)
     }
     
-    func renameNode(named name: NSString, inParent parentHandle: HandleEntity) -> String {
+    public func renameNode(named name: NSString, inParent parentHandle: HandleEntity) -> String {
         let counterPattern = #"\(\d+\)"#
         var filename = name.deletingPathExtension
         if let counterRange = filename.range(of: counterPattern, options: .regularExpression) {
@@ -127,7 +126,7 @@ struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryPr
         }
     }
     
-    func node(for handle: HandleEntity) -> NodeEntity? {
+    public func node(for handle: HandleEntity) -> NodeEntity? {
         nodeRepository.nodeForHandle(handle)
     }
     

@@ -1,6 +1,7 @@
 import UIKit
 import PDFKit
 import VisionKit
+import MEGADomain
 
 enum DocScanExportFileType: String {
     case pdf = "PDF"

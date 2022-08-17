@@ -1,5 +1,5 @@
 
-enum NameCollisionActionType {
+public enum NameCollisionActionType {
     case update
     case replace
     case rename

@@ -1,7 +1,6 @@
 import Foundation
-import MEGADomain
 
-protocol FileSystemRepositoryProtocol: RepositoryProtocol {
+public protocol FileSystemRepositoryProtocol: RepositoryProtocol {
     func documentsDirectory() -> URL
     func fileExists(at url: URL) -> Bool
     func systemVolumeAvailability() -> Int64

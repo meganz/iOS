@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     static let newRepo = MockFileSystemRepository()
