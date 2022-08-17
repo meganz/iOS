@@ -753,7 +753,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             stopVideoForParticipant(participant)
             
             if callParticipants.isEmpty {
-                if chatRoom.chatType == .meeting && !reconnecting {
+                if chatRoom.chatType == .meeting && !reconnecting && call.status == .inProgress {
                     invokeCommand?(.showNoOneElseHereMessage)
                 }
                 if layoutMode == .speaker {
