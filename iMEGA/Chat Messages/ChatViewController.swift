@@ -279,7 +279,6 @@ class ChatViewController: MessagesViewController {
         super.viewDidAppear(animated)
         
         reloadInputViews()
-        TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
         
         if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .plain, target: self, action: #selector(dismissChatRoom))
