@@ -1583,6 +1583,8 @@
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
+		B5E411A928AB65A600D05719 /* FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */; };
+		B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */; };
 		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */; };
 		B5FE691328698C5C00A1725C /* FavouritesExplorerGridSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */; };
@@ -3966,6 +3968,8 @@
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
+		B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagProvider.swift; sourceTree = "<group>"; };
+		B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridViewController.swift; sourceTree = "<group>"; };
 		B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridSource.swift; sourceTree = "<group>"; };
 		B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -5950,6 +5954,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B5E411A528AB658600D05719 /* FeatureFlags */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
 				B6730B0A2735F34100A9CF5F /* Shared Views */,
 				B68ED09127D05F8700713850 /* DomainExtensions */,
@@ -7126,6 +7131,7 @@
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
 				5D33D675250DBAAB00D74666 /* StoreUserClient.swift */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
+				B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -9168,6 +9174,14 @@
 				B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */,
 			);
 			path = Banner;
+			sourceTree = "<group>";
+		};
+		B5E411A528AB658600D05719 /* FeatureFlags */ = {
+			isa = PBXGroup;
+			children = (
+				B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */,
+			);
+			path = FeatureFlags;
 			sourceTree = "<group>";
 		};
 		B6061FE528978B040094087E /* Modules */ = {
@@ -13154,6 +13168,7 @@
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,
 				5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */,
+				B5E411A928AB65A600D05719 /* FeatureFlagProvider.swift in Sources */,
 				9428B998281922A500DB7250 /* CMConfigEntity.swift in Sources */,
 				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
@@ -14007,6 +14022,8 @@
 				83847D9926B83CAF00A79F48 /* CallEntity+Additions.swift in Sources */,
 				B6AADEEC2518A377009A874C /* MockSMSRepository.swift in Sources */,
 				B66BA2402514DCFE009787BD /* MockAchievementUseCase.swift in Sources */,
+				8361D9F4283E7CBC0001FAC1 /* MockNameCollisionUseCase.swift in Sources */,
+				B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */,
 				A81F9BA827E9F62D00D47C0D /* MockCookieSettingsRepository.swift in Sources */,
 				727189832800556800B2DB08 /* MockFeedbackInfoRepository.swift in Sources */,
 				3296053E288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift in Sources */,

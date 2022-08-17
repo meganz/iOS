@@ -7,7 +7,7 @@ extension PhotosViewController {
                 menuType: .display,
                 sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
                 isCameraUploadExplorer: true,
-                isFilterEnabled: FeatureToggle.filterMenuOnCameraUploadExplorer.isEnabled,
+                isFilterEnabled: viewModel.shouldShowFilterMenuOnCameraUpload,
                 isEmptyState: viewModel.mediaNodesArray.isEmpty
             )
         } else {
@@ -102,7 +102,7 @@ extension PhotosViewController {
     }
     
     @objc func setRightNavigationBarButtons() {
-        if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
+        if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
             updateMenuBarButtonItems(photoLibraryContentViewModel.selectedMode)
         } else {
             disableContextMenuOnCameraUploader()
@@ -113,7 +113,7 @@ extension PhotosViewController {
         setEditing(!isEditing, animated: true)
         setRightNavigationBarButtons()
         
-        if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
+        if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled  {
             editBarButtonItem?.action = nil
         }
     }
@@ -161,7 +161,7 @@ extension PhotosViewController {
     }
     
     @objc private func onSelect() {
-        if FeatureToggle.contextMenuOnCameraUploadExplorer.isEnabled {
+        if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
             enableContextMenuOnCameraUploaderOnSelect()
         } else {
             disableContextMenuOnCameraUploaderOnSelect()
