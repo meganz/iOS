@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct FileSystemRepository: FileSystemRepositoryProtocol {
     static var newRepo: FileSystemRepository {

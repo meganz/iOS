@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct NameCollisionAction: Identifiable {
     let id = UUID()

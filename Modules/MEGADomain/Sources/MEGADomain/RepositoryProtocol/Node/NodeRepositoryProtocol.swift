@@ -1,6 +1,6 @@
-import MEGADomain
+import Foundation
 
-protocol NodeRepositoryProtocol: RepositoryProtocol {
+public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)

@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class TextEditorViewController: UIViewController {
     private var viewModel: TextEditorViewModel
     
