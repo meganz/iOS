@@ -196,7 +196,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
 
     if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
         [DevicePermissionsHelper modalNotificationsPermission];
