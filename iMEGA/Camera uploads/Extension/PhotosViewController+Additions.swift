@@ -43,10 +43,6 @@ extension PhotosViewController {
         cancelEditing()
     }
     
-    @objc func shouldRemoveHomeImage() -> Bool {
-        FeatureToggle.removeHomeImage.isEnabled        
-    }
-    
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
         let entityNodes = nodes.toNodeEntities()
         ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
@@ -104,5 +100,20 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
 extension PhotosViewController: BrowserViewControllerDelegate, ContatctsViewControllerDelegate {
     public func nodeEditCompleted(_ complete: Bool) {
         cancelEditing()
+    }
+}
+
+//MARK: - Feature Flag
+extension PhotosViewController {
+    @objc func applyPhotosFeatureFlags() {
+        if !viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
+            sortMenu(didSelect: .nameAscending)
+        }
+        
+        if !viewModel.shouldShowFilterMenuOnCameraUpload {
+            viewModel.resetFilters()
+        }
+        
+        setRightNavigationBarButtons()
     }
 }

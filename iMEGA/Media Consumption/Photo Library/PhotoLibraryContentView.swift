@@ -40,6 +40,9 @@ struct PhotoLibraryContentView: View {
                 onFilterUpdate: onFilterUpdate
             )
         }
+        .onAppear {
+            filterViewModel.applyFiltersFeatureFlags()
+        }
     }
     
     @ViewBuilder

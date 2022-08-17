@@ -35,7 +35,7 @@ struct PhotoLibraryFilterView: View {
         onFilterUpdate?(
             filterViewModel.filterOption(for: filterViewModel.selectedMediaType),
             filterViewModel.filterOption(for: filterViewModel.selectedLocation),
-            FeatureToggle.filterMenuOnCameraUploadExplorer.isEnabled   
+            filterViewModel.shouldShowFilterMenuOnCameraUpload
         )
         
         viewModel.showFilter.toggle()

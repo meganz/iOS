@@ -97,12 +97,14 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self.viewModel loadAllPhotosWithFeatureFlag:[self shouldRemoveHomeImage]];
+    [self.viewModel loadAllPhotos];
     [self refreshMyAvatar];
     
     if (@available(iOS 14.0, *)) {
         [self updateLimitedAccessBannerVisibility];
     }
+    
+    [self applyPhotosFeatureFlags];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -985,7 +987,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList with:[self shouldRemoveHomeImage]];
+        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
     });
 }
 

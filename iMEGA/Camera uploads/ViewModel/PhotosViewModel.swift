@@ -8,6 +8,7 @@ final class PhotosViewModel: NSObject {
         }
     }
     
+    private var featureFlagProvider: FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     var cameraUploadExplorerSortOrderType: SortOrderType? {
@@ -28,34 +29,36 @@ final class PhotosViewModel: NSObject {
     var filterLocation: PhotosFilterOptions = .allLocations
     
     var isFilterActive: Bool {
-        filterType != .allMedia || filterLocation != .allLocations
+        (filterType != .allMedia || filterLocation != .allLocations) && shouldShowFilterMenuOnCameraUpload
     }
-    
+
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
-        photoLibraryUseCase: PhotoLibraryUseCaseProtocol
+        photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
+        featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
+        self.featureFlagProvider = featureFlagProvider
         super.init()
         loadSortOrderType()
     }
     
-    @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList, with featureFlag: Bool) {
+    @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
         Task { [weak self] in
             do {
                 guard let container = await self?.photoLibraryUseCase.photoLibraryContainer() else { return }
-                guard featureFlag || self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
+                guard isRemoveHomeImageFeatureFlagEnabled || self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
 
-                await self?.loadPhotos(withFeatureFlag: featureFlag)
+                await self?.loadPhotos(withFeatureFlag: isRemoveHomeImageFeatureFlagEnabled)
             }
         }
     }
     
     @MainActor
-    @objc func loadAllPhotos(withFeatureFlag flag: Bool) {
+    @objc func loadAllPhotos() {
         Task.detached(priority: .userInitiated) { [weak self] in
-            await self?.loadPhotos(withFeatureFlag: flag)
+            await self?.loadPhotos(withFeatureFlag: self?.isRemoveHomeImageFeatureFlagEnabled ?? false)
         }
     }
     
@@ -89,7 +92,7 @@ final class PhotosViewModel: NSObject {
         
         self.filterType = filterType
         self.filterLocation = filterLocation
-        loadAllPhotos(withFeatureFlag: featureFlag)
+        loadAllPhotos()
     }
     
     // MARK: - Private
@@ -123,5 +126,26 @@ final class PhotosViewModel: NSObject {
     
     private func updateMediaNodesArray(_ photos: [MEGANode]){
         mediaNodesArray = reorderPhotos(cameraUploadExplorerSortOrderType, mediaNodes: photos)
+    }
+}
+
+//MARK: - FeatureFlag
+extension PhotosViewModel {
+    func resetFilters() {
+        self.filterType = .allMedia
+        self.filterLocation = .allLocations
+    }
+    
+    var shouldShowFilterMenuOnCameraUpload: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .contextMenuOnCameraUploadExplorer) &&
+        featureFlagProvider.isFeatureFlagEnabled(for: .filterMenuOnCameraUploadExplorer)
+    }
+    
+    var isRemoveHomeImageFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .removeHomeImage)
+    }
+    
+    var isContextMenuOnCameraUploadFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .contextMenuOnCameraUploadExplorer)
     }
 }
