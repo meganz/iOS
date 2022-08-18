@@ -902,7 +902,7 @@ static TransfersWidgetViewController* instance = nil;
         return;
     }
     
-    if (error.type == MEGAErrorTypeApiEIncomplete) {
+    if (error.type == MEGAErrorTypeApiEIncomplete && [self shouldShowTransferCancelledMessageFor:transfer]) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
     }
     
