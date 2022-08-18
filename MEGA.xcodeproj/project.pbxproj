@@ -795,9 +795,7 @@
 		77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */; };
-		830C26C325DFDCD400E9B56E /* RecentNodesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C26C225DFDCD400E9B56E /* RecentNodesRepositoryProtocol.swift */; };
 		830C26CD25DFDD3000E9B56E /* RecentNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C26CC25DFDD3000E9B56E /* RecentNodesRepository.swift */; };
-		830C26D825DFDDE800E9B56E /* RecentNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C26D725DFDDE800E9B56E /* RecentNodesUseCase.swift */; };
 		830C27B025E64D5F00E9B56E /* MOOfflineNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */; };
 		830C27C125E64DF000E9B56E /* MOOfflineNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */; };
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
@@ -1158,8 +1156,6 @@
 		83E3459B25B598A1006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */; };
 		83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */; };
 		83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */; };
-		83E345BA25B59FB4006F2AD6 /* RecentItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345B925B59FB4006F2AD6 /* RecentItemsUseCase.swift */; };
-		83E345CD25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345CC25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift */; };
 		83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345DF25B5A662006F2AD6 /* RecentItemsRepository.swift */; };
 		83E3460225B5C73E006F2AD6 /* QuickAccessWidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */; };
 		83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3462925B6DE1D006F2AD6 /* OfflineFilesRepositoryProtocol.swift */; };
@@ -1936,8 +1932,6 @@
 		B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8CE3C2628F1970074CBBF /* MEGAStore+User.swift */; };
 		B6FCBFD527121AB600B3599F /* PhotoLibraryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */; };
 		B6FCBFD727121B4500B3599F /* PhotosViewController+PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FCBFD627121B4500B3599F /* PhotosViewController+PhotoLibrary.swift */; };
-		B6FD64EB2689E29300988A17 /* RecentItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345B925B59FB4006F2AD6 /* RecentItemsUseCase.swift */; };
-		B6FD64EF2689E2BD00988A17 /* RecentItemsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345CC25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift */; };
 		B6FD64F02689E2C600988A17 /* RecentItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345DF25B5A662006F2AD6 /* RecentItemsRepository.swift */; };
 		B6FD64F12689E2C600988A17 /* FavouriteItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */; };
 		B6FD64F32689E87F00988A17 /* MEGASortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD64F22689E87F00988A17 /* MEGASortOrderType+Mapper.swift */; };
@@ -2087,8 +2081,6 @@
 		BF782D57269BA4BB0001D169 /* ReachabilityApproachEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D26269BA4BA0001D169 /* ReachabilityApproachEntity.swift */; };
 		BF782D5F269BA4BB0001D169 /* ChatRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */; };
 		BF782D60269BA4BB0001D169 /* CameraPositionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D32269BA4BA0001D169 /* CameraPositionEntity.swift */; };
-		BF782D61269BA4BB0001D169 /* RecentActionBucketEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D34269BA4BA0001D169 /* RecentActionBucketEntity.swift */; };
-		BF782D62269BA4BB0001D169 /* RecentItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D35269BA4BA0001D169 /* RecentItemEntity.swift */; };
 		BF782D63269BA4BB0001D169 /* ChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */; };
 		BF782D68269BA4BB0001D169 /* AchievementTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D3D269BA4BA0001D169 /* AchievementTypeEntity.swift */; };
 		BF782D69269BA4BB0001D169 /* RegionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D3F269BA4BA0001D169 /* RegionEntity.swift */; };
@@ -2108,7 +2100,6 @@
 		BF782D78269BA4BB0001D169 /* AudioSessionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D50269BA4BA0001D169 /* AudioSessionErrorEntity.swift */; };
 		BF782D79269BA4BB0001D169 /* OfflineFileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D52269BA4BA0001D169 /* OfflineFileEntity.swift */; };
 		BF782D7D269BA5AD0001D169 /* OfflineFileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D52269BA4BA0001D169 /* OfflineFileEntity.swift */; };
-		BF782D7F269BA6060001D169 /* RecentItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D35269BA4BA0001D169 /* RecentItemEntity.swift */; };
 		BF782D81269BA8610001D169 /* RecentActionBucketEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
@@ -3362,9 +3353,7 @@
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteNodesRepository.swift; sourceTree = "<group>"; };
-		830C26C225DFDCD400E9B56E /* RecentNodesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentNodesRepositoryProtocol.swift; sourceTree = "<group>"; };
 		830C26CC25DFDD3000E9B56E /* RecentNodesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentNodesRepository.swift; sourceTree = "<group>"; };
-		830C26D725DFDDE800E9B56E /* RecentNodesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentNodesUseCase.swift; sourceTree = "<group>"; };
 		830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOOfflineNode+Mapper.swift"; sourceTree = "<group>"; };
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
@@ -3654,8 +3643,6 @@
 		83E3454C25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		83E3454D25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuickAccessWidgetRecentItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+QuickAccessWidget.swift"; sourceTree = "<group>"; };
-		83E345B925B59FB4006F2AD6 /* RecentItemsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentItemsUseCase.swift; sourceTree = "<group>"; };
-		83E345CC25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentItemsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		83E345DF25B5A662006F2AD6 /* RecentItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentItemsRepository.swift; sourceTree = "<group>"; };
 		83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManager.swift; sourceTree = "<group>"; };
 		83E3462925B6DE1D006F2AD6 /* OfflineFilesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4439,8 +4426,6 @@
 		BF782D26269BA4BA0001D169 /* ReachabilityApproachEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityApproachEntity.swift; sourceTree = "<group>"; };
 		BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomEntity.swift; sourceTree = "<group>"; };
 		BF782D32269BA4BA0001D169 /* CameraPositionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPositionEntity.swift; sourceTree = "<group>"; };
-		BF782D34269BA4BA0001D169 /* RecentActionBucketEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentActionBucketEntity.swift; sourceTree = "<group>"; };
-		BF782D35269BA4BA0001D169 /* RecentItemEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentItemEntity.swift; sourceTree = "<group>"; };
 		BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSessionEntity.swift; sourceTree = "<group>"; };
 		BF782D3D269BA4BA0001D169 /* AchievementTypeEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementTypeEntity.swift; sourceTree = "<group>"; };
 		BF782D3F269BA4BA0001D169 /* RegionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionEntity.swift; sourceTree = "<group>"; };
@@ -7803,24 +7788,6 @@
 			path = Recents;
 			sourceTree = "<group>";
 		};
-		830C26C125DFDCC100E9B56E /* Recents */ = {
-			isa = PBXGroup;
-			children = (
-				83E345CC25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift */,
-				830C26C225DFDCD400E9B56E /* RecentNodesRepositoryProtocol.swift */,
-			);
-			path = Recents;
-			sourceTree = "<group>";
-		};
-		830C26D625DFDDD400E9B56E /* Recents */ = {
-			isa = PBXGroup;
-			children = (
-				83E345B925B59FB4006F2AD6 /* RecentItemsUseCase.swift */,
-				830C26D725DFDDE800E9B56E /* RecentNodesUseCase.swift */,
-			);
-			path = Recents;
-			sourceTree = "<group>";
-		};
 		830C28A825E68F3500E9B56E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -9564,7 +9531,6 @@
 				B6C9596A2689B05B00CF73A8 /* General */,
 				0D213E66263A602500B43723 /* Node */,
 				0D7E5FCA2634F06E00C5CB2A /* Transfer */,
-				830C26D625DFDDD400E9B56E /* Recents */,
 				5BC47E2F253F0F8800853323 /* Chat */,
 				83655B262593A1AE001A0846 /* Offline */,
 				B645BC2F252FAF4C00D1D7CF /* Authentication */,
@@ -9686,7 +9652,6 @@
 				A8E1CFA126EA655A00EB7D3A /* Versions */,
 				0D213E79263A609D00B43723 /* Node */,
 				0D7E5FB72634E4CA00C5CB2A /* Transfer */,
-				830C26C125DFDCC100E9B56E /* Recents */,
 				5BC47E30253F0FAB00853323 /* Chat */,
 				83E3462825B6DDFC006F2AD6 /* Files */,
 				B645BC34252FAFC700D1D7CF /* Authentication */,
@@ -10358,15 +10323,6 @@
 				BF782D26269BA4BA0001D169 /* ReachabilityApproachEntity.swift */,
 			);
 			path = General;
-			sourceTree = "<group>";
-		};
-		BF782D33269BA4BA0001D169 /* Recents */ = {
-			isa = PBXGroup;
-			children = (
-				BF782D34269BA4BA0001D169 /* RecentActionBucketEntity.swift */,
-				BF782D35269BA4BA0001D169 /* RecentItemEntity.swift */,
-			);
-			path = Recents;
 			sourceTree = "<group>";
 		};
 		BF782D37269BA4BA0001D169 /* Node */ = {
@@ -12242,7 +12198,6 @@
 				943AFB59283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */,
 				94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */,
 				BF5E345F255A2E1A0055395E /* FilesExplorerGridSource.swift in Sources */,
-				83E345BA25B59FB4006F2AD6 /* RecentItemsUseCase.swift in Sources */,
 				A882F52127E1E6830032DC07 /* NetworkMonitorRepository.swift in Sources */,
 				A89D72712795C5F500284BFC /* ReportIssueView.swift in Sources */,
 				5BE689AB2419135400462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
@@ -12268,7 +12223,6 @@
 				2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */,
 				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
 				5B33F0FA26601E4100E5F0F4 /* FavouritesRouter.swift in Sources */,
-				83E345CD25B5A1BF006F2AD6 /* RecentItemsRepositoryProtocol.swift in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				329110FC288E39FC001324EA /* PhotoLibraryFilterTypeView.swift in Sources */,
@@ -12285,7 +12239,6 @@
 				5D31674724FCA8FD0032492F /* UIViewController+ErrorHandling.swift in Sources */,
 				BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
-				830C26C325DFDCD400E9B56E /* RecentNodesRepositoryProtocol.swift in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				2F879C592629261A00D2FA78 /* EncourageGuestUserToJoinMegaViewController.swift in Sources */,
 				BFE6909325351F7700CD21F9 /* PhotosExplorerRouter.swift in Sources */,
@@ -12502,13 +12455,11 @@
 				A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */,
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */,
-				BF782D62269BA4BB0001D169 /* RecentItemEntity.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
 				BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */,
 				5D87C1F424E922D600BB5AB0 /* SDKUserClient.swift in Sources */,
 				0D213E68263A603E00B43723 /* NodeActionUseCase.swift in Sources */,
 				BF6E8DBB25B927F2003A125A /* MEGARequest+Mapper.swift in Sources */,
-				BF782D61269BA4BB0001D169 /* RecentActionBucketEntity.swift in Sources */,
 				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
@@ -13256,7 +13207,6 @@
 				83A49E79270475AB00FD0D85 /* TransfersRepositoryProtocol.swift in Sources */,
 				12397E172820C3B100A30CCC /* PageTabView.swift in Sources */,
 				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
-				830C26D825DFDDE800E9B56E /* RecentNodesUseCase.swift in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				B6B278DC24E1E89C00BB3E9A /* SMSUseCase.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
@@ -13461,13 +13411,11 @@
 				83655B292593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */,
 				83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */,
 				A82D5CE426BC083700E73D27 /* PreferenceRepository.swift in Sources */,
-				B6FD64EB2689E29300988A17 /* RecentItemsUseCase.swift in Sources */,
 				83344F73258A1CE40052DB3C /* AuthRepositoryProtocol.swift in Sources */,
 				B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				83655A5F259379C2001A0846 /* MEGAStore.m in Sources */,
 				B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */,
 				B6F8CE212628232C0074CBBF /* CoreDataErrorHandler.m in Sources */,
-				BF782D7F269BA6060001D169 /* RecentItemEntity.swift in Sources */,
 				83655AE7259387F6001A0846 /* MOOfflineNode.m in Sources */,
 				837ABEF925DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
@@ -13491,7 +13439,6 @@
 				B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				83E3465725B6E0D0006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
-				B6FD64EF2689E2BD00988A17 /* RecentItemsRepositoryProtocol.swift in Sources */,
 				8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */,
 				83344F61258A1CAC0052DB3C /* CredentialRepositoryProtocol.swift in Sources */,
 				83655A8325938499001A0846 /* MOMessage+CoreDataProperties.m in Sources */,

@@ -1,8 +1,4 @@
-import Foundation
-import MEGADomain
-
-// MARK: - Use case protocol -
-protocol RecentItemsUseCaseProtocol {
+public protocol RecentItemsUseCaseProtocol {
     @available(iOS 14.0, *)
     func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func insertRecentItem(_ item: RecentItemEntity)
@@ -11,15 +7,15 @@ protocol RecentItemsUseCaseProtocol {
     func fetchRecentItems() -> [RecentItemEntity]
 }
 
-struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsUseCaseProtocol {
+public struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsUseCaseProtocol {
     private let repo: T
 
-    init(repo: T) {
+    public init(repo: T) {
         self.repo = repo
     }
     
     @available(iOS 14.0, *)
-    func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         repo.deleteAllRecentItems { (result) in
             switch result {
             case .success(_):
@@ -32,16 +28,16 @@ struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsUseCaseP
         }
     }
     
-    func insertRecentItem(_ item: RecentItemEntity) {
+    public func insertRecentItem(_ item: RecentItemEntity) {
         repo.insertRecentItem(item)
     }
     
     @available(iOS 14.0, *)
-    func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         repo.batchInsertRecentItems(items, completion: completion)
     }
     
-    func fetchRecentItems() -> [RecentItemEntity] {
+    public func fetchRecentItems() -> [RecentItemEntity] {
         return repo.fetchAllRecentItems()
     }
 }
