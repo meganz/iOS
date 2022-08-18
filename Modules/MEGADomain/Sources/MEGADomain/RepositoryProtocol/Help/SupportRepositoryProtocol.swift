@@ -1,5 +1,5 @@
 import Combine
 
-protocol SupportRepositoryProtocol {
+public protocol SupportRepositoryProtocol {
     func createSupportTicket(withMessage message: String) -> Future<Void, CreateSupportTicketErrorEntity>
 }
