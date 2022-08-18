@@ -1,23 +1,20 @@
-import Foundation
-import MEGADomain
-
-protocol RecentNodesUseCaseProtocol {
+public protocol RecentNodesUseCaseProtocol {
     func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void)
 }
 
-struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol>: RecentNodesUseCaseProtocol {
+public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol>: RecentNodesUseCaseProtocol {
     private let repo: T
 
-    init(repo: T) {
+    public init(repo: T) {
         self.repo = repo
     }
     
-    func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    public func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         repo.getAllRecentActionBuckets(completion: completion)
     }
     
-    func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    public func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         repo.getRecentActionBuckets(limitCount: limitCount, completion: completion)
     }
 }

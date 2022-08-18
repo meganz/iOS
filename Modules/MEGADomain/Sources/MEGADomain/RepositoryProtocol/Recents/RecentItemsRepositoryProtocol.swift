@@ -1,7 +1,6 @@
 import Foundation
-import MEGADomain
 
-protocol RecentItemsRepositoryProtocol {
+public protocol RecentItemsRepositoryProtocol {
     func deleteAllRecentItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func insertRecentItem(_ item: RecentItemEntity)
     @available(iOS 14.0, *)
