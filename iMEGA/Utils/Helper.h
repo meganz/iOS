@@ -19,7 +19,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
-+ (NSString *)relativePathForOffline;
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath;
 

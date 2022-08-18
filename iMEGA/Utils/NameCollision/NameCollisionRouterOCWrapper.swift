@@ -2,7 +2,7 @@ import MEGADomain
 
 @objc final class NameCollisionRouterOCWrapper: NSObject {
     @objc func uploadFiles(_ transfers: [CancellableTransfer], presenter: UIViewController, type: CancellableTransferType) {
-        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: URL(fileURLWithPath: $0.path).lastPathComponent, isFile: $0.isFile, fileUrl: URL(fileURLWithPath: $0.path))}
+        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: $0.localFileURL?.lastPathComponent ?? "", isFile: $0.isFile, fileUrl: $0.localFileURL) }
         NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
     }
     

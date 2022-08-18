@@ -182,10 +182,10 @@ final class TextEditorViewModel: ViewModelType {
         guard let parentHandle = parentHandle else { return }
         let fileName = textFile.fileName
         let content = textFile.content
-        let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
+        let tempUrl = uploadFileUseCase.tempURL(forFilename: fileName)
         do {
-            try content.write(toFile: tempPath, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
-            uploadFileUseCase.uploadFile(withLocalPath: tempPath, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, cancelToken: nil, start: nil, update: nil) { result in
+            try content.write(toFile: tempUrl.path, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
+            uploadFileUseCase.uploadFile(tempUrl, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, cancelToken: nil, start: nil, update: nil) { result in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
                 }
@@ -204,7 +204,7 @@ final class TextEditorViewModel: ViewModelType {
                 router.dismissTextEditorVC()
             }
         } catch {
-            MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
+            MEGALogDebug("Could not write to file \(tempUrl) with error \(error.localizedDescription)")
         }
     }
     

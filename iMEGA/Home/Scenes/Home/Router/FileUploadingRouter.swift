@@ -74,7 +74,7 @@ final class FileUploadingRouter {
                         let transfers = urls.map {
                             let coordinates = $0.path.mnz_coordinatesOfPhotoOrVideo()
                             let appData = coordinates.map(NSString().mnz_appData(toSaveCoordinates:))
-                            return CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, path: $0.path, name: nil, appData: appData, priority: false, isFile: true, type: .upload)
+                            return CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, localFileURL: $0, name: nil, appData: appData, priority: false, isFile: true, type: .upload)
                         } as [CancellableTransfer]
                         CancellableTransferRouter.init(presenter: presenter, transfers: transfers, transferType: .upload).start()
                     }
@@ -114,7 +114,7 @@ final class FileUploadingRouter {
                                 guard let presenter = self?.navigationController else {
                                     return
                                 }
-                                CancellableTransferRouter.init(presenter: presenter, transfers: [CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, path: filePath, name: nil, appData: appData, priority: false, isFile: true, type: .upload)], transferType: .upload).start()
+                                CancellableTransferRouter.init(presenter: presenter, transfers: [CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, localFileURL: URL(fileURLWithPath: filePath), name: nil, appData: appData, priority: false, isFile: true, type: .upload)], transferType: .upload).start()
                             }
                         }
                     }

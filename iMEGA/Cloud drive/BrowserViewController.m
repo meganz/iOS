@@ -544,7 +544,7 @@
 - (CancellableTransfer *)transferToUpload {
     NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
 
-    return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil path:self.localpath name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
+    return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:self.localpath] name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
 }
 #endif
 

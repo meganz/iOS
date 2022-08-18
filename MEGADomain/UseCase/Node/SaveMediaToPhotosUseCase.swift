@@ -20,9 +20,9 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
     }
     
     func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        let tempUrl = fileCacheRepository.cachedFileURL(for: node.base64Handle, name: node.name)
+        let tempUrl = fileCacheRepository.tempFileURL(for: node)
        
-        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl.path, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -33,14 +33,14 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
     }
     
     func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        guard let base64Handle = nodeRepository.base64ForChatNode(handle: handle, messageId: messageId, chatId: chatId), let name = nodeRepository.nameForChatNode(handle: handle, messageId: messageId, chatId: chatId) else {
+        guard let node = nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
             completion(.failure(.nodeNotFound))
             return
         }
 
-        let tempUrl = fileCacheRepository.cachedFileURL(for: base64Handle, name: name)
-        
-        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl.path, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
+        let tempUrl = fileCacheRepository.tempFileURL(for: node)
+
+        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -55,7 +55,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         nodeRepository.nodeFor(fileLink: fileLink) { result in
             switch result {
             case .success(let node):
-                downloadFileRepository.downloadFileLink(fileLink, named: node.name, toUrl: fileCacheRepository.tempURL(for: node.base64Handle), transferMetaData: transferMetaData, startFirst: true, cancelToken: nil, start: nil, update: nil) { result in
+                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), transferMetaData: transferMetaData, startFirst: true, cancelToken: nil, start: nil, update: nil) { result in
                     switch result {
                     case .success(_):
                         completion(.success)

@@ -29,42 +29,41 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
     
     func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         
-        let nodeName = nodeRepository.nameForNode(handle: handle)
+        guard let node = nodeRepository.nodeForHandle(handle) else {
+            completion?(.failure(.couldNotFindNodeByHandle))
+            return
+        }
         
-        if !shouldDownloadToGallery(name: nodeName) {
-            if nodeRepository.isFileNode(handle: handle) {
-                if let base64Handle = nodeRepository.base64ForNode(handle: handle) {
-                    guard offlineFilesRepository.offlineFile(for: base64Handle) == nil else {
-                        completion?(.failure(.alreadyDownloaded))
+        if !shouldDownloadToGallery(name: node.name) {
+            if node.isFile {
+                guard offlineFilesRepository.offlineFile(for: node.base64Handle) == nil else {
+                    completion?(.failure(.alreadyDownloaded))
+                    return
+                }
+                
+                let tempUrl = tempURL(for: node)
+                if fileSystemRepository.fileExists(at: tempUrl) {
+                    let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
+                    if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl, name: node.name) {
+                        offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
+                        completion?(.failure(.copiedFromTempFolder))
                         return
-                    }
-                    if let name = nodeName {
-                        let tempUrl = tempUrlFor(base64Handle: base64Handle, name: name)
-                        
-                        if fileSystemRepository.fileExists(at: tempUrl) {
-                            let offlineUrl = fileCacheRepository.offlineFileURL(name: name)
-                            if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl, name: name) {
-                                offlineFilesRepository.createOfflineFile(name: name, for: handle)
-                                completion?(.failure(.copiedFromTempFolder))
-                                return
-                            }
-                        }
                     }
                 }
             } else {
-                guard (nodeName != "Inbox") else {
+                guard (node.name != "Inbox") else {
                     completion?(.failure(.inboxFolderNameNotAllowed))
                     return
                 }
             }
         }
         
-        guard let nodeSize = nodeRepository.sizeForNode(handle: handle), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
+        guard fileSystemRepository.systemVolumeAvailability() > node.size else {
             completion?(.failure(.notEnoughSpace))
             return
         }
 
-        downloadFileRepository.downloadFile(forNodeHandle: handle, toUrl: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: cancelToken, start: start, update: update) { result in
+        downloadFileRepository.downloadFile(forNodeHandle: handle, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: cancelToken, start: start, update: update) { result in
             switch result {
             case .success(let transferEntity):
                 completion?(.success(transferEntity))
@@ -76,35 +75,34 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
     
     func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         
-        let nodeName = nodeRepository.nameForChatNode(handle: handle, messageId: messageId, chatId: chatId)
-        
-        if !shouldDownloadToGallery(name: nodeName) {
-            if let base64Handle = nodeRepository.base64ForChatNode(handle: handle, messageId: messageId, chatId: chatId)  {
-                guard offlineFilesRepository.offlineFile(for: base64Handle) == nil else {
-                    completion?(.failure(.alreadyDownloaded))
-                    return
-                }
+        guard let node = nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
+            completion?(.failure(.couldNotFindNodeByHandle))
+            return
+        }
                 
-                if let name = nodeName {
-                    let tempUrl = tempUrlFor(base64Handle: base64Handle, name: name)
-                    if fileSystemRepository.fileExists(at: tempUrl) {
-                        let offlineUrl = fileCacheRepository.offlineFileURL(name: name)
-                        if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl, name: name) {
-                            offlineFilesRepository.createOfflineFile(name: name, for: handle)
-                            completion?(.failure(.copiedFromTempFolder))
-                            return
-                        }
-                    }
+        if !shouldDownloadToGallery(name: node.name) {
+            guard offlineFilesRepository.offlineFile(for: node.base64Handle) == nil else {
+                completion?(.failure(.alreadyDownloaded))
+                return
+            }
+            
+            let tempUrl = tempURL(for: node)
+            if fileSystemRepository.fileExists(at: tempUrl) {
+                let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
+                if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl, name: node.name) {
+                    offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
+                    completion?(.failure(.copiedFromTempFolder))
+                    return
                 }
             }
         }
         
-        guard let nodeSize = nodeRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
+        guard fileSystemRepository.systemVolumeAvailability() > node.size else {
             completion?(.failure(.notEnoughSpace))
             return
         }
 
-        downloadFileRepository.downloadChatFile(forNodeHandle: handle, messageId: messageId, chatId: chatId, toUrl: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: cancelToken, start: start, update: update) { result in
+        downloadFileRepository.downloadChatFile(forNodeHandle: handle, messageId: messageId, chatId: chatId, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: cancelToken, start: start, update: update) { result in
             switch result {
             case .success(let transferEntity):
                 completion?(.success(transferEntity))
@@ -115,7 +113,7 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
     }
 
     func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, cancelToken: MEGACancelToken?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        downloadFileRepository.downloadToTempFolder(nodeHandle: nodeHandle, appData: appData, cancelToken: cancelToken, progress: update, completion: completion)
+        downloadFileRepository.downloadTo(fileCacheRepository.tempFolder, nodeHandle: nodeHandle, appData: appData, cancelToken: cancelToken, progress: update, completion: completion)
     }
     
     func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -126,7 +124,7 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
                     completion(.failure(.notEnoughSpace))
                     return
                 }
-                downloadFileRepository.downloadFileLink(fileLink, named: node.name, toUrl: fileSystemRepository.documentsDirectory(), transferMetaData: transferMetaData, startFirst: true, cancelToken: nil, start: start, update: update, completion: completion)
+                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileSystemRepository.documentsDirectory(), transferMetaData: transferMetaData, startFirst: true, cancelToken: nil, start: start, update: update, completion: completion)
             case .failure(_):
                 completion(.failure(.couldNotFindNodeByLink))
             }
@@ -134,8 +132,8 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
     }
     
     //MARK: - Private
-    private func tempUrlFor(base64Handle: String, name: String) -> URL {
-        name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalURL(for: base64Handle, name: name) : fileCacheRepository.cachedFileURL(for: base64Handle, name: name)
+    private func tempURL(for node: NodeEntity) -> URL {
+        node.name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalURL(for: node.base64Handle, name: node.name) : fileCacheRepository.tempFileURL(for: node)
     }
     
     private func shouldDownloadToGallery(name: String?) -> Bool {
