@@ -34,7 +34,7 @@ final class HomeViewController: UIViewController {
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
     
-    var featureFlagViewModel: FeatureFlagViewModel?
+    private var featureFlagProvider = FeatureFlagProvider()
     
     // MARK: - Router
 
@@ -102,10 +102,6 @@ final class HomeViewController: UIViewController {
         setupView()
         refreshView(with: traitCollection)
         setupViewModelEventListening()
-        
-#if QA_CONFIG
-        setupFeatureFlag()
-#endif
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -498,7 +494,7 @@ extension HomeViewController: ExploreViewStackDelegate {
 
         switch card {
         case .images:
-            guard isRemoveHomeImageFeatureFlagEnabled() else {
+            guard isRemoveHomeImageFeatureFlagEnabled else {
                 router.photosExplorerSelected()
                 return
             }
@@ -738,20 +734,14 @@ extension HomeViewController: AudioPlayerPresenterProtocol {
 
 //MARK: - Feature Flag
 extension HomeViewController {
-    func setupFeatureFlag() {
-        self.featureFlagViewModel = FeatureFlagViewModel()
-        applyRemoveHomeImageFeatureFlag()
-    }
-    
     func applyRemoveHomeImageFeatureFlag() {
         guard let slidePanelView = slidePanelView,
                 let exploreView = exploreView else { return }
-        slidePanelView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled()
-        exploreView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled()
+        slidePanelView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled
+        exploreView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled
     }
 
-    func isRemoveHomeImageFeatureFlagEnabled() -> Bool {
-        guard let viewModel = featureFlagViewModel else { return false }
-        return viewModel.isFeatureFlagEnabled(for: .removeHomeImage)
+    var isRemoveHomeImageFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .removeHomeImage)
     }
 }

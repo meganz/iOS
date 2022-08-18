@@ -48,7 +48,7 @@ extension FeatureFlagViewModel {
     }
     
     /// Saves new feature flags on data store defined on `featureFlagList`
-    private func saveNewFeatureFlags() {
+    func saveNewFeatureFlags() {
         let savedFeatureFlags = Set(useCase.savedFeatureFlags())
         let featureList = Set(featureFlagList)
         let newFeatures = featureList.subtracting(savedFeatureFlags)
@@ -59,7 +59,7 @@ extension FeatureFlagViewModel {
     }
     
     /// Removes feature flags on data store that are not defined on the `featureFlagList`
-    private func cleanSavedFeatureFlags() {
+    func cleanSavedFeatureFlags() {
         let savedFeatureFlags = Set(useCase.savedFeatureFlags())
         let featureList = Set(featureFlagList)
         let nonExistingFeatureFlags = savedFeatureFlags.subtracting(featureList)
@@ -73,12 +73,5 @@ extension FeatureFlagViewModel {
     /// - Parameter featureFlag: `FeatureFlagEntity` values to be saved
     func saveFeatureFlag(featureFlag: FeatureFlagEntity) {
         useCase.configFeatureFlag(key: featureFlag.name, isEnabled: featureFlag.isEnabled)
-    }
-    
-    /// Gets the latest feature flag value from data store
-    /// - Parameter featureFlag: `FeatureFlagEntity` to be searched on data store
-    /// - Returns: It returns the feature flag boolean value from data store
-    func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
-        useCase.isFeatureFlagEnabled(for: key.rawValue)
     }
 }
