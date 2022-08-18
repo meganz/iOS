@@ -1710,7 +1710,6 @@
 		B66BA25C25155EA2009787BD /* MockCheckSMSUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BA25B25155EA2009787BD /* MockCheckSMSUseCase.swift */; };
 		B66BA26325155FC3009787BD /* MockAuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BA26225155FC3009787BD /* MockAuthUseCase.swift */; };
 		B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */ = {isa = PBXBuildFile; productRef = B66BC70728A0F9CB00D4CB04 /* MEGADomainMock */; };
-		B66E80702759FF5F00502601 /* FeatureToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E806F2759FF5F00502601 /* FeatureToggle.swift */; };
 		B66E8074275A0C3000502601 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E8073275A0C3000502601 /* PhotoCell.swift */; };
 		B66E8076275A0C4200502601 /* PhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */; };
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
@@ -4089,7 +4088,6 @@
 		B66BA25425155E78009787BD /* MockGetSMSUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetSMSUseCase.swift; sourceTree = "<group>"; };
 		B66BA25B25155EA2009787BD /* MockCheckSMSUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCheckSMSUseCase.swift; sourceTree = "<group>"; };
 		B66BA26225155FC3009787BD /* MockAuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthUseCase.swift; sourceTree = "<group>"; };
-		B66E806F2759FF5F00502601 /* FeatureToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureToggle.swift; sourceTree = "<group>"; };
 		B66E8073275A0C3000502601 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellViewModel.swift; sourceTree = "<group>"; };
 		B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Utils.h"; sourceTree = "<group>"; };
@@ -6009,7 +6007,6 @@
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
 				C4E78E99272B4F5100DBF926 /* NodeAccess */,
-				B66E806F2759FF5F00502601 /* FeatureToggle.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -12137,7 +12134,6 @@
 				BFAC87972600041C009CA3F6 /* CaptureDeviceRepository.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
 				83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */,
-				B66E80702759FF5F00502601 /* FeatureToggle.swift in Sources */,
 				BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */,
 				BFAB114323CEA5C300BCE72D /* PhotoSelectedMarkerView.swift in Sources */,
 				BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */,
