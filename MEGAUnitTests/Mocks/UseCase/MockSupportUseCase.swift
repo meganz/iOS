@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+@testable import MEGADomain
 
 struct MockSupportUseCase: SupportUseCaseProtocol {
     var createSupportTicket = Future<Void, CreateSupportTicketErrorEntity> { promise in

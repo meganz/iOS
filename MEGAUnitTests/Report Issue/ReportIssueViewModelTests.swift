@@ -1,6 +1,7 @@
 import XCTest
 import Combine
 @testable import MEGA
+@testable import MEGADomain
 
 @available(iOS 14.0, *)
 final class ReportIssueViewModelTests: XCTestCase {
