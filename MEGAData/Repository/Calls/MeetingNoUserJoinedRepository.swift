@@ -2,9 +2,7 @@ import Combine
 import MEGADomain
 
 final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
-    static var newRepo: MeetingNoUserJoinedRepository {
-        MeetingNoUserJoinedRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())
-    }
+    static var sharedRepo = MeetingNoUserJoinedRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())
     
     private var subscription: AnyCancellable?
         
