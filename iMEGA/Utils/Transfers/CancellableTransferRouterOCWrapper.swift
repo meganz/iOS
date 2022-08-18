@@ -10,15 +10,15 @@ import MEGADomain
     }
     
     @objc func uploadFiles(_ transfers: [CancellableTransfer], presenter: UIViewController, type: CancellableTransferType) {
-        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: URL(fileURLWithPath: $0.path).lastPathComponent, isFile: $0.isFile, fileUrl: URL(fileURLWithPath: $0.path))}
+        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: $0.localFileURL?.lastPathComponent ?? "", isFile: $0.isFile, fileUrl: $0.localFileURL) }
         NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
     }
     
     private func transferViewEntities(fromNodes nodes: [MEGANode]) -> [CancellableTransfer] {
-        nodes.map { CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
     }
     
     private func chatTransferViewEntities(fromNodes nodes: [MEGANode], messageId: HandleEntity, chatId: HandleEntity) -> [CancellableTransfer] {
-        nodes.map { CancellableTransfer(handle: $0.handle, messageId: messageId, chatId: chatId, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .downloadChat) }
+        nodes.map { CancellableTransfer(handle: $0.handle, messageId: messageId, chatId: chatId, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .downloadChat) }
     }
 }

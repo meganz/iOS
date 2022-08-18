@@ -85,7 +85,7 @@ final class NameCollisionViewModel: ObservableObject {
         
         switch collisionType {
         case .upload:
-            guard var transfers = transfers, let transfer = transfers.first(where: { $0.path == collision.fileUrl?.path }) else {
+            guard var transfers = transfers, let transfer = transfers.first(where: { $0.localFileURL == collision.fileUrl }) else {
                 return
             }
             switch action {

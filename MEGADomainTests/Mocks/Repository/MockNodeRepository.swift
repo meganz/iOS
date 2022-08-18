@@ -95,6 +95,10 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         base64Handle
     }
     
+    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
+        node
+    }
+
     func isFileNode(handle: HandleEntity) -> Bool {
         isFile
     }

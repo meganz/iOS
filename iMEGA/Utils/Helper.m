@@ -224,17 +224,6 @@
     return pathString;
 }
 
-+ (NSString *)relativePathForOffline {
-    static NSString *pathString = nil;
-    
-    if (pathString == nil) {
-        pathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-        pathString = [pathString lastPathComponent];
-    }
-    
-    return pathString;
-}
-
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath {
     NSRange rangeOfSubstring = [totalPath rangeOfString:[Helper pathForOffline]];
     NSString *relativePath = [totalPath substringFromIndex:rangeOfSubstring.length];

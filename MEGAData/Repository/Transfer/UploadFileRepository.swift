@@ -13,7 +13,7 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
         return nodeList.mnz_existsFile(withName: name)
     }
     
-    func uploadFile(withLocalPath path: String, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         guard let parentNode = sdk.node(forHandle: parent) else {
             completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
             return
@@ -27,14 +27,14 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
             if let update = update {
                 transferDelegate.progress = update
             }
-            sdk.startUpload(withLocalPath: path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
+            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
         } else {
-            sdk.startUpload(withLocalPath: path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken)
+            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken)
         }
     }
     
-    func uploadSupportFile(atPath path: String, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        sdk.startUploadForSupport(withLocalPath: path, isSourceTemporary: true, delegate: TransferDelegate(start: start, progress: progress, completion: completion))
+    func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+        sdk.startUploadForSupport(withLocalPath: url.path, isSourceTemporary: true, delegate: TransferDelegate(start: start, progress: progress, completion: completion))
     }
     
     func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void) {

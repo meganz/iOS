@@ -128,7 +128,7 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
-        chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size?.uint64Value
+        chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size
     }
     
     func base64ForNode(handle: HandleEntity) -> String? {
@@ -143,12 +143,12 @@ struct NodeRepository: NodeRepositoryProtocol {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.base64Handle
     }
     
-    private func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> MEGANode? {
+    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
         guard let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle else {
             return nil
         }
         
-        return node
+        return node.toNodeEntity()
     }
     
     func isFileNode(handle: HandleEntity) -> Bool {

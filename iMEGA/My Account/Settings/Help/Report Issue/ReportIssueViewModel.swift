@@ -48,11 +48,11 @@ final class ReportIssueViewModel: ObservableObject {
     }
     
     private func uploadLogFileIfNeeded() {
-        guard let path = sourceUrl?.path else {
+        guard let url = sourceUrl else {
             createTicketForSupport()
             return
         }
-        uploadFileUseCase.uploadSupportFile(atPath: path) { [weak self] (transferEntity) in
+        uploadFileUseCase.uploadSupportFile(url) { [weak self] (transferEntity) in
             DispatchQueue.main.async {
                 self?.transfer = transferEntity
                 self?.isUploadingLog = true

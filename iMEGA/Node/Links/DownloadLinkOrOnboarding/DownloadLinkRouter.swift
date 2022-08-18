@@ -48,13 +48,13 @@ final class DownloadLinkRouter: DownloadLinkRouterProtocol {
     func downloadFileLink() {
         guard let presenter = presenter else { return }
 
-        let transferViewEntity = CancellableTransfer(fileLinkURL: link, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: true, type: .downloadFileLink)
+        let transferViewEntity = CancellableTransfer(fileLinkURL: link, name: nil, appData: nil, priority: false, isFile: true, type: .downloadFileLink)
         CancellableTransferRouter(presenter: presenter, transfers: [transferViewEntity], transferType: .downloadFileLink).start()
     }
     
     func downloadFolderLinkNodes() {
         guard let presenter = presenter, let nodes = nodes else { return }
-        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile, type: .download) }
+        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile, type: .download) }
         CancellableTransferRouter(presenter: presenter, transfers: transfers, transferType: .download, isFolderLink: true).start()
     }
 
