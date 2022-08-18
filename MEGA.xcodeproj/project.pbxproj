@@ -1304,7 +1304,6 @@
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */; };
-		9D705825289EBB9E008B9A27 /* PhotosViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D705824289EBB9E008B9A27 /* PhotosViewController+Addition.swift */; };
 		9DD1BB2A28A91A8D00EEF24D /* FeedbackEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1BB2928A91A8D00EEF24D /* FeedbackEntity.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
@@ -3725,7 +3724,6 @@
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		94E71806283D24D3000EDDDF /* ChatStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStatus.swift; sourceTree = "<group>"; };
 		94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
-		9D705824289EBB9E008B9A27 /* PhotosViewController+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Addition.swift"; sourceTree = "<group>"; };
 		9DD1BB2928A91A8D00EEF24D /* FeedbackEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackEntity.swift; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
@@ -6095,7 +6093,6 @@
 				B658D3BE218F93D4004C0D64 /* DataModels */,
 				B658D3BD218F939C004C0D64 /* UploadOperations */,
 				B658D3BC218F9384004C0D64 /* TransferSession */,
-				9D705824289EBB9E008B9A27 /* PhotosViewController+Addition.swift */,
 			);
 			path = "Camera uploads";
 			sourceTree = "<group>";
@@ -12783,7 +12780,6 @@
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				A882F52427E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift in Sources */,
-				9D705825289EBB9E008B9A27 /* PhotosViewController+Addition.swift in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
