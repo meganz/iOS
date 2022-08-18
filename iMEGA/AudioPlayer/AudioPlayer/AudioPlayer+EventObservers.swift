@@ -139,12 +139,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
         
         switch type {
         case .began:
-            guard !isAudioPlayerInterrupted, !isPaused else {
-                if isPaused && !isAudioPlayerInterrupted {
-                    disableRemoteCommands()
-                }
-                return
-            }
+            guard !isAudioPlayerInterrupted else { return }
             
             if let isAudioSessionSuspended = userInfo[AVAudioSessionInterruptionWasSuspendedKey] as? Bool, isAudioSessionSuspended {
                 MEGALogDebug("[AudioPlayer] The Audio Session was deactivated by the system")
@@ -152,27 +147,26 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
-            isAudioPlayerInterrupted = true
-            pause()
             
-            setAudioSession(active: false)
+            setAudioPlayer(interrupted: true)
             
-            disableRemoteCommands()
+            if !isPaused {
+                disableRemoteCommands()
+                pause()
+            }
             
         case .ended:
             guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
             
-            setAudioSession(active: true)
-            
-            isAudioPlayerInterrupted = false
             enableRemoteCommands()
+            setAudioPlayer(interrupted: false)
+            
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
                 resetAudioSessionCategoryIfNeeded()
                 play()
             }
-            
         default: break
         }
         
