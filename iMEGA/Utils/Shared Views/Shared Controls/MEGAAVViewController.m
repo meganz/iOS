@@ -139,10 +139,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                   object:nil];
     
     [self stopStreaming];
-    
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
-    }
         
     if (![AudioPlayerManager.shared isPlayerAlive]) {
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
@@ -155,6 +151,10 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                      withAnimation:YES
                                                         withLogout:YES
                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
+    }
+    
+    if ([AudioPlayerManager.shared isPlayerAlive]) {
+        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
     }
 }
 

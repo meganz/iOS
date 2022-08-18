@@ -46,7 +46,7 @@ extension AudioPlayer {
 
 extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     @objc func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        guard event.command.isEnabled, let player = queuePlayer else { return .commandFailed }
+        guard event.command.isEnabled, let player = queuePlayer, !isAudioPlayerInterrupted else { return .commandFailed }
         if player.rate == 0.0 {
             play()
             return .success
@@ -56,7 +56,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     }
     
     @objc func audioPlayer(didReceivePauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        guard event.command.isEnabled, let player = queuePlayer else { return .commandFailed }
+        guard event.command.isEnabled, let player = queuePlayer, !isAudioPlayerInterrupted else { return .commandFailed }
         
         if player.rate == 1.0 {
             pause()
@@ -67,7 +67,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     }
     
     @objc func audioPlayer(didReceiveNextTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        guard event.command.isEnabled, queuePlayer != nil else { return .commandFailed }
+        guard event.command.isEnabled, queuePlayer != nil, !isAudioPlayerInterrupted else { return .commandFailed }
         
         if isRepeatOneMode() {
             repeatAll(true)
@@ -84,7 +84,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     }
     
     @objc func audioPlayer(didReceivePreviousTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        guard event.command.isEnabled, queuePlayer != nil else { return .commandFailed }
+        guard event.command.isEnabled, queuePlayer != nil, !isAudioPlayerInterrupted else { return .commandFailed }
         
         disableRemoteCommands()
         playPrevious() { [weak self] in
@@ -96,7 +96,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     }
     
     @objc func audioPlayer(didReceiveTogglePlayPauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        guard event.command.isEnabled, let player = queuePlayer else { return .commandFailed }
+        guard event.command.isEnabled, let player = queuePlayer, !isAudioPlayerInterrupted else { return .commandFailed }
         
         if isPlaying {
             if player.rate == 1.0 {
@@ -114,7 +114,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     }
     
     @objc func audioPlayer(didReceiveChangePlaybackPositionCommand event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        guard event.command.isEnabled else { return .commandFailed }
+        guard event.command.isEnabled, !isAudioPlayerInterrupted else { return .commandFailed }
         setProgressCompleted(event.positionTime)
         return .success
     }
@@ -126,6 +126,12 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
         MPRemoteCommandCenter.shared().previousTrackCommand.isEnabled = enabled
         MPRemoteCommandCenter.shared().togglePlayPauseCommand.isEnabled = enabled
         MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = enabled
+        
+        if enabled {
+            registerRemoteControls()
+        } else {
+            unregisterRemoteControls()
+        }
     }
     
     func enableRemoteCommands() {

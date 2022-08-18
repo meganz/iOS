@@ -152,6 +152,8 @@
         [self.provider reportCallWithUUID:call.uuid endedAtDate:nil reason:callEndedReason];
     }
     [self.megaCallManager removeCallByUUID:call.uuid];
+    
+    [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
 }
 
 #pragma mark - Private

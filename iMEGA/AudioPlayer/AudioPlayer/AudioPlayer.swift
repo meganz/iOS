@@ -230,6 +230,10 @@ final class AudioPlayer: NSObject {
         }
     }
     
+    func setAudioPlayer(interrupted: Bool) {
+        isAudioPlayerInterrupted = interrupted
+    }
+    
     func resetAudioSessionCategoryIfNeeded() {
         if AVAudioSession.sharedInstance().category != .playback {
             do {
