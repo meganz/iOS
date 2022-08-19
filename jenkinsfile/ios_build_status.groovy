@@ -105,7 +105,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Run unit test') {
                     injectEnvironments({
-                        sh "bundle exec fastlane tests"
+                        sh "arch -x86_64 bundle exec fastlane tests"
                     })
                 }
             }
