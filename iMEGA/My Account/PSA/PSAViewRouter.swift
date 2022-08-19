@@ -2,7 +2,6 @@
 protocol PSAViewRouting: Routing {
     func currentPSAView() -> PSAView?
     func isPSAViewAlreadyShown() -> Bool
-    func adjustPSAViewFrame()
     func hidePSAView(_ hide: Bool)
     func openPSAURLString(_ urlString: String)
     func dismiss(psaView: PSAView)
@@ -28,9 +27,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         psaView.translatesAutoresizingMaskIntoConstraints = false
         psaView.leadingAnchor.constraint(equalTo: tabBarController.view.leadingAnchor).isActive = true
         psaView.trailingAnchor.constraint(equalTo: tabBarController.view.trailingAnchor).isActive = true
-        let tabbarHeight = tabBarController.tabBar.bounds.height
-        self.psaViewBottomConstraint = tabBarController.view.bottomAnchor.constraint(equalTo: psaView.bottomAnchor, constant: tabbarHeight)
-        self.psaViewBottomConstraint?.isActive = true
+        psaView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor).isActive = true
         
         self.hidePSAView(false)
     }
@@ -45,15 +42,6 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     
     func isPSAViewAlreadyShown() -> Bool {
         return currentPSAView() != nil
-    }
-    
-    func adjustPSAViewFrame() {
-        guard let tabBar = tabBarController?.tabBar else { return }
-        let constant: CGFloat = -tabBar.bounds.height
-        guard psaViewBottomConstraint?.constant != constant else { return }
-        
-        psaViewBottomConstraint?.constant = constant
-        currentPSAView()?.layoutIfNeeded()
     }
     
     func hidePSAView(_ hide: Bool) {
