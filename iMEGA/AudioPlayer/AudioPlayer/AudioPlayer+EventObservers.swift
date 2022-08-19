@@ -148,7 +148,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionBegan")
             
-            setAudioPlayer(interrupted: true)
+            setAudioPlayer(interrupted: true, needToBeResumed: !isPaused)
             
             if !isPaused {
                 disableRemoteCommands()
@@ -161,12 +161,12 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
             
             enableRemoteCommands()
-            setAudioPlayer(interrupted: false)
             
-            if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) {
+            if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) && needToBeResumedAfterInterruption {
                 resetAudioSessionCategoryIfNeeded()
                 play()
             }
+            setAudioPlayer(interrupted: false, needToBeResumed: false)
         default: break
         }
         
