@@ -1,6 +1,7 @@
 
 import XCTest
-@testable import MEGA
+import MEGADomain
+import MEGADomainMock
 
 final class NetworkMonitorUseCaseTests: XCTestCase {
 
