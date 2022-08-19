@@ -80,15 +80,6 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertTrue(router.didOpenPSAURLString)
     }
     
-    func testAction_adjustPSAViewFrameScenario() {
-        let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
-        let router = MockPSAViewRouter()
-        let viewModel = PSAViewModel(router: router, useCase: useCase, preferenceUseCase: MockPreferenceUseCase())
-
-        test(viewModel: viewModel, action: .adjustPSAFrameIfNeeded, expectedCommands: [])
-        XCTAssertTrue(router.didAdjustPSAViewFrame)
-    }
-    
     func testAction_hidePSAViewScenario() {
         let useCase = PSAUseCase(repo: MockPSARepository(psaResult: .success(mocURLPSAEntity())))
         let router = MockPSAViewRouter()
@@ -134,9 +125,9 @@ final class PSAViewModelTests: XCTestCase {
 
 
 final class MockPSAViewRouter: PSAViewRouting {
+    
     var psaViewShown = false
     var didOpenPSAURLString = false
-    var didAdjustPSAViewFrame = false
     
     func start() {
         psaViewShown = true
@@ -148,10 +139,6 @@ final class MockPSAViewRouter: PSAViewRouting {
     
     func isPSAViewAlreadyShown() -> Bool {
         return psaViewShown
-    }
-    
-    func adjustPSAViewFrame() {
-        didAdjustPSAViewFrame = true
     }
     
     func hidePSAView(_ hide: Bool) {

@@ -16,8 +16,4 @@ extension MainTabBarController {
     @objc func hidePSAView(_ hide: Bool, psaViewModel: PSAViewModel) {
         psaViewModel.dispatch(.setPSAViewHidden(hide))
     }
-    
-    @objc func adjustPSAFrameIfNeeded(psaViewModel: PSAViewModel) {
-        psaViewModel.dispatch(.adjustPSAFrameIfNeeded)
-    }
 }

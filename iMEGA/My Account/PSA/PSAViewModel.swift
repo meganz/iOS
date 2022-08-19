@@ -3,7 +3,6 @@ import MEGADomain
 enum PSAViewAction: ActionType {
     case showPSAViewIfNeeded
     case setPSAViewHidden(_ hide: Bool)
-    case adjustPSAFrameIfNeeded
     case onViewReady
     case openPSAURLString(_ urlString: String)
     case dimiss(psaView: PSAView, psaEntity: PSAEntity)
@@ -46,8 +45,6 @@ final class PSAViewModel: NSObject, ViewModelType {
             }
         case .setPSAViewHidden(let hide):
             router.hidePSAView(hide)
-        case .adjustPSAFrameIfNeeded:
-            router.adjustPSAViewFrame()
         case .onViewReady:
             invokeConfigViewCommandIfNeeded()
         case .openPSAURLString(let urlString):
