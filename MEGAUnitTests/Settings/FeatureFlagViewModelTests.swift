@@ -8,7 +8,7 @@ class FeatureFlagViewModelTests: XCTestCase {
 
     //MARK: Save New Feature Flags
     func testSaveNewFeatureFlags_oneNew() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false]
+        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false)]
         let featureListWithNewFeature = [FeatureFlagEntity(name: "Feature1", isEnabled: false),
                                          FeatureFlagEntity(name: "Feature2", isEnabled: false)]
         
@@ -19,11 +19,11 @@ class FeatureFlagViewModelTests: XCTestCase {
         sut.featureFlagList = featureListWithNewFeature
         sut.saveNewFeatureFlags()
         
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, featureListWithNewFeature.count)
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set(featureListWithNewFeature))
     }
     
     func testSaveNewFeatureFlags_multipleNew() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false]
+        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false)]
         let featureListWithNewFeature = [FeatureFlagEntity(name: "Feature1", isEnabled: false),
                                          FeatureFlagEntity(name: "Feature2", isEnabled: false),
                                          FeatureFlagEntity(name: "Feature3", isEnabled: false),
@@ -36,11 +36,11 @@ class FeatureFlagViewModelTests: XCTestCase {
         sut.featureFlagList = featureListWithNewFeature
         sut.saveNewFeatureFlags()
 
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, featureListWithNewFeature.count)
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set(featureListWithNewFeature))
     }
     
     func testSaveNewFeatureFlags_multipleNew_withNewValue() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false]
+        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false)]
         let featureListWithNewFeature = [FeatureFlagEntity(name: "Feature1", isEnabled: true),
                                          FeatureFlagEntity(name: "Feature2", isEnabled: false),
                                          FeatureFlagEntity(name: "Feature3", isEnabled: false)]
@@ -52,37 +52,39 @@ class FeatureFlagViewModelTests: XCTestCase {
         sut.featureFlagList = featureListWithNewFeature
         sut.saveNewFeatureFlags()
 
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, featureListWithNewFeature.count)
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList.map(\.name)), Set(featureListWithNewFeature.map(\.name)))
     }
     
     func testSaveFeatureFlag_addNewFeatureFlag() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false]
-
+        let savedFeature = FeatureFlagEntity(name: "Feature1", isEnabled: false)
+        let newFeature = FeatureFlagEntity(name: "Feature2", isEnabled: true)
+        
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.savedFeatureList = [savedFeature]
 
-        sut.saveFeatureFlag(featureFlag: FeatureFlagEntity(name: "Feature2", isEnabled: true))
+        sut.saveFeatureFlag(featureFlag: newFeature)
 
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, 2)
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set([savedFeature, newFeature]))
     }
     
     func testSaveFeatureFlag_existingFeatureFlag_updateIsEnabled() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false]
-
+        let existingFeature = FeatureFlagEntity(name: "Feature1", isEnabled: false)
+        let updatedExistingFeature = FeatureFlagEntity(name: "Feature1", isEnabled: true)
+        
         let mockUseCase = MockFeatureFlagUseCase()
         let sut = FeatureFlagViewModel(useCase: mockUseCase)
-        mockUseCase.savedFeatureList = savedFeatureFlagList
+        mockUseCase.savedFeatureList = [existingFeature]
 
         sut.saveFeatureFlag(featureFlag: FeatureFlagEntity(name: "Feature1", isEnabled: true))
 
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, 1)
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set([updatedExistingFeature]))
     }
     
     //MARK: Remove Old Feature Flags
     func testCleanSavedFeatureFlags_oneOld() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false,
-                                    FeatureFlagEntity(name: "Feature2", isEnabled: false): false]
+        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false),
+                                    FeatureFlagEntity(name: "Feature2", isEnabled: false)]
         let featureListWithRemovedFeature = [FeatureFlagEntity(name: "Feature1", isEnabled: false)]
 
         let mockUseCase = MockFeatureFlagUseCase()
@@ -92,14 +94,14 @@ class FeatureFlagViewModelTests: XCTestCase {
         sut.featureFlagList = featureListWithRemovedFeature
         sut.cleanSavedFeatureFlags()
         
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, featureListWithRemovedFeature.count)
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set(featureListWithRemovedFeature))
     }
 
     func testCleanSavedFeatureFlags_multipleOld() {
-        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false): false,
-                                    FeatureFlagEntity(name: "Feature2", isEnabled: false): false,
-                                    FeatureFlagEntity(name: "Feature3", isEnabled: false): false,
-                                    FeatureFlagEntity(name: "Feature4", isEnabled: false): false]
+        let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false),
+                                    FeatureFlagEntity(name: "Feature2", isEnabled: false),
+                                    FeatureFlagEntity(name: "Feature3", isEnabled: false),
+                                    FeatureFlagEntity(name: "Feature4", isEnabled: false)]
         let featureListWithRemovedFeatures = [FeatureFlagEntity(name: "Feature1", isEnabled: false)]
 
         let mockUseCase = MockFeatureFlagUseCase()
@@ -109,6 +111,7 @@ class FeatureFlagViewModelTests: XCTestCase {
         sut.featureFlagList = featureListWithRemovedFeatures
         sut.cleanSavedFeatureFlags()
         
-        XCTAssertEqual(mockUseCase.savedFeatureList.count, featureListWithRemovedFeatures.count)
+        
+        XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set(featureListWithRemovedFeatures))
     }
 }

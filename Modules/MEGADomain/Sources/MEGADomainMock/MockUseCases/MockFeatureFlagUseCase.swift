@@ -2,28 +2,32 @@ import MEGADomain
 import Foundation
 
 public final class MockFeatureFlagUseCase: FeatureFlagUseCaseProtocol {
-    public var savedFeatureList: [FeatureFlagEntity: Bool]
+    public var savedFeatureList: [FeatureFlagEntity]
 
-    public init(savedFeatureFlags: [FeatureFlagEntity: Bool] = [:]) {
+    public init(savedFeatureFlags: [FeatureFlagEntity] = []) {
         savedFeatureList = savedFeatureFlags
     }
 
     public func savedFeatureFlags() -> [FeatureFlagEntity] {
-        Array(savedFeatureList.keys)
+        savedFeatureList
     }
-
+    
     public func isFeatureFlagEnabled(for key: FeatureFlagName) -> Bool {
-        let featureFlag = FeatureFlagEntity(name: key, isEnabled: false)
-        return savedFeatureList[featureFlag] ?? false
+        guard let featureFlag = savedFeatureList.first(where: { $0.name == key }) else { return false }
+        return featureFlag.isEnabled
     }
 
     public func configFeatureFlag(key: FeatureFlagName, isEnabled: Bool) {
-        let featureFlag = FeatureFlagEntity(name: key, isEnabled: isEnabled)
-        savedFeatureList[featureFlag] = isEnabled
+        let newFeatureFlag = FeatureFlagEntity(name: key, isEnabled: isEnabled)
+        
+        if let featureFlag = savedFeatureList.first(where: { $0.name == key }) {
+            savedFeatureList.remove(object: featureFlag)
+        }
+        savedFeatureList.append(newFeatureFlag)
     }
 
     public func removeFeatureFlag(key: FeatureFlagName) {
-        let featureFlag = FeatureFlagEntity(name: key, isEnabled: false)
-        savedFeatureList[featureFlag] = nil
+        guard let featureFlag = savedFeatureList.first(where: { $0.name == key }) else { return }
+        savedFeatureList.remove(object: featureFlag)
     }
 }
