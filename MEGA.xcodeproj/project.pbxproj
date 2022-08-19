@@ -1417,13 +1417,8 @@
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
-		A882F51C27E1E6010032DC07 /* NetworkMonitorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882F51B27E1E6010032DC07 /* NetworkMonitorUseCase.swift */; };
 		A882F52127E1E6830032DC07 /* NetworkMonitorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882F52027E1E6830032DC07 /* NetworkMonitorRepository.swift */; };
-		A882F52427E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882F52327E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
-		A889B2EC27E21441002B4E7F /* MockNetworkMonitorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2EA27E213BA002B4E7F /* MockNetworkMonitorUseCase.swift */; };
-		A889B2EF27E21C34002B4E7F /* MockNetworkMonitorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2ED27E21C15002B4E7F /* MockNetworkMonitorRepository.swift */; };
-		A889B2F227E21CE2002B4E7F /* NetworkMonitorUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2F027E21C9A002B4E7F /* NetworkMonitorUseCaseTests.swift */; };
 		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
@@ -3812,13 +3807,8 @@
 		A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeDurationInfo.swift; sourceTree = "<group>"; };
 		A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+Message.swift"; sourceTree = "<group>"; };
 		A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileCompressor.swift; sourceTree = "<group>"; };
-		A882F51B27E1E6010032DC07 /* NetworkMonitorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorUseCase.swift; sourceTree = "<group>"; };
 		A882F52027E1E6830032DC07 /* NetworkMonitorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorRepository.swift; sourceTree = "<group>"; };
-		A882F52327E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorRepositoryProtocol.swift; sourceTree = "<group>"; };
 		A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogFileView.swift; sourceTree = "<group>"; };
-		A889B2EA27E213BA002B4E7F /* MockNetworkMonitorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitorUseCase.swift; sourceTree = "<group>"; };
-		A889B2ED27E21C15002B4E7F /* MockNetworkMonitorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitorRepository.swift; sourceTree = "<group>"; };
-		A889B2F027E21C9A002B4E7F /* NetworkMonitorUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorUseCaseTests.swift; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
 		A88BFFCB1F0A52E90081BCE3 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcurl.a; sourceTree = "<group>"; };
@@ -8886,26 +8876,10 @@
 			path = TurnOnNotifications;
 			sourceTree = "<group>";
 		};
-		A882F51F27E1E6050032DC07 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				A882F51B27E1E6010032DC07 /* NetworkMonitorUseCase.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		A882F52227E1E6990032DC07 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				A882F52027E1E6830032DC07 /* NetworkMonitorRepository.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		A882F52527E1E74A0032DC07 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				A882F52327E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -9518,7 +9492,6 @@
 				B645BC2F252FAF4C00D1D7CF /* Authentication */,
 				B645BC2C252FAF4000D1D7CF /* Account */,
 				32CB490D284EF40B00697BA9 /* Photos */,
-				A882F51F27E1E6050032DC07 /* Network */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -9639,7 +9612,6 @@
 				B645BC35252FAFCC00D1D7CF /* Account */,
 				321AF2E0284F3E3E004FCC1E /* Photos */,
 				A861B57927BE7B8C009C29C2 /* Help */,
-				A882F52527E1E74A0032DC07 /* Network */,
 			);
 			path = RepositoryProtocol;
 			sourceTree = "<group>";
@@ -9779,7 +9751,6 @@
 				A8AAE6B826C2AA38002243C0 /* AppFirstLaunchUseCaseTests.swift */,
 				A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */,
 				A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */,
-				A889B2F027E21C9A002B4E7F /* NetworkMonitorUseCaseTests.swift */,
 				A81F9BAB27E9F74700D47C0D /* CookieSettingsUseCaseTests.swift */,
 				A81BD5CF27EB697B00234902 /* ClearChatHistoryUseCaseTests.swift */,
 				A81BD5D127EB6CEB00234902 /* HistoryRetentionUseCaseTests.swift */,
@@ -10109,7 +10080,6 @@
 				A8AAE6BA26C2AC20002243C0 /* MockCredentialRepository.swift */,
 				A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */,
 				A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */,
-				A889B2ED27E21C15002B4E7F /* MockNetworkMonitorRepository.swift */,
 				A81F9BA727E9F62D00D47C0D /* MockCookieSettingsRepository.swift */,
 				A81BD5CB27EB68C400234902 /* MockManageChatHistoryRepository.swift */,
 				727189822800556800B2DB08 /* MockFeedbackInfoRepository.swift */,
@@ -10141,7 +10111,6 @@
 				B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */,
 				A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */,
 				A8EE47AC27DFB13D00D37685 /* MockSupportUseCase.swift */,
-				A889B2EA27E213BA002B4E7F /* MockNetworkMonitorUseCase.swift */,
 				A81F9BB127EA014B00D47C0D /* MockCookieSettingsUseCase.swift */,
 				A81BD5D327EB702200234902 /* MockClearChatHistoryUseCase.swift */,
 				A81BD5D527EB708000234902 /* MockHistoryRetentionUseCase.swift */,
@@ -12032,7 +12001,6 @@
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
 				B6B278DE24E1E93000BB3E9A /* AchievementUseCase.swift in Sources */,
-				A882F51C27E1E6010032DC07 /* NetworkMonitorUseCase.swift in Sources */,
 				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,
 				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
 				BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
@@ -12779,6 +12747,7 @@
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
+				9D705825289EBB9E008B9A27 /* PhotosViewController+Addition.swift in Sources */,
 				A882F52427E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */,
@@ -13853,7 +13822,6 @@
 				B6A6E1A5287BD8DB00179806 /* MockRequest.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
-				A889B2EC27E21441002B4E7F /* MockNetworkMonitorUseCase.swift in Sources */,
 				B64A71D5287BBAEB0085087D /* MockNode.swift in Sources */,
 				C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */,
 				94482C702829449100C45C48 /* ContextMenuActionsTests.swift in Sources */,
@@ -13875,7 +13843,6 @@
 				6D80C2632880AA6A0065EAD4 /* MockFilesSearchRepository.swift in Sources */,
 				83B5E88227F714510073C870 /* MockFileSystemRepository.swift in Sources */,
 				B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */,
-				A889B2EF27E21C34002B4E7F /* MockNetworkMonitorRepository.swift in Sources */,
 				A8B8E02A273A689400C64E0A /* TransferUseCaseTests.swift in Sources */,
 				B6FD6520268D8EF100988A17 /* NodeEntity+Additions.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
@@ -13928,7 +13895,6 @@
 				B6AADF0B2518BB0E009A874C /* AchievementUseCaseTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				83B5E88027F70DF20073C870 /* DownloadNodeUseCaseTests.swift in Sources */,
-				A889B2F227E21CE2002B4E7F /* NetworkMonitorUseCaseTests.swift in Sources */,
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				A8AAE6B926C2AA38002243C0 /* AppFirstLaunchUseCaseTests.swift in Sources */,
