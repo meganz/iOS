@@ -36,10 +36,11 @@ final class AudioPlayer: NSObject {
         }
     }
     var onClosePlayerCompletion: (() -> Void)?
-    var isAutoPlayEnabled: Bool = true
-    var isAudioPlayerInterrupted: Bool = false
-    var isPaused: Bool = false
-    var isCloseRequested: Bool = false
+    var isAutoPlayEnabled = true
+    var isAudioPlayerInterrupted = false
+    var isPaused = false
+    var isCloseRequested = false
+    var needToBeResumedAfterInterruption = false
     
     //MARK: - Private properties
     private let assetQueue = DispatchQueue(label: "player.queue", qos: .utility)
@@ -230,8 +231,9 @@ final class AudioPlayer: NSObject {
         }
     }
     
-    func setAudioPlayer(interrupted: Bool) {
+    func setAudioPlayer(interrupted: Bool, needToBeResumed: Bool) {
         isAudioPlayerInterrupted = interrupted
+        needToBeResumedAfterInterruption = needToBeResumed
     }
     
     func resetAudioSessionCategoryIfNeeded() {
