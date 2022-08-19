@@ -204,6 +204,7 @@
     self.navigationController.toolbarHidden = true;
     
     [AudioPlayerManager.shared addDelegate:self];
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
