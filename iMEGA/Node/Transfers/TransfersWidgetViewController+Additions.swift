@@ -122,6 +122,11 @@ extension TransfersWidgetViewController {
         }
     }
     
+    @objc
+    func shouldShowTransferCancelledMessage(for transfer: MEGATransfer) -> Bool {
+        !transfer.path.hasPrefix(FileManager.default.temporaryDirectory.path) || transfer.appData != nil
+    }
+    
     //MARK: - NavigationBarButtons
     @objc func updateNavBarButtonAppearance() {
         let barButtons = [navigationItem.rightBarButtonItems,

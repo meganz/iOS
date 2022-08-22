@@ -69,7 +69,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             credentialRepo: CredentialRepository.newRepo
         )
-        let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo)
+        let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,

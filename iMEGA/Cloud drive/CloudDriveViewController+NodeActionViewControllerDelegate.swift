@@ -117,7 +117,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     func download(_ nodes: [MEGANode]) {
-        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
     }
     

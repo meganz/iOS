@@ -1,5 +1,6 @@
 
 import Network
+import MEGADomain
 
 final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     private let monitor: NWPathMonitor

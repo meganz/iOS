@@ -94,7 +94,10 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     //MARK: - Share extension upload
     private func startShareExtensionFileUploads() {
         fileTransfers.forEach { transferViewEntity in
-            uploadFileUseCase.uploadFile(withLocalPath: transferViewEntity.path,
+            guard let uploadLocalURL = transferViewEntity.localFileURL else {
+                return
+            }
+            uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
@@ -118,7 +121,10 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     
     private func startShareExtensionFolderUploads() {
         folderTransfers.forEach { transferViewEntity in
-            uploadFileUseCase.uploadFile(withLocalPath: transferViewEntity.path,
+            guard let uploadLocalURL = transferViewEntity.localFileURL else {
+                return
+            }
+            uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
                                          fileName: nil,
                                          appData: transferViewEntity.appData,

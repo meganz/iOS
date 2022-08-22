@@ -3583,6 +3583,12 @@ public enum Strings {
             return Strings.tr("Localizable", "general.format.retentionPeriod.year", p1)
           }
         }
+        public enum RubbishBin {
+          /// Plural format key: "%#@days@"
+          public static func days(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.rubbishBin.days", p1)
+          }
+        }
       }
       public enum MenuAction {
         /// Delete permanently

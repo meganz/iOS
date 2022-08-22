@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGADomain
 
 struct ActionsView: View {
     var duplicatedItem: DuplicatedItem

@@ -45,6 +45,21 @@
           "containerPath" : "container:MEGA.xcodeproj",
           "identifier" : "831B490D256FED6F0086002B",
           "name" : "MEGAIntent"
+        },
+        {
+          "containerPath" : "container:Modules\/MEGADomain",
+          "identifier" : "MEGADomain",
+          "name" : "MEGADomain"
+        },
+        {
+          "containerPath" : "container:Modules\/MEGAFoundation",
+          "identifier" : "MEGAFoundation",
+          "name" : "MEGAFoundation"
+        },
+        {
+          "containerPath" : "container:Modules\/MEGASwift",
+          "identifier" : "MEGASwift",
+          "name" : "MEGASwift"
         }
       ]
     },

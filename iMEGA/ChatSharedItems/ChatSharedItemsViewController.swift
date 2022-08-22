@@ -134,7 +134,7 @@ class ChatSharedItemsViewController: UIViewController {
         var transfers = [CancellableTransfer]()
         selectedMessages.forEach { message in
             if let node = message.nodeList?.node(at: 0) {
-                transfers.append(CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, path: Helper.pathForOffline(), name: nil, appData: nil, priority: false, type: .downloadChat))
+                transfers.append(CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, name: nil, appData: nil, priority: false, type: .downloadChat))
             }
         }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .downloadChat).start()
@@ -499,7 +499,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
                 return
             }
-            let transfer = CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat)
+            let transfer = CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat)
             CancellableTransferRouter(presenter: self, transfers: [transfer], transferType: .downloadChat).start()
             cancelSelectTapped()
             

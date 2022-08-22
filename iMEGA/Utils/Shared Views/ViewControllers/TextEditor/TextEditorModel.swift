@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct TextEditorModel: Equatable {
     let textFile: TextFile
     let textEditorMode: TextEditorMode

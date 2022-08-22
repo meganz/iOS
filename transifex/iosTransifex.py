@@ -785,6 +785,9 @@ def await_download(url, encoding = "utf-8"):
     for i in range(50):
         try:
             response = do_request(url)
+            if "errors" in response:
+                print_error(response["errors"])
+                return False
             if response["data"]["attributes"]["status"] == "failed":
                 if response["data"]["attributes"]["errors"]:
                     print_error(response["data"]["attributes"]["errors"])
@@ -1425,7 +1428,7 @@ def run_download_stores():
     content = resource_get_english(STORES_IOS_ID, True) # Not a plurals resource but is not UTF-16 encoded
     if content:
         file_put_contents(DOWNLOAD_FOLDER + "/stores-ios.yaml", content)
-    else: 
+    else:
         print("Error: Failed to retrieve stores strings")
     return False
 

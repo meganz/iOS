@@ -156,7 +156,7 @@ final class NodeActionViewControllerGenericDelegate:
         guard let viewController = viewController else {
             return
         }
-        let transfer = CancellableTransfer(handle: node.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+        let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
         CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download).start()
     }
     

@@ -6,13 +6,14 @@ struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     
     var base64Handle: Base64HandleEntity = ""
     var name: String = ""
-    
+    var tempFolder: URL = URL(fileURLWithPath: "temp/")
+
     func tempFileURL(for node: NodeEntity) -> URL {
-        URL(fileURLWithPath: "temp/" + name)
+        tempFolder.appendingPathComponent(name)
     }
     
     func existingTempFileURL(for node: NodeEntity) -> URL? {
-        URL(fileURLWithPath: "temp/" + name)
+        tempFolder.appendingPathComponent(name)
     }
     
     var cachedOriginalImageDirectoryURL: URL {
@@ -32,15 +33,11 @@ struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     }
     
     func tempUploadURL(for name: String) -> URL {
-        URL(fileURLWithPath: "temp/" + self.name)
-    }
-    
-    func tempURL(for base64Handle: Base64HandleEntity) -> URL {
-        URL(fileURLWithPath: "temp/" + self.base64Handle)
+        tempFolder.appendingPathComponent(self.name)
     }
 
-    func cachedFileURL(for base64Handle: Base64HandleEntity, name: String) -> URL {
-        URL(fileURLWithPath: "Library/Caches/" + self.base64Handle)
+    func base64HandleTempFolder(for base64Handle: Base64HandleEntity) -> URL {
+        tempFolder.appendingPathComponent(self.base64Handle)
     }
     
     func offlineFileURL(name: String) -> URL {

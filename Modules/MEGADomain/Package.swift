@@ -16,12 +16,13 @@ let package = Package(
             targets: ["MEGADomainMock"])
     ],
     dependencies: [
-        .package(path: "../MEGASwift")
+        .package(path: "../MEGASwift"),
+        .package(path: "../MEGAFoundation")
     ],
     targets: [
         .target(
             name: "MEGADomain",
-            dependencies: ["MEGASwift"]),
+            dependencies: ["MEGASwift", "MEGAFoundation"]),
         .target(
             name: "MEGADomainMock",
             dependencies: ["MEGADomain"]),

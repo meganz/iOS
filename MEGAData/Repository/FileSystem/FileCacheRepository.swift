@@ -14,16 +14,24 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
     private let fileManager: FileManager
     private lazy var appGroup: AppGroupContainer = AppGroupContainer(fileManager: fileManager)
     
+    var tempFolder: URL {
+        fileManager.temporaryDirectory
+    }
+
     init(fileManager: FileManager) {
         self.fileManager = fileManager
     }
     
     // MARK: - Temp file cache
     func tempFileURL(for node: NodeEntity) -> URL {
-        let directory = fileManager.temporaryDirectory
-            .appendingPathComponent(node.base64Handle, isDirectory: true)
-        try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
-        return directory.appendingPathComponent(node.name)
+        base64HandleTempFolder(for: node.base64Handle).appendingPathComponent(node.name)
+    }
+    
+    func base64HandleTempFolder(for base64Handle: Base64HandleEntity) -> URL {
+        let directoryURL = tempFolder.appendingPathComponent(base64Handle)
+        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+        
+        return directoryURL
     }
     
     func existingTempFileURL(for node: NodeEntity) -> URL? {
@@ -58,21 +66,6 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
         let directory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(Constants.uploadsDirectory)
         try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory.appendingPathComponent(name)
-    }
-    
-    //MARK: - Tempfolder
-    func tempURL(for base64Handle: Base64HandleEntity) -> URL {
-        let directoryURL = fileManager.temporaryDirectory.appendingPathComponent(base64Handle)
-        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-        
-        return directoryURL
-    }
-    
-    func cachedFileURL(for base64Handle: Base64HandleEntity, name: String) -> URL {
-        let directoryURL = fileManager.temporaryDirectory.appendingPathComponent(base64Handle)
-        try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-        
-        return directoryURL.appendingPathComponent(name)
     }
     
     //MARK: - Offline

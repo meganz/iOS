@@ -27,9 +27,11 @@ pipeline {
                     }
 
                     withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        final String response = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
-                        def json = new groovy.json.JsonSlurperClassic().parseText(response)
-                        env.MARKDOWN_LINK = ":x: Build status check Failed <br />Build Log: ${json.markdown}"
+                        final String logsResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+                        def logsJSON = new groovy.json.JsonSlurperClassic().parseText(logsResponse)
+                        final String unitTestsHTMLOutputResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@report.html https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+                        def unitTestsHTMLJSON = new groovy.json.JsonSlurperClassic().parseText(unitTestsHTMLOutputResponse)
+                        env.MARKDOWN_LINK = ":x: Build status check Failed <br />Build Log: ${logsJSON.markdown} <br />Unit Tests Report: ${unitTestsHTMLJSON.markdown}"
                         env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
                         sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                     }
@@ -54,7 +56,9 @@ pipeline {
                     def mrNumber = env.BRANCH_NAME.replace('MR-', '')
 
                     withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        env.MARKDOWN_LINK = ":white_check_mark: Build status check succeeded"
+                        final String unitTestsHTMLOutputResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@report.html https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+                        def unitTestsHTMLJSON = new groovy.json.JsonSlurperClassic().parseText(unitTestsHTMLOutputResponse)
+                        env.MARKDOWN_LINK = ":white_check_mark: Build status check succeeded <br />Unit Tests Report: ${unitTestsHTMLJSON.markdown}"
                         env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
                         sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                     }
@@ -105,7 +109,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Run unit test') {
                     injectEnvironments({
-                        sh "bundle exec fastlane tests"
+                        sh "arch -x86_64 bundle exec fastlane tests"
                     })
                 }
             }

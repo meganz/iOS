@@ -60,7 +60,7 @@
 @property (nonatomic) MEGACameraUploadsState currentState;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
-
+@property (nonatomic) NSLayoutConstraint *stateViewHeightConstraint;
 @end
 
 @implementation PhotosViewController
@@ -97,12 +97,14 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self.viewModel loadAllPhotosWithFeatureFlag:[self shouldRemoveHomeImage]];
+    [self.viewModel loadAllPhotos];
     [self refreshMyAvatar];
     
     if (@available(iOS 14.0, *)) {
         [self updateLimitedAccessBannerVisibility];
     }
+    
+    [self applyPhotosFeatureFlags];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -113,6 +115,15 @@
         self.cellSize = cellSize;
         [self.photosCollectionView reloadData];
     }
+    [self setupStateViewHeight];
+}
+
+- (void)setupStateViewHeight {
+    NSLayoutConstraint *heightConstraint = [self configureStackViewHeightWithView:self.stateView perviousConstraint:self.stateViewHeightConstraint];
+    if (heightConstraint != nil) {
+        self.stateViewHeightConstraint = heightConstraint;
+    }
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -157,6 +168,7 @@
     }
     
     [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
+    [self setupStateViewHeight];
 }
 
 #pragma mark - config views
@@ -975,7 +987,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList with:[self shouldRemoveHomeImage]];
+        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
     });
 }
 

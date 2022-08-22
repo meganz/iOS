@@ -5,7 +5,8 @@ struct MockNodeRepository: NodeRepositoryProtocol {
     static let newRepo = MockNodeRepository()
     
     var node: NodeEntity?
-    
+    var rubbisNode: NodeEntity?
+
     var nodeAccessLevel:NodeAccessTypeEntity = .unknown
     var isDownloaded: Bool = false
     var hasVersions: Bool = false
@@ -63,11 +64,12 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         name
     }
     
-    func nodeNameFor(fileLink: FileLinkEntity) async throws -> String {
-        guard let name = name else {
-            throw NodeErrorEntity.nodeNameNotFound
+    func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
+        guard let node = fileLinkNode else {
+            completion(.failure(.nodeNotFound))
+            return
         }
-        return name
+        completion(.success(node))
     }
     
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
@@ -93,6 +95,10 @@ struct MockNodeRepository: NodeRepositoryProtocol {
         base64Handle
     }
     
+    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
+        node
+    }
+
     func isFileNode(handle: HandleEntity) -> Bool {
         isFile
     }
@@ -139,5 +145,9 @@ struct MockNodeRepository: NodeRepositoryProtocol {
     
     func images(for parentHandle: HandleEntity) -> [NodeEntity] {
         images
+    }
+    
+    func rubbishNode() -> NodeEntity? {
+        rubbisNode
     }
 }
