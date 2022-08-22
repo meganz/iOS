@@ -1496,7 +1496,6 @@
 		A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */; };
 		A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = A8ECD8CA27F34BB0008D75B8 /* PinLayout */; };
 		A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */; };
-		A8EE47AD27DFB13D00D37685 /* MockSupportUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE47AC27DFB13D00D37685 /* MockSupportUseCase.swift */; };
 		A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
 		A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
@@ -3873,7 +3872,6 @@
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
 		A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueViewModel.swift; sourceTree = "<group>"; };
 		A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueViewModelTests.swift; sourceTree = "<group>"; };
-		A8EE47AC27DFB13D00D37685 /* MockSupportUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportUseCase.swift; sourceTree = "<group>"; };
 		A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalNotificationManager.h; sourceTree = "<group>"; };
 		A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocalNotificationManager.m; sourceTree = "<group>"; };
 		A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMessage+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -10110,7 +10108,6 @@
 				B6FD6514268D818D00988A17 /* MockShareUseCase.swift */,
 				B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */,
 				A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */,
-				A8EE47AC27DFB13D00D37685 /* MockSupportUseCase.swift */,
 				A81F9BB127EA014B00D47C0D /* MockCookieSettingsUseCase.swift */,
 				A81BD5D327EB702200234902 /* MockClearChatHistoryUseCase.swift */,
 				A81BD5D527EB708000234902 /* MockHistoryRetentionUseCase.swift */,
@@ -12747,8 +12744,6 @@
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
-				9D705825289EBB9E008B9A27 /* PhotosViewController+Addition.swift in Sources */,
-				A882F52427E1E7400032DC07 /* NetworkMonitorRepositoryProtocol.swift in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
@@ -13831,7 +13826,6 @@
 				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
 				8393E32426C52884000AACFA /* CallParticipantEntity+Additions.swift in Sources */,
 				B59383572877F8D400861244 /* MockCreateContextMenuRepository.swift in Sources */,
-				A8EE47AD27DFB13D00D37685 /* MockSupportUseCase.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				0D213EF8263B847200B43723 /* MockNodeActionUseCase.swift in Sources */,
 				B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */,
