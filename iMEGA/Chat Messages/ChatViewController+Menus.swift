@@ -109,7 +109,7 @@ extension ChatViewController {
                     node = sdk.authorizeNode(nodelist.node(at: index))
                 }
                 if let node = node {
-                    transfers.append(CancellableTransfer(handle: node.handle, messageId: message.message.messageId, chatId: chatRoom.chatId, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat))
+                    transfers.append(CancellableTransfer(handle: node.handle, messageId: message.message.messageId, chatId: chatRoom.chatId, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat))
                 }
             }
         }

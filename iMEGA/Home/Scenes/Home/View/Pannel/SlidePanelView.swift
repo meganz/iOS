@@ -87,19 +87,24 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     weak var delegate: SlidePanelDelegate?
     
+    //MARK: - Feature Flag
+    var isRemoveHomeImageFeatureFlagEnabled = false {
+        didSet {
+            applyRemoveHomeImageFeatureFlag()
+        }
+    }
+    
     // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadNibContent()
-        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadNibContent()
-        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
     
@@ -189,21 +194,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     }
 
     // MARK: - Privates
-    
-    private func addRemoveHomeImageFeatureToggleSubscription() {
-        FeatureToggle
-            .removeHomeImage
-            .$isEnabled
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.setupSegmentTitle()
-                self.updateTabVisiblity(to: .recents)
-            }
-            .store(in: &subscriptions)
-    }
-    
-    
     private func setupView(with trait: UITraitCollection) {
         setupSegmentTitle()
         updateTabVisiblity(to: .recents)
@@ -235,7 +225,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         let favouritesTitle = Strings.Localizable.favourites
         let offlineTitle = Strings.Localizable.offline
         
-        let segmentModel: SegmentTitleView.SegmentTitleViewModel = FeatureToggle.removeHomeImage.isEnabled ?
+        let segmentModel: SegmentTitleView.SegmentTitleViewModel = isRemoveHomeImageFeatureFlagEnabled ?
                                                                                 .init(titles: [.init(text: recentsTitle, index: 0),
                                                                                                 .init(text: offlineTitle, index: 1)]) :
                                                                                 .init(titles: [.init(text: recentsTitle, index: 0),
@@ -343,5 +333,14 @@ extension SlidePanelView: UIGestureRecognizerDelegate {
         }
         
         return true // `true` makes only recognize the scroll view and pan
+    }
+}
+
+//MARK: - Feature Flag
+extension SlidePanelView {
+    func applyRemoveHomeImageFeatureFlag() {
+        setupSegmentTitle()
+        updateTabVisiblity(to: .recents)
+        showTab(.recents)
     }
 }

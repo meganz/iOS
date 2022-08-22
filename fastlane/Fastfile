@@ -114,6 +114,17 @@ platform :ios do
     File.write("version_number.txt", lane_context[SharedValues::VERSION_NUMBER]) 
   end
 
+  desc "build app for simulator"
+  lane :build_simulator do
+    xcodebuild(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      sdk: "iphonesimulator",
+      arch: "x86_64",
+      derivedDataPath: "derivedData"
+    )
+  end
+
   desc "archive for app store"
   lane :archive_appstore do
     gym(
@@ -128,6 +139,8 @@ platform :ios do
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       disable_package_automatic_updates: true,
+      derived_data_path: "derivedData",
+      archive_path: "archive",
       export_options: {
         iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
@@ -198,7 +211,9 @@ platform :ios do
       scheme: "MEGA",
       devices: ["iPhone 13 Pro Max"],
       cloned_source_packages_path: "SwiftPackages",
-      disable_package_automatic_updates: true
+      disable_package_automatic_updates: true,
+      output_directory: ".",
+      derived_data_path: "derivedData"
     )
   end
 
@@ -253,6 +268,8 @@ platform :ios do
       cloned_source_packages_path: "SwiftPackages",
       verbose: true,
       disable_package_automatic_updates: true,
+      derived_data_path: "derivedData",
+      archive_path: "archive",
       export_options: {
         iCloudContainerEnvironment: "Production"
       }

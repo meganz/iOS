@@ -6,7 +6,7 @@ extension PhotosViewController {
     
     @objc func handleDownloadAction(for nodes: [MEGANode]) {
         let transfers = nodes.map {
-            CancellableTransfer(handle: $0.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download)
+            CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download)
         }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
         cancelEditing()
@@ -41,10 +41,6 @@ extension PhotosViewController {
     func handleRemoveLinks(for nodes: [MEGANode]) {
         nodes.publicLinkedNodes().mnz_removeLinks()
         cancelEditing()
-    }
-    
-    @objc func shouldRemoveHomeImage() -> Bool {
-        FeatureToggle.removeHomeImage.isEnabled        
     }
     
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
@@ -104,5 +100,39 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
 extension PhotosViewController: BrowserViewControllerDelegate, ContatctsViewControllerDelegate {
     public func nodeEditCompleted(_ complete: Bool) {
         cancelEditing()
+    }
+}
+
+//MARK: - Feature Flag
+extension PhotosViewController {
+    @objc func applyPhotosFeatureFlags() {
+        if !viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
+            sortMenu(didSelect: .nameAscending)
+        }
+        
+        if !viewModel.shouldShowFilterMenuOnCameraUpload {
+            viewModel.resetFilters()
+        }
+        
+        setRightNavigationBarButtons()
+    }
+}
+
+extension PhotosViewController {
+    @objc func configureStackViewHeight(view: UIView, perviousConstraint: NSLayoutConstraint?) -> NSLayoutConstraint? {
+
+        var newConstraint: NSLayoutConstraint?
+        let verticalPadding = 24.0
+
+        let maxHeight = view.subviews.flatMap({ $0.subviews }).map({ $0.intrinsicContentSize.height }).max() ?? 0
+
+        if perviousConstraint == nil {
+            newConstraint = view.heightAnchor.constraint(equalToConstant: maxHeight > 0 ? maxHeight + verticalPadding : 0)
+        } else {
+            perviousConstraint?.isActive = false
+            newConstraint = view.heightAnchor.constraint(equalToConstant: maxHeight + verticalPadding)
+        }
+        newConstraint?.isActive = true
+        return newConstraint
     }
 }

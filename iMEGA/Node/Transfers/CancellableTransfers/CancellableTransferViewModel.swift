@@ -61,12 +61,7 @@ final class CancellableTransferViewModel: ViewModelType {
             case .downloadChat:
                 startChatFileDownloads()
             case .downloadFileLink:
-                Task {
-                    await startFileLinkDownload()
-                    DispatchQueue.main.async { [weak self] in
-                        self?.manageTransfersCompletion()
-                    }
-                }
+                startFileLinkDownload()
             }
         case .didTapCancelButton:
             if processingComplete {
@@ -143,7 +138,10 @@ final class CancellableTransferViewModel: ViewModelType {
     //MARK: - Upload
     private func startFileUploads() {
         fileTransfers.forEach { transferViewEntity in
-            uploadFileUseCase.uploadFile(withLocalPath: transferViewEntity.path,
+            guard let uploadLocalURL = transferViewEntity.localFileURL else {
+                return
+            }
+            uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
@@ -168,7 +166,10 @@ final class CancellableTransferViewModel: ViewModelType {
     
     private func startFolderUploads() {
         folderTransfers.forEach { transferViewEntity in
-            uploadFileUseCase.uploadFile(withLocalPath:transferViewEntity.path,
+            guard let uploadLocalURL = transferViewEntity.localFileURL else {
+                return
+            }
+            uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
                                          fileName: nil,
                                          appData: transferViewEntity.appData,
@@ -251,23 +252,30 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
-    private func startFileLinkDownload() async {
+    private func startFileLinkDownload() {
         guard let transferViewEntity = fileTransfers[safe: 0], let linkUrl = transferViewEntity.fileLinkURL else {
             return
         }
-        
-        do {
-            let fileLink = FileLinkEntity(linkURL: linkUrl)
-            _ = try await downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
-                                                                    filename: transferViewEntity.name,
-                                                                    transferMetaData: nil,
-                                                                    startFirst: transferViewEntity.priority,
-                                                                    cancelToken: cancelToken)
-        } catch {
-            if let error = error as? TransferErrorEntity {
+        let fileLink = FileLinkEntity(linkURL: linkUrl)
+
+        downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
+                                                      filename: transferViewEntity.name,
+                                                      transferMetaData: nil,
+                                                      startFirst: transferViewEntity.priority,
+                                                      cancelToken: cancelToken)
+        { transferEntity in
+            transferViewEntity.state = transferEntity.state
+            self.manageTransfersCompletion()
+        } update: { _ in } completion: { [weak self] result in
+            switch result {
+            case .success(let transferEntity):
+                transferViewEntity.state = transferEntity.state
+            case .failure(let error):
+                transferViewEntity.state = .failed
                 if error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                    transferErrors.append(error)
+                    self?.transferErrors.append(error)
                 }
+                self?.manageTransfersCompletion()
             }
         }
     }

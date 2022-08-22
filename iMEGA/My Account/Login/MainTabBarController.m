@@ -72,11 +72,6 @@
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
     [self refreshBottomConstraint];
-    
-    if (self.psaViewModel != nil) {
-        [self adjustPSAFrameIfNeededWithPsaViewModel:self.psaViewModel];
-    }
-    
     [self updatePhoneImageBadgeFrame];
 }
 

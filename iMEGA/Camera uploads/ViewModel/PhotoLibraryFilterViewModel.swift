@@ -7,6 +7,12 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     var lastSelectedMediaType = PhotosFilterType.allMedia
     var lastSelectedLocation = PhotosFilterLocation.allLocations
     
+    private var featureFlagProvider: FeatureFlagProviderProtocol
+    
+    init(featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
+        self.featureFlagProvider = featureFlagProvider
+    }
+    
     func initializeLastSelection() {
         lastSelectedMediaType = selectedMediaType
         lastSelectedLocation = selectedLocation
@@ -95,4 +101,19 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     var filterTitle = Strings.Localizable.filter
     var chooseTypeTitle = Strings.Localizable.CameraUploads.Timeline.Filter.chooseType
     var showItemsFromTitle = Strings.Localizable.CameraUploads.Timeline.Filter.showItemsFrom
+}
+
+//MARK: - Feature Flag
+extension PhotoLibraryFilterViewModel {
+    
+    var shouldShowFilterMenuOnCameraUpload: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .contextMenuOnCameraUploadExplorer) &&
+        featureFlagProvider.isFeatureFlagEnabled(for: .filterMenuOnCameraUploadExplorer)
+    }
+    
+    func applyFiltersFeatureFlags() {
+        guard !shouldShowFilterMenuOnCameraUpload else { return }
+        selectedMediaType = .allMedia
+        selectedLocation = .allLocations
+    }
 }

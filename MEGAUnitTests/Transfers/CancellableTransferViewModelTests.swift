@@ -5,7 +5,7 @@ import XCTest
 final class CancellableTransferViewModelTests: XCTestCase {
 
     func testAction_onViewReady() {
-        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, path: "PathToFile", name: nil, appData: nil, priority: false, isFile: true, type: .download)
+        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
         
@@ -13,7 +13,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
     }
     
     func testAction_cancelTransfer() {
-        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, path: "PathToFile", name: nil, appData: nil, priority: false, isFile: true, type: .download)
+        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
         
@@ -22,7 +22,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
     }
     
     func testAction_dismissCancelTransfer() {
-        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, path: "PathToFile", name: nil, appData: nil, priority: false, isFile: true, type: .download)
+        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
         
@@ -31,7 +31,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
     }
     
     func testAction_confirmCancelTransfer() {
-        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, path: "PathToFile", name: nil, appData: nil, priority: false, isFile: true, type: .download)
+        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
         

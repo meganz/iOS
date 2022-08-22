@@ -4,7 +4,7 @@ import MEGADomain
 
 class DownloadNodeUseCaseTests: XCTestCase {
     func testDownloadNode_fileAlreadyInOfflineError() {
-        let nodeRepo = MockNodeRepository(base64Handle: "base64Handle", isFile: true)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle", isFile: true))
         let offlineNode = OfflineFileEntity(base64Handle: "base64Handle", localPath: "Documents/", parentBase64Handle: nil, fingerprint: nil, timestamp: nil)
         let offlineFilesRepo = MockOfflineFilesRepository(offlineFileMock: offlineNode)
         
@@ -21,7 +21,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_copiedFromTempFolderError() {
-        let nodeRepo = MockNodeRepository(name: "nodeName", size: 10, base64Handle: "base64Handle", isFile: true, copiedNodeIfExists: false)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(name: "nodeName", base64Handle: "base64Handle", isFile: true, size: 10), copiedNodeIfExists: false)
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100, fileExists: true, copiedNode: true)
         
         let mockError: TransferErrorEntity = .copiedFromTempFolder
@@ -37,7 +37,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_folderNamedInboxError() {
-        let nodeRepo = MockNodeRepository(name: "Inbox", isFile: false)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(name: "Inbox", isFile: false))
         
         let mockError: TransferErrorEntity = .inboxFolderNameNotAllowed
         let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository())
@@ -52,7 +52,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_notEnoughSpaceError() {
-        let nodeRepo = MockNodeRepository(name: "node", size: 1000)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(name: "node", size: 1000))
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
 
         let mockError: TransferErrorEntity = .notEnoughSpace
@@ -68,7 +68,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_downloadSuccess() {
-        let nodeRepo = MockNodeRepository(size: 10, base64Handle: "base64Handle", isFile: true)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle", isFile: true, size: 10))
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
         let mockTransferEntity = TransferEntity(type: .download, path: "Documents/")
         let downloadRepo = MockDownloadFileRepository(completionResult: .success(mockTransferEntity))

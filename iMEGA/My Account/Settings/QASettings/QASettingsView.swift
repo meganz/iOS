@@ -24,12 +24,11 @@ struct QASettingsView: View {
                 .listRowBackground(listRowBackgroundColor)
             }            
             
-            Section(header: Text(Constants.featureListHeaderText)) {
-                ForEach(viewModel.featureToggleList) { featureToggle in
-                    FeatureToggleView(featureToggle: featureToggle)
-                        .listRowInsets(.init())
+            if #available(iOS 14.0, *) {
+                Section(header: Text(Constants.featureListHeaderText)) {
+                    FeatureFlagView()
+                        .listRowBackground(listRowBackgroundColor)
                 }
-                .listRowBackground(listRowBackgroundColor)
             }
         }
         .listStyle(.plain)
@@ -43,16 +42,5 @@ struct QASettingsView: View {
     
     private var backgroundColor: Color {
         colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name)
-    }
-}
-
-
-struct FeatureToggleView: View {
-    @ObservedObject var featureToggle: FeatureToggle
-    
-    var body: some View {
-        Toggle(featureToggle.name, isOn: $featureToggle.isEnabled)
-            .padding(.horizontal)
-            .padding(.vertical, 5)
     }
 }

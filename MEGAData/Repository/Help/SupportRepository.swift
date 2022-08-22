@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 struct SupportRepository: SupportRepositoryProtocol {
     private let sdk: MEGASdk

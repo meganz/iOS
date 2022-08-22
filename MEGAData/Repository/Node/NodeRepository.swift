@@ -82,16 +82,31 @@ struct NodeRepository: NodeRepositoryProtocol {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
     }
     
+    func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
+        sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { (result) in
+            switch result {
+            case .success(let request):
+                guard let node = request.publicNode else {
+                    completion(.failure(.nodeNotFound))
+                    return
+                }
+                completion(.success(node.toNodeEntity()))
+            case .failure(_):
+                completion(.failure(.nodeNotFound))
+            }
+        })
+    }
+    
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
         try await withCheckedThrowingContinuation { continuation in
-            sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { (result) in
+            nodeFor(fileLink: fileLink) { result in
                 switch result {
-                case .success(let request):
-                    continuation.resume(returning: request.publicNode.toNodeEntity())
-                case .failure(_):
-                    continuation.resume(throwing: NodeErrorEntity.nodeNotFound)
+                case .success(let node):
+                    continuation.resume(returning: node)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-            })
+            }
         }
     }
     
@@ -113,7 +128,7 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
-        chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size?.uint64Value
+        chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size
     }
     
     func base64ForNode(handle: HandleEntity) -> String? {
@@ -128,12 +143,12 @@ struct NodeRepository: NodeRepositoryProtocol {
         chatNode(handle: handle, messageId: messageId, chatId: chatId)?.base64Handle
     }
     
-    private func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> MEGANode? {
+    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
         guard let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle else {
             return nil
         }
         
-        return node
+        return node.toNodeEntity()
     }
     
     func isFileNode(handle: HandleEntity) -> Bool {
@@ -265,6 +280,10 @@ struct NodeRepository: NodeRepositoryProtocol {
         guard let parent = sdk.node(forHandle: parentHandle) else { return [] }
         
         return images(forParentNode: parent)
+    }
+    
+    func rubbishNode() -> NodeEntity? {
+        MEGASdkManager.sharedMEGASdk().rubbishNode?.toNodeEntity()
     }
     
     // MARK: - Private

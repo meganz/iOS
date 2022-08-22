@@ -155,7 +155,7 @@ final class HomeRouter: HomeRouterProtocol {
             return
         }
         
-        let transfer = CancellableTransfer(handle: node.handle, path: Helper.relativePathForOffline(), name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+        let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
         CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download).start()
     }
 

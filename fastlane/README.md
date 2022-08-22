@@ -63,6 +63,14 @@ set the date and time as build number and write it to build_number file
 
 fetch the version number and write to file named version_number.txt
 
+### ios build_simulator
+
+```sh
+[bundle exec] fastlane ios build_simulator
+```
+
+build app for simulator
+
 ### ios archive_appstore
 
 ```sh

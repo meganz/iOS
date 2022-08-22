@@ -24,10 +24,8 @@ final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
         completion(result)
     }
     
-    func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken) async throws -> TransferEntity {
-        guard let transferEntity = transferEntity else {
-            throw transferError
-        }
-        return transferEntity
+    func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+        guard let result = result else { return }
+        completion(result)
     }
 }

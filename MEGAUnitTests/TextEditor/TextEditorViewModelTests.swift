@@ -260,6 +260,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.uploadFileResult = .success
+        mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
@@ -314,6 +315,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.uploadFileResult = .failure(TransferErrorEntity.upload)
+        mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         
@@ -383,6 +385,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = false
         mockUploadFileUC.uploadFileResult = .success
+        mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
@@ -415,6 +418,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = false
         mockUploadFileUC.uploadFileResult = .failure(TransferErrorEntity.upload)
+        mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
@@ -482,6 +486,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = false
         mockUploadFileUC.uploadFileResult = .success
+        mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create
@@ -512,6 +517,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         mockUploadFileUC.duplicate = false
         mockUploadFileUC.uploadFileResult = .failure(TransferErrorEntity.upload)
+        mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeActionUC = MockNodeActionUseCase()
         let textEditorMode: TextEditorMode = .create

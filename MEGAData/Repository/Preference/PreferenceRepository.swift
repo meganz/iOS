@@ -2,6 +2,10 @@ import Foundation
 import MEGADomain
 
 struct PreferenceRepository: PreferenceRepositoryProtocol {
+    static var newRepo: PreferenceRepository {
+        PreferenceRepository(userDefaults: UserDefaults.standard)
+    }
+    
     private let userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults) {

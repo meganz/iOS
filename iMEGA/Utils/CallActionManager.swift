@@ -42,7 +42,7 @@
             let requestDelegate = MEGAChatStartCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     self.notifyStartCallToCallKit(chatId: chatId)
-                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo).start(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
                 }
                 delegate.completion(error)
             }

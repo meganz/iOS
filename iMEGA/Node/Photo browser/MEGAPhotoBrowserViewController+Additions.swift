@@ -52,17 +52,9 @@ extension MEGAPhotoBrowserViewController {
                 case .chatAttachment, .chatSharedFiles:
                     saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
                 case .fileLink:
-                    Task {
-                        do {
-                            guard let linkUrl = URL(string: self.publicLink) else { return }
-                            let fileLink = FileLinkEntity(linkURL: linkUrl)
-                            try await saveMediaUseCase.saveToPhotos(fileLink: fileLink)
-                        } catch TransferErrorEntity.cancelled {
-                            MEGALogDebug("Failed to saveToPhotosFileLink: download cancelled")
-                        } catch {
-                            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
-                        }
-                    }
+                    guard let linkUrl = URL(string: self.publicLink) else { return }
+                    let fileLink = FileLinkEntity(linkURL: linkUrl)
+                    saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
                 default:
                     saveMediaUseCase.saveToPhotos(node: node.toNodeEntity(), completion: completionBlock)
                 }

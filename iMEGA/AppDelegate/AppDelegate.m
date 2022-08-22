@@ -136,7 +136,7 @@
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
     UNUserNotificationCenter.currentNotificationCenter.delegate = self;
-
+    
     return YES;
 }
 

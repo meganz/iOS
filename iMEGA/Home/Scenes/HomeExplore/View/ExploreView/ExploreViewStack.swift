@@ -14,19 +14,24 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     
     var subscriptions = Set<AnyCancellable>()
     
+    //MARK: - Feature Flag
+    var isRemoveHomeImageFeatureFlagEnabled = false {
+        didSet {
+            applyRemoveHomeImageFeatureFlag()
+        }
+    }
+    
     // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addStackView()
-        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         addStackView()
-        addRemoveHomeImageFeatureToggleSubscription()
         setupView(with: traitCollection)
     }
     
@@ -40,18 +45,6 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     }
     
     // MARK: - Privates
-    
-    private func addRemoveHomeImageFeatureToggleSubscription() {
-        FeatureToggle
-            .removeHomeImage
-            .$isEnabled
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.setupView(with: self.traitCollection)
-            }
-            .store(in: &subscriptions)
-    }
     
     private func addStackView() {
         guard let contentview = loadedViewFromNibContent() else { return }
@@ -69,7 +62,8 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
         
         (0..<cards.count).forEach {
            let exploreViewStyleFactory = ExploreViewStyleFactory(style: MEGAExploreViewStyle(rawValue: $0) ?? .images,
-                                                                 traitCollection: trait)
+                                                                 traitCollection: trait,
+                                                                 isRemoveHomeImageFeatureFlagEnabled: isRemoveHomeImageFeatureFlagEnabled)
             cards[$0].configuration = exploreViewStyleFactory.configuration
         }
     }
@@ -98,5 +92,12 @@ extension ExploreViewStack: TraitEnviromentAware {
 
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         setupView(with: currentTrait)
+    }
+}
+
+//MARK: - Feature Flag
+extension ExploreViewStack {
+    func applyRemoveHomeImageFeatureFlag() {
+        self.setupView(with: self.traitCollection)
     }
 }
