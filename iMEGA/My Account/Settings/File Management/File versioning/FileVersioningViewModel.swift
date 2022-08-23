@@ -1,3 +1,4 @@
+import MEGADomain
 
 enum FileVersioningViewAction: ActionType {
     case onViewLoaded
@@ -64,8 +65,10 @@ final class FileVersioningViewModel: ViewModelType {
                 }
             }
         }
+#if MAIN_APP_TARGET
         self.invokeCommand?(.updateFileVersions(fileVersionsUseCase.rootNodeFileVersionCount()))
         self.invokeCommand?(.updateFileVersionsSize(fileVersionsUseCase.rootNodeFileVersionTotalSizeInBytes()))
+#endif
     }
     
     private func disableFileVersions() {
@@ -98,7 +101,9 @@ final class FileVersioningViewModel: ViewModelType {
                         guard let self = self else { return }
                         switch $0 {
                         case .success:
+#if MAIN_APP_TARGET
                             self.invokeCommand?(.updateFileVersions(self.fileVersionsUseCase.rootNodeFileVersionCount()))
+#endif
                             self.invokeCommand?(.updateFileVersionsSize(self.fileVersionsUseCase.rootNodeFileVersionTotalSizeInBytes()))
                         case .failure: break
                         }
