@@ -3,7 +3,6 @@ import UIKit
 
 protocol AddToChatMenuItemsViewDelegate: AnyObject {
     func didTap(menu: AddToChatMenu)
-    func shouldDisable(menu: AddToChatMenu) -> Bool
 }
 
 class AddToChatMenuItemsView: UIView {
@@ -30,28 +29,10 @@ class AddToChatMenuItemsView: UIView {
                 if menus.count > index {
                     let menu = menus[index]
                     menuView.menu = menu
-                    update(menuView: menuView)
                 } else {
                     menuView.menu = nil
                 }
             }
-        }
-    }
-    
-    func updateMenus() {
-        menuViews.forEach { menuView in
-            update(menuView: menuView)
-        }
-    }
-    
-    private func update(menuView: AddToChatMenuView) {
-        guard let delegate = delegate  else {
-            return
-        }
-        
-        if let menu = menuView.menu,
-            menu.dynamicKey == true {
-            menuView.disable(delegate.shouldDisable(menu: menu))
         }
     }
     

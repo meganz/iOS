@@ -127,12 +127,10 @@ internal enum Asset {
       internal enum AddToChat {
         internal static let attachCloud = ImageAsset(name: "attachCloud")
         internal static let attachContact = ImageAsset(name: "attachContact")
+        internal static let attachFilesApp = ImageAsset(name: "attachFilesApp")
         internal static let attachGIF = ImageAsset(name: "attachGIF")
         internal static let attachGallery = ImageAsset(name: "attachGallery")
-        internal static let attachGroup = ImageAsset(name: "attachGroup")
         internal static let attachLocation = ImageAsset(name: "attachLocation")
-        internal static let attachVideoCall = ImageAsset(name: "attachVideoCall")
-        internal static let attachVoiceCall = ImageAsset(name: "attachVoiceCall")
         internal static let attachVoiceClip = ImageAsset(name: "attachVoiceClip")
         internal static let chatScanDocument = ImageAsset(name: "chatScanDocument")
       }

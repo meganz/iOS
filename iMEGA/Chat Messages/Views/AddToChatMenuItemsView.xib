@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,16 +27,16 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kfE-Ox-B7k">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="kfE-Ox-B7k" firstAttribute="centerX" secondItem="Egq-cg-GXs" secondAttribute="centerX" id="3Pk-ur-CBL"/>
                                                 <constraint firstItem="kfE-Ox-B7k" firstAttribute="centerY" secondItem="Egq-cg-GXs" secondAttribute="centerY" id="HIS-w9-qVh"/>
-                                                <constraint firstItem="kfE-Ox-B7k" firstAttribute="width" secondItem="Egq-cg-GXs" secondAttribute="width" multiplier="0.645" id="JRz-Bz-Mvz"/>
+                                                <constraint firstItem="kfE-Ox-B7k" firstAttribute="width" secondItem="Egq-cg-GXs" secondAttribute="width" multiplier="0.5" id="JRz-Bz-Mvz"/>
                                                 <constraint firstAttribute="width" secondItem="Egq-cg-GXs" secondAttribute="height" id="mug-8Q-tG6"/>
-                                                <constraint firstItem="kfE-Ox-B7k" firstAttribute="height" secondItem="Egq-cg-GXs" secondAttribute="height" multiplier="0.645" id="r3x-Xh-J69"/>
+                                                <constraint firstItem="kfE-Ox-B7k" firstAttribute="height" secondItem="Egq-cg-GXs" secondAttribute="height" multiplier="0.5" id="r3x-Xh-J69"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6a-e9-hY4" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
@@ -82,15 +82,15 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-wc-AyL">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="TjP-wc-AyL" firstAttribute="centerX" secondItem="aun-1c-vfJ" secondAttribute="centerX" id="8GP-cl-lej"/>
-                                                <constraint firstItem="TjP-wc-AyL" firstAttribute="width" secondItem="aun-1c-vfJ" secondAttribute="width" multiplier="0.645" id="Kgg-7B-SSV"/>
+                                                <constraint firstItem="TjP-wc-AyL" firstAttribute="width" secondItem="aun-1c-vfJ" secondAttribute="width" multiplier="0.5" id="Kgg-7B-SSV"/>
                                                 <constraint firstAttribute="width" secondItem="aun-1c-vfJ" secondAttribute="height" id="Lb3-8Y-0lh"/>
-                                                <constraint firstItem="TjP-wc-AyL" firstAttribute="height" secondItem="aun-1c-vfJ" secondAttribute="height" multiplier="0.645" id="dK5-6a-OY7"/>
+                                                <constraint firstItem="TjP-wc-AyL" firstAttribute="height" secondItem="aun-1c-vfJ" secondAttribute="height" multiplier="0.5" id="dK5-6a-OY7"/>
                                                 <constraint firstItem="TjP-wc-AyL" firstAttribute="centerY" secondItem="aun-1c-vfJ" secondAttribute="centerY" id="prA-zH-T3p"/>
                                             </constraints>
                                         </view>
@@ -137,15 +137,15 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eqW-Ag-Lp4">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Xia-Qd-Rdf" secondAttribute="height" id="NeV-IH-Tue"/>
                                                 <constraint firstItem="eqW-Ag-Lp4" firstAttribute="centerX" secondItem="Xia-Qd-Rdf" secondAttribute="centerX" id="cqe-ga-qvo"/>
-                                                <constraint firstItem="eqW-Ag-Lp4" firstAttribute="height" secondItem="Xia-Qd-Rdf" secondAttribute="height" multiplier="0.645" id="deU-eh-sRo"/>
-                                                <constraint firstItem="eqW-Ag-Lp4" firstAttribute="width" secondItem="Xia-Qd-Rdf" secondAttribute="width" multiplier="0.645" id="qTL-pa-dUt"/>
+                                                <constraint firstItem="eqW-Ag-Lp4" firstAttribute="height" secondItem="Xia-Qd-Rdf" secondAttribute="height" multiplier="0.5" id="deU-eh-sRo"/>
+                                                <constraint firstItem="eqW-Ag-Lp4" firstAttribute="width" secondItem="Xia-Qd-Rdf" secondAttribute="width" multiplier="0.5" id="qTL-pa-dUt"/>
                                                 <constraint firstItem="eqW-Ag-Lp4" firstAttribute="centerY" secondItem="Xia-Qd-Rdf" secondAttribute="centerY" id="u9f-At-adS"/>
                                             </constraints>
                                         </view>
@@ -192,15 +192,15 @@
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tle-z5-Kkb">
-                                                    <rect key="frame" x="15" y="15" width="53.5" height="53.5"/>
+                                                    <rect key="frame" x="21" y="21" width="41.5" height="41.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="Tle-z5-Kkb" firstAttribute="height" secondItem="S7E-0Y-cGM" secondAttribute="height" multiplier="0.645" id="JkV-QC-Ias"/>
+                                                <constraint firstItem="Tle-z5-Kkb" firstAttribute="height" secondItem="S7E-0Y-cGM" secondAttribute="height" multiplier="0.5" id="JkV-QC-Ias"/>
                                                 <constraint firstItem="Tle-z5-Kkb" firstAttribute="centerX" secondItem="S7E-0Y-cGM" secondAttribute="centerX" id="lPg-Ob-qQg"/>
                                                 <constraint firstItem="Tle-z5-Kkb" firstAttribute="centerY" secondItem="S7E-0Y-cGM" secondAttribute="centerY" id="wI0-mf-o7B"/>
-                                                <constraint firstItem="Tle-z5-Kkb" firstAttribute="width" secondItem="S7E-0Y-cGM" secondAttribute="width" multiplier="0.645" id="wRc-30-yyw"/>
+                                                <constraint firstItem="Tle-z5-Kkb" firstAttribute="width" secondItem="S7E-0Y-cGM" secondAttribute="width" multiplier="0.5" id="wRc-30-yyw"/>
                                                 <constraint firstAttribute="width" secondItem="S7E-0Y-cGM" secondAttribute="height" id="zr6-lm-hKo"/>
                                             </constraints>
                                         </view>
@@ -253,14 +253,14 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ODp-cc-cUe">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="ODp-cc-cUe" firstAttribute="width" secondItem="V1F-TF-c3y" secondAttribute="width" multiplier="0.645" id="Jm6-n0-c42"/>
+                                                <constraint firstItem="ODp-cc-cUe" firstAttribute="width" secondItem="V1F-TF-c3y" secondAttribute="width" multiplier="0.5" id="Jm6-n0-c42"/>
                                                 <constraint firstItem="ODp-cc-cUe" firstAttribute="centerX" secondItem="V1F-TF-c3y" secondAttribute="centerX" id="RWk-Lo-ABZ"/>
-                                                <constraint firstItem="ODp-cc-cUe" firstAttribute="height" secondItem="V1F-TF-c3y" secondAttribute="height" multiplier="0.645" id="cDT-Dw-xy9"/>
+                                                <constraint firstItem="ODp-cc-cUe" firstAttribute="height" secondItem="V1F-TF-c3y" secondAttribute="height" multiplier="0.5" id="cDT-Dw-xy9"/>
                                                 <constraint firstAttribute="width" secondItem="V1F-TF-c3y" secondAttribute="height" id="ebL-kw-MIR"/>
                                                 <constraint firstItem="ODp-cc-cUe" firstAttribute="centerY" secondItem="V1F-TF-c3y" secondAttribute="centerY" id="jY8-ma-0NO"/>
                                             </constraints>
@@ -308,7 +308,7 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KjB-Gh-K9b">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -316,8 +316,8 @@
                                                 <constraint firstAttribute="width" secondItem="n5c-u4-SoS" secondAttribute="height" id="7mt-IU-f7p"/>
                                                 <constraint firstItem="KjB-Gh-K9b" firstAttribute="centerX" secondItem="n5c-u4-SoS" secondAttribute="centerX" id="Pl4-Y8-H6c"/>
                                                 <constraint firstItem="KjB-Gh-K9b" firstAttribute="centerY" secondItem="n5c-u4-SoS" secondAttribute="centerY" id="ZU8-dW-1Ar"/>
-                                                <constraint firstItem="KjB-Gh-K9b" firstAttribute="height" secondItem="n5c-u4-SoS" secondAttribute="height" multiplier="0.645" id="gSJ-IN-pqn"/>
-                                                <constraint firstItem="KjB-Gh-K9b" firstAttribute="width" secondItem="n5c-u4-SoS" secondAttribute="width" multiplier="0.645" id="z6j-zT-Asm"/>
+                                                <constraint firstItem="KjB-Gh-K9b" firstAttribute="height" secondItem="n5c-u4-SoS" secondAttribute="height" multiplier="0.5" id="gSJ-IN-pqn"/>
+                                                <constraint firstItem="KjB-Gh-K9b" firstAttribute="width" secondItem="n5c-u4-SoS" secondAttribute="width" multiplier="0.5" id="z6j-zT-Asm"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYg-M1-a4f" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
@@ -363,15 +363,15 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vd4-eF-pnc">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="Vd4-eF-pnc" firstAttribute="height" secondItem="I7E-pA-gr8" secondAttribute="height" multiplier="0.645" id="FkF-1V-8mL"/>
+                                                <constraint firstItem="Vd4-eF-pnc" firstAttribute="height" secondItem="I7E-pA-gr8" secondAttribute="height" multiplier="0.5" id="FkF-1V-8mL"/>
                                                 <constraint firstAttribute="width" secondItem="I7E-pA-gr8" secondAttribute="height" id="OJz-xe-Abq"/>
                                                 <constraint firstItem="Vd4-eF-pnc" firstAttribute="centerX" secondItem="I7E-pA-gr8" secondAttribute="centerX" id="T4c-rJ-44C"/>
-                                                <constraint firstItem="Vd4-eF-pnc" firstAttribute="width" secondItem="I7E-pA-gr8" secondAttribute="width" multiplier="0.645" id="ZI8-Us-kpF"/>
+                                                <constraint firstItem="Vd4-eF-pnc" firstAttribute="width" secondItem="I7E-pA-gr8" secondAttribute="width" multiplier="0.5" id="ZI8-Us-kpF"/>
                                                 <constraint firstItem="Vd4-eF-pnc" firstAttribute="centerY" secondItem="I7E-pA-gr8" secondAttribute="centerY" id="nz6-n6-A9h"/>
                                             </constraints>
                                         </view>
@@ -418,15 +418,15 @@
                                             <rect key="frame" x="11" y="0.0" width="81.5" height="81.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sov-ox-y35">
-                                                    <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
+                                                    <rect key="frame" x="20.5" y="20.5" width="40.5" height="40.5"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="kQl-zJ-FDm" secondAttribute="height" id="4bk-UQ-KNf"/>
                                                 <constraint firstItem="sov-ox-y35" firstAttribute="centerX" secondItem="kQl-zJ-FDm" secondAttribute="centerX" id="7LF-SZ-raj"/>
-                                                <constraint firstItem="sov-ox-y35" firstAttribute="width" secondItem="kQl-zJ-FDm" secondAttribute="width" multiplier="0.645" id="Kao-3E-2gT"/>
-                                                <constraint firstItem="sov-ox-y35" firstAttribute="height" secondItem="kQl-zJ-FDm" secondAttribute="height" multiplier="0.645" id="owO-5U-XAh"/>
+                                                <constraint firstItem="sov-ox-y35" firstAttribute="width" secondItem="kQl-zJ-FDm" secondAttribute="width" multiplier="0.5" id="Kao-3E-2gT"/>
+                                                <constraint firstItem="sov-ox-y35" firstAttribute="height" secondItem="kQl-zJ-FDm" secondAttribute="height" multiplier="0.5" id="owO-5U-XAh"/>
                                                 <constraint firstItem="sov-ox-y35" firstAttribute="centerY" secondItem="kQl-zJ-FDm" secondAttribute="centerY" id="vN2-px-Ai4"/>
                                             </constraints>
                                         </view>
@@ -506,4 +506,30 @@
             <point key="canvasLocation" x="-275" y="185"/>
         </view>
     </objects>
+    <designables>
+        <designable name="41h-S1-Ym9">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="5Dz-Ez-M0H">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="83h-WU-qd9">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="Bcc-dF-All">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="Egb-yg-t4f">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="Pxp-M0-HNv">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="hYg-M1-a4f">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+        <designable name="v6a-e9-hY4">
+            <size key="intrinsicContentSize" width="29.5" height="13.5"/>
+        </designable>
+    </designables>
 </document>

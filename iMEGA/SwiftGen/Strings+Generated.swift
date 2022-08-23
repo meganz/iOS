@@ -2908,6 +2908,12 @@ public enum Strings {
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
       /// Chats
       public static let title = Strings.tr("Localizable", "chat.title")
+      public enum AddToChatMenu {
+        /// Files app
+        public static let filesApp = Strings.tr("Localizable", "chat.addToChatMenu.filesApp")
+        /// Scan
+        public static let scan = Strings.tr("Localizable", "chat.addToChatMenu.scan")
+      }
       public enum Chats {
         public enum EmptyState {
           /// Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.

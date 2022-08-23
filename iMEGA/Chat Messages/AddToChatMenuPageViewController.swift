@@ -5,16 +5,12 @@ import UIKit
 protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
     func loadPhotosView()
     func showCloudDrive()
-    func startVoiceCall()
-    func startVideoCall()
     func showVoiceClip()
     func showContacts()
     func showScanDoc()
-    func startGroupChat()
     func showLocation()
     func showGiphy()
-    func shouldDisableAudioMenu() -> Bool
-    func shouldDisableVideoMenu() -> Bool
+    func showFilesApp()
     func numberOfPages(_ pages: Int)
     func currentSelectedPageIndex(_ pageIndex: Int)
 }
@@ -79,12 +75,6 @@ class AddToChatMenuPageViewController: UIPageViewController {
         }
         
         menuDelegate?.numberOfPages(menuPages.count)
-    }
-    
-    func updateAudioVideoMenu() {
-        menuPages.forEach { menuViewController in
-            menuViewController.updateMenus()
-        }
     }
     
     func moveToPageAtIndex(_ pageIndex: Int) {
@@ -169,38 +159,18 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
             }
         case .file:
             menuDelegate?.showCloudDrive()
-        case .voice:
-            menuDelegate?.startVoiceCall()
-        case .video:
-            menuDelegate?.startVideoCall()
         case .contact:
             menuDelegate?.showContacts()
         case .scanDoc:
             menuDelegate?.showScanDoc()
-        case .startGroup:
-            menuDelegate?.startGroupChat()
         case .location:
             menuDelegate?.showLocation()
         case .voiceClip:
             menuDelegate?.showVoiceClip()
         case .giphy:
             menuDelegate?.showGiphy()
-        }
-    }
-    
-    func shouldDisable(menu: AddToChatMenu) -> Bool {
-        guard let menuNameKey = menu.menuNameKey else {
-            MEGALogDebug("Menu name key is nil for shouldDisable")
-            return false
-        }
-        
-        switch menuNameKey {
-        case .voice:
-            return menuDelegate?.shouldDisableAudioMenu() ?? false
-        case .video:
-            return menuDelegate?.shouldDisableVideoMenu() ?? false
-        default:
-            return false
+        case .filesApp:
+            menuDelegate?.showFilesApp()
         }
     }
 }

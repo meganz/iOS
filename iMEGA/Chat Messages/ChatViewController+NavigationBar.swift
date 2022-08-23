@@ -42,12 +42,6 @@ extension ChatViewController {
 
         audioCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
         videoCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
-
-        guard let addToChatViewController = addToChatViewController else {
-            return
-        }
-
-        addToChatViewController.updateAudioVideoMenu()
     }
 
     private func addRightBarButtons() {
