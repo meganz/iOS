@@ -16,6 +16,13 @@ public extension UIImageView {
         layer.cornerRadius = blur / 2
     }
     
+    func setToIntrinsicContentSize() {
+        guard let imageData = image else { return }
+
+        let scaledHeight = imageData.size.height * (frame.size.width / imageData.size.width)
+        frame.size = CGSize(width: frame.size.width, height: scaledHeight)
+    }
+    
     private func updateShadowProperties(for container: UIView, color: UIColor, alpha: Float, x: CGFloat, y: CGFloat, blur: CGFloat) {
         container.layer.shadowColor = color.cgColor
         container.layer.shadowOpacity = alpha

@@ -75,6 +75,10 @@ extension MEGAPhotoBrowserViewController {
             messageId = newMessageId
         }
     }
+
+    @objc func openSlideShow() {
+        SlideShowRouter(dataProvider: dataProvider, megaPhotoBrowserViewController: self).start()
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
@@ -97,5 +101,13 @@ extension MEGAPhotoBrowserViewController {
         )
         browser.needsReload = true
         return browser
+    }
+}
+
+extension MEGAPhotoBrowserViewController {
+    @objc func updateProviderNodeEntities(nodes: [MEGANode]) {
+        DispatchQueue.main.async {
+            self.dataProvider.resetPhotos(to: nodes)
+        }
     }
 }

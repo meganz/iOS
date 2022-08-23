@@ -62,6 +62,20 @@ final class PhotoBrowserDataProvider: NSObject {
         }
     }
     
+    var allPhotoEntities: [NodeEntity] {
+        if let nodeEntities = nodeEntities {
+            return nodeEntities
+        } else {
+            return megaNodes?.toNodeEntities() ?? []
+        }
+    }
+    
+    func resetPhotos(to photos: [MEGANode]) {
+        nodeEntities = photos.toNodeEntities()
+        megaNodes = photos
+        currentIndex = 0
+    }
+    
     @objc var allPhotos: [MEGANode] {
         if let nodes = megaNodes {
             return nodes

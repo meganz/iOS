@@ -171,6 +171,26 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testCloudDriveNodeContainsSlideShow() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsSlideshow(true)
+            .build()
+        
+        XCTAssertTrue(actions.contains(.slideshowAction()))
+    }
+    
+    func testCloudDriveNodeDoesNotContainSlideShow() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsSlideshow(false)
+            .build()
+        
+        XCTAssertFalse(actions.contains(.slideshowAction()))
+    }
+    
     func testFileFolderNodeDoNotShowInfoAction() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeInfo)

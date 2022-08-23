@@ -71,7 +71,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node {
     PhotoBrowserDataProvider *provider = [[PhotoBrowserDataProvider alloc] initWithCurrentPhoto:node allPhotos:mediaNodesArray sdk:api];
-    return [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
+
+    MEGAPhotoBrowserViewController *photoBrowser = [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
+    [photoBrowser updateProviderNodeEntitiesWithNodes: mediaNodesArray];
+    return photoBrowser;
 }
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode preferredIndex:(NSUInteger)preferredIndex {
@@ -1226,6 +1229,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
         case MegaNodeActionTypeForward:
             [self didPressForwardbarButton:self.customActionsButton];
+            break;
+            
+        case MegaNodeActionTypeSlideshow:
+            [self openSlideShow];
             break;
             
         default:
