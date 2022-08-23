@@ -43,7 +43,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="رابط غير صالح";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="تم إنهاء الحساب الذي أنشأ هذا الرابط بسبب انتهاكات متعددة [A]لشروط  الخدمة[/A]";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="تم إنهاء الحساب الذي أنشأ هذا الرابط بسبب انتهاكات متعددة [A]لشروط الخدمة[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -93,9 +93,9 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="البريد الإلكتروني و/أو كلمة المرور غير صالح. حاول مرة اخرى";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة. الرجاء الانتظار حتى %@ ثم المحاولة ثانية";
+"tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة. الرجاء الانتظار حتى %@ ثم المحاولة ثانية.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="الرجاء تفقد بريدك الالكتروني والضغط على رابط تأكيد الحساب";
+"accountNotConfirmed"="الرجاء تفقد بريدك الالكتروني والضغط على رابط تأكيد الحساب.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="تم إنهاء حسابك بسبب خرق لشروط الخدمة لدى ميغا MEGA بما في ذلك على سبيل المثال لا الحصر ، البند 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -143,11 +143,11 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="عليك أن توافق على أنك تفهم خطر فقدان كلمة المرور الخاصة بك";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="هذا البريد الإلكتروني لديه حساب مسجل بالفعل على ميغا MEGA.";
+"emailAlreadyRegistered"="هذا البريد الإلكتروني لديه حساب مسجل بالفعل على ميغا MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="بانتظار تأكيد البريد الالكتروني.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="يُرجى إدخال كلمة المرور الخاصة بك لتأكيد حسابك.";
+"confirmText"="يُرجى إدخال كلمة المرور الخاصة بك لتأكيد حسابك";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="أكّد الحساب";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
@@ -223,7 +223,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="دعوة إلى ميغا MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="جهة الاتصال الخاصة بك [X] ليست موجودة على ميغا MEGA. من أجل الاتصال عبر المحادثة المشفرة في ميغا MEGA ، عليك دعوة جهة الاتصال الخاصة بك";
+"dialog.callAttempt.contactNotInMEGA"="جهة الاتصال الخاصة بك [X] ليست موجودة على ميغا MEGA. من أجل الاتصال عبر المحادثة المشفرة في ميغا MEGA، عليك دعوة جهة الاتصال الخاصة بك";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="تم إرسال الدعوة";
 /* Button title to allow the user postpone an action */
@@ -323,7 +323,7 @@
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] تم رفعه بالفعل باسم [B]";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d ملفات محددة سبق رفعها للمجلد";
+"filesAlreadyExistMessage"="%d ملفات محددة سبق رفعها للمجلد.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="بدأ الترفيع";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
@@ -337,7 +337,7 @@
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="توليد الرابط…";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="جاري إنشاء روابط …";
+"generatingLinks"="جاري إنشاء روابط…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="تم نسخ الرابط";
 /* Message shown when some links have been copied to the pasteboard */
@@ -441,7 +441,7 @@
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
 "general.error.charactersNotAllowed"="المحارف التالية غير مسموح بها: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="أعد تسمية الملفّ %@ ؟";
+"rename_file_alert_title"="أعد تسمية الملفّ %@؟";
 /* Title for the action that allows you to replace a file. */
 "replace"="استبدال";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -453,13 +453,13 @@
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
 "foldersMovedToRubbishBinMessage"="تم نقل %d مجلد إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="تم نقل 1 ملف و 1 مجلد  إلى سلة المحذوفات";
+"fileFolderMovedToRubbishBinMessage"="تم نقل 1 ملف و 1 مجلد إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="تم نقل 1 ملف و %d مجلد  إلى سلة المحذوفات";
+"fileFoldersMovedToRubbishBinMessage"="تم نقل 1 ملف و %d مجلد إلى سلة المحذوفات";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="تم نقل %d ملف و 1 مجلد  إلى سلة المحذوفات";
+"filesFolderMovedToRubbishBinMessage"="تم نقل %d ملف و 1 مجلد إلى سلة المحذوفات";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="تم نقل [A] ملف و [B] مجلد  إلى سلة المحذوفات";
+"filesFoldersMovedToRubbishBinMessage"="تم نقل [A] ملف و [B] مجلد إلى سلة المحذوفات";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="خطأ في الإذن";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -467,9 +467,9 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="تم مشاركة المجلد";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d مجلدات تم مشاركتها بنجاح";
+"sharedFolders_success"="%d مجلدات تم مشاركتها بنجاح.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="الاستيراد الي السواقة السحابية";
+"Import to Cloud Drive"="استيراد";
 /* Message shown when a file has been imported */
 "fileImported"="تم استيراد الملف";
 /* Message shown when some files have been imported */
@@ -485,7 +485,7 @@
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="تم تمكين ترفيعات الكاميرا";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="اكتملت ترفيعات الكاميرا ";
+"cameraUploadsComplete"="اكتملت ترفيعات الكاميرا";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="جاري الترفيع، 1 ملف قيد الانتظار";
 /* Message shown while uploading files. Plural. */
@@ -521,15 +521,15 @@
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="تم إيقاف الترفيع مؤقتاً نظراً لعدم وجود اتصال واي فاي Wi-Fi، وهناك %lu ملف معلق";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="تم ترفيع الصور, ترفيعات الفيديو متوقفة؛ لم يتم ترفيع 1 فيديو";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع 1 فيديو";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="تم ترفيع الصور, ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %lu فيديو";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %lu فيديو";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="تم تحديد %lu عنصر ";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="تم تحديد %lu عنصر";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="تم تحديد  1";
+"1 selected"="تم تحديد 1";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="تم تحديد %d ";
 /* Title of the Offline section */
@@ -681,9 +681,9 @@
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="حفظ الصور HEIC كـ";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="نوصي بتنسيق JPG ، لأنه التنسيق الأكثر توافقًا للصور.";
+"We recommend JPG, as its the most compatible format for photos."="نوصي بتنسيق JPG، لأنه التنسيق الأكثر توافقًا للصور.";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
-"SAVE HEVC VIDEOS AS"="حفظ فيديوهات HEVC كـ:";
+"SAVE HEVC VIDEOS AS"="حفظ فيديوهات HEVC كـ";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="نوصي بتنسيق H.264، لأنه التنسيق الأكثر ملاءمة لمقاطع الفيديو.";
 /* Footer for video compression quality */
@@ -763,7 +763,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="تم تصدير مفتاح الاستعادة";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="تم تصدير \"مفتاح الاستعادة\" إلى قسم \"غير متصل بالانترنت\" كـ MEGA-مفتاح الاستعادة.txt. ملاحظة: سيتم حذفه إذا قمت بتسجيل الخروج، يرجى تخزينه في مكان آمن.";
+"masterKeyExported_alertMessage"="تم تصدير ”مفتاح الاستعادة“ إلى قسم ”غير متصل بالانترنت“ كـ MEGA-مفتاح الاستعادة.txt. ملاحظة: سيتم حذفه إذا قمت بتسجيل الخروج، يرجى تخزينه في مكان آمن.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="على جهازك";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -791,7 +791,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="سوف تفقد جميع البيانات المرتبطة بهذا الحساب. هل أنت متأكد أنك تريد المتابعة؟";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="إذا لم تتمكن من الوصول إلى البريد الإلكتروني الخاص بك، يرجى التواصل عبر support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="إذا لم تتمكن من الوصول إلى البريد الإلكتروني الخاص بك، يرجى التواصل عبر support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="انتهت صلاحية رابط الإلغاء.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -845,7 +845,7 @@
 /* An option to reset the password. */
 "forgotPassword"="نسيت كلمة المرور؟";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="لقد انتهت صلاحية هذا الرابط ، يرجى المحاولة مرة أخرى.";
+"recoveryLinkHasExpired"="لقد انتهت صلاحية هذا الرابط، يرجى المحاولة مرة أخرى.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="إعادة تعيين كلمة المرور";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -1003,7 +1003,7 @@
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
 "account.achievement.complete.valid.cell.subtitle"="%@ يوم/أيام متبقية";
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="المكافأة تنتهي في %@ يوم/أيام";
+"account.achievement.complete.valid.detail.subtitle"="المكافأة تنتهي في %@ يوم/أيام.";
 /* Add Phone Number title */
 "Add Phone Number"="أضف رقم هاتف";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -1079,7 +1079,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="حدد نوع حساب واحد:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="الاشتراك السنوي أرخص بنسبة 16٪ من 12 دفعة شهرية.";
+"twoMonthsFree"="الاشتراك السنوي أرخص بنسبة 16٪ من 12 دفعة شهرية";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="لترقية اشتراكك الحالي، يرجى الاتصال بقسم االدعم للحصول على [A] باقة مخصصة[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1097,7 +1097,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="وفر 16%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="شراء خاطئ  %@ (%ld)";
+"wrongPurchase"="شراء خاطئ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="خدمة الشراء داخل التطبيق معطل، الرجاء تفعيل الخدمة من إعدادات ال iOS";
 /* Error message shown when the selected product doesn't exist */
@@ -1143,7 +1143,7 @@
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="تعطيل وضع اكتشاف الأخطاء";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="السجل  (MEGAiOS.log) سيتم حذفه من قسم \"دون اتصال\"";
+"disableDebugMode_message"="السجل (MEGAiOS.log) سيتم حذفه من قسم دون اتصال.";
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="هل أنت متأكد أنك تريد حذف هذا العنصر من قسم غير متصل بالإنترنت؟";
 /* Alert message shown when the user remove various items from the Offline section */
@@ -1173,13 +1173,13 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="أنا";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"=" تم حذف [A] من المجموعة من قبل [B]";
+"wasRemovedFromTheGroupChatBy"="تم حذف [A] من المجموعة من قبل [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="غادر [A] المحادثة الجماعية.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="انضم [A] إلى المحادثة الجماعية بدعوة من [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="قام [A] بحذف سجل المحادثة";
+"clearedTheChatHistory"="قام [A] بحذف سجل المحادثة.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="قام [A] بتغيير اسم المحادثة الجماعية الى “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
@@ -1191,7 +1191,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="عرض الروابط الإلكترونية المعززة URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="قم بجعل تجربة المحادثة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف";
+"richPreviewsFooter"="قم بجعل تجربة المحادثة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="اتصالات فيديو وصوت";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1299,7 +1299,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]وأكثر يكتبون…[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="اكتب رسالة إلى %s …";
+"writeAMessage"="اكتب رسالة إلى %s…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="لا توجد سجل للمحادثات";
 /* Button which allows to retry send message in chat conversation. */
@@ -1345,11 +1345,11 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="هل أنت متأكد أنك تريد إلغاء التسجيل؟";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="إذا كنت قد أخطأت في كتابة عنوان البريد الإلكتروني الخاص بك، صححها وانقر فوق \"إعادة إرسال\".";
+"misspelledEmailAddress"="إذا كنت قد أخطأت في كتابة عنوان البريد الإلكتروني الخاص بك، صححها وانقر فوق “إعادة إرسال”.";
 /* A button to resend the email confirmation. */
 "resend"="إعادة إرسال";
 /* Error message displayed when trying to invite a contact who is already added. */
-"alreadyAContact"="%s موجود كجهة اتصال بالفعل";
+"alreadyAContact"="%s موجود كجهة اتصال بالفعل.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
 "sentContact"="جهة الاتصال المرسلة: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
@@ -1367,7 +1367,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu رسائل غير مقروءة";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية لنفس المدة وبنفس سعر الفترة الأولية المختارة. يمكنك إيقاف التجديد التلقائي لاشتراكك ميغا برو MEGA Pro في موعد أقصاه 24 ساعة قبل أن يحين موعد سداد اشتراكك التالي عبر صفحة إعدادات الحساب iTunes اي تيونز الخاص بك. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة متجر التطبيقات App Store على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل Apple ID الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك بالفعل) ثم انقر فوق عرض المعرف. سيتم نقلك إلى صفحة حسابك حيث يمكنك التمرير لأسفل إلى مدير اشتراكات التطبيقات. من هناك ، يمكنك تحديد اشتراك ميغا برو MEGA Pro الخاص بك وعرض تاريخ التجديد المجدول، أو اختيار حزمة اشتراك مختلفة أو تبديل مفتاح التشغيل/الإيقاف إلى إيقاف التشغيل لتعطيل التجديد التلقائي لاشتراكك.";
+"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية لنفس المدة وبنفس سعر الفترة الأولية المختارة. يمكنك إيقاف التجديد التلقائي لاشتراكك ميغا برو MEGA Pro في موعد أقصاه 24 ساعة قبل أن يحين موعد سداد اشتراكك التالي عبر صفحة إعدادات الحساب iTunes اي تيونز الخاص بك. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة متجر التطبيقات App Store على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل Apple ID الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك بالفعل) ثم انقر فوق عرض المعرف. سيتم نقلك إلى صفحة حسابك حيث يمكنك التمرير لأسفل إلى مدير اشتراكات التطبيقات. من هناك، يمكنك تحديد اشتراك ميغا برو MEGA Pro الخاص بك وعرض تاريخ التجديد المجدول، أو اختيار حزمة اشتراك مختلفة أو تبديل مفتاح التشغيل/الإيقاف إلى إيقاف التشغيل لتعطيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="افتح ميغا MEGA و سجل دخولك للمتابعة";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1435,7 +1435,7 @@
 /* Label shown when current account does not have enough quota to complete the operation */
 "Not enough quota"="لا يوجد حجم متاح كافي";
 /* SDK error returned when a MFA is required to perform an operation */
-"Multi-factor authentication required"="المصادقة المزدوجة Two-Factor مطلوبة.";
+"Multi-factor authentication required"="المصادقة المزدوجة Two-Factor مطلوبة";
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="الولوج ممنوع لغيرمستخدمي مدير النظام";
 /* SDK error returned when a business account has expired */
@@ -1455,7 +1455,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
 /* Label shown when you call someone (outgoing call), before the call starts. */
-"calling..."="جار الاتصال";
+"calling..."="جار الاتصال…";
 /* notification subtitle of incoming calls */
 "Incoming call"="مكالمة واردة";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1473,7 +1473,7 @@
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="إعادة تعيين رمز الاستجابة السريعة QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
-"resetQrCodeFooter"="رموز الاستجابة السريعة QR السابقة ستصبح غير صالحة";
+"resetQrCodeFooter"="رموز الاستجابة السريعة QR السابقة ستصبح غير صالحة.";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
 "My QR code"="رمز الاستجابة السريعة QR الخاص بي";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
@@ -1645,7 +1645,7 @@
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
 "Save Images in Photos"="حفظ الصور في تطبيق الصور";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="حفظ  مقاطع الفيديو في تطبيق الصور";
+"Save Videos in Photos"="حفظ مقاطع الفيديو في تطبيق الصور";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="سيتم تخزين الصور و/ أو مقاطع الفيديو التي تم تنزيلها في مكتبة الوسائط المتعددة بالجهاز بدلاً من قسم غير متصل بالانترنت.";
 /* Setting associated with the 'Camera' of the device */
@@ -1687,9 +1687,9 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="تفعيل الكاميرا والمايكروفون";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="لإرسال رسائل صوتية وإجراء مكالمات صوتية وفيديو مشفرة ، اسمح لميغا MEGA بالوصول إلى الكاميرا والميكروفون";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="لإرسال رسائل صوتية وإجراء مكالمات صوتية وفيديو مشفرة، اسمح لميغا MEGA بالوصول إلى الكاميرا والميكروفون";
 /* Title label that explains that the user is going to be asked for the notifications permission */
-"Enable Notifications"="تفعيل الإشعارات ";
+"Enable Notifications"="تفعيل الإشعارات";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="نود أن نرسل إليك إشعارات حتى تتلقى رسائل جديدة على جهازك على الفور.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
@@ -1715,7 +1715,7 @@
 /* Text of a button which deletes all historical versions of files in the users entire account. */
 "Delete Previous Versions"="حذف النسخ السابقة";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف";
+"All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف.";
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="انت بصدد حذف كل النسخ المعدلة لكل الملفات. أي نسخة معدلة لملف مشارك معك من جهة اتصال يجب ان يحذف من قبله. \n\nيرجى الملاحظة انه لن يتم حذف النسخ الحالية للملفات.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
@@ -1731,15 +1731,15 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="لتعطيل الافراغ المجدول لسلة المحذوفات أو لتحديد زمن أطول للاحتفاظ، يجب ان تشترك بباقة برو Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="هل تريد انهاء كل الجلسات الفعالة حاليا؟ ذلك سيسجل الخروج من كل هذه الجلسات الفعالة باستثناء الحالية";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="هل تريد انهاء كل الجلسات الفعالة حاليا؟ ذلك سيسجل الخروج من كل هذه الجلسات الفعالة باستثناء الحالية.";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ انضم الى المكالمة.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ غادر المكالمة.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام";
+"There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="توجد مكالمة فعالة. انقر للانضمام";
+"There is an active call. Tap to join."="توجد مكالمة فعالة. انقر للانضمام.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="انقر للعودة الى المكالمة %@";
 /* Message shown in a chat room for a one on one call */
@@ -1805,7 +1805,7 @@
 /* The header of a notification related to payments */
 "Payment info"="معلومات الدفع";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً.";
+"PRO membership plan expiring soon"="ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="إشعار الإزالة";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1839,7 +1839,7 @@
 /* notification text */
 "A user has left the shared folder {0}"="أحد المستخدمين غادر التشارك على المجلد {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
-"Access to folders was removed."="تمت إزالة صلاحية الوصول إلى المجلدات";
+"Access to folders was removed."="تمت إزالة صلاحية الوصول إلى المجلدات.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added 1 file"="تم إضافة 1 ملف";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1863,7 +1863,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="تم استلام دفعتك للباقة %1.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="لم تنجح دفعتك للباقة %1";
+"Your payment for the %1 plan was unsuccessful."="لم تنجح دفعتك للباقة %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="ستنتهي صلاحية اشتراك برو Pro الخاص بك غداً.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1873,7 +1873,7 @@
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="لقد انتهت صلاحية إشتراك برو Pro الخاص بك منذ %1 يوم";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="تمت إزالة ملفك المشارك %1 (%2) بشكل عام";
+"Your publicly shared %1 (%2) has been taken down."="تمت إزالة ملفك المشارك %1 (%2) بشكل عام.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="تمت إعادة %1 (%2) الذي تم إزالته.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
@@ -1963,7 +1963,7 @@
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="اضغط هنا للحصول على معلومات";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="لا يوجد رابط محادثة متاح";
+"No chat link available."="لا يوجد رابط محادثة متاح.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="يرجى السماح بالوصول";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
@@ -1979,7 +1979,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="التغيير الى مخدم تجريبي؟";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد أنك تريد التغيير إلى المخدم التجريبي؟ من الممكن ان يتعرض حسابك  لمشاكل غير قابلة للإصلاح.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد أنك تريد التغيير إلى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="منح حق الوصول إلى دفتر العناوين الخاص بك";
 /* Detailed explanation of why the user should give permission to contacts */
@@ -2041,7 +2041,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="حسابك [B]معلق[/B] حالياً. يمكنك فقط تصفح بياناتك.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="لا يمكن لميغا MEGA الوصول إلى بياناتك. ومع ذلك ، يمكن لمسؤول حساب الأعمال الوصول إلى ترفيعات الكاميرا الخاصة بك.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="لا يمكن لميغا MEGA الوصول إلى بياناتك. ومع ذلك، يمكن لمسؤول حساب الأعمال الوصول إلى ترفيعات الكاميرا الخاصة بك.";
 /*  */
 "Something went wrong"="حدث خطأ ما";
 /* Title of the "Links" Shared Items. */
@@ -2079,7 +2079,7 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="تم كتم صوت الإشعارات";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="جاري إعادة اتصال …";
+"Reconnecting..."="جاري إعادة اتصال…";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="لقد عدت.";
 /* Subtitle of chat screen when the chat is inactive */
@@ -2157,7 +2157,7 @@
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="من الممكن أن تقوم باستخدام نفس كلمة المرور لحساب ميغا MEGA الخاص بك لخدمات الأخرى، وأن واحدة من هذه الخدمات الأخرى على الأقل قد تعرضت لاختراق للبيانات.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن  أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="تجاوز حد التراسل المتاح";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
@@ -2205,7 +2205,7 @@
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="إخفاء التفاعل مؤخراً";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="إخفاء التفاعل مؤخراً في قسم الصفحة الرئيسية";
+"settings.userInterface.hideRecentActivity.footer"="إخفاء التفاعل مؤخراً في قسم الصفحة الرئيسية.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="الإفتراضي";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
@@ -2263,7 +2263,7 @@
 /* Over Disk Quota of must act immediately to save your data */
 "<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>يجب أن تتصرف فوراً لحفظ بياناتك.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
-"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>لديك  <warn>%@</warn> متبقية للترقية.</body>";
+"<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>لديك <warn>%@</warn> متبقية للترقية.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="بعد ذلك، تخضع بياناتك للحذف.";
 /* Title for action to modify the registered phone number. */
@@ -2345,7 +2345,7 @@
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="نسخ الكل";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="خيارات مثل إرسال مفتاح فك التشفير بشكل منفصل أو تعيين تاريخ انتهاء الصلاحية أو كلمات مرور متاحة  لعنصر واحد فقط.";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="خيارات مثل إرسال مفتاح فك التشفير بشكل منفصل أو تعيين تاريخ انتهاء الصلاحية أو كلمات مرور متاحة لعنصر واحد فقط.";
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="تم نسخ الرابط إلى الحافظة";
 /* Message shown when some links have been copied to the Clipboard */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="ليس لديك الأذونات اللازمة لإعادة هذا الملف. للمتابعة، يمكننا إنشاء ملف جديد بالبيانات التي تم إرجاعها. هل ترغب في المتابعة؟";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="برو لايت Pro Lite";
+"Pro Lite"="برو لايت Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="حسابي";
 /* Text for title for favourite nodes */
@@ -2629,7 +2629,7 @@
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="انت الوحيد هنا…";
 /* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="رابط الاجتماع الالكتروني URL غير صالح  ";
+"meetings.joinMeeting.header"="رابط الاجتماع الالكتروني URL غير صالح";
 /* Message description when the user enters a invalid meeting URL */
 "meetings.joinMeeting.description"="تعذر الانضمام إلى الاجتماع. يرجى التحقق من صحة الرابط.";
 /* Message shown when the meeting link cannot be generated */
@@ -2679,7 +2679,7 @@
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="إدارة الاشتراكات";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="لديك اشتراك ميغا MEGA مفعل مع غوغل Google. يجب عليك إلغاؤه بشكل منفصل في غوغل بلاي Google Play ، حيث أن ميغا MEGA غير قادر على إلغائه من أجلك. قم بزيارة مركز المساعدة للحصول على مزيد من المعلومات.";
+"account.delete.subscription.googlePlay"="لديك اشتراك ميغا MEGA مفعل مع غوغل Google. يجب عليك إلغاؤه بشكل منفصل في غوغل بلاي Google Play، حيث أن ميغا MEGA غير قادر على إلغائه من أجلك. قم بزيارة مركز المساعدة للحصول على مزيد من المعلومات.";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="قم بزيارة متجر غوغل Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
@@ -2729,7 +2729,7 @@
 /* File extension: .bz2. Commercial names should be stay on English */
 "general.filetype.bz2"="ملف مضغوط UNIX";
 /* File extension: .c. Commercial names should be stay on English */
-"general.filetype.c"="الرماز المصدري C/C++ ";
+"general.filetype.c"="الرماز المصدري C/C++";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="الرماز المصدري C++";
 /* File extension. Commercial names should be stay on English */
@@ -2763,7 +2763,7 @@
 /* File extension: .fon. Commercial names should be stay on English */
 "general.filetype.fon"="خط";
 /* File extension: .gadget. Commercial names should be stay on English */
-"general.filetype.gadget"="أداة ويندوز  Windows Gadget";
+"general.filetype.gadget"="أداة ويندوز Windows Gadget";
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="صورة GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
@@ -2913,7 +2913,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="تحميل ملف السجل";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="شكراً لملاحظاتك.";
+"help.reportIssue.success.title"="شكراً لملاحظاتك";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="شكرا. سننظر في هذه المشكلة وسيتواصل معك أحد أعضاء فريقنا.";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="لقد أضفت بالفعل جميع جهات الاتصال الخاصة بك إلى هذه المحادثة.\nإذا كنت ترغب في إضافة المزيد من المشاركين فعليك أولاً بدعوتهم إلى قائمة جهات الاتصال الخاصة بك.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="ادعو";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="ملفات";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="مسح ضوئي";

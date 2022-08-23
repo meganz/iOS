@@ -441,7 +441,7 @@
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
 "general.error.charactersNotAllowed"="The following characters are not allowed: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Rename File %@ ?";
+"rename_file_alert_title"="Rename file %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Replace";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d folders shared successfully.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Import to Cloud Drive";
+"Import to Cloud Drive"="Import";
 /* Message shown when a file has been imported */
 "fileImported"="File imported";
 /* Message shown when some files have been imported */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Uploads Options!";
+"New Camera Upload!"="New Camera uploads options";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
 /* Title for an action to use most compatible formats */
@@ -791,7 +791,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can’t access your email, please contact support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="If you can’t access your email, please contact support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Cancellation link has expired.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Storage";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Storage";
+"account.storage.freePlan"="[B]20 GB+[/B] Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Transfer Quota";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1065,9 +1065,9 @@
 /*  */
 "chooseYourAccountType"="Choose your account type";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Storage";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1363,9 +1363,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu UNREAD MESSAGE";
+"unreadMessage"="%lu unread message";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu UNREAD MESSAGES";
+"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then tap View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS ON MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="My Account";
 /* Text for title for favourite nodes */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Please Upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
 /* Over Disk Quota paywall not final title. */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Join the largest secure cloud storage and collaboration platform in the world.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Get 20 GB for free";
+"meetings.joinMega.paragraph2.title"="Get 20 GB for free";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Sign up now and enjoy advanced collaboration features for free.";
 /* Message shown when the user privilege is changed to moderator */
@@ -2913,7 +2913,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Uploading Log File";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Thanks for Your Feedback";
+"help.reportIssue.success.title"="Thanks for your feedback";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -3063,6 +3063,6 @@
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Invite";
 /* Menu option from the `Add` section that allows the user to share files from Files app */
-"chat.addToChatMenu.filesApp"="Files app";
+"chat.addToChatMenu.filesApp"="Files";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Scan";

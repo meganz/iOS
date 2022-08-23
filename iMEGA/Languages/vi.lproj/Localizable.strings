@@ -71,7 +71,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin kiên nhẫn chờ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Bộ phận máy chủ hiện đang bận. Xin vui lòng chờ.";
+"serversAreTooBusy"="Bộ phận máy chủ hiện đang bận. Xin vui lòng chờ…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Không liên lạc được tới MEGA. Xin kiểm tra kết nối mạng hoặc thử lại sau.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -441,7 +441,7 @@
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
 "general.error.charactersNotAllowed"="Các ký tự không được phép sử dụng: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Đổi Tên %@?";
+"rename_file_alert_title"="Đổi tên %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Thay thế";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="Đã chia sẻ %d thư mục thành công.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Chuyển nhập vào Ổ Mây";
+"Import to Cloud Drive"="Chuyển nhập";
 /* Message shown when a file has been imported */
 "fileImported"="Tệp đã được chuyển nhập";
 /* Message shown when some files have been imported */
@@ -1363,9 +1363,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Có tin nhắn mới";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu TIN NHẮN CHƯA ĐỌC";
+"unreadMessage"="%lu tin nhắn chưa đọc";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu TIN NHẮN CHƯA ĐỌC";
+"unreadMessages"="%lu tin nhắn chưa đọc";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói thuê bao sẽ được tự động gia hạn chu kỳ kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó chạm vào Xem ID. Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA Pro của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi bật-tắt để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Bạn không có đủ quyền hạn để khôi phục tệp này. Để tiếp tục, cần phải tạo một tệp mới với dữ liệu muốn phục hồi. Bạn có muốn tiếp tục không?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Trang Tài Khoản";
 /* Text for title for favourite nodes */
@@ -2913,7 +2913,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Đang Gửi Tệp Nhật Ký";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Cảm Ơn Bạn Đã Gửi Phản Hồi";
+"help.reportIssue.success.title"="Cảm ơn bạn đã gửi phản hồi";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Xin cảm ơn bạn. Chúng tôi sẽ xem xét vấn đề và một người từ bộ phận trợ giúp sẽ liên lạc với bạn.";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="Bạn đã thêm tất cả các tên liên lạc đã có vào trong cuộc chát này rồi.\nNếu bạn muốn thêm thành viên nữa, trước hết hãy mời thêm người vào sổ liên lạc của bạn.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Mời";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="Tệp tin";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="Quét";
