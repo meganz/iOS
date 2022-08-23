@@ -1831,6 +1831,7 @@
 		B6B1A27928A1DE630057E75B /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */; };
 		B6B1A27A28A1DE630057E75B /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */; };
 		B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */; };
+		B6B23E8E28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B23E8D28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift */; };
 		B6B278DC24E1E89C00BB3E9A /* SMSUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B278DB24E1E89C00BB3E9A /* SMSUseCase.swift */; };
 		B6B278DE24E1E93000BB3E9A /* AchievementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B278DD24E1E93000BB3E9A /* AchievementUseCase.swift */; };
 		B6B3C366222628C200918D44 /* TransferResponseValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3C365222628C200918D44 /* TransferResponseValidator.m */; };
@@ -4191,6 +4192,7 @@
 		B6AF22C126097C310008FF72 /* DiskFullBlockingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingModel.swift; sourceTree = "<group>"; };
 		B6AF22DE26097F500008FF72 /* DiskFullBlockingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModelTests.swift; sourceTree = "<group>"; };
 		B6B1A27828A1DE630057E75B /* MEGAFileTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAFileTypes.swift; sourceTree = "<group>"; };
+		B6B23E8D28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryMapperTests.swift; sourceTree = "<group>"; };
 		B6B278DB24E1E89C00BB3E9A /* SMSUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSUseCase.swift; sourceTree = "<group>"; };
 		B6B278DD24E1E93000BB3E9A /* AchievementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUseCase.swift; sourceTree = "<group>"; };
 		B6B3C364222628C200918D44 /* TransferResponseValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferResponseValidator.h; sourceTree = "<group>"; };
@@ -5795,6 +5797,7 @@
 				32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */,
 				3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */,
 				B6DAED3E28AB322800703E28 /* PhotoSelectionTests.swift */,
+				B6B23E8D28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -13895,6 +13898,7 @@
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
+				B6B23E8E28AEFD8700A2A4D3 /* PhotoLibraryMapperTests.swift in Sources */,
 				8393E32426C52884000AACFA /* CallParticipantEntity+Additions.swift in Sources */,
 				B59383572877F8D400861244 /* MockCreateContextMenuRepository.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,

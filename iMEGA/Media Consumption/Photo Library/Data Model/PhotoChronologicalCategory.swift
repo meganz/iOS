@@ -30,7 +30,7 @@ extension PhotoChronologicalCategory {
 
 extension PhotoChronologicalCategory {
     static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.contentList == rhs.contentList
+        lhs.contentList == rhs.contentList && lhs.categoryDate == rhs.categoryDate
     }
 }
 
