@@ -58,7 +58,7 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
             }
         }
         
-        guard fileSystemRepository.systemVolumeAvailability() > node.size else {
+        guard let nodeSize = nodeRepository.sizeForNode(handle: handle), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
             completion?(.failure(.notEnoughSpace))
             return
         }
@@ -97,7 +97,7 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
             }
         }
         
-        guard fileSystemRepository.systemVolumeAvailability() > node.size else {
+        guard let nodeSize = nodeRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
             completion?(.failure(.notEnoughSpace))
             return
         }

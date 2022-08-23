@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 
 protocol TransferWidgetRouting: Routing {
@@ -17,9 +18,12 @@ final class CancellableTransferViewModel: ViewModelType {
     
     private let cancelToken = MEGACancelToken()
     private var processingComplete: Bool = false
+    private var isAlertBlocked: Bool = false
 
     private var transferErrors = [TransferErrorEntity]()
     
+    private var alertSubscription: AnyCancellable?
+
     // MARK: - Private properties
     private let router: routingProtocols
     // MARK: - Internel properties
@@ -63,6 +67,7 @@ final class CancellableTransferViewModel: ViewModelType {
             case .downloadFileLink:
                 startFileLinkDownload()
             }
+            showAlertViewIfNeeded()
         case .didTapCancelButton:
             if processingComplete {
                 return
@@ -77,6 +82,33 @@ final class CancellableTransferViewModel: ViewModelType {
     }
     
     // MARK: - Private
+    private func showAlertViewIfNeeded() {
+        alertSubscription = Just(Void.self)
+            .delay(for: .seconds(0.8), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                guard !self.cancelToken.isCancelled, !self.processingComplete else {
+                    self.alertSubscription?.cancel()
+                    return
+                }
+                self.router.showTransfersAlert()
+                self.blockAlertView()
+            }
+    }
+    
+    private func blockAlertView() {
+        isAlertBlocked = true
+        alertSubscription = Just(Void.self)
+            .delay(for: .seconds(1.2), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.isAlertBlocked = false
+                if (self.fileTransfersStarted() && self.folderTransfers.isEmpty || self.folderTransfersStartedTransferring()) && !self.cancelToken.isCancelled {
+                    self.manageTransfersCompletion()
+                }
+            }
+    }
+    
     private func fileTransfersStarted() -> Bool {
         fileTransfers.filter({ $0.state != .none }).count == fileTransfers.count
     }
@@ -86,41 +118,46 @@ final class CancellableTransferViewModel: ViewModelType {
     }
     
     private func continueFolderTransfersIfNeeded() {
-        guard !cancelToken.isCancelled else {
+        guard fileTransfersStarted() else {
             return
         }
         
-        guard folderTransfers.isNotEmpty else {
-            manageTransfersCompletion()
-            return
-        }
-        
-        switch transferType {
-        case .download:
-            if fileTransfersStarted() {
-                startFolderDownloads()
+        if cancelToken.isCancelled {
+            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+        } else {
+            if folderTransfers.isEmpty {
+                manageTransfersCompletion()
+            } else {
+                switch transferType {
+                case .download:
+                    startFolderDownloads()
+                case .upload:
+                    startFolderUploads()
+                default:
+                    break
+                }
             }
-        case .upload:
-            if fileTransfersStarted() {
-                startFolderUploads()
-            }
-        default:
-            break
         }
     }
     
     private func checkIfAllTransfersStartedTranferring() {
-        guard folderTransfersStartedTransferring(), !cancelToken.isCancelled else {
+        guard folderTransfersStartedTransferring() else {
             return
         }
-        manageTransfersCompletion()
+        if cancelToken.isCancelled {
+            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+        } else {
+            manageTransfersCompletion()
+        }
     }
     
     private func manageTransfersCompletion() {
-        if processingComplete {
+        if processingComplete || isAlertBlocked {
             return
         }
         processingComplete = true
+        alertSubscription?.cancel()
+        alertSubscription = nil
         if transferErrors.isEmpty {
             switch self.transferType {
             case .download, .downloadChat, .downloadFileLink:
@@ -289,10 +326,10 @@ final class CancellableTransferViewModel: ViewModelType {
                                                       cancelToken: cancelToken,
                                                       start: nil)
             { transferEntity in
-                transferViewEntity.stage = transferEntity.stage
-                transferViewEntity.state = transferEntity.state
                 switch transferEntity.stage {
                 case .transferringFiles:
+                    transferViewEntity.stage = transferEntity.stage
+                    transferViewEntity.state = transferEntity.state
                     self.checkIfAllTransfersStartedTranferring()
                 default:
                     break
