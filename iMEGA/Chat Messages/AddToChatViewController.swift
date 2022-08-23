@@ -6,16 +6,12 @@ protocol AddToChatViewControllerDelegate: AnyObject {
     func loadPhotosView()
     func showCamera()
     func showCloudDrive()
-    func startAudioCall()
-    func startVideoCall()
     func showVoiceClip()
     func showContacts()
     func showScanDoc()
-    func startGroupChat()
     func showLocation()
     func showGiphy()
-    func shouldDisableAudioMenu() -> Bool
-    func shouldDisableVideoMenu() -> Bool
+    func showFilesApp()
     func canRecordAudio() -> Bool
 }
 
@@ -211,14 +207,6 @@ class AddToChatViewController: UIViewController {
         }
     }
     
-    func updateAudioVideoMenu() {
-        guard let menuPageViewController = menuPageViewController else {
-            return
-        }
-        
-        menuPageViewController.updateAudioVideoMenu()
-    }
-    
     private func updateContentViewConstraints() {
         if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width > UIScreen.main.bounds.height) {
             let safeArea = SafeArea()
@@ -300,18 +288,6 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
         }
     }
     
-    func startVoiceCall() {
-        dismiss() {
-            self.addToChatDelegate?.startAudioCall()
-        }
-    }
-    
-    func startVideoCall() {
-        dismiss() {
-            self.addToChatDelegate?.startVideoCall()
-        }
-    }
-    
     func showScanDoc() {
         dismiss() {
             self.addToChatDelegate?.showScanDoc()
@@ -333,24 +309,16 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
         }
     }
     
-    func startGroupChat() {
-        dismiss() {
-            self.addToChatDelegate?.startGroupChat()
-        }
-    }
-    
     func showLocation() {
         dismiss() {
             self.addToChatDelegate?.showLocation()
         }
     }
     
-    func shouldDisableAudioMenu() -> Bool {
-        return addToChatDelegate?.shouldDisableAudioMenu() ?? false
-    }
-    
-    func shouldDisableVideoMenu() -> Bool {
-        return addToChatDelegate?.shouldDisableVideoMenu() ?? false
+    func showFilesApp() {
+        dismiss {
+            self.addToChatDelegate?.showFilesApp()
+        }
     }
     
     func numberOfPages(_ pages: Int) {
