@@ -381,7 +381,6 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
             if (error.type) return;
             
             [self.tableView reloadData];
-            [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOffline;
             break;
         }
             
