@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     private weak var baseViewController: UIViewController?
