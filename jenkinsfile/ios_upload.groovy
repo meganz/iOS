@@ -9,7 +9,7 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-    agent { label 'mac-jenkins-slave' }
+    agent { label 'mac-jenkins-slave || mac-jenkins-slave-ios' }
     options {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
