@@ -3,7 +3,7 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA accede alla tua fotocamera quando fai una foto, registri un video o effettui una chiamata all'interno dell'app.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA ha accesso alle tue foto e/o video quando li carichi, li condividi in chat e quando il Caricamento dalla fotocamera è attivo.";
+"NSPhotoLibraryUsageDescription"="MEGA ha accesso alle tue foto e video quando li carichi, li condividi in chat e quando il Caricamento da fotocamera è attivo.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="Permettere l'accesso alla tua lista dei contatti aiuta te e altre persone a trovare amici e ci aiuta a fornire un servizio migliore.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */

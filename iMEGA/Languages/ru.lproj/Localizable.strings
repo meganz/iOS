@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введите ключ дешифрирования";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Для доступа к этой папке/файлу нужен ключ дешифрования. Если у вас его нет, пожалуйста, свяжитесь с создателем ссылки.";
+"decryptionKeyAlertMessage"="Для доступа к этой папке или файлу нужен ключ дешифрования. Если у вас его нет, пожалуйста, свяжитесь с создателем ссылки.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Ключ дешифрования";
 /* Button title to try to decrypt the link */
@@ -71,7 +71,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Процесс длится дольше ожидаемого. Пожалуйста, подождите…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Серверы очень заняты. Пожалуйста, подождите.";
+"serversAreTooBusy"="Серверы очень заняты. Пожалуйста, подождите…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Не удаётся подключиться к MEGA. Пожалуйста, проверьте соединение или попробуйте позже.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Присоединиться к встрече как гость";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Неправильный email/пароль. Пожалуйста, попробуйте еще раз.";
+"invalidMailOrPassword"="Неправильный email или пароль. Пожалуйста, попробуйте еще раз.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Вы пытались зайти очень много раз. Пожалуйста, подождите до %@ и попробуйте снова.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -117,7 +117,7 @@
 /*  */
 "weak"="Ненадёжный";
 /*  */
-"passwordVeryWeakOrWeak"="Ваш пароль легко подбирается. Попробуйте использовать более длинный пароль. Используйте сочетания прописных и строчных букв. Используйте символы. Не используйте имена или словарные слова";
+"passwordVeryWeakOrWeak"="Ваш пароль легко подбирается. Попробуйте использовать более длинный пароль. Используйте сочетания прописных и строчных букв. Используйте символы. Не используйте имена или словарные слова.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="Средний";
 /*  */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Вы должны согласиться с тем, что понимаете опасность потери пароля";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="На введенный вами электронный адрес уже зарегистрирована учётная запись сервиса MEGA.";
+"emailAlreadyRegistered"="На введенный вами электронный адрес уже зарегистрирована учётная запись сервиса MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Ожидание подтверждения по электронной почте.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -163,7 +163,7 @@
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Открыть";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="Загружаемый файл занимает больше, чем доступно памяти";
+"fileTooBigMessage"="Загружаемый файл занимает больше, чем доступно памяти.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Открываемый файл занимает больше, чем доступно памяти.";
 /* Error title shown when you open a file or folder link and it's no longer available */
@@ -185,7 +185,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Загружаемая папка занимает больше, чем доступно памяти.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Папка '%@' не может быть создана";
+"folderCreationError"="Папка «%@» не может быть создана";
 /*  */
 "folderLinkUnavailableText1"="Это могло произойти в силу следующих причин:";
 /*  */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="Вы поделились %d папками.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Импортировать на облачный диск";
+"Import to Cloud Drive"="Импорт";
 /* Message shown when a file has been imported */
 "fileImported"="Файл импортирован";
 /* Message shown when some files have been imported */
@@ -483,7 +483,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Включить загрузки из камеры";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Закачки с камеры включены!";
+"cameraUploadsEnabled"="Закачки с камеры включены";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Загрузки из камеры завершены";
 /* Message shown while uploading files. Singular. */
@@ -693,15 +693,15 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Если включено, фото будут загружаться.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Фото будут загружаться в папку «Загрузки из камеры»";
+"Photos will be uploaded to Camera Uploads folder."="Фото будут загружаться в папку «Загрузки из камеры».";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Фото и видео будут загружаться в папку «Загрузки из камеры»";
+"Photos and videos will be uploaded to Camera Uploads folder."="Фото и видео будут загружаться в папку «Загрузки из камеры».";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Видео будут загружаться в папку «Загрузки из камеры»";
+"Videos will be uploaded to the Camera Uploads folder."="Видео будут загружаться в папку «Загрузки из камеры».";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Если включено, видео будут загружаться в облако.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Новые опции загрузок из камеры!";
+"New Camera Upload!"="Новые опции загрузок из камеры";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Теперь вы можете конвертировать фотографии и видео HEIC/HEVC в более широко совместимые форматы JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -757,7 +757,7 @@
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Экспорт ключа восстановления и его хранение в надёжном месте позволит задать новый пароль без потери данных.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления";
+"whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="Ключ восстановления скопирован в буфер обмена. Пожалуйста, храните его в надёжном месте.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -789,7 +789,7 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Удалить аккаунт";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Вы потеряете все связанные данные. Действительно  хотите продолжить?";
+"youWillLooseAllData"="Вы потеряете все связанные данные. Действительно хотите продолжить?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Если вы не можете получить доступ к своему адресу, свяжитесь с support@mega.nz.";
 /* During account cancellation (deletion) */
@@ -821,9 +821,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Файлы ([A]) и папки ([B]) будут необратимо удалены. Продолжить? (Это действие нельзя отменить.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 файл был удален с MEGA!";
+"fileRemovedToRubbishBinMessage"="1 файл был удален с MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d файлов удалено с MEGA!";
+"filesRemovedToRubbishBinMessage"="%d файлов удалено с MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 папка удалена с MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
@@ -945,7 +945,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Улучшить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Посмотреть и изменить профиль.";
+"viewAndEditProfile"="Посмотреть и изменить профиль";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Профиль";
 /* Title of the Achievements section */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ на диске";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20+ ГБ[/B] на диске";
+"account.storage.freePlan"="[B]20+ ГБ[/B] на диске";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Квота на передачу";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1079,7 +1079,7 @@
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Выберите тип учётной записи:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="Годовая подписка на 16% дешевле 12 месячных платежей";
+"twoMonthsFree"="Годовая подписка на 16 % дешевле 12 месячных платежей";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Чтобы улучшить текущую подписку, обратитесь в службу поддержки за [A]индивидуальным планом[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
@@ -1095,7 +1095,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Выберите тарифный план:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Экономия 16%";
+"save17"="Экономия 16 %";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="НЕВЕРНАЯ ПОКУПКА %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1163,7 +1163,7 @@
 /* Empty Conversations section */
 "noConversations"="Нет разговоров";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Начните безопасное общение со своими контактами благодаря сквозному шифрованию.";
+"Start chatting securely with your contacts using end-to-end encryption"="Начните безопасное общение со своими контактами благодаря сквозному шифрованию";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Включить";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1181,7 +1181,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] очистил(а) историю разговора.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="Пользователь [A] переименовал групповой чат в '[B]'.";
+"changedGroupChatNameTo"="Пользователь [A] переименовал групповой чат в «[B]»";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Добавить участника…";
 /* Menu item to add participants to a chat */
@@ -1203,7 +1203,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Менять статус на «отошёл» после 1 минуты неактивности.";
+"showMeAwayAfter1MinuteOfInactivity"="Менять статус на «отошёл» после 1 минуты неактивности";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сохранение статуса";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1269,7 +1269,7 @@
 /* A button label. The button allows the user to close the conversation. */
 "close"="Закрыть";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="У вас больше не будет доступа к этому разговору.";
+"youWillNoLongerHaveAccessToThisConversation"="У вас больше не будет доступа к этому разговору";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Покинуть Группу";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1323,7 +1323,7 @@
 /*  */
 "never"="Никогда";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Вы отключаете превью URL насовсем. Их можно включить позже в «настройках». Продолжить";
+"richPreviewsConfirmation"="Вы отключаете превью URL насовсем. Их можно включить позже в «настройках». Продолжить?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Удалить превью";
 /*  */
@@ -1363,9 +1363,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Новые сообщения";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="НЕ ПРОЧИТАНО: %lu";
+"unreadMessage"="Не прочитано: %lu";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="НЕ ПРОЧИТАНО: %lu";
+"unreadMessages"="Не прочитано: %lu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA Pro не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA Pro и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1629,7 +1629,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Вам нужно приложение-аутентификатор, чтобы включить 2FA в MEGA. Вы можете загрузить и установить приложение Google Authenticator, Duo Mobile, Authy или Microsoft Authenticator на свой телефон или планшет.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена.";
+"twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="При следующем входе в аккаунт система запросит 6-значный код из приложения-аутентификатора.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
@@ -1647,7 +1647,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Сохранять видео в «Фотографиях»";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Загруженные изображения и/или видео будут сохранены в медиабиблиотеке устройства, а не в локальном разделе.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Загруженные изображения и видео будут сохранены в медиабиблиотеке устройства, а не в локальном разделе.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Камера";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1823,7 +1823,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Отношения с контактом установлены";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Аккаунт был удален/отключен";
+"Account has been deleted/deactivated"="Аккаунт был удален или отключен";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Заблокировал ваш контакт";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -1879,7 +1879,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Голосовое сообщение";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Это действие не может быть выполнено, так как это приведет к превышению текущего лимита хранилища.";
+"This action can not be completed as it would take you over your current storage limit"="Это действие не может быть выполнено, так как это приведет к превышению текущего лимита хранилища";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Загрузки нельзя продолжить, потому что диск заполнен";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -1963,7 +1963,7 @@
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Коснитесь для информации";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="Нет доступной ссылки на чат";
+"No chat link available."="Нет доступной ссылки на чат.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Пожалуйста, откройте доступ";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="КОНТАКТЫ В MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="У вас есть ожидающий запрос в MEGA Secure Chat. Зарегистрируйтесь в MEGA и получите бесплатно 20 ГБ хранилища навсегда.";
+"contact.invite.message"="У вас есть ожидающий запрос в MEGA Secure Chat. Зарегистрируйтесь в MEGA и получите бесплатно 20 ГБ хранилища навсегда.";
 /* Destination folder name of chat files */
 "My chat files"="Мои файлы из чата";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2125,7 +2125,7 @@
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Вы достигли дневного лимита";
 /* Error message that will be shown when the code introduced do not match with the one you received */
-"The verification code doesn't match."="Код подтверждения не совпадает";
+"The verification code doesn't match."="Код подтверждения не совпадает.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Неправильный код. Пожалуйста, попробуйте ещё раз или отправьте повторно.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2335,7 +2335,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Задать пароль";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Экспортировать ссылку и ключ дешифрования отдельно";
+"Export the link and decryption key separately."="Экспортировать ссылку и ключ дешифрования отдельно.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Узнать больше";
 /* Text indicating the date until a link will be valid */
@@ -2363,7 +2363,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Эта ссылка недоступна, так как аккаунт пользователя был закрыт за грубое нарушение [A]условий использования[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="Нам сообщили, что эта папка/файл содержит нежелательный контент, такой как эксплуатация детей, насильственный экстремизм или жестокое обращение с животными. Аккаунт пользователя, создавшего ссылку, был закрыт, и его полная информация, включая IP-адрес, была предоставлена властям.";
+"Taken down due to severe violation of our terms of service"="Нам сообщили, что эта папка или файл содержит нежелательный контент, такой как эксплуатация детей, насильственный экстремизм или жестокое обращение с животными. Аккаунт пользователя, создавшего ссылку, был закрыт, и его полная информация, включая IP-адрес, была предоставлена властям.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Недоступно";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="У вас нет прав, необходимых для восстановления этого файла. Чтобы продолжить, мы можем создать новый файл с восстановленными данными. Хотите продолжить?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Мой аккаунт";
 /* Text for title for favourite nodes */
@@ -2531,9 +2531,9 @@
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="Текущий адрес электронной почты";
 /* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Хотите улучшить аккаунт?";
+"dialog.storage.odq.title"="Пожалуйста, улучшите аккаунт";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Ваш облачный диск почти заполнен. Улучшите аккаунт до Pro сейчас и получите до %@ ТБ (%@ ГБ) в облаке.";
+"dialog.storage.almostFull.detail"="Ваш облачный диск почти заполнен. Улучшите аккаунт до Pro сейчас и получите до %@ ТБ (%@ ГБ) в облаке.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Ваше облачное хранилище заполнено. Перейдите на подписку MEGA Pro, чтобы увеличить пространство для хранения и воспользоваться дополнительными преимуществами. Если вы превысите лимит хранилища и не улучшите аккаунт, или не удалите некоторые данные, ваш аккаунт может быть заблокирован. Пожалуйста, просмотрите электронные письма, которые мы вам отправили, для получения дополнительной информации.";
 /* Over Disk Quota paywall not final title. */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Присоединяйтесь к самой крупной в мире безопасной облачной платформе хранения и совместной работы.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Получите 20 ГБ бесплатно";
+"meetings.joinMega.paragraph2.title"="Получите 20 ГБ бесплатно";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Зарегистрируйтесь сейчас и наслаждайтесь расширенными функциями совместной работы бесплатно.";
 /* Message shown when the user privilege is changed to moderator */
@@ -2883,7 +2883,7 @@
 /* Description shown in chat screen if the user didn't allow access to photos */
 "chat.photos.allowPhotoAccessMessage"="Чтобы делиться фотографиями и видео, предоставьте MEGA доступ к своей галерее";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.title"="Прикрепить лог-файлы?";
+"help.reportIssue.attachLogFiles.title"="Прикрепить лог-файлы";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Прикрепить файлы журналов диагностики, чтобы облегчить отладку?";
 /* Title of the alert shown when you confirm to cancel pending transfers */
@@ -2989,7 +2989,7 @@
 /* Text of the update action when trying to upload a file and already exists in destination */
 "nameCollision.files.action.update.title"="Изменить";
 /* Text description for the update action when upload and already exists in destination */
-"nameCollision.files.action.update.description"="Этот файл будет обновлён новой версией:";
+"nameCollision.files.action.update.description"="Этот файл будет обновлён новой версией.";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Здесь только вы";
 /* Meetings end call dialog description */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="Вы уже добавили все свои контакты в этот чат.\nЕсли хотите добавить больше участников, сначала пригласите их в свой список контактов.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Пригласить";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="Файлы";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="Скан";
