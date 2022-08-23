@@ -19,7 +19,7 @@ final class CancellableTransferControllerWrapper<U: ViewModelType>: NSObject {
         createAlertController()
     }
 
-    func hasBeenPresented() {
+    func viewIsReady() {
         guard let onViewReady = CancellableTransferViewAction.onViewReady as? U.Action else { return }
         viewModel.dispatch(onViewReady)
     }
