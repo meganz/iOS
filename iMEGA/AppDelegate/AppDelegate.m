@@ -1762,12 +1762,6 @@
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
-    
-    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
-        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
-    } else if (newState >= MEGAChatConnectionLogging) {
-        [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
-    }
 }
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
