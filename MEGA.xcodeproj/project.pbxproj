@@ -212,11 +212,21 @@
 		321AF2FF2856DAF6004FCC1E /* PhotoLibraryContainerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321AF2FE2856DAF6004FCC1E /* PhotoLibraryContainerEntity.swift */; };
 		32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32303CF328657BA1005DF060 /* PhotosViewController+ContextMenu.swift */; };
 		325857332845D410007890F5 /* MediaUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325857322845D410007890F5 /* MediaUploadNodeAccess.swift */; };
+		325EFA7328AB9408005D4851 /* Slideshow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EFA7028AB9405005D4851 /* Slideshow.storyboard */; };
 		32860721288509DD0056A3A5 /* PhotoLibraryFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32860720288509DD0056A3A5 /* PhotoLibraryFilterView.swift */; };
+		328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913928A9DB890058C645 /* SlideShowCollectionView.swift */; };
+		328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913A28A9DB890058C645 /* SlideShowCollectionViewCell.swift */; };
+		328A913F28A9DB8A0058C645 /* SlideShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913B28A9DB8A0058C645 /* SlideShowViewController.swift */; };
+		328A914028A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */; };
 		329110FA288E39D6001324EA /* PhotoLibraryFilterLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329110F9288E39D6001324EA /* PhotoLibraryFilterLocationView.swift */; };
 		329110FC288E39FC001324EA /* PhotoLibraryFilterTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329110FB288E39FC001324EA /* PhotoLibraryFilterTypeView.swift */; };
 		3293D8092845B4380013EA72 /* PhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3293D8082845B4380013EA72 /* PhotosViewModel.swift */; };
 		3296053E288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */; };
+		32B0722928A4E0B5002BAE34 /* SlideShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */; };
+		32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */; };
+		32B0722E28A4E137002BAE34 /* SlideshowOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722D28A4E137002BAE34 /* SlideshowOrderType.swift */; };
+		32B0723028A4E17C002BAE34 /* SlideShowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722F28A4E17C002BAE34 /* SlideShowRouter.swift */; };
+		32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0723228A4E403002BAE34 /* SlideshowViewModelTests.swift */; };
 		32C98A3B2887DF0000B67B23 /* PhotoLibraryFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C98A3A2887DEFF00B67B23 /* PhotoLibraryFilterViewModel.swift */; };
 		32CB4911284EF42400697BA9 /* PhotoLibraryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */; };
 		32CB4914284EF56900697BA9 /* PhotoLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */; };
@@ -2752,11 +2762,21 @@
 		321AF2FE2856DAF6004FCC1E /* PhotoLibraryContainerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContainerEntity.swift; sourceTree = "<group>"; };
 		32303CF328657BA1005DF060 /* PhotosViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		325857322845D410007890F5 /* MediaUploadNodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUploadNodeAccess.swift; sourceTree = "<group>"; };
+		325EFA7028AB9405005D4851 /* Slideshow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Slideshow.storyboard; sourceTree = "<group>"; };
 		32860720288509DD0056A3A5 /* PhotoLibraryFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterView.swift; sourceTree = "<group>"; };
+		328A913928A9DB890058C645 /* SlideShowCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowCollectionView.swift; sourceTree = "<group>"; };
+		328A913A28A9DB890058C645 /* SlideShowCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowCollectionViewCell.swift; sourceTree = "<group>"; };
+		328A913B28A9DB8A0058C645 /* SlideShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowViewController.swift; sourceTree = "<group>"; };
+		328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowCollectionViewLayout.swift; sourceTree = "<group>"; };
 		329110F9288E39D6001324EA /* PhotoLibraryFilterLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterLocationView.swift; sourceTree = "<group>"; };
 		329110FB288E39FC001324EA /* PhotoLibraryFilterTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterTypeView.swift; sourceTree = "<group>"; };
 		3293D8082845B4380013EA72 /* PhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModel.swift; sourceTree = "<group>"; };
 		3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterViewModelTest.swift; sourceTree = "<group>"; };
+		32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowViewModel.swift; sourceTree = "<group>"; };
+		32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowPlaybackStatus.swift; sourceTree = "<group>"; };
+		32B0722D28A4E137002BAE34 /* SlideshowOrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowOrderType.swift; sourceTree = "<group>"; };
+		32B0722F28A4E17C002BAE34 /* SlideShowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowRouter.swift; sourceTree = "<group>"; };
+		32B0723228A4E403002BAE34 /* SlideshowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowViewModelTests.swift; sourceTree = "<group>"; };
 		32C98A3A2887DEFF00B67B23 /* PhotoLibraryFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterViewModel.swift; sourceTree = "<group>"; };
 		32CB4910284EF42400697BA9 /* PhotoLibraryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryUseCase.swift; sourceTree = "<group>"; };
 		32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryRepository.swift; sourceTree = "<group>"; };
@@ -5710,6 +5730,46 @@
 				329110FB288E39FC001324EA /* PhotoLibraryFilterTypeView.swift */,
 			);
 			path = FilterView;
+			sourceTree = "<group>";
+		};
+		328A913628A9DB330058C645 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				328A913B28A9DB8A0058C645 /* SlideShowViewController.swift */,
+				328A913928A9DB890058C645 /* SlideShowCollectionView.swift */,
+				328A913A28A9DB890058C645 /* SlideShowCollectionViewCell.swift */,
+				328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */,
+				325EFA7028AB9405005D4851 /* Slideshow.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		32B0722728A4E082002BAE34 /* Slideshow Library */ = {
+			isa = PBXGroup;
+			children = (
+				328A913628A9DB330058C645 /* Views */,
+				32B0722A28A4E0EC002BAE34 /* Data Model */,
+				32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */,
+				32B0722F28A4E17C002BAE34 /* SlideShowRouter.swift */,
+			);
+			path = "Slideshow Library";
+			sourceTree = "<group>";
+		};
+		32B0722A28A4E0EC002BAE34 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */,
+				32B0722D28A4E137002BAE34 /* SlideshowOrderType.swift */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		32B0723128A4E3CA002BAE34 /* Slideshow */ = {
+			isa = PBXGroup;
+			children = (
+				32B0723228A4E403002BAE34 /* SlideshowViewModelTests.swift */,
+			);
+			path = Slideshow;
 			sourceTree = "<group>";
 		};
 		32CB490D284EF40B00697BA9 /* Photos */ = {
@@ -9682,6 +9742,7 @@
 			children = (
 				12397E1A2820C43E00A30CCC /* Album Library */,
 				B6C444E0274A28AA00268D9A /* Photo Library */,
+				32B0722728A4E082002BAE34 /* Slideshow Library */,
 			);
 			path = "Media Consumption";
 			sourceTree = "<group>";
@@ -9966,6 +10027,7 @@
 				BFF0EE2E2630E34300FAEFF9 /* Meeting */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				32F03D54287D222800C518A4 /* Photos */,
+				32B0723128A4E3CA002BAE34 /* Slideshow */,
 			);
 			path = MEGAUnitTests;
 			sourceTree = "<group>";
@@ -11655,6 +11717,7 @@
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				5B727399240D3465005816AB /* altIconMinimal@3x.png in Resources */,
 				5B86D7C5248957E100B7888D /* ContactsTableViewHeader.xib in Resources */,
+				325EFA7328AB9408005D4851 /* Slideshow.storyboard in Resources */,
 				83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */,
 				BF5E33922558D2890055395E /* FileExplorerGridCell.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
@@ -11921,6 +11984,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				325857332845D410007890F5 /* MediaUploadNodeAccess.swift in Sources */,
+				32B0722928A4E0B5002BAE34 /* SlideShowViewModel.swift in Sources */,
 				83B6172F27DB521200492E46 /* DownloadNodeUseCase.swift in Sources */,
 				B64F9A9F2238F4A4000A4EA7 /* AssetResourceUploadOperation.m in Sources */,
 				B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */,
@@ -12052,6 +12116,7 @@
 				B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */,
 				0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */,
 				5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */,
+				32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */,
 				B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */,
 				5DFBF1F024F4AEC700BB662B /* UploadPhotoAssetsUseCaseProtocol.swift in Sources */,
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
@@ -12249,6 +12314,7 @@
 				839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				B6AADEA825188D77009A874C /* SMSRepository.swift in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
+				328A914028A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift in Sources */,
 				B6C5D0A02718DAAA004FB105 /* PhotoLibrary.swift in Sources */,
 				A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */,
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
@@ -12446,6 +12512,7 @@
 				1208CEC527FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
+				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
 				B6AADEC2251894C1009A874C /* AchievementRepositoryProtocol.swift in Sources */,
 				BF66DF222612C23600066F35 /* ChatRoomRepositoryProtocol.swift in Sources */,
@@ -12495,6 +12562,7 @@
 				B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */,
+				32B0722E28A4E137002BAE34 /* SlideshowOrderType.swift in Sources */,
 				BF782D68269BA4BB0001D169 /* AchievementTypeEntity.swift in Sources */,
 				B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
@@ -12877,6 +12945,7 @@
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
+				328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */,
 				12BDD4DA28285C0700009D73 /* AlbumContentViewModel.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				BF49DF352820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift in Sources */,
@@ -12914,6 +12983,7 @@
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */,
+				32B0723028A4E17C002BAE34 /* SlideShowRouter.swift in Sources */,
 				12BC3E7D27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
 				C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */,
@@ -13206,6 +13276,7 @@
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */,
 				5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */,
+				328A913F28A9DB8A0058C645 /* SlideShowViewController.swift in Sources */,
 				12696B0E27A8B122008628EA /* PhotoLibraryZoomControl.swift in Sources */,
 				B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */,
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
@@ -13877,6 +13948,7 @@
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
 				BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */,
+				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				B6AADF042518B80D009A874C /* CheckSMSUseCaseTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,

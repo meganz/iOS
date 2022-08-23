@@ -193,6 +193,13 @@ extension NodeAction {
         return NodeAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: Asset.Images.NodeActions.saveToPhotos.image, type: .saveToPhotos)
     }
     
+    class func slideshowAction() -> NodeAction {
+        return NodeAction(title: Strings.Localizable.SharedItems.Menu.Slideshow.title,
+                          detail: nil,
+                          image: Asset.Images.NodeActions.slideshow.image,
+                          type: .slideshow)
+    }
+    
     class func sendToChatAction() -> NodeAction {
         return NodeAction(title: Strings.Localizable.General.sendToChat, detail: nil, image: Asset.Images.NodeActions.sendToChat.image, type: .sendToChat)
     }

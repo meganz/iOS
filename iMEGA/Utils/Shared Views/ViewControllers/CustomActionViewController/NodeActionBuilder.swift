@@ -23,6 +23,7 @@ final class NodeActionBuilder {
     private var viewMode: ViewModePreference = .list
     private var nodeSelectionType: NodeSelectionType = .single
     private var isTakedown = false
+    private var isSlideshow = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -133,6 +134,11 @@ final class NodeActionBuilder {
     
     func setIsTakedown(_ isTakedown: Bool) -> NodeActionBuilder {
         self.isTakedown = isTakedown
+        return self
+    }
+    
+    func setIsSlideshow(_ isSlideshow: Bool) -> NodeActionBuilder {
+        self.isSlideshow = isSlideshow
         return self
     }
     
@@ -449,6 +455,10 @@ final class NodeActionBuilder {
         
         if isMediaFile {
             nodeActions.append(NodeAction.saveToPhotosAction())
+        }
+        
+        if isSlideshow {
+            nodeActions.append(NodeAction.slideshowAction())
         }
         
         nodeActions.append(NodeAction.downloadAction())
