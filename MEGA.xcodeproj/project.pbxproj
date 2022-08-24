@@ -11225,7 +11225,7 @@
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
 				942254FF1EDC03150074C51A /* Embed App Extensions */,
-				2FCB996A24CA8CA10040E825 /* Run Script */,
+				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 			);
 			buildRules = (
 			);
@@ -11906,7 +11906,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2FCB996A24CA8CA10040E825 /* Run Script */ = {
+		2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -11915,14 +11915,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Run Script: Automatically sets SDK and chat SDK commit hashes";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This script automatically sets the SDK and Chat SDK commit hashes (where the application points to) in the AboutTableViewController\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
 		};
 		B5D57CB327968B820043BA50 /* SwiftGen Script */ = {
 			isa = PBXShellScriptBuildPhase;
