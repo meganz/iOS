@@ -31,7 +31,7 @@
 /* Alert title to attract attention */
 "attention"="请注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="请在设置中允许MEGA应用程序访问您的相机。";
+"cameraPermissions"="请在设置中允许MEGA应用程序访问您的相机";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="请在您的设置中允许MEGA应用程序访问您的麦克风";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -133,7 +133,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href=\"terms\">服务条款</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="我了解[S]如果我忘记密码，则会丢失我的数据。[/S]了解更多关于<a href=\"terms\">MEGA端到端加密技术</a>.";
+"agreeWithLosingPasswordYouLoseData"="我了解[S]如果我忘记密码，则会丢失我的数据。[/S]了解更多关于<a href=\"terms\">MEGA的端到端加密技术</a>。";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="请输入一个有效的名字";
 /* Error text shown when you have not written the same password */
@@ -467,9 +467,9 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="文件夹已共享";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="已成功共享%d个文件夹.";
+"sharedFolders_success"="已成功共享%d个文件夹。";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="导入云盘";
+"Import to Cloud Drive"="输入";
 /* Message shown when a file has been imported */
 "fileImported"="文件已导入";
 /* Message shown when some files have been imported */
@@ -479,7 +479,7 @@
 /* Button title that skips the current action */
 "skipButton"="跳过";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="自动备份您的照片和视频到您的云盘";
+"Automatically backup your photos and videos to the Cloud Drive."="自动备份您的照片和视频到您的云盘。";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="启用相机上传";
 /* Success message shown when Camera Uploads has been enabled */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="当开启相机上传后，视频将会被上传。";
 /* Title for new camera upload feature */
-"New Camera Upload!"="全新相机上传选项！";
+"New Camera Upload!"="全新相机上传选项";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="现在您可以选择将HEIC/HEVC格式的照片和视频转换为更兼容的JPEG/H.264格式。";
 /* Title for an action to use most compatible formats */
@@ -723,13 +723,13 @@
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="上传隐藏相册";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="上传每个实况照片的照片和视频版本";
+"The video and the photo in each Live Photo will be uploaded."="上传每个实况照片的照片和视频版本。";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="只上传每个实况照片的照片版本";
+"Only the photo in each Live Photo will be uploaded."="只上传每个实况照片的照片版本。";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="上传连拍照片序列中的所有照片";
+"All the photos from your burst photo sequences will be uploaded."="上传连拍照片序列中的所有照片。";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="只上传连拍照片中的个人收藏照片";
+"Only the representative photos from your burst photo sequences will be uploaded."="只上传连拍照片中的个人收藏照片。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隐藏相册是指您在设备的照片中隐藏照片或视频的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
@@ -791,13 +791,13 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您将丢失与此帐户关联的所有数据。您确定要继续吗？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您无法访问您的邮箱，请联系support@mega.nz。";
+"ifYouCantAccessYourEmailAccount"="如果您无法访问您的邮箱，请联系support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消链接已过期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="这是删除帐户的最后一步。您将永久丢失存储在云盘中的所有数据。请在下方输入您的密码。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="您的帐户已成功删除";
+"accountCanceledSuccessfully"="您的帐户已成功删除。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="关闭帐户";
 /* Title for the action that allows to remove a file or folder */
@@ -899,7 +899,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="擦除本地数据";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="若尝试10次失败后，您的帐户将被登出，您的离线文件将被删除。";
+"failedAttempstSectionTitle"="若尝试10次失败后，您的帐户将被登出，您的离线文件将被删除";
 /* Button text to change the passcode type. */
 "Passcode Options"="密码选项";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@存储空间";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20GB+[/B]存储空间";
+"account.storage.freePlan"="[B]20 GB+[/B]存储空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="传输流量";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1065,9 +1065,9 @@
 /*  */
 "chooseYourAccountType"="选择您的帐户类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@TB (%@GB)[/S]的云存储空间。";
+"cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@TB (%@GB)[/S]的云存储空间。";
+"cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="存储空间";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1289,7 +1289,7 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]保密性。[/S]只有发送人和接收人才能解译并查看聊天内容。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]真实性。 [/S] 我们的系统能确保接收到的资料是由真实的发件人发送，且其内容在传输过程中不会被篡改。";
+"authenticityExplanation"="[S]真实性。[/S] 系统确保收到的数据是由显示的发件人发送，并且其内容在传输过程中未被篡改。";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="未找到聊天";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1343,7 +1343,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新共享文件夹";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="您确定要取消注册吗?";
+"areYouSureYouWantToAbortTheRegistration"="您确定要取消注册吗？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="如果您的电子邮件地址拼写错误，请更改后点击“重新发送”。";
 /* A button to resend the email confirmation. */
@@ -1427,7 +1427,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="已违反服务条款";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="传输失败，递归目录结构错误。";
+"Upload produces recursivity"="传输失败，递归目录结构错误";
 /* Error shown when downloading a file that has violated Terms of Service. */
 "transfer.error.termsOfServiceViolation"="已违反服务条款";
 /* Error shown when SSL check has failed */
@@ -1469,7 +1469,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自动接受";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="通过扫描二维码添加的用户会自动添加到您的联系人列表";
+"autoAcceptFooter"="通过扫描二维码添加的用户会自动添加到您的联系人列表。";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重置二维码";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1553,7 +1553,7 @@
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="登出帐户前，请确认您是否记住了您的密码。如果您忘记密码，则无法访问您的数据。";
 /* state previous to import a file */
-"loading"="加载中";
+"loading"="加载中⋯";
 /*  */
 "next"="接下来";
 /* Button title to allow the user ignore something */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上的联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="您有一条MEGAchat消息等待查收。注册MEGA帐户即可获得20GB永久免费存储空间。";
+"contact.invite.message"="您有一条MEGAchat消息等待查收。注册MEGA帐户即可获得20 GB永久免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2125,7 +2125,7 @@
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="您已达到每日限额";
 /* Error message that will be shown when the code introduced do not match with the one you received */
-"The verification code doesn't match."="验证码不匹配";
+"The verification code doesn't match."="验证码不匹配。";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="验证码错误。请再试一次或重新发送。";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2335,7 +2335,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="设置密码";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="单独导出链接和解密密钥";
+"Export the link and decryption key separately."="单独导出链接和解密密钥。";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="了解更多";
 /* Text indicating the date until a link will be valid */
@@ -2461,7 +2461,7 @@
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "settings.cookies.essential.alwaysOn"="始终开启";
 /* Cookie settings dialog text. */
-"settings.cookies.essential.footer"="为您提供重要功能和安全访问我们服务的必要条件。 因此，无需进行设置。";
+"settings.cookies.essential.footer"="为您提供重要功能和安全访问我们服务的必要条件。因此，无需进行设置。";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics"="性能与分析Cookies";
 /* Cookie settings dialog text. */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您没有恢复此文件所需的权限。若继续，我们可以使用恢复的数据创建一个新文件。 您想继续吗？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的帐户";
 /* Text for title for favourite nodes */
@@ -2493,9 +2493,9 @@
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="快速访问您的“离线”";
 /* Dialog title for the no enough device storage screen */
-"The device does not have enough space for MEGA to run properly."="设备存储空间不足，MEGA无法正常运行";
+"The device does not have enough space for MEGA to run properly."="设备存储空间不足，MEGA无法正常运行。";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="请删除不常用的应用程序或大型视频文件以释放设备存储空间。您可以通过以下步骤进行设置：%@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="请删除不常用的应用程序或大型视频文件以释放设备存储空间。您可以通过以下步骤进行设置 %@";
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="开启通知";
 /* The description of Turn on Notifications view */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="请升级帐户";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="您的云盘空间几乎已满。立即升级至Pro会员帐户并获得最高%@TB（%@GB）的云存储空间。";
+"dialog.storage.almostFull.detail"="您的云盘空间几乎已满。立即升级至Pro会员帐户并获得最高%@ TB（%@ GB）的云存储空间。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="您的云盘空间已满。请升级至MEGA Pro会员增加您的存储空间并享受其他会员服务。如果您没有升级帐户或删除多余数据且仍然超出存储空间上限，您的帐户可能会被锁定。请查看我们发送给您的电子邮件以了解更多信息。";
 /* Over Disk Quota paywall not final title. */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="加入全球最大的安全云存储和协作平台。";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="获得20GB免费存储空间";
+"meetings.joinMega.paragraph2.title"="获得20 GB免费存储空间";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="立即注册并免费享受全球领先的协作平台。";
 /* Message shown when the user privilege is changed to moderator */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="您已将所有联系人添加到此聊天中。\n如果您想添加更多参与者，请先邀请他们成为您的联系人。";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="邀请";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="文件";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="扫描";

@@ -3,11 +3,11 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA posiada dostęp do mikrofonu aby umożliwić ci przeprowadzanie rozmów wideo.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA ma dostęp do Twoich zdjęć/filmów, jeżeli je wcześniej wgrasz lub masz uruchomioną funkcję wgrywania zdjęć.";
+"NSPhotoLibraryUsageDescription"="MEGA ma dostęp do Twoich zdjęć i filmów, jeżeli je wcześniej wgrasz lub masz uruchomioną funkcję wgrywania zdjęć.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="Zezwolenie na dostęp do książki adresowej pomaga Tobie i innym osobom znaleźć przyjaciół i pomaga nam zapewnić lepszą obsługę.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA wymaga dostępu do biblioteki twoich zdjęć, aby wgrać zdjęcia do Twojej galerii na urządzeniu.";
+"NSPhotoLibraryAddUsageDescription"="MEGA wymaga dostępu do biblioteki twoich zdjęć, aby wgrać zdjęcia do Twojej galerii na urządzeniu";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="MEGA wykorzystuje dostęp do Face ID aby umożliwić łatwy dostęp do aplikacji bez używania kodu.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */

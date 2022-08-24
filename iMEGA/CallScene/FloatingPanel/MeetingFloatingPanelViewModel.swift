@@ -198,18 +198,18 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     //MARK:- Private methods
     private func inviteParticipants() {
-        let participantsAddingViewFactory = ParticipantsAddingViewFactory(
-            userUseCase: userUseCase,
-            chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
-        )
+        let participantsAddingViewFactory = createParticipantsAddingViewFactory()
+        
+        guard participantsAddingViewFactory.hasVisibleContacts else {
+            router.showNoAvailableContactsAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory)
+            return
+        }
+        
         
         let excludedHandles = recentlyAddedHandles
         recentlyAddedHandles = []
                         
-        guard participantsAddingViewFactory.shouldShowAddParticipantsScreen(
-            withExcludedHandles: Set(excludedHandles)
-        ) else {
+        guard participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: Set(excludedHandles)) else {
             router.showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory)
             return
         }
@@ -222,6 +222,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             self.recentlyAddedHandles.append(contentsOf: userHandles)
             userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
         }
+    }
+    
+    private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
+        ParticipantsAddingViewFactory(
+            userUseCase: userUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatId: chatRoom.chatId
+        )
     }
     
     private func addChatRoomParticipantsChangedListener() {

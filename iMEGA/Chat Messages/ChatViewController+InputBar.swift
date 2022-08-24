@@ -2,6 +2,7 @@ import Foundation
 import MessageKit
 import ISEmojiView
 import VisionKit
+import CoreServices
 
 extension ChatViewController {
     
@@ -651,6 +652,19 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         present(viewController: pickerController)
     }
     
+    func showFilesApp() {
+        let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypeContent as String,
+                                                                            kUTTypeData as String,
+                                                                            kUTTypePackage as String,
+                                                                            "com.apple.iwork.pages.pages",
+                                                                            "com.apple.iwork.numbers.numbers",
+                                                                            "com.apple.iwork.keynote.key"],
+                                                            in: .import)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = true
+        present(documentPicker, animated: true)
+    }
+    
     func showGiphy() {
         let vc = GiphySelectionViewController(chatRoom: chatRoom)
         let nav = MEGANavigationController(rootViewController: vc)
@@ -706,18 +720,6 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         present(viewController: contactsNavigationController)
     }
     
-    func startGroupChat() {
-        guard let (contactsNavigationController, contactsViewController) = createContactsViewController() else {
-            return
-        }
-
-        contactsViewController.contactsMode = .chatCreateGroup
-        contactsViewController.createGroupChat = { [weak self] in
-            self?.createGroupChat(selectedObjects: $0, groupName: $1, keyRotationEnabled: $2, getChatLink: $3)
-        }
-        present(viewController: contactsNavigationController)
-    }
-    
     func showLocation() {
         let genericRequestDelegate = MEGAGenericRequestDelegate { (request, error) in
             if error.type != .apiOk {
@@ -760,18 +762,6 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         MEGASdkManager.sharedMEGASdk().isGeolocationEnabled(with: genericRequestDelegate)
     }
     
-    func shouldDisableAudioMenu() -> Bool {
-        return shouldDisableAudioVideoCall
-    }
-    
-    func shouldDisableVideoMenu() -> Bool {
-        guard !chatRoom.isGroup else {
-            return true
-        }
-        
-        return shouldDisableAudioVideoCall
-    }
-    
     func canRecordAudio() -> Bool {
         if !isAudioPermissionAuthorized() {
             return false
@@ -807,5 +797,23 @@ extension ChatViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController,
                                    traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
+    }
+}
+
+extension ChatViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
+        MyChatFilesFolderNodeAccess.shared.loadNode { [weak self] myChatFilesFolderNode, error in
+            guard let myChatFilesFolderNode = myChatFilesFolderNode, let self = self else {
+                if let error = error {
+                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
+                }
+                return
+            }
+            
+            urls.forEach { url in
+                self.uploadAsset(withFilePath: url.path, parentNode: myChatFilesFolderNode, localIdentifier: "")
+            }
+        }
     }
 }

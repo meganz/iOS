@@ -847,9 +847,6 @@
 		831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */; };
 		8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8320213522B78D530057D96F /* ContactsOnMegaViewController.swift */; };
-		8327EE1C2833916C00068856 /* FileVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */; };
-		8327EE1F2833917D00068856 /* FileVersionsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */; };
-		8327EE202833918900068856 /* FileVersionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */; };
 		8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
 		832CAEEF2864857D0069409D /* HangOrEndCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */; };
@@ -1336,11 +1333,7 @@
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */; };
-		A81971E126FCD118007DC7B1 /* FileVersionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */; };
 		A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E326FDBE82007DC7B1 /* FileVersioningViewModelTests.swift */; };
-		A81971E626FDD85A007DC7B1 /* MockFileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */; };
-		A81971E826FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */; };
-		A81971EA26FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */; };
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
@@ -1400,7 +1393,6 @@
 		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
 		A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
-		A84E92E626FB708D00606AA7 /* FileVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
@@ -1496,7 +1488,6 @@
 		A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
-		A8E1CFA326EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */; };
 		A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D8EA277F316E009093C5 /* Logger.swift */; };
 		A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */; };
 		A8E5E52B282A913F007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */; };
@@ -3758,11 +3749,7 @@
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
 		A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FileVersioning.storyboard; sourceTree = "<group>"; };
-		A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileVersionErrorEntity.swift; sourceTree = "<group>"; };
 		A81971E326FDBE82007DC7B1 /* FileVersioningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewModelTests.swift; sourceTree = "<group>"; };
-		A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileVersionsRepository.swift; sourceTree = "<group>"; };
-		A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileVersionsUseCase.swift; sourceTree = "<group>"; };
-		A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsUseCaseTests.swift; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomModalAlertViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomModalAlertViewController.xib; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
@@ -3801,7 +3788,6 @@
 		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
 		A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Mapper.swift"; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
-		A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsUseCase.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -3885,7 +3871,6 @@
 		A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
-		A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileVersionsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		A8E1D8EA277F316E009093C5 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ExtensionLogFiles.swift"; sourceTree = "<group>"; };
 		A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SynchronousBGThread.swift"; sourceTree = "<group>"; };
@@ -8844,14 +8829,6 @@
 			path = Versions;
 			sourceTree = "<group>";
 		};
-		A84E92E426FB706E00606AA7 /* Versions */ = {
-			isa = PBXGroup;
-			children = (
-				A84E92E526FB708D00606AA7 /* FileVersionsUseCase.swift */,
-			);
-			path = Versions;
-			sourceTree = "<group>";
-		};
 		A861B57927BE7B8C009C29C2 /* Help */ = {
 			isa = PBXGroup;
 			children = (
@@ -9090,14 +9067,6 @@
 				A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */,
 			);
 			path = BusinessExpiredViewController;
-			sourceTree = "<group>";
-		};
-		A8E1CFA126EA655A00EB7D3A /* Versions */ = {
-			isa = PBXGroup;
-			children = (
-				A8E1CFA226EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift */,
-			);
-			path = Versions;
 			sourceTree = "<group>";
 		};
 		A8EE47AB27DFAEF600D37685 /* Report Issue */ = {
@@ -9541,7 +9510,6 @@
 			children = (
 				9428B99A281922B100DB7250 /* ContextMenu */,
 				129D51CE2821D58200A4D4D3 /* Album */,
-				A84E92E426FB706E00606AA7 /* Versions */,
 				BFAC87B2260006E5009CA3F6 /* AudioVideo */,
 				838A7B5225D55EE200767DB0 /* Calls */,
 				BF90C789260406AF006061F8 /* User */,
@@ -9664,7 +9632,6 @@
 				BFAC874A25FEF713009CA3F6 /* AudioVideo */,
 				8396FBE225D68E4C00EB50FD /* User */,
 				838A7B7A25D5679100767DB0 /* Calls */,
-				A8E1CFA126EA655A00EB7D3A /* Versions */,
 				0D213E79263A609D00B43723 /* Node */,
 				0D7E5FB72634E4CA00C5CB2A /* Transfer */,
 				5BC47E30253F0FAB00853323 /* Chat */,
@@ -9811,7 +9778,6 @@
 				B6AADF0A2518BB0E009A874C /* AchievementUseCaseTests.swift */,
 				B6FD6518268D8A2300988A17 /* RatingRequestingTests.swift */,
 				A8AAE6B826C2AA38002243C0 /* AppFirstLaunchUseCaseTests.swift */,
-				A81971E926FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift */,
 				A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */,
 				A81F9BAB27E9F74700D47C0D /* CookieSettingsUseCaseTests.swift */,
 				A81BD5CF27EB697B00234902 /* ClearChatHistoryUseCaseTests.swift */,
@@ -10141,7 +10107,6 @@
 				B6AADEEB2518A377009A874C /* MockSMSRepository.swift */,
 				B6AADF112518BB67009A874C /* MockAchievementRepository.swift */,
 				A8AAE6BA26C2AC20002243C0 /* MockCredentialRepository.swift */,
-				A81971E526FDD85A007DC7B1 /* MockFileVersionsRepository.swift */,
 				A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */,
 				A81F9BA727E9F62D00D47C0D /* MockCookieSettingsRepository.swift */,
 				A81BD5CB27EB68C400234902 /* MockManageChatHistoryRepository.swift */,
@@ -10172,7 +10137,6 @@
 				5BBC13EB26CE86D80010115B /* MockAccountUseCase.swift */,
 				B6FD6514268D818D00988A17 /* MockShareUseCase.swift */,
 				B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */,
-				A81971E726FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift */,
 				A81F9BB127EA014B00D47C0D /* MockCookieSettingsUseCase.swift */,
 				A81BD5D327EB702200234902 /* MockClearChatHistoryUseCase.swift */,
 				A81BD5D527EB708000234902 /* MockHistoryRetentionUseCase.swift */,
@@ -10369,7 +10333,6 @@
 			children = (
 				BF782D46269BA4BA0001D169 /* Chat */,
 				5B151E32276BB00900EA9BDD /* ExportFileErrorEntity.swift */,
-				A81971E026FCD118007DC7B1 /* FileVersionErrorEntity.swift */,
 				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
 				125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */,
 				BF782D45269BA4BA0001D169 /* PSAErrorEntity.swift */,
@@ -11262,7 +11225,7 @@
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
 				942254FF1EDC03150074C51A /* Embed App Extensions */,
-				2FCB996A24CA8CA10040E825 /* Run Script */,
+				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 			);
 			buildRules = (
 			);
@@ -11943,7 +11906,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2FCB996A24CA8CA10040E825 /* Run Script */ = {
+		2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -11952,14 +11915,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Run Script: Automatically sets SDK and chat SDK commit hashes";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This script automatically sets the SDK and Chat SDK commit hashes (where the application points to) in the AboutTableViewController\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
 		};
 		B5D57CB327968B820043BA50 /* SwiftGen Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -12132,7 +12095,6 @@
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
 				C4EACA912772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
 				5B9199F426E7CAF600402358 /* ThumbnailRepository.swift in Sources */,
-				A81971E126FCD118007DC7B1 /* FileVersionErrorEntity.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				B66E8074275A0C3000502601 /* PhotoCell.swift in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
@@ -12395,7 +12357,6 @@
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				5B98BE1127AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift in Sources */,
-				A81971E626FDD85A007DC7B1 /* MockFileVersionsRepository.swift in Sources */,
 				2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */,
 				BF99A41C24B2AC1B0035A183 /* ChatUploader.swift in Sources */,
 				2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */,
@@ -12403,7 +12364,6 @@
 				5DF0E3D22563A8540052CC95 /* MEGAResultRequestDelegate.swift in Sources */,
 				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
-				A81971E826FDDB3D007DC7B1 /* MockFileVersionsUseCase.swift in Sources */,
 				BF33EF70243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift in Sources */,
 				12FF88EE2846F03100D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
@@ -12485,7 +12445,6 @@
 				B6A305EE278BBEDC00E78205 /* PhotoAutoScrollViewModel.swift in Sources */,
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
-				A84E92E626FB708D00606AA7 /* FileVersionsUseCase.swift in Sources */,
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
 				5D667EEC24ECF9400092474D /* StoreUser.swift in Sources */,
@@ -13173,7 +13132,6 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */,
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
-				A8E1CFA326EA655A00EB7D3A /* FileVersionsRepositoryProtocol.swift in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */,
 				C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */,
@@ -13722,7 +13680,6 @@
 				BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				5BE689B42419188A00462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
-				8327EE202833918900068856 /* FileVersionErrorEntity.swift in Sources */,
 				B695B60A264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
@@ -13751,7 +13708,6 @@
 				C46517A6272C9DC9004F27A0 /* MEGANodeList+Mapper.swift in Sources */,
 				B695B607264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */,
-				8327EE1C2833916C00068856 /* FileVersionsUseCase.swift in Sources */,
 				B695B601264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				C42C35782743D924004D8BA9 /* NodeAccess.swift in Sources */,
@@ -13775,7 +13731,6 @@
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,
 				8340CAF0284E226D007C3B39 /* HeaderView.swift in Sources */,
 				5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
-				8327EE1F2833917D00068856 /* FileVersionsRepositoryProtocol.swift in Sources */,
 				C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
@@ -14025,7 +13980,6 @@
 				8361D9F2283E7B4E0001FAC1 /* NameCollisionViewModelTests.swift in Sources */,
 				B6AADEDF2518A323009A874C /* GetSMSUseCaseTests.swift in Sources */,
 				B66BA26325155FC3009787BD /* MockAuthUseCase.swift in Sources */,
-				A81971EA26FDDC76007DC7B1 /* FileVersionsUseCaseTests.swift in Sources */,
 				943EC225282D70B800E8F3A9 /* CreateContextMenuUseCaseTests.swift in Sources */,
 				12B1E58028751B0700D23A58 /* MockMediaDiscoveryStatsUseCase.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
@@ -15363,7 +15317,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";

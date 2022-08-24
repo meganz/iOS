@@ -33,7 +33,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Você deve dar permissão ao MEGA para acessar a sua Câmera nos Ajustes";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Ajuste as Configurações do seu dispositivo para permitir que o MEGA acesse o seu microfone.";
+"microphonePermissions"="Ajuste as Configurações do seu dispositivo para permitir que o MEGA acesse o seu microfone";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Você deve dar permissão ao MEGA para acessar às suas fotos nos Ajustes";
 /* Message shown when the user clicks on a confirm account link that has already been used */
@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Digite a chave de decodificação";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Para acessar este link de arquivo/pasta, você precisa da chave de decodificação. Se você não possui essa chave, entre em contato com o criador do link.";
+"decryptionKeyAlertMessage"="Para acessar este link de arquivo ou pasta, você precisa da chave de decodificação. Se você não possui essa chave, entre em contato com o criador do link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chave de decodificação";
 /* Button title to try to decrypt the link */
@@ -63,15 +63,15 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Desconectado";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
+"loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Não foi possível conectar-se ao MEGA de forma segura via SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde.";
+"takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Servidores ocupados. Por favor, aguarde.";
+"serversAreTooBusy"="Servidores ocupados. Por favor, aguarde…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Não foi possível acessar o MEGA. Por favor, verifique a sua conexão ou tente novamente mais tarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Entrar em uma reunião como convidado";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email e/ou senha inválidos. Por favor, tente novamente.";
+"invalidMailOrPassword"="Email ou senha inválidos. Por favor, tente novamente";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -111,7 +111,7 @@
 /* Account, Change Password view. Error shown when you type your current password. */
 "account.changePassword.error.currentPassword"="Você digitou a sua senha atual.";
 /*  */
-"pleaseStrengthenYourPassword"="Escolha uma senha mais forte";
+"pleaseStrengthenYourPassword"="Escolha uma senha mais forte.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="Muito fraca";
 /*  */
@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Você precisa confirmar que entende o perigo de perder a sua senha";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Já existe uma conta no MEGA com esse email.";
+"emailAlreadyRegistered"="Já existe uma conta no MEGA com esse email";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Aguardando email de confirmação.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -185,7 +185,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="A pasta que você está tentando baixar é maior do que a memória disponível.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="O arquivo '%@' não pode ser criado";
+"folderCreationError"="O arquivo “%@” não pode ser criado";
 /*  */
 "folderLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /*  */
@@ -469,9 +469,9 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d pastas compartilhadas corretamente.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Importar para a Cloud Drive";
+"Import to Cloud Drive"="Importar";
 /* Message shown when a file has been imported */
-"fileImported"="Arquivo importado!";
+"fileImported"="Arquivo importado";
 /* Message shown when some files have been imported */
 "filesImported"="Arquivos importados";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -517,13 +517,13 @@
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Uploads da câmera";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão Wi-Fi: 1 arquivo pendente";
+"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão Wi-Fi, 1 arquivo pendente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão Wi-Fi: %lu arquivos pendentes";
+"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão Wi-Fi, %lu arquivos pendentes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito.";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de %lu vídeos não foi feito.";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de %lu vídeos não foi feito";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selecionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Ao ativar, será feito o upload de vídeos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Novas opções para os Uploads da câmera!";
+"New Camera Upload!"="Novas opções para os Uploads da câmera";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIF/HEVC a formatos mais compatíveis, como JPEG e H.264.";
 /* Title for an action to use most compatible formats */
@@ -807,7 +807,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
 "removeFileToRubbishBinMessage"="Você está prestes a remover permanentemente um arquivo. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Você está prestes a remover permanentemente  %d arquivos. Pretende continuar? (Esta ação é irreversível.)";
+"removeFilesToRubbishBinMessage"="Você está prestes a remover permanentemente %d arquivos. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
 "removeFolderToRubbishBinMessage"="Você está prestes a remover permanentemente 1 arquivo. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
@@ -815,9 +815,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
 "removeFileFolderToRubbishBinMessage"="Está prestes a remover permanentemente 1 arquivo e 1 pasta. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Está prestes a remover permanentemente  1 arquivo e %d pastas. Pretende continuar? (Esta ação é irreversível.)";
+"removeFileFoldersToRubbishBinMessage"="Está prestes a remover permanentemente 1 arquivo e %d pastas. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Está prestes a remover permanentemente  %d arquivos e 1 pasta. Pretende continuar? (Esta ação é irreversível.)";
+"removeFilesFolderToRubbishBinMessage"="Está prestes a remover permanentemente %d arquivos e 1 pasta. Pretende continuar? (Esta ação é irreversível.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Você está prestes a remover permanentemente [A] arquivos e pastas [B]. Gostaria de continuar? (Você não pode desfazer esta ação.)";
 /* Success message shown when 1 file has been removed from MEGA */
@@ -845,7 +845,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Esqueceu a sua senha?";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="O link de recuperação expirou. Tente novamente.";
+"recoveryLinkHasExpired"="O link de recuperação expirou. Por favor, tente novamente.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Resetar senha";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -887,7 +887,7 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu email";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Parabéns! O novo endereço de email para esta conta MEGA é: [X]";
+"congratulationsNewEmailAddress"="Parabéns, o novo endereço de email para esta conta MEGA é: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Fechar outras sessões";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -899,7 +899,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Depois de 10 tentativas incorretas, você será deslogado e os arquivos salvos em Offline serão deletados.";
+"failedAttempstSectionTitle"="Depois de 10 tentativas incorretas, você será deslogado e os arquivos salvos em Offline serão deletados";
 /* Button text to change the passcode type. */
 "Passcode Options"="Opções de código de acesso";
 /* Action text to change to 4-Digit Numeric passcode type. */
@@ -931,7 +931,7 @@
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="transferência cancelada";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCancelled"="Transferências canceladas!";
+"transfersCancelled"="Transferências canceladas";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Transferências canceladas";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ de espaço de armazenamento";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB[/B] de armazenamento";
+"account.storage.freePlan"="[B]20 GB[/B] de armazenamento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Cota de transferência";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1181,7 +1181,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] deletou o histórico do chat.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] mudou o nome do grupo de chat para '[B]'.";
+"changedGroupChatNameTo"="[A] mudou o nome do grupo de chat para “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adicionar participante…";
 /* Menu item to add participants to a chat */
@@ -1231,7 +1231,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Você tem certeza de que quer deletar o histórico de mensagens deste chat?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="O histórico do chat foi deletado.";
+"Chat History has Been Cleared"="O histórico do chat foi deletado";
 /* Message show when the history of a chat hasn’t been successfully deleted */
 "An error has occurred. The chat history has not been successfully cleared"="Não foi possível deletar o histórico do chat";
 /* 'Next' button in a dialog */
@@ -1345,7 +1345,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Você tem certeza que quer cancelar o cadastro?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Se você digitou incorretamente o seu endereço de e-mail, corrija-o e clique em \"Reenviar\".";
+"misspelledEmailAddress"="Se você digitou incorretamente o seu endereço de e-mail, corrija-o e clique em “Reenviar”.";
 /* A button to resend the email confirmation. */
 "resend"="Reenviar";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1363,9 +1363,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Novas mensagens";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu MENSAGEM NÃO LIDA";
+"unreadMessage"="%lu mensagem não lida";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu MENSAGENS NÃO LIDAS";
+"unreadMessages"="%lu mensagens não lidas";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura Pro no MEGA até 24 horas antes do próximo pagamento, por meio da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta tocar no ícone da App Store no seu dispositivo, fazer login com o seu Apple ID na parte inferior da página (se você ainda não tiver feito isso), e então selecionar Ver ID. Você será direcionado à página da sua conta, na qual deve ir até a opção Assinaturas. A continuação, você poderá selecionar a sua assinatura Pro do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão ON/OFF para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1373,7 +1373,7 @@
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Conectando…";
 /* Inform user that there were unsupported assets in the share extension */
-"shareExtensionUnsupportedAssets"="Não foi possível compartilhar alguns dos itens com o MEGA.";
+"shareExtensionUnsupportedAssets"="Não foi possível compartilhar alguns dos itens com o MEGA";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="Compartilhado corretamente";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1447,7 +1447,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Recusado pelo sistema de antifraude";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Solicitações em excesso.";
+"Too many requests"="Solicitações em excesso";
 /* SDK error returned when there is a balance error */
 "Balance error"="Erro no saldo";
 /* SDK error returned upon a HTTP error */
@@ -1581,7 +1581,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Falha na chamada";
 /* When an active call of user A with user B had ended */
-"callEnded"="Chamada finalizada";
+"callEnded"="Chamada finalizada.";
 /* When an active goup call is ended */
 "Group call ended"="Chamada em grupo finalizada";
 /* When an active goup call is ended, shows the duration */
@@ -1647,7 +1647,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Salvar vídeos em Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imagens e/ou vídeos baixados serão armazenados na biblioteca multimídia do seu dispositivo, em vez da seção Offline.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imagens e vídeos baixados serão armazenados na biblioteca multimídia do seu dispositivo, em vez da seção Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Câmera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1731,7 +1731,7 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa adquirir um plano Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar as demais sessões? Essa ação faráo  logout de todas as outras sessões ativas, exceto a atual.";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar as demais sessões? Essa ação faráo logout de todas as outras sessões ativas, exceto a atual.";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ entrou na chamada.";
 /* Message to inform the local user that someone has left the current group call */
@@ -1879,7 +1879,7 @@
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mensagem de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Esta ação não pode ser concluída, pois excederia o seu limite de armazenamento atual.";
+"This action can not be completed as it would take you over your current storage limit"="Esta ação não pode ser concluída, pois excederia o seu limite de armazenamento atual";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque a sua conta está cheia";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTATOS COM CONTA NO MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Você recebeu uma solicitação do chat seguro do MEGA Cadastre uma conta no MEGA e obtenha 20 GB de armazenamento vitalício grátis.";
+"contact.invite.message"="Você recebeu uma solicitação do chat seguro do MEGA Cadastre uma conta no MEGA e obtenha 20 GB de armazenamento vitalício grátis.";
 /* Destination folder name of chat files */
 "My chat files"="Arquivos dos meus chats";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2123,11 +2123,11 @@
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Por favor, forneça um número de telefone válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
-"You have reached the daily limit"="Você atingiu o limite diário.";
+"You have reached the daily limit"="Você atingiu o limite diário";
 /* Error message that will be shown when the code introduced do not match with the one you received */
 "The verification code doesn't match."="O código de verificação é incorreto.";
 /* Error message that will show to user when user entered invalid verification code */
-"Wrong code. Please try again or resend."="Código incorreto, tente novamente.";
+"Wrong code. Please try again or resend."="Código incorreto. Por favor, tente novamente.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
 "This number is already associated with a Mega account"="Este número já está associado a uma conta no MEGA.";
 /* Country label for a button, title, etc. */
@@ -2203,7 +2203,7 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Classificação e tipo de visualização";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Ocultar Atividades recentes.";
+"settings.userInterface.hideRecentActivity"="Ocultar Atividades recentes";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
 "settings.userInterface.hideRecentActivity.footer"="Ocultar Atividades recentes no Início.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
@@ -2219,7 +2219,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Ícone do aplicativo";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
-"Configure default launch section."="Escolha a área a ser mostrada ao abrir o aplicativo";
+"Configure default launch section."="Escolha a área a ser mostrada ao abrir o aplicativo.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Escolha a ordem de classificação e tipo de visualização predeterminados (lista ou miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
@@ -2277,7 +2277,7 @@
 /* Information message shown to users when the operation of removing phone number succeed. */
 "Your phone number has been removed successfully."="O seu número de telefone foi removido corretamente.";
 /* A message shown to users when phone number removal fails. */
-"Failed to remove your phone number, please try again later."="Não foi possível ao remover o seu número de telefone -  tente novamente mais tarde.";
+"Failed to remove your phone number, please try again later."="Não foi possível ao remover o seu número de telefone, por favor, tente novamente mais tarde.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Descartar alterações";
 /* Title of the Proxy section under Settings */
@@ -2363,11 +2363,11 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Este link não está disponível porque a conta do usuário que o criou foi encerrada devido a uma grave violação dos [A]Termos de serviço[/A] do MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="Este arquivo/pasta foi denunciado por armazenar conteúdo censurável, como material relacionado à exploração infantil, extremismo violento ou bestialidade. A conta do usuário que criou este link foi encerrada e as informações desta conta, incluindo o endereço IP, foram proporcionadas às autoridades competentes.";
+"Taken down due to severe violation of our terms of service"="Este arquivo ou pasta foi denunciado por armazenar conteúdo censurável, como material relacionado à exploração infantil, extremismo violento ou bestialidade. A conta do usuário que criou este link foi encerrada e as informações desta conta, incluindo o endereço IP, foram proporcionadas às autoridades competentes.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Não disponível";
 /* Error text shown when requesting email for email verification within 10 minutes */
-"Email already sent. Please wait a few minutes before trying again."="O email já foi enviado. Espere alguns minutos antes de tentar novamente.";
+"Email already sent. Please wait a few minutes before trying again."="O email já foi enviado. Por favor, espere alguns minutos antes de tentar novamente.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
 "Manage Chat History"="Gerenciar o histórico do chat";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Você não tem a permissão necessária para reverter este arquivo. Caso decida continuar, estará criando um novo arquivo com os dados revertidos. Você quer continuar?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Minha conta";
 /* Text for title for favourite nodes */
@@ -2517,7 +2517,7 @@
 /* Offline log out warning message */
 "offline.logOut.warning.message"="Ao fazer logout, os seus arquivos offline serão deletados.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
-"transfer.cell.shareOwnerStorageQuota.infoLabel"="O proprietário da pasta compartilhada excedeu a cota de armazenamento disponível";
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="O proprietário da pasta compartilhada excedeu a cota de armazenamento disponível.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
 "dialog.shareOwnerStorageQuota.message"="Não foi possível enviar o arquivo porque destinatário ultrapassou o seu limite de armazenamento.";
 /* Hud info message when edit large text file. */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Faça o upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="A sua Nuvem de arquivos está quase cheia. Faça o upgrade a um plano Pro e obtenha até %@ TB (%@ GB) de espaço de armazenamento.";
+"dialog.storage.almostFull.detail"="A sua Nuvem de arquivos está quase cheia. Faça o upgrade a um plano Pro e obtenha até %@ TB (%@ GB) de espaço de armazenamento.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="A sua Nuvem de arquivos está cheia. Faça o upgrade a um plano Pro para aumentar o seu espaço de armazenamento e obter vantagens adicionais. Se você continuar excedendo o limite de armazenamento e não fizer upgrade ou deletar alguns dados, a sua conta pode ser bloqueada. Consulte os emails que enviamos para obter mais informações.";
 /* Over Disk Quota paywall not final title. */
@@ -2559,7 +2559,7 @@
 /* Change the default backup location warning message */
 "dialog.root.backup.folder.location.warning.message"="Você está a ponto de alterar a localização de uma pasta de backup predeterminada. Ao fazer isso, você poderá ter dificuldades para localizar esta pasta de backup. Assegure-se de lembrar onde ela está localizada para poder encontrá-la no futuro.";
 /* Change the default backup location warning message */
-"dialog.backup.folder.location.warning.message"="Mover esta pasta alterará o destino do backup, fazendo com que o backup seja desativado por motivos de segurança. É realmente  isso o que você quer fazer? Os backups podem ser reativados com o aplicativo do MEGA para desktop.";
+"dialog.backup.folder.location.warning.message"="Mover esta pasta alterará o destino do backup, fazendo com que o backup seja desativado por motivos de segurança. É realmente isso o que você quer fazer? Os backups podem ser reativados com o aplicativo do MEGA para desktop.";
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="Mover “%@” à Lixeira";
 /* Delete the default backup folder warning message */
@@ -2599,7 +2599,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nova reunião";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="Reunião %@ ";
+"meetings.createMeeting.defaultMeetingName"="Reunião %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Fazer uma reunião";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2633,7 +2633,7 @@
 /* Message description when the user enters a invalid meeting URL */
 "meetings.joinMeeting.description"="Não foi possível entrar na reunião. Por favor, verifique se o link é válido.";
 /* Message shown when the meeting link cannot be generated */
-"meetings.sharelink.Error"="Não foi possível gerar o link da reunião - tente novamente.";
+"meetings.sharelink.Error"="Não foi possível gerar o link da reunião. ,Por favor, tente novamente.";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.loggedInUser.joinButtonText"="Entrar em uma reunião";
 /* Button text to join a meeting for the logged in user */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Faça parte da maior plataforma de colaboração e armazenamento em nuvem segura do mundo.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Obtenha 20 GB de forma gratuita";
+"meetings.joinMega.paragraph2.title"="Obtenha 20 GB de forma gratuita";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Cadastre-se agora e aproveite de forma gratuita os recursos de colaboração avançados.";
 /* Message shown when the user privilege is changed to moderator */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="Você já adicionou todos os seus contatos a este chat.\nSe você quiser adicionar mais participantes, primeiro envie um convite para inclui-los na sua lista de contatos.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Convidar";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="Arquivos";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="Digitalizados";

@@ -35,7 +35,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="กรุณาให้สิทธิ์แอป MEGA เพื่อเข้าถึงไมโครโฟนในการตั้งค่าของคุณ";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปถ่ายของคุณได้";
+"photoLibraryPermissions"="กรุณาอนุญาตให้แอป MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปภาพของคุณได้";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="บัญชีของคุณถูกเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ";
 /*  */
@@ -71,7 +71,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่";
+"serversAreTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="ไม่สามารถเข้าถึง MEGA กรุณาตรวจสอบการเชื่อมต่อของคุณหรือลองอีกครั้งในภายหลัง";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -185,7 +185,7 @@
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="โฟลเดอร์ที่คุณกำลังพยายามดาวน์โหลด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="โฟลเดอร์ '%@' ไม่สามารถสร้างได้";
+"folderCreationError"="โฟลเดอร์ “%@” ไม่สามารถสร้างได้";
 /*  */
 "folderLinkUnavailableText1"="ซึ่งอาจเป็นเพราะเหตุผลดังต่อไปนี้:";
 /*  */
@@ -351,7 +351,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA เคารพลิขสิทธิ์ของผู้อื่นและต้องการให้ผู้ใช้บริการคลาวด์ MEGA ปฏิบัติตามกฎหมายลิขสิทธิ์";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="ห้ามมิให้ใช้บริการ MEGA คลาวด์เพื่อละเมิดลิขสิทธิ์เป็นอันขาด คุณไม่สามารถอัปโหลด ดาวน์โหลด จัดเก็บ แชร์ นำไปแสดง สตรีม แจกจ่าย ส่งอีเมล เผยแพร่ไฟล์ข้อมูล หรือเนื้อหาใด ๆ ที่อาจละเมิดลิขสิทธิ์หรือสิทธิ์ที่ถูกต้องตามกฎหมายของบุคคลหรือนิติบุคคลอื่น ๆ ";
+"copyrightMessagePart2"="ห้ามมิให้ใช้บริการ MEGA คลาวด์เพื่อละเมิดลิขสิทธิ์เป็นอันขาด คุณไม่สามารถอัปโหลด ดาวน์โหลด จัดเก็บ แชร์ นำไปแสดง สตรีม แจกจ่าย ส่งอีเมล เผยแพร่ไฟล์ข้อมูล หรือเนื้อหาใด ๆ ที่อาจละเมิดลิขสิทธิ์หรือสิทธิ์ที่ถูกต้องตามกฎหมายของบุคคลหรือนิติบุคคลอื่น ๆ";
 /* button caption text that the user clicks when he agrees */
 "agree"="เห็นด้วย";
 /* button caption text that the user clicks when he disagrees */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d โฟลเดอร์ถูกแชร์เรียบร้อยแล้ว";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="นำเข้าไปยังคลาวด์ไดรฟ์";
+"Import to Cloud Drive"="นำเข้า";
 /* Message shown when a file has been imported */
 "fileImported"="นำเข้าไฟล์เรียบร้อยแล้ว";
 /* Message shown when some files have been imported */
@@ -635,9 +635,9 @@
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ถูกจำกัดการเข้าถึงไลบรารีรูปภาพของคุณและไม่สามารถสำรองรูปภาพทั้งหมดของคุณได้ แตะเพื่อเปลี่ยนการอนุญาต";
 /* Navigation title for Photo Controller */
-"photo.navigation.title"="รูปถ่าย";
+"photo.navigation.title"="รูปภาพ";
 /* Photo view is empty */
-"photo.empty.title"="ไม่พบรูปถ่าย";
+"photo.empty.title"="ไม่พบรูปภาพ";
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="ปี";
 /* Title of Photo's Months tab */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="เมื่อเปิดใช้งาน วิดีโอจะถูกอัปโหลด";
 /* Title for new camera upload feature */
-"New Camera Upload!"="ตัวเลือกอัพโหลดกล้องใหม่!";
+"New Camera Upload!"="ตัวเลือกอัพโหลดกล้องใหม่";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="ตอนนี้คุณสามารถเลือกที่จะแปลงรูปภาพและวิดีโอ HEIC/HEVC เป็นรูปแบบ JPEG/H.264 ที่เข้ากันได้มากขึ้น";
 /* Title for an action to use most compatible formats */
@@ -719,7 +719,7 @@
 /* Title of the switch to config whether to upload videos for Live Photos */
 "Upload Videos for Live Photos"="อัปโหลดวิดีโอ Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload All Burst Photos"="อัปโหลดรูปถ่ายต่อเนื่องทั้งหมด";
+"Upload All Burst Photos"="อัปโหลดรูปภาพต่อเนื่องทั้งหมด";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="อัปโหลดอัลบั้มที่ซ่อนอยู่";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="พื้นที่เก็บข้อมูล %@";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]20 GB+[/B]";
+"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]20 GB+[/B]";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="โควต้าการถ่ายโอน";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -993,7 +993,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="เมื่อคุณติดตั้งแอป MEGA บนเดสก์ท็อป คุณจะได้รับพื้นที่เก็บข้อมูลฟรี %@ มีอายุการใช้งาน 365 วัน แอป MEGA บนเดสก์ท็อปสามารถใช้ได้ทั้ง Windows, macOS และ Linux distros เป็นส่วนใหญ่";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="ติดตั้งแอป MEGA บนมือถือ ";
+"account.achievement.mobileApp.title"="ติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1181,7 +1181,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] ล้างประวัติการแชท";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] เปลี่ยนชื่อแชทกลุ่มเป็น ‘[B]’";
+"changedGroupChatNameTo"="[A] เปลี่ยนชื่อแชทกลุ่มเป็น “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="เพิ่มผู้เข้าร่วม…";
 /* Menu item to add participants to a chat */
@@ -1345,7 +1345,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="คุณแน่ใจว่าต้องการที่จะยกเลิกการลงทะเบียนนี้";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและคลิก 'ส่งใหม่'";
+"misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและคลิก “ส่งใหม่”";
 /* A button to resend the email confirmation. */
 "resend"="ส่งใหม่";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1669,7 +1669,7 @@
 /* Description shown in a page of the onboarding screens explaining contacts */
 "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="เพิ่มผู้ติดต่อ สร้างเครือข่าย การทำงานร่วมกันและโทรออกด้วยเสียงและสนทนาทางวิดีโอโดยไม่ต้องออกจากแอป MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="รูปถ่ายของคุณในคลาวด์";
+"Your Photos in the Cloud"="รูปภาพของคุณในคลาวด์";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="การอัปโหลดจากกล้อง เป็นฟีเจอร์สำคัญสำหรับโทรศัพท์มือถือทุกเครื่องและเราได้ให้ความสำคัญกับคุณ สร้างบัญชีของคุณเลย";
 /* Button which triggers the initial setup */
@@ -1681,7 +1681,7 @@
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 จาก %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="อนุญาตให้เข้าถึงรูปถ่าย";
+"Allow Access to Photos"="อนุญาตให้เข้าถึงรูปภาพ";
 /* Detailed explanation of why the user should give permission to access to the photos */
 "Please give the MEGA App permission to access Photos to share photos and videos."="กรุณาให้สิทธิ์แอป MEGA ในการเข้าถึงรูปภาพเพื่อแชร์รูปภาพและวิดีโอ";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
@@ -1745,7 +1745,7 @@
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="แตะเพื่อกลับไปที่การโทร";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="บันทึกลงในรูปถ่าย";
+"Save to Photos"="บันทึกลงในรูปภาพ";
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="กำลังบันทึกไปยังรูปภาพ…";
 /* Text shown for switching from preview view to all media view. */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="ผู้ติดต่อใน MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="คุณมีคำขอ MEGA Secure Chat รออยู่ ลงทะเบียนบัญชีที่ MEGA แล้วรับพื้นที่เก็บข้อมูลฟรี 20 GB ตลอดอายุการใช้งาน";
+"contact.invite.message"="คุณมีคำขอ MEGA Secure Chat รออยู่ ลงทะเบียนบัญชีที่ MEGA แล้วรับพื้นที่เก็บข้อมูลฟรี 20 GB ตลอดอายุการใช้งาน";
 /* Destination folder name of chat files */
 "My chat files"="ไฟล์แชทของฉัน";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2111,7 +2111,7 @@
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="ไม่เลือก";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
-"No Photos or Videos"="ไม่มีรูปถ่ายหรือวิดีโอ";
+"No Photos or Videos"="ไม่มีรูปภาพหรือวิดีโอ";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="ดูในโฟลเดอร์";
 /* Error message shown when opening a link with an account that not corresponds to the link */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="คุณไม่มีสิทธิ์ในการแปลงไฟล์นี้กลับคืน เพื่อดำเนินการต่อ เราสามารถสร้างไฟล์ใหม่ด้วยข้อมูลที่ถูกแปลงกลับได้ คุณต้องการที่จะดำเนินการต่อไปหรือไม่";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="บัญชีของฉัน";
 /* Text for title for favourite nodes */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="กรุณาอัปเกรด";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="คลาวด์ไดร์ฟของคุณใกล้จะเต็มแล้ว อัปเกรดตอนนี้เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์สูงสุด %@ TB (%@ GB)";
+"dialog.storage.almostFull.detail"="คลาวด์ไดร์ฟของคุณใกล้จะเต็มแล้ว อัปเกรดตอนนี้เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์สูงสุด %@ TB (%@ GB)";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="ที่เก็บข้อมูลบนคลาวด์ของคุณเต็มแล้ว กรุณาอัปเกรดเป็นแผน MEGA Pro เพื่อเพิ่มพื้นที่และรับสิทธิประโยชน์เพิ่มเติมอีกมากมาย หากคุณใช้พื้นที่เกินขีดจำกัดและไม่อัปเกรดหรือลบข้อมูลบางอย่างออก บัญชีของคุณอาจถูกล็อก กรุณาดูอีเมลที่เราส่งข้อมูลเพิ่มเติมถึงคุณ";
 /* Over Disk Quota paywall not final title. */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="เข้าร่วมพื้นที่เก็บข้อมูลบนคลาวด์ที่ปลอดภัยและแพลตฟอร์มการทำงานร่วมกันที่ใหญ่ที่สุดในโลก";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="รับฟรี 20 GB";
+"meetings.joinMega.paragraph2.title"="รับฟรี 20 GB";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="ลงทะเบียนตอนนี้และเพลิดเพลินไปกับฟีเจอร์การทำงานร่วมกันขั้นสูงได้ฟรี";
 /* Message shown when the user privilege is changed to moderator */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="คุณได้เพิ่มผู้ติดต่อทั้งหมดในแชทนี้แล้ว\nหากคุณต้องการเพิ่มผู้เข้าร่วมคนอื่น ขั้นแรกให้ส่งคำเชิญเพื่อเพิ่มไปที่รายชื่อผู้ติดต่อของคุณก่อน";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="เชิญ";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="ไฟล์";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="สแกน";

@@ -41,6 +41,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
 }
 
 final class MockCancellableTransferRouter: CancellableTransferRouting, TransferWidgetRouting {
+    var showTransfersAlert_calledTimes = 0
     var transferSuccess_calledTimes = 0
     var transferCancelled_calledTimes = 0
     var transferFailed_calledTimes = 0
@@ -49,6 +50,10 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, TransferW
     var dismissConfirmCancel_calledTimes = 0
     var prepareTransfersWidget_calledTimes = 0
 
+    func showTransfersAlert() {
+        showTransfersAlert_calledTimes += 1
+    }
+    
     func transferSuccess(with message: String) {
         transferSuccess_calledTimes += 1
     }

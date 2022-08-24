@@ -5,20 +5,21 @@ struct ParticipantsAddingViewFactory {
     let chatRoomUseCase: ChatRoomUseCaseProtocol
     let chatId: HandleEntity
     
-    func shouldShowAddParticipantsScreen(withExcludedHandles handles: Set<HandleEntity>) -> Bool {
-        let contacts = userUseCase.contacts
-        let hasNoVisibleContacts = contacts.notContains { $0.contact?.contactVisibility == .visible }
-        
+    var hasVisibleContacts: Bool {
+        userUseCase.contacts.contains { $0.contact?.contactVisibility == .visible }
+    }
+    
+    func hasNonAddedVisibleContacts(withExcludedHandles handles: Set<HandleEntity>) -> Bool {
         let peerHandles = chatRoomUseCase.peerHandles(forChatId: chatId)
         let excludedHandles = handles.union(peerHandles)
 
-        let hasNonAddedVisibleContacts = contacts
+        let hasNonAddedVisibleContacts = userUseCase.contacts
             .contains { user in
                 user.contact?.contactVisibility == .visible
                 && excludedHandles.notContains(where: { user.handle == $0})
             }
         
-        guard hasNoVisibleContacts || hasNonAddedVisibleContacts else {
+        guard hasNonAddedVisibleContacts else {
             return false
         }
         
@@ -28,15 +29,13 @@ struct ParticipantsAddingViewFactory {
     func allContactsAlreadyAddedAlert(inviteAction: @escaping () -> Void) -> UIAlertController {
         let title = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.title
         let message = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.description
-        let inviteButtonTitle = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.confirmationButtonTitle
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
-        let inviteAction = UIAlertAction(title: inviteButtonTitle, style: .default) { _ in
-            inviteAction()
-        }
-        alertController.addAction(inviteAction)
-        alertController.preferredAction = inviteAction
-        return alertController
+        return alert(withTitle: title, message: message, inviteAction: inviteAction)
+    }
+    
+    func noAvailableContactsAlert(inviteAction: @escaping () -> Void) -> UIAlertController {
+        let title = Strings.Localizable.Meetings.AddContacts.ZeroContactsAvailable.title
+        let message = Strings.Localizable.Meetings.AddContacts.ZeroContactsAvailable.description
+        return alert(withTitle: title, message: message, inviteAction: inviteAction)
     }
     
     func inviteContactController() -> InviteContactViewController? {
@@ -80,5 +79,18 @@ struct ParticipantsAddingViewFactory {
         }
     
         return navigationController
+    }
+    
+    //MARK: - Private methods
+    private func alert(withTitle title: String, message: String, inviteAction: @escaping () -> Void) -> UIAlertController {
+        let inviteButtonTitle = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.confirmationButtonTitle
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
+        let inviteAction = UIAlertAction(title: inviteButtonTitle, style: .default) { _ in
+            inviteAction()
+        }
+        alertController.addAction(inviteAction)
+        alertController.preferredAction = inviteAction
+        return alertController
     }
 }

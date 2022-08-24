@@ -40,10 +40,13 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     @objc func start() {
+        _ = build()
+        wrapper?.viewIsReady()
+    }
+    
+    func showTransfersAlert() {
         guard let presenter = presenter else { return }
-        presenter.present(build(), animated: true) { [weak self] in
-            self?.wrapper?.hasBeenPresented()
-        }
+        presenter.present(build(), animated: true)
     }
     
     func transferSuccess(with message: String) {

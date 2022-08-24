@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="請注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="請在設定中允許MEGA App使用您的相機。";
+"cameraPermissions"="請在設定中允許MEGA App使用您的相機";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="請於您的設定中授予MEGA應用程式使用您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="請在設定中允許MEGA App存取您的相簿。";
+"photoLibraryPermissions"="請在設定中允許MEGA App存取您的相簿";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
 /*  */
@@ -69,9 +69,9 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著以在手機瀏覽器中所登入的相同帳戶進行登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="此處理過程比預期的要長。請稍候…";
+"takingLongerThanExpected"="此處理過程比預期的要長。請稍候⋯";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="系統忙碌中，請稍候。";
+"serversAreTooBusy"="系統忙碌中，請稍候⋯";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="無法連上MEGA。請檢查您的網路連線或於稍後重試。";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
@@ -171,7 +171,7 @@
 /*  */
 "fileLinkUnavailableText1"="這可能因下列因素造成：";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="檔案因違反我們的服務條款而被刪除。";
+"fileLinkUnavailableText2"="檔案因違反我們的服務條款而被刪除";
 /*  */
 "fileLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
@@ -261,9 +261,9 @@
 /* Possible state of a transfer. When the transfer was cancelled */
 "Cancelled"="已取消";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
-"Completing..."="即將完成…";
+"Completing..."="即將完成⋯";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
-"Retrying..."="重試中…";
+"Retrying..."="重試中⋯";
 /* Section title of the 'Sort by' */
 "sortTitle"="排序";
 /* Button title to 'Save' the selected option */
@@ -335,9 +335,9 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="儲存圖片";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="產生連結中…";
+"generatingLink"="產生連結中⋯";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="產生連結中…";
+"generatingLinks"="產生連結中⋯";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="已複製連結";
 /* Message shown when some links have been copied to the pasteboard */
@@ -375,7 +375,7 @@
 /* Title for a button that copies the key of the link to the clipboard */
 "copyKey"="複製金鑰";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="從…開啟";
+"openIn"="從⋯開啟";
 /*  */
 "uploadToMega"="上傳至MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
@@ -441,7 +441,7 @@
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
 "general.error.charactersNotAllowed"="不允許使用以下字元：” * / : < > ? \ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="重新命名檔案 %@?";
+"rename_file_alert_title"="重新命名檔案 %@？";
 /* Title for the action that allows you to replace a file. */
 "replace"="取代";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="已成功共享 %d 個資料夾。";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="匯入雲端硬碟";
+"Import to Cloud Drive"="匯入";
 /* Message shown when a file has been imported */
 "fileImported"="檔案已匯入";
 /* Message shown when some files have been imported */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="啟用後將上傳影片。";
 /* Title for new camera upload feature */
-"New Camera Upload!"="新的相機上傳選項！";
+"New Camera Upload!"="新的相機上傳選項";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIC/HEVC照片和影片轉檔成相容性更好的JPEG/H.264格式。";
 /* Title for an action to use most compatible formats */
@@ -791,7 +791,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您將遺失所有與此帳戶相關的資料。確定要繼續嗎？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡 support@mega.nz。";
+"ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡 support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消連結已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -819,7 +819,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="您即將永久刪除%d個檔案和1個資料夾。您要繼續嗎？（您不能復原該操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="您將永久刪除[A]個檔案和[B]個資料夾。您要繼續嗎？(注意！此操作不可恢復。)";
+"removeFilesFoldersToRubbishBinMessage"="您將永久刪除[A]個檔案和[B]個資料夾。您要繼續嗎？(此操作不可恢復。)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="已自MEGA移除1個檔案";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@儲存空間";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B]儲存空間";
+"account.storage.freePlan"="[B]20 GB+[/B]儲存空間";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="傳輸配額";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1065,9 +1065,9 @@
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為Pro帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
+"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為Pro帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為Pro帳戶，並獲得[S]%@TB (%@GB)[/S]的雲端儲存空間。";
+"cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為Pro帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="儲存空間";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1183,7 +1183,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]將聊天室名稱變更為 “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="新增與會者…";
+"addParticipant"="新增與會者⋯";
 /* Menu item to add participants to a chat */
 "addParticipants"="新增與會者";
 /* Title that refers to the status of the chat (Either Online or Offline) */
@@ -1191,7 +1191,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="網址連結預覽";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="讓MEGAchat使用更順暢！系統將會對連結內容進行索引，此動作將不會使用點對點加密處理。";
+"richPreviewsFooter"="讓MEGAchat使用更順暢。系統將會對連結內容進行索引，此動作將不會使用點對點加密處理。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="語音與視訊通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1203,7 +1203,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="閒置[X]分鐘後，將我狀態顯示為離開";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="在閒置1分鐘後，將我的狀態改為離開。";
+"showMeAwayAfter1MinuteOfInactivity"="在閒置1分鐘後，將我的狀態改為離開";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="狀態持續設定";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1293,13 +1293,13 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="未找到對話";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@正在輸入…";
+"isTyping"="%@正在輸入⋯";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
-"twoUsersAreTyping"="%1$s [A]正在打字…[/A]";
+"twoUsersAreTyping"="%1$s [A]正在打字⋯[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
-"moreThanTwoUsersAreTyping"="%1$s [A]和其他人正在打字…[/A]";
+"moreThanTwoUsersAreTyping"="%1$s [A]和其他人正在打字⋯[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="傳訊息給%s…";
+"writeAMessage"="傳訊息給%s⋯";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="沒有對話歷史記錄";
 /* Button which allows to retry send message in chat conversation. */
@@ -1343,7 +1343,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新的共享資料夾";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="您確定要中止註冊嗎?";
+"areYouSureYouWantToAbortTheRegistration"="您確定要中止註冊嗎？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="如果您寫錯了您的電子郵件地址，請於修正後點擊 “重新發送”。";
 /* A button to resend the email confirmation. */
@@ -1371,7 +1371,7 @@
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
-"connecting"="正在連線中…";
+"connecting"="正在連線中⋯";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些項目無法與MEGA共享";
 /* Success message shown when the user has successfully shared something */
@@ -1455,7 +1455,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的錯誤";
 /* Label shown when you call someone (outgoing call), before the call starts. */
-"calling..."="撥號中…";
+"calling..."="撥號中⋯";
 /* notification subtitle of incoming calls */
 "Incoming call"="來電";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1463,7 +1463,7 @@
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="影片品質";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
-"preparing..."="準備中…";
+"preparing..."="準備中⋯";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="二維條碼";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1553,7 +1553,7 @@
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="您即將登出，請測試您的密碼以確保您有記住它。如果您遺失密碼，您將無法存取您在MEGA的資料。";
 /* state previous to import a file */
-"loading"="載入中…";
+"loading"="載入中⋯";
 /*  */
 "next"="下一步";
 /* Button title to allow the user ignore something */
@@ -1747,7 +1747,7 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="儲存至相簿";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="正在儲存至相簿…";
+"Saving to Photos…"="正在儲存至相簿⋯";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="所有媒體";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -1791,9 +1791,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="由於與會者人數超過上限，因此無法發起通話。";
 /* Label shown while joining a public chat */
-"Joining..."="正在加入…";
+"Joining..."="正在加入⋯";
 /* Label shown while leaving a public chat */
-"Leaving..."="離開中…";
+"Leaving..."="離開中⋯";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="列表檢視";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1917,7 +1917,7 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="正在通話時無法錄製語音留言。";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="錄音中…";
+"Recording..."="錄音中⋯";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="正在進行中的通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="在MEGA上面的聯絡人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="您有一個等待中的MEGA安全對話請求。在MEGA上註冊一個帳戶並獲得20 GB的終身免費儲存空間。";
+"contact.invite.message"="您有一個等待中的MEGA安全對話請求。在MEGA上註冊一個帳戶並獲得20 GB的終身免費儲存空間。";
 /* Destination folder name of chat files */
 "My chat files"="我的對話檔案";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2079,7 +2079,7 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="通知靜音";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="正在重新連線…";
+"Reconnecting..."="正在重新連線⋯";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="你回來了。";
 /* Subtitle of chat screen when the chat is inactive */
@@ -2191,7 +2191,7 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
-"chat.message.placeholder"="輸入訊息…";
+"chat.message.placeholder"="輸入訊息⋯";
 /* Chat: Message shown when the chat link was removed successfully */
 "chat.link.linkRemoved"="連結已移除";
 /* Action suggestion text to the user in voice recording view */
@@ -2307,7 +2307,7 @@
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "cloudDrive.sort.label"="標籤";
 /* Context menu item which allows to mark folders with own color label */
-"general.chooseLabel.title"="標籤…";
+"general.chooseLabel.title"="標籤⋯";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
 "Remove Label"="移除標籤";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
@@ -2393,7 +2393,7 @@
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
 "One Month"="1個月";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
-"Custom..."="自訂…";
+"Custom..."="自訂⋯";
 /* System message displayed to all chat participants when one of them enables retention history */
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]將訊息刪除時間改為[/B][A]%2$s[/A][B]。[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您沒有還原此檔案的權限。為了繼續，我們能夠以還原的資料建立一個新檔案。您想要這麼做嗎？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的帳戶";
 /* Text for title for favourite nodes */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="請升級";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至Pro帳戶並獲得高達%@TB（%@GB）的雲端儲存空間。";
+"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至Pro帳戶並獲得高達%@ TB（%@ GB）的雲端儲存空間。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA Pro方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至Pro方案或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件了解更多訊息。";
 /* Over Disk Quota paywall not final title. */
@@ -2625,9 +2625,9 @@
 /* Action of a call/meeting to share its link */
 "meetings.action.shareLink"="共享會議連結";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="正等待其他人加入…";
+"meetings.message.waitingOthers"="正等待其他人加入⋯";
 /* Message shown when the user is the only one left in the meeting */
-"meetings.message.noOtherParticipants"="這裡只有您一人…";
+"meetings.message.noOtherParticipants"="這裡只有您一人⋯";
 /* Message header when the user enters a invalid meeting URL */
 "meetings.joinMeeting.header"="無效的會議連結";
 /* Message description when the user enters a invalid meeting URL */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="加入世界上最大的安全雲端空間與協作平台。";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="免費獲得20 GB";
+"meetings.joinMega.paragraph2.title"="免費獲得20 GB";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="立即註冊並免費享有進階的協作功能。";
 /* Message shown when the user privilege is changed to moderator */
@@ -2897,7 +2897,7 @@
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="否，繼續";
 /* First step message for cancellable transfer (letting known the user not to close the app) */
-"transfers.cancellable.scanning"="正在掃描…";
+"transfers.cancellable.scanning"="正在掃描⋯";
 /* Message asking the user to not close the app during a process */
 "transfers.cancellable.donotclose"="請不要關閉應用程式。";
 /* Message info for a cancelled transfer */
@@ -3055,10 +3055,14 @@
 /* Title of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.title"="提示音通知";
 /* Description of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.description"="當有人加入或離開通話時播放提示音";
+"settings.section.calls.soundNotifications.description"="當有人加入或離開通話時播放提示音。";
 /* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.title"="已加入所有聯絡人";
 /* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.description"="您已經將您所有聯絡人加入此對話。\n如果您想加入更多與會者，請先邀請他們成為您的聯絡人。";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="邀請";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="檔案";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="掃描";
