@@ -712,7 +712,7 @@
 		77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
 		7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7794AED6231E4E0A0039C1D2 /* NotificationService.swift */; };
-		7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7794AEDF231E54120039C1D2 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEE3231E65570039C1D2 /* libKarere.a */; };
@@ -831,11 +831,11 @@
 		8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */; };
 		83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1225556CD900344531 /* WidgetKit.framework */; };
 		83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1425556CDA00344531 /* SwiftUI.framework */; };
-		83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83199F592555780300344531 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */; };
 		831B4911256FED6F0086002B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831B4910256FED6F0086002B /* IntentHandler.swift */; };
-		831B4915256FED6F0086002B /* MEGAIntent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 831B490E256FED6F0086002B /* MEGAIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		831B4915256FED6F0086002B /* MEGAIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 831B490E256FED6F0086002B /* MEGAIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
 		831CDAFC27E0F2DE00A9D367 /* CancellableTransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CDAFB27E0F2DE00A9D367 /* CancellableTransferType.swift */; };
 		831CDAFD27E0F2DE00A9D367 /* CancellableTransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831CDAFB27E0F2DE00A9D367 /* CancellableTransferType.swift */; };
@@ -1199,8 +1199,8 @@
 		941135651F011C8400D33428 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		9419B6C61F20DC5700FEBE31 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */; };
-		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		942255041EDC04080074C51A /* FileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255021EDC04060074C51A /* FileProvider.m */; };
 		942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255071EDC04BA0074C51A /* DocumentPickerViewController.m */; };
 		9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9422550A1EDC04DC0074C51A /* MainInterface.storyboard */; };
@@ -1251,7 +1251,7 @@
 		943AFB5A283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */; };
 		943AFB5B283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */; };
 		943EC225282D70B800E8F3A9 /* CreateContextMenuUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EC224282D70B800E8F3A9 /* CreateContextMenuUseCaseTests.swift */; };
-		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
@@ -2532,20 +2532,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		942254FF1EDC03150074C51A /* Embed App Extensions */ = {
+		942254FF1EDC03150074C51A /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed App Extensions */,
-				942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */,
-				942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */,
-				943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed App Extensions */,
-				831B4915256FED6F0086002B /* MEGAIntent.appex in Embed App Extensions */,
-				7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed App Extensions */,
+				83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed Foundation Extensions */,
+				942254F81EDC03150074C51A /* MEGAPicker.appex in Embed Foundation Extensions */,
+				942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed Foundation Extensions */,
+				943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed Foundation Extensions */,
+				831B4915256FED6F0086002B /* MEGAIntent.appex in Embed Foundation Extensions */,
+				7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -11224,7 +11224,7 @@
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
-				942254FF1EDC03150074C51A /* Embed App Extensions */,
+				942254FF1EDC03150074C51A /* Embed Foundation Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 			);
 			buildRules = (
@@ -11447,7 +11447,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = MEGA;
 				TargetAttributes = {
 					137361891A6664C300B740E8 = {
