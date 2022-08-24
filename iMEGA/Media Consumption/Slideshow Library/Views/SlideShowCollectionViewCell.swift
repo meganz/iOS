@@ -31,14 +31,14 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         self.addGestureRecognizer(singleTap)
     }
     
-    private func correctOrigin(forView view: UIView, scaledAt scale: CGFloat){
+    private func correctOrigin(forView view: UIView, scaledAt scale: CGFloat) {
         var frame = view.frame
-        frame.origin.x = max(frame.origin.x + (scrollView.frame.size.width - (view.frame.size.width * scale)) / 2, 0)
-        frame.origin.y = max(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height * scale)) / 2, 0)
+        frame.origin.x = max(frame.origin.x + (scrollView.frame.size.width - (view.frame.size.width * scale)) / CGFloat(2), CGFloat(0))
+        frame.origin.y = max(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height * scale)) / CGFloat(2), CGFloat(0))
         view.frame = frame
     }
     
-    @objc func doubleTap(gesture: UITapGestureRecognizer){
+    @objc func doubleTap(gesture: UITapGestureRecognizer) {
         var newScale: CGFloat = 0
         if imageView.frame.size.width < scrollView.frame.size.width {
             newScale = scrollView.zoomScale > 1.0 ? 1.0 : scrollView.frame.size.width / imageView.frame.size.width
