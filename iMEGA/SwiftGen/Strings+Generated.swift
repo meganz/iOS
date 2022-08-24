@@ -445,11 +445,11 @@ public enum Strings {
     public static let cloudDriveEmptyStateTitle = Strings.tr("Localizable", "cloudDriveEmptyState_title")
     /// Empty Rubbish Bin
     public static let cloudDriveEmptyStateTitleRubbishBin = Strings.tr("Localizable", "cloudDriveEmptyState_titleRubbishBin")
-    /// [S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
+    /// [S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
     public static func cloudDriveIsAlmostFull(_ p1: Any, _ p2: Any) -> String {
       return Strings.tr("Localizable", "cloudDriveIsAlmostFull", String(describing: p1), String(describing: p2))
     }
-    /// [S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
+    /// [S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
     public static func cloudDriveIsFull(_ p1: Any, _ p2: Any) -> String {
       return Strings.tr("Localizable", "cloudDriveIsFull", String(describing: p1), String(describing: p2))
     }
@@ -963,7 +963,7 @@ public enum Strings {
     public static let ifYouDoNotHaveThePasswordContactTheCreatorOfTheLink = Strings.tr("Localizable", "If you do not have the password, contact the creator of the link.")
     /// If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].
     public static let ifYouLoseThisRecoveryKeyAndForgetYourPasswordBAllYourFilesFoldersAndMessagesWillBeInaccessibleEvenByMEGAB = Strings.tr("Localizable", "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].")
-    /// If you can’t access your email, please contact support@mega.nz.
+    /// If you can’t access your email, please contact support@mega.nz
     public static let ifYouCantAccessYourEmailAccount = Strings.tr("Localizable", "ifYouCantAccessYourEmailAccount")
     /// Ignore
     public static let ignore = Strings.tr("Localizable", "ignore")
@@ -973,7 +973,7 @@ public enum Strings {
     public static let imagesAndOrVideosDownloadedWillBeStoredInTheDeviceSMediaLibraryInsteadOfTheOfflineSection = Strings.tr("Localizable", "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.")
     /// Immediately
     public static let immediately = Strings.tr("Localizable", "Immediately")
-    /// Import to Cloud Drive
+    /// Import
     public static let importToCloudDrive = Strings.tr("Localizable", "Import to Cloud Drive")
     /// In Progress
     public static let inProgress = Strings.tr("Localizable", "In Progress")
@@ -1259,7 +1259,7 @@ public enum Strings {
     public static let never = Strings.tr("Localizable", "never")
     /// New
     public static let new = Strings.tr("Localizable", "New")
-    /// New Camera Uploads Options!
+    /// New Camera uploads options
     public static let newCameraUpload = Strings.tr("Localizable", "New Camera Upload!")
     /// New Chat Link
     public static let newChatLink = Strings.tr("Localizable", "New Chat Link")
@@ -1535,7 +1535,7 @@ public enum Strings {
     public static let previousVersions = Strings.tr("Localizable", "previousVersions")
     /// Privacy Policy
     public static let privacyPolicyLabel = Strings.tr("Localizable", "privacyPolicyLabel")
-    /// Pro Lite
+    /// Pro Lite
     public static let proLite = Strings.tr("Localizable", "Pro Lite")
     /// Pro membership plan expiring soon
     public static let proMembershipPlanExpiringSoon = Strings.tr("Localizable", "PRO membership plan expiring soon")
@@ -1699,7 +1699,7 @@ public enum Strings {
     public static let removeUserTitle = Strings.tr("Localizable", "removeUserTitle")
     /// Rename
     public static let rename = Strings.tr("Localizable", "rename")
-    /// Rename File %@ ?
+    /// Rename file %@?
     public static func renameFileAlertTitle(_ p1: Any) -> String {
       return Strings.tr("Localizable", "rename_file_alert_title", String(describing: p1))
     }
@@ -2175,11 +2175,11 @@ public enum Strings {
     public static let unlockedBonuses = Strings.tr("Localizable", "unlockedBonuses")
     /// Unmute
     public static let unmute = Strings.tr("Localizable", "unmute")
-    /// %lu UNREAD MESSAGE
+    /// %lu unread message
     public static func unreadMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "unreadMessage", p1)
     }
-    /// %lu UNREAD MESSAGES
+    /// %lu unread messages
     public static func unreadMessages(_ p1: Int) -> String {
       return Strings.tr("Localizable", "unreadMessages", p1)
     }
@@ -2807,7 +2807,7 @@ public enum Strings {
         public static let newToMega = Strings.tr("Localizable", "account.login.newToMega")
       }
       public enum Storage {
-        /// [B]20 GB+[/B] Storage
+        /// [B]20 GB+[/B] Storage
         public static let freePlan = Strings.tr("Localizable", "account.storage.freePlan")
       }
       public enum TransferQuota {
@@ -2909,7 +2909,7 @@ public enum Strings {
       /// Chats
       public static let title = Strings.tr("Localizable", "chat.title")
       public enum AddToChatMenu {
-        /// Files app
+        /// Files
         public static let filesApp = Strings.tr("Localizable", "chat.addToChatMenu.filesApp")
         /// Scan
         public static let scan = Strings.tr("Localizable", "chat.addToChatMenu.scan")
@@ -3089,7 +3089,7 @@ public enum Strings {
     }
     public enum Contact {
       public enum Invite {
-        /// You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.
+        /// You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.
         public static let message = Strings.tr("Localizable", "contact.invite.message")
       }
     }
@@ -3252,7 +3252,7 @@ public enum Strings {
       }
       public enum Storage {
         public enum AlmostFull {
-          /// Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.
+          /// Your Cloud drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.
           public static func detail(_ p1: Any, _ p2: Any) -> String {
             return Strings.tr("Localizable", "dialog.storage.almostFull.detail", String(describing: p1), String(describing: p2))
           }
@@ -3688,7 +3688,7 @@ public enum Strings {
         public enum Success {
           /// Thanks. We’ll look into this issue and a member of our team will get back to you.
           public static let message = Strings.tr("Localizable", "help.reportIssue.success.message")
-          /// Thanks for Your Feedback
+          /// Thanks for your feedback
           public static let title = Strings.tr("Localizable", "help.reportIssue.success.title")
         }
       }
@@ -3814,6 +3814,12 @@ public enum Strings {
           /// All contacts added
           public static let title = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.title")
         }
+        public enum ZeroContactsAvailable {
+          /// You have no contacts to add to this chat. If you want to add participants, first invite them to your contact list.
+          public static let description = Strings.tr("Localizable", "meetings.addContacts.zeroContactsAvailable.description")
+          /// No contacts
+          public static let title = Strings.tr("Localizable", "meetings.addContacts.zeroContactsAvailable.title")
+        }
       }
       public enum Alert {
         /// Meeting Ended
@@ -3895,7 +3901,7 @@ public enum Strings {
         public enum Paragraph2 {
           /// Sign up now and enjoy advanced collaboration features for free.
           public static let description = Strings.tr("Localizable", "meetings.joinMega.paragraph2.description")
-          /// Get 20 GB for free
+          /// Get 20 GB for free
           public static let title = Strings.tr("Localizable", "meetings.joinMega.paragraph2.title")
         }
       }

@@ -42,14 +42,22 @@ extension GroupChatDetailsViewController {
         )
     }
     
+    private func showInviteContacts() {
+        guard let inviteController = createParticipantsAddingViewFactory().inviteContactController() else { return }
+        navigationController?.pushViewController(inviteController, animated: true)
+    }
+    
     @objc func addParticipant() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         
-        guard participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: []) else {
-            let allContactsAlreadyAddedAlert = participantsAddingViewFactory.allContactsAlreadyAddedAlert {
-                guard let inviteController = participantsAddingViewFactory.inviteContactController() else { return }
-                self.navigationController?.pushViewController(inviteController, animated: true)
-            }
+        guard participantsAddingViewFactory.hasVisibleContacts else {
+            let noAvailableContactsAlert = participantsAddingViewFactory.noAvailableContactsAlert(inviteAction: showInviteContacts)
+            present(noAvailableContactsAlert, animated: true)
+            return
+        }
+        
+        guard participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: []) else {
+            let allContactsAlreadyAddedAlert = participantsAddingViewFactory.allContactsAlreadyAddedAlert(inviteAction: showInviteContacts)
             present(allContactsAlreadyAddedAlert, animated: true)
             return
         }
