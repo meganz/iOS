@@ -11908,6 +11908,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -11926,6 +11927,7 @@
 		};
 		B5D57CB327968B820043BA50 /* SwiftGen Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
