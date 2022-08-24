@@ -107,7 +107,7 @@ extension MEGAPhotoBrowserViewController {
 extension MEGAPhotoBrowserViewController {
     @objc func updateProviderNodeEntities(nodes: [MEGANode]) {
         DispatchQueue.main.async {
-            self.dataProvider.resetPhotos(to: nodes)
+            self.dataProvider.convertToNodeEntities(from: nodes)
         }
     }
 }

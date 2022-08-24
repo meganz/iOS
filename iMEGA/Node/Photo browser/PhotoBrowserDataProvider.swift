@@ -70,10 +70,9 @@ final class PhotoBrowserDataProvider: NSObject {
         }
     }
     
-    func resetPhotos(to photos: [MEGANode]) {
+    func convertToNodeEntities(from photos: [MEGANode]) {
         nodeEntities = photos.toNodeEntities()
         megaNodes = photos
-        currentIndex = 0
     }
     
     @objc var allPhotos: [MEGANode] {
