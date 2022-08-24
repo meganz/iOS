@@ -151,10 +151,6 @@
 	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
-	<key>NSUserActivityTypes</key>
-	<array>
-		<string>SelectShortcutIntent</string>
-	</array>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
 	<true/>
 	<key>SDK_GIT_COMMIT_HASH</key>
