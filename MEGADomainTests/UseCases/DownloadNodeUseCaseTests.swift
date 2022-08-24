@@ -68,7 +68,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_downloadSuccess() {
-        let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle", isFile: true, size: 10))
+        let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle"), size: 10, isFile: true)
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
         let mockTransferEntity = TransferEntity(type: .download, path: "Documents/")
         let downloadRepo = MockDownloadFileRepository(completionResult: .success(mockTransferEntity))

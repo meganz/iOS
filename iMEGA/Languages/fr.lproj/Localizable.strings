@@ -69,7 +69,7 @@
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Veuillez essayer de vous connecter avec le même compte que pour le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter.";
+"takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Les serveurs sont trop occupés. Veuillez patienter…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
@@ -293,9 +293,9 @@
 /* Menu option from the `Add` section that allows the user to Start Group. */
 "Start Group"="Commencer un groupe";
 /* Menu option from the `Add` section that allows the user to share Location */
-"chat.map.location"="Emplacement";
+"chat.map.location"="Position";
 /* Error message shown when enabling geolocation failed */
-"chat.map.location.enableGeolocationFailedError"="Échec d’activation de la géolocalisation. Erreur :%@";
+"chat.map.location.enableGeolocationFailedError"="Échec d’activation de la géolocalisation. Erreur : %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
 "Voice Clip"="Insert parlé";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d dossiers ont été partagés avec succès.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Importer vers le Disque nuagique";
+"Import to Cloud Drive"="Importer";
 /* Message shown when a file has been imported */
 "fileImported"="Le fichier a été importé";
 /* Message shown when some files have been imported */
@@ -1097,7 +1097,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Économisez 16 %";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="L’ACHAT A ÉCHOUÉ  %@ (%ld)";
+"wrongPurchase"="L’ACHAT A ÉCHOUÉ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans les réglages d’iOS";
 /* Error message shown when the selected product doesn't exist */
@@ -1221,7 +1221,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"=" Confirmer le numéro d’identification";
+"verifyCredentials"="Confirmer le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Confirmer";
 /* Button title */
@@ -1969,7 +1969,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Veuillez vous rendre dans la section Confidentialité des réglages de votre appareil. Activez le service de localisation et définissez MEGA à Quand l’appli est active ou à Toujours.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accède à votre position quand vous la partagez avec vos contacts dans une conversation";
+"NSLocationWhenInUseUsageDescription"="MEGA accède à votre position quand vous la partagez avec vos contacts dans une conversation.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Les données mobiles sont désactivées";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="Vous avez déjà ajouté tous vos contacts à cette conversation.\nSi vous voulez ajouter d’autres participants, invitez-les d’abord dans votre liste de contacts.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Inviter";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="Fichiers";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="Numérisation";

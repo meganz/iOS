@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Masukkan kunci dekripsi";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Untuk mengakses folder / file ini, anda memerlukan kunci Dekripsi. Jika anda tidak memiliki kuncinya, silakan hubungi pembuat tautan.";
+"decryptionKeyAlertMessage"="Untuk mengakses folder dan file ini, anda memerlukan kunci Dekripsi. Jika anda tidak memiliki kuncinya, silakan hubungi pembuat tautan.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Kunci dekripsi";
 /* Button title to try to decrypt the link */
@@ -77,7 +77,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Terlalu banyak permintaan. Mohon tunggu.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Harap masuk ke akun anda";
+"pleaseLogInToYourAccount"="Harap masuk ke akun anda.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Anda harus masuk untuk menyelesaikan perubahan email anda. Harap masuk kembali dengan alamat email anda sekarang dan klik link konfirmasi anda lagi.";
 /* Button title which triggers the action to login in your MEGA account */
@@ -441,7 +441,7 @@
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
 "general.error.charactersNotAllowed"="Karakter berikut tidak diperbolehkan: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Ganti Nama File %@ ?";
+"rename_file_alert_title"="Ganti nama file %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Ganti";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -469,9 +469,9 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d folder berhasil dibagikan.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Import ke Cloud Drive";
+"Import to Cloud Drive"="Import";
 /* Message shown when a file has been imported */
-"fileImported"="File terimpor!";
+"fileImported"="File terimpor";
 /* Message shown when some files have been imported */
 "filesImported"="Files terimport";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -589,7 +589,7 @@
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Tambah";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
+"noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri";
 /* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
 "dialog.inviteContact.outgoingContactRequest"="Pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Success message shown when some contacts have been invited */
@@ -599,7 +599,7 @@
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Anda yakin ingin menghapus %d pengguna dari daftar kontak anda?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
-"removedContact"="Kontak %@ telah terhapus!";
+"removedContact"="Kontak %@ telah terhapus";
 /* Label shown when a contact request is pending */
 "pending"="Tertunda";
 /* Button title of the action that allows to leave a shared folder */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Jika diaktifkan, video akan diunggah.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Opsi Unggah Kamera Baru!";
+"New Camera Upload!"="Opsi Unggah Kamera baru";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang anda dapat memilih untuk mengonversi foto dan video HEIC/HEVC ke format JPEG/H.264 yang lebih luas kompatibel.";
 /* Title for an action to use most compatible formats */
@@ -863,7 +863,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkir akun";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Saya mengetahui bahwa saya memulai dari awal, akun kosong dan saya akan kehilangan seluruh data di akun terkini saya kecuali saya mengingat password saya atau  menemukan Kunci Pemulihan yang telah terekspor.";
+"startingFreshAccount"="Saya mengetahui bahwa saya memulai dari awal, akun kosong dan saya akan kehilangan seluruh data di akun terkini saya kecuali saya mengingat password saya atau menemukan Kunci Pemulihan yang telah terekspor.";
 /* Caption of the button to proceed */
 "startNewAccount"="Mulai akun baru";
 /*  */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Penyimpanan";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Penyimpanan";
+"account.storage.freePlan"="[B]20 GB+[/B] Penyimpanan";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Kuota Pemindahan";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -983,19 +983,19 @@
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bonus Pendaftaran";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
-"account.achievement.registration.explanation.label"="Anda telah menerima %@ ruang penyimpanan sebagai bonus pendaftaran gratis anda. ";
+"account.achievement.registration.explanation.label"="Anda telah menerima %@ ruang penyimpanan sebagai bonus pendaftaran gratis anda.";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus Referral";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instal aplikasi desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Anda telah menerima %@ ruang penyimpanan untuk menginstal aplikasi desktop MEGA. ";
+"account.achievement.desktopApp.complete.explaination.label"="Anda telah menerima %@ ruang penyimpanan untuk menginstal aplikasi desktop MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Saat anda menginstal aplikasi desktop MEGA, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi desktop MEGA tersedia untuk Windows, macOS, dan sebagian besar distro Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Install Aplikasi Mobile MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ruang penyimpanan untuk menginstal aplikasi seluler MEGA. ";
+"account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ruang penyimpanan untuk menginstal aplikasi seluler MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Saat anda menginstal aplikasi seluler MEGA, anda mendapatkan %@ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi seluler MEGA tersedia untuk iOS dan Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
@@ -1007,9 +1007,9 @@
 /* Add Phone Number title */
 "Add Phone Number"="Tambahkan Nomor Telepon";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="Anda telah menerima %@ruang penyimpanan untuk menambahkan nomor telepon anda. ";
+"account.achievement.phoneNumber.complete.explaination.label"="Anda telah menerima %@ruang penyimpanan untuk menambahkan nomor telepon anda.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="Ketika anda menambahkan nomor telepon anda, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari. ";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Ketika anda menambahkan nomor telepon anda, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Dapatkan %@ gratis saat anda menambahkan nomor telepon anda. Ini memudahkan kontak anda untuk menemukan anda di MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1071,7 +1071,7 @@
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Gudang";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Subject pada partisipasi anda dalam achievements program kami";
+"subjectToYourParticipationInOurAchievementsProgram"="Subject pada partisipasi anda dalam achievements program kami.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ per bulan";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1181,7 +1181,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] menghapus riwayat percakapan.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] mengganti nama percakapan grup menjadi '[B]'.";
+"changedGroupChatNameTo"="[A] mengganti nama percakapan grup menjadi “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Tambah participant…";
 /* Menu item to add participants to a chat */
@@ -1295,7 +1295,7 @@
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ sedang mengetik …";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
-"twoUsersAreTyping"="%1$s [A]sedang mengetik..[/A]";
+"twoUsersAreTyping"="%1$s [A]sedang mengetik…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]dan lainnya sedang mengetik…[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
@@ -1345,7 +1345,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Apakah anda yakin ingin membatalkan pendaftaran?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, benarkan dan klik 'Kirim Ulang'.";
+"misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, benarkan dan klik “Kirim Ulang”.";
 /* A button to resend the email confirmation. */
 "resend"="Kirim lagi";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1363,11 +1363,11 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Pesan baru";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu PESAN BELUM TERBACA";
+"unreadMessage"="%lu pesan belum terbaca";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu PESAN BELUM TERBACA";
+"unreadMessages"="%lu pesan belum terbaca";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Langganan diperbarui secara otomatis untuk periode berlangganan berturut-turut dengan durasi yang sama dan dengan harga yang sama dengan periode awal yang dipilih. Anda dapat mematikan pembaruan otomatis langganan MEGA Pro anda selambat-lambatnya 24 jam sebelum pembayaran langganan berikutnya jatuh tempo melalui halaman pengaturan akun iTunes anda. Untuk mengelola langganan anda, cukup ketuk ikon App Store di perangkat seluler anda, masuk dengan ID Apple anda di bagian bawah halaman (jika anda belum melakukannya), lalu ketuk Lihat ID. Anda akan dibawa ke halaman akun tempat anda dapat menggulir ke bawah ke Kelola Langganan Aplikasi. Dari sana, anda dapat memilih langganan MEGA Pro anda dan melihat tanggal perpanjangan terjadwal anda, memilih paket langganan yang berbeda, atau matikan sakelar hidup-mati untuk menonaktifkan perpanjangan otomatis langganan anda..";
+"autorenewableDescription"="Langganan diperbarui secara otomatis untuk periode berlangganan berturut-turut dengan durasi yang sama dan dengan harga yang sama dengan periode awal yang dipilih. Anda dapat mematikan pembaruan otomatis langganan MEGA Pro anda selambat-lambatnya 24 jam sebelum pembayaran langganan berikutnya jatuh tempo melalui halaman pengaturan akun iTunes anda. Untuk mengelola langganan anda, cukup ketuk ikon App Store di perangkat seluler anda, masuk dengan ID Apple anda di bagian bawah halaman (jika anda belum melakukannya), lalu ketuk Lihat ID. Anda akan dibawa ke halaman akun tempat anda dapat menggulir ke bawah ke Kelola Langganan Aplikasi. Dari sana, anda dapat memilih langganan MEGA Pro anda dan melihat tanggal perpanjangan terjadwal anda, memilih paket langganan yang berbeda, atau matikan sakelar hidup-mati untuk menonaktifkan perpanjangan otomatis langganan anda.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Buka MEGA dan masuk untuk melanjutkan";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1647,7 +1647,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Simpan Video di Foto";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Gambar dan / atau video yang diunduh akan disimpan di pustaka media perangkat, bukan bagian Offline.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Gambar dan video yang diunduh akan disimpan di pustaka media perangkat, bukan bagian Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1779,9 +1779,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ mengaktifkan rotasi kunci enkripsi.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ membuat tautan publik untuk obrolan.";
+"%@ created a public link for the chat."="%@ membuat tautan publik untuk obrolan";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ menghapus tautan publik untuk obrolan.";
+"%@ removed a public link for the chat."="%@ menghapus tautan publik untuk obrolan";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ bergabung dengan obrolan grup.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1823,7 +1823,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Anda sekarang masuk dalam kontak";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Akun telah dihapus/ di non-aktifkan";
+"Account has been deleted/deactivated"="Akun telah dihapus atau di non-aktifkan";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Mem-blok anda dari kontak";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="KONTAK DI MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Anda memiliki permintaan Obrolan Aman MEGA yang menunggu. Daftarkan akun di MEGA dan dapatkan 20 GB penyimpanan seumur hidup gratis.";
+"contact.invite.message"="Anda memiliki permintaan Obrolan Aman MEGA yang menunggu. Daftarkan akun di MEGA dan dapatkan 20 GB penyimpanan seumur hidup gratis.";
 /* Destination folder name of chat files */
 "My chat files"="File obrolan saya";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2363,7 +2363,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Tautan ini tidak tersedia karena akun pengguna telah ditutup karena pelanggaran berat terhadap [A]Ketentuan Layanan[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="Folder/file ini dilaporkan mengandung konten yang tidak menyenangkan, seperti Materi Eksploitasi Anak, Ekstremisme Kekerasan, atau Bestialitas. Akun pembuat tautan telah ditutup dan detail lengkapnya, termasuk alamat IP, telah diberikan kepada pihak berwenang.";
+"Taken down due to severe violation of our terms of service"="Folder atau file ini dilaporkan mengandung konten yang tidak menyenangkan, seperti Materi Eksploitasi Anak, Ekstremisme Kekerasan, atau Bestialitas. Akun pembuat tautan telah ditutup dan detail lengkapnya, termasuk alamat IP, telah diberikan kepada pihak berwenang.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Tidak tersedia";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -2465,7 +2465,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics"="Cookie Kinerja dan Analisis";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics.footer"="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini  berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
+"settings.cookies.performanceAndAnalytics.footer"="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versi berhasil dibuat sebagai file baru.";
 /* Text shown for the action create new file */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Anda tidak memiliki izin yang diperlukan untuk mengembalikan file ini. Untuk melanjutkan, kita dapat membuat file baru dengan data yang dikembalikan. Apakah Anda ingin melanjutkan?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Akun Saya";
 /* Text for title for favourite nodes */
@@ -2495,7 +2495,7 @@
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="Perangkat tidak memiliki cukup ruang untuk MEGA untuk bekerja dengan baik.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Kosongkan sebagian ruang dengan menghapus aplikasi yang tidak lagi anda gunakan atau file video besar di galeri anda.Anda dapat mengelola penyimpanan anda di %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Kosongkan sebagian ruang dengan menghapus aplikasi yang tidak lagi anda gunakan atau file video besar di galeri anda. Anda dapat mengelola penyimpanan anda di %@1";
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="Nyalakan Notifikasi";
 /* The description of Turn on Notifications view */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Harap Tingkatkan";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Cloud Drive anda hampir penuh. Tingkatkan sekarang ke akun Pro dan dapatkan %@ TB (%@ GB) dari ruang penyimpanan cloud.";
+"dialog.storage.almostFull.detail"="Cloud Drive anda hampir penuh. Tingkatkan sekarang ke akun Pro dan dapatkan %@ TB (%@ GB) dari ruang penyimpanan cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Penyimpanan Cloud anda penuh. Harap tingkatkan ke paket MEGA Pro untuk menambah ruang penyimpanan anda dan nikmati manfaat tambahan. Jika anda tetap melebihi batas penyimpanan dan tidak meningkatkan atau menghapus beberapa data, akun anda mungkin terkunci. Silakan lihat email yang kami kirimkan kepada anda untuk informasi lebih lanjut.";
 /* Over Disk Quota paywall not final title. */
@@ -2591,9 +2591,9 @@
 /* Alert the user when trying to share several backup and non-backup folders */
 "dialog.share.backup.non.backup.folders.warning.message"="Beberapa folder yang dibagikan adalah folder cadangan dan hanya-baca. Apakah anda ingin melanjutkan?";
 /* Message to inform the local user that someone has joined the current group call */
-"meetings.message.joinedCall"="%@ bergabung dengan panggilan ";
+"meetings.message.joinedCall"="%@ bergabung dengan panggilan";
 /* Message to inform the local user that someone has left the current group call */
-"meetings.message.leftCall"="%@ meninggalkan panggilan ";
+"meetings.message.leftCall"="%@ meninggalkan panggilan";
 /* Title for Enter Meeting Link. */
 "meetings.enterMeetingLink.title"="Masukkan Link Rapat";
 /* Text button for init a Meeting. */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Bergabunglah dengan platform kolaborasi dan penyimpanan cloud aman terbesar di dunia.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Dapatkan 20 GB gratis";
+"meetings.joinMega.paragraph2.title"="Dapatkan 20 GB gratis";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Daftar sekarang dan nikmati fitur kolaborasi lanjutan secara gratis.";
 /* Message shown when the user privilege is changed to moderator */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="You’ve already added all your contacts to this chat.\nIf you want to add more participants, first invite them to your contact list.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Undang";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="File";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="Pindai";

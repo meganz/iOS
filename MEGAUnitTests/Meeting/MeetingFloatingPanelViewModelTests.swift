@@ -332,7 +332,19 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     
     func testAction_inviteParticipants() {
         let router = MockMeetingFloatingPanelRouter()
-        let viewModel = MeetingFloatingPanelViewModel(router: router)
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            )
+        ])
+        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
@@ -357,6 +369,25 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
+    func testAction_inviteParticipants_showNoAvailableContactsAlert() {
+        let router = MockMeetingFloatingPanelRouter()
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .blocked
+                )
+            )
+        ])
+        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
+        XCTAssert(router.showNoAvailableContactsAlert_CalledTimes == 1)
+    }
+    
     func testAction_inviteParticipants_singleContactBlocked() {
         let router = MockMeetingFloatingPanelRouter()
         let userUseCase = MockUserUseCase(contacts: [
@@ -373,7 +404,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
-        XCTAssert(router.inviteParticpants_calledTimes == 1)
+        XCTAssert(router.inviteParticpants_calledTimes == 0)
     }
     
     func testAction_inviteParticipants_singleContactVisible() {
@@ -802,6 +833,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var inviteParticpants_calledTimes = 0
     var showContextMenu_calledTimes = 0
     var showAllContactsAlreadyAddedAlert_CalledTimes = 0
+    var showNoAvailableContactsAlert_CalledTimes = 0
     var invitedParticipantHandles: [HandleEntity]?
 
     var viewModel: MeetingFloatingPanelViewModel? {
@@ -829,6 +861,10 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
         showAllContactsAlreadyAddedAlert_CalledTimes += 1
+    }
+    
+    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory){
+        showNoAvailableContactsAlert_CalledTimes += 1
     }
     
     func showContextMenu(presenter: UIViewController,

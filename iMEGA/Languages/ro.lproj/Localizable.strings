@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, te rugăm să contactezi creatorul linkului.";
+"decryptionKeyAlertMessage"="Pentru a accesa acest folder sau fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, te rugăm să contactezi creatorul linkului.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Alătură-te întâlnirii ca invitat";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mailul și/sau parola nevalide. Te rugăm să încerci din nou";
+"invalidMailOrPassword"="E-mailul sau parola nevalide. Te rugăm să încerci din nou";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la %@ și să încerci din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -441,7 +441,7 @@
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
 "general.error.charactersNotAllowed"="Următoarele caractere nu sunt permise: ” * / : < > ? \\ |";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
-"rename_file_alert_title"="Rename File %@ ?";
+"rename_file_alert_title"="Rename file %@?";
 /* Title for the action that allows you to replace a file. */
 "replace"="Înlocuiește";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -469,7 +469,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d foldere partajate cu succes.";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Importă în unitatea cloud";
+"Import to Cloud Drive"="Importă";
 /* Message shown when a file has been imported */
 "fileImported"="Fișier importat";
 /* Message shown when some files have been imported */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Când este activat, videoclipurile vor fi încărcate.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Opțiuni noi pentru Încărcări cameră!";
+"New Camera Upload!"="Opțiuni noi pentru Încărcări cameră";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Acum poți alege să convertești fotografiile și videoclipurile HEIC/HEVC la formatele JPEG/H.264 compatibile la o scară mai largă.";
 /* Title for an action to use most compatible formats */
@@ -791,7 +791,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Vei pierde toate datele asociate cu acest cont. Sigur vrei să continui?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Dacă nu-ți poți accesa e-mailul, te rugăm să contactezi support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Dacă nu-ți poți accesa e-mailul, te rugăm să contactezi support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -973,7 +973,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ spațiu de stocare";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] spațiu de stocare";
+"account.storage.freePlan"="[B]20 GB+[/B] spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Cotă de transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1071,7 +1071,7 @@
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Spațiu de stocare";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Obiectul participării tale în programul nostru de realizări";
+"subjectToYourParticipationInOurAchievementsProgram"="Obiectul participării tale în programul nostru de realizări.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ pe lună";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1345,7 +1345,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sigur vrei să abandonezi înregistrarea?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Dacă ți-ai scris greșit adresa de e-mail, corecteaz-o și dă clic pe 'Retrimite'.";
+"misspelledEmailAddress"="Dacă ți-ai scris greșit adresa de e-mail, corecteaz-o și dă clic pe „Retrimite”.";
 /* A button to resend the email confirmation. */
 "resend"="Retrimite";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1363,9 +1363,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu MESAJ NECITIT";
+"unreadMessage"="%lu mesaj necitit";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu MESAJE NECITITE";
+"unreadMessages"="%lu mesaje necitite";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge pe pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți să selectezi abonamentul MEGA Pro și să vezi data de reînnoire programată, să alegi un alt pachet de abonament sau să setezi comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului tău.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1647,7 +1647,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Salvează videoclipuri în Fotografii";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imaginile și/sau videoclipurile descărcate vor fi stocate în biblioteca media a dispozitivului în locul secțiunii Offline.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imaginile sau videoclipurile descărcate vor fi stocate în biblioteca media a dispozitivului în locul secțiunii Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Cameră";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1823,7 +1823,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Relație de contact stabilită";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Contul a fost șters/dezactivat";
+"Account has been deleted/deactivated"="Contul a fost șters sau dezactivat";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Te-a blocat ca contact";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -2005,7 +2005,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTE PE MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="Fișierele mele de chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2277,7 +2277,7 @@
 /* Information message shown to users when the operation of removing phone number succeed. */
 "Your phone number has been removed successfully."="Numărul tău de telefon a fost eliminat cu succes.";
 /* A message shown to users when phone number removal fails. */
-"Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu,";
+"Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu.";
 /* Text used to notify the user that some action would discard a non ended action */
 "Discard Changes"="Renunță la modificări";
 /* Title of the Proxy section under Settings */
@@ -2363,7 +2363,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Acest link este indisponibil deoarece contul utilizatorului a fost închis pentru încălcarea gravă a [A]Termenilor de utilizare a serviciului[/A] MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="Acest folder/link a fost raportat că include conținut inacceptabil, precum materiale cu exploatare infantilă, extremism violent sau bestialitate. Contul creatorului linkului a fost închis și detaliile complete ale acestuia, inclusiv adresa IP, au fost furnizate autorităților.";
+"Taken down due to severe violation of our terms of service"="Acest folder sau link a fost raportat că include conținut inacceptabil, precum materiale cu exploatare infantilă, extremism violent sau bestialitate. Contul creatorului linkului a fost închis și detaliile complete ale acestuia, inclusiv adresa IP, au fost furnizate autorităților.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Indisponibil";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -2473,7 +2473,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Nu ai permisiunile necesare pentru a reveni la versiunea anterioară pentru acest fișier. Pentru a continua, putem crea un nou fișier cu datele readuse la versiunea anterioară. Dorești să continui?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
+"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Contul meu";
 /* Text for title for favourite nodes */
@@ -2533,7 +2533,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Please Upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud Drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
 /* Over Disk Quota paywall not final title. */
@@ -2619,7 +2619,7 @@
 /* Meetings: Action on a meeting that change participant's role to moderator */
 "meetings.participant.makeModerator"="Make host";
 /* Meetings: Action on a meeting that remove participant's moderator role */
-"meetings.participant.removeModerator"="Remove as host";
+"meetings.participant.removeModerator"="Elimină ca gazdă";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Redenumește întâlnirea";
 /* Action of a call/meeting to share its link */
@@ -2645,7 +2645,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Alătură-te celei mai mari platforme de stocare în cloud și colaborare securizate din lume.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Obține 20 GB gratuit";
+"meetings.joinMega.paragraph2.title"="Obține 20 GB gratuit";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Înscrie-te acum și bucură-te gratuit de funcțiile avansate de colaborare.";
 /* Message shown when the user privilege is changed to moderator */
@@ -2913,7 +2913,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Uploading Log File";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Thanks for Your Feedback";
+"help.reportIssue.success.title"="Thanks for your feedback";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -2993,21 +2993,21 @@
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="You’re the only one here";
 /* Meetings end call dialog description */
-"meetings.endCallDialog.description"="Call will automatically end in 2 mins unless you want to stay on it.";
+"meetings.endCallDialog.description"="Apelul se va încheia automat în 2 minute dacă nu vrei să rămâi în acesta.";
 /* Meetings end call dialog Stay on call button title */
-"meetings.endCallDialog.stayOnCallButtonTitle"="Stay on call";
+"meetings.endCallDialog.stayOnCallButtonTitle"="Rămâi în apel";
 /* Meetings end call dialog button title */
-"meetings.endCallDialog.endCallNowButtonTitle"="End call now";
+"meetings.endCallDialog.endCallNowButtonTitle"="Încheie apelul acum";
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
-"meetings.notification.EndCallTimerDuration"="Call will end in %@";
+"meetings.notification.EndCallTimerDuration"="Apelul se va încheia în %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Make available offline";
 /* Button and title text that ends the meeting for all */
-"meetings.endCall.endForAllButtonTitle"="End call for all";
+"meetings.endCall.endForAllButtonTitle"="Încheie apelul pentru toți";
 /* Title of the popup that ends the meeting for all */
-"meetings.endCall.endForAllAlert.title"="End call for all?";
+"meetings.endCall.endForAllAlert.title"="Închei apelul pentru toți?";
 /* Description of the popup that ends the meeting for all */
-"meetings.endCall.endForAllAlert.description"="This will end the call for all participants.";
+"meetings.endCall.endForAllAlert.description"="Acest lucru va încheia apelul pentru toți participanții.";
 /* Button title - tapping on the button will end the call. */
 "meetings.endCall.endForAllAlert.confirm"="Da";
 /* Button title - tapping on the button dismiss without ending the call. */
@@ -3015,19 +3015,19 @@
 /* Label for hang a group chat or meeting when the user is moderator */
 "meetings.leaveCall.buttonTitle"="Părăsește";
 /* Label for end a group chat or meeting when the user is moderator */
-"meetings.endForAll.buttonTitle"="End for all";
+"meetings.endForAll.buttonTitle"="Încheie apelul pentru toți";
 /* Chat section selector tab for chats */
 "chat.selector.chat"="Chaturi";
 /* Chat section selector tab for meetings */
-"chat.selector.meeting"="Meetings";
+"chat.selector.meeting"="Întâlniri";
 /* Ttile for empty meetings tab */
-"chat.meetings.emptyState.title"="Start a meeting";
+"chat.meetings.emptyState.title"="Începe o întâlnire";
 /* Description for empty meetings tab */
 "chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
 /* Text button for empty meetings tab */
 "chat.meetings.emptyState.button.title"="Întâlnire nouă";
 /* Ttile for empty chats tab */
-"chat.chats.emptyState.title"="Start chatting now";
+"chat.chats.emptyState.title"="Începe să chatuiești acum";
 /* Description for empty chats tab */
 "chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
 /* Text button for empty chats tab */
@@ -3051,7 +3051,7 @@
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Alătură-te întâlnirii";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
-"settings.section.calls.title"="Calls";
+"settings.section.calls.title"="Apeluri";
 /* Title of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.title"="Sound notifications";
 /* Description of the sound notifications choice for calls when users join or left a call */
@@ -3062,3 +3062,7 @@
 "meetings.addContacts.allContactsAdded.description"="You’ve already added all your contacts to this chat.\nIf you want to add more participants, first invite them to your contact list.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Invită";
+/* Menu option from the `Add` section that allows the user to share files from Files app */
+"chat.addToChatMenu.filesApp"="Fișiere";
+/* Menu option from the `Add` section that allows the user to share files from scanning */
+"chat.addToChatMenu.scan"="Scan";

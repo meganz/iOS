@@ -2,12 +2,6 @@
 #import <Foundation/Foundation.h>
 #import "Reachability.h"
 
-typedef NS_ENUM (NSInteger, MEGAChatRoomListState) {
-    MEGAChatRoomListStateOffline,
-    MEGAChatRoomListStateInProgress,
-    MEGAChatRoomListStateOnline
-};
-
 @interface MEGAReachabilityManager : NSObject
 
 + (MEGAReachabilityManager *)sharedManager;
@@ -23,7 +17,6 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomListState) {
 - (void)retryPendingConnections;
 - (void)reconnect;
 
-@property (nonatomic) MEGAChatRoomListState chatRoomListState;
 @property (nonatomic, readonly) NSString *currentAddress;
 @property (nonatomic, getter=isMobileDataEnabled, readonly) BOOL mobileDataEnabled;
 

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "attachGallery.pdf",
+      "filename" : "saveToCameraRoll.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "attachGalleryDark.pdf",
+      "filename" : "saveToCameraRollDark.pdf",
       "idiom" : "universal"
     }
   ],

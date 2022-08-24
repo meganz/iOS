@@ -222,21 +222,6 @@
 
 - (void)reachabilityDidChange:(NSNotification *)notification {
     [self retryOrReconnect];
-
-    if ([MEGAReachabilityManager isReachable]) {
-        NSUInteger chatsConnected = 0;
-        MEGAChatListItemList *chatList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-        for (NSUInteger i=0; i<chatList.size; i++) {
-            MEGAChatListItem *chat = [chatList chatListItemAtIndex:i];
-            MEGAChatConnection state = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:chat.chatId];
-            if (state == MEGAChatConnectionOnline) {
-                chatsConnected++;
-            }
-        }
-        self.chatRoomListState = chatsConnected == chatList.size ? MEGAChatRoomListStateOnline : MEGAChatRoomListStateInProgress;
-    } else {
-        self.chatRoomListState = MEGAChatRoomListStateOffline;
-    }
 }
 
 @end

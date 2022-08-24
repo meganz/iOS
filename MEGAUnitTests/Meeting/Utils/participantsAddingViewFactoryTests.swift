@@ -10,8 +10,8 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
             chatId: .invalid
         )
         
-        let shouldShowAddParticipantsScreen = participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: [])
-        XCTAssertTrue(shouldShowAddParticipantsScreen)
+        let hasVisibleContacts = participantsAddingViewFactory.hasVisibleContacts
+        XCTAssertFalse(hasVisibleContacts)
     }
     
     func test_shouldShowAddParticipantsScreen_hasNonAddedVisibleContacts() {
@@ -34,8 +34,11 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
             chatId: .invalid
         )
         
-        let shouldShowAddParticipantsScreen = participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: [])
-        XCTAssertTrue(shouldShowAddParticipantsScreen)
+        let hasNonAddedVisibleContacts = participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: [])
+        XCTAssertTrue(hasNonAddedVisibleContacts)
+        
+        let hasVisibleContacts = participantsAddingViewFactory.hasVisibleContacts
+        XCTAssertTrue(hasVisibleContacts)
     }
     
     func test_shouldShowAddParticipantsScreen_AllContactsAlreadyAdded() {
@@ -60,7 +63,7 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
             chatId: .invalid
         )
         
-        let shouldShowAddParticipantsScreen = participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: [])
+        let shouldShowAddParticipantsScreen = participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: [])
         XCTAssertFalse(shouldShowAddParticipantsScreen)
     }
 }

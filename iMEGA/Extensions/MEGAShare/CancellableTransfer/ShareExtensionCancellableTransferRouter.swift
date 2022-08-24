@@ -27,8 +27,13 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
     @objc func start() {
         guard let presenter = presenter else { return }
         presenter.present(build(), animated: true) { [weak self] in
-            self?.wrapper?.hasBeenPresented()
+            self?.wrapper?.viewIsReady()
         }
+    }
+    
+    func showTransfersAlert() {
+        guard let presenter = presenter else { return }
+        presenter.present(build(), animated: true)
     }
     
     func transferSuccess(with message: String) {

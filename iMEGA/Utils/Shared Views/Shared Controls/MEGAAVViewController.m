@@ -14,7 +14,7 @@
 
 static const NSUInteger MIN_SECOND = 10; // Save only where the users were playing the file, if the streaming second is greater than this value.
 
-@interface MEGAAVViewController () <AVPlayerViewControllerDelegate, UIViewControllerTransitioningDelegate>
+@interface MEGAAVViewController () <AVPlayerViewControllerDelegate>
 
 @property (nonatomic, strong, nonnull) NSURL *fileUrl;
 @property (nonatomic, strong) MEGANode *node;
@@ -53,8 +53,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setTransitioningDelegate:self];
     
     if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
         [self.node mnz_generateThumbnailForVideoAtPath:self.fileUrl];

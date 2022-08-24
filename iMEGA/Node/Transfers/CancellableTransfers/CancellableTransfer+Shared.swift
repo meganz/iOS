@@ -1,5 +1,6 @@
 
 protocol CancellableTransferRouting: Routing {
+    func showTransfersAlert()
     func transferSuccess(with message: String)
     func transferCancelled(with message: String)
     func transferFailed(error: String)

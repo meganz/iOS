@@ -4,83 +4,51 @@
 <array>
 	<dict>
 		<key>imageKey</key>
-		<string>attachGallery</string>
+		<string>saveToPhotos</string>
 		<key>nameKey</key>
 		<string>photo.navigation.title</string>
-		<key>dynamicKey</key>
-		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachCloud</string>
 		<key>nameKey</key>
-		<string>chat.match.file</string>
-		<key>dynamicKey</key>
-		<false/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
-		<string>attachVoiceCall</string>
-		<key>nameKey</key>
-		<string>Voice</string>
-		<key>dynamicKey</key>
-		<true/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
-		<string>attachVideoCall</string>
-		<key>nameKey</key>
-		<string>Video</string>
-		<key>dynamicKey</key>
-		<true/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
-		<string>chatScanDocument</string>
-		<key>nameKey</key>
-		<string>Scan Document</string>
-		<key>dynamicKey</key>
-		<false/>
+		<string>cloudDrive</string>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachGIF</string>
 		<key>nameKey</key>
 		<string>GIF</string>
-		<key>dynamicKey</key>
-		<false/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
-		<string>attachLocation</string>
-		<key>nameKey</key>
-		<string>chat.map.location</string>
-		<key>dynamicKey</key>
-		<false/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
-		<string>attachContact</string>
-		<key>nameKey</key>
-		<string>Contact</string>
-		<key>dynamicKey</key>
-		<false/>
-	</dict>
-	<dict>
-		<key>imageKey</key>
-		<string>attachGroup</string>
-		<key>nameKey</key>
-		<string>Start Group</string>
-		<key>dynamicKey</key>
-		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachVoiceClip</string>
 		<key>nameKey</key>
 		<string>Voice Clip</string>
-		<key>dynamicKey</key>
-		<false/>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>chatScanDocument</string>
+		<key>nameKey</key>
+		<string>chat.addToChatMenu.scan</string>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>attachLocation</string>
+		<key>nameKey</key>
+		<string>chat.map.location</string>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>attachFilesApp</string>
+		<key>nameKey</key>
+		<string>chat.addToChatMenu.filesApp</string>
+	</dict>
+	<dict>
+		<key>imageKey</key>
+		<string>attachContact</string>
+		<key>nameKey</key>
+		<string>Contact</string>
 	</dict>
 </array>
 </plist>

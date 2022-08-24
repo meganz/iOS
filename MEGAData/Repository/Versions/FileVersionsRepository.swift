@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct FileVersionsRepository: FileVersionsRepositoryProtocol {
     
@@ -37,23 +38,29 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         })
     }
     
-#if MAIN_APP_TARGET
     func rootNodeFileVersionCount() -> Int64 {
+#if MAIN_APP_TARGET
         guard let rootNode = sdk.rootNode,
               let count = sdk.mnz_accountDetails?.numberOfVersionFiles(forHandle: rootNode.handle) else {
             return 0
         }
         return count
+#else
+        return 0
+#endif
     }
     
     func rootNodeFileVersionTotalSizeInBytes() -> Int64 {
+#if MAIN_APP_TARGET
         guard let rootNode = sdk.rootNode,
               let size = sdk.mnz_accountDetails?.versionStorageUsed(forHandle: rootNode.handle) else {
             return 0
         }
         return size
-    }
+#else
+        return 0
 #endif
+    }
 
     func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
         sdk.removeVersions(with: RequestDelegate { (result) in
