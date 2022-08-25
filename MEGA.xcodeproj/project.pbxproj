@@ -1311,6 +1311,25 @@
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */; };
+		9D3563BF28B54A7200CB3365 /* AboutViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563BE28B54A7200CB3365 /* AboutViewRouter.swift */; };
+		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
+		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
+		9D3563C828B54C1300CB3365 /* AppearanceViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */; };
+		9D3563CA28B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C928B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift */; };
+		9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563CB28B54DE900CB3365 /* ChatSettingsViewRouter.swift */; };
+		9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563CD28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift */; };
+		9D3563D028B54EEE00CB3365 /* HelpViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563CF28B54EEE00CB3365 /* HelpViewRouter.swift */; };
+		9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563D128B5506A00CB3365 /* SecuritySettingsViewRouter.swift */; };
+		9D3563D428B5515A00CB3365 /* SettingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563D328B5515A00CB3365 /* SettingBuilder.swift */; };
+		9D3563D628B551C600CB3365 /* SettingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563D528B551C600CB3365 /* SettingCellViewModel.swift */; };
+		9D3563D828B551E900CB3365 /* SettingSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563D728B551E900CB3365 /* SettingSectionViewModel.swift */; };
+		9D3563DA28B5520800CB3365 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563D928B5520800CB3365 /* SettingsViewModel.swift */; };
+		9D3563DC28B5523F00CB3365 /* SettingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563DB28B5523F00CB3365 /* SettingViewRouter.swift */; };
+		9D3563DF28B5568500CB3365 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563DD28B5568500CB3365 /* SettingsTableViewCell.swift */; };
+		9D3563E028B5568500CB3365 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3563DE28B5568500CB3365 /* SettingsTableViewCell.xib */; };
+		9D68BBB228B55E23006FCBC5 /* MyAccountHallViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */; };
+		9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68BBBE28B69F26006FCBC5 /* SettingsViewModelTests.swift */; };
+		9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68BBC028B6A135006FCBC5 /* SettingCellViewModelTests.swift */; };
 		9DD1BB2A28A91A8D00EEF24D /* FeedbackEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1BB2928A91A8D00EEF24D /* FeedbackEntity.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
@@ -3730,6 +3749,25 @@
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		94E71806283D24D3000EDDDF /* ChatStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStatus.swift; sourceTree = "<group>"; };
 		94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		9D3563BE28B54A7200CB3365 /* AboutViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewRouter.swift; sourceTree = "<group>"; };
+		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
+		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
+		9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewRouter.swift; sourceTree = "<group>"; };
+		9D3563C928B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadsSettingsViewRouter.swift; sourceTree = "<group>"; };
+		9D3563CB28B54DE900CB3365 /* ChatSettingsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsViewRouter.swift; sourceTree = "<group>"; };
+		9D3563CD28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagementSettingsViewRouter.swift; sourceTree = "<group>"; };
+		9D3563CF28B54EEE00CB3365 /* HelpViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewRouter.swift; sourceTree = "<group>"; };
+		9D3563D128B5506A00CB3365 /* SecuritySettingsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewRouter.swift; sourceTree = "<group>"; };
+		9D3563D328B5515A00CB3365 /* SettingBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBuilder.swift; sourceTree = "<group>"; };
+		9D3563D528B551C600CB3365 /* SettingCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellViewModel.swift; sourceTree = "<group>"; };
+		9D3563D728B551E900CB3365 /* SettingSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionViewModel.swift; sourceTree = "<group>"; };
+		9D3563D928B5520800CB3365 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		9D3563DB28B5523F00CB3365 /* SettingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewRouter.swift; sourceTree = "<group>"; };
+		9D3563DD28B5568500CB3365 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		9D3563DE28B5568500CB3365 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+Addition.swift"; sourceTree = "<group>"; };
+		9D68BBBE28B69F26006FCBC5 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
+		9D68BBC028B6A135006FCBC5 /* SettingCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellViewModelTests.swift; sourceTree = "<group>"; };
 		9DD1BB2928A91A8D00EEF24D /* FeedbackEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackEntity.swift; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
@@ -5944,6 +5982,7 @@
 		415226821A692ECC00EC7BB6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				9D3563C228B54AD700CB3365 /* Delete Account */,
 				83AE36BE2886CFCD002F1755 /* Calls */,
 				BFEF8CA92887A0D000F8F9F1 /* QASettings */,
 				5BCF7E3F2631707500BE769B /* TermsAndPoliciesScene */,
@@ -5960,6 +5999,13 @@
 				41FC83AF1AA853CC008FA551 /* SettingsTableViewController.h */,
 				41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */,
 				83AE36C32886DEB2002F1755 /* SettingsTableViewController+Additions.swift */,
+				9D3563D328B5515A00CB3365 /* SettingBuilder.swift */,
+				9D3563D528B551C600CB3365 /* SettingCellViewModel.swift */,
+				9D3563D728B551E900CB3365 /* SettingSectionViewModel.swift */,
+				9D3563D928B5520800CB3365 /* SettingsViewModel.swift */,
+				9D3563DB28B5523F00CB3365 /* SettingViewRouter.swift */,
+				9D3563DD28B5568500CB3365 /* SettingsTableViewCell.swift */,
+				9D3563DE28B5568500CB3365 /* SettingsTableViewCell.xib */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -6175,6 +6221,7 @@
 				E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */,
 				777E922B203EE14B00266229 /* QRSettingsTableViewController.h */,
 				777E922C203EE14B00266229 /* QRSettingsTableViewController.m */,
+				9D3563D128B5506A00CB3365 /* SecuritySettingsViewRouter.swift */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -6185,6 +6232,7 @@
 				41AC66461AB1D493003FE8DA /* AboutTableViewController.h */,
 				41AC66471AB1D493003FE8DA /* AboutTableViewController.m */,
 				BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */,
+				9D3563BE28B54A7200CB3365 /* AboutViewRouter.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -6197,6 +6245,7 @@
 				7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */,
 				7288C2CC27F5D3B50010DC19 /* Send Feedback */,
 				A89D726F2795C27400284BFC /* Report Issue */,
+				9D3563CF28B54EEE00CB3365 /* HelpViewRouter.swift */,
 			);
 			path = Help;
 			sourceTree = "<group>";
@@ -6416,6 +6465,7 @@
 				B61B815622D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.h */,
 				B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */,
 				B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */,
+				9D3563C928B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift */,
 			);
 			path = "Camera Uploads";
 			sourceTree = "<group>";
@@ -6428,6 +6478,7 @@
 				5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */,
 				5B5A983B212EF29500FDBC79 /* RubbishBinTableViewController.h */,
 				5B5A983A212EF29500FDBC79 /* RubbishBinTableViewController.m */,
+				9D3563CD28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift */,
 			);
 			path = "File Management";
 			sourceTree = "<group>";
@@ -6597,6 +6648,7 @@
 				5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */,
 				5B727384240D1682005816AB /* Appearance.storyboard */,
 				0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */,
+				9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -6697,6 +6749,8 @@
 				A81F9BB327EA023A00D47C0D /* CookieSettingsViewModelTests.swift */,
 				8330A99E2888479B003E80DB /* CallsSettingsViewModelTests.swift */,
 				B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */,
+				9D68BBBE28B69F26006FCBC5 /* SettingsViewModelTests.swift */,
+				9D68BBC028B6A135006FCBC5 /* SettingCellViewModelTests.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -8704,6 +8758,14 @@
 				94482C6F2829449100C45C48 /* ContextMenuActionsTests.swift */,
 			);
 			path = ContextMenu;
+			sourceTree = "<group>";
+		};
+		9D3563C228B54AD700CB3365 /* Delete Account */ = {
+			isa = PBXGroup;
+			children = (
+				9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */,
+			);
+			path = "Delete Account";
 			sourceTree = "<group>";
 		};
 		9DD1BB2828A91A7900EEF24D /* Help */ = {
@@ -11116,6 +11178,7 @@
 				A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */,
 				2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */,
 				5BE484BE215BB3CD003B291D /* ChatSettings.storyboard */,
+				9D3563CB28B54DE900CB3365 /* ChatSettingsViewRouter.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -11125,6 +11188,7 @@
 			children = (
 				E87C98341CC4CC1000E2B9E6 /* AdvancedTableViewController.h */,
 				E87C98351CC4CC1000E2B9E6 /* AdvancedTableViewController.m */,
+				9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -11152,6 +11216,7 @@
 				5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */,
 				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
 				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
+				9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */,
 			);
 			path = "My Account";
 			sourceTree = "<group>";
@@ -11778,6 +11843,7 @@
 				2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				5B727394240D32F9005816AB /* altIconNight@2x.png in Resources */,
+				9D3563E028B5568500CB3365 /* SettingsTableViewCell.xib in Resources */,
 				5B46D96924333D6100404ED4 /* Achievements.storyboard in Resources */,
 				5D79EDD5251C71B500C0307A /* SearchHintTableViewCell.xib in Resources */,
 				83C49BAF2652627500A7764B /* CallTitleView.xib in Resources */,
@@ -12047,6 +12113,7 @@
 				BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
 				B662B87724F75FEF0089376A /* CheckSMSUseCase.swift in Sources */,
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
+				9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				2FDDC6242630DE100060E02A /* EncourageGuestUserToJoinMegaViewModel.swift in Sources */,
 				BF14A144289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift in Sources */,
@@ -12067,6 +12134,7 @@
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */,
 				BFAC87972600041C009CA3F6 /* CaptureDeviceRepository.swift in Sources */,
+				9D3563D828B551E900CB3365 /* SettingSectionViewModel.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
 				83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */,
 				BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */,
@@ -12107,6 +12175,7 @@
 				A8A716E02639A71800DDC8E2 /* TurnOnNotificationsViewModel.swift in Sources */,
 				5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */,
 				C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */,
+				9D3563CA28B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift in Sources */,
 				12397E272820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift in Sources */,
 				B662B85B24ECC7A30089376A /* AddPhoneNumberRouter.swift in Sources */,
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
@@ -12146,6 +12215,7 @@
 				B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */,
 				5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */,
 				7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */,
+				9D3563BF28B54A7200CB3365 /* AboutViewRouter.swift in Sources */,
 				B67507B62766BE670034F951 /* PhotoLibraryContentViewRouter.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */,
@@ -12155,6 +12225,7 @@
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				BFAFB143252AC6ED003ADFE3 /* FilesExplorerRouter.swift in Sources */,
+				9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */,
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				BF6D309E25390AEA00BD4653 /* ExplorerTypeEntity.swift in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
@@ -12202,6 +12273,7 @@
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				329110FC288E39FC001324EA /* PhotoLibraryFilterTypeView.swift in Sources */,
 				C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */,
+				9D3563DC28B5523F00CB3365 /* SettingViewRouter.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				C45F982B264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift in Sources */,
@@ -12227,6 +12299,7 @@
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
 				BF99A41F24B2AD040035A183 /* ChatUploadTransfer+CoreDataClass.swift in Sources */,
+				9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */,
 				B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */,
 				123AEFF627BEE20400E6A0A7 /* PhotoDateSection.swift in Sources */,
 				B64A71B7287A5D070085087D /* NodeEntity+ChangeType.swift in Sources */,
@@ -12239,6 +12312,7 @@
 				1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */,
 				BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */,
 				5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */,
+				9D3563D028B54EEE00CB3365 /* HelpViewRouter.swift in Sources */,
 				32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */,
 				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
 				B662B87524F70A570089376A /* GetSMSUseCase.swift in Sources */,
@@ -12424,6 +12498,7 @@
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
+				9D3563DA28B5520800CB3365 /* SettingsViewModel.swift in Sources */,
 				B6ADE4DC2732189000C19F36 /* FileSystemRepository.swift in Sources */,
 				B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */,
 				A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */,
@@ -12461,6 +12536,7 @@
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
 				7284970D280589AA00A51742 /* ContextMenuBuilder.swift in Sources */,
 				5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */,
+				9D3563D428B5515A00CB3365 /* SettingBuilder.swift in Sources */,
 				B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
@@ -12664,6 +12740,8 @@
 				5B9199EA26E781C600402358 /* MEGANodeLabel+Mapper.swift in Sources */,
 				5DF249DD24F37589003FED76 /* FileUploadingRouter.swift in Sources */,
 				5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */,
+				9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */,
+				9D3563C828B54C1300CB3365 /* AppearanceViewRouter.swift in Sources */,
 				5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */,
@@ -12754,6 +12832,7 @@
 				5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */,
 				5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */,
 				C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */,
+				9D3563DF28B5568500CB3365 /* SettingsTableViewCell.swift in Sources */,
 				B662B88124F8CB490089376A /* MEGAError+Mapper.swift in Sources */,
 				BF782D78269BA4BB0001D169 /* AudioSessionErrorEntity.swift in Sources */,
 				B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */,
@@ -12778,6 +12857,7 @@
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */,
+				9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
 				A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
@@ -12805,6 +12885,7 @@
 				B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */,
 				C46D2A80270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
+				9D3563D628B551C600CB3365 /* SettingCellViewModel.swift in Sources */,
 				BF6D30AA25390BBA00BD4653 /* FilesSearchUseCase.swift in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
 				12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */,
@@ -13097,6 +13178,7 @@
 				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,
+				9D68BBB228B55E23006FCBC5 /* MyAccountHallViewController+Addition.swift in Sources */,
 				B6BD983527D6F343006E4333 /* NSData+CameraUploads.swift in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
 				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
@@ -13866,6 +13948,7 @@
 				BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
+				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				6D80C2632880AA6A0065EAD4 /* MockFilesSearchRepository.swift in Sources */,
 				83B5E88227F714510073C870 /* MockFileSystemRepository.swift in Sources */,
 				B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */,
@@ -13883,6 +13966,7 @@
 				83B5E88827F71BB00073C870 /* MockOfflineFilesRepository.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
+				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				83993CF926B9471D00223C92 /* ChatRoomEntity+Additions.swift in Sources */,
 				BFA6CD70263247B700791E02 /* MockCaptureDeviceUseCase.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,

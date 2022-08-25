@@ -14,7 +14,7 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
     private weak var navigationController: UINavigationController?
     private weak var presenter: UIViewController?
     
-    @objc init(presenter: UIViewController) {
+    @objc init(presenter: UIViewController?) {
         self.presenter = presenter
     }
     
