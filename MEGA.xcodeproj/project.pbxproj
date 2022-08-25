@@ -805,8 +805,6 @@
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */; };
 		830C26CD25DFDD3000E9B56E /* RecentNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C26CC25DFDD3000E9B56E /* RecentNodesRepository.swift */; };
-		830C27B025E64D5F00E9B56E /* MOOfflineNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */; };
-		830C27C125E64DF000E9B56E /* MOOfflineNode+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */; };
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
@@ -987,8 +985,6 @@
 		83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		83655AE7259387F6001A0846 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
 		83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
-		83655B282593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */; };
-		83655B292593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */; };
 		836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */; };
 		836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */; };
 		836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */; };
@@ -1104,7 +1100,6 @@
 		83B5E88227F714510073C870 /* MockFileSystemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E88127F714510073C870 /* MockFileSystemRepository.swift */; };
 		83B5E88427F714670073C870 /* MockDownloadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E88327F714670073C870 /* MockDownloadFileRepository.swift */; };
 		83B5E88627F71B890073C870 /* MockNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E88527F71B890073C870 /* MockNodeRepository.swift */; };
-		83B5E88827F71BB00073C870 /* MockOfflineFilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E88727F71BB00073C870 /* MockOfflineFilesRepository.swift */; };
 		83B5E88A27F71BC70073C870 /* MockPhotosLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */; };
 		83B6172F27DB521200492E46 /* DownloadNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B6172E27DB521200492E46 /* DownloadNodeUseCase.swift */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
@@ -1164,9 +1159,7 @@
 		83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */; };
 		83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345DF25B5A662006F2AD6 /* RecentItemsRepository.swift */; };
 		83E3460225B5C73E006F2AD6 /* QuickAccessWidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */; };
-		83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3462925B6DE1D006F2AD6 /* OfflineFilesRepositoryProtocol.swift */; };
 		83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3463C25B6DE67006F2AD6 /* OfflineFilesRepository.swift */; };
-		83E3464E25B6E0BC006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3462925B6DE1D006F2AD6 /* OfflineFilesRepositoryProtocol.swift */; };
 		83E3465725B6E0D0006F2AD6 /* OfflineFilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3463C25B6DE67006F2AD6 /* OfflineFilesRepository.swift */; };
 		83E53D29282A96D50049DFBE /* URL+FileAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E53D28282A96D50049DFBE /* URL+FileAttribute.swift */; };
 		83E53D2A282A96E70049DFBE /* URL+FileAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E53D28282A96D50049DFBE /* URL+FileAttribute.swift */; };
@@ -1481,6 +1474,8 @@
 		A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51AE827F3565E0030F1EA /* WSTagsField */; };
 		A8B8E02A273A689400C64E0A /* TransferUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */; };
 		A8B8E02E273A697200C64E0A /* MockTransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */; };
+		A8BAFCAB28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */; };
+		A8BAFCAC28B6381200ED4259 /* OfflineFileEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */; };
 		A8BB95122813028F002449D7 /* SharedItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */; };
 		A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */; };
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
@@ -2109,8 +2104,6 @@
 		BF782D76269BA4BB0001D169 /* GetSMSErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D4E269BA4BA0001D169 /* GetSMSErrorEntity.swift */; };
 		BF782D77269BA4BB0001D169 /* CallErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D4F269BA4BA0001D169 /* CallErrorEntity.swift */; };
 		BF782D78269BA4BB0001D169 /* AudioSessionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D50269BA4BA0001D169 /* AudioSessionErrorEntity.swift */; };
-		BF782D79269BA4BB0001D169 /* OfflineFileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D52269BA4BA0001D169 /* OfflineFileEntity.swift */; };
-		BF782D7D269BA5AD0001D169 /* OfflineFileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D52269BA4BA0001D169 /* OfflineFileEntity.swift */; };
 		BF782D81269BA8610001D169 /* RecentActionBucketEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
@@ -3374,7 +3367,6 @@
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteNodesRepository.swift; sourceTree = "<group>"; };
 		830C26CC25DFDD3000E9B56E /* RecentNodesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentNodesRepository.swift; sourceTree = "<group>"; };
-		830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOOfflineNode+Mapper.swift"; sourceTree = "<group>"; };
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
@@ -3506,7 +3498,6 @@
 		836370362461D2EA00842E38 /* SendLinkToChatsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SendLinkToChatsDelegate.swift; path = Chat/SendLinkToChatsDelegate.swift; sourceTree = "<group>"; };
 		8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAShowPasswordReminderRequestDelegate.h; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.h; sourceTree = "<group>"; };
 		8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAShowPasswordReminderRequestDelegate.m; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.m; sourceTree = "<group>"; };
-		83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineFilesUseCase.swift; sourceTree = "<group>"; };
 		8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewController.swift; sourceTree = "<group>"; };
 		8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModel.swift; sourceTree = "<group>"; };
 		8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutRouter.swift; sourceTree = "<group>"; };
@@ -3625,7 +3616,6 @@
 		83B5E88127F714510073C870 /* MockFileSystemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileSystemRepository.swift; sourceTree = "<group>"; };
 		83B5E88327F714670073C870 /* MockDownloadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadFileRepository.swift; sourceTree = "<group>"; };
 		83B5E88527F71B890073C870 /* MockNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeRepository.swift; sourceTree = "<group>"; };
-		83B5E88727F71BB00073C870 /* MockOfflineFilesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOfflineFilesRepository.swift; sourceTree = "<group>"; };
 		83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotosLibraryRepository.swift; sourceTree = "<group>"; };
 		83B6172E27DB521200492E46 /* DownloadNodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadNodeUseCase.swift; sourceTree = "<group>"; };
 		83B906B9249A29CA0088F15C /* UIButton+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Additions.swift"; sourceTree = "<group>"; };
@@ -3665,7 +3655,6 @@
 		83E3455825B58FA9006F2AD6 /* MEGAStore+QuickAccessWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+QuickAccessWidget.swift"; sourceTree = "<group>"; };
 		83E345DF25B5A662006F2AD6 /* RecentItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentItemsRepository.swift; sourceTree = "<group>"; };
 		83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManager.swift; sourceTree = "<group>"; };
-		83E3462925B6DE1D006F2AD6 /* OfflineFilesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryProtocol.swift; sourceTree = "<group>"; };
 		83E3463C25B6DE67006F2AD6 /* OfflineFilesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepository.swift; sourceTree = "<group>"; };
 		83E53D28282A96D50049DFBE /* URL+FileAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+FileAttribute.swift"; sourceTree = "<group>"; };
 		83E74545255BF81600D35E13 /* MEGAWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -3888,6 +3877,7 @@
 		A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatNotificationDelegate.m; sourceTree = "<group>"; };
 		A8B8E029273A689400C64E0A /* TransferUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferUseCaseTests.swift; sourceTree = "<group>"; };
 		A8B8E02D273A697200C64E0A /* MockTransferRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferRepository.swift; sourceTree = "<group>"; };
+		A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OfflineFileEntity+Mapper.swift"; sourceTree = "<group>"; };
 		A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharedItemsTableViewCell.xib; sourceTree = "<group>"; };
 		A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsTableViewCell.swift; sourceTree = "<group>"; };
 		A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+ContextMenu.swift"; sourceTree = "<group>"; };
@@ -4468,7 +4458,6 @@
 		BF782D4E269BA4BA0001D169 /* GetSMSErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSMSErrorEntity.swift; sourceTree = "<group>"; };
 		BF782D4F269BA4BA0001D169 /* CallErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallErrorEntity.swift; sourceTree = "<group>"; };
 		BF782D50269BA4BA0001D169 /* AudioSessionErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionErrorEntity.swift; sourceTree = "<group>"; };
-		BF782D52269BA4BA0001D169 /* OfflineFileEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineFileEntity.swift; sourceTree = "<group>"; };
 		BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecentActionBucketEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
 		BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+MEGANode.swift"; sourceTree = "<group>"; };
@@ -8158,14 +8147,6 @@
 			path = NameCollision;
 			sourceTree = "<group>";
 		};
-		83655B262593A1AE001A0846 /* Offline */ = {
-			isa = PBXGroup;
-			children = (
-				83655B272593A1D1001A0846 /* OfflineFilesUseCase.swift */,
-			);
-			path = Offline;
-			sourceTree = "<group>";
-		};
 		836651272649374B00BC02F0 /* ParticipantsLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -8586,14 +8567,6 @@
 				83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */,
 			);
 			path = Widget;
-			sourceTree = "<group>";
-		};
-		83E3462825B6DDFC006F2AD6 /* Files */ = {
-			isa = PBXGroup;
-			children = (
-				83E3462925B6DE1D006F2AD6 /* OfflineFilesRepositoryProtocol.swift */,
-			);
-			path = Files;
 			sourceTree = "<group>";
 		};
 		83E3463B25B6DE56006F2AD6 /* Files */ = {
@@ -9579,7 +9552,6 @@
 				0D213E66263A602500B43723 /* Node */,
 				0D7E5FCA2634F06E00C5CB2A /* Transfer */,
 				5BC47E2F253F0F8800853323 /* Chat */,
-				83655B262593A1AE001A0846 /* Offline */,
 				B645BC2F252FAF4C00D1D7CF /* Authentication */,
 				B645BC2C252FAF4000D1D7CF /* Account */,
 				32CB490D284EF40B00697BA9 /* Photos */,
@@ -9590,6 +9562,7 @@
 		B662B86F24F331D50089376A /* Model Mapping */ = {
 			isa = PBXGroup;
 			children = (
+				A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */,
 				A866D9A7271D8B0600146302 /* Account */,
 				0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */,
 				0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */,
@@ -9599,7 +9572,6 @@
 				943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */,
 				B63AE686250EFA3A000B8517 /* SMSState+Mapper.swift */,
 				BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */,
-				830C27A625E64A3000E9B56E /* MOOfflineNode+Mapper.swift */,
 				BF66DFBD2613CC4500066F35 /* ChatRoomEntity+Mapper.swift */,
 				BF0A426B28A21C9A0071F923 /* ChatRoomEntity+Peer.swift */,
 				BF66E036261420A000066F35 /* CallEntity+Mapper.swift */,
@@ -9697,7 +9669,6 @@
 				0D213E79263A609D00B43723 /* Node */,
 				0D7E5FB72634E4CA00C5CB2A /* Transfer */,
 				5BC47E30253F0FAB00853323 /* Chat */,
-				83E3462825B6DDFC006F2AD6 /* Files */,
 				B645BC34252FAFC700D1D7CF /* Authentication */,
 				B645BC35252FAFCC00D1D7CF /* Account */,
 				321AF2E0284F3E3E004FCC1E /* Photos */,
@@ -10176,7 +10147,6 @@
 				83B5E88127F714510073C870 /* MockFileSystemRepository.swift */,
 				83B5E88327F714670073C870 /* MockDownloadFileRepository.swift */,
 				83B5E88527F71B890073C870 /* MockNodeRepository.swift */,
-				83B5E88727F71BB00073C870 /* MockOfflineFilesRepository.swift */,
 				83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */,
 				833CAF3E2846886500B52B64 /* MockFileCacheRepository.swift */,
 				B59383562877F8D400861244 /* MockCreateContextMenuRepository.swift */,
@@ -10349,7 +10319,6 @@
 				BF782D37269BA4BA0001D169 /* Node */,
 				BF782D3C269BA4BA0001D169 /* Account */,
 				BF782D42269BA4BA0001D169 /* Error */,
-				BF782D51269BA4BA0001D169 /* Offline */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -10420,14 +10389,6 @@
 				BF782D48269BA4BA0001D169 /* ChatRoomErrorEntity.swift */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		BF782D51269BA4BA0001D169 /* Offline */ = {
-			isa = PBXGroup;
-			children = (
-				BF782D52269BA4BA0001D169 /* OfflineFileEntity.swift */,
-			);
-			path = Offline;
 			sourceTree = "<group>";
 		};
 		BF7EBD29244E8D120015255F /* Chat Input Bar */ = {
@@ -12035,7 +11996,6 @@
 				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
 				B6E5D24E274C2E8600C8AB96 /* PhotoDayCard.swift in Sources */,
 				C4AC9E6627ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift in Sources */,
-				830C27C125E64DF000E9B56E /* MOOfflineNode+Mapper.swift in Sources */,
 				2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */,
 				B6D0B342283C7A6B0020C64D /* AppGroupContainerRepository.swift in Sources */,
 				B6B73E6E22C5713700ACAD48 /* RegionListViewController.swift in Sources */,
@@ -12397,7 +12357,6 @@
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */,
-				83E3462A25B6DE1E006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
 				BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */,
 				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
@@ -12585,7 +12544,6 @@
 				7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */,
 				8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */,
 				832F19EB2091BA970067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,
-				83655B282593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */,
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */,
 				B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */,
@@ -13229,6 +13187,7 @@
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				BF5BC77E2611693800716CD6 /* UserInviteRepositoryProtocol.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
+				A8BAFCAB28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift in Sources */,
 				837DC7AD256D196400CA289E /* GetLinkInfoTableViewCell.swift in Sources */,
 				B6C444CB274A27DE00268D9A /* PhotoLibraryMonthView.swift in Sources */,
 				2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */,
@@ -13255,7 +13214,6 @@
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				838A7B7C25D5679F00767DB0 /* CallRepositoryProtocol.swift in Sources */,
 				83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */,
-				BF782D79269BA4BB0001D169 /* OfflineFileEntity.swift in Sources */,
 				B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
 				32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */,
@@ -13462,8 +13420,6 @@
 				835EE3B32582430700D8E3B8 /* MEGASdkManager.m in Sources */,
 				A82D5CE526BC086E00E73D27 /* CredentialRepository.swift in Sources */,
 				830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */,
-				83E3464E25B6E0BC006F2AD6 /* OfflineFilesRepositoryProtocol.swift in Sources */,
-				83655B292593A1D1001A0846 /* OfflineFilesUseCase.swift in Sources */,
 				83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */,
 				A82D5CE426BC083700E73D27 /* PreferenceRepository.swift in Sources */,
 				83344F73258A1CE40052DB3C /* AuthRepositoryProtocol.swift in Sources */,
@@ -13474,7 +13430,6 @@
 				83655AE7259387F6001A0846 /* MOOfflineNode.m in Sources */,
 				837ABEF925DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
-				830C27B025E64D5F00E9B56E /* MOOfflineNode+Mapper.swift in Sources */,
 				8334508C258B5EFE0052DB3C /* NSDate+MNZCategory.m in Sources */,
 				836924D72582728100658F6C /* MEGAGenericRequestDelegate.m in Sources */,
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
@@ -13501,6 +13456,7 @@
 				8361086325AF156800CAC6E1 /* MEGALogger.m in Sources */,
 				83E3454F25B58DDC006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				83655AC32593855F001A0846 /* MOUploadTransfer+CoreDataClass.m in Sources */,
+				A8BAFCAC28B6381200ED4259 /* OfflineFileEntity+Mapper.swift in Sources */,
 				8375B75425EFC77D00B70F6B /* RecentsQuickAccessWidget.swift in Sources */,
 				83344F4F258A1BD00052DB3C /* AuthUseCase.swift in Sources */,
 				8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */,
@@ -13515,7 +13471,6 @@
 				830C28E025E6900200E9B56E /* GridView.swift in Sources */,
 				83655A8C25938546001A0846 /* MOChatDraft+CoreDataClass.m in Sources */,
 				8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */,
-				BF782D7D269BA5AD0001D169 /* OfflineFileEntity.swift in Sources */,
 				B5300AF62754A0A5001E516B /* Strings+Generated.swift in Sources */,
 				83655ACC25938568001A0846 /* MOMessage+CoreDataClass.m in Sources */,
 				83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */,
@@ -13963,7 +13918,6 @@
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				A866D9AC271D92C200146302 /* AccountDetailsEntity+Additions.swift in Sources */,
 				B6A6E19A287BCE3800179806 /* MockUser.swift in Sources */,
-				83B5E88827F71BB00073C870 /* MockOfflineFilesRepository.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
