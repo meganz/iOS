@@ -400,7 +400,7 @@
 		5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5B98624D26B1B2E600BB9945 /* EmptyStateView+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98624526B1A39900BB9945 /* EmptyStateView+Config.swift */; };
 		5B98BE1127AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98BE1027AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift */; };
-		5B98BE1327AA9FF800426B97 /* ExportChatMessagesNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98BE1227AA9FF700426B97 /* ExportChatMessagesNodeRepository.swift */; };
+		5B98BE1327AA9FF800426B97 /* ExportChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */; };
 		5B9CC937269DA6A8006342FC /* GenericNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B9CC936269DA6A8006342FC /* GenericNodeTableViewCell.xib */; };
 		5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
 		5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */; };
@@ -3024,7 +3024,7 @@
 		5B947A9D267A2A3400715B0C /* GenericNodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericNodeTableViewCell.swift; sourceTree = "<group>"; };
 		5B98624526B1A39900BB9945 /* EmptyStateView+Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmptyStateView+Config.swift"; sourceTree = "<group>"; };
 		5B98BE1027AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExportChatMessagesRepositoryProtocol.swift; path = MEGADomain/RepositoryProtocol/Chat/ExportChatMessagesRepositoryProtocol.swift; sourceTree = SOURCE_ROOT; };
-		5B98BE1227AA9FF700426B97 /* ExportChatMessagesNodeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportChatMessagesNodeRepository.swift; sourceTree = "<group>"; };
+		5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportChatMessagesRepository.swift; sourceTree = "<group>"; };
 		5B9CC936269DA6A8006342FC /* GenericNodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericNodeTableViewCell.xib; sourceTree = "<group>"; };
 		5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactLinkQR.storyboard; sourceTree = "<group>"; };
 		5B9F5D44259DD57700BADB11 /* CookieSettingsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsUseCase.swift; sourceTree = "<group>"; };
@@ -5149,7 +5149,6 @@
 		0D213E79263A609D00B43723 /* Node */ = {
 			isa = PBXGroup;
 			children = (
-				5B98BE1027AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift */,
 				8396AB4427BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift */,
 			);
 			path = Node;
@@ -6815,7 +6814,7 @@
 		5BC47E2C253F0F7200853323 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				5B98BE1227AA9FF700426B97 /* ExportChatMessagesNodeRepository.swift */,
+				5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */,
 				5BFA962F252E1119003653EB /* ManageChatHistoryRepository.swift */,
 				BF66DF152612C20200066F35 /* ChatRoomRepository.swift */,
 			);
@@ -6836,6 +6835,7 @@
 		5BC47E30253F0FAB00853323 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5B98BE1027AA978E00426B97 /* ExportChatMessagesRepositoryProtocol.swift */,
 				5BFA9617252E0E13003653EB /* ManageHistoryRepositoryProtocol.swift */,
 				BF66DF212612C23600066F35 /* ChatRoomRepositoryProtocol.swift */,
 			);
@@ -12531,7 +12531,7 @@
 				A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */,
 				83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */,
 				5DAC09D324CFC5B9001B6476 /* MEGABannerView.swift in Sources */,
-				5B98BE1327AA9FF800426B97 /* ExportChatMessagesNodeRepository.swift in Sources */,
+				5B98BE1327AA9FF800426B97 /* ExportChatMessagesRepository.swift in Sources */,
 				B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */,
 				9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */,
 				7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */,
