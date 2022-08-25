@@ -268,6 +268,7 @@
                         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [CameraUploadManager.shared enableCameraUpload];
+                            self.cameraUploadSettingChanged();
                             [self configUI];
                         }]];
                         [self presentViewController:alertController animated:YES completion:nil];
@@ -277,12 +278,13 @@
                 } else {
                     [DevicePermissionsHelper alertPhotosPermission];
                 }
-                
+                self.cameraUploadSettingChanged();
                 [self configUI];
             }];
         }
     } else {
         [CameraUploadManager.shared disableCameraUpload];
+        self.cameraUploadSettingChanged();
         [self configUI];
     }
 }

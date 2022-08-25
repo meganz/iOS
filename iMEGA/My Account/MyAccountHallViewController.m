@@ -440,9 +440,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == MyAccountSectionOther) {
-        SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
-        [self.navigationController pushViewController:settingsTVC animated:YES];
-        
+        [self showSettings];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     }
