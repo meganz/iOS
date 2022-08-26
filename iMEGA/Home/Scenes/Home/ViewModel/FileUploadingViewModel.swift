@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol HomeUploadingViewModelInputs {
 
@@ -34,7 +35,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
                                                      createContextMenuUseCase: createContextMenuUseCase)
         notifyUpdate?(self.outputs)
         
-        reachabilityUseCase.registerNetworkChangeListener { [weak self] _ in
+        networkMonitorUseCase.networkPathChanged { [weak self] _ in
             guard let self = self else { return }
             self.notifyUpdate?(self.outputs)
         }
@@ -113,7 +114,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     var inputs: HomeUploadingViewModelInputs { self }
 
     var outputs: HomeUploadingViewModelOutputs {
-        let networkReachable = reachabilityUseCase.isReachable()
+        let networkReachable = networkMonitorUseCase.isConnected()
         let cmConfigEntity = CMConfigEntity(menuType: .uploadAdd, isHome: true)
         if let error = error {
             if #available(iOS 14.0, *) {
@@ -154,7 +155,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     private let devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol
 
-    private let reachabilityUseCase: ReachabilityUseCaseProtocol
+    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     
     private let createContextMenuUseCase: CreateContextMenuUseCaseProtocol
     
@@ -163,13 +164,13 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     init(
         uploadFilesUseCase: UploadPhotoAssetsUseCaseProtocol,
         devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol,
-        reachabilityUseCase: ReachabilityUseCaseProtocol,
+        networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
         createContextMenuUseCase: CreateContextMenuUseCaseProtocol,
         router: FileUploadingRouter
     ) {
         self.uploadPhotoAssetsUseCase = uploadFilesUseCase
         self.devicePermissionUseCase = devicePermissionUseCase
-        self.reachabilityUseCase = reachabilityUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.router = router
     }
