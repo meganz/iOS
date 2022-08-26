@@ -113,8 +113,8 @@ extension SettingViewRouter {
 #if QA_CONFIG
         SettingSectionViewModel {
             SettingCellViewModel(image: Asset.Images.MyAccount.iconSettings,
-                                 title: "QA",
-                                 router: QASettingsRouter(presenter: presenter?.navigationController))
+                                 title: "QA Settings",
+                                 router: QASettingsRouter(presenter: presenter))
         }
 #endif
     }
