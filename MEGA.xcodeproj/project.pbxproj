@@ -1534,6 +1534,7 @@
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
+		B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */; };
 		B52E231828A0B3240018C3C3 /* FeatureFlagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231728A0B3240018C3C3 /* FeatureFlagRepository.swift */; };
 		B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */; };
 		B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
@@ -1547,6 +1548,7 @@
 		B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */; };
 		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
@@ -3923,8 +3925,10 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
+		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
 		B52E231728A0B3240018C3C3 /* FeatureFlagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagRepository.swift; sourceTree = "<group>"; };
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
+		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
@@ -5988,6 +5992,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B51DD9CB28B5D3110094A979 /* LiveText */,
 				B5E411A528AB658600D05719 /* FeatureFlags */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
 				B6730B0A2735F34100A9CF5F /* Shared Views */,
@@ -7800,6 +7805,7 @@
 				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
 				B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */,
 				BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */,
+				B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */,
 				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
 				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
 				77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */,
@@ -9097,6 +9103,14 @@
 				A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */,
 			);
 			path = "Report Issue";
+			sourceTree = "<group>";
+		};
+		B51DD9CB28B5D3110094A979 /* LiveText */ = {
+			isa = PBXGroup;
+			children = (
+				B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */,
+			);
+			path = LiveText;
 			sourceTree = "<group>";
 		};
 		B52E231428A0B3050018C3C3 /* FeatureFlag */ = {
@@ -12227,6 +12241,7 @@
 				BF99A42024B2AD040035A183 /* ChatUploadTransfer+CoreDataProperties.swift in Sources */,
 				5D31674724FCA8FD0032492F /* UIViewController+ErrorHandling.swift in Sources */,
 				BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */,
+				B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				2F879C592629261A00D2FA78 /* EncourageGuestUserToJoinMegaViewController.swift in Sources */,
@@ -12813,6 +12828,7 @@
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
 				837B9C07247817F100D409B4 /* NodeActionBuilder.swift in Sources */,
 				BFAD51182607F2B600DFBD1B /* UserUseCase.swift in Sources */,
+				B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */,
 				BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */,
 				83CCBC5127959CF800B90EF2 /* TransferStageEntity+Mapper.swift in Sources */,
 				BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */,
