@@ -77,10 +77,11 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     func selectedAction(_ action: NameCollisionActionType) {
-        guard let collision = collision else {
+        guard var collision = collision, let index = collisions.firstIndex(of: collision) else {
             return
         }
         collision.collisionAction = action
+        collisions[index] = collision
         cancelLoading()
         
         switch collisionType {
