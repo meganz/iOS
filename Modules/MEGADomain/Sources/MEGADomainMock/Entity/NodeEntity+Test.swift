@@ -1,8 +1,7 @@
-import Foundation
-@testable import MEGA
 import MEGADomain
+import Foundation
 
-extension NodeEntity {
+public extension NodeEntity {
     init(changeTypes: ChangeTypeEntity = .attributes,
          nodeType: NodeTypeEntity? = nil,
          name: String = "",

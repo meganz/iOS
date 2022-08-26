@@ -22,13 +22,13 @@ final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
         }
         
         return offlineNodes.map {
-            OfflineFileEntity(with: $0)
+            $0.toOfflineFileEntity()
         }
     }
     
     func offlineFile(for base64Handle: Base64HandleEntity) -> OfflineFileEntity? {
         if let offlineNode = store.offlineNode(withHandle: base64Handle) {
-            return OfflineFileEntity(with: offlineNode)
+            return offlineNode.toOfflineFileEntity()
         } else {
             return nil
         }

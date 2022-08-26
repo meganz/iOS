@@ -1,25 +1,25 @@
 import Foundation
 
 // MARK: - Use case protocol -
-protocol OfflineFilesUseCaseProtocol {
+public protocol OfflineFilesUseCaseProtocol {
     func offlineFiles() -> [OfflineFileEntity]
     func offlineFile(for base64Handle: String) -> OfflineFileEntity?
 }
 
 // MARK: - Use case implementation -
-struct OfflineFilesUseCase<T: OfflineFilesRepositoryProtocol>: OfflineFilesUseCaseProtocol {
+public struct OfflineFilesUseCase<T: OfflineFilesRepositoryProtocol>: OfflineFilesUseCaseProtocol {
 
     private let repo: T
 
-    init(repo: T) {
+    public init(repo: T) {
         self.repo = repo
     }
     
-    func offlineFiles() -> [OfflineFileEntity] {
+    public func offlineFiles() -> [OfflineFileEntity] {
         return repo.offlineFiles()
     }
     
-    func offlineFile(for base64Handle: String) -> OfflineFileEntity? {
+    public func offlineFile(for base64Handle: String) -> OfflineFileEntity? {
         return repo.offlineFile(for: base64Handle)
     }
 }
