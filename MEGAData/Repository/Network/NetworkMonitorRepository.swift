@@ -19,6 +19,9 @@ final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     }
     
     func networkPathChanged(completion: @escaping (Bool) -> Void) {
+        if pathStatus == .unsatisfied && monitor.currentPath.status == .satisfied {
+            pathStatus = monitor.currentPath.status
+        }
         monitor.pathUpdateHandler =  { [weak self] path in
             if self?.pathStatus != path.status {
                 self?.pathStatus = path.status
@@ -27,5 +30,9 @@ final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
                 }
             }
         }
+    }
+    
+    func isConnected() -> Bool {
+        monitor.currentPath.status == .satisfied
     }
 }
