@@ -435,6 +435,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self configLiveTextInterfaceFrom:self.imageViewsCache];
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         NSInteger newIndex = (scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
@@ -451,6 +455,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
             [self updateMessageIdTo:newIndex];
         }
+        
+        [self configLiveTextLayout];
+        
+        [self startLiveTextAnalysisFrom:self.imageViewsCache];
     }
 }
 
@@ -467,6 +475,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self configLiveTextLayout];
+    [self startLiveTextAnalysisFrom:self.imageViewsCache];
+}
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         return nil;
@@ -481,7 +494,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         if (node.name.mnz_isImagePathExtension) {
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                [self setupNode:node forImageView:(UIImageView *)view withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:(UIImageView *)view inIndex:self.dataProvider.currentIndex withMode:MEGAPhotoModeOriginal];
             }
             if (!self.interfaceHidden) {
                 [self singleTapGesture:nil];
@@ -499,6 +512,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             scrollView.subviews.lastObject.hidden = NO;
         }
         [self resizeImageView:(UIImageView *)view];
+        
+        [self configLiveTextLayout];
+
+        [self startLiveTextAnalysisFrom:self.imageViewsCache];
     }
 }
 
@@ -513,7 +530,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 continue;
             }
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+            UIImageView *imageView = [self imageViewWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = self.dataProvider[i];
@@ -521,35 +538,40 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
-                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath] placeholderImage:placeHolderImage];
+                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath]
+                             placeholderImage:placeHolderImage
+                                    completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    [self startLiveTextAnalysisFor:imageView in:index];
+                }];
             } else {
                 BOOL loadOriginalWithMobileData = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
                 if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData) && node.name.mnz_isImagePathExtension && node.size.longLongValue < MaxSizeToDownloadOriginal) {
-                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                    [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeOriginal];
                 }
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
                     imageView.image = [UIImage imageWithContentsOfFile:previewPath];
                 } else if (node.hasPreview) {
                     if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData)) {
                         if (node.size.longLongValue > MinSizeToRequestThePreview) {
-                            [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                            [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModePreview];
                         }
                     } else {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModePreview];
+                        [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModePreview];
                     }
                 } else {
                     NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
                         imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
+                        [self startLiveTextAnalysisFor:imageView in:index];
                     } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeThumbnail];
+                        [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeThumbnail];
                     }
                     if (node.name.mnz_isImagePathExtension && ![node.name.pathExtension isEqualToString:@"gif"]) {
-                        [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                        [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeOriginal];
                     }
                 }
                 if ([node.name.pathExtension isEqualToString:@"gif"]) {
-                    [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                    [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeOriginal];
                 }
             }
             
@@ -581,11 +603,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self.scrollView addSubview:zoomableView];
             
             [self.imageViewsCache setObject:zoomableView forKey:@(i)];
+            
+            [self configLiveTextLayout];
         }
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode {
     [self removeActivityIndicatorsFromView:imageView];
     
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -598,6 +622,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
                         completion:nil];
         [self removeActivityIndicatorsFromView:imageView];
+        [self startLiveTextAnalysisFor:imageView in:index];
     };
     
     void (^transferCompletion)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
@@ -613,6 +638,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                         completion:nil];
         [self reloadUI];
         [self removeActivityIndicatorsFromView:imageView];
+        [self startLiveTextAnalysisFor:imageView in:index];
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
@@ -635,7 +661,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
             } else if (node.name.mnz_isImagePathExtension) {
-                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
             }
             
             break;
@@ -647,7 +673,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
             } else if (node.name.mnz_isImagePathExtension) {
-                [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
             }
             
             break;
@@ -962,6 +988,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.interfaceHidden = YES;
         }
         
+        [self configLiveTextLayout];
+
         [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
@@ -1279,8 +1307,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - Private methods.
 
 - (UIImageView *)placeholderCurrentImageView {
-    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
-    UIImageView *animatedImageView  = zoomableView.subviews.firstObject;
+    UIImageView *animatedImageView = [self currentImageViewFrom:self.imageViewsCache];
     
     UIImageView *imageview = UIImageView.new;
     imageview.backgroundColor = self.view.backgroundColor;
@@ -1304,6 +1331,14 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
     
     return nil;
+}
+
+#pragma mark - Live Text
+
+- (void)configLiveTextLayout {
+    [self configLiveTextLayoutFrom:self.imageViewsCache
+                 isInterfaceHidden:self.isInterfaceHidden
+                     toolBarHeight:self.toolbar.frame.size.height];
 }
 
 @end
