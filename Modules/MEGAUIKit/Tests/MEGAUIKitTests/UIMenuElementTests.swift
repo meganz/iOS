@@ -26,15 +26,19 @@ final class UIMenuElementTests: XCTestCase {
         XCTAssertFalse(actionA.compare(actionB))
     }
     
-    @available(iOS 15.0, *)
-    func testCompareUIMenuElementWith_SameSubtitle() {
+    func testCompareUIMenuElementWith_SameSubtitle() throws {
+        guard #available(iOS 15.0, *) else {
+            throw XCTSkip("Required API is not available for this test.")
+        }
         let actionA = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.A.Subtitle",image: nil, attributes: .hidden) { _ in }
         let actionB = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.A.Subtitle",image: nil, attributes: .hidden) { _ in }
         XCTAssertTrue(actionA.compare(actionB))
     }
     
-    @available(iOS 15.0, *)
-    func testCompareUIMenuElementWith_DifferentSubtitle() {
+    func testCompareUIMenuElementWith_DifferentSubtitle() throws {
+        guard #available(iOS 15.0, *) else {
+            throw XCTSkip("Required API is not available for this test.")
+        }
         let actionA = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.A.Subtitle",image: nil, attributes: .hidden) { _ in }
         let actionB = UIAction(title: "UIAction.A.Title", subtitle: "",image: nil, attributes: .hidden, state: .on) { _ in }
         XCTAssertFalse(actionA.compare(actionB))
