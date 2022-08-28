@@ -11,10 +11,10 @@ struct QASettingsRouter: QASettingsRouting {
         static let errorAlertTitle = "Error"
     }
     
-    private let navigationController: UINavigationController
+    private weak var presenter: UINavigationController?
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(presenter: UINavigationController?) {
+        self.presenter = presenter
     }
     
     func build() -> UIViewController {
@@ -26,13 +26,13 @@ struct QASettingsRouter: QASettingsRouting {
     }
     
     func start() {
-        navigationController.pushViewController(build(), animated: true)
+        presenter?.pushViewController(build(), animated: true)
     }
     
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction]) {
         let alertController = UIAlertController(title: title,message: message, preferredStyle: .alert)
         actions.forEach(alertController.addAction)
-        navigationController.present(alertController, animated: true, completion: nil)
+        presenter?.present(alertController, animated: true, completion: nil)
     }
     
     func showAlert(withError error: Error) {

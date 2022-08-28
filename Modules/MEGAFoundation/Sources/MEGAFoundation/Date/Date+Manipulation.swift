@@ -26,25 +26,37 @@ public extension Date {
     }
     
     /// Return a date object by removing the timestamp. Only year, month and day date components will be preserved
+    /// - Parameter timeZone: the time zone to use to create the new date. If not provided, the system time zone will be used.
     /// - Returns: A new date object without timestamp
-    func removeTimestamp() -> Date? {
-        let calendar = Calendar.current
+    func removeTimestamp(timeZone: TimeZone? = nil) -> Date? {
+        var calendar = Calendar.current
+        if let timeZone = timeZone {
+            calendar.timeZone = timeZone
+        }
         let components = calendar.dateComponents([.year, .month, .day], from: self)
         return calendar.date(from: components)
     }
     
     /// Return a date object by removing day information. Only year, month date components will be preserved
+    /// - Parameter timeZone: the time zone to use to create the new date. If not provided, the system time zone will be used.
     /// - Returns: A new date object without day information
-    func removeDay() -> Date? {
-        let calendar = Calendar.current
+    func removeDay(timeZone: TimeZone? = nil) -> Date? {
+        var calendar = Calendar.current
+        if let timeZone = timeZone {
+            calendar.timeZone = timeZone
+        }
         let components = calendar.dateComponents([.year, .month], from: self)
         return calendar.date(from: components)
     }
     
     /// Return a date object by removing day information. Only year date components will be preserved
+    /// - Parameter timeZone: the time zone to use to create the new date. If not provided, the system time zone will be used.
     /// - Returns: A new date object without month infomation
-    func removeMonth() -> Date? {
-        let calendar = Calendar.current
+    func removeMonth(timeZone: TimeZone? = nil) -> Date? {
+        var calendar = Calendar.current
+        if let timeZone = timeZone {
+            calendar.timeZone = timeZone
+        }
         let components = calendar.dateComponents([.year], from: self)
         return calendar.date(from: components)
     }

@@ -535,6 +535,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 }
 
 - (void)incompleteRestore {
+    [SVProgressHUD dismiss];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"incompleteRestore_title", @"Alert title shown when a restore hasn't been completed correctly")  message:NSLocalizedString(@"incompleteRestore_message", @"Alert message shown when a restore hasn't been completed correctly") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     
@@ -542,6 +543,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 }
 
 - (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage {
+    [SVProgressHUD dismiss];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedRestore_title", @"Alert title shown when the restoring process has stopped for some reason")  message:NSLocalizedString(@"failedRestore_message", @"Alert message shown when the restoring process has stopped for some reason") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     
