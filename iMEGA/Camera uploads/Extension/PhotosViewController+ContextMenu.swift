@@ -40,12 +40,17 @@ extension PhotosViewController {
     }
     
     func updateMenuBarButtonItems(_ activeTabSelectionMode: PhotoLibraryViewMode) {
-        objcWrapper_parent.navigationItem.rightBarButtonItems = nil
-        
         if activeTabSelectionMode == .all {
             enableContextMenuOnCameraUploader()
         } else if activeTabSelectionMode != .all && viewModel.isFilterActive {
             objcWrapper_parent.navigationItem.rightBarButtonItem = filterActiveBarButtonItem
+        } else {
+            if #available(iOS 14.0, *) {
+                self.objcWrapper_parent.navigationItem.rightBarButtonItems = nil;
+            }
+            else {
+                self.navigationItem.rightBarButtonItem = nil;
+            }
         }
     }
     
@@ -66,20 +71,22 @@ extension PhotosViewController {
     private func enableContextMenuOnCameraUploader() {
         if #available(iOS 14.0, *) {
             guard let menuConfig = contextMenuConfiguration(), let editBarButtonItem = editBarButtonItem else { return }
-
-            editBarButtonItem.image = Asset.Images.NavigationBar.moreNavigationBar.image
-            editBarButtonItem.menu = contextMenuManager?.contextMenu(with: menuConfig)
-            editBarButtonItem.isEnabled = true
-            editBarButtonItem.target = nil
-            editBarButtonItem.action = nil
-            
-            var rightBarButtonItems = [editBarButtonItem]
-            if viewModel.isFilterActive {
-                rightBarButtonItems.append(filterActiveBarButtonItem)
+            let newMenuItem = contextMenuManager?.contextMenu(with: menuConfig)
+            if UIMenu.compareMenuItem(newMenuItem, editBarButtonItem.menu) == false {
+                editBarButtonItem.image = Asset.Images.NavigationBar.moreNavigationBar.image
+                editBarButtonItem.menu = newMenuItem
+                editBarButtonItem.isEnabled = true
+                editBarButtonItem.target = nil
+                editBarButtonItem.action = nil
+                
+                var rightBarButtonItems = [editBarButtonItem]
+                if viewModel.isFilterActive {
+                    rightBarButtonItems.append(filterActiveBarButtonItem)
+                }
+                objcWrapper_parent.navigationItem.rightBarButtonItems = rightBarButtonItems
+                editBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
+                )
             }
-            objcWrapper_parent.navigationItem.rightBarButtonItems = rightBarButtonItems
-            editBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-            )
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
         }

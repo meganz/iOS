@@ -18,13 +18,13 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     private weak var navigationController: UINavigationController?
     private weak var presentController: UIViewController?
 
-    @objc init(navigationController: UINavigationController) {
+    @objc init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
         
         super.init()
     }
     
-    @objc init(presentController: UIViewController) {
+    @objc init(presentController: UIViewController?) {
         self.presentController = presentController
         
         super.init()

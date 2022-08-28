@@ -1,7 +1,5 @@
-import MEGADomain
-
 // MARK: - Use case protocol -
-protocol NodeActionUseCaseProtocol {
+public protocol NodeActionUseCaseProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
@@ -11,35 +9,35 @@ protocol NodeActionUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
+public struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
     
     private let nodeRepository: T
     
-    init(repo: T) {
+    public init(repo: T) {
         self.nodeRepository = repo
     }
     
-    func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
+    public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         nodeRepository.nodeAccessLevel(nodeHandle: nodeHandle)
     }
     
-    func labelString(label: NodeLabelTypeEntity) -> String {
+    public func labelString(label: NodeLabelTypeEntity) -> String {
         return nodeRepository.labelString(label: label)
     }
     
-    func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
+    public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         nodeRepository.getFilesAndFolders(nodeHandle: nodeHandle)
     }
     
-    func hasVersions(nodeHandle: HandleEntity) -> Bool {
+    public func hasVersions(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.hasVersions(nodeHandle: nodeHandle)
     }
     
-    func isDownloaded(nodeHandle: HandleEntity) -> Bool {
+    public func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.isDownloaded(nodeHandle: nodeHandle)
     }
     
-    func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
+    public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         nodeRepository.isInRubbishBin(nodeHandle: nodeHandle)
     }
 }
