@@ -990,6 +990,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [Helper cannotPlayContentDuringACallAlert];
         } else {
             UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder]) fileLink:nil];
+            playerVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             [self presentViewController:playerVC animated:YES completion:nil];
         }
     } else {
