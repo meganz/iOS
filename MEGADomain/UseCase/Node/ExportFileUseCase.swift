@@ -8,9 +8,9 @@ protocol ExportFileNodeUseCaseProtocol {
 }
 
 protocol ExportFileChatMessageUseCaseProtocol {
-    func export(message: MEGAChatMessage, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
-    func export(messages: [MEGAChatMessage], completion:  @escaping ([URL]) -> Void)
-    func exportMessageNode(_ node: MEGANode, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
+    func export(message: MEGAChatMessage, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
+    func export(messages: [MEGAChatMessage], chatId: HandleEntity, completion:  @escaping ([URL]) -> Void)
+    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
 }
 
 typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
@@ -77,11 +77,11 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         }
     }
     
-    private func importNodeToDownload(_ node: MEGANode, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        importNodeRepository.importChatNode(node) { result in
+    private func importNodeToDownload(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+        importNodeRepository.importChatNode(node, messageId:messageId, chatId:chatId) { result in
             switch result {
             case .success(let node):
-                downloadNode(node.toNodeEntity(), completion: completion)
+                downloadNode(node, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -137,7 +137,7 @@ extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
 
 // MARK: - ExportFileChatMessageUseCaseProtocol implementation -
 extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
-    func export(message: MEGAChatMessage, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    func export(message: MEGAChatMessage, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         switch message.type {
         case .normal, .containsMeta:
             if let url = exportChatMessagesRepository.exportText(message: message) {
@@ -163,7 +163,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 completion(.failure(.nonExportableMessage))
                 return
             }
-            exportMessageNode( node, completion: completion)
+            exportNode(node.toNodeEntity(), messageId:message.messageId, chatId: chatId, completion: completion)
             
         default:
             MEGALogError("Failed to export a non compatible message type \(message.type)")
@@ -171,14 +171,14 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
         }
     }
     
-    func export(messages: [MEGAChatMessage], completion: @escaping ([URL]) -> Void) {
+    func export(messages: [MEGAChatMessage], chatId: HandleEntity, completion: @escaping ([URL]) -> Void) {
         var urlsArray = [URL]()
         let myGroup = DispatchGroup()
         
         for message in messages {
             myGroup.enter()
             
-            export(message: message) { result in
+            export(message: message, chatId: chatId) { result in
                 switch result {
                 case .success(let url):
                     urlsArray.append(url)
@@ -194,11 +194,11 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
         }
     }
     
-    func exportMessageNode(_ node: MEGANode, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        if let nodeUrl = nodeUrl(node.toNodeEntity()) {
+    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+        if let nodeUrl = nodeUrl(node) {
             completion(.success(nodeUrl))
         } else {
-            importNodeToDownload(node, completion: completion)
+            importNodeToDownload(node, messageId: messageId, chatId: chatId, completion: completion)
         }
     }
 }

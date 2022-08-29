@@ -296,7 +296,6 @@
 		5B12D03B241273D5006C3907 /* MEGAStore+CloudAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B12D03A241273D4006C3907 /* MEGAStore+CloudAppearancePreference.swift */; };
 		5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */; };
 		5B151E2D276B4A7D00EA9BDD /* ExportFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B151E2A276B4A7D00EA9BDD /* ExportFileUseCase.swift */; };
-		5B151E33276BB00A00EA9BDD /* ExportFileErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B151E32276BB00900EA9BDD /* ExportFileErrorEntity.swift */; };
 		5B16A738220D6E0A00085F61 /* ThumbnailViewerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B16A737220D6E0900085F61 /* ThumbnailViewerTableViewCell.m */; };
 		5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */; };
 		5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */; };
@@ -1060,7 +1059,6 @@
 		8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */; };
 		8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */; };
-		8396AB4527BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396AB4427BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift */; };
 		83993CF926B9471D00223C92 /* ChatRoomEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83993CF826B9471D00223C92 /* ChatRoomEntity+Additions.swift */; };
 		83993CFD26B9630D00223C92 /* ChatSessionEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83993CFC26B9630D00223C92 /* ChatSessionEntity+Additions.swift */; };
 		839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839999DA264AE52700520F38 /* MeetingOptionsMenuViewController.swift */; };
@@ -2899,7 +2897,6 @@
 		5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMultiFactorAuthCheckRequestDelegate.m; path = API/Requests/MEGAMultiFactorAuthCheckRequestDelegate.m; sourceTree = "<group>"; };
 		5B14A41420D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMultiFactorAuthCheckRequestDelegate.h; path = API/Requests/MEGAMultiFactorAuthCheckRequestDelegate.h; sourceTree = "<group>"; };
 		5B151E2A276B4A7D00EA9BDD /* ExportFileUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportFileUseCase.swift; sourceTree = "<group>"; };
-		5B151E32276BB00900EA9BDD /* ExportFileErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportFileErrorEntity.swift; sourceTree = "<group>"; };
 		5B16A736220D6E0900085F61 /* ThumbnailViewerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailViewerTableViewCell.h; sourceTree = "<group>"; };
 		5B16A737220D6E0900085F61 /* ThumbnailViewerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailViewerTableViewCell.m; sourceTree = "<group>"; };
 		5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteFriendsViewController.h; sourceTree = "<group>"; };
@@ -3569,7 +3566,6 @@
 		8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRemoteVideoUseCase.swift; sourceTree = "<group>"; };
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
 		8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportNodeRepository.swift; sourceTree = "<group>"; };
-		8396AB4427BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportNodeRepositoryProtocol.swift; sourceTree = "<group>"; };
 		83993CF826B9471D00223C92 /* ChatRoomEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomEntity+Additions.swift"; sourceTree = "<group>"; };
 		83993CFC26B9630D00223C92 /* ChatSessionEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatSessionEntity+Additions.swift"; sourceTree = "<group>"; };
 		839999DA264AE52700520F38 /* MeetingOptionsMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingOptionsMenuViewController.swift; sourceTree = "<group>"; };
@@ -5136,7 +5132,6 @@
 		0D213E79263A609D00B43723 /* Node */ = {
 			isa = PBXGroup;
 			children = (
-				8396AB4427BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -10313,7 +10308,6 @@
 			isa = PBXGroup;
 			children = (
 				BF782D46269BA4BA0001D169 /* Chat */,
-				5B151E32276BB00900EA9BDD /* ExportFileErrorEntity.swift */,
 				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
 				125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */,
 				BF782D45269BA4BA0001D169 /* PSAErrorEntity.swift */,
@@ -12787,7 +12781,6 @@
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				BF66DFE22613E7BE00066F35 /* MeetingParticipantTableViewCell.swift in Sources */,
 				5D60927E255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift in Sources */,
-				8396AB4527BBDD9000C71291 /* ImportNodeRepositoryProtocol.swift in Sources */,
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */,
 				C46D2A80270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift in Sources */,
@@ -13105,7 +13098,6 @@
 				5DFC8DC224ECEC9B00DDA006 /* StoreUserClient.swift in Sources */,
 				5D7792DC250613B200378D87 /* NodeInfoRouter.swift in Sources */,
 				B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */,
-				5B151E33276BB00A00EA9BDD /* ExportFileErrorEntity.swift in Sources */,
 				B65D17D7289A233C00D5AD33 /* UIImage+Doc.swift in Sources */,
 				2F0986762511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift in Sources */,
 				BF782D73269BA4BB0001D169 /* AchievementErrorEntity.swift in Sources */,

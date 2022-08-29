@@ -37,7 +37,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
     
     func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, appData: String?, cancelToken: MEGACancelToken?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
-        guard let node = chatNode(handle: nodeHandle, messageId: messageId, chatId: chatId) else {
+        guard let node = chatSdk.chatNode(handle: nodeHandle, messageId: messageId, chatId: chatId) else {
             completion(.failure(.couldNotFindNodeByHandle))
             return
         }
@@ -101,7 +101,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     
     func downloadChatFile(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         
-        guard let node = chatNode(handle: handle, messageId: messageId, chatId: chatId), let name = node.name else {
+        guard let node = chatSdk.chatNode(handle: handle, messageId: messageId, chatId: chatId), let name = node.name else {
             completion?(.failure(.couldNotFindNodeByHandle))
             return
         }
@@ -136,16 +136,6 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
         } else {
             sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken)
-        }
-    }
-    
-    private func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> MEGANode? {
-        if let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle {
-            return node
-        } else if let messageForNodeHistory = chatSdk.messageFromNodeHistory(forChat: chatId, messageId: messageId), let node = messageForNodeHistory.nodeList?.node(at: 0), handle == node.handle {
-            return node
-        } else {
-            return nil
         }
     }
 }
