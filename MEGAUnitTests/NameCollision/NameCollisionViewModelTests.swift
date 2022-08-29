@@ -49,11 +49,12 @@ final class NameCollisionViewModelTests: XCTestCase {
     
     func testAction_copyWithNameCollisions() {
         let router = MockNameCollisionRouter()
-        let collisions = nameCollisions
-        collisions.forEach { collision in
+        var resolvedCollisions = [NameCollisionEntity]()
+        for var collision in nameCollisions {
             collision.collisionNodeHandle = HandleEntity.random(in: 100...1000)
+            resolvedCollisions.append(collision)
         }
-        let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: collisions)
+        let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: resolvedCollisions)
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
@@ -124,7 +125,6 @@ final class MockNameCollisionRouter: NameCollisionViewRouting {
     }
     
     func showCopyOrMoveSuccess() {
-        print("NameCollisionViewModelTests show succes")
         showCopyOrMoveSuccess_calledTimes += 1
     }
     

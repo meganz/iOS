@@ -12,6 +12,7 @@ final class SlideShowViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case startPlaying
         case pausePlaying
+        case initialPhotoLoaded
     }
     
     static let SlideShowAutoPlayingTimeInSeconds: Double = 4
@@ -26,6 +27,8 @@ final class SlideShowViewModel: ViewModelType {
     var photos = [SlideShowMediaEntity]()
     var numberOfSlideShowImages = 0
     
+    var currentSlideNumber = 0
+    
     init(
         thumbnailUseCase: ThumbnailUseCaseProtocol,
         dataProvider: PhotoBrowserDataProvider
@@ -36,7 +39,17 @@ final class SlideShowViewModel: ViewModelType {
         numberOfSlideShowImages =  dataProvider.allPhotoEntities.lazy.filter{ $0.isImage }.count
         
         Task {
+            await loadFirstSelectedPhotoPreview()
             await loadAllPhotoPreviews()
+        }
+    }
+    
+    private func loadFirstSelectedPhotoPreview() async {
+        guard let node = dataProvider.currentPhoto else { return }
+        guard let photo = try? await thumbnailUseCase.loadThumbnail(for: node.toNodeEntity(), type: .preview) else { return }
+        if let image = UIImage(contentsOfFile: photo.path) {
+            self.photos.append(SlideShowMediaEntity(image: image))
+            invokeCommand?(.initialPhotoLoaded)
         }
     }
     
@@ -44,6 +57,7 @@ final class SlideShowViewModel: ViewModelType {
         guard dataProvider.allPhotoEntities.isNotEmpty else { return }
         
         for node in dataProvider.allPhotoEntities.lazy.filter({ $0.isImage }) {
+            if let currentPhoto = dataProvider.currentPhoto, currentPhoto.handle == node.handle { continue }
             if playbackStatus == .complete { break }
             
             guard let photo = try? await thumbnailUseCase.loadThumbnail(for: node, type: .preview) else { return }

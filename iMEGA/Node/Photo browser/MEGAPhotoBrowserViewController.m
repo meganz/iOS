@@ -127,6 +127,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.rightToolbarItem.image = [UIImage imageNamed:@"share"];
             self.centerToolbarItem.image = [UIImage imageNamed:@"saveToPhotos"];
             break;
+        case DisplayModeCloudDrive:
+            if (![self isSlideShowEnabled]) {
+                self.centerToolbarItem.image = nil;
+            } else {
+                self.centerToolbarItem.image = [UIImage systemImageNamed: @"play.rectangle"];
+            }
+            break;
             
         case DisplayModeRubbishBin:
         case DisplayModeSharedItem:
@@ -874,6 +881,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self saveToPhotosWithNode:node];
             break;
             
+        case DisplayModeCloudDrive:
+            [self openSlideShow];
+            break;
+            
         default:
             break;
     }
@@ -1007,6 +1018,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [Helper cannotPlayContentDuringACallAlert];
         } else {
             UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder]) fileLink:nil];
+            playerVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             [self presentViewController:playerVC animated:YES completion:nil];
         }
     } else {
@@ -1257,10 +1269,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
         case MegaNodeActionTypeForward:
             [self didPressForwardbarButton:self.customActionsButton];
-            break;
-            
-        case MegaNodeActionTypeSlideshow:
-            [self openSlideShow];
             break;
             
         default:

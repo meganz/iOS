@@ -1,33 +1,50 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 class DownloadLinkViewModelTests: XCTestCase {
 
     func testDownloadFileLinkUserLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
-        let viewModel = DownloadLinkViewModel(router: router, authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true), reachabilityUseCase: MockReachabilityUseCase(), link: URL(string: "fileLinkUrl")!, isFolderLink: false)
+        let viewModel = DownloadLinkViewModel(router: router,
+                                              authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true),
+                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+                                              link: URL(string: "fileLinkUrl")!,
+                                              isFolderLink: false)
         viewModel.checkIfLinkCanBeDownloaded()
         XCTAssert(router.downloadFileLink_calledTimes == 1)
     }
     
     func testDownloadFolderLinkUserLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
-        let viewModel = DownloadLinkViewModel(router: router, authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true), reachabilityUseCase: MockReachabilityUseCase(), nodes: [NodeEntity()], isFolderLink: true)
+        let viewModel = DownloadLinkViewModel(router: router,
+                                              authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true),
+                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+                                              nodes: [NodeEntity()],
+                                              isFolderLink: true)
         viewModel.checkIfLinkCanBeDownloaded()
         XCTAssert(router.downloadFolderLinkNodes_calledTimes == 1)
     }
 
     func testDownloadFileLinkUserNotLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
-        let viewModel = DownloadLinkViewModel(router: router, authUseCase: MockAuthUseCase(isUserLoggedIn: false), reachabilityUseCase: MockReachabilityUseCase(), link: URL(string: "fileLinkUrl")!, isFolderLink: false)
+        let viewModel = DownloadLinkViewModel(router: router,
+                                              authUseCase: MockAuthUseCase(isUserLoggedIn: false),
+                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+                                              link: URL(string: "fileLinkUrl")!,
+                                              isFolderLink: false)
         viewModel.checkIfLinkCanBeDownloaded()
         XCTAssert(router.showOnboarding_calledTimes == 1)
     }
     
     func testDownloadFolderLinkUserNotLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
-        let viewModel = DownloadLinkViewModel(router: router, authUseCase: MockAuthUseCase(isUserLoggedIn: false), reachabilityUseCase: MockReachabilityUseCase(), nodes: [NodeEntity()], isFolderLink: true)
+        let viewModel = DownloadLinkViewModel(router: router,
+                                              authUseCase: MockAuthUseCase(isUserLoggedIn: false),
+                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+                                              nodes: [NodeEntity()],
+                                              isFolderLink: true)
         viewModel.checkIfLinkCanBeDownloaded()
         XCTAssert(router.showOnboarding_calledTimes == 1)
     }

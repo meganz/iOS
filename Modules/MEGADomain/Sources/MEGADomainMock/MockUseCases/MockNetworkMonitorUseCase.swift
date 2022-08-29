@@ -11,4 +11,7 @@ public struct MockNetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
     public func networkPathChanged(completion: @escaping (Bool) -> Void) {
         completion(connected)
     }
+    public func isConnected() -> Bool {
+        connected
+    }
 }
