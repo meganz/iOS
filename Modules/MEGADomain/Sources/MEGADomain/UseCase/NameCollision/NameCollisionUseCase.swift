@@ -31,10 +31,12 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
     }
     
     public func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity] {
-        collisions.forEach { collision in
+        var resolvedCollisions = [NameCollisionEntity]()
+        for var collision in collisions {
             collision.collisionNodeHandle = nodeRepository.childNodeNamed(name: collision.name, in: collision.parentHandle)?.handle
+            resolvedCollisions.append(collision)
         }
-        return collisions
+        return resolvedCollisions
     }
     
     public func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity] {

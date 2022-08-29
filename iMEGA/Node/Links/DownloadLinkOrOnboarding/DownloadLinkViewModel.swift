@@ -9,7 +9,7 @@ protocol DownloadLinkRouterProtocol {
 final class DownloadLinkViewModel {
     private let router: DownloadLinkRouterProtocol
     private let authUseCase: AuthUseCaseProtocol
-    private let reachabilityUseCase: ReachabilityUseCaseProtocol
+    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     
     private let link: URL?
     private let isFolderLink: Bool
@@ -17,12 +17,12 @@ final class DownloadLinkViewModel {
 
     init(router: DownloadLinkRouterProtocol,
          authUseCase: AuthUseCaseProtocol,
-         reachabilityUseCase: ReachabilityUseCaseProtocol,
+         networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          link: URL,
          isFolderLink: Bool) {
         self.router = router
         self.authUseCase = authUseCase
-        self.reachabilityUseCase = reachabilityUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.link = link
         self.nodes = nil
         self.isFolderLink = isFolderLink
@@ -30,19 +30,19 @@ final class DownloadLinkViewModel {
     
     init(router: DownloadLinkRouterProtocol,
          authUseCase: AuthUseCaseProtocol,
-         reachabilityUseCase: ReachabilityUseCaseProtocol,
+         networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          nodes: [NodeEntity],
          isFolderLink: Bool) {
         self.router = router
         self.authUseCase = authUseCase
-        self.reachabilityUseCase = reachabilityUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.isFolderLink = isFolderLink
         self.link = nil
         self.nodes = nodes
     }
     
     func checkIfLinkCanBeDownloaded() {
-        if reachabilityUseCase.isReachable() {
+        if networkMonitorUseCase.isConnected() {
             if authUseCase.sessionId() != nil {
                 if isFolderLink {
                     router.downloadFolderLinkNodes()

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 enum StartConversationAction: ActionType {
     case viewDidLoad
@@ -19,22 +20,22 @@ final class StartConversationViewModel: ViewModelType {
     }
     
     private func registerNetworkListener() {
-        reachabilityUseCase.registerNetworkChangeListener { [weak self] networkReachability in
+        networkMonitorUseCase.networkPathChanged { [weak self] (connected) in
             guard let self = self else { return }
-            self.invokeCommand?(.networkAvailablityUpdate(.unreachable != networkReachability))
+            self.invokeCommand?(.networkAvailablityUpdate(connected))
         }
     }
     
     // MARK: - Properties
     
-    private let reachabilityUseCase: ReachabilityUseCaseProtocol
+    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     private let router: NewChatRouter
 
     init(
-        reachabilityUseCase: ReachabilityUseCaseProtocol,
+        networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
         router: NewChatRouter
     ) {
-        self.reachabilityUseCase = reachabilityUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
     }
 

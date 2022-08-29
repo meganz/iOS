@@ -495,7 +495,6 @@
 		5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B8A252198BB004F4F4A /* ItemGroup.swift */; };
 		5D166B8D252198EF004F4F4A /* HomeSearchHintViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B8C252198EF004F4F4A /* HomeSearchHintViewModel.swift */; };
 		5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */; };
-		5D17CFAF25466D090000194A /* ReachabilityUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D17CFAE25466D090000194A /* ReachabilityUseCaseProtocol.swift */; };
 		5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D18BDA1249718280045F9B3 /* MarkedString.swift */; };
 		5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */; };
 		5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */; };
@@ -1085,7 +1084,6 @@
 		83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
 		83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */; };
 		83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
-		83AE36B32886A07B002F1755 /* MockReachabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE36B22886A07B002F1755 /* MockReachabilityUseCase.swift */; };
 		83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE36C12886D033002F1755 /* CallsSettingsViewModel.swift */; };
 		83AE36C42886DEB2002F1755 /* SettingsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE36C32886DEB2002F1755 /* SettingsTableViewController+Additions.swift */; };
 		83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */; };
@@ -2080,7 +2078,6 @@
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF782D56269BA4BB0001D169 /* CallEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D24269BA4BA0001D169 /* CallEntity.swift */; };
-		BF782D57269BA4BB0001D169 /* ReachabilityApproachEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D26269BA4BA0001D169 /* ReachabilityApproachEntity.swift */; };
 		BF782D5F269BA4BB0001D169 /* ChatRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */; };
 		BF782D60269BA4BB0001D169 /* CameraPositionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D32269BA4BA0001D169 /* CameraPositionEntity.swift */; };
 		BF782D63269BA4BB0001D169 /* ChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */; };
@@ -3098,7 +3095,6 @@
 		5D166B8A252198BB004F4F4A /* ItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGroup.swift; sourceTree = "<group>"; };
 		5D166B8C252198EF004F4F4A /* HomeSearchHintViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchHintViewModel.swift; sourceTree = "<group>"; };
 		5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartConversationViewModel.swift; sourceTree = "<group>"; };
-		5D17CFAE25466D090000194A /* ReachabilityUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityUseCaseProtocol.swift; sourceTree = "<group>"; };
 		5D18BDA1249718280045F9B3 /* MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedString.swift; sourceTree = "<group>"; };
 		5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAShadowStyle.swift; sourceTree = "<group>"; };
 		5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonColorFactory.swift; sourceTree = "<group>"; };
@@ -3597,7 +3593,6 @@
 		83AB5A8125598CE200A04232 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerVideo.h; sourceTree = "<group>"; };
 		83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerAudio.h; sourceTree = "<group>"; };
-		83AE36B22886A07B002F1755 /* MockReachabilityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockReachabilityUseCase.swift; sourceTree = "<group>"; };
 		83AE36C12886D033002F1755 /* CallsSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsViewModel.swift; sourceTree = "<group>"; };
 		83AE36C32886DEB2002F1755 /* SettingsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSharedItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -4430,7 +4425,6 @@
 		BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF782D24269BA4BA0001D169 /* CallEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallEntity.swift; sourceTree = "<group>"; };
-		BF782D26269BA4BA0001D169 /* ReachabilityApproachEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityApproachEntity.swift; sourceTree = "<group>"; };
 		BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomEntity.swift; sourceTree = "<group>"; };
 		BF782D32269BA4BA0001D169 /* CameraPositionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPositionEntity.swift; sourceTree = "<group>"; };
 		BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSessionEntity.swift; sourceTree = "<group>"; };
@@ -9549,7 +9543,6 @@
 				BFAC87B2260006E5009CA3F6 /* AudioVideo */,
 				838A7B5225D55EE200767DB0 /* Calls */,
 				BF90C789260406AF006061F8 /* User */,
-				B6C9596A2689B05B00CF73A8 /* General */,
 				0D213E66263A602500B43723 /* Node */,
 				0D7E5FCA2634F06E00C5CB2A /* Transfer */,
 				5BC47E2F253F0F8800853323 /* Chat */,
@@ -9992,14 +9985,6 @@
 			path = Ratings;
 			sourceTree = "<group>";
 		};
-		B6C9596A2689B05B00CF73A8 /* General */ = {
-			isa = PBXGroup;
-			children = (
-				5D17CFAE25466D090000194A /* ReachabilityUseCaseProtocol.swift */,
-			);
-			path = General;
-			sourceTree = "<group>";
-		};
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -10177,7 +10162,6 @@
 				B6D54833283E2D5F00D7302F /* MockAccountCleanerUseCase.swift */,
 				12B1E57F28751B0700D23A58 /* MockMediaDiscoveryStatsUseCase.swift */,
 				12BCECD5287F795C00F98E33 /* MockPhotoLibraryUseCase.swift */,
-				83AE36B22886A07B002F1755 /* MockReachabilityUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -10310,21 +10294,12 @@
 				9428B9952819229800DB7250 /* ContextMenu */,
 				7288547227F711F700EFE506 /* Settings */,
 				838B976426B15318000E480E /* Call */,
-				BF782D25269BA4BA0001D169 /* General */,
 				321AF2E528505F6B004FCC1E /* Photos */,
 				BF782D37269BA4BA0001D169 /* Node */,
 				BF782D3C269BA4BA0001D169 /* Account */,
 				BF782D42269BA4BA0001D169 /* Error */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		BF782D25269BA4BA0001D169 /* General */ = {
-			isa = PBXGroup;
-			children = (
-				BF782D26269BA4BA0001D169 /* ReachabilityApproachEntity.swift */,
-			);
-			path = General;
 			sourceTree = "<group>";
 		};
 		BF782D37269BA4BA0001D169 /* Node */ = {
@@ -12886,7 +12861,6 @@
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */,
 				12397E2E2820C79100A30CCC /* PhotoAlbumViewController+PageViewController.swift in Sources */,
-				5D17CFAF25466D090000194A /* ReachabilityUseCaseProtocol.swift in Sources */,
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
 				C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */,
 				8340CAF2284E28F5007C3B39 /* HeaderViewModel.swift in Sources */,
@@ -13301,7 +13275,6 @@
 				2F3B13D42471F5E60026DE64 /* ChatViewController+Toolbar.swift in Sources */,
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				B6A6E1BF287CDE6600179806 /* MEGANode+Array.swift in Sources */,
-				BF782D57269BA4BB0001D169 /* ReachabilityApproachEntity.swift in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				12BDD4DF282865CC00009D73 /* AlbumContent+PhotoLibrary.swift in Sources */,
 				BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */,
@@ -13979,7 +13952,6 @@
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */,
-				83AE36B32886A07B002F1755 /* MockReachabilityUseCase.swift in Sources */,
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
@@ -14349,7 +14321,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -14421,7 +14393,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -14485,7 +14457,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -14549,7 +14521,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -14612,7 +14584,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
@@ -14674,7 +14646,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14719,7 +14691,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
@@ -14761,7 +14733,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14805,7 +14777,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPickerFileProvider";
@@ -14854,7 +14826,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
@@ -14913,7 +14885,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14977,7 +14949,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPicker";
@@ -15039,7 +15011,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15103,7 +15075,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15344,7 +15316,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -15414,7 +15386,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPicker";
@@ -15466,7 +15438,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
@@ -15526,7 +15498,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15585,7 +15557,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -15704,7 +15676,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15750,7 +15722,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 7.16;
+				MARKETING_VERSION = 7.17;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
