@@ -68,9 +68,5 @@
     return NO;
 }
 
-- (QLPreviewItemEditingMode)previewController:(QLPreviewController *)controller editingModeForPreviewItem:(id<QLPreviewItem>)previewItem {
-    return QLPreviewItemEditingModeDisabled;
-}
-
 
 @end
