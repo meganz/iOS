@@ -2,12 +2,12 @@
 import Network
 import MEGADomain
 
-final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
+public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
     private var pathStatus: NWPath.Status
     
-    init(monitor: NWPathMonitor = NWPathMonitor(), queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")) {
+    public init(monitor: NWPathMonitor = NWPathMonitor(), queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")) {
         self.monitor = monitor
         self.queue = queue
         pathStatus = monitor.currentPath.status
@@ -18,7 +18,7 @@ final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
         monitor.cancel()
     }
     
-    func networkPathChanged(completion: @escaping (Bool) -> Void) {
+    public func networkPathChanged(completion: @escaping (Bool) -> Void) {
         if pathStatus == .unsatisfied && monitor.currentPath.status == .satisfied {
             pathStatus = monitor.currentPath.status
         }
@@ -32,7 +32,7 @@ final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
         }
     }
     
-    func isConnected() -> Bool {
+    public func isConnected() -> Bool {
         monitor.currentPath.status == .satisfied
     }
 }
