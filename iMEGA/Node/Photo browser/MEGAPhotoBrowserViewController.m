@@ -834,7 +834,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
         
     if (self.displayMode == DisplayModeChatAttachment) {
-        [self exportMessageFileFrom:node sender:sender];
+        [self exportMessageFileFrom:node messageId:self.messageId chatId:self.chatId sender:sender];
     } else {
         [self exportFileFrom:node sender:sender];
     }

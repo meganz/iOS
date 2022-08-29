@@ -177,7 +177,7 @@ extension ChatViewController {
             obj1.messageIndex < obj2.messageIndex
         })
         setEditing(false, animated: false)
-        ExportFileRouter(presenter: self, sender: sender).export(messages: megaMessages)
+        ExportFileRouter(presenter: self, sender: sender).export(messages: megaMessages, chatId: chatRoom.chatId)
     }
     
     func updateToolbarState() {

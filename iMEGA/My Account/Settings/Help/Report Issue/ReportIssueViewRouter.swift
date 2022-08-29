@@ -1,6 +1,7 @@
 
 import SwiftUI
 import MEGADomain
+import MEGAData
 
 @available(iOS 14.0, *)
 protocol ReportIssueViewRouting: Routing {
