@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct ImportNodeRepository: ImportNodeRepositoryProtocol {
     static var newRepo: ImportNodeRepository {
@@ -15,25 +16,35 @@ struct ImportNodeRepository: ImportNodeRepositoryProtocol {
         self.myChatFilesFolder = myChatFilesFolder
     }
     
-    func importChatNode(_ node: MEGANode, completion: @escaping (Result<MEGANode, ExportFileErrorEntity>) -> Void) {
-        if node.owner == chatSdk.myUserHandle {
+    func importChatNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<NodeEntity, ExportFileErrorEntity>) -> Void) {
+        if node.ownerHandle == chatSdk.myUserHandle {
             completion(.success(node))
         } else {
             if let remoteNode = sdk.node(forFingerprint: node.fingerprint ?? ""), remoteNode.owner == chatSdk.myUserHandle {
-                completion(.success(remoteNode))
+                completion(.success(remoteNode.toNodeEntity()))
             } else {
                 myChatFilesFolder.loadNode { myChatFilesNode, error in
                     if let chatFilesNode = myChatFilesNode {
-                        sdk.copy(node, newParent: chatFilesNode, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
-                            guard let resultNode = sdk.node(forHandle: request.nodeHandle) else {
-                                MEGALogWarning("Coud not find node for handle \(request.nodeHandle)")
+                        guard let megaNode = chatSdk.chatNode(handle: node.handle, messageId: messageId, chatId: chatId) else {
+                            MEGALogWarning("Coud not find node for handle \(node.handle)")
+                            completion(.failure(.couldNotFindNodeByHandle))
+                            return
+                        }
+                        sdk.copy(megaNode, newParent: chatFilesNode, delegate: RequestDelegate { (result) in
+                            switch result {
+                            case .success(let request):
+                                guard let resultNode = sdk.node(forHandle: request.nodeHandle) else {
+                                    MEGALogWarning("Coud not find node for handle \(request.nodeHandle)")
+                                    completion(.failure(.generic))
+                                    return
+                                }
+                                completion(.success(resultNode.toNodeEntity()))
+                            case .failure:
                                 completion(.failure(.generic))
-                                return
                             }
-                            completion(.success(resultNode))
-                        }))
+                        })
                     } else {
-                        MEGALogWarning("Coud not load MyChatFiles target folder doe tu error \(String(describing: error))")
+                        MEGALogWarning("Coud not load MyChatFiles target folder due to error \(String(describing: error))")
                         completion(.failure(.generic))
                     }
                 }

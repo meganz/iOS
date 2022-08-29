@@ -20,12 +20,12 @@ final class ExportFileRouter: ExportFileViewRouting {
         viewModel.dispatch(.exportFilesFromNodes(nodes))
     }
     
-    func export(messages: [MEGAChatMessage]) {
-        viewModel.dispatch(.exportFilesFromMessages(messages))
+    func export(messages: [MEGAChatMessage], chatId: HandleEntity) {
+        viewModel.dispatch(.exportFilesFromMessages(messages, chatId))
     }
     
-    func exportMessage(node: MEGANode) {
-        viewModel.dispatch(.exportFileFromMessageNode(node))
+    func exportMessage(node: MEGANode, messageId: HandleEntity, chatId: HandleEntity) {
+        viewModel.dispatch(.exportFileFromMessageNode(node, messageId, chatId))
     }
     
     //MARK: - Private -
