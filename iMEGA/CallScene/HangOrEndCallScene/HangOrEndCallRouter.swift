@@ -1,4 +1,11 @@
 import SwiftUI
+import MEGADomain
+
+protocol HangOrEndCallRouting: AnyObject, Routing {
+    func leaveCall()
+    func endCallForAll()
+    func dismiss(animated flag: Bool, completion: (() -> Void)?)
+}
 
 final class HangOrEndCallRouter: HangOrEndCallRouting {
     private weak var presenter: UIViewController?
@@ -12,7 +19,10 @@ final class HangOrEndCallRouter: HangOrEndCallRouting {
     }
     
     func build() -> UIViewController {
-        let viewModel = HangOrEndCallViewModel(router: self)
+        let meetingStatsUseCase = MeetingStatsUseCase(
+            repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        )
+        let viewModel = HangOrEndCallViewModel(router: self, statsUseCase: meetingStatsUseCase)
         let hangOrEndCallView = HangOrEndCallView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: hangOrEndCallView)
         hostingController.view.backgroundColor = .clear
