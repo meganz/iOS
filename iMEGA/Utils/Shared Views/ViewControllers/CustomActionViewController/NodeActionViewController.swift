@@ -275,7 +275,6 @@ class NodeActionViewController: ActionSheetViewController {
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         let isTakedown = node.isTakenDown()
-        let isSlideshow = FeatureFlagProvider(useCase: FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)).isFeatureFlagEnabled(for: .slideShow) && node.name?.mnz_isImagePathExtension == true
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
@@ -294,7 +293,6 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
             .setIsTakedown(isTakedown)
-            .setIsSlideshow(isSlideshow)
             .build()
     }
 }
