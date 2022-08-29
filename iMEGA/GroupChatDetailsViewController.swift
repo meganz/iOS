@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension GroupChatDetailsViewController {
     
@@ -22,6 +23,9 @@ extension GroupChatDetailsViewController {
                   let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: self.chatRoom.chatId) else {
                 return
             }
+            
+            let statsRepoSitory = StatsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+            MeetingStatsUseCase(repository: statsRepoSitory).sendEndCallForAllStats()
             
             MEGASdkManager.sharedMEGAChatSdk().endChatCall(call.callId)
             self.navigationController?.popViewController(animated: true)
