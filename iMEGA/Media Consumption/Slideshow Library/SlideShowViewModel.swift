@@ -36,7 +36,7 @@ final class SlideShowViewModel: ViewModelType {
         self.thumbnailUseCase = thumbnailUseCase
         self.dataProvider = dataProvider
         
-        numberOfSlideShowImages =  dataProvider.allPhotoEntities.lazy.filter{ $0.isImage }.count
+        numberOfSlideShowImages = dataProvider.allPhotoEntities.lazy.filter{ $0.isImage }.count
         
         Task {
             await loadFirstSelectedPhotoPreview()
@@ -56,7 +56,7 @@ final class SlideShowViewModel: ViewModelType {
     private func loadAllPhotoPreviews() async {
         guard dataProvider.allPhotoEntities.isNotEmpty else { return }
         
-        for node in dataProvider.allPhotoEntities.lazy.filter({ $0.isImage }) {
+        for node in dataProvider.allPhotoEntities.shuffled().lazy.filter({ $0.isImage }) {
             if let currentPhoto = dataProvider.currentPhoto, currentPhoto.handle == node.handle { continue }
             if playbackStatus == .complete { break }
             
