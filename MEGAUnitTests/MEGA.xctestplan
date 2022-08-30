@@ -119,6 +119,13 @@
         "identifier" : "MEGAFoundationTests",
         "name" : "MEGAFoundationTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGAData",
+        "identifier" : "MEGADataTests",
+        "name" : "MEGADataTests"
+      }
     }
   ],
   "version" : 1
