@@ -18,7 +18,9 @@ final class PhotoLibraryYearViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .year
         sut = PhotoLibraryYearViewModel(libraryViewModel: libraryViewModel)
+        
         XCTAssertEqual(sut.photoCategoryList, library.photoByYearList)
+        XCTAssertEqual(sut.photoCategoryList.count, 3)
         XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-08-18T22:01:04Z".date.removeMonth(timeZone: TimeZone(secondsFromGMT: 0)))
         XCTAssertNil(libraryViewModel.cardScrollPosition)
         XCTAssertNil(libraryViewModel.photoScrollPosition)
