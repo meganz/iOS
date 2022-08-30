@@ -14,15 +14,15 @@ final class MockExportNodeUseCase: ExportFileUseCaseProtocol {
         completion(exportUrlsResult)
     }
     
-    func export(message: MEGAChatMessage, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    func export(message: MEGAChatMessage, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         completion(exportFromChatResult)
     }
     
-    func export(messages: [MEGAChatMessage], completion: @escaping ([URL]) -> Void) {
+    func export(messages: [MEGAChatMessage], chatId: HandleEntity, completion: @escaping ([URL]) -> Void) {
         completion(exportUrlsResult)
     }
     
-    func exportMessageNode(_ node: MEGANode, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         completion(exportFromChatResult)
     }
 }

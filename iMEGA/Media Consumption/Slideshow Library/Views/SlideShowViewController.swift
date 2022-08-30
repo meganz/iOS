@@ -15,13 +15,16 @@ final class SlideShowViewController: UIViewController, ViewType {
     @IBOutlet var btnPlay: UIBarButtonItem!
     
     private var slideShowTimer = Timer()
-    private var slideShowCounter = 0
+    
+    private lazy var backgroundColor: UIColor = {
+        UIColor.mnz_mainBars(for: traitCollection)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.mnz_background()
-        statusBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        navigationBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        view.backgroundColor = backgroundColor
+        statusBarBackground.backgroundColor = backgroundColor
+        navigationBar.backgroundColor = backgroundColor
         bottomBarBackground.isHidden = true
         btnPlay.setBackgroundImage(UIImage(systemName: "play.fill"), for: .normal, style: .plain, barMetrics: .default)
         
@@ -32,11 +35,24 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSlideShow), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        if let viewModel = viewModel, viewModel.photos.isNotEmpty {
+            playOrPauseSlideShow()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+            AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
+            statusBarBackground.backgroundColor = backgroundColor
+            navigationBar.backgroundColor = backgroundColor
+        }
     }
     
     func update(viewModel: SlideShowViewModel) {
@@ -47,6 +63,7 @@ final class SlideShowViewController: UIViewController, ViewType {
          switch command {
          case .startPlaying: play()
          case .pausePlaying: pause()
+         case .initialPhotoLoaded: playOrPauseSlideShow()
          }
     }
     
@@ -63,25 +80,28 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func play() {
+        guard let viewModel = viewModel else { return }
+
         setVisibility(false)
         collectionView.backgroundColor = UIColor.black
         
-        if slideShowCounter >= viewModel?.photos.count ?? 0 {
-            slideShowCounter = 0
+        if viewModel.currentSlideNumber >= viewModel.photos.count {
+            viewModel.currentSlideNumber = -1
+            changeImage()
         }
         
-        changeImage()
         slideShowTimer = Timer.scheduledTimer(timeInterval: SlideShowViewModel.SlideShowAutoPlayingTimeInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     private func pause() {
         setVisibility(true)
         collectionView.backgroundColor = UIColor.mnz_background()
         slideShowTimer.invalidate()
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     private func finish() {
-        slideShowCounter = 0
         collectionView.backgroundColor = UIColor.mnz_background()
         slideShowTimer.invalidate()
         viewModel?.dispatch(.finishPlaying)
@@ -90,10 +110,10 @@ final class SlideShowViewController: UIViewController, ViewType {
     @objc private func changeImage() {
         guard let viewModel = viewModel else { return }
         
-        if slideShowCounter < viewModel.photos.count {
-            let index = IndexPath(item: slideShowCounter, section: 0)
+        viewModel.currentSlideNumber += 1
+        if viewModel.currentSlideNumber < viewModel.photos.count {
+            let index = IndexPath(item: viewModel.currentSlideNumber, section: 0)
             collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
-            slideShowCounter += 1
         } else {
             finish()
         }
@@ -120,6 +140,10 @@ extension SlideShowViewController: UICollectionViewDelegate {
             cell.alpha = 1
         }
         
+        if let viewModel = viewModel, viewModel.currentSlideNumber != indexPath.row {
+            viewModel.currentSlideNumber = indexPath.row
+        }
+        
         guard let cell = cell as? SlideShowCollectionViewCell else { return }
         cell.imageView.setToIntrinsicContentSize()
     }
@@ -141,6 +165,19 @@ extension SlideShowViewController: UICollectionViewDataSource {
         
         cell.update(withImage: viewModel.photos[indexPath.row].image, andInteraction: self)
         return cell
+    }
+}
+
+extension SlideShowViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        let visibleIndexPath = collectionView.indexPathForItem(at: visiblePoint)
+        
+        if let viewModel = viewModel, let visibleIndexPath = visibleIndexPath,
+            viewModel.currentSlideNumber != visibleIndexPath.row {
+            viewModel.currentSlideNumber = visibleIndexPath.row
+        }
     }
 }
 

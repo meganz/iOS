@@ -1,3 +1,4 @@
+import MEGADomain
 extension MEGAChatSdk {
     var firstActiveCall: MEGAChatCall? {
         guard let callIds = chatCallsIds() else { return nil }
@@ -58,6 +59,16 @@ extension MEGAChatSdk {
         }
         
         return [MEGAChatListItem](recentChats[0..<min(max, recentChats.count)])
+    }
+    
+    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> MEGANode? {
+        if let message = self.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle {
+            return node
+        } else if let messageForNodeHistory = self.messageFromNodeHistory(forChat: chatId, messageId: messageId), let node = messageForNodeHistory.nodeList?.node(at: 0), handle == node.handle {
+            return node
+        } else {
+            return nil
+        }
     }
     
     // MARK: - Private

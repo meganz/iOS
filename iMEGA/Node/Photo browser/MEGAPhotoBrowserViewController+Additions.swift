@@ -79,6 +79,11 @@ extension MEGAPhotoBrowserViewController {
     @objc func openSlideShow() {
         SlideShowRouter(dataProvider: dataProvider, megaPhotoBrowserViewController: self).start()
     }
+    
+    @objc func isSlideShowEnabled() -> Bool {
+        FeatureFlagProvider(useCase: FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)).isFeatureFlagEnabled(for: .slideShow) &&
+        dataProvider.currentPhoto?.name?.mnz_isImagePathExtension == true
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {

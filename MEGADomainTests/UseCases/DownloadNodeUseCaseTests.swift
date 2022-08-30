@@ -1,12 +1,13 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 class DownloadNodeUseCaseTests: XCTestCase {
     func testDownloadNode_fileAlreadyInOfflineError() {
         let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle", isFile: true))
         let offlineNode = OfflineFileEntity(base64Handle: "base64Handle", localPath: "Documents/", parentBase64Handle: nil, fingerprint: nil, timestamp: nil)
-        let offlineFilesRepo = MockOfflineFilesRepository(offlineFileMock: offlineNode)
+        let offlineFilesRepo = MockOfflineFilesRepository(offlineFileEntity: offlineNode)
         
         let mockError: TransferErrorEntity = .alreadyDownloaded
         let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: offlineFilesRepo, fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository())

@@ -3066,3 +3066,7 @@
 "chat.addToChatMenu.filesApp"="Files";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Scan";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="No contacts";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="You have no contacts to add to this chat. If you want to add participants, first invite them to your contact list.";

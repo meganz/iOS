@@ -217,19 +217,15 @@
 #pragma mark - uploads state
 
 - (void)showEditBarButton:(BOOL)show {
-    if (@available(iOS 14.0, *)) {
-        self.objcWrapper_parent.navigationItem.rightBarButtonItems = nil;
-    }
-    else {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-    
     if (show) {
         [self setRightNavigationBarButtons];
     }
     else {
         self.editBarButtonItem.image = nil;
         self.editBarButtonItem.title = @"";
+        if (@available(iOS 14.0, *)) {
+            self.editBarButtonItem.menu = nil;
+        }
     }
 }
 
@@ -452,6 +448,9 @@
     } else {
         self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
         self.editBarButtonItem.image = nil;
+        if (@available(iOS 14.0, *)) {
+            self.editBarButtonItem.menu = nil;
+        }
     }
 }
 

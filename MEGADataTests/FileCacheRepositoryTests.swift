@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 class FileCacheRepositoryTests: XCTestCase {
     func testTempFileURL() throws {

@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 final class TextEditorViewModelTests: XCTestCase {
 
@@ -9,9 +10,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
+        let mockNodeActionUC = MockNodeActionUseCase(nodeAccessLevelVariable: nodeAccessLevel)
                 
         var textEditorModel: TextEditorModel
         var navbarItemsModel: TextEditorNavbarItemsModel
@@ -75,9 +75,8 @@ final class TextEditorViewModelTests: XCTestCase {
         mockDownloadNodeUC.transferEntity = transferEntity
         mockDownloadNodeUC.result = .success(transferEntity)
         
-        let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
+        let mockNodeActionUC = MockNodeActionUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
         let textEditorMode: TextEditorMode = .load
         
@@ -152,9 +151,8 @@ final class TextEditorViewModelTests: XCTestCase {
         mockDownloadNodeUC.transferEntity = transferEntity
         mockDownloadNodeUC.result = .success(transferEntity)
         
-        let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
+        let mockNodeActionUC = MockNodeActionUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
         let textEditorMode: TextEditorMode = .load
         
@@ -206,9 +204,8 @@ final class TextEditorViewModelTests: XCTestCase {
         mockDownloadNodeUC.result = .failure(TransferErrorEntity.download)
         mockDownloadNodeUC.transferEntity = transferEntity
         
-        let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
+        let mockNodeActionUC = MockNodeActionUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
         let textEditorMode: TextEditorMode = .load
         
@@ -262,9 +259,8 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.uploadFileResult = .success
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
+        let mockNodeActionUC = MockNodeActionUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
         let mockParentHandle: HandleEntity = 123
         let mockNode = NodeEntity(handle: 123, isFile: true)
@@ -876,9 +872,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockNodeActionUC = MockNodeActionUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
-        mockNodeActionUC.nodeAccessLevelVariable = nodeAccessLevel
+        let mockNodeActionUC = MockNodeActionUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
         
         let mockNode = NodeEntity(handle: 123, isFile: true)

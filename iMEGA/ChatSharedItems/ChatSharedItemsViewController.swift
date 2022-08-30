@@ -507,7 +507,10 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             importNodes([node])
             
         case .exportFile:
-            ExportFileRouter(presenter: self, sender: sender).exportMessage(node: node)
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+                return
+            }
+            ExportFileRouter(presenter: self, sender: sender).exportMessage(node: node, messageId: message.messageId, chatId: chatRoom.chatId)
             
         default: break
         }

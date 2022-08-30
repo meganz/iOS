@@ -98,11 +98,13 @@ extension ChatViewController {
     @objc func addParticipant() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         
-        guard participantsAddingViewFactory.shouldShowAddParticipantsScreen(withExcludedHandles: []) else {
-            present(viewController: participantsAddingViewFactory.allContactsAlreadyAddedAlert {
-                guard let inviteController = participantsAddingViewFactory.inviteContactController() else { return }
-                self.navigationController?.pushViewController(inviteController, animated: true)
-            })
+        guard participantsAddingViewFactory.hasVisibleContacts else {
+            present(viewController: participantsAddingViewFactory.noAvailableContactsAlert(inviteAction: showInviteContacts))
+            return
+        }
+        
+        guard participantsAddingViewFactory.hasNonAddedVisibleContacts(withExcludedHandles: []) else {
+            present(viewController: participantsAddingViewFactory.allContactsAlreadyAddedAlert(inviteAction: showInviteContacts))
             return
         }
         
@@ -122,6 +124,11 @@ extension ChatViewController {
         
         guard let contactsNavigationController = contactsNavigationController else { return }
         present(viewController: contactsNavigationController)
+    }
+    
+    private func showInviteContacts() {
+        guard let inviteController = createParticipantsAddingViewFactory().inviteContactController() else { return }
+        navigationController?.pushViewController(inviteController, animated: true)
     }
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {

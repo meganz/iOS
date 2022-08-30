@@ -11,4 +11,8 @@ public struct MockNetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     public func networkPathChanged(completion: @escaping (Bool) -> Void) {
         completion(connected)
     }
+    
+    public func isConnected() -> Bool {
+        connected
+    }
 }
