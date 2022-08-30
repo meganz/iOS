@@ -119,6 +119,41 @@
         "identifier" : "MEGAFoundationTests",
         "name" : "MEGAFoundationTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGAData",
+        "identifier" : "MEGADataTests",
+        "name" : "MEGADataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGASwift",
+        "identifier" : "MEGASwiftTests",
+        "name" : "MEGASwiftTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGASwiftUI",
+        "identifier" : "MEGASwiftUITests",
+        "name" : "MEGASwiftUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGAUI",
+        "identifier" : "MEGAUITests",
+        "name" : "MEGAUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGAUIKit",
+        "identifier" : "MEGAUIKitTests",
+        "name" : "MEGAUIKitTests"
+      }
     }
   ],
   "version" : 1
