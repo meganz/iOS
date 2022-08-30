@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL allNodesSelected;
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
 @property (assign, nonatomic) BOOL isFromSharedItem;
+@property (assign, nonatomic) BOOL hasMediaFiles;
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 
