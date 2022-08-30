@@ -398,6 +398,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            self.hasMediaFiles = [[self.nodes mnz_mediaNodesMutableArrayFromNodeList] count] > 0;
             [self setNavigationBarButtons];
             
             break;

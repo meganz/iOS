@@ -5,7 +5,7 @@ extension CloudDriveViewController {
     @objc func shouldShowMediaDiscovery() -> Bool {
         guard let parent = parentNode else { return false }
         
-        return parent.type != .root && mediaNodes().isNotEmpty && !isFromSharedItem
+        return parent.type != .root && hasMediaFiles && !isFromSharedItem
     }
     
     @objc func mediaDiscoveryAction() -> ActionSheetAction? {
@@ -18,14 +18,5 @@ extension CloudDriveViewController {
         }
         
         return action
-    }
-    
-    // MARK: - Private
-    
-    private func mediaNodes() -> [MEGANode] {
-        guard let parent = parentNode else { return [] }
-        let nodeList = MEGASdkManager.sharedMEGASdk().children(forParent: parent)
-        
-        return (nodeList.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
     }
 }
