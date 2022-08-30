@@ -1,4 +1,6 @@
 import MEGAUIKit
+import MEGADomain
+import MEGAData
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     //MARK:- Private variables
@@ -186,7 +188,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                     photoPermission: .live,
                     devicePermission: .live
                 ),
-                reachabilityUseCase: ReachabilityUseCase(),
+                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
                 router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
             )

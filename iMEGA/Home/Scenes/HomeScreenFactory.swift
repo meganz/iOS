@@ -1,4 +1,6 @@
 import Foundation
+import MEGADomain
+import MEGAData
 
 @objc
 final class HomeScreenFactory: NSObject {
@@ -33,7 +35,7 @@ final class HomeScreenFactory: NSObject {
                 photoPermission: .live,
                 devicePermission: .live
             ),
-            reachabilityUseCase: ReachabilityUseCase(),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
         )
@@ -41,7 +43,7 @@ final class HomeScreenFactory: NSObject {
         homeViewController.myAvatarViewModel = myAvatarViewModel
         homeViewController.uploadViewModel = uploadViewModel
         homeViewController.startConversationViewModel = StartConversationViewModel(
-            reachabilityUseCase: ReachabilityUseCase(),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
             router: NewChatRouter(
                 navigationController: navigationController,
                 tabBarController: tabBarController

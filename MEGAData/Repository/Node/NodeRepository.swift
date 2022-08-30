@@ -144,11 +144,13 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
-        guard let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle else {
+        if let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle {
+            return node.toNodeEntity()
+        } else if let messageForNodeHistory = chatSdk.messageFromNodeHistory(forChat: chatId, messageId: messageId), let node = messageForNodeHistory.nodeList?.node(at: 0), handle == node.handle {
+            return node.toNodeEntity()
+        } else {
             return nil
         }
-        
-        return node.toNodeEntity()
     }
     
     func isFileNode(handle: HandleEntity) -> Bool {

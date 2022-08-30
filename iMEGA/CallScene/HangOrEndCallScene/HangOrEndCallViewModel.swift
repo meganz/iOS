@@ -1,23 +1,31 @@
+import MEGADomain
 
-protocol HangOrEndCallRouting: AnyObject, Routing {
-    func leaveCall()
-    func endCallForAll()
-    func dismiss(animated flag: Bool, completion: (() -> Void)?)
+enum HangOrEndCallAction: ActionType {
+    case leaveCall
+    case endCallForAll
 }
 
-final class HangOrEndCallViewModel {
+struct HangOrEndCallViewModel: ViewModelType {
+    enum Command: CommandType, Equatable {
+    }
     
     private let router: HangOrEndCallRouting
+    private let statsUseCase: MeetingStatsUseCaseProtocol
     
-    init(router: HangOrEndCallRouting) {
+    init(router: HangOrEndCallRouting, statsUseCase: MeetingStatsUseCaseProtocol) {
         self.router = router
+        self.statsUseCase = statsUseCase
     }
     
-    func leaveCallAction() {
-        router.leaveCall()
-    }
+    var invokeCommand: ((Command) -> Void)?
     
-    func endForAllAction() {
-        router.endCallForAll()
+    func dispatch(_ action: HangOrEndCallAction) {
+        switch action {
+        case .leaveCall:
+            router.leaveCall()
+        case .endCallForAll:
+            statsUseCase.sendEndCallForAllStats()
+            router.endCallForAll()
+        }
     }
 }

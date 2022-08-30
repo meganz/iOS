@@ -9,6 +9,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     )
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
+    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
     func showContextMenu(presenter: UIViewController,
                          sender: UIButton,
                          participant: CallParticipantEntity,
@@ -104,13 +105,27 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
-        let allContactsAlreadyAddedAlert = participantsAddingViewFactory.allContactsAlreadyAddedAlert {
+        showContactsAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory,
+                          action: participantsAddingViewFactory.allContactsAlreadyAddedAlert)
+        
+    }
+    
+    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
+        showContactsAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory,
+                          action: participantsAddingViewFactory.noAvailableContactsAlert)
+    }
+    
+    private func showContactsAlert(
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        action: (@escaping () -> Void) -> UIAlertController
+    ) {
+        let contactsAlert = action {
             guard let inviteContactController = participantsAddingViewFactory.inviteContactController() else { return }
             self.showInviteToMega(inviteContactController)
         }
         
-        allContactsAlreadyAddedAlert.overrideUserInterfaceStyle = .dark
-        baseViewController?.present(allContactsAlreadyAddedAlert, animated: true)
+        contactsAlert.overrideUserInterfaceStyle = .dark
+        baseViewController?.present(contactsAlert, animated: true)
     }
     
     func showContextMenu(presenter: UIViewController,

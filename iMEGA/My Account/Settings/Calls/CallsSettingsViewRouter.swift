@@ -1,14 +1,17 @@
 import SwiftUI
+import MEGADomain
 
-final class CallsSettingsViewRouter {
+final class CallsSettingsViewRouter: Routing {
     private weak var presenter: UINavigationController?
     
-    init(presenter: UINavigationController) {
+    init(presenter: UINavigationController?) {
         self.presenter = presenter
     }
     
     func build() -> UIViewController {
-        let callsSettingsView = CallsSettingsView(viewModel: CallsSettingsViewModel())
+        let statsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let viewModel = CallsSettingsViewModel(statsUseCase: statsUseCase)
+        let callsSettingsView = CallsSettingsView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: callsSettingsView)
         return hostingController
     }

@@ -1,6 +1,6 @@
 import Foundation
 
-public final class NameCollisionEntity: NSObject {
+public struct NameCollisionEntity: Equatable {
     public let parentHandle: HandleEntity
     public let name: String
     public let isFile: Bool

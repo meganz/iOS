@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)
@@ -70,7 +71,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             credentialRepo: CredentialRepository.newRepo
         )
         let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
-        
+        let statsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
                                                   callUseCase: createCallUseCase,
@@ -78,7 +79,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   callCoordinatorUseCase: CallCoordinatorUseCase(),
                                                   userUseCase: UserUseCase(repo: .live),
                                                   authUseCase: authUseCase,
-                                                  noUserJoinedUseCase: meetingNoUserJoinedUseCase)
+                                                  noUserJoinedUseCase: meetingNoUserJoinedUseCase,
+                                                  statsUseCase: statsUseCase)
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel

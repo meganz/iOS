@@ -15,10 +15,10 @@ extension Array where Element == MEGANode {
 }
 
 extension Array where Element == NodeEntity {
-    func toPhotoLibrary(withSortType type: SortOrderType) -> PhotoLibrary {
+    func toPhotoLibrary(withSortType type: SortOrderType, in timeZone: TimeZone? = nil) -> PhotoLibrary {
         var tempDayDict = [Date: PhotoByDayDataProvider]()
         for node in self where NSString(string: node.name).mnz_isVisualMediaPathExtension {
-            guard let day = node.categoryDate.removeTimestamp() else { continue }
+            guard let day = node.categoryDate.removeTimestamp(timeZone: timeZone) else { continue }
             if let photoByDay = tempDayDict[day] {
                 photoByDay.photos.append(node)
             } else {
@@ -31,7 +31,7 @@ extension Array where Element == NodeEntity {
         
         var tempMonthDict = [Date: PhotoByMonthDataProvider]()
         for (day, photosByDay) in dayDict.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key }) {
-            guard let month = day.removeDay() else { continue }
+            guard let month = day.removeDay(timeZone: timeZone) else { continue }
             if let photoByMonth = tempMonthDict[month] {
                 photoByMonth.photos.append(photosByDay)
             } else {
@@ -44,7 +44,7 @@ extension Array where Element == NodeEntity {
         
         var tempYearDict = [Date: PhotoByYearDataProvider]()
         for (month, photoByMonth) in monthDict.sorted(by: { type == .oldest ? $0.key < $1.key : $0.key > $1.key }) {
-            guard let year = month.removeMonth() else { continue }
+            guard let year = month.removeMonth(timeZone: timeZone) else { continue }
             if let photoByYear = tempYearDict[year] {
                 photoByYear.photos.append(photoByMonth)
             } else {

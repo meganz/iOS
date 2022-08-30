@@ -12,6 +12,7 @@ extension MeetingContainerViewModel {
         userUseCase: UserUseCaseProtocol = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
         authUseCase: AuthUseCaseProtocol = MockAuthUseCase(isUserLoggedIn: true),
         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
+        statsUseCase: MeetingStatsUseCaseProtocol =  MockMeetingStatsUseCase(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -22,7 +23,8 @@ extension MeetingContainerViewModel {
             callCoordinatorUseCase: callCoordinatorUseCase,
             userUseCase: userUseCase,
             authUseCase: authUseCase,
-            noUserJoinedUseCase: noUserJoinedUseCase
+            noUserJoinedUseCase: noUserJoinedUseCase,
+            statsUseCase: statsUseCase
         )
     }
 }

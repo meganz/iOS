@@ -20,7 +20,7 @@ struct HangOrEndCallView: View {
             VStack {
                 VStack(spacing: Constants.buttonsSpacing) {
                     Button(action: {
-                        viewModel.leaveCallAction()
+                        viewModel.dispatch(.leaveCall)
                     }, label: {
                         Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
                             .font(.headline)
@@ -33,7 +33,7 @@ struct HangOrEndCallView: View {
                     })
                     
                     Button(action: {
-                        viewModel.endForAllAction()
+                        viewModel.dispatch(.endCallForAll)
                     }, label: {
                         Text(Strings.Localizable.Meetings.EndForAll.buttonTitle)
                             .font(.headline)
