@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol MeetingParticipantsLayoutRouting: Routing {
     func showRenameChatAlert()
@@ -31,20 +32,24 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo
         )
-        
-        let vm = MeetingParticipantsLayoutViewModel(router: self,
-                               containerViewModel: containerViewModel,
-                               callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
-                               captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-                               localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
-                               remoteVideoUseCase: CallRemoteVideoUseCase(repository: CallRemoteVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
-                               chatRoomUseCase: ChatRoomUseCase(
-                                chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
-                                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
-                               userUseCase: UserUseCase(repo: .live),
-                               userImageUseCase: userImageUseCase,
-                               chatRoom: chatRoom,
-                               call: call)
+        let statsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+
+        let vm = MeetingParticipantsLayoutViewModel(
+            router: self,
+            containerViewModel: containerViewModel,
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+            remoteVideoUseCase: CallRemoteVideoUseCase(repository: CallRemoteVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+            chatRoomUseCase: ChatRoomUseCase(
+                chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
+            userUseCase: UserUseCase(repo: .live),
+            userImageUseCase: userImageUseCase,
+            statsUseCase: statsUseCase,
+            chatRoom: chatRoom,
+            call: call
+        )
         
         let vc = MeetingParticipantsLayoutViewController(viewModel: vm)
         baseViewController = vc

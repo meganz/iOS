@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 enum MeetingContainerAction: ActionType {
     case onViewReady
@@ -40,6 +41,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
+    private let statsUseCase: MeetingStatsUseCaseProtocol
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
 
@@ -58,7 +60,8 @@ final class MeetingContainerViewModel: ViewModelType {
          callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          authUseCase: AuthUseCaseProtocol,
-         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol) {
+         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol,
+         statsUseCase: MeetingStatsUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -67,6 +70,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
+        self.statsUseCase = statsUseCase
         
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callCoordinatorUseCase.addCallRemoved { [weak self] uuid in
@@ -240,8 +244,11 @@ final class MeetingContainerViewModel: ViewModelType {
         guard isOnlyMyselfInTheMeeting() else { return }
         router.showEndCallDialog { [weak self] in
             guard let self = self else { return }
+            self.statsUseCase.sendEndCallWhenNoParticipantsStats()
             self.endCall()
-        } stayOnCallCompletion: {
+        } stayOnCallCompletion: { [weak self] in
+            guard let self = self else { return }
+            self.statsUseCase.sendStayOnCallWhenNoParticipantsStats()
             stayOnCallCompletion?()
         }
     }

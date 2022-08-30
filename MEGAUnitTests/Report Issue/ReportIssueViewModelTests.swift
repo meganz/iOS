@@ -4,8 +4,6 @@ import MEGADomainMock
 import MEGADomain
 @testable import MEGA
 
-
-@available(iOS 14.0, *)
 final class ReportIssueViewModelTests: XCTestCase {
     let mockRouter = MockReportIssueViewRouter()
     

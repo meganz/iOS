@@ -91,12 +91,14 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
         
         slideShowTimer = Timer.scheduledTimer(timeInterval: SlideShowViewModel.SlideShowAutoPlayingTimeInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     private func pause() {
         setVisibility(true)
         collectionView.backgroundColor = UIColor.mnz_background()
         slideShowTimer.invalidate()
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     private func finish() {
