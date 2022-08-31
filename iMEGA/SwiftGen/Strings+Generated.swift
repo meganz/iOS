@@ -3739,6 +3739,14 @@ public enum Strings {
         }
       }
     }
+    public enum Invite {
+      public enum ContactLink {
+        public enum Share {
+          /// Send invitation
+          public static let title = Strings.tr("Localizable", "invite.contactLink.share.title")
+        }
+      }
+    }
     public enum Media {
       public enum Audio {
         public enum Playlist {
