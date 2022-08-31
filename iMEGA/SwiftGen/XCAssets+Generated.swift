@@ -521,6 +521,7 @@ internal enum Asset {
       internal static let name = ImageAsset(name: "name")
     }
     internal enum Logo {
+      internal static let megaShareContactLink = ImageAsset(name: "MEGA_ShareContactLink")
       internal static let megaLogoGrayscale = ImageAsset(name: "MEGA_logo_grayscale")
       internal static let favicon = ImageAsset(name: "favicon")
       internal static let megaThePrivacyCompanyLogo = ImageAsset(name: "megaThePrivacyCompanyLogo")

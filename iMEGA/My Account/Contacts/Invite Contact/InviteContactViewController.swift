@@ -108,8 +108,9 @@ class InviteContactViewController: UIViewController {
     }
 
     @IBAction func moreButtonTapped(_ sender: Any) {
-        let items = [Strings.Localizable.Contact.Invite.message, userLink]
-        let activity = UIActivityViewController(activityItems: items, applicationActivities: [])
+        guard let url = URL(string: userLink) else { return }
+        let metadataItemSource = ContactLinkPresentationItemSource(title: Strings.Localizable.Invite.ContactLink.Share.title, description: Strings.Localizable.Contact.Invite.message, icon: Asset.Images.Logo.megaShareContactLink, url: url)
+        let activity = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: [])
         activity.popoverPresentationController?.sourceView = moreLabel
         activity.popoverPresentationController?.sourceRect = moreLabel.frame
         present(activity, animated: true)
