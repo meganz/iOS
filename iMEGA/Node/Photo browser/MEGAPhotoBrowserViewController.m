@@ -612,6 +612,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self.imageViewsCache setObject:zoomableView forKey:@(i)];
             
             [self configLiveTextLayout];
+            
+            if (i != self.dataProvider.currentIndex) {
+                [imageView setImageLiveTextInterfaceHidden:true animated:false];
+            }
         }
     }
 }
@@ -1346,7 +1350,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)configLiveTextLayout {
     [self configLiveTextLayoutFrom:self.imageViewsCache
                  isInterfaceHidden:self.isInterfaceHidden
-                     toolBarHeight:self.toolbar.frame.size.height];
+                      toolBarFrame:self.toolbar.frame];
 }
 
 @end
