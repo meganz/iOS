@@ -24,15 +24,15 @@ extension MEGAPhotoBrowserViewController {
         imageView.startImageLiveTextAnalysisIfNeeded()
     }
     
-    @objc func configLiveTextLayout(from imageViewCache: NSCache<NSNumber, UIScrollView>, isInterfaceHidden: Bool, toolBarHeight: CGFloat) {
+    @objc func configLiveTextLayout(from imageViewCache: NSCache<NSNumber, UIScrollView>, isInterfaceHidden: Bool, toolBarFrame: CGRect) {
         guard #available(iOS 16, *), let imageView = currentImageView(from: imageViewCache) else { return }
         
-        let isCurrentImageInFullScreen = imageView.frame.height.rounded() >= UIScreen.main.bounds.height
+        let isImageAndToolBarOverlapped = imageView.frame.maxY >= toolBarFrame.minY
         var contentInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         
-        if isCurrentImageInFullScreen && !isInterfaceHidden {
+        if isImageAndToolBarOverlapped && !isInterfaceHidden {
             let padding: CGFloat = 5.0
-            contentInset.bottom = toolBarHeight + padding
+            contentInset.bottom = toolBarFrame.height + padding
         }
 
         imageView.setImageLiveTextSupplementaryInterfaceContentInsets(contentInset)
