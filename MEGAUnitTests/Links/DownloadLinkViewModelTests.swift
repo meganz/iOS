@@ -9,7 +9,6 @@ class DownloadLinkViewModelTests: XCTestCase {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
                                               authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true),
-                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
                                               link: URL(string: "fileLinkUrl")!,
                                               isFolderLink: false)
         viewModel.checkIfLinkCanBeDownloaded()
@@ -20,7 +19,6 @@ class DownloadLinkViewModelTests: XCTestCase {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
                                               authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true),
-                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
                                               nodes: [NodeEntity()],
                                               isFolderLink: true)
         viewModel.checkIfLinkCanBeDownloaded()
@@ -31,7 +29,6 @@ class DownloadLinkViewModelTests: XCTestCase {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
                                               authUseCase: MockAuthUseCase(isUserLoggedIn: false),
-                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
                                               link: URL(string: "fileLinkUrl")!,
                                               isFolderLink: false)
         viewModel.checkIfLinkCanBeDownloaded()
@@ -42,7 +39,6 @@ class DownloadLinkViewModelTests: XCTestCase {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
                                               authUseCase: MockAuthUseCase(isUserLoggedIn: false),
-                                              networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
                                               nodes: [NodeEntity()],
                                               isFolderLink: true)
         viewModel.checkIfLinkCanBeDownloaded()
