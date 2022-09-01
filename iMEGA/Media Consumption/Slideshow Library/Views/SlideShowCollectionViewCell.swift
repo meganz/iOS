@@ -66,12 +66,16 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func singleTap(gesture: UITapGestureRecognizer) {
-        slideshowInteraction?.singleTapOnSlideshow()
+        slideshowInteraction?.pausePlaying()
     }
 }
 
 extension SlideShowCollectionViewCell :UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
+    }
+    
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        slideshowInteraction?.pausePlaying()
     }
 }

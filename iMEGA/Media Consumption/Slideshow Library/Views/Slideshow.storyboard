@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -100,7 +101,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ejn-es-2RO"/>
-                                    <barButtonItem style="plain" id="OF7-sI-b6y">
+                                    <barButtonItem style="plain" systemItem="play" id="OF7-sI-b6y">
+                                        <color key="tintColor" name="515151"/>
                                         <connections>
                                             <action selector="playOrPauseSlideShow" destination="BYZ-38-t0r" id="wIq-Tz-hR4"/>
                                         </connections>
@@ -129,6 +131,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="515151">
+            <color red="0.31799998879432678" green="0.31799998879432678" blue="0.31799998879432678" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

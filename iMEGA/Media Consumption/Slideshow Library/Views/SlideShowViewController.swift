@@ -1,7 +1,7 @@
 import UIKit
 
 protocol SlideShowInteraction {
-    func singleTapOnSlideshow()
+    func pausePlaying()
 }
 
 final class SlideShowViewController: UIViewController, ViewType {
@@ -16,9 +16,9 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private var slideShowTimer = Timer()
     
-    private lazy var backgroundColor: UIColor = {
+    private var backgroundColor: UIColor {
         UIColor.mnz_mainBars(for: traitCollection)
-    }()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         statusBarBackground.backgroundColor = backgroundColor
         navigationBar.backgroundColor = backgroundColor
         bottomBarBackground.isHidden = true
-        btnPlay.setBackgroundImage(UIImage(systemName: "play.fill"), for: .normal, style: .plain, barMetrics: .default)
         
         collectionView.updateLayout()
         
@@ -182,7 +181,7 @@ extension SlideShowViewController: UIScrollViewDelegate {
 }
 
 extension SlideShowViewController: SlideShowInteraction {
-    func singleTapOnSlideshow() {
+    func pausePlaying() {
         viewModel?.dispatch(.pausePlaying)
     }
 }
