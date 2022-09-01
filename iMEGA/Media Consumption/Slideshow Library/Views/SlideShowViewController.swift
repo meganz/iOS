@@ -20,6 +20,17 @@ final class SlideShowViewController: UIViewController, ViewType {
         UIColor.mnz_mainBars(for: traitCollection)
     }
     
+    private func updatePlayButtonTintColor() {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            btnPlay.tintColor = UIColor.mnz_gray515151()
+        case .dark:
+            btnPlay.tintColor = UIColor.mnz_grayD1D1D1()
+        @unknown default:
+            btnPlay.tintColor = UIColor.mnz_gray515151()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
@@ -27,6 +38,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         navigationBar.backgroundColor = backgroundColor
         bottomBarBackground.isHidden = true
         
+        updatePlayButtonTintColor()
         collectionView.updateLayout()
         
         viewModel?.invokeCommand = { [weak self] command in
@@ -51,6 +63,7 @@ final class SlideShowViewController: UIViewController, ViewType {
             AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
             statusBarBackground.backgroundColor = backgroundColor
             navigationBar.backgroundColor = backgroundColor
+            updatePlayButtonTintColor()
         }
     }
     
