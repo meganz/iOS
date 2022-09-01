@@ -44,7 +44,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *centerToolbarItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveToolbarItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *importToolbarItem;
@@ -127,14 +126,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.rightToolbarItem.image = [UIImage imageNamed:@"share"];
             self.centerToolbarItem.image = [UIImage imageNamed:@"saveToPhotos"];
             break;
-        case DisplayModeCloudDrive:
-            if (![self isSlideShowEnabled]) {
-                self.centerToolbarItem.image = nil;
-            } else {
-                self.centerToolbarItem.image = [UIImage systemImageNamed: @"play.rectangle"];
-            }
-            break;
             
+        case DisplayModeCloudDrive:
+            [self activateSlideShowButton];
+            break;
+
         case DisplayModeRubbishBin:
         case DisplayModeSharedItem:
         case DisplayModeNodeInsideFolderLink:
@@ -450,6 +446,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self resetZooms];
             [self reloadTitle];
             [self airplayDisplayCurrentImage];
+            [self activateSlideShowButton];
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
                 [self.delegate photoBrowser:self didPresentNode:self.dataProvider.currentPhoto];
             }
@@ -615,6 +612,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGANode *mediaNode = self.dataProvider.currentPhoto;
             if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
                 self.pieChartView.alpha = 0.0f;
+                [self activateSlideShowButton];
             }
         }
                         completion:nil];
@@ -627,6 +625,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
             self.transferProgress = transfer.transferredBytes.doubleValue / transfer.totalBytes.doubleValue;
             [self.pieChartView reloadData];
+            [self hideSlideShowButton];
             if (self.pieChartView.alpha < 1.0f) {
                 [UIView animateWithDuration:0.2 animations:^{
                     self.pieChartView.alpha = 1.0f;
@@ -653,6 +652,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
+                [self activateSlideShowButton];
             } else if (node.name.mnz_isImagePathExtension) {
                 [self setupNode:node forImageView:imageView withMode:MEGAPhotoModeOriginal];
             }
