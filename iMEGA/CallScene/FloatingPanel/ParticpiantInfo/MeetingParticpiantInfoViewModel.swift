@@ -106,7 +106,15 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
 
     private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { result in
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
+            return
+        }
+        
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
+                                         base64Handle: base64Handle,
+                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                         name: name) { result in
             switch result {
             case .success(let image):
                 invokeCommand?(.updateAvatarImage(image: image))
