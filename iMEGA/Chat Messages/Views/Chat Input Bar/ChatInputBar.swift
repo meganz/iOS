@@ -114,6 +114,7 @@ class ChatInputBar: UIView {
                     self.voiceClipInputBar.trashView.isHidden = false
                     self.voiceClipInputBar.sendView.isHidden = false
 
+                    self.voiceClipInputBar.cancelRecordingIfNeeded()
                     self.voiceClipInputBar.removeFromSuperview()
                     self.voiceClipInputBar = nil
                     
@@ -261,6 +262,7 @@ class ChatInputBar: UIView {
             self.audioRecordingInputBar.viewHeightConstraint.constant = self.storedMessageInputBarHeight
             self.audioRecordingInputBar.layoutIfNeeded()
         }) { _ in
+            self.audioRecordingInputBar.cancelRecordingIfNeeded()
             self.audioRecordingInputBar.removeFromSuperview()
             self.audioRecordingInputBar = nil
             

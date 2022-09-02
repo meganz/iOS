@@ -170,14 +170,14 @@ class VoiceClipInputBar: UIView {
         return nil
     }
     
-    private func updateAppearance() {
-        backgroundColor = UIColor.mnz_voiceRecordingViewBackground(traitCollection)
-    }
-    
-    deinit {
+    func cancelRecordingIfNeeded() {
         if audioRecorder.isRecording {
             delegate?.voiceRecordingEnded()
             stopRecording(true)
         }
+    }
+    
+    private func updateAppearance() {
+        backgroundColor = UIColor.mnz_voiceRecordingViewBackground(traitCollection)
     }
 }
