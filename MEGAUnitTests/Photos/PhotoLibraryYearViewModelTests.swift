@@ -14,22 +14,25 @@ final class PhotoLibraryYearViewModelTests: XCTestCase {
             NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2021-07-18T22:01:04Z".date),
             NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2020-04-18T22:01:04Z".date),
         ]
-        let library = nodes.toPhotoLibrary(withSortType: .newest, in: TimeZone(secondsFromGMT: 0))
+        let library = nodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .year
         sut = PhotoLibraryYearViewModel(libraryViewModel: libraryViewModel)
-        
-        XCTAssertEqual(sut.photoCategoryList, library.photoByYearList)
+    }
+    
+    func testInit_defaultValue() throws {
+        XCTAssertEqual(sut.photoCategoryList, sut.libraryViewModel.library.photoByYearList)
         XCTAssertEqual(sut.photoCategoryList.count, 3)
-        XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-08-18T22:01:04Z".date.removeMonth(timeZone: TimeZone(secondsFromGMT: 0)))
-        XCTAssertNil(libraryViewModel.cardScrollPosition)
-        XCTAssertNil(libraryViewModel.photoScrollPosition)
-        XCTAssertEqual(libraryViewModel.selectedMode, .year)
+        XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-08-18T22:01:04Z".date.removeMonth(timeZone: .GMT))
+        XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
+        XCTAssertNil(sut.libraryViewModel.photoScrollPosition)
+        XCTAssertEqual(sut.libraryViewModel.selectedMode, .year)
+        XCTAssertNil(sut.position)
     }
     
     func testDidTapCategory_tappingYearCard_goToMonthMode() throws {
         let category = sut.photoCategoryList[2]
-        XCTAssertEqual(category.categoryDate, try "2020-04-18T22:01:04Z".date.removeMonth(timeZone: TimeZone(secondsFromGMT: 0)))
+        XCTAssertEqual(category.categoryDate, try "2020-04-18T22:01:04Z".date.removeMonth(timeZone: .GMT))
         sut.didTapCategory(category)
         XCTAssertEqual(sut.libraryViewModel.cardScrollPosition, category.position)
         XCTAssertNil(sut.libraryViewModel.photoScrollPosition)

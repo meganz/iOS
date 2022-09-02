@@ -5,7 +5,7 @@ enum ZoomType {
     case out
 }
 
-struct PhotoLibraryZoomState {
+struct PhotoLibraryZoomState: Equatable {
     private static let supportedScaleFactors = [1, 3, 5]
     
     static let defaultScaleFactor = 3

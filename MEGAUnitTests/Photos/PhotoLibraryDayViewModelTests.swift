@@ -15,22 +15,25 @@ final class PhotoLibraryDayViewModelTests: XCTestCase {
             NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2020-04-18T12:01:04Z".date),
             NodeEntity(name: "d.mp4", handle: 4, modificationTime: try "2020-04-18T01:01:04Z".date),
         ]
-        let library = nodes.toPhotoLibrary(withSortType: .newest, in: TimeZone(secondsFromGMT: 0))
+        let library = nodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .day
         sut = PhotoLibraryDayViewModel(libraryViewModel: libraryViewModel)
-        
-        XCTAssertEqual(sut.photoCategoryList, library.photosByDayList)
+    }
+    
+    func testInit_defaultValue() throws {
+        XCTAssertEqual(sut.photoCategoryList, sut.libraryViewModel.library.photosByDayList)
         XCTAssertEqual(sut.photoCategoryList.count, 2)
-        XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-08-18T22:01:04Z".date.removeTimestamp(timeZone: TimeZone(secondsFromGMT: 0)))
-        XCTAssertNil(libraryViewModel.cardScrollPosition)
-        XCTAssertNil(libraryViewModel.photoScrollPosition)
-        XCTAssertEqual(libraryViewModel.selectedMode, .day)
+        XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-08-18T22:01:04Z".date.removeTimestamp(timeZone: .GMT))
+        XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
+        XCTAssertNil(sut.libraryViewModel.photoScrollPosition)
+        XCTAssertEqual(sut.libraryViewModel.selectedMode, .day)
+        XCTAssertNil(sut.position)
     }
     
     func testDidTapCategory_tappingDayCard_goToAllMode() throws {
         let category = sut.photoCategoryList[1]
-        XCTAssertEqual(category.categoryDate, try "2020-04-18T01:01:04Z".date.removeTimestamp(timeZone: TimeZone(secondsFromGMT: 0)))
+        XCTAssertEqual(category.categoryDate, try "2020-04-18T01:01:04Z".date.removeTimestamp(timeZone: .GMT))
         XCTAssertEqual(category.contentList.count, 3)
         sut.didTapCategory(category)
         XCTAssertEqual(sut.libraryViewModel.cardScrollPosition, category.position)
