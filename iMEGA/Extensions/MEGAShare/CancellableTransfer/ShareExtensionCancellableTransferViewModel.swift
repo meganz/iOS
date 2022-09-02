@@ -8,7 +8,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     private let fileTransfers: [CancellableTransfer]
     private let folderTransfers: [CancellableTransfer]
     
-    private let cancelToken = MEGACancelToken()
+    private var transfersCancelled: Bool = false
     private var processingComplete: Bool = false
 
     private var transferErrors = [TransferErrorEntity]()
@@ -46,8 +46,8 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
         case .didTapDismissConfirmCancel:
             router.dismissConfirmCancel()
         case .didTapProceedCancel:
-            cancelToken.cancel()
-            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+            transfersCancelled = true
+            uploadFileUseCase.cancelUploadTransfers()
         }
     }
     
@@ -61,14 +61,14 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     }
     
     private func checkIfAllTransfersComplete() {
-        guard folderTransfersFinished(), !cancelToken.isCancelled else {
+        guard folderTransfersFinished(), !transfersCancelled else {
             return
         }
         manageTransfersCompletion()
     }
     
     private func continueFolderTransfersIfNeeded() {
-        guard !cancelToken.isCancelled else {
+        guard !transfersCancelled else {
             return
         }
         
@@ -103,8 +103,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: false,
-                                         startFirst: transferViewEntity.priority,
-                                         cancelToken: cancelToken)
+                                         startFirst: transferViewEntity.priority)
             { transferEntity in
                 transferViewEntity.state = transferEntity.state
             } update: { _ in } completion: { [weak self] result in
@@ -131,7 +130,6 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: false,
                                          startFirst: transferViewEntity.priority,
-                                         cancelToken: cancelToken,
                                          start: nil)
             { transferEntity in
                 transferViewEntity.stage = transferEntity.stage

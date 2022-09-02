@@ -1,7 +1,7 @@
-import MEGADomain
+import Foundation
 
 // MARK: - Use case protocol -
-protocol TransfersUseCaseProtocol {
+public protocol TransfersUseCaseProtocol {
     func transfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
@@ -10,17 +10,22 @@ protocol TransfersUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryProtocol>: TransfersUseCaseProtocol {
+public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryProtocol>: TransfersUseCaseProtocol {
     
     private let transfersRepository: T
     private let fileSystemRepository: U
     
-    init(transfersRepository: T, fileSystemRepository: U) {
+    private enum AppDataConstants: String {
+        case exportFile = ">exportFile"
+        case saveInPhotos = ">SaveInPhotosApp"
+    }
+
+    public init(transfersRepository: T, fileSystemRepository: U) {
         self.transfersRepository = transfersRepository
         self.fileSystemRepository = fileSystemRepository
     }
     
-    func transfers(filteringUserTransfers: Bool) -> [TransferEntity] {
+    public func transfers(filteringUserTransfers: Bool) -> [TransferEntity] {
         let transfers = transfersRepository.transfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
@@ -29,7 +34,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryP
         }
     }
 
-    func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
+    public func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
         let transfers = transfersRepository.downloadTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
@@ -38,7 +43,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryP
         }
     }
     
-    func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
+    public func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
         let transfers = transfersRepository.uploadTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
@@ -47,7 +52,7 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryP
         }
     }
     
-    func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
+    public func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
         let transfers = transfersRepository.completedTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
@@ -67,14 +72,14 @@ struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryP
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(NSString().mnz_appDataToExportFile()) ?? false
+        transfer.appData?.contains(AppDataConstants.exportFile.rawValue) ?? false
     }
     
     private func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(NSString().mnz_appDataToSaveInPhotosApp()) ?? false
+        transfer.appData?.contains(AppDataConstants.saveInPhotos.rawValue) ?? false
     }
     
-    func documentsDirectory() -> URL {
+    public func documentsDirectory() -> URL {
         fileSystemRepository.documentsDirectory()
     }
 }

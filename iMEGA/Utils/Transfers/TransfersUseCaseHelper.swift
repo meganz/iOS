@@ -1,3 +1,5 @@
+import MEGADomain
+
 @objc final class TransferUseCaseHelper: NSObject {
     private let transfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
     private let sharedFolderTransfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)

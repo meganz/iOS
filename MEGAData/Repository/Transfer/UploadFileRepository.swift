@@ -2,7 +2,8 @@ import MEGADomain
 
 struct UploadFileRepository: UploadFileRepositoryProtocol {
     private let sdk: MEGASdk
-    
+    private let cancelToken = MEGACancelToken()
+
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
@@ -13,7 +14,7 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
         return nodeList.mnz_existsFile(withName: name)
     }
     
-    func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, cancelToken: MEGACancelToken?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         guard let parentNode = sdk.node(forHandle: parent) else {
             completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
             return
@@ -27,9 +28,9 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
             if let update = update {
                 transferDelegate.progress = update
             }
-            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
+            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken, delegate: transferDelegate)
         } else {
-            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: cancelToken)
+            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken)
         }
     }
     
@@ -51,5 +52,11 @@ struct UploadFileRepository: UploadFileRepositoryProtocol {
                 completion(.success(()))
             }
         })
+    }
+    
+    func cancelUploadTransfers() {
+        if !cancelToken.isCancelled {
+            cancelToken.cancel()
+        }
     }
 }

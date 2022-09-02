@@ -1,6 +1,5 @@
-import MEGADomain
 
-protocol TransfersRepositoryProtocol {
+public protocol TransfersRepositoryProtocol {
     func transfers() -> [TransferEntity]
     func downloadTransfers() -> [TransferEntity]
     func uploadTransfers() -> [TransferEntity]
