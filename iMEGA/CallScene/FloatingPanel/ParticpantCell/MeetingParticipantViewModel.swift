@@ -94,7 +94,16 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
 
     private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId, name: name) { [weak self] result in
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
+            MEGALogDebug("ChatRoom: base64 handle not found for handle \(participant.participantId)")
+            return
+        }
+        
+        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
+                                         base64Handle: base64Handle,
+                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                         name: name) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let image):
@@ -112,7 +121,11 @@ final class MeetingParticipantViewModel: ViewModelType {
                 MEGALogDebug("error fetching the changed avatar \(error)")
             }, receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.userImageUseCase.clearAvatarCache(forUserHandle: participant.participantId)
+                
+                if let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId) {
+                    self.userImageUseCase.clearAvatarCache(withUserHandle: participant.participantId, base64Handle: base64Handle)
+                }
+                
                 self.avatarRefetchTask = self.createRefetchAvatarTask(forParticipant: participant)
             })
             .store(in: &subscriptions)
@@ -141,7 +154,11 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func downloadAndUpdateAvatar(forParticipant participant: CallParticipantEntity) async throws {
-        let downloadedAvatar = try await userImageUseCase.downloadAvatar(forUserHandle: participant.participantId)
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId) else {
+            throw UserImageLoadErrorEntity.base64EncodingError
+        }
+        
+        let downloadedAvatar = try await userImageUseCase.downloadAvatar(withUserHandle: participant.participantId, base64Handle: base64Handle)
         try Task.checkCancellation()
         await updateAvatar(image: downloadedAvatar)
     }
@@ -156,10 +173,14 @@ final class MeetingParticipantViewModel: ViewModelType {
         }
         try Task.checkCancellation()
         
-        let image = try await userImageUseCase.createAvatar(
-            usingUserHandle: participant.participantId, name: name
-        )
-        
+        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
+            return nil
+        }
+        let image = try await userImageUseCase.createAvatar(withUserHandle: participant.participantId,
+                                                            base64Handle: base64Handle,
+                                                            avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                                            name: name)
         return image
     }
     
