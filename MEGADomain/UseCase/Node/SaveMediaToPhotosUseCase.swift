@@ -22,7 +22,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
     func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
        
-        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp()) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -40,7 +40,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
 
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
 
-        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp(), cancelToken: nil) { result in
+        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp()) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -55,7 +55,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         nodeRepository.nodeFor(fileLink: fileLink) { result in
             switch result {
             case .success(let node):
-                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), transferMetaData: transferMetaData, startFirst: true, cancelToken: nil, start: nil, update: nil) { result in
+                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), transferMetaData: transferMetaData, startFirst: true, start: nil, update: nil) { result in
                     switch result {
                     case .success(_):
                         completion(.success)

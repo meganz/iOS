@@ -1,5 +1,4 @@
-import MEGADomain
 
-protocol UploadPhotoAssetsRepositoryProtocol {
+public protocol UploadPhotoAssetsRepositoryProtocol {
     func upload(assets: [String], toParent parentHandle: HandleEntity)
 }

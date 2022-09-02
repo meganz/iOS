@@ -1,7 +1,6 @@
 import Foundation
-import MEGADomain
 
-protocol FileCacheRepositoryProtocol: RepositoryProtocol {
+public protocol FileCacheRepositoryProtocol: RepositoryProtocol {
     var tempFolder: URL { get }
     func tempFileURL(for node: NodeEntity) -> URL
     func existingTempFileURL(for node: NodeEntity) -> URL?

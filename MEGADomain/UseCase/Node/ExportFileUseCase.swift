@@ -95,7 +95,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         }
         let appDataToExportFile = NSString().mnz_appDataToExportFile()
         let url = node.name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalImageURL(for: node) : fileCacheRepository.tempFileURL(for: node)
-        downloadFileRepository.download(nodeHandle: node.handle, to: url, appData: appDataToExportFile, cancelToken: nil) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: url, appData: appDataToExportFile) { result in
             processDownloadThenShareResult(result: result, completion: completion)
         }
     }

@@ -1,7 +1,5 @@
-import Foundation
-import MEGADomain
 
-protocol UploadPhotoAssetsUseCaseProtocol {
+public protocol UploadPhotoAssetsUseCaseProtocol {
 
     /// Upload from photo albums
     /// - Parameters:
@@ -10,15 +8,15 @@ protocol UploadPhotoAssetsUseCaseProtocol {
     func upload(photoIdentifiers: [String], to parentHandle: HandleEntity)
 }
 
-final class UploadPhotoAssetsUseCase: UploadPhotoAssetsUseCaseProtocol {
+public final class UploadPhotoAssetsUseCase: UploadPhotoAssetsUseCaseProtocol {
 
     private let uploadFromAlbumRepository: UploadPhotoAssetsRepositoryProtocol
 
-    init(uploadPhotoAssetsRepository: UploadPhotoAssetsRepositoryProtocol) {
+    public init(uploadPhotoAssetsRepository: UploadPhotoAssetsRepositoryProtocol) {
         self.uploadFromAlbumRepository = uploadPhotoAssetsRepository
     }
     
-    func upload(photoIdentifiers: [String], to parentHandle: HandleEntity) {
+    public func upload(photoIdentifiers: [String], to parentHandle: HandleEntity) {
         uploadFromAlbumRepository.upload(assets: photoIdentifiers, toParent: parentHandle)
     }
 }
