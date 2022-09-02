@@ -1,6 +1,7 @@
 
 import UIKit
 import MediaPlayer
+import MEGADomain
 
 class MeetingQuickActionView: UIView {
     

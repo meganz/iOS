@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol MeetingCreatingViewRouting: Routing {
     func dismiss()
