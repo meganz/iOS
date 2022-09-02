@@ -155,16 +155,16 @@ class AudioRecordingInputBar: UIView {
         delegate?.trashButtonTapped()
     }
     
-    private func updateAppearance() {
-        suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-    }
-    
-    deinit {
+    func cancelRecordingIfNeeded() {
         if audioRecorder.isRecording {
             delegate?.audioRecordingEnded()
             cancelRecording()
         }
+    }
+    
+    private func updateAppearance() {
+        suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
 }
 
