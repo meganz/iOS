@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 extension MeetingFloatingPanelViewModel {
     convenience init(

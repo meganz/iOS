@@ -1,25 +1,5 @@
 
-enum AudioSessionRouteChangedReason {
-    case unknown
-    case newDeviceAvailable
-    case oldDeviceUnavailable
-    case categoryChange
-    case override
-    case wakeFromSleep
-    case noSuitableRouteForCategory
-    case routeConfigurationChange
-
-}
-
-enum AudioPort {
-    case unknown
-    case builtInReceiver
-    case builtInSpeaker
-    case headphones
-    case other
-}
-
-protocol AudioSessionRepositoryProtocol {
+public protocol AudioSessionRepositoryProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
     func configureAudioSession()
