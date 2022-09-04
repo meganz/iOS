@@ -1,9 +1,14 @@
 import SwiftUI
+import MEGASwiftUI
 import MEGADomain
 
 extension ThumbnailUseCaseProtocol {
     func cachedThumbnailImage(for node: NodeEntity, type: ThumbnailTypeEntity) -> Image? {
         Image(contentsOfFile: cachedThumbnail(for: node, type: type).path)
+    }
+    
+    func cachedThumbnailImageContainer(for node: NodeEntity, type: ThumbnailTypeEntity) -> ImageContainer? {
+        URLImageContainer(imageURL: cachedThumbnail(for: node, type: type))
     }
     
     func loadThumbnailImage(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> Image {
