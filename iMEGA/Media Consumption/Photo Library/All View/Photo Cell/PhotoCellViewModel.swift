@@ -8,6 +8,7 @@ import MEGADomain
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
     private let placeholderThumbnail: ImageContainer
     private let selection: PhotoSelection
     private var cancellable: AnyCancellable?
@@ -42,13 +43,15 @@ final class PhotoCellViewModel: ObservableObject {
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryAllViewModel,
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: ThumbnailUseCaseProtocol,
+         mediaUseCase: MediaUseCaseProtocol = MediaUseCase()) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase
+        self.mediaUseCase = mediaUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         
-        isVideo = photo.isVideo
+        isVideo = mediaUseCase.isVideo(for: URL(fileURLWithPath: photo.name))
         isFavorite = photo.isFavourite
         duration = NSString.mnz_string(fromTimeInterval: Double(photo.duration))
         

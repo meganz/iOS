@@ -29,14 +29,18 @@ final class SlideShowViewModel: ViewModelType {
     
     var currentSlideNumber = 0
     
+    private let mediaUseCase: MediaUseCaseProtocol
+    
     init(
         thumbnailUseCase: ThumbnailUseCaseProtocol,
-        dataProvider: PhotoBrowserDataProvider
+        dataProvider: PhotoBrowserDataProvider,
+        mediaUseCase: MediaUseCaseProtocol = MediaUseCase()
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         self.dataProvider = dataProvider
+        self.mediaUseCase = mediaUseCase
         
-        numberOfSlideShowImages = dataProvider.allPhotoEntities.lazy.filter{ $0.isImage }.count
+        numberOfSlideShowImages = dataProvider.allPhotoEntities.lazy.filter{ mediaUseCase.isImage(for: URL(fileURLWithPath: $0.name)) }.count
         
         Task {
             await loadFirstSelectedPhotoPreview()
@@ -56,7 +60,7 @@ final class SlideShowViewModel: ViewModelType {
     private func loadAllPhotoPreviews() async {
         guard dataProvider.allPhotoEntities.isNotEmpty else { return }
         
-        for node in dataProvider.allPhotoEntities.shuffled().lazy.filter({ $0.isImage }) {
+        for node in dataProvider.allPhotoEntities.shuffled().lazy.filter({ self.mediaUseCase.isImage(for: URL(fileURLWithPath: $0.name)) }) {
             if let currentPhoto = dataProvider.currentPhoto, currentPhoto.handle == node.handle { continue }
             if playbackStatus == .complete { break }
             
