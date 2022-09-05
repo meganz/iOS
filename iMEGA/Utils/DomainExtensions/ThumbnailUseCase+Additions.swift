@@ -19,4 +19,13 @@ extension ThumbnailUseCaseProtocol {
         }
         return image
     }
+    
+    func loadThumbnailImageContainer(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> ImageContainer {
+        try Task.checkCancellation()
+        let url = try await loadThumbnail(for: node, type: type)
+        guard let container = URLImageContainer(imageURL: url) else {
+            throw(ThumbnailErrorEntity.noThumbnail(type))
+        }
+        return container
+    }
 }
