@@ -82,6 +82,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk addChatRequestDelegate:self];
     [self addChatCallDelegate];
+    [self addChatRoomDelegate];
     
     [self updateHeadingView];
     [self setParticipants];
@@ -94,6 +95,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [MEGASdkManager.sharedMEGAChatSdk removeChatRequestDelegate:self];
     [self removeChatCallDelegate];
+    [self removeChatRoomDelegate];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -475,7 +477,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         case GroupChatDetailsSectionParticipants:
             numberOfRows = self.participantsMutableArray.count;
             
-            if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+            if ([self shouldShowAddParticipants]) {
                 numberOfRows += 1;
             }
             break;
@@ -573,7 +575,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             break;
             
         case GroupChatDetailsSectionParticipants: {
-            if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
+            if ((indexPath.row == 0) && [self shouldShowAddParticipants]) {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
                 cell.leftImageView.image = [UIImage imageNamed:@"inviteToChat"];
                 cell.emailLabel.text = NSLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
@@ -584,7 +586,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 return cell;
             }
             
-            NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
+            NSInteger index = [self shouldShowAddParticipants] ? (indexPath.row - 1) : indexPath.row;
             
             uint64_t handle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
             NSString *base64Handle = [MEGASdk base64HandleForUserHandle:handle];
@@ -932,13 +934,13 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                     break;
                 }
                 
-                if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
+                if ((indexPath.row == 0) && [self shouldShowAddParticipants]) {
                     [self addParticipant];
                     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                     return;
                 }
                 
-                NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
+                NSInteger index = [self shouldShowAddParticipants] ? (indexPath.row - 1) : indexPath.row;
                 uint64_t userHandle = [self.participantsMutableArray[index] unsignedLongLongValue];
 
                 if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {

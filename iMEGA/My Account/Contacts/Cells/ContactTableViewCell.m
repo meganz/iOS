@@ -158,10 +158,6 @@
             self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
             break;
-        case ContactsStartConversationNewChatLink:
-            self.nameLabel.text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
-            self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
-            break;
         case ContactsStartConversationNewMeeting:
             self.nameLabel.text = NSLocalizedString(@"meetings.create.newMeeting", @"Text button for init a Meeting.");
             self.avatarImageView.image = [UIImage imageNamed:@"newMeeting"];

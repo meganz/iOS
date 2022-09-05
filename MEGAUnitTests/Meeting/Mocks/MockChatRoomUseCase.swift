@@ -2,7 +2,7 @@
 import Combine
 import MEGADomain
 
-struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
+struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {    
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var userDisplayNamesCompletion: Result<[(handle: HandleEntity, name: String)], ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
@@ -13,7 +13,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var participantsUpdatedSubject = PassthroughSubject<[HandleEntity], Never>()
     var privilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
     var peerPrivilege: ChatRoomEntity.Privilege = .unknown
-    
+    var allowNonHostToAddParticipantsEnabled = false
+    var allowNonHostToAddParticipantsValueChangedSubject = PassthroughSubject<Bool, Never>()
+
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
     }
@@ -65,5 +67,13 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
         privilegeChangedSubject.eraseToAnyPublisher()
+    }
+    
+    func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {
+        allowNonHostToAddParticipantsEnabled
+    }
+    
+    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
+        allowNonHostToAddParticipantsValueChangedSubject.eraseToAnyPublisher()
     }
 }

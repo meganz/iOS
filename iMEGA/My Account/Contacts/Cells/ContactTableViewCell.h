@@ -3,7 +3,6 @@
 
 typedef NS_ENUM(NSUInteger, ContactsStartConversation) {
     ContactsStartConversationNewGroupChat = 0,
-    ContactsStartConversationNewChatLink,
     ContactsStartConversationNewMeeting,
     ContactsStartConversationJoinMeeting
 };

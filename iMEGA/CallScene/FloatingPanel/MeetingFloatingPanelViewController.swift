@@ -32,6 +32,13 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     @IBOutlet private var floatingViewSuperViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private var floatingViewConstantViewWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private var allowNonHostToAddParticipantsSwitch: UISwitch!
+    @IBOutlet private var allowNonHostToAddParticipantsLabel: UILabel!
+    @IBOutlet private var allowNonHostToAddParticipantsView: UIView!
+
+    @IBOutlet private var allowNonHostToAddParticipantsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var allowNonHostToAddParticipantsTopConstraint: NSLayoutConstraint!
 
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
@@ -114,8 +121,18 @@ final class MeetingFloatingPanelViewController: UIViewController {
     // MARK: - Dispatch action
     func executeCommand(_ command: MeetingFloatingPanelViewModel.Command) {
         switch command {
-        case .configView(let canInviteParticipants, let isOneToOneMeeting, let isVideoEnabled, let cameraPosition):
-            updateUI(canInviteParticipants: canInviteParticipants, isOneToOneMeeting: isOneToOneMeeting, isVideoEnabled: isVideoEnabled, cameraPosition: cameraPosition)
+        case .configView(let canInviteParticipants,
+                         let isOneToOneMeeting,
+                         let isVideoEnabled,
+                         let cameraPosition,
+                         let allowNonHostToAddParticipantsEnabled,
+                         let isMyselfAModerator):
+            updateUI(canInviteParticipants: canInviteParticipants,
+                     isOneToOneMeeting: isOneToOneMeeting,
+                     isVideoEnabled: isVideoEnabled,
+                     cameraPosition: cameraPosition,
+                     allowNonHostToAddParticipantsEnabled: allowNonHostToAddParticipantsEnabled,
+                     isMyselfAModerator: isMyselfAModerator)
         case .enabledLoudSpeaker(let enabled):
             speakerQuickActionView?.isSelected = enabled
         case .microphoneMuted(let muted):
@@ -144,6 +161,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .transitionToShortForm:
             panModalSetNeedsLayoutUpdate()
             panModalTransition(to: .shortForm)
+        case .updateAllowNonHostToAddParticipants(let enabled):
+            allowNonHostToAddParticipantsSwitch.setOn(enabled, animated: true)
         }
     }
     
@@ -181,6 +200,10 @@ final class MeetingFloatingPanelViewController: UIViewController {
         viewModel.dispatch(.switchCamera(backCameraOn: !flipQuickActionView.isSelected))
     }
     
+    @IBAction func allowNonHostToAddParticipantsValueChanged(_ sender: UISwitch) {
+        viewModel.dispatch(.allowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsSwitch.isOn))
+    }
+    
     //MARK:- Private methods
     
     private func updatedCameraPosition(_ position: CameraPositionEntity) {
@@ -196,7 +219,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
         speakerQuickActionView?.selectedAudioPortUpdated(selectedAudioPort, isBluetoothRouteAvailable: isBluetoothRouteAvailable)
     }
     
-    private func updateUI(canInviteParticipants: Bool, isOneToOneMeeting: Bool, isVideoEnabled: Bool, cameraPosition: CameraPositionEntity?) {
+    private func updateUI(canInviteParticipants: Bool,
+                          isOneToOneMeeting: Bool,
+                          isVideoEnabled: Bool,
+                          cameraPosition: CameraPositionEntity?,
+                          allowNonHostToAddParticipantsEnabled: Bool,
+                          isMyselfAModerator: Bool) {
         cameraQuickActionView.isSelected = isVideoEnabled
         if let cameraPosition = cameraPosition {
             flipQuickActionView.disabled = false
@@ -211,6 +239,19 @@ final class MeetingFloatingPanelViewController: UIViewController {
         } else if canInviteParticipants && inviteParticpicantsView.superview == nil {
             optionsStackView.addArrangedSubview(inviteParticpicantsView)
         }
+        
+        if isOneToOneMeeting || !isMyselfAModerator {
+            hideAllowNonHostToAddParticipantsView()
+        } else {
+            allowNonHostToAddParticipantsLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
+            allowNonHostToAddParticipantsSwitch.setOn(allowNonHostToAddParticipantsEnabled, animated: true)
+        }
+    }
+    
+    private func hideAllowNonHostToAddParticipantsView() {
+        allowNonHostToAddParticipantsTopConstraint.constant = 0.0
+        allowNonHostToAddParticipantsHeightConstraint.constant = 0.0
+        allowNonHostToAddParticipantsView.isHidden = true
     }
     
     private func updateInTheMeetingLabel() {

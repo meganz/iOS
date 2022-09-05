@@ -45,25 +45,33 @@ final class NewChatRouter {
             self?.switchToChat(withChatID: chatId)
         }
 
-        contactController.createGroupChat = { [weak self] (users, groupName, keyRotation, getChatLink) in
+        contactController.createGroupChat = { [weak self] (users, groupName, keyRotation, getChatLink, allowNonHostToAddParticipants) in
             guard let self = self else { return }
             let megaUsers = (users as? [MEGAUser]) ?? []
             switch keyRotation {
             case true:
-                self.createChatRoom(byUsers: megaUsers, groupName: groupName, completion: { chatRoom in
-                    self.switchToChat(withChatID: chatRoom.chatId)
+                self.createChatRoom(byUsers: megaUsers,
+                                    groupName: groupName,
+                                    allowNonHostToAddParticipants: allowNonHostToAddParticipants,
+                                    completion: { chatRoom in
+                    DispatchQueue.main.async {
+                        self.switchToChat(withChatID: chatRoom.chatId)
+                    }
                 })
             case false:
                 self.createPublicChatRoom(
                     forUsers: megaUsers,
                     chatRoomName: groupName,
-                    shouldGetChatLink: getChatLink
+                    shouldGetChatLink: getChatLink,
+                    allowNonHostToAddParticipants: allowNonHostToAddParticipants
                 ) { chatId, publicChatLink in
-                    guard let publicChatLink = publicChatLink, !publicChatLink.isEmpty else {
-                        self.switchToChat(withChatID: chatId)
-                        return
+                    DispatchQueue.main.async {
+                        guard let publicChatLink = publicChatLink, !publicChatLink.isEmpty else {
+                            self.switchToChat(withChatID: chatId)
+                            return
+                        }
+                        self.switchToChat(withPublicLink: publicChatLink, chatID: chatId)
                     }
-                    self.switchToChat(withPublicLink: publicChatLink, chatID: chatId)
                 }
             }
         }
@@ -92,20 +100,28 @@ final class NewChatRouter {
         forUsers users: [MEGAUser],
         chatRoomName: String?,
         shouldGetChatLink: Bool,
+        allowNonHostToAddParticipants: Bool,
         completion: @escaping (HandleEntity, String?) -> Void
     ) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
         let chatPeers = MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users)
-        chatSDK.createPublicChat(
-            withPeers: chatPeers,
-            title: chatRoomName,
-            delegate: chatRequestDelegate(ofShouldGetChatLink: shouldGetChatLink, completion: completion)
-        )
+        chatSDK.createPublicChat(withPeers: chatPeers,
+                                 title: chatRoomName,
+                                 speakRequest: false,
+                                 waitingRoom: false,
+                                 openInvite: allowNonHostToAddParticipants,
+                                 delegate: chatRequestDelegate(ofShouldGetChatLink: shouldGetChatLink, completion: completion))
     }
 
-    private func createChatRoom(byUsers users: [MEGAUser], groupName: String?, completion: @escaping (MEGAChatRoom) -> Void) {
+    private func createChatRoom(byUsers users: [MEGAUser],
+                                groupName: String?,
+                                allowNonHostToAddParticipants: Bool,
+                                completion: @escaping (MEGAChatRoom) -> Void) {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
-        chatSDK.mnz_createChatRoom(usersArray: users, title: groupName, completion: completion)
+        chatSDK.mnz_createChatRoom(usersArray: users,
+                                   title: groupName,
+                                   allowNonHostToAddParticipants: allowNonHostToAddParticipants,
+                                   completion: completion)
     }
 
     private func chatRoom(byUserHandle userHandle: HandleEntity,

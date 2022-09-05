@@ -18,6 +18,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case displayParticipantInMainView(_ participant: CallParticipantEntity)
     case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     case didSwitchToGridView
+    case allowNonHostToAddParticipants(enabled: Bool)
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -25,7 +26,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case configView(canInviteParticipants: Bool,
                         isOneToOneMeeting: Bool,
                         isVideoEnabled: Bool,
-                        cameraPosition: CameraPositionEntity?)
+                        cameraPosition: CameraPositionEntity?,
+                        allowNonHostToAddParticipantsEnabled: Bool,
+                        isMyselfAModerator: Bool)
         case enabledLoudSpeaker(enabled: Bool)
         case microphoneMuted(muted: Bool)
         case updatedCameraPosition(position: CameraPositionEntity)
@@ -33,6 +36,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case reloadParticpantsList(participants: [CallParticipantEntity])
         case updatedAudioPortSelection(audioPort: AudioPort,bluetoothAudioRouteAvailable: Bool)
         case transitionToShortForm
+        case updateAllowNonHostToAddParticipants(enabled: Bool)
     }
     
     private let router: MeetingFloatingPanelRouting
@@ -53,17 +57,25 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
+    private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
     private var isSpeakerEnabled: Bool {
         didSet {
             containerViewModel?.dispatch(.speakerEnabled(isSpeakerEnabled))
         }
     }
+    
     private var isVideoEnabled: Bool? {
-        return call?.hasLocalVideo
+        call?.hasLocalVideo
     }
+    
     private var isMyselfAModerator: Bool {
-        return chatRoom.ownPrivilege == .moderator
+        chatRoom.ownPrivilege == .moderator
     }
+    
+    private var canInviteParticipants: Bool {
+        (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && !userUseCase.isGuest
+    }
+    
     var invokeCommand: ((Command) -> Void)?
 
     init(router: MeetingFloatingPanelRouting,
@@ -112,10 +124,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             populateParticipants()
             callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
-            invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuest,
-                                       isOneToOneMeeting: chatRoom.chatType == .oneToOne,
-                                       isVideoEnabled: isVideoEnabled ?? false,
-                                       cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
+            configView()
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
             if let call = call, call.hasLocalVideo {
                 checkForVideoPermission {
@@ -135,6 +144,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             }
             addChatRoomParticipantsChangedListener()
             requestPrivilegeChange(forChatId: chatRoom.chatId)
+            requestAllowNonHostToAddParticipantsValueChange(forChatID: chatRoom.chatId)
         case .hangCall(let presenter, let sender):
             manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
@@ -193,6 +203,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .didSwitchToGridView:
             callParticipants.forEach { $0.isSpeakerPinned = false }
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        case .allowNonHostToAddParticipants(let enabled):
+            updateAllowNonHostToAddParticipantsTask?.cancel()
+            updateAllowNonHostToAddParticipantsTask = createAllowNonHostToAddParticipants(enabled: enabled, chatId: chatRoom.chatId)
         }
     }
     
@@ -408,11 +421,53 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             .store(in: &subscriptions)
     }
     
+    private func requestAllowNonHostToAddParticipantsValueChange(forChatID chatId: HandleEntity) {
+        chatRoomUseCase
+            .allowNonHostToAddParticipantsValueChanged(forChatId: chatId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { error in
+                MEGALogDebug("error fetching allow host to add participants with error \(error)")
+            }, receiveValue: { [weak self] handle in
+                guard let self = self,
+                      let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatRoom.chatId) else {
+                    return
+                }
+                
+                self.chatRoom = chatRoom
+                self.configView()
+            })
+            .store(in: &subscriptions)
+    }
+    
     private func participantPrivilegeChanged(forUserHandle handle: HandleEntity) {
         callParticipants.filter( { $0.participantId == handle} ).forEach { participant in
             participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, inChatId: participant.chatId) == .moderator
         }
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+    }
+    
+    private func createAllowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) -> Task<Void, Never> {
+        Task { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                let allowNonHostToAddParticipantsEnabled = try await self.chatRoomUseCase.allowNonHostToAddParticipants(enabled: enabled, chatId: chatId)
+                if let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatRoom.chatId) {
+                    self.chatRoom = chatRoom
+                }
+                try Task.checkCancellation()
+                if allowNonHostToAddParticipantsEnabled != enabled {
+                    await self.updateAllowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsEnabled)
+                }
+            } catch {
+                MEGALogDebug("Error allowing Non Host To Add Participants enabled \(enabled) with \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    private func updateAllowNonHostToAddParticipants(enabled: Bool) {
+        invokeCommand?(.updateAllowNonHostToAddParticipants(enabled: enabled))
     }
 }
 
@@ -443,11 +498,17 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         self.chatRoom = chatRoom
         guard let participant = callParticipants.first else { return }
         participant.isModerator = privilege == .moderator
-        invokeCommand?(.configView(canInviteParticipants: isMyselfAModerator && !userUseCase.isGuest,
+        configView()
+        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+    }
+    
+    func configView() {
+        invokeCommand?(.configView(canInviteParticipants: canInviteParticipants,
                                    isOneToOneMeeting: chatRoom.chatType == .oneToOne,
                                    isVideoEnabled: isVideoEnabled ?? false,
-                                   cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil))
-        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+                                   cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil,
+                                   allowNonHostToAddParticipantsEnabled: chatRoom.isOpenInviteEnabled,
+                                   isMyselfAModerator: isMyselfAModerator))
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {

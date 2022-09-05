@@ -4,7 +4,8 @@ import MEGADomain
 struct ChatRoomRepository: ChatRoomRepositoryProtocol {
     private let sdk: MEGAChatSdk
     private var participantsUpdateListener: ChatRoomUpdateListener?
-    
+    private var allowNonHostToAddParticipantsUpdateListener: ChatRoomUpdateListener?
+
     init(sdk: MEGAChatSdk) {
         self.sdk = sdk
     }
@@ -146,6 +147,39 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         })
     }
     
+    func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            let requestDelegate = ChatRequestListener { (request, error) in
+                guard let error = error, error.type == .MEGAChatErrorTypeOk else {
+                    if let error = error {
+                        if error.type == .MEGAChatErrorTypeNoEnt {
+                            continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.chatRoomDoesNoExists)
+                        } else if error.type == .MEGAChatErrorTypeArgs {
+                            continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.oneToOneChatRoom)
+                        } else if error.type == .MEGAChatErrorTypeAccess {
+                            continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.access)
+                        } else if error.type == .MegaChatErrorTypeExist {
+                            continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.alreadyExists)
+                        } else {
+                            continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.generic)
+                        }
+                    } else {
+                        continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.generic)
+                    }
+                    return
+                }
+                
+                if let enabled = request?.isFlag {
+                    continuation.resume(returning: enabled)
+                } else {
+                    continuation.resume(throwing: AllowNonHostToAddParticipantsErrorEntity.generic)
+                }
+            }
+            
+            sdk.openInvite(enabled, chatId: chatId, delegate: requestDelegate)
+        }
+    }
+    
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
         let participantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .participants)
         self.participantsUpdateListener = participantsUpdateListener
@@ -161,6 +195,15 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         return participantsUpdateListener
             .monitor
             .map(\.userHandle)
+            .eraseToAnyPublisher()
+    }
+    
+    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
+        let allowNonHostToAddParticipantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .openInvite)
+        self.allowNonHostToAddParticipantsUpdateListener = allowNonHostToAddParticipantsUpdateListener
+        return allowNonHostToAddParticipantsUpdateListener
+            .monitor
+            .map(\.isOpenInviteEnabled)
             .eraseToAnyPublisher()
     }
 }
