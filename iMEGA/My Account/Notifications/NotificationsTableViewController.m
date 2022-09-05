@@ -328,41 +328,13 @@
             break;
         }
             
-        case MEGAUserAlertTypeTakedown: {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
-            NSString *nodeType = @"";
-            if (node.type == MEGANodeTypeFile) {
-                nodeType = NSLocalizedString(@"file", nil);
-            } else if (node.type == MEGANodeTypeFolder) {
-                nodeType = NSLocalizedString(@"folder", nil);
-            }
-            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : boldFont }];
-            NSString *text = NSLocalizedString(@"Your publicly shared %1 (%2) has been taken down.", @"The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
-            text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
-            NSRange range = [text rangeOfString:@"%2"];
-            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
-            [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
-            contentLabel.attributedText = attributedText;
+        case MEGAUserAlertTypeTakedown:
+            contentLabel.attributedText = [self contentForTakedownPubliclySharedNodeWithHandle:userAlert.nodeHandle nodeFont:boldFont];
             break;
-        }
-            
-        case MEGAUserAlertTypeTakedownReinstated:{
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
-            NSString *nodeType = @"";
-            if (node.type == MEGANodeTypeFile) {
-                nodeType = NSLocalizedString(@"file", nil);
-            } else if (node.type == MEGANodeTypeFolder) {
-                nodeType = NSLocalizedString(@"folder", nil);
-            }
-            NSAttributedString *nodeName = [NSAttributedString.alloc initWithString:node.name ?: @"" attributes:@{ NSFontAttributeName : boldFont }];
-            NSString *text = NSLocalizedString(@"Your taken down %1 (%2) has been reinstated.", @"The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
-            text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
-            NSRange range = [text rangeOfString:@"%2"];
-            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
-            [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
-            contentLabel.attributedText = attributedText;
+
+        case MEGAUserAlertTypeTakedownReinstated:
+            contentLabel.attributedText = [self contentForTakedownReinstatedNodeWithHandle:userAlert.nodeHandle nodeFont:boldFont];
             break;
-        }
             
         default:
             contentLabel.text = userAlert.title;

@@ -2421,10 +2421,6 @@ public enum Strings {
     public static let yourPROMembershipPlanWillExpireIn1Days = Strings.tr("Localizable", "Your PRO membership plan will expire in %1 days.")
     /// Your Pro membership plan will expire tomorrow.
     public static let yourPROMembershipPlanWillExpireIn1Day = Strings.tr("Localizable", "Your PRO membership plan will expire in 1 day.")
-    /// Your publicly shared %1 (%2) has been taken down.
-    public static let yourPubliclyShared12HasBeenTakenDown = Strings.tr("Localizable", "Your publicly shared %1 (%2) has been taken down.")
-    /// Your taken down %1 (%2) has been reinstated.
-    public static let yourTakenDown12HasBeenReinstated = Strings.tr("Localizable", "Your taken down %1 (%2) has been reinstated.")
     /// Your upload(s) cannot proceed because your account is full
     public static let yourUploadSCannotProceedBecauseYourAccountIsFull = Strings.tr("Localizable", "Your upload(s) cannot proceed because your account is full")
     /// Your old account has been parked successfully. You can now log into your new account.
@@ -4080,6 +4076,30 @@ public enum Strings {
         public static let file = Strings.tr("Localizable", "nameCollision.title.file")
         /// Folder already exists
         public static let folder = Strings.tr("Localizable", "nameCollision.title.folder")
+      }
+    }
+    public enum Notifications {
+      public enum Message {
+        public enum TakenDownPubliclyShared {
+          /// Your publicly shared file (%@) has been taken down.
+          public static func file(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.file", String(describing: p1))
+          }
+          /// Your publicly shared folder (%@) has been taken down.
+          public static func folder(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.folder", String(describing: p1))
+          }
+        }
+        public enum TakenDownReinstated {
+          /// Your taken down file (%@) has been reinstated.
+          public static func file(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "notifications.message.takenDownReinstated.file", String(describing: p1))
+          }
+          /// Your taken down folder (%@) has been reinstated.
+          public static func folder(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "notifications.message.takenDownReinstated.folder", String(describing: p1))
+          }
+        }
       }
     }
     public enum Offline {

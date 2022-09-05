@@ -171,3 +171,4 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "MEGAPhotoBrowserPickerViewController.h"
 #import "CameraUploadsTableViewController.h"
+#import "NotificationsTableViewController.h"
