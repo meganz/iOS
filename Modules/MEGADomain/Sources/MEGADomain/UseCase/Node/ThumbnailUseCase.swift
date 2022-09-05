@@ -47,6 +47,12 @@ public protocol ThumbnailUseCaseProtocol {
     /// - Parameter node: The node entity for which the thumbnail and preview to be loaded
     /// - Returns: A publisher to publish thumbnail and preview URL values
     func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(URL?, URL?), ThumbnailErrorEntity>
+    
+    /// Find cached preview or original in thumbnail repository
+    /// - Parameters:
+    ///   - node: The node to be checked
+    /// - Returns: The path of the cached preview or original in thumbnail repository
+    func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String?
 }
 
 public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCaseProtocol {
@@ -101,5 +107,9 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
                     .prepend(nil)
             )
             .eraseToAnyPublisher()
+    }
+    
+    public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
+        repository.cachedPreviewOrOriginalPath(for: node)
     }
 }

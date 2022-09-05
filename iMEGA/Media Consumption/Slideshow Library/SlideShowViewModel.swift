@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASwiftUI
+import Foundation
 
 enum SlideShowAction: ActionType {
     case startPlaying
@@ -43,13 +44,21 @@ final class SlideShowViewModel: ViewModelType {
         numberOfSlideShowImages = dataProvider.allPhotoEntities.lazy.filter{ mediaUseCase.isImage(for: URL(fileURLWithPath: $0.name)) }.count
         
         Task {
-            await loadFirstSelectedPhotoPreview()
+            await loadSelectedPhotoPreview()
             await loadAllPhotoPreviews()
         }
     }
     
-    private func loadFirstSelectedPhotoPreview() async {
+    private func loadSelectedPhotoPreview() async {
         guard let node = dataProvider.currentPhoto else { return }
+        
+        if let pathForPreviewOrOriginal = thumbnailUseCase.cachedPreviewOrOriginalPath(for: node.toNodeEntity()),
+           let image = UIImage(contentsOfFile: pathForPreviewOrOriginal) {
+            self.photos.append(SlideShowMediaEntity(image: image))
+            invokeCommand?(.initialPhotoLoaded)
+            return
+        }
+        
         guard let photo = try? await thumbnailUseCase.loadThumbnail(for: node.toNodeEntity(), type: .preview) else { return }
         if let image = UIImage(contentsOfFile: photo.path) {
             self.photos.append(SlideShowMediaEntity(image: image))
