@@ -89,7 +89,7 @@ final class PhotoCellViewModel: ObservableObject {
         case .thumbnail:
             guard let image = try? await thumbnailUseCase.loadThumbnailImage(for: photo, type: .thumbnail) else { return }
             await updateThumbail(image)
-        case .preview:
+        case .preview, .original:
             if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .thumbnail) {
                 await updateThumbail(image)
             }

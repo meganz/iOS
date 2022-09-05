@@ -13,4 +13,5 @@ public protocol ThumbnailRepositoryProtocol {
     /// - Returns: The URL of the loaded thumbnail
     /// - Throws: An error of `ThumbnailErrorEntity`
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL
+    func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String?
 }
