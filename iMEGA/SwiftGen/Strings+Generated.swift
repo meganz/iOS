@@ -3818,6 +3818,10 @@ public enum Strings {
           /// All contacts added
           public static let title = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.title")
         }
+        public enum AllowNonHost {
+          /// Allow non-host to add participants
+          public static let message = Strings.tr("Localizable", "meetings.addContacts.allowNonHost.message")
+        }
         public enum ZeroContactsAvailable {
           /// You have no contacts to add to this chat. If you want to add participants, first invite them to your contact list.
           public static let description = Strings.tr("Localizable", "meetings.addContacts.zeroContactsAvailable.description")

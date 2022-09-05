@@ -3078,3 +3078,5 @@
 "notifications.message.takenDownPubliclyShared.file"="Your publicly shared file (%@) has been taken down.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
 "notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder (%@) has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting*/
+"meetings.addContacts.allowNonHost.message"="Allow non-host to add participants";

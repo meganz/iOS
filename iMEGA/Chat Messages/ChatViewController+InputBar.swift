@@ -203,7 +203,8 @@ extension ChatViewController {
     private func createGroupChat(selectedObjects: [Any]?,
                                  groupName: String?,
                                  keyRotationEnabled: Bool,
-                                 getChatLink:Bool) {
+                                 allowNonHostToAddParticipants: Bool,
+                                 getChatLink: Bool) {
         guard let selectedUsers = selectedObjects as? [MEGAUser] else {
             return
         }
@@ -215,10 +216,14 @@ extension ChatViewController {
         selectedUsers.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
         
         if keyRotationEnabled {
-            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(usersArray: selectedUsers,
-                                                                   title: groupName) {
-                                                                    newChatRoom in
-                                                                    self.open(chatRoom: newChatRoom)
+            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(
+                usersArray: selectedUsers,
+                title: groupName,
+                allowNonHostToAddParticipants: allowNonHostToAddParticipants
+            ) { newChatRoom in
+                DispatchQueue.main.async {
+                    self.open(chatRoom: newChatRoom)
+                }
             }
         } else {
             let createChatGroupRequestDelegate = MEGAChatGenericRequestDelegate { request, error in
@@ -240,12 +245,17 @@ extension ChatViewController {
                     
                     MEGASdkManager.sharedMEGAChatSdk().createChatLink(newChatRoom.chatId, delegate: genericRequestDelegate)
                 } else {
-                    self.open(chatRoom: newChatRoom)
+                    DispatchQueue.main.async {
+                        self.open(chatRoom: newChatRoom)
+                    }
                 }
             }
             MEGASdkManager.sharedMEGAChatSdk().createPublicChat(withPeers: peerlist,
-                                                                 title: groupName,
-                                                                 delegate: createChatGroupRequestDelegate)
+                                                                title: groupName,
+                                                                speakRequest: false,
+                                                                waitingRoom: false,
+                                                                openInvite: allowNonHostToAddParticipants,
+                                                                delegate: createChatGroupRequestDelegate)
         }
     }
     

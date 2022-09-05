@@ -11,6 +11,18 @@ extension GroupChatDetailsViewController {
         MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatCallDelegate)
     }
     
+    @objc func addChatRoomDelegate() {
+        MEGASdkManager.sharedMEGAChatSdk().addChatRoomDelegate(chatRoom.chatId, delegate: self)
+    }
+    
+    @objc func removeChatRoomDelegate() {
+        MEGASdkManager.sharedMEGAChatSdk().removeChatRoomDelegate(chatRoom.chatId, delegate: self)
+    }
+    
+    @objc func shouldShowAddParticipants() -> Bool {
+        chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled
+    }
+    
     @objc func showEndCallForAll() {
         let endCallDialog = EndCallDialog(
             type: .endCallForAll,
@@ -94,6 +106,17 @@ extension GroupChatDetailsViewController: MEGAChatCallDelegate {
                                                     .destroyed]
         if statusToReload.contains(call.status) {
             self.reloadData()
+        }
+    }
+}
+
+extension GroupChatDetailsViewController: MEGAChatRoomDelegate {
+    public func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+        if chat.hasChanged(for: .openInvite) {
+            DispatchQueue.main.async {
+                self.chatRoom = chat
+                self.reloadData()
+            }
         }
     }
 }

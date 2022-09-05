@@ -25,7 +25,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
+                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
@@ -53,7 +53,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(canInviteParticipants: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil),
+                .configView(canInviteParticipants: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
@@ -84,7 +84,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .front),
+                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .front, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true),
@@ -117,7 +117,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .back),
+                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .back, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
@@ -145,7 +145,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
+                .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
@@ -173,7 +173,35 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil),
+                .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
+                .reloadParticpantsList(participants: []),
+                .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .microphoneMuted(muted: true)
+             ])
+        XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
+    }
+    
+    func testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting, isOpenInviteEnabled: true)
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
+        let audioSessionUseCase = MockAudioSessionUseCase()
+        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      isSpeakerEnabled: false,
+                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callUseCase: callUseCase,
+                                                      audioSessionUseCase: audioSessionUseCase,
+                                                      devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+        test(viewModel: viewModel,
+             action: .onViewReady,
+             expectedCommands: [
+                .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: true, isMyselfAModerator: false),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
@@ -822,6 +850,124 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 .reloadParticpantsList(participants: [])
              ]
         )
+    }
+    
+    func testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled() {
+        let router = MockMeetingFloatingPanelRouter()
+        router.invitedParticipantHandles = [101]
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            )
+        ])
+        let chatRoomEntity = ChatRoomEntity(chatId: 100, isOpenInviteEnabled: true)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: router,
+            chatRoom: chatRoomEntity,
+            userUseCase: userUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
+        
+        let expectation = expectation(description: "testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled")
+        viewModel.invokeCommand = { command in
+            switch command {
+            case .configView(_ , _, _, _, let allowNonHostToAddParticipantsEnabled, _):
+                XCTAssertTrue(allowNonHostToAddParticipantsEnabled)
+                expectation.fulfill()
+            default:
+                break
+            }
+        }
+        
+        viewModel.dispatch(.onViewReady)
+        chatRoomUseCase.allowNonHostToAddParticipantsValueChangedSubject.send(true)
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled() {
+        let router = MockMeetingFloatingPanelRouter()
+        router.invitedParticipantHandles = [101]
+        let userUseCase = MockUserUseCase(contacts: [
+            UserSDKEntity(
+                email: "user@email.com",
+                handle: 101,
+                base64Handle: nil,
+                change: nil,
+                contact: UserSDKEntity.Contact(
+                    withBecomingContactDate: Date(),
+                    contactVisibility: .visible
+                )
+            )
+        ])
+        let chatRoomEntity = ChatRoomEntity(chatId: 100, isOpenInviteEnabled: false)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: router,
+            chatRoom: chatRoomEntity,
+            userUseCase: userUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
+        
+        let expectation = expectation(description: "testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled")
+        viewModel.invokeCommand = { command in
+            switch command {
+            case .configView(_ , _, _, _, let allowNonHostToAddParticipantsEnabled, _):
+                XCTAssertFalse(allowNonHostToAddParticipantsEnabled)
+                expectation.fulfill()
+            default:
+                break
+            }
+        }
+        
+        viewModel.dispatch(.onViewReady)
+        chatRoomUseCase.allowNonHostToAddParticipantsValueChangedSubject.send(true)
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testAction_updateAllowNonHostToAddParticipants_allowNonHostToAddParticipantsEnabled() {
+        let chatRoomUseCase = MockChatRoomUseCase(allowNonHostToAddParticipantsEnabled: true)
+        let viewModel = MeetingFloatingPanelViewModel(chatRoomUseCase: chatRoomUseCase)
+        
+        let expectation = expectation(description: "testAction_updateAllowNonHostToAddParticipants")
+        viewModel.invokeCommand = { command in
+            switch command {
+            case .updateAllowNonHostToAddParticipants(let enabled):
+                XCTAssertTrue(enabled)
+                expectation.fulfill()
+            default:
+                break
+            }
+        }
+        
+        viewModel.dispatch(.allowNonHostToAddParticipants(enabled: false))
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testAction_updateAllowNonHostToAddParticipants_allowNonHostToAddParticipantsDisabled() {
+        let chatRoomUseCase = MockChatRoomUseCase(allowNonHostToAddParticipantsEnabled: false)
+        let viewModel = MeetingFloatingPanelViewModel(chatRoomUseCase: chatRoomUseCase)
+        
+        let expectation = expectation(description: "testAction_updateAllowNonHostToAddParticipants")
+        viewModel.invokeCommand = { command in
+            switch command {
+            case .updateAllowNonHostToAddParticipants(let enabled):
+                XCTAssertFalse(enabled)
+                expectation.fulfill()
+            default:
+                break
+            }
+        }
+        
+        viewModel.dispatch(.allowNonHostToAddParticipants(enabled: true))
+        waitForExpectations(timeout: 10)
     }
 }
 

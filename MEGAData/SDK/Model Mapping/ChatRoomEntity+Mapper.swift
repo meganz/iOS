@@ -22,6 +22,7 @@ extension ChatRoomEntity {
         self.peers = (0..<chatRoom.peerCount).map { Peer(chatRoom: chatRoom, index: $0) }
         
         self.userHandle = chatRoom.userHandle
+        self.isOpenInviteEnabled = chatRoom.isOpenInviteEnabled
         
         if chatRoom.isMeeting {
             self.chatType = .meeting
