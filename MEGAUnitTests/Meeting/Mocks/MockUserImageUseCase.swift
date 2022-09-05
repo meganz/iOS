@@ -18,10 +18,8 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         completion(result)
     }
     
-    @discardableResult
-    func clearAvatarCache(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) -> Bool {
+    func clearAvatarCache(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) {
         clearAvatarCacheCompletion?(handle)
-        return clearAvatarCache
     }
     
     func downloadAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) async throws -> UIImage {
