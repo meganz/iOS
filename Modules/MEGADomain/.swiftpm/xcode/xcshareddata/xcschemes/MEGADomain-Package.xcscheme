@@ -23,20 +23,6 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MEGADomainTests"
-               BuildableName = "MEGADomainTests"
-               BlueprintName = "MEGADomainTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
             buildForAnalyzing = "YES">
@@ -45,6 +31,20 @@
                BlueprintIdentifier = "MEGADomainMock"
                BuildableName = "MEGADomainMock"
                BlueprintName = "MEGADomainMock"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MEGADomainTests"
+               BuildableName = "MEGADomainTests"
+               BlueprintName = "MEGADomainTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>

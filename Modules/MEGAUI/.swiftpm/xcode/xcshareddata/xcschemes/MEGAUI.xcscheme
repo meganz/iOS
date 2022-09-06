@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MEGADomain"
-               BuildableName = "MEGADomain"
-               BlueprintName = "MEGADomain"
+               BlueprintIdentifier = "MEGAUI"
+               BuildableName = "MEGAUI"
+               BlueprintName = "MEGAUI"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,23 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MEGADomainTests"
-               BuildableName = "MEGADomainTests"
-               BlueprintName = "MEGADomainTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MEGADomainMock"
-               BuildableName = "MEGADomainMock"
-               BlueprintName = "MEGADomainMock"
+               BlueprintIdentifier = "MEGAUITests"
+               BuildableName = "MEGAUITests"
+               BlueprintName = "MEGAUITests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -62,9 +48,9 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MEGADomainTests"
-               BuildableName = "MEGADomainTests"
-               BlueprintName = "MEGADomainTests"
+               BlueprintIdentifier = "MEGAUITests"
+               BuildableName = "MEGAUITests"
+               BlueprintName = "MEGAUITests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -90,9 +76,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "MEGADomain"
-            BuildableName = "MEGADomain"
-            BlueprintName = "MEGADomain"
+            BlueprintIdentifier = "MEGAUI"
+            BuildableName = "MEGAUI"
+            BlueprintName = "MEGAUI"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
