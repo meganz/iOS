@@ -72,17 +72,17 @@ final class PhotoCardViewModelTests: XCTestCase {
         )
         XCTAssertEqual(sut.thumbnailContainer, ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true))
         
-        let expectation = expectation(description: "thumbnailContainer is updated")
+        let exp = expectation(description: "thumbnailContainer is updated")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
                 XCTAssertEqual(container, URLImageContainer(imageURL: remoteURL))
-                expectation.fulfill()
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.loadThumbnail()
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [exp], timeout: 1.0)
         
         XCTAssertNotEqual(sut.thumbnailContainer, ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true))
         XCTAssertEqual(sut.thumbnailContainer, URLImageContainer(imageURL: remoteURL))
