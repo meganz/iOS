@@ -57,6 +57,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
                 await loadThumbnail(for: node)
             } else {
                 isLoading = false
+                thumbnailContainer = placeholderThumbnail
             }
         }
     }
