@@ -232,6 +232,8 @@
             [self removeLoginRequiredView];
             [self loginToMEGA];
         }
+        
+        [self checkPasscode];
     } else {
         [self requireLogin];
     }
