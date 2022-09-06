@@ -67,21 +67,21 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURL: localURL, loadPreviewResult: .success(remoteURL))
         )
         
-        let thumbnailChangeExpectation = XCTestExpectation(description: "thumbnail is changed")
-        thumbnailChangeExpectation.expectedFulfillmentCount = 2
+        let exp = expectation(description: "thumbnail is changed")
+        exp.expectedFulfillmentCount = 2
         var thumbnails = [URLImageContainer(imageURL: localURL), URLImageContainer(imageURL: remoteURL)]
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
                 XCTAssertEqual(container, thumbnails.removeFirst())
-                thumbnailChangeExpectation.fulfill()
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, 1)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [thumbnailChangeExpectation], timeout: 1.0)
+        wait(for: [exp], timeout: 1.0)
         XCTAssertTrue(thumbnails.isEmpty)
     }
     
@@ -102,7 +102,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURL: localURL, loadPreviewResult: .success(remoteURL))
         )
         
-        let thumbnailChangeExpectation = XCTestExpectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { _ in
@@ -113,7 +113,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.out)
         XCTAssertEqual(sut.currentZoomScaleFactor, 5)
         XCTAssertNil(sut.thumbnailLoadingTask)
-        let result = XCTWaiter.wait(for: [thumbnailChangeExpectation], timeout: 1.0)
+        let result = XCTWaiter.wait(for: [exp], timeout: 1.0)
         print("result: \(result)")
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("Thumbnail should not be changed")
@@ -271,5 +271,77 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.libraryViewModel.selection.allSelected = false
         XCTAssertFalse(sut.isSelected)
         XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+    }
+    
+    func testIsFavorite_isNotFavoriteAndReceiveFavoriteUpdate_isFavorite() {
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        XCTAssertFalse(sut.isFavorite)
+        
+        let exp = expectation(description: "isFavourite is updated")
+        sut.$isFavorite
+            .dropFirst()
+            .sink { isFavorite in
+                XCTAssertTrue(isFavorite)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        NotificationCenter.default.post(name: .didPhotoFavouritesChange,
+                                        object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: true)])
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertTrue(sut.isFavorite)
+    }
+    
+    func testIsFavorite_isFavoriteAndReceiveNotFavoriteUpdate_isNotFavorite() {
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0, isFavourite: true),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        XCTAssertTrue(sut.isFavorite)
+        
+        let exp = expectation(description: "isFavourite is updated")
+        sut.$isFavorite
+            .dropFirst()
+            .sink { isFavorite in
+                XCTAssertFalse(isFavorite)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        NotificationCenter.default.post(name: .didPhotoFavouritesChange,
+                                        object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: false)])
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertFalse(sut.isFavorite)
+    }
+    
+    func testIsFavorite_isNotFavoriteAndReceiveNoUpdates_isNotFavorite() {
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        XCTAssertFalse(sut.isFavorite)
+        
+        let exp = expectation(description: "isFavourite is updated")
+        sut.$isFavorite
+            .dropFirst()
+            .sink { isFavorite in
+                XCTFail("isFavourite should not be updated")
+            }
+            .store(in: &subscriptions)
+        
+        NotificationCenter.default.post(name: .didPhotoFavouritesChange,
+                                        object: [NodeEntity(name: "00.jpg", handle: 1, isFavourite: true)])
+        let result = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        XCTAssertFalse(sut.isFavorite)
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("isFavourite should not be updated")
+            return
+        }
     }
 }
