@@ -855,7 +855,13 @@
         NSString *message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self processTransfers];
+            if (self.pendingAssets == self.unsupportedAssets) {
+                [self hideViewWithCompletion:^{
+                    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+                }];
+            } else {
+                [self processTransfers];
+            }
         }]];
         [NSOperationQueue.mainQueue addOperationWithBlock:^{
             [self presentViewController:alertController animated:YES completion:nil];
