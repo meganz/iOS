@@ -10,26 +10,31 @@ import Combine
 final class PhotoCellViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     private var allViewModel: PhotoLibraryAllViewModel!
-
+    
+    private var testNodes: [NodeEntity] {
+        get throws {
+            [
+                NodeEntity(name: "00.jpg", handle: 100, modificationTime: try "2022-09-03T22:01:04Z".date),
+                NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2022-09-01T22:01:04Z".date),
+                NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
+                NodeEntity(name: "a.jpg", handle: 2, modificationTime: try "2022-08-10T22:01:04Z".date),
+                NodeEntity(name: "b.jpg", handle: 3, modificationTime: try "2020-04-18T20:01:04Z".date),
+                NodeEntity(name: "c.mov", handle: 4, modificationTime: try "2020-04-18T12:01:04Z".date),
+                NodeEntity(name: "d.mp4", handle: 5, modificationTime: try "2020-04-18T01:01:04Z".date),
+                NodeEntity(name: "e.mp4", handle: 6, modificationTime: try "2019-10-18T01:01:04Z".date),
+                NodeEntity(name: "f.mp4", handle: 7, modificationTime: try "2018-01-23T01:01:04Z".date),
+                NodeEntity(name: "g.mp4", handle: 8, modificationTime: try "2017-12-31T01:01:04Z".date),
+            ]
+        }
+    }
+    
     override func setUpWithError() throws {
-        let nodes =  [
-            NodeEntity(name: "00.jpg", handle: 100, modificationTime: try "2022-09-03T22:01:04Z".date),
-            NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2022-09-01T22:01:04Z".date),
-            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
-            NodeEntity(name: "a.jpg", handle: 2, modificationTime: try "2022-08-10T22:01:04Z".date),
-            NodeEntity(name: "b.jpg", handle: 3, modificationTime: try "2020-04-18T20:01:04Z".date),
-            NodeEntity(name: "c.mov", handle: 4, modificationTime: try "2020-04-18T12:01:04Z".date),
-            NodeEntity(name: "d.mp4", handle: 5, modificationTime: try "2020-04-18T01:01:04Z".date),
-            NodeEntity(name: "e.mp4", handle: 6, modificationTime: try "2019-10-18T01:01:04Z".date),
-            NodeEntity(name: "f.mp4", handle: 7, modificationTime: try "2018-01-23T01:01:04Z".date),
-            NodeEntity(name: "g.mp4", handle: 8, modificationTime: try "2017-12-31T01:01:04Z".date),
-        ]
-        let library = nodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
+        let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
         allViewModel = PhotoLibraryAllViewModel(libraryViewModel: libraryViewModel)
     }
-
+    
     func testInit_defaultValue() throws {
         let sut = PhotoCellViewModel(photo: NodeEntity(name: "0.jpg", handle: 0),
                                      viewModel: allViewModel,
@@ -47,12 +52,12 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testLoadThumbnail_zoomInAndHasCachedThumbnail_loadLocalThumbnailAndRemotePreview() async throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID())_local", isDirectory: false)
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent("\((UUID()))_remote", isDirectory: false)
+        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
@@ -82,12 +87,12 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testLoadThumbnail_zoomOut_noLoadLocalThumbnailAndRemotePreview() async throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent("\((UUID()))_local", isDirectory: false)
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent("\((UUID()))_remote", isDirectory: false)
+        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
@@ -118,7 +123,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testLoadThumbnail_placeholderAndLoadThumbnail_loadThumbnail() async throws {
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent("\((UUID()))_remote", isDirectory: false)
+        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
@@ -142,7 +147,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testLoadThumbnail_nonPlaceholderAndLoadThumbnail_noLoadThumbnail() async throws {
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent("\((UUID()))_remote", isDirectory: false)
+        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
@@ -164,5 +169,107 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.loadThumbnailIfNeeded()
         await sut.thumbnailLoadingTask?.value
         XCTAssertEqual(sut.thumbnailContainer, ImageContainer(image: Image(systemName: "heart")))
+    }
+    
+    func testIsSelected_notSelectedAndSelect_selected() {
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        
+        XCTAssertFalse(sut.isSelected)
+        XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        sut.isSelected = true
+        XCTAssertTrue(sut.isSelected)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+    }
+    
+    func testIsSelected_selectedAndNonEditingDuringInit_isNotSelected() {
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        allViewModel.libraryViewModel.selection.photos[0] = photo
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        XCTAssertFalse(sut.isSelected)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+    }
+    
+    func testIsSelected_selectedAndIsEditingDuringInit_selected() {
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        allViewModel.libraryViewModel.selection.editMode = .active
+        allViewModel.libraryViewModel.selection.photos[0] = photo
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        XCTAssertTrue(sut.isSelected)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+    }
+    
+    func testIsSelected_selectedAndDeselect_deselected() {
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        allViewModel.libraryViewModel.selection.editMode = .active
+        allViewModel.libraryViewModel.selection.photos[0] = photo
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        XCTAssertTrue(sut.isSelected)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        
+        sut.isSelected = false
+        XCTAssertFalse(sut.isSelected)
+        XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+    }
+    
+    func testIsSelected_noSelectedAndSelectAll_selected() throws {
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        
+        XCTAssertFalse(sut.isSelected)
+        XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        XCTAssertFalse(allViewModel.libraryViewModel.selection.allSelected)
+        
+        allViewModel.libraryViewModel.selection.allSelected = true
+        allViewModel.libraryViewModel.selection.setSelectedPhotos(try testNodes)
+        
+        XCTAssertTrue(sut.isSelected)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+    }
+    
+    func testIsSelected_selectedAndDeselectAll_notSelected() throws {
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        
+        allViewModel.libraryViewModel.selection.editMode = .active
+        allViewModel.libraryViewModel.selection.allSelected = true
+        allViewModel.libraryViewModel.selection.setSelectedPhotos(try testNodes)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.allSelected)
+        
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        
+        allViewModel.libraryViewModel.selection.allSelected = false
+        XCTAssertFalse(sut.isSelected)
+        XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
     }
 }
