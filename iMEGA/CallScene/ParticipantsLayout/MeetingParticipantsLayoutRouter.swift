@@ -30,7 +30,8 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
-            thumbnailRepo: ThumbnailRepository.newRepo
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            fileSystemRepo: FileSystemRepository.newRepo
         )
         let statsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
 

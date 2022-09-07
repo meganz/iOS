@@ -29,7 +29,7 @@
     [super prepareForReuse];
     
     self.delegate = nil;
-    [self.notificationsSwitch setOn:YES];
+    [self.controlSwitch setOn:YES];
     
     self.avatarImageView.image = nil;
     [self updateAppearance];
@@ -157,10 +157,6 @@
         case ContactsStartConversationNewGroupChat:
             self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-            break;
-        case ContactsStartConversationNewChatLink:
-            self.nameLabel.text = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
-            self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
             break;
         case ContactsStartConversationNewMeeting:
             self.nameLabel.text = NSLocalizedString(@"meetings.create.newMeeting", @"Text button for init a Meeting.");

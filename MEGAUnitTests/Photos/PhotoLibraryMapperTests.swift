@@ -5,15 +5,15 @@ import MEGAFoundation
 
 private extension Date {
     var year: Date {
-        get throws { try XCTUnwrap(removeMonth(timeZone: TimeZone(secondsFromGMT: 0))) }
+        get throws { try XCTUnwrap(removeMonth(timeZone: .GMT)) }
     }
     
     var month: Date {
-        get throws { try XCTUnwrap(removeDay(timeZone: TimeZone(secondsFromGMT: 0))) }
+        get throws { try XCTUnwrap(removeDay(timeZone: .GMT)) }
     }
     
     var day: Date {
-        get throws { try XCTUnwrap(removeTimestamp(timeZone: TimeZone(secondsFromGMT: 0))) }
+        get throws { try XCTUnwrap(removeTimestamp(timeZone: .GMT)) }
     }
 }
 
@@ -38,7 +38,7 @@ class PhotoLibraryMapperTests: XCTestCase {
     }
     
     func testMapping_sort_oldest() throws {
-        let photoLibrary = nodes.toPhotoLibrary(withSortType: .oldest, in: TimeZone(secondsFromGMT: 0))
+        let photoLibrary = nodes.toPhotoLibrary(withSortType: .oldest, in: .GMT)
         XCTAssertEqual(Set(photoLibrary.allPhotos), Set(nodes))
         XCTAssertEqual(photoLibrary.photoByYearList.count, 5)
         
@@ -111,7 +111,7 @@ class PhotoLibraryMapperTests: XCTestCase {
     }
     
     func testMapping_sort_newest() throws {
-        let photoLibrary = nodes.toPhotoLibrary(withSortType: .newest, in: TimeZone(secondsFromGMT: 0))
+        let photoLibrary = nodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         XCTAssertEqual(Set(photoLibrary.allPhotos), Set(nodes))
         XCTAssertEqual(photoLibrary.photoByYearList.count, 5)
         

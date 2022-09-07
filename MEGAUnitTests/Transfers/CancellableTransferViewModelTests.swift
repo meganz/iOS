@@ -29,15 +29,6 @@ final class CancellableTransferViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .didTapDismissConfirmCancel, expectedCommands: [])
         XCTAssert(router.dismissConfirmCancel_calledTimes == 1)
     }
-    
-    func testAction_confirmCancelTransfer() {
-        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
-        let router = MockCancellableTransferRouter()
-        let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
-        
-        test(viewModel: viewModel, action: .didTapProceedCancel, expectedCommands: [])
-        XCTAssert(router.transferCancelled_calledTimes == 1)
-    }
 }
 
 final class MockCancellableTransferRouter: CancellableTransferRouting, TransferWidgetRouting {

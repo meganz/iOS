@@ -193,11 +193,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d fichier</string>
+        <string>%d fichier</string>
         <key>many</key>
         <string>%d de fichiers</string>
         <key>other</key>
-        <string>%d fichiers</string>
+        <string>%d fichiers</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -211,11 +211,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d dossier1</string>
+        <string>%d dossier</string>
         <key>many</key>
         <string>%d de dossiers</string>
         <key>other</key>
-        <string>%d dossiers</string>
+        <string>%d dossiers</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -229,11 +229,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d dossier</string>
+        <string>%d dossier</string>
         <key>many</key>
         <string>%d de dossiers</string>
         <key>other</key>
-        <string>%d dossiers</string>
+        <string>%d dossiers</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -247,11 +247,29 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>• %d fichier</string>
+        <string>• %d fichier</string>
         <key>many</key>
         <string>• %d de fichiers</string>
         <key>other</key>
-        <string>• %d fichiers</string>
+        <string>• %d fichiers</string>
+      </dict>
+    </dict>
+    <key>general.format.rubbishBin.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -301,11 +319,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d image</string>
+        <string>%d image</string>
         <key>many</key>
         <string>%d d’images</string>
         <key>other</key>
-        <string>%d images</string>
+        <string>%d images</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
@@ -319,11 +337,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>et %d vidéo</string>
+        <string>et %d vidéo</string>
         <key>many</key>
         <string>et %d de vidéos</string>
         <key>other</key>
-        <string>et %d vidéos</string>
+        <string>et %d vidéos</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -337,11 +355,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] de %d fichier</string>
+        <string>[A] de %d fichier</string>
         <key>many</key>
         <string>[A] de %d de fichiers</string>
         <key>other</key>
-        <string>[A] de %d fichiers</string>
+        <string>[A] de %d fichiers</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -355,11 +373,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d fichier</string>
+        <string>%d fichier</string>
         <key>many</key>
         <string>%d de fichiers</string>
         <key>other</key>
-        <string>%d fichiers</string>
+        <string>%d fichiers</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>

@@ -819,7 +819,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="您即將永久刪除%d個檔案和1個資料夾。您要繼續嗎？（您不能復原該操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="您將永久刪除[A]個檔案和[B]個資料夾。您要繼續嗎？(此操作不可恢復。)";
+"removeFilesFoldersToRubbishBinMessage"="您將永久刪除[A]個檔案和[B]個資料夾。您要繼續嗎？（此操作不可恢復。）";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="已自MEGA移除1個檔案";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -1097,7 +1097,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="省下16%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="購買出錯 %@ (%ld)";
+"wrongPurchase"="購買出錯 %@ （%ld）";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="應用程式內購買功能尚未啟用，請於iOS的設定中啟用此功能";
 /* Error message shown when the selected product doesn't exist */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="您的Pro方案已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="您的Pro方案已於%1天前到期";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="您公開共享的 %1 (%2) 已被移除。";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="您 %1 (%2) 的刪除已復原。";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="語音留言";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2103,9 +2099,9 @@
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="啟用後，您的位置資訊將包含在您的照片中。分享此資訊時請小心。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
-"Send (%d)"="傳送 (%d)";
+"Send (%d)"="傳送 （%d）";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="上傳 (%d)";
+"Upload (%d)"="上傳 （%d）";
 /* Used in Photos app browser album listing screen. */
 "Albums"="相簿";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="檔案";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="掃描";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="沒有聯絡人";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="您沒有聯絡人可以加入此對話了。如果您想加入更多與會者，請先邀請他們成為您的聯絡人。";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="發送邀請";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="您被下架的檔案「%@」已經復原。";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="您被下架的資料夾「%@」已經復原。";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="您公開共享的檔案「%@」已被下架。";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="您公開共享的資料夾「%@」已被下架。";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="允許非主持人新增參與者";

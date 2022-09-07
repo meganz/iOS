@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     private let audioSession: AVAudioSession

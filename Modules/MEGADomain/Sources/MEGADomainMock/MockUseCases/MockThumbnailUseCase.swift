@@ -5,23 +5,29 @@ import MEGADomain
 public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     let hasCachedThumbnail: Bool
     let hasCachedPreview: Bool
+    let hasCachedOriginal: Bool
     let cachedThumbnailURL: URL
     let cachedPreviewURL: URL
+    let cachedOriginalURL: URL
     let loadThumbnailResult: Result<URL, ThumbnailErrorEntity>
     let loadPreviewResult: Result<URL, ThumbnailErrorEntity>
     let loadThumbnailAndPreviewResult: Result<(URL?, URL?), ThumbnailErrorEntity>
     
     public init(hasCachedThumbnail: Bool = false,
                 hasCachedPreview: Bool = false,
+                hasCachedOriginal: Bool = false,
                 cachedThumbnailURL: URL = URL(string: "https://MEGA.NZ")!,
                 cachedPreviewURL: URL = URL(string: "https://MEGA.NZ")!,
+                cachedOriginalURL: URL = URL(string: "https://MEGA.NZ")!,
                 loadThumbnailResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic),
                 loadPreviewResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic),
                 loadThumbnailAndPreviewResult: Result<(URL?, URL?), ThumbnailErrorEntity> = .failure(.generic)) {
         self.hasCachedThumbnail = hasCachedThumbnail
         self.hasCachedPreview = hasCachedPreview
+        self.hasCachedOriginal = hasCachedOriginal
         self.cachedThumbnailURL = cachedThumbnailURL
         self.cachedPreviewURL = cachedPreviewURL
+        self.cachedOriginalURL = cachedOriginalURL
         self.loadThumbnailResult = loadThumbnailResult
         self.loadPreviewResult = loadPreviewResult
         self.loadThumbnailAndPreviewResult = loadThumbnailAndPreviewResult
@@ -33,6 +39,8 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
             return hasCachedThumbnail
         case .preview:
             return hasCachedPreview
+        case .original:
+            return hasCachedOriginal
         }
     }
     
@@ -42,6 +50,8 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
             return cachedThumbnailURL
         case .preview:
             return cachedPreviewURL
+        case .original:
+            return cachedOriginalURL
         }
     }
     
@@ -50,7 +60,7 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
             switch type {
             case .thumbnail:
                 continuation.resume(with: loadThumbnailResult)
-            case .preview:
+            case .preview, .original:
                 continuation.resume(with: loadPreviewResult)
             }
         }
@@ -61,7 +71,7 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
             switch type {
             case .thumbnail:
                 promise(loadThumbnailResult)
-            case .preview:
+            case .preview, .original:
                 promise(loadPreviewResult)
             }
         }
@@ -77,5 +87,9 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         loadThumbnailAndPreviewResult
             .publisher
             .eraseToAnyPublisher()
+    }
+    
+    public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
+        nil
     }
 }

@@ -1198,8 +1198,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (void)pushNotificationSettingsLoaded {
     ContactTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    if (cell.notificationsSwitch != nil) {
-        cell.notificationsSwitch.enabled = YES;
+    if (cell.controlSwitch != nil) {
+        cell.controlSwitch.enabled = YES;
     }
 }
 

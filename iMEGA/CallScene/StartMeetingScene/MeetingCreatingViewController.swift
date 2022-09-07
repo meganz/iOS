@@ -1,5 +1,6 @@
 import UIKit
 import MEGAUIKit
+import MEGADomain
 
 class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     

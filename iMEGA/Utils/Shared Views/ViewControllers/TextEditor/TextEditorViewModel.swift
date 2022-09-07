@@ -185,7 +185,7 @@ final class TextEditorViewModel: ViewModelType {
         let tempUrl = uploadFileUseCase.tempURL(forFilename: fileName)
         do {
             try content.write(toFile: tempUrl.path, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
-            uploadFileUseCase.uploadFile(tempUrl, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, cancelToken: nil, start: nil, update: nil) { result in
+            uploadFileUseCase.uploadFile(tempUrl, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, start: nil, update: nil) { result in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
                 }
@@ -256,7 +256,7 @@ final class TextEditorViewModel: ViewModelType {
     
     private func downloadToTempFolder() {
         guard let nodeHandle = nodeEntity?.handle else { return }
-        downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil, cancelToken: nil) { (transferEntity) in
+        downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil) { (transferEntity) in
             let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
             self.invokeCommand?(.updateProgressView(progress: percentage))
         } completion: { (result) in

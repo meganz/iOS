@@ -155,7 +155,7 @@
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Ошибка. Этот адрес уже используется.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Нужно освободить больше места";
+"nodeTooBig"="Нужно освободить больше места на устройстве";
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA нужно минимум %@. Освободите место, удалив приложения, которые вы больше не используете, или большие видеофайлы в галерее. Вы также можете управлять тем, что MEGA хранит на устройстве.";
 /* Title for the file link view */
@@ -367,7 +367,7 @@
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Установить защиту паролем";
 /* The text of a button. This button will encrypt a link with a password. */
-"encrypt"="Шифровать";
+"encrypt"="Зашифровать";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypted"="Зашифровано";
 /* Title for a button to copy the link to the clipboard */
@@ -821,7 +821,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Файлы ([A]) и папки ([B]) будут необратимо удалены. Продолжить? (Это действие нельзя отменить.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 файл был удален с MEGA";
+"fileRemovedToRubbishBinMessage"="1 файл удалён из MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
 "filesRemovedToRubbishBinMessage"="%d файлов удалено с MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
@@ -883,7 +883,7 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Вы уже запрашивали ссылку подтверждения для этого адреса.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Пожалуйста, зайдите во «входящие» и перейдите по ссылке для подтверждения нового адреса.";
+"emailIsChanging_description"="Пожалуйста, откройте почту и перейдите по ссылке в письме для подтверждения нового адреса.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Пожалуйста, введите пароль, чтобы подтвердить свой адрес электронной почты";
 /* The [X] will be replaced with the e-mail address. */
@@ -955,7 +955,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ на диске за каждого приведённого пользователя. \nНа 365 дней.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Выберите из телефонных контактов или введите несколько адресов электронной почты";
+"Select from phone contacts or enter multiple email addresses"="Выберите из телефонных контактов или введите адреса электронной почты";
 /*  */
 "insertYourFriendsEmails"="Введите адреса электронной почты друзей:";
 /*  */
@@ -1593,7 +1593,7 @@
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Вы можете сохранить его локально и открыть в совместимом приложении.";
 /* Item of a menu to forward a message chat to another chatroom */
-"forward"="Вперёд";
+"forward"="Переслать";
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Сообщения отправлены";
 /* Title of archived chats button */
@@ -1797,7 +1797,7 @@
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Список";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Отображение эскизов";
+"Thumbnail View"="Эскизы";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Вид страницы";
 /* There are no notifications to display. */
@@ -1861,7 +1861,7 @@
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Закрыт доступ к [X] элементам";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="Ваша оплата за %1 план получена.";
+"Your payment for the %1 plan was received."="Ваша оплата плана %1 получена.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Ваша оплата %1 плана не удалась.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="Ваш план Pro истёк 1 день назад";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Ваш план Pro истёк %1 д. назад";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Ваш элемент с общим доступом (%1 (%2)) убран.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="Убранный элемент восстановлен: %1 (%2).";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Голосовое сообщение";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2929,7 +2925,7 @@
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Отображать в основном представлении";
 /* Label indicating storage over quota */
-"transfer.storage.quotaExceeded"="Недостаточно места";
+"transfer.storage.quotaExceeded"="Превышен лимит хранения данных";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Далее";
 /* Meetings: Notification message to be shown when one person joins the call. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="Файлы";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Скан";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="Нет контактов";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="У вас нет контактов для добавления в этот чат. Если хотите добавить участников, сначала пригласите их в свой список контактов.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="Отправить приглашение";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Изъятый файл «%@» восстановлен.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Изъятая папка «%@» восстановлена.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Ваша общедоступный файл «%@» была изъят.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Ваша общедоступная папка «%@» была изъята.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Разрешить не организаторам добавлять участников";

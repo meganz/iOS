@@ -63,11 +63,13 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        guard let node = sdk.node(forHandle: handle) else {
-            return nil
+        if let node = sdk.node(forHandle: handle) {
+            return node.toNodeEntity()
+        } else if let node = sharedFolderSdk.node(forHandle: handle) {
+            return node.toNodeEntity()
         }
         
-        return node.toNodeEntity()
+        return nil
     }
 
     func nameForNode(handle: HandleEntity) -> String? {

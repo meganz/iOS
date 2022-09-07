@@ -857,7 +857,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="La tua Chiave di Recupero sarà usata per resettare la tua password. Per favore, inserisci la tua nuova password.";
 /*  */
-"yourPasswordHasBeenReset"="La tua password è stata reimpostata correttamente. Si prega di accedere al proprio account.";
+"yourPasswordHasBeenReset"="La tua password è stata reimpostata con successo. Si prega di accedere al proprio account.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Invia";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -1375,7 +1375,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Condiviso";
+"Shared successfully"="Condiviso con successo";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Trasferimento fallito:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="Il tuo piano Pro è scaduto 1 giorno fa";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Il tuo piano Pro è scaduto %1 giorni fa";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Il/la tuo/a %1 condiviso/a pubblicamente (%2) è stato/a chiuso/a.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="Il/la tuo/a %1 (%2) chiuso/a è stato/a riattivato/a.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Messaggio vocale";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2929,7 +2925,7 @@
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Mostra nella schermata principale";
 /* Label indicating storage over quota */
-"transfer.storage.quotaExceeded"="Quota superata";
+"transfer.storage.quotaExceeded"="Quota di archiviazione superata";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Avanti";
 /* Meetings: Notification message to be shown when one person joins the call. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="File";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Scansiona";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="Nessun contatto";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="Non hai contatti da poter aggiungere a questa chat. Se vuoi aggiungere partecipanti, prima invitali ad unirsi alla tua Rubrica.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="Spedisci l'invito";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Permetti a chi non è host di aggiungere partecipanti";

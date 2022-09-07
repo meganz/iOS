@@ -9,6 +9,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     private enum Constants {
         static let thumbnailCacheDirectory = "thumbnailsV3"
         static let previewCacheDirectory = "previewsV3"
+        static let originalCacheDirectory = "originalV3"
     }
     
     private let sdk: MEGASdk
@@ -55,11 +56,27 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
             directory = Constants.thumbnailCacheDirectory
         case .preview:
             directory = Constants.previewCacheDirectory
+        case .original:
+            directory = Constants.originalCacheDirectory
         }
         
         let directoryURL = appGroupCacheURL.appendingPathComponent(directory, isDirectory: true)
         try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         return directoryURL.appendingPathComponent(base64Handle)
+    }
+    
+    func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
+        let previewFileURL = cachedThumbnailURL(for: node.base64Handle, type: .preview)
+        if fileExists(at: previewFileURL) {
+            return previewFileURL.path
+        }
+        
+        let originalFileURL = cachedThumbnailURL(for: node.base64Handle, type: .original)
+        if fileExists(at: originalFileURL) {
+            return originalFileURL.path
+        }
+        
+        return nil
     }
 }
 
@@ -77,7 +94,7 @@ extension ThumbnailRepository {
         switch type {
         case .thumbnail:
             downloadThumbnail(for: node, to: url, completion: completion)
-        case .preview:
+        case .preview, .original:
             downloadPreview(for: node, to: url, completion: completion)
         }
     }

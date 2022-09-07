@@ -7,18 +7,20 @@ protocol AlbumContentsUseCaseProtocol {
     func favouriteAlbumNodes() async throws -> [NodeEntity]
 }
 
-final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: FavouriteNodesRepositoryProtocol, V: PhotoLibraryUseCaseProtocol>: AlbumContentsUseCaseProtocol {
+final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: FavouriteNodesRepositoryProtocol, V: PhotoLibraryUseCaseProtocol, W: MediaUseCaseProtocol>: AlbumContentsUseCaseProtocol {
     private var albumContentsRepo: T
     private var favouriteRepo: U
     private var photoUseCase: V
+    private var mediaUseCase: W
     
     let updatePublisher: AnyPublisher<Void, Never>
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    init(albumContentsRepo: T, favouriteRepo: U, photoUseCase: V) {
+    init(albumContentsRepo: T, favouriteRepo: U, photoUseCase: V, mediaUseCase: W) {
         self.albumContentsRepo = albumContentsRepo
         self.favouriteRepo = favouriteRepo
         self.photoUseCase = photoUseCase
+        self.mediaUseCase = mediaUseCase
         
         updatePublisher = AnyPublisher(updateSubject)
         
@@ -44,6 +46,9 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     
     // MARK: Private
     private func isNodeInContainer(_ node: NodeEntity, container: PhotoLibraryContainerEntity) -> Bool {
-        node.isImage || (node.isVideo && node.parentHandle == container.cameraUploadNode?.handle || node.parentHandle == container.mediaUploadNode?.handle)
+        let nameUrl = URL(fileURLWithPath: node.name)
+        let isImage = mediaUseCase.isImage(for: nameUrl)
+        let isVideo = mediaUseCase.isVideo(for: nameUrl)
+        return isImage || (isVideo && node.parentHandle == container.cameraUploadNode?.handle || node.parentHandle == container.mediaUploadNode?.handle)
     }
 }

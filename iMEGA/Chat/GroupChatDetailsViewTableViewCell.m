@@ -22,7 +22,7 @@
 
 - (void)setDefaultState {
     self.delegate = nil;
-    [self.notificationsSwitch setOn:YES];
+    [self.controlSwitch setOn:YES];
     self.leftImageView.hidden = NO;
     self.enableLabel.hidden = YES;
     self.userInteractionEnabled = YES;
@@ -69,8 +69,8 @@
 }
 
 - (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
-    if ([self.delegate respondsToSelector:@selector(notificationSwitchValueChanged:)]) {
-        [self.delegate notificationSwitchValueChanged:sender];
+    if ([self.delegate respondsToSelector:@selector(controlSwitchValueChanged:fromCell:)]) {
+        [self.delegate controlSwitchValueChanged:sender fromCell:self];
     }
 }
 

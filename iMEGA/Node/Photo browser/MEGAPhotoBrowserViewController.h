@@ -41,6 +41,8 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic) MEGAHandle messageId;
 @property (nonatomic) NSArray *messagesIds;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *centerToolbarItem;
+
 @property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 
 @end

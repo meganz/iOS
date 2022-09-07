@@ -3,7 +3,6 @@
 
 typedef NS_ENUM(NSUInteger, ContactsStartConversation) {
     ContactsStartConversationNewGroupChat = 0,
-    ContactsStartConversationNewChatLink,
     ContactsStartConversationNewMeeting,
     ContactsStartConversationJoinMeeting
 };
@@ -21,7 +20,7 @@ typedef NS_ENUM(NSUInteger, ContactsStartConversation) {
 @property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 @property (weak, nonatomic) IBOutlet UILabel *shareLabel;
 
-@property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *controlSwitch;
 
 @property (weak, nonatomic) IBOutlet UIImageView *permissionsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *permissionsLabel;

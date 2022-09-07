@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="Your Pro plan expired 1 day ago";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Your Pro plan expired %1 days ago";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Your publicly shared %1 (%2) has been taken down.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="Your taken down %1 (%2) has been reinstated.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Voice message";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -3070,3 +3066,15 @@
 "meetings.addContacts.zeroContactsAvailable.title"="No contacts";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.description"="You have no contacts to add to this chat. If you want to add participants, first invite them to your contact list.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="Send invitation";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";

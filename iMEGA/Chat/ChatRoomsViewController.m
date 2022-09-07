@@ -939,11 +939,20 @@
         }
     };
     
-    contactsVC.createGroupChat = ^void(NSArray *users, NSString *groupName, BOOL keyRotation, BOOL getChatLink) {
+    contactsVC.createGroupChat = ^void(NSArray *users,
+                                       NSString *groupName,
+                                       BOOL keyRotation,
+                                       BOOL getChatLink,
+                                       BOOL allowNonHostToAddParticipants) {
         if (keyRotation) {
-            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUsersArray:users title:groupName completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-                [self.navigationController pushViewController:chatViewController animated:YES];
+            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUsersArray:users
+                                                                         title:groupName
+                                                 allowNonHostToAddParticipants:allowNonHostToAddParticipants
+                                                                    completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+                    [self.navigationController pushViewController:chatViewController animated:YES];
+                });
             }];
         } else {
             MEGAChatGenericRequestDelegate *createChatGroupRequestDelegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
@@ -960,12 +969,20 @@
                         }];
                         [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatRoom.chatId delegate:delegate];
                     } else {
-                        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-                        [self.navigationController pushViewController:chatViewController animated:YES];
+                        dispatch_async(dispatch_get_main_queue(), ^(void){
+                            ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+                            [self.navigationController pushViewController:chatViewController animated:YES];
+                        });
                     }
                 }
             }];
-            [MEGASdkManager.sharedMEGAChatSdk createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users] title:groupName delegate:createChatGroupRequestDelegate];
+            
+            [MEGASdkManager.sharedMEGAChatSdk createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users]
+                                                                  title:groupName
+                                                           speakRequest:false
+                                                            waitingRoom:false
+                                                              openInvite:allowNonHostToAddParticipants
+                                                               delegate:createChatGroupRequestDelegate];
         }
     };
 }

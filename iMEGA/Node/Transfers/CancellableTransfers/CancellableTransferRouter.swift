@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
     
@@ -45,8 +46,8 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func showTransfersAlert() {
-        guard let presenter = presenter else { return }
-        presenter.present(build(), animated: true)
+        guard let presenter = presenter, let wrapper = wrapper?.cancelAlertController() else { return }
+        presenter.present(wrapper, animated: true)
     }
     
     func transferSuccess(with message: String) {

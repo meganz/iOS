@@ -1,7 +1,7 @@
 import UIKit
 
 protocol SlideShowInteraction {
-    func singleTapOnSlideshow()
+    func pausePlaying()
 }
 
 final class SlideShowViewController: UIViewController, ViewType {
@@ -16,9 +16,20 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private var slideShowTimer = Timer()
     
-    private lazy var backgroundColor: UIColor = {
+    private var backgroundColor: UIColor {
         UIColor.mnz_mainBars(for: traitCollection)
-    }()
+    }
+    
+    private func updatePlayButtonTintColor() {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            btnPlay.tintColor = UIColor.mnz_gray515151()
+        case .dark:
+            btnPlay.tintColor = UIColor.mnz_grayD1D1D1()
+        @unknown default:
+            btnPlay.tintColor = UIColor.mnz_gray515151()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +37,8 @@ final class SlideShowViewController: UIViewController, ViewType {
         statusBarBackground.backgroundColor = backgroundColor
         navigationBar.backgroundColor = backgroundColor
         bottomBarBackground.isHidden = true
-        btnPlay.setBackgroundImage(UIImage(systemName: "play.fill"), for: .normal, style: .plain, barMetrics: .default)
         
+        updatePlayButtonTintColor()
         collectionView.updateLayout()
         
         viewModel?.invokeCommand = { [weak self] command in
@@ -52,6 +63,7 @@ final class SlideShowViewController: UIViewController, ViewType {
             AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
             statusBarBackground.backgroundColor = backgroundColor
             navigationBar.backgroundColor = backgroundColor
+            updatePlayButtonTintColor()
         }
     }
     
@@ -182,7 +194,7 @@ extension SlideShowViewController: UIScrollViewDelegate {
 }
 
 extension SlideShowViewController: SlideShowInteraction {
-    func singleTapOnSlideshow() {
+    func pausePlaying() {
         viewModel?.dispatch(.pausePlaying)
     }
 }

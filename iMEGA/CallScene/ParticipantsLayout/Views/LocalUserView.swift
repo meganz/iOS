@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGADomain
 
 enum Corner {
     case topLeft

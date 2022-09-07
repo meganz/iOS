@@ -561,9 +561,9 @@
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permissões alteradas";
 /* Message shown when a share has been left */
-"shareLeft"="esquerda compartilhada";
+"shareLeft"="Saiu do compartilhamento";
 /* Message shown when some shares have been left */
-"sharesLeft"="ações esquerda";
+"sharesLeft"="Saiu dos compartilhamentos";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Deixar de compartilhar";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -1837,7 +1837,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="Recusou a sua solicitação de contato";
 /* notification text */
-"A user has left the shared folder {0}"="Um usuário deixou a pasta compartilhada {0}";
+"A user has left the shared folder {0}"="Um usuário saiu da pasta compartilhada {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="O acesso às pastas foi removido.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="O seu plano Pro expirou há 1 dia";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="O seu plano Pro expirou há %1 dias";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="O(a) %1 (%2) compartilhado publicamente foi removido(a).";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="A remoção de %1 (%2) foi revogada.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mensagem de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2853,7 +2849,7 @@
 /* File extension: .swf. Commercial names should be stay on English */
 "general.filetype.swf"="Flash Movie";
 /* File extension: .tar. Commercial names should be stay on English */
-"general.filetype.tar"="Arquivar";
+"general.filetype.tar"="Arquivo";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="Arquivos";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Digitalizados";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="Não há contatos";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="Você não tem contatos para adicionar a este chat. Se você quiser adicionar participantes, primeiro envie um convite para inclui-los na sua lista de contatos.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="Enviar convite";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Permitir adicionar participantes a usuários que não forem anfitriões";

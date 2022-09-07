@@ -89,8 +89,14 @@
 @property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationBottomSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *getChatLinkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *keyRotationFooterLabel;
-@property (weak, nonatomic) IBOutlet UIButton *checkboxButton;
 
+@property (weak, nonatomic) IBOutlet UISwitch *allowNonHostToAddParticipantsSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *allowNonHostToAddParticipantsLabel;
+@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsView;
+@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsBottomSeparatorView;
+
+@property (weak, nonatomic) IBOutlet UISwitch *chatLinkSwitch;
 @property (weak, nonatomic) IBOutlet UIView *getChatLinkTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *getChatLinkView;
 @property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
@@ -145,6 +151,8 @@
         self.enterGroupNameTextField.placeholder = NSLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
         self.enterGroupNameTextFieldDelegate = EnterGroupNameTextFieldDelegate.new;
         self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
+        [self.allowNonHostToAddParticipantsSwitch setOn:YES];
+        self.allowNonHostToAddParticipantsLabel.text = NSLocalizedString(@"meetings.addContacts.allowNonHost.message", @"Message to allow non host to add contacts in the group chat and meeting");
     }
     
     [self updateAppearance];
@@ -247,6 +255,9 @@
             
             self.getChatLinkView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
             self.getChatLinkTopSeparatorView.backgroundColor = self.getChatLinkBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+            
+            self.allowNonHostToAddParticipantsView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.allowNonHostToAddParticipantsTopSeparatorView.backgroundColor = self.allowNonHostToAddParticipantsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
             break;
         }
             
@@ -350,15 +361,6 @@
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             [self.tableView setEditing:NO animated:YES];
             [self.enterGroupNameTextField becomeFirstResponder];
-            self.checkboxButton.selected = self.getChatLinkEnabled;
-            
-            if (self.getChatLinkEnabled) {
-                self.optionsStackView.hidden = self.getChatLinkEnabled;
-                self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 60);
-            } else {
-                UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
-                [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
-            }
             
             break;
         }
@@ -730,11 +732,7 @@
             break;
             
         case ContactsModeChatNamingGroup:
-            if (self.getChatLinkEnabled) {
-                self.navigationItem.title = NSLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
-            } else {
-                self.navigationItem.title = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
-            }
+            self.navigationItem.title = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
             break;
         case ContactsModeInviteParticipants:
             self.navigationItem.title = NSLocalizedString(@"meetings.panel.InviteParticipants", @"Menu item to add participants to a chat");
@@ -1024,17 +1022,6 @@
         default:
             break;
     }
-}
-
-- (void)newChatLink {
-    if (self.searchController.isActive) {
-        self.searchController.active = NO;
-    }
-    ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-    contactsVC.contactsMode = ContactsModeChatNamingGroup;
-    contactsVC.createGroupChat = self.createGroupChat;
-    contactsVC.getChatLinkEnabled = YES;
-    [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
 - (void)newMeeting {
@@ -1348,7 +1335,7 @@
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
-        if (!self.isKeyRotationEnabled && self.checkboxButton.selected && self.enterGroupNameTextField.text.mnz_isEmpty) {
+        if (!self.isKeyRotationEnabled && self.chatLinkSwitch.isOn && self.enterGroupNameTextField.text.mnz_isEmpty) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:NSLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self.enterGroupNameTextField becomeFirstResponder];
@@ -1356,7 +1343,7 @@
             [self presentViewController:alertController animated:YES completion:nil];
         } else {
             [self dismissViewControllerAnimated:YES completion:^{
-                self.createGroupChat(self.selectedUsersArray, self.insertedGroupName, self.keyRotationEnabled, self.keyRotationEnabled ? NO : self.checkboxButton.isSelected);
+                self.createGroupChat(self.selectedUsersArray, self.insertedGroupName, self.keyRotationEnabled, self.keyRotationEnabled ? NO : self.chatLinkSwitch.isOn, self.allowNonHostToAddParticipantsSwitch.isOn);
             }];
         }
     }
@@ -1379,18 +1366,25 @@
 - (IBAction)keyRotationSwitchValueChanged:(UISwitch *)sender {
     self.keyRotationEnabled = sender.on;
     self.getChatLinkView.hidden = sender.on;
-    if (sender.on) {
-        self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 266 - self.getChatLinkView.frame.size.height - 23);
-    } else {
-        self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 266);
-    }
     
+    if (sender.on) {
+        self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 356 - self.getChatLinkView.frame.size.height - 23);
+    } else {
+        self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 356);
+    }
+
     [self.tableView reloadData];
 }
 
-- (IBAction)checkboxTouchUpInside:(UIButton *)sender {
-    self.checkboxButton.selected = !self.checkboxButton.selected;
+
+- (IBAction)chatLinkSwitchValueChanged:(UISwitch *)sender {
+    self.chatLinkSwitch.selected = !self.chatLinkSwitch.selected;
 }
+
+- (IBAction)allowNonHostToAddParticipantsSwitchValueChanged:(UISwitch *)sender {
+    self.allowNonHostToAddParticipantsSwitch.selected = !self.allowNonHostToAddParticipantsSwitch.selected;
+}
+
 
 - (IBAction)inviteContactTouchUpInside:(UIButton *)sender {
     [self addContact:sender];
@@ -1645,6 +1639,7 @@
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
         [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+        headerView.marginViewHeightConstraint.constant = 0.0;
         return headerView;
     }
     if (section == 1 && self.contactsMode == ContactsModeChatNamingGroup) {
@@ -1752,9 +1747,6 @@
                 switch (self.startConversationOptions[indexPath.row].intValue) {
                     case ContactsStartConversationNewGroupChat:
                         [self startGroup];
-                        break;
-                    case ContactsStartConversationNewChatLink:
-                        [self newChatLink];
                         break;
                     case ContactsStartConversationNewMeeting:
                         [self newMeeting];

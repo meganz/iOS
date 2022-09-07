@@ -8,21 +8,20 @@ import MEGADomain
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
     private let placeholderThumbnail: ImageContainer
     private let selection: PhotoSelection
-    private var cancellable: AnyCancellable?
-    private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     
-    var duration: String = ""
+    var thumbnailLoadingTask: Task<Void, Never>?
+    var duration: String
     var isVideo: Bool
-    var currentZoomScaleFactor: Int {
+    
+    @Published var currentZoomScaleFactor: Int {
         didSet {
-            objectWillChange.send()
-            
             // 1 -> 3 or 3 -> 1 needs reload
             if currentZoomScaleFactor == 1 || oldValue == 1 {
-                loadingTask = Task {
+                thumbnailLoadingTask = Task {
                     await loadThumbnail()
                 }
             }
@@ -42,13 +41,15 @@ final class PhotoCellViewModel: ObservableObject {
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryAllViewModel,
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: ThumbnailUseCaseProtocol,
+         mediaUseCase: MediaUseCaseProtocol = MediaUseCase()) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase
+        self.mediaUseCase = mediaUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         
-        isVideo = photo.isVideo
+        isVideo = mediaUseCase.isVideo(for: URL(fileURLWithPath: photo.name))
         isFavorite = photo.isFavourite
         duration = NSString.mnz_string(fromTimeInterval: Double(photo.duration))
         
@@ -69,13 +70,13 @@ final class PhotoCellViewModel: ObservableObject {
             return
         }
         
-        loadingTask = Task {
+        thumbnailLoadingTask = Task {
             await loadThumbnail()
         }
     }
     
     func cancelLoading() {
-        loadingTask?.cancel()
+        thumbnailLoadingTask?.cancel()
     }
     
     // MARK: Private
@@ -84,11 +85,11 @@ final class PhotoCellViewModel: ObservableObject {
         
         switch type {
         case .thumbnail:
-            guard let image = try? await thumbnailUseCase.loadThumbnailImage(for: photo, type: .thumbnail) else { return }
-            await updateThumbail(image)
-        case .preview:
-            if let image = thumbnailUseCase.cachedThumbnailImage(for: photo, type: .thumbnail) {
-                await updateThumbail(image)
+            guard let container = try? await thumbnailUseCase.loadThumbnailImageContainer(for: photo, type: .thumbnail) else { return }
+            await updateThumbailContainer(container)
+        case .preview, .original:
+            if let container = thumbnailUseCase.cachedThumbnailImageContainer(for: photo, type: .thumbnail) {
+                await updateThumbailContainer(container)
             }
             
             requestPreview()
@@ -96,8 +97,8 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateThumbail(_ image: Image) {
-        thumbnailContainer = ImageContainer(image: image)
+    private func updateThumbailContainer(_ container: ImageContainer) {
+        thumbnailContainer = container
     }
     
     private func requestPreview() {
@@ -105,8 +106,7 @@ final class PhotoCellViewModel: ObservableObject {
             .requestPreview(for: photo)
             .delay(for: .seconds(0.3), scheduler: DispatchQueue.global(qos: .userInitiated))
             .map {
-                MEGALogDebug("[Photos Debug] preview url comes back \(self.photo.id) and url \($0)")
-                return ImageContainer(image: Image(contentsOfFile: $0.path))
+                URLImageContainer(imageURL: $0)
             }
             .replaceError(with: nil)
             .compactMap { $0 }
@@ -134,7 +134,7 @@ final class PhotoCellViewModel: ObservableObject {
     private func configZoomState(with viewModel: PhotoLibraryAllViewModel) {
         viewModel
             .$zoomState
-            .receive(on: DispatchQueue.main)
+            .dropFirst()
             .sink { [weak self] in
                 self?.currentZoomScaleFactor = $0.scaleFactor
             }
