@@ -24,21 +24,7 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
-typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
-    GroupChatDetailsSectionChatNotifications = 0,
-    GroupChatDetailsSectionRenameGroup,
-    GroupChatDetailsSectionSharedFiles,
-    GroupChatDetailsSectionGetChatLink,
-    GroupChatDetailsSectionManageChatHistory,
-    GroupChatDetailsSectionArchiveChat,
-    GroupChatDetailsSectionLeaveGroup,
-    GroupChatDetailsSectionEndCallForAll,
-    GroupChatDetailsSectionEncryptedKeyRotation,
-    GroupChatDetailsSectionObservers,
-    GroupChatDetailsSectionParticipants,
-};
-
-@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, GroupChatDetailsViewTableViewCellDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
+@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *groupInfoView;
 @property (weak, nonatomic) IBOutlet MegaAvatarView *avatarView;
@@ -46,16 +32,10 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 @property (weak, nonatomic) IBOutlet UIView *groupInfoBottomSeparatorView;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (strong, nonatomic) NSArray<NSNumber *> *groupDetailsSections;
-
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
 @property (nonatomic) NSMutableSet<NSNumber *> *requestedParticipantsMutableSet;
 @property (atomic) NSUInteger pendingCellsToLoadAfterThreshold;
-
-@property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
 @end
 
@@ -121,6 +101,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     NSMutableArray *sections = NSMutableArray.new;
     [sections addObjectsFromArray:@[
         @(GroupChatDetailsSectionChatNotifications),
+        @(GroupChatDetailsSectionAllowNonHostToAddParticipants),
         @(GroupChatDetailsSectionRenameGroup),
         @(GroupChatDetailsSectionSharedFiles),
         @(GroupChatDetailsSectionGetChatLink),
@@ -482,6 +463,9 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             }
             break;
             
+        case GroupChatDetailsSectionAllowNonHostToAddParticipants:
+            numberOfRows = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? 1 : 0;
+
         default:
             break;
     }
@@ -502,10 +486,15 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     
     switch (self.groupDetailsSections[indexPath.section].unsignedIntegerValue) {
         case GroupChatDetailsSectionChatNotifications:
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsNotificationsTypeID" forIndexPath:indexPath];
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsSwitchTypeID" forIndexPath:indexPath];
             [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
                                                      chatId:self.chatRoom.chatId];
             cell.delegate = self;
+            break;
+            
+        case GroupChatDetailsSectionAllowNonHostToAddParticipants:
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsSwitchTypeID" forIndexPath:indexPath];
+            [self configureAllowNonHostToAddParticipantsCell:cell];
             break;
             
         case GroupChatDetailsSectionRenameGroup:
@@ -1076,23 +1065,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     }
 }
 
-
-#pragma mark - ContactTableViewCellDelegate
-
-- (void)notificationSwitchValueChanged:(UISwitch *)sender {
-    if (sender.isOn) {
-        [self.chatNotificationControl turnOffDNDWithChatId:self.chatRoom.chatId];
-    } else {
-        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId sender:sender];
-    }
-}
-
 #pragma mark - ChatNotificationControlProtocol
 
 - (void)pushNotificationSettingsLoaded {
     GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:GroupChatDetailsSectionChatNotifications]];
-    if (cell.notificationsSwitch != nil) {
-        cell.notificationsSwitch.enabled = YES;
+    if (cell.controlSwitch != nil) {
+        cell.controlSwitch.enabled = YES;
     }
 }
 

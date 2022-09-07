@@ -1333,8 +1333,8 @@
                                         <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="avatarImageView" destination="3pF-gE-qDF" id="GGd-B0-dwt"/>
+                                            <outlet property="controlSwitch" destination="pEC-Lu-JVy" id="QeR-9g-DEM"/>
                                             <outlet property="nameLabel" destination="OTu-Wx-Fd8" id="4Ov-GI-Ku1"/>
-                                            <outlet property="notificationsSwitch" destination="pEC-Lu-JVy" id="HFb-dt-rjo"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactDetailsDefaultTypeID" id="SUf-DR-7PK" userLabel="Send Message Table View Cell" customClass="ContactTableViewCell">

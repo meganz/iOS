@@ -29,7 +29,7 @@
     [super prepareForReuse];
     
     self.delegate = nil;
-    [self.notificationsSwitch setOn:YES];
+    [self.controlSwitch setOn:YES];
     
     self.avatarImageView.image = nil;
     [self updateAppearance];

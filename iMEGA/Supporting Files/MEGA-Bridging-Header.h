@@ -84,6 +84,7 @@
 #import "EmptyStateView.h"
 #import "EnablingTwoFactorAuthenticationViewController.h"
 #import "GradientView.h"
+#import "GroupChatDetailsViewTableViewCell.h"
 #import "InitialLaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
