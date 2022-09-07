@@ -2,7 +2,7 @@ import UIKit
 
 @objc protocol ChatNotificationControlCellProtocol {
     weak var nameLabel: UILabel? { get }
-    weak var notificationsSwitch: UISwitch? { get }
+    weak var controlSwitch: UISwitch? { get }
     weak var iconImageView: UIImageView? { get }
 }
 
@@ -13,8 +13,8 @@ import UIKit
         
         cell.nameLabel?.text = Strings.Localizable.chatNotifications
         
-        cell.notificationsSwitch?.isEnabled = isNotificationSettingsLoaded()
-        cell.notificationsSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
+        cell.controlSwitch?.isEnabled = isNotificationSettingsLoaded()
+        cell.controlSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
         cell.iconImageView?.image = Asset.Images.Chat.chatNotifications.image
     }
     
