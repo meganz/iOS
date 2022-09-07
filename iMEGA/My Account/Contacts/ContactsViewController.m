@@ -151,6 +151,8 @@
         self.enterGroupNameTextField.placeholder = NSLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
         self.enterGroupNameTextFieldDelegate = EnterGroupNameTextFieldDelegate.new;
         self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
+        [self.allowNonHostToAddParticipantsSwitch setOn:YES];
+        self.allowNonHostToAddParticipantsLabel.text = NSLocalizedString(@"meetings.addContacts.allowNonHost.message", @"Message to allow non host to add contacts in the group chat and meeting");
     }
     
     [self updateAppearance];
@@ -1333,7 +1335,7 @@
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
-        if (!self.isKeyRotationEnabled && self.chatLinkSwitch.isSelected && self.enterGroupNameTextField.text.mnz_isEmpty) {
+        if (!self.isKeyRotationEnabled && self.chatLinkSwitch.isOn && self.enterGroupNameTextField.text.mnz_isEmpty) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:NSLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self.enterGroupNameTextField becomeFirstResponder];
@@ -1341,7 +1343,7 @@
             [self presentViewController:alertController animated:YES completion:nil];
         } else {
             [self dismissViewControllerAnimated:YES completion:^{
-                self.createGroupChat(self.selectedUsersArray, self.insertedGroupName, self.keyRotationEnabled, self.keyRotationEnabled ? NO : self.chatLinkSwitch.isSelected, self.allowNonHostToAddParticipantsSwitch.isSelected);
+                self.createGroupChat(self.selectedUsersArray, self.insertedGroupName, self.keyRotationEnabled, self.keyRotationEnabled ? NO : self.chatLinkSwitch.isOn, self.allowNonHostToAddParticipantsSwitch.isOn);
             }];
         }
     }
