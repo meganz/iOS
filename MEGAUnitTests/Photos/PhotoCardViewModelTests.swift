@@ -82,7 +82,7 @@ final class PhotoCardViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         sut.loadThumbnail()
-        wait(for: [exp], timeout: 1.0)
+        wait(for: [exp], timeout: 3.0)
         
         XCTAssertNotEqual(sut.thumbnailContainer, ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true))
         XCTAssertEqual(sut.thumbnailContainer, URLImageContainer(imageURL: remoteURL))

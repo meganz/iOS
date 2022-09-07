@@ -81,7 +81,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, 1)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 1.0)
+        wait(for: [exp], timeout: 3.0)
         XCTAssertTrue(thumbnails.isEmpty)
     }
     
@@ -113,7 +113,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.out)
         XCTAssertEqual(sut.currentZoomScaleFactor, 5)
         XCTAssertNil(sut.thumbnailLoadingTask)
-        let result = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        let result = XCTWaiter.wait(for: [exp], timeout: 3.0)
         print("result: \(result)")
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("Thumbnail should not be changed")
@@ -292,7 +292,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: true)])
-        wait(for: [exp], timeout: 1.0)
+        wait(for: [exp], timeout: 3.0)
         XCTAssertTrue(sut.isFavorite)
     }
     
@@ -315,7 +315,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: false)])
-        wait(for: [exp], timeout: 1.0)
+        wait(for: [exp], timeout: 3.0)
         XCTAssertFalse(sut.isFavorite)
     }
     
@@ -337,7 +337,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "00.jpg", handle: 1, isFavourite: true)])
-        let result = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        let result = XCTWaiter.wait(for: [exp], timeout: 3.0)
         XCTAssertFalse(sut.isFavorite)
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("isFavourite should not be updated")
