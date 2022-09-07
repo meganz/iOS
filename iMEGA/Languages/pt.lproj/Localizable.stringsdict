@@ -254,6 +254,24 @@
         <string>• %d arquivos</string>
       </dict>
     </dict>
+    <key>general.format.rubbishBin.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
     <key>recents.section.thumbnail.count.image</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
