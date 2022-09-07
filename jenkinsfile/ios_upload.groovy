@@ -87,6 +87,15 @@ pipeline {
         }
     }
     stages {
+        stage('Bundle install') {
+            steps {
+                gitlabCommitStatus(name: 'Bundle install') {
+                    injectEnvironments({
+                        sh "bundle install"
+                    })
+                }
+            }
+        }
         stage('Prepare') {
             parallel {
                 stage('Set build number and fetch version') {
