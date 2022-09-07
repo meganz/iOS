@@ -11,8 +11,10 @@ protocol ChatRoomUseCaseProtocol {
     func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String]
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
+    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
 }
 
 struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -96,11 +98,19 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         chatRoomRepo.renameChatRoom(chatId: chatId, title: title, completion: completion)
     }
     
+    func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {
+        try await chatRoomRepo.allowNonHostToAddParticipants(enabled: enabled, chatId: chatId)
+    }
+    
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
         chatRoomRepo.participantsUpdated(forChatId: chatId)
     }
     
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
         chatRoomRepo.userPrivilegeChanged(forChatId: chatId)
+    }
+    
+    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
+        chatRoomRepo.allowNonHostToAddParticipantsValueChanged(forChatId: chatId)
     }
 }

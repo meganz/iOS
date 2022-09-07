@@ -30,18 +30,17 @@ final class DownloadLinkRouter: DownloadLinkRouterProtocol {
     
     func start() {
         let authUseCase = AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()), credentialRepo: CredentialRepository.newRepo)
-        let networkMonitorUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository())
         let viewModel: DownloadLinkViewModel
         if isFolderLink {
             guard let nodes = nodes else {
                 return
             }
-            viewModel = DownloadLinkViewModel(router: self, authUseCase: authUseCase, networkMonitorUseCase: networkMonitorUseCase, nodes: nodes, isFolderLink: isFolderLink)
+            viewModel = DownloadLinkViewModel(router: self, authUseCase: authUseCase, nodes: nodes, isFolderLink: isFolderLink)
         } else {
             guard let link = link else {
                 return
             }
-            viewModel = DownloadLinkViewModel(router: self, authUseCase: authUseCase, networkMonitorUseCase: networkMonitorUseCase, link: link, isFolderLink: isFolderLink)
+            viewModel = DownloadLinkViewModel(router: self, authUseCase: authUseCase, link: link, isFolderLink: isFolderLink)
         }
         viewModel.checkIfLinkCanBeDownloaded()
     }

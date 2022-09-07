@@ -1363,9 +1363,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nouveaux messages";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu MESSAGE NON LU";
+"unreadMessage"="%lu message non lu";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu MESSAGES NON LUS";
+"unreadMessages"="%lu messages non lus";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, touchez simplement l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et touchez Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="Votre abonnement Pro a expiré il y a un jour";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Votre abonnement Pro a expiré il y a %1 jours";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Votre %1 (%2) partagé publiquement a été retiré.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Message vocal";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="Fichiers";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Numérisation";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="Vous n’avez aucun contact";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="Vous n’avez aucun contact à ajouter à cette conversation. Si vous voulez ajouter des participants, invitez-les d’abord dans votre liste de contacts.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="Send invitation";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Permettre aux non-hôtes d’ajouter des participants";

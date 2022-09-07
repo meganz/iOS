@@ -82,7 +82,20 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func isSlideShowEnabled() -> Bool {
         FeatureFlagProvider(useCase: FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)).isFeatureFlagEnabled(for: .slideShow) &&
+        displayMode == .cloudDrive &&
         dataProvider.currentPhoto?.name?.mnz_isImagePathExtension == true
+    }
+    
+    @objc func activateSlideShowButton() {
+        if isSlideShowEnabled() {
+            centerToolbarItem?.image = UIImage(systemName: "play.rectangle")
+        } else {
+            centerToolbarItem?.image = nil
+        }
+    }
+    
+    @objc func hideSlideShowButton() {
+        centerToolbarItem?.image = nil
     }
 }
 

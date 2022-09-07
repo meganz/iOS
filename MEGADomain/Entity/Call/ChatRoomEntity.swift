@@ -21,6 +21,9 @@ struct ChatRoomEntity {
         case chatMode         = 0x400
         case previewers       = 0x800
         case retentionTime    = 0x1000
+        case openInvite       = 0x2000
+        case speakRequest     = 0x4000
+        case waitingRoom      = 0x8000
     }
     
     enum Privilege: Int {
@@ -56,4 +59,5 @@ struct ChatRoomEntity {
     let chatType: ChatType
     let peers: [Peer]
     let userHandle: HandleEntity
+    let isOpenInviteEnabled: Bool
 }

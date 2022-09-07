@@ -10,17 +10,19 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
     var clearAvatarCache = false
     var avatarChangePublisher = PassthroughSubject<[HandleEntity], Never>()
     
-    func fetchUserAvatar(withUserHandle handle: UInt64, name: String, completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
+    func fetchUserAvatar(withUserHandle handle: HandleEntity,
+                         base64Handle: Base64HandleEntity,
+                         avatarBackgroundHexColor: String,
+                         name: String,
+                         completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
         completion(result)
     }
     
-    @discardableResult
-    func clearAvatarCache(forUserHandle handle: HandleEntity) -> Bool {
+    func clearAvatarCache(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) {
         clearAvatarCacheCompletion?(handle)
-        return clearAvatarCache
     }
     
-    func downloadAvatar(forUserHandle handle: HandleEntity) async throws -> UIImage {
+    func downloadAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) async throws -> UIImage {
         downloadAvatarCompletion?(handle)
         switch result {
         case .success(let image):
@@ -30,7 +32,10 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         }
     }
     
-    func createAvatar(usingUserHandle handle: HandleEntity, name: String) async throws -> UIImage {
+    func createAvatar(withUserHandle handle: HandleEntity,
+                      base64Handle: Base64HandleEntity,
+                      avatarBackgroundHexColor: String,
+                      name: String) async throws -> UIImage {
         createAvatarCompletion?(handle)
         switch result {
         case .success(let image):

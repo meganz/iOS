@@ -26,10 +26,12 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         )
         
         let thumbnailUsecase = ThumbnailUseCase(repository: thumbnailRepo)
+        let mediaUseCase = MediaUseCase()
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             favouriteRepo: favouriteRepo,
-            photoUseCase: photoUseCase
+            photoUseCase: photoUseCase,
+            mediaUseCase: mediaUseCase
         )
         
         let vm = AlbumCellViewModel(

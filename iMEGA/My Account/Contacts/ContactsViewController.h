@@ -31,7 +31,6 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (nonatomic) ChatOptionType chatOptionType;
 
 @property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
-@property (nonatomic) BOOL getChatLinkEnabled;
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
@@ -40,7 +39,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 
 @property (nonatomic, copy) void(^userSelected)(NSArray<MEGAUser *> *);
 @property (nonatomic, copy) void(^chatSelected)(uint64_t);
-@property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL);
+@property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL, BOOL);
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 @property (nonatomic, weak) id<ContatctsViewControllerDelegate> contatctsViewControllerDelegate;

@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="당신의 Pro 요금제가 1일 전에 만료되었습니다";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="당신의 Pro 요금제가 %1일 전에 만료되었습니다";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="공개적으로 공유된 %1 (%2)가 게시중단되었습니다.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="게시중단된 %1 (%2)가 재게시되었습니다.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="음성 메시지";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="파일";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="스캔";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="연락처 없음";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="이 대화에 추가된 연락처가 없습니다. 만약 참여자를 추가하고 싶다면, 먼저 당신의 연락처 목록에 초대하세요.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="초대 발송";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="주최자가 아닌 사람이 참여자를 추가하는 것을 허용";

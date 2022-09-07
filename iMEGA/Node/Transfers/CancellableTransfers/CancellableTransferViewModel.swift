@@ -16,7 +16,7 @@ final class CancellableTransferViewModel: ViewModelType {
     private let folderTransfers: [CancellableTransfer]
     private let transferType: CancellableTransferType
     
-    private let cancelToken = MEGACancelToken()
+    private var transfersCancelled: Bool = false
     private var processingComplete: Bool = false
     private var isAlertBlocked: Bool = false
 
@@ -76,8 +76,12 @@ final class CancellableTransferViewModel: ViewModelType {
         case .didTapDismissConfirmCancel:
             router.dismissConfirmCancel()
         case .didTapProceedCancel:
-            cancelToken.cancel()
-            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+            transfersCancelled = true
+            if transferType == .upload {
+                uploadFileUseCase.cancelUploadTransfers()
+            } else {
+                downloadNodeUseCase.cancelDownloadTransfers()
+            }
         }
     }
     
@@ -87,7 +91,7 @@ final class CancellableTransferViewModel: ViewModelType {
             .delay(for: .seconds(0.8), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                guard !self.cancelToken.isCancelled, !self.processingComplete else {
+                guard !self.transfersCancelled, !self.processingComplete else {
                     self.alertSubscription?.cancel()
                     return
                 }
@@ -103,7 +107,7 @@ final class CancellableTransferViewModel: ViewModelType {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.isAlertBlocked = false
-                if (self.fileTransfersStarted() && self.folderTransfers.isEmpty || self.folderTransfersStartedTransferring()) && !self.cancelToken.isCancelled {
+                if (self.fileTransfersStarted() && self.folderTransfers.isEmpty || self.folderTransfersStartedTransferring()) && !self.transfersCancelled {
                     self.manageTransfersCompletion()
                 }
             }
@@ -122,7 +126,7 @@ final class CancellableTransferViewModel: ViewModelType {
             return
         }
         
-        if cancelToken.isCancelled {
+        if transfersCancelled {
             router.transferCancelled(with: Strings.Localizable.transferCancelled)
         } else {
             if folderTransfers.isEmpty {
@@ -144,7 +148,7 @@ final class CancellableTransferViewModel: ViewModelType {
         guard folderTransfersStartedTransferring() else {
             return
         }
-        if cancelToken.isCancelled {
+        if transfersCancelled {
             router.transferCancelled(with: Strings.Localizable.transferCancelled)
         } else {
             manageTransfersCompletion()
@@ -183,8 +187,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: true,
-                                         startFirst: transferViewEntity.priority,
-                                         cancelToken: cancelToken)
+                                         startFirst: transferViewEntity.priority)
             { transferEntity in
                 transferViewEntity.state = transferEntity.state
                 self.continueFolderTransfersIfNeeded()
@@ -212,7 +215,6 @@ final class CancellableTransferViewModel: ViewModelType {
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: true,
                                          startFirst: transferViewEntity.priority,
-                                         cancelToken: cancelToken,
                                          start: nil)
             { transferEntity in
                 transferViewEntity.stage = transferEntity.stage
@@ -244,8 +246,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                                           chatId: transferViewEntity.chatId,
                                                           filename: transferViewEntity.name,
                                                           appdata: transferViewEntity.appData,
-                                                          startFirst: transferViewEntity.priority,
-                                                          cancelToken: cancelToken)
+                                                          startFirst: transferViewEntity.priority)
             { transferEntity in
                 transferViewEntity.state = transferEntity.state
                 self.continueFolderTransfersIfNeeded()
@@ -269,8 +270,7 @@ final class CancellableTransferViewModel: ViewModelType {
             downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
-                                                      startFirst: transferViewEntity.priority,
-                                                      cancelToken: cancelToken)
+                                                      startFirst: transferViewEntity.priority)
             { transferEntity in
                 transferViewEntity.state = transferEntity.state
                 self.continueFolderTransfersIfNeeded()
@@ -298,8 +298,7 @@ final class CancellableTransferViewModel: ViewModelType {
         downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
                                                       filename: transferViewEntity.name,
                                                       transferMetaData: nil,
-                                                      startFirst: transferViewEntity.priority,
-                                                      cancelToken: cancelToken)
+                                                      startFirst: transferViewEntity.priority)
         { transferEntity in
             transferViewEntity.state = transferEntity.state
             self.manageTransfersCompletion()
@@ -323,7 +322,6 @@ final class CancellableTransferViewModel: ViewModelType {
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
                                                       startFirst: transferViewEntity.priority,
-                                                      cancelToken: cancelToken,
                                                       start: nil)
             { transferEntity in
                 switch transferEntity.stage {

@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 enum MeetingCreatingViewAction: ActionType {
     case onViewReady
@@ -191,11 +192,15 @@ final class MeetingCreatingViewModel: ViewModelType {
         case .updateLastName(let name):
             lastName = name
         case .loadAvatarImage:
-            guard let myHandle = userUseCase.myHandle else {
+            guard let myHandle = userUseCase.myHandle,
+                  let base64Handle = MEGASdk.base64Handle(forUserHandle: myHandle),
+                  let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
                 return
             }
-            
+
             userImageUseCase.fetchUserAvatar(withUserHandle: myHandle,
+                                             base64Handle: base64Handle,
+                                             avatarBackgroundHexColor: avatarBackgroundHexColor,
                                              name: meetingUseCase.getUsername()) { [weak self] result in
                 guard let self = self else { return }
                 switch result {

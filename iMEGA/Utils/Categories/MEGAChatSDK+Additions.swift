@@ -26,13 +26,25 @@ extension MEGAChatSdk {
         createChatGroup(false, peers: peerList, delegate: delegate)
     }
     
-    @objc func mnz_createChatRoom(usersArray: Array<MEGAUser>, title: String?, completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) {
+    @objc func mnz_createChatRoom(
+        usersArray: Array<MEGAUser>,
+        title: String?,
+        allowNonHostToAddParticipants: Bool,
+        completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void
+    ) {
         let peerList = MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: usersArray)
         let delegate = createChatDelegate { (chatRoom) in
             completion(chatRoom)
         }
         
-        createChatGroup(true, peers: peerList, title:title, delegate: delegate)
+        createChatGroup(
+            withPeers: peerList,
+            title: title,
+            speakRequest: false,
+            waitingRoom: false,
+            openInvite: allowNonHostToAddParticipants,
+            delegate: delegate
+        )
     }
     
     @objc func recentChats(max: Int) -> [MEGAChatListItem] {

@@ -11,6 +11,18 @@ extension GroupChatDetailsViewController {
         MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatCallDelegate)
     }
     
+    @objc func addChatRoomDelegate() {
+        MEGASdkManager.sharedMEGAChatSdk().addChatRoomDelegate(chatRoom.chatId, delegate: self)
+    }
+    
+    @objc func removeChatRoomDelegate() {
+        MEGASdkManager.sharedMEGAChatSdk().removeChatRoomDelegate(chatRoom.chatId, delegate: self)
+    }
+    
+    @objc func shouldShowAddParticipants() -> Bool {
+        chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled
+    }
+    
     @objc func showEndCallForAll() {
         let endCallDialog = EndCallDialog(
             type: .endCallForAll,
@@ -51,6 +63,14 @@ extension GroupChatDetailsViewController {
         navigationController?.pushViewController(inviteController, animated: true)
     }
     
+    private func changeChatNotificationStatus(sender: UISwitch) {
+        if sender.isOn {
+            chatNotificationControl.turnOffDND(chatId: Int64(chatRoom.chatId))
+        } else {
+            chatNotificationControl.turnOnDND(chatId: Int64(chatRoom.chatId), sender: sender)
+        }
+    }
+    
     @objc func addParticipant() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         
@@ -83,6 +103,13 @@ extension GroupChatDetailsViewController {
         guard let contactsNavigationController = contactsNavigationController else { return }
         present(contactsNavigationController, animated: true)
     }
+    
+    @objc func configureAllowNonHostToAddParticipantsCell(_ cell: GroupChatDetailsViewTableViewCell) {
+        cell.nameLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
+        cell.leftImageView.image = Asset.Images.Contacts.addContact.image
+        cell.controlSwitch.isOn = chatRoom.isOpenInviteEnabled
+        cell.delegate = self
+    }
 }
 
 extension GroupChatDetailsViewController: MEGAChatCallDelegate {
@@ -94,6 +121,31 @@ extension GroupChatDetailsViewController: MEGAChatCallDelegate {
                                                     .destroyed]
         if statusToReload.contains(call.status) {
             self.reloadData()
+        }
+    }
+}
+
+extension GroupChatDetailsViewController: MEGAChatRoomDelegate {
+    public func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+        if chat.hasChanged(for: .openInvite) {
+            DispatchQueue.main.async {
+                self.chatRoom = chat
+                self.reloadData()
+            }
+        }
+    }
+}
+ 
+extension GroupChatDetailsViewController: GroupChatDetailsViewTableViewCellDelegate {
+    public func controlSwitchValueChanged(_ sender: UISwitch, from cell: GroupChatDetailsViewTableViewCell) {
+        guard let section = tableView.indexPath(for: cell)?.section else { return }
+        switch UInt(section) {
+        case GroupChatDetailsSection.chatNotifications.rawValue:
+            changeChatNotificationStatus(sender: sender)
+        case GroupChatDetailsSection.allowNonHostToAddParticipants.rawValue:
+            MEGASdkManager.sharedMEGAChatSdk().openInvite(sender.isOn, chatId: chatRoom.chatId)
+        default:
+            break
         }
     }
 }

@@ -52,6 +52,11 @@
           "name" : "MEGADomain"
         },
         {
+          "containerPath" : "container:Modules\/MEGAData",
+          "identifier" : "MEGAData",
+          "name" : "MEGAData"
+        },
+        {
           "containerPath" : "container:Modules\/MEGAFoundation",
           "identifier" : "MEGAFoundation",
           "name" : "MEGAFoundation"
@@ -60,6 +65,21 @@
           "containerPath" : "container:Modules\/MEGASwift",
           "identifier" : "MEGASwift",
           "name" : "MEGASwift"
+        },
+        {
+          "containerPath" : "container:Modules\/MEGASwiftUI",
+          "identifier" : "MEGASwiftUI",
+          "name" : "MEGASwiftUI"
+        },
+        {
+          "containerPath" : "container:Modules\/MEGAUI",
+          "identifier" : "MEGAUI",
+          "name" : "MEGAUI"
+        },
+        {
+          "containerPath" : "container:Modules\/MEGAUIKit",
+          "identifier" : "MEGAUIKit",
+          "name" : "MEGAUIKit"
         }
       ]
     },
