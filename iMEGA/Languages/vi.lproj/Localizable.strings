@@ -143,7 +143,7 @@
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bạn cần phải đồng ý rằng là đã hiểu được rủi ro sẽ xáy ra khi mất mật khẩu";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Địa chỉ email này đã đăng ký từ trước với MEGA.";
+"emailAlreadyRegistered"="Địa chỉ email này đã đăng ký từ trước với MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Đang chờ việc xác nhận email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -557,7 +557,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Mục Gửi Đi";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Được chia sẻ cho %d  người";
+"sharedWithXContacts"="Được chia sẻ cho %d người";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Đã thay đổi quyền hạn";
 /* Message shown when a share has been left */
@@ -701,7 +701,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Khi được bật, videos sẽ được cho phép tải lên.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Có các tùy chọn MỚI cho Đăng Tải Camêra!";
+"New Camera Upload!"="Có các tùy chọn mới cho Đăng tải camêra";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Chọn lựa giữa việc chuyển định dạng số phim ảnh HEIC/HEVC sang các định dạng số tương tích với JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -725,7 +725,7 @@
 /* Footer description when upload videos for Live Photos is enabled */
 "The video and the photo in each Live Photo will be uploaded."="Các phiên bản của từng ảnh và video trong mục Live Photos sẽ được phép tải lên.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Chỉ cho phép các phiên bản ảnh trong mục Live Photos  mới được tải lên.";
+"Only the photo in each Live Photo will be uploaded."="Chỉ cho phép các phiên bản bằng hình trong Live Photos mới được tải lên.";
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Tất cả các ảnh trong mục Chụp Liên Tục sẽ được phép tải lên.";
 /* Footer description when upload all burst photos is disabled */
@@ -781,7 +781,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Không dùng HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Chỉ nên bật tính năng này khi các phiên truyền tải lên/xuống không hoạt động. Trong các trường hợp bình thường, giao thức HTTP rất thích hợp để truyền tải các nội dung mã hóa.";
+"transfersSectionFooter"="Chỉ bật tính năng này khi các phiên truyền tải không lưu thông. Trong các trường hợp bình thường, HTTP là đủ thích hợp vì các phiên truyền tải đã được mã hóa.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Tuỳ chọn tải xuống";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -791,7 +791,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Bạn sẽ mất tất cả dữ liệu liên quan đến tới tài khoản này. Bạn có chắc muốn tiếp tục không?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Nếu quý khách không truy cập được email của mình, xin liên hệ support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Nếu bạn không truy cập được email của mình, xin liên hệ support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -961,7 +961,7 @@
 /*  */
 "howItWorks"="Cách hoạt động";
 /*  */
-"howItWorksMain"="Bạn của bạn cần phải đăng ký một tài khoản MEGA miễn phí và  [S]cài đặt một trong những ứng dụng của MEGA[/S] (App MEGA cho Máy Tính hoặc App MEGA cho Di Động)";
+"howItWorksMain"="Bạn của bạn cần phải đăng ký một tài khoản miễn phí trên MEGA và [S]cài đặt một trong những ứng dụng máy khách của MEGA[/S] (App MEGA cho Máy Tính hoặc App MEGA cho Di Động)";
 /*  */
 "howItWorksSecondary"="Bạn có thể nhắc nhở bạn bè bằng nhiều các. Bạn sẽ nhận được băng thông nếu bạn điền địa chỉ email của bạn mình vào đây trước khi họ tạo tài khoản với địa chỉ email đó.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -971,9 +971,9 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Hạn Mức Lưu Trữ";
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
-"account.storageQuota"="%@  Lưu Trữ";
+"account.storageQuota"="%@ Lưu trữ";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Lưu Trữ";
+"account.storage.freePlan"="[B]20 GB+[/B] Lưu Trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Lượng Băng Thông";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -997,7 +997,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho di động.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt ứng dụng MEGA trên điện thoại, bạn sẽ nhận được thêm %@ vào không gian lưu trữ, hạn sử dụng là 365 ngày. MEGA còn có ứng dụng di động dành cho iOS và Android..";
+"account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt ứng dụng MEGA cho Di Động, bạn sẽ nhận được thêm %@ vào không gian lưu trữ, hạn sử dụng là 365 ngày. App MEGA cho Di Động còn có cho iOS và Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ vào không gian lưu trữ. Hạn dùng là 365 ngày.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -1045,7 +1045,7 @@
 /* Hint text for the last name (Placeholder) */
 "lastName"="Họ";
 /* Title for "Local" used space. */
-"localLabel"="Trong Đ.thoại";
+"localLabel"="Nội Bộ";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Không Gian Trống";
 /* title of the My Account screen */
@@ -1099,7 +1099,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="GIAO DỊCH SAI %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Mua in-app bị tắt, xin bật lại trong phần Cài đặt của iOS.";
+"appPurchaseDisabled"="Mua in-app bị tắt, xin bật lại trong phần Cài đặt của iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Không tìm thấy mặt hàng %@, xin liên lạc với ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -1201,9 +1201,9 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Tự động vắng mặt";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau [X] phút không hoạt động";
+"showMeAwayAfterXMinutesOfInactivity"="Tự chuyển trạng thái thành “Vắng mặt” sau [X] phút không hoạt động";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau 1 phút không hoạt động";
+"showMeAwayAfter1MinuteOfInactivity"="Tự chuyển trạng thái thành “Vắng mặt” sau 1 phút không hoạt động";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bảo Toàn Trạng Thái";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1287,7 +1287,7 @@
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện nghiêm ngặt với công nghệ bảo mật đầu-cuối (người dùng kiểm soát) cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Đảo Bảo An Ninh.[/S] Chỉ có tác giả hay người sở hữu và người được giao quyền sử dụng mới có thể giải mã và đọc nội dung.";
+"confidentialityExplanation"="[S]Đảo bảo an ninh.[/S] Chỉ có tác giả hay người sở hữu và người được giao quyền sử dụng mới có thể giải mã và đọc nội dung.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Bảo Vệ Xác Thực.[/S] Hệ thống đảm bảo rằng các dữ liệu nhận được từ người gửi sẽ hiển thị rõ ràng, và nội dung giữ nguyên vẹn và không bị chế tác trong quá trình truyền tải.";
 /* Alert message shown when a chat does not exist */
@@ -1391,7 +1391,7 @@
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="Thất bại hoàn toàn";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
-"Too many concurrent connections or transfers"="Quá nhiều kết nối/truyền tải cùng lúc";
+"Too many concurrent connections or transfers"="Quá nhiều kết nối hoặc truyền tải cùng lúc";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
 "Out of range"="Quá kích thước";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
@@ -1691,7 +1691,7 @@
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Bật Thông Báo";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="Ứng dụng MEGA muốn gửi thông báo trên điện thoại để  báo hiệu cho bạn có tin nhắn ngay tức thời.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Ứng dụng MEGA muốn gửi thông báo để báo hiệu ngay tức thì cho khi bạn có tin nhắn.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Cho Phép Quyền Hạn";
 /* Title of the Settings section where you can configure security details of your MEGA account */
@@ -1779,7 +1779,7 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên chìa khóa mã.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết vào cuộc chát.";
+"%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết vào cuộc chát";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ vừa xóa đường liên kết vào cuộc chát";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
@@ -1823,7 +1823,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Tên liên lạc đã được thiết lập";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Tài khoản đã bị xóa/vô hiệu hóa";
+"Account has been deleted/deactivated"="Tài khoản đã bị xóa hoặc vô hiệu hóa";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Đã chặn liên lạc từ bạn";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="Hạng Pro đã hết hạn 1 ngày qua";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Hạng Pro đã hết hạn %1 ngày qua";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Một %1 chia sẻ công cộng của bạn (tên %2) đã bị gỡ bỏ.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="Nội dung %1 (tên %2) đã được phục hồi lại.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Tin nhắn thoại";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2005,7 +2001,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="SỔ LIÊN LẠC TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Bạn có một lời đang chờ bạn tham gia chát trên MEGA. Đăng ký một tài khoản trên MEGA và nhận 20 GB không gian lưu trữ miễn phí vô thời hạn.";
+"contact.invite.message"="Bạn có một lời đang chờ bạn tham gia chát trên MEGA. Đăng ký một tài khoản trên MEGA và nhận 20 GB không gian lưu trữ miễn phí vô thời hạn.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2101,7 +2097,7 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include Location Tags"="Kèm theo Vị Trí Địa Lý";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Nếu được bật. thông tin vị trí đã chụp sẽ được đính kèm với hình ảnh của bạn. Xin xem xét trước mỗi lần chia sẻ.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Nếu được bật, thông tin vị trí đã chụp sẽ được đính kèm với hình ảnh của bạn. Xin xem xét trước mỗi lần chia sẻ.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Gửi (%d) mục";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
@@ -2335,7 +2331,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Đặt Mật Khẩu";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Xuất chìa khóa giải mã và đường liên kết ra riêng";
+"Export the link and decryption key separately."="Xuất chìa khóa giải mã và đường liên kết ra riêng.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Tìm hiểu thêm";
 /* Text indicating the date until a link will be valid */
@@ -2533,7 +2529,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Xin Nâng Cấp";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Ổ Mây sắp hết chỗ trống. Nâng cấp ngay lện hạng Pro để nhận thêm tới %@ TB (%@ GB) cho không gian lưu trữ.";
+"dialog.storage.almostFull.detail"="Ổ Mây sắp hết chỗ trống. Nâng cấp ngay lện hạng Pro để nhận thêm tới %@ TB (%@ GB) cho không gian lưu trữ.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Không gian lưu trữ của Ổ Mây đã bị đầy. Xin nâng cấp lên một hạng Pro để mở rộng lưu trữ và tận hưởng thêm nhiều tính năng cao cấp. Tài khoản sẽ bị khóa sau một khoảng thời vượt quá không gian lưu trữ và không nâng cấp quá lâu. Xin kiểm tra hộp thư email và xem thư chúng tôi đã gửi để biết thêm chi tiết.";
 /* Over Disk Quota paywall not final title. */
@@ -2645,7 +2641,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Tham gia vào dịch vụ lưu trữ điện toán đám mây lớn và an ninh nhất với nền tảng cộng tác toàn cầu.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Nhận 20 GB miễn phí";
+"meetings.joinMega.paragraph2.title"="Nhận 20 GB miễn phí";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Đăng ký ngay và tận hưởng các tính năng cộng tác hữu dụng và miễn phí.";
 /* Message shown when the user privilege is changed to moderator */
@@ -2687,7 +2683,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Truy cập trang AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản.  Tất cả dữ liệu bạn đã lưu trên ổ mây MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
+"account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Tất cả dữ liệu bạn đã lưu trên ổ mây MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2719,7 +2715,7 @@
 /* File extension: .asx. Is not a commercial name, but a file format name. */
 "general.filetype.asx"="Phát trực tuyến nâng cao";
 /* File extension: .avi. Name of a multimedia container format */
-"general.filetype.avi"="Âm thanh / Video xen kẽ";
+"general.filetype.avi"="Âm thanh/Video xen kẽ";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
 "general.filetype.bat"="Tệp hàng loạt DOS";
 /* File extension: .bay. Commercial names should be stay on English */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="Tệp tin";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Quét";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="Không có tên liên lạc nào";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="Bạn không có tên nào trong sổ liên lạc để thêm vào cuộc chát này. Nếu bạn muốn thêm thành viên, trước hết hãy thêm tên của họ vào sổ liên lạc.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="Send invitation";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";

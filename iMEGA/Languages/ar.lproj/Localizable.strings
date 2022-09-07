@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="انتهت صلاحية باقة برو Pro قبل 1 يوم";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="لقد انتهت صلاحية إشتراك برو Pro الخاص بك منذ %1 يوم";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="تمت إزالة ملفك المشارك %1 (%2) بشكل عام.";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="تمت إعادة %1 (%2) الذي تم إزالته.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="رسالة صوتية";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="ملفات";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="مسح ضوئي";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="لا يوجد جهات اتصال";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="ليس لديك جهات اتصال لإضافتها إلى هذه المحادثة. إذا كنت ترغب في إضافة مشاركين، قم أولاً بدعوتهم إلى قائمة جهات الاتصال الخاصة بك.";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="إرسال دعوة";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="السماح لغير المضيفين بإضافة مشاركين";

@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="แผน Pro ของคุณหมดอายุเมื่อ 1 วันก่อน";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="แผน Pro ของคุณหมดอายุเมื่อ %1 วันก่อน";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="การแชร์สาธารณะของคุณ %1 (%2) ถูกแจ้งว่าให้ลบเนื้อหา";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="การแจ้งให้ดำเนินการของคุณ %1 (%2) ถูกคืนสิทธิ์เรียบร้อยแล้ว";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="ข้อความเสียง";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2697,15 +2693,15 @@
 /* File extension: .3ds. Commercial names should be stay on English */
 "general.filetype.3ds"="ฉาก 3D";
 /* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
-"general.filetype.rawImage"="รูปภาพ RAW";
+"general.filetype.rawImage"="ภาพ RAW";
 /* File extension: .3g2. Commercial names should be stay on English */
 "general.filetype.3g2"="มัลติมีเดีย";
 /* File extension: .7z. Commercial names should be stay on English */
 "general.filetype.7z"="บีบอัด 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
-"general.filetype.database"="ไฟล์ฐานข้อมูล";
+"general.filetype.database"="ฐานข้อมูล";
 /* File extension: .aif and .aiff. Is not a commercial name, but a standard */
-"general.filetype.audioInterchange"="ไฟล์เสียงที่บีบอัดข้อมูลไม่ได้";
+"general.filetype.audioInterchange"="เสียง Interchange";
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ไฟล์ข้อความ ANSI";
 /* File extension: .apk. Commercial names should be stay on English */
@@ -2723,19 +2719,19 @@
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
 "general.filetype.bat"="ไฟล์ชุดคำสั่ง DOS";
 /* File extension: .bay. Commercial names should be stay on English */
-"general.filetype.bay"="ไฟล์รูปภาพ Casio RAW";
+"general.filetype.bay"="ภาพ Casio RAW";
 /* File extension: .bmp. Commercial names should be stay on English */
 "general.filetype.bmp"="ภาพบิตแมป";
 /* File extension: .bz2. Commercial names should be stay on English */
 "general.filetype.bz2"="บีบอัด UNIX";
 /* File extension: .c. Commercial names should be stay on English */
-"general.filetype.c"="ไฟล์โค้ด C/C++";
+"general.filetype.c"="ซอร์สโค้ด C/C++";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
-"general.filetype.cpp"="ไฟล์โค้ด C++";
+"general.filetype.cpp"="ซอร์สโค้ด C++";
 /* File extension. Commercial names should be stay on English */
 "general.filetype.cdr"="ภาพ CorelDRAW";
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
-"general.filetype.cgi"="ไฟล์สคริปต์ CGI";
+"general.filetype.cgi"="สคริปต์ CGI";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="คลาส Java";
 /* File extension: .com. Commercial names should be stay on English */
@@ -2743,17 +2739,17 @@
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="สไตล์ชีต CSS";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
-"general.filetype.dhtml"="ไฟล์ไดนามิก HTML";
+"general.filetype.dhtml"="ไดนามิก HTML";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
-"general.filetype.dll"="ไฟล์ไดนามิกลิงก์ไลบรารี";
+"general.filetype.dll"="ไดนามิกลิงก์ไลบรารี";
 /* File extension: .dotx. Commercial names should be stay on English */
-"general.filetype.wordTemplate"="เทมเพลตของ MS Word";
+"general.filetype.wordTemplate"="เทมเพลต MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
 "general.filetype.dxf"="ภาพ DXF";
 /* File extension: .eps. Commercial names should be stay on English */
 "general.filetype.eps"="ภาพ EPS";
 /* File extension: .exe. Commercial names should be stay on English */
-"general.filetype.exe"="ไฟล์รันโปรแกรมได้";
+"general.filetype.exe"="ไฟล์ปฏิบัติการ";
 /* File extension: .flac. Commercial names should be stay on English */
 "general.filetype.flac"="เสียง Lossless";
 /* File extension: .flv. Commercial names should be stay on English */
@@ -2761,121 +2757,121 @@
 /* File extension: .fnt. Commercial names should be stay on English */
 "general.filetype.fnt"="แบบอักษรของ Windows";
 /* File extension: .fon. Commercial names should be stay on English */
-"general.filetype.fon"="ฟอนต์";
+"general.filetype.fon"="แบบอักษร";
 /* File extension: .gadget. Commercial names should be stay on English */
 "general.filetype.gadget"="โปรแกรมเบ็ดเตล็ดของ Windows";
 /* File extension: .gif. Commercial names should be stay on English */
-"general.filetype.gif"="ไฟล์ภาพ GIF";
+"general.filetype.gif"="ภาพ GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
 "general.filetype.gpx"="GPS Exchange";
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="สเปรดชีต";
 /* File extension: .gz. Commercial names should be stay on English */
-"general.filetype.gz"="บีบอัดของ GNU";
+"general.filetype.gz"="บีบอัด GNU";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
-"general.filetype.header"="Header";
+"general.filetype.header"="ไฟล์ส่วนหัว";
 /* File extensions: .htm and .html. Commercial names should be stay on English */
 "general.filetype.htmlDocument"="ไฟล์เอกสาร HTML";
 /* File extension: .iff. Commercial names should be stay on English */
-"general.filetype.iff"="Interchange File Format";
+"general.filetype.iff"="รูปแบบไฟล์ Interchange";
 /* File extension: .iso. Commercial names should be stay on English */
-"general.filetype.iso"="ISO Image";
+"general.filetype.iso"="อิมเมจ ISO";
 /* File extension: .jar. Commercial names should be stay on English */
 "general.filetype.jar"="Java Archive";
 /* File extension: .java. Commercial names should be stay on English */
 "general.filetype.java"="Java Code";
 /* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
-"general.filetype.jpeg"="ไฟล์ภาพ JPEG";
+"general.filetype.jpeg"="ภาพ JPEG";
 /* File extension: .log. Commercial names should be stay on English */
 "general.filetype.log"="ไฟล์บันทึก";
 /* File extension: .3mu. Commercial names should be stay on English */
 "general.filetype.m3u"="Media Playlist";
 /* File extension: .m4a. Commercial names should be stay on English */
-"general.filetype.m4a"="ไฟล์เสียง MPEG-4";
+"general.filetype.m4a"="เสียง MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
-"general.filetype.max"="3ds Max Scene";
+"general.filetype.max"="ฉาก 3ds Max";
 /* File extension: .mdb. Commercial names should be stay on English */
 "general.filetype.mdb"="MS Access";
 /* File extensions: .mid and .midi. Commercial names should be stay on English */
-"general.filetype.mid"="ไฟล์เสียง MIDI";
+"general.filetype.mid"="เสียง MIDI";
 /* File extension: .mkv. Commercial names should be stay on English */
 "general.filetype.mkv"="MKV Video";
 /* File extension: .mov. Commercial names should be stay on English */
 "general.filetype.mov"="QuickTime Movie";
 /* File extension: .mp3. Commercial names should be stay on English */
-"general.filetype.mp3"="ไฟล์เสียง MP3";
+"general.filetype.mp3"="เสียง MP3";
 /* File extension: .mp4. Commercial names should be stay on English */
-"general.filetype.mp4"="MP4 Video";
+"general.filetype.mp4"="วิดีโอ MP4";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
-"general.filetype.mpeg"="MPEG Movie";
+"general.filetype.mpeg"="ภาพยนตร์ MPEG";
 /* File extension: .msi. Commercial names should be stay on English */
-"general.filetype.msi"="MS Installer";
+"general.filetype.msi"="โปรแกรมติดตั้ง MS";
 /* File extensions: .txt and .odt. Commercial names should be stay on English */
-"general.filetype.textDocument"="Text Document";
+"general.filetype.textDocument"="เอกสารข้อความ";
 /* File extension: .otf. Commercial names should be stay on English */
-"general.filetype.otf"="ไฟล์ฟอนต์ OpenType";
+"general.filetype.otf"="แบบอักษร OpenType";
 /* File extension: .pages. Commercial names should be stay on English */
-"general.filetype.pages"="Pages";
+"general.filetype.pages"="เพจ";
 /* File extension: .pcast. Commercial names should be stay on English */
-"general.filetype.podcast"="Podcast";
+"general.filetype.podcast"="พ็อดแคสต์";
 /* File extension: .pdf. Commercial names should be stay on English */
-"general.filetype.pdf"="ไฟล์เอกสาร PDF";
+"general.filetype.pdf"="เอกสาร PDF";
 /* File extension: .php, .php3, .php4 and .php5. Commercial names should be stay on English */
-"general.filetype.php"="ไฟล์โค้ด PHP";
+"general.filetype.php"="โค้ด PHP";
 /* File extension: .pl. Is not a commercial name. "script" is a common noun */
-"general.filetype.pl"="ไฟล์สคริปต์ Perl";
+"general.filetype.pl"="สคริปต์ Perl";
 /* File extension: .pls. Commercial names should be stay on English */
-"general.filetype.pls"="ไฟล์เพลย์ลิสต์เสียง";
+"general.filetype.pls"="เพลย์ลิสต์เสียง";
 /* File extension: .png. Commercial names should be stay on English */
-"general.filetype.png"="ไฟล์ภาพ PNG";
+"general.filetype.png"="ภาพ PNG";
 /* File extension: .py. Is not a commercial name. "script" is a common noun */
-"general.filetype.py"="ไฟล์สคริปต์ไพธอน";
+"general.filetype.py"="สคริปต์ไพธอน";
 /* File extension: .rar. Commercial names should be stay on English */
-"general.filetype.rar"="ไฟล์บีบอัด RAR";
+"general.filetype.rar"="บีบอัด RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Rich Text";
 /* File extension: .rw2. Commercial names should be stay on English */
-"general.filetype.rw2"="Panasonic RAW Image";
+"general.filetype.rw2"="ภาพ Panasonic RAW";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="ไฟล์ชุดคำสั่ง Shell";
+"general.filetype.sh"="ชุดคำสั่ง Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="ไฟล์ฐานข้อมูล SQL";
+"general.filetype.sql"="ฐานข้อมูล SQL";
 /* File extension: .srf. Commercial names should be stay on English */
-"general.filetype.srf"="Sony RAW Image";
+"general.filetype.srf"="ภาพ Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
-"general.filetype.subtitle"="Subtitle";
+"general.filetype.subtitle"="คำบรรยาย";
 /* File extension: .svg and .svgz. Commercial names should be stay on English */
-"general.filetype.vectorImage"="Vector Image";
+"general.filetype.vectorImage"="ภาพ Vector";
 /* File extension: .swf. Commercial names should be stay on English */
 "general.filetype.swf"="Flash Movie";
 /* File extension: .tar. Commercial names should be stay on English */
-"general.filetype.tar"="จัดเก็บ";
+"general.filetype.tar"="Archive";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="ไฟล์กราฟิก Targa";
+"general.filetype.tga"="กราฟิก Targa";
 /* File extension: .tif. Commercial names should be stay on English */
-"general.filetype.tif"="TIF Image";
+"general.filetype.tif"="ภาพ TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
-"general.filetype.tiff"="TIFF Image";
+"general.filetype.tiff"="ภาพ TIFF";
 /* File extension: .ttf. Commercial names should be stay on English */
-"general.filetype.ttf"="ไฟล์ฟอนต์ TrueType";
+"general.filetype.ttf"="แบบอักษร TrueType";
 /* File extension: .wav. Commercial names should be stay on English */
-"general.filetype.wav"="ไฟล์เสียง Wave";
+"general.filetype.wav"="เสียง Wave";
 /* File extension: .webm. Commercial names should be stay on English */
-"general.filetype.webm"="ไฟล์วิดีโอ WebM";
+"general.filetype.webm"="วิดีโอ WebM";
 /* File extension: .wma. Commercial names should be stay on English */
-"general.filetype.wma"="WM Audio";
+"general.filetype.wma"="เสียง WM";
 /* File extension: .wmv. Commercial names should be stay on English */
-"general.filetype.wmv"="WM Video";
+"general.filetype.wmv"="วิดีโอ WM";
 /* File extension: .xml. Commercial names should be stay on English */
-"general.filetype.xml"="ไฟล์เอกสาร XML";
+"general.filetype.xml"="เอกสาร XML";
 /* File extension: .zip. Commercial names should be stay on English */
-"general.filetype.zip"="ZIP Archive";
+"general.filetype.zip"="บีบอัด ZIP";
 /* Text show to highlight that you can choose a different option */
 "general.choose"="เลือก";
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="ไฟล์";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="สแกน";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="ไม่มีรายชื่อผู้ติดต่อ";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="คุณไม่มีรายชื่อผู้ติดต่อที่จะเพิ่มเข้าไปในแชทนี้แล้ว หากคุณต้องการเพิ่มผู้เข้าร่วมคนอื่น ขั้นแรกให้ส่งคำเชิญเพื่อเพิ่มไปที่รายชื่อผู้ติดต่อของคุณก่อน";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="ส่งคำเชิญ";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="อนุญาตให้ผู้ที่ไม่ใช่ผู้จัดการประชุมเพิ่มผู้เข้าร่วมได้";

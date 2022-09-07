@@ -1209,7 +1209,7 @@
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
 "maintainMyChosenStatusAppearance"="即使我没有连接设备仍保持我已选择的状态。";
 /* A log message in a chat to indicate that the message has been edited by the user. */
-"edited"="(已编辑)";
+"edited"="（已编辑）";
 /*  */
 "online"="在线";
 /*  */
@@ -1872,10 +1872,6 @@
 "Your PRO membership plan expired 1 day ago"="您的Pro会员已于1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="您的Pro会员已于%1天前到期";
-/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="您公开分享的%1 (%2) 已被移除。";
-/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="您被移除的%1 (%2) 已恢复。";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="语音消息";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2103,9 +2099,9 @@
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="开启后，您的位置信息将包含在您的图片中。请谨慎选择。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
-"Send (%d)"="发送(%d)";
+"Send (%d)"="发送（%d）";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="上传(%d)";
+"Upload (%d)"="上传（%d）";
 /* Used in Photos app browser album listing screen. */
 "Albums"="相簿";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
@@ -3066,3 +3062,19 @@
 "chat.addToChatMenu.filesApp"="文件";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="扫描";
+/* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.title"="无联系人";
+/* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
+"meetings.addContacts.zeroContactsAvailable.description"="您没有联系人可以添加到此聊天中。如果您想添加参与者，请先邀请他们成为您的联系人。";
+/* Text title showed when users share the contact link */
+"invite.contactLink.share.title"="发送邀请";
+/* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+/* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+/* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+/* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="允许非主持人添加参与者";

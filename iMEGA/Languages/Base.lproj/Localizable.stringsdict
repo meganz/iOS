@@ -228,19 +228,19 @@
     </dict>
     <key>general.format.rubbishBin.days</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@days@</string>
-        <key>days</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>day</string>
-            <key>other</key>
-            <string>days</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>day</string>
+        <key>other</key>
+        <string>days</string>
+      </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
     <dict>

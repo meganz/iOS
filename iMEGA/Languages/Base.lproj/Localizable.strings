@@ -3066,15 +3066,15 @@
 "meetings.addContacts.zeroContactsAvailable.title"="No contacts";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.description"="You have no contacts to add to this chat. If you want to add participants, first invite them to your contact list.";
-/* Text title showed when users share the contact link  */
+/* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Send invitation";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken down file (%@) has been reinstated.";
+"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken down folder (%@) has been reinstated.";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file (%@) has been taken down.";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder (%@) has been taken down.";
-/* Add contacts: Message to allow non host to add contacts in the group chat and meeting*/
-"meetings.addContacts.allowNonHost.message"="Allow non-host to add participants";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+/* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
+"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
