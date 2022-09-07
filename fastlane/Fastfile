@@ -213,8 +213,19 @@ platform :ios do
       cloned_source_packages_path: "SwiftPackages",
       disable_package_automatic_updates: true,
       output_directory: ".",
-      derived_data_path: "derivedData"
+      derived_data_path: "derivedData",
+      code_coverage: true
     )
+  end
+
+  lane :code_coverage do
+    xcov(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      output_directory: "xcov_output",
+      derived_data_path: "derivedData",
+      json_report: true
+    )  
   end
 
   desc "Download metadata"
