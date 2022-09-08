@@ -9,7 +9,7 @@ extension PhotosViewController {
             CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download)
         }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
-        cancelEditing()
+        toggleEditing()
     }
     
     @objc func showBrowserNavigation(for nodes: [MEGANode], action: BrowserAction) {
@@ -26,27 +26,27 @@ extension PhotosViewController {
     @objc func handleShareLink(for nodes: [MEGANode]) {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
         CopyrightWarningViewController.presentGetLinkViewController(for: nodes, in: UIApplication.mnz_presentingViewController())
-        cancelEditing()
+        toggleEditing()
     }
     
     @objc func handleDeleteAction(for nodes: [MEGANode]) {
         guard let rubbish = MEGASdkManager.sharedMEGASdk().rubbishNode else { return }
         let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: nodes.contentCounts().fileCount,
                                                folders: nodes.contentCounts().folderCount) { [weak self] in
-            self?.cancelEditing()
+            self?.toggleEditing()
         }
         nodes.forEach { MEGASdkManager.sharedMEGASdk().move($0, newParent: rubbish, delegate: delegate) }
     }
     
     func handleRemoveLinks(for nodes: [MEGANode]) {
         nodes.publicLinkedNodes().mnz_removeLinks()
-        cancelEditing()
+        toggleEditing()
     }
     
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
         let entityNodes = nodes.toNodeEntities()
         ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
-        cancelEditing()
+        toggleEditing()
     }
     
     private func handleSendToChat(for nodes: [MEGANode]) {
@@ -58,7 +58,7 @@ extension PhotosViewController {
         sendToViewController.nodes = nodes
         sendToViewController.sendMode = .cloud
         present(navigationController, animated: true)
-        cancelEditing()
+        toggleEditing()
     }
 }
 
@@ -99,7 +99,7 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
 //MARK: - BrowserViewControllerDelegate and ContatctsViewControllerDelegate
 extension PhotosViewController: BrowserViewControllerDelegate, ContatctsViewControllerDelegate {
     public func nodeEditCompleted(_ complete: Bool) {
-        cancelEditing()
+        toggleEditing()
     }
 }
 
@@ -113,8 +113,6 @@ extension PhotosViewController {
         if !viewModel.shouldShowFilterMenuOnCameraUpload {
             viewModel.resetFilters()
         }
-        
-        setRightNavigationBarButtons()
     }
 }
 

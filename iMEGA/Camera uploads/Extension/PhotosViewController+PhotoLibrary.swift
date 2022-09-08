@@ -5,9 +5,9 @@ import SwiftUI
 extension PhotosViewController: PhotoLibraryProvider {
     // MARK: - config views
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
-        configPhotoLibraryView(in: container) { type, location, featureFlag in
-            self.viewModel.updateFilter(filterType: type, filterLocation: location, featureFlag: featureFlag)
-            self.updateMenuBarButtonItems(self.photoLibraryContentViewModel.selectedMode)
+        configPhotoLibraryView(in: container) { [weak self] type, location, featureFlag in
+            self?.viewModel.updateFilter(filterType: type, filterLocation: location, featureFlag: featureFlag)
+            self?.setupNavigationBarButtons()
         }
     }
     

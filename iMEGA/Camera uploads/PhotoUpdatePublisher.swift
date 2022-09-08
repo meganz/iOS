@@ -25,9 +25,11 @@ import Combine
         subscribleToCameraUploadStatsChange()
         subscribleToPhotoLibraryUpdate()
         
-        photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] in
+        photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] _ in
             self?.photosVC?.showToolbar(true)
-            self?.photosVC?.updateMenuBarButtonItems($0)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self?.photosVC?.setupNavigationBarButtons()
+            }
         }
         
         photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
