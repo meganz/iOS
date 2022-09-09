@@ -670,8 +670,10 @@
             break;
             
         case GroupChatDetailsSectionManageChatHistory:
-        case GroupChatDetailsSectionRenameGroup:
-            [headerView configureWithTitle:nil topDistance:(self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 1.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        case GroupChatDetailsSectionRenameGroup: {
+            CGFloat headerHeight = self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator ? (self.groupDetailsSections[section].unsignedIntegerValue == GroupChatDetailsSectionRenameGroup ? 20.0f : 10.0f) : 1.0f;
+            [headerView configureWithTitle:nil topDistance:headerHeight isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        }
             break;
             
         case GroupChatDetailsSectionSharedFiles:
@@ -731,6 +733,10 @@
         case GroupChatDetailsSectionParticipants:
             headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
             [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+            break;
+            
+        case GroupChatDetailsSectionAllowNonHostToAddParticipants:
+            [headerView configureWithTitle:nil topDistance:10.0f isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
             break;
             
         default:
