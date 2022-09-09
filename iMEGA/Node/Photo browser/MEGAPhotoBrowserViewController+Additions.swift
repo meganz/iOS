@@ -89,13 +89,16 @@ extension MEGAPhotoBrowserViewController {
     @objc func activateSlideShowButton() {
         if isSlideShowEnabled() {
             centerToolbarItem?.image = UIImage(systemName: "play.rectangle")
+            centerToolbarItem?.isEnabled = true
         } else {
             centerToolbarItem?.image = nil
+            centerToolbarItem?.isEnabled = false
         }
     }
     
     @objc func hideSlideShowButton() {
         centerToolbarItem?.image = nil
+        centerToolbarItem?.isEnabled = false
     }
 }
 
