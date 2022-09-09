@@ -394,6 +394,7 @@
             if (self.viewModel.mediaNodesArray.count == 0) {
                 [self reloadPhotosCollectionView];
             }
+            [self setupNavigationBarButtons];
         });
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -415,6 +416,7 @@
         }
         
         [self reloadPhotosCollectionView];
+        [self setupNavigationBarButtons];
     }
 }
 
