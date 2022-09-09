@@ -20,7 +20,7 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func shouldShowAddParticipants() -> Bool {
-        chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled
+        (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdkManager.sharedMEGASdk().isGuestAccount
     }
     
     @objc func showEndCallForAll() {
