@@ -313,12 +313,12 @@ pipeline {
                         gitlabCommitStatus(name: 'Prepare archive zip to be uploaded to MEGA') {
                             injectEnvironments({
                                 script {
-                                    withCredentials([usernamePassword(credentialsId: 'Lancy-Artifactory-Credentials', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                                    withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
                                         def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}.zip"
                                         env.zipPath = "${WORKSPACE}/${fileName}"
                                         env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/${fileName}"
                                         sh "bundle exec fastlane zip_Archive archive_path:\'${env.MEGA_BUILD_ARCHIVE_PATH}\' zip_path:${env.zipPath}"
-                                        sh 'curl -u${USERNAME}:${TOKEN} -T ${zipPath} \"${targetPath}\"'
+                                        sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
                                         sh 'rm ${zipPath}'
                                     }
                                 } 
