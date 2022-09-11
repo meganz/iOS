@@ -538,6 +538,11 @@
         [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         
+        UITabBar *tabBar = self.tabBarController.tabBar;
+        if (tabBar == nil) {
+            return;
+        }
+        
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
