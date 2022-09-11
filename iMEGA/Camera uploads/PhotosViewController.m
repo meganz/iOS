@@ -572,6 +572,11 @@
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.objcWrapper_parent.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
+        UITabBar *tabBar = self.tabBarController.tabBar;
+        if (tabBar == nil) {
+            return;
+        }
+        
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
