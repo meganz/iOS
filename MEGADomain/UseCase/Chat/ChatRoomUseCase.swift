@@ -111,6 +111,10 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
     }
     
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
-        chatRoomRepo.allowNonHostToAddParticipantsValueChanged(forChatId: chatId)
+        if chatRoomRepo.isChatRoomOpen(chatId: chatId) == false {
+            try? chatRoomRepo.openChatRoom(chatId: chatId) { _ in }
+        }
+        
+        return chatRoomRepo.allowNonHostToAddParticipantsValueChanged(forChatId: chatId)
     }
 }

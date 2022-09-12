@@ -13,8 +13,10 @@ protocol ChatRoomRepositoryProtocol {
     func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity) async throws -> String
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool
-    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
-    mutating func userPrivilegeChanged(forChatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
-    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
+    func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
+    func userPrivilegeChanged(forChatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
+    func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
+    func isChatRoomOpen(chatId: HandleEntity) -> Bool
+    func openChatRoom(chatId: HandleEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void) throws
+    func closeChatRoom(chatId: HandleEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void)
 }
-

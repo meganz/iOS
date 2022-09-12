@@ -1,4 +1,5 @@
 import UIKit
+import MEGASwift
 
 public extension UIImage {
     
@@ -43,17 +44,10 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
-    
-    static func compareImages(_ lhs: UIImage?, _ rhs: UIImage?) -> Bool {
-        if lhs != rhs {
-            guard let lhs = lhs else { return false }
-            guard let rhs = rhs else { return false }
-            return lhs.comparePNGData(rhs)
-        }
-        return true
-    }
-    
-    func comparePNGData(_ image: UIImage) -> Bool {
-        self.pngData() == image.pngData()
+}
+
+extension UIImage: Matchable {
+    public static func ~~ (lhs: UIImage, rhs: UIImage) -> Bool {
+        lhs.pngData() == rhs.pngData()
     }
 }
