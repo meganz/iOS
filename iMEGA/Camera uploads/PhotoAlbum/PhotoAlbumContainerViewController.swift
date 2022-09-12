@@ -10,7 +10,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
     override var isEditing: Bool {
         willSet {
             pageTabViewModel.isEditing = newValue
-            
             pageController.dataSource = newValue ? nil : self
             pageTabHostingController?.view?.isUserInteractionEnabled = !newValue
         }
@@ -150,7 +149,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         
         pageController.$currentPage
             .sink { [weak self] in
-                self?.photoViewController?.hideRightBarButtonItem($0 == .timeline ? false : true)
+                self?.photoViewController?.hideRightBarButtonItem($0 != .timeline)
             }
             .store(in: &subscriptions)
     }

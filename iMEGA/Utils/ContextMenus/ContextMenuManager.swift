@@ -294,19 +294,14 @@ final class ContextMenuManager: NSObject {
     ///     - menu: represent a context menu entity that contains the information related to this menu
     ///  - Returns: UIMenu that represent all actions and submenus of the current menu.
     private func convertToMenu(menu: CMEntity) -> UIMenu {
+        let menuItem = UIMenu(title: menu.title ?? "",
+                          image: menu.image,
+                          options: menu.displayInline ? [.displayInline] : [],
+                          children: convertToMenuElements(items: menu.children))
         if #available(iOS 15.0, *) {
-            return UIMenu(title: menu.title ?? "",
-                          subtitle: menu.detail ?? "",
-                          image: menu.image,
-                          options: menu.displayInline ? [.displayInline] : [],
-                          children: convertToMenuElements(items: menu.children))
-        } else {
-            let menu =  UIMenu(title: menu.title ?? "",
-                          image: menu.image,
-                          options: menu.displayInline ? [.displayInline] : [],
-                          children: convertToMenuElements(items: menu.children))
-            return menu
+            menuItem.subtitle = menu.detail ?? ""
         }
+        return menuItem
     }
     
     // MARK: - Create context menu with configurations

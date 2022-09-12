@@ -56,6 +56,9 @@ final class MeetingCreatingViewModel: ViewModelType {
     private var isVideoEnabled = false
     private var isSpeakerEnabled = true
     private var isMicrophoneEnabled = false
+    private var isSpeakRequestEnabled = false
+    private var isWaitingRoomEnabled = false
+    private var doesAllowNonHostToAddParticipants = true
     private var userHandle: UInt64
     
     private var chatId: UInt64?
@@ -283,7 +286,13 @@ final class MeetingCreatingViewModel: ViewModelType {
             dispatch(.updateMeetingName(defaultMeetingName))
         }
         
-        meetingUseCase.startCall(meetingName: meetingName, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled) { [weak self] in
+        meetingUseCase.startCall(
+            meetingName: meetingName,
+            enableVideo: isVideoEnabled,
+            enableAudio: isMicrophoneEnabled,
+            speakRequest: isSpeakRequestEnabled,
+            waitingRoom: isWaitingRoomEnabled,
+            allowNonHostToAddParticipants: doesAllowNonHostToAddParticipants) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):
