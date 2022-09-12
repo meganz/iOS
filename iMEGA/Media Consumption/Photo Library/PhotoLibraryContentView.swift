@@ -32,7 +32,7 @@ struct PhotoLibraryContentView: View {
                 }
             }
         }
-        .popover(isPresented: $viewModel.showFilter) {
+        .sheet(isPresented: $viewModel.showFilter){
             PhotoLibraryFilterView(
                 viewModel,
                 filterViewModel: filterViewModel,
