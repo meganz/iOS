@@ -133,7 +133,7 @@ extension ChatViewController {
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+            chatRoomRepo: ChatRoomRepository.sharedRepo,
             userStoreRepo: UserStoreRepository(store: .shareInstance()))
         return ParticipantsAddingViewFactory(
             userUseCase: UserUseCase(repo: .live),

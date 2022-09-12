@@ -33,7 +33,15 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         chatSdk.createChatLink(chatId)
     }
     
-    func startChatCall(meetingName: String, enableVideo: Bool, enableAudio: Bool,  completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+    func startCall(
+        meetingName: String,
+        enableVideo: Bool,
+        enableAudio: Bool,
+        speakRequest: Bool,
+        waitingRoom: Bool,
+        allowNonHostToAddParticipants: Bool,
+        completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void
+    ) {
         let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
             guard let self = self else { return }
             guard let chatroom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
@@ -53,10 +61,17 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 }
             }
             
+          
             self.callActionManager.startCall(chatId: chatroom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallDelegate)
         }
         
-        chatSdk.createMeeting(withTitle: meetingName, delegate: delegate)
+        chatSdk.createMeeting(
+            withTitle: meetingName,
+            speakRequest: speakRequest,
+            waitingRoom: waitingRoom,
+            openInvite: allowNonHostToAddParticipants,
+            delegate: delegate
+        )
     }
 
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {

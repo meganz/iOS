@@ -13,7 +13,15 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
         self.chatCallCompletion = chatCallCompletion
     }
     
-    func startCall(meetingName: String, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+    func startCall(
+        meetingName: String,
+        enableVideo: Bool,
+        enableAudio: Bool,
+        speakRequest: Bool,
+        waitingRoom: Bool,
+        allowNonHostToAddParticipants: Bool,
+        completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void
+    ) {
         completion(chatCallCompletion)
     }
     
