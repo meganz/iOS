@@ -139,7 +139,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.updateJoinView()
                 SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
             } else {
-                api.closeChatRoom(chat.chatId, delegate: self)
+                ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chat.chatId) { _ in }
                 chatViewController?.navigationController?.popViewController(animated: true)
             }
         case .updatePreviewers:
@@ -430,12 +430,13 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         MEGASdkManager.sharedMEGASdk().add(self)
         MEGASdkManager.sharedMEGAChatSdk().add(self)
         
-        isChatRoomOpen = MEGASdkManager.sharedMEGAChatSdk().openChatRoom(chatRoom.chatId, delegate: self)
-        if isChatRoomOpen {
+        do {
+            try ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatRoom.chatId, delegate: self)
+            isChatRoomOpen = true
             loadingState = true
             chatViewController?.messagesCollectionView.reloadEmptyDataSet()
             loadMessages()
-        } else {
+        } catch {
             MEGALogError("OpenChatRoom: Cannot open chat room with id \(chatRoom.chatId)")
         }
     }
@@ -444,7 +445,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         isChatRoomOpen = false
         chatMessages = []
         chatViewController?.messagesCollectionView.reloadData()
-        MEGASdkManager.sharedMEGAChatSdk().closeChatRoom(chatRoom.chatId, delegate: self)
+        ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: self)
         MEGASdkManager.sharedMEGAChatSdk().remove(self)
         MEGASdkManager.sharedMEGASdk().remove(self)
     }

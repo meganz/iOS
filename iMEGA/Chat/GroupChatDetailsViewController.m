@@ -210,7 +210,7 @@
             if (chatRoom.isArchived) {
                 if (self.navigationController.childViewControllers.count >= 3) {
                     NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
-                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
+                    [self openChatRoomWithChatId:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
                 }
                 [self.navigationController popToRootViewControllerAnimated:YES];
             } else {

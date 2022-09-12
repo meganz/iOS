@@ -24,6 +24,13 @@ extension GroupChatDetailsViewController {
         return (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdkManager.sharedMEGASdk().isGuestAccount
     }
     
+    @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatId: chatId) {
+            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
+        }
+        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)
+    }
+    
     @objc func showEndCallForAll() {
         let endCallDialog = EndCallDialog(
             type: .endCallForAll,
@@ -50,7 +57,7 @@ extension GroupChatDetailsViewController {
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+            chatRoomRepo: ChatRoomRepository.sharedRepo,
             userStoreRepo: UserStoreRepository(store: .shareInstance()))
         return ParticipantsAddingViewFactory(
             userUseCase: UserUseCase(repo: .live),
