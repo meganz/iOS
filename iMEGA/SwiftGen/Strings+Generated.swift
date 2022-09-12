@@ -3819,7 +3819,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.title")
         }
         public enum AllowNonHost {
-          /// Allow non-host to add participants
+          /// Allow non-hosts to add participants
           public static let message = Strings.tr("Localizable", "meetings.addContacts.allowNonHost.message")
         }
         public enum ZeroContactsAvailable {
@@ -4085,21 +4085,21 @@ public enum Strings {
     public enum Notifications {
       public enum Message {
         public enum TakenDownPubliclyShared {
-          /// Your publicly shared file (%@) has been taken down.
+          /// Your publicly shared file ”%@” has been taken down.
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.file", String(describing: p1))
           }
-          /// Your publicly shared folder (%@) has been taken down.
+          /// Your publicly shared folder ”%@” has been taken down.
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.folder", String(describing: p1))
           }
         }
         public enum TakenDownReinstated {
-          /// Your taken down file (%@) has been reinstated.
+          /// Your taken-down file ”%@” has been reinstated.
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.file", String(describing: p1))
           }
-          /// Your taken down folder (%@) has been reinstated.
+          /// Your taken-down folder ”%@” has been reinstated.
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.folder", String(describing: p1))
           }

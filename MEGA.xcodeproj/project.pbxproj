@@ -2067,7 +2067,6 @@
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF782D56269BA4BB0001D169 /* CallEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D24269BA4BA0001D169 /* CallEntity.swift */; };
-		BF782D5F269BA4BB0001D169 /* ChatRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */; };
 		BF782D63269BA4BB0001D169 /* ChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */; };
 		BF782D68269BA4BB0001D169 /* AchievementTypeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D3D269BA4BA0001D169 /* AchievementTypeEntity.swift */; };
 		BF782D69269BA4BB0001D169 /* RegionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D3F269BA4BA0001D169 /* RegionEntity.swift */; };
@@ -2211,6 +2210,8 @@
 		BFBB888B28B8421B00E8B482 /* MockMeetingStatsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888A28B8421B00E8B482 /* MockMeetingStatsUseCase.swift */; };
 		BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */; };
 		BFBB88D528C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */; };
+		BFBB88EA28CAF18500E8B482 /* ChatRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB88E928CAF18500E8B482 /* ChatRoomEntity.swift */; };
+		BFBB88EB28CAF18500E8B482 /* ChatRoomCallbackEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB88E828CAF18400E8B482 /* ChatRoomCallbackEntity.swift */; };
 		BFBE04C826AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */; };
 		BFC060F328A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */; };
 		BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F528A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift */; };
@@ -4405,7 +4406,6 @@
 		BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF782D24269BA4BA0001D169 /* CallEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallEntity.swift; sourceTree = "<group>"; };
-		BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomEntity.swift; sourceTree = "<group>"; };
 		BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSessionEntity.swift; sourceTree = "<group>"; };
 		BF782D3D269BA4BA0001D169 /* AchievementTypeEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementTypeEntity.swift; sourceTree = "<group>"; };
 		BF782D3F269BA4BA0001D169 /* RegionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionEntity.swift; sourceTree = "<group>"; };
@@ -4543,6 +4543,8 @@
 		BFBB888A28B8421B00E8B482 /* MockMeetingStatsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMeetingStatsUseCase.swift; sourceTree = "<group>"; };
 		BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingParticipantsLayoutViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowNonHostToAddParticipantsErrorEntity.swift; sourceTree = "<group>"; };
+		BFBB88E828CAF18400E8B482 /* ChatRoomCallbackEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomCallbackEntity.swift; sourceTree = "<group>"; };
+		BFBB88E928CAF18500E8B482 /* ChatRoomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomEntity.swift; sourceTree = "<group>"; };
 		BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSelectionErrorEntity.swift; sourceTree = "<group>"; };
 		BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactory.swift; sourceTree = "<group>"; };
 		BFC060F528A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = participantsAddingViewFactoryTests.swift; sourceTree = "<group>"; };
@@ -8293,9 +8295,10 @@
 			children = (
 				BF782D24269BA4BA0001D169 /* CallEntity.swift */,
 				83B42F6925D2E9F900AAA88F /* CallParticipantEntity.swift */,
-				BF782D31269BA4BA0001D169 /* ChatRoomEntity.swift */,
 				BF782D36269BA4BA0001D169 /* ChatSessionEntity.swift */,
 				8361D9E4283E53620001FAC1 /* NetworkQuality.swift */,
+				BFBB88E828CAF18400E8B482 /* ChatRoomCallbackEntity.swift */,
+				BFBB88E928CAF18500E8B482 /* ChatRoomEntity.swift */,
 				BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */,
 			);
 			path = Call;
@@ -11877,6 +11880,7 @@
 				C4EDB73826655229006A114F /* RoundedView.swift in Sources */,
 				B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */,
 				83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */,
+				BFBB88EB28CAF18500E8B482 /* ChatRoomCallbackEntity.swift in Sources */,
 				5D66F8C624E507900088E5FF /* BadgeButton.swift in Sources */,
 				5DD6B17624D7C34700F14515 /* ColorStyle.swift in Sources */,
 				12397E1F2820C47E00A30CCC /* AlbumCellViewModel.swift in Sources */,
@@ -12873,7 +12877,6 @@
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				C473097526FC93BB00DC9D55 /* CrashlyticsLogger.swift in Sources */,
-				BF782D5F269BA4BB0001D169 /* ChatRoomEntity.swift in Sources */,
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
 				BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */,
 				12B2773227ED16270008BDEE /* PhotoLibraryMapper.swift in Sources */,
@@ -13075,6 +13078,7 @@
 				B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
+				BFBB88EA28CAF18500E8B482 /* ChatRoomEntity.swift in Sources */,
 				5BCF7E43263170E900BE769B /* TermsAndPoliciesTableViewController.swift in Sources */,
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				5D166B7725219650004F4F4A /* HomeSearchResultViewModel.swift in Sources */,
