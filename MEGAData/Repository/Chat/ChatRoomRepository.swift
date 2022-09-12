@@ -1,12 +1,15 @@
 import Combine
 import MEGADomain
 
-struct ChatRoomRepository: ChatRoomRepositoryProtocol {
+final class ChatRoomRepository: ChatRoomRepositoryProtocol {
+    
+    static var sharedRepo = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
+    
     private let sdk: MEGAChatSdk
-    private var participantsUpdateListener: ChatRoomUpdateListener?
-    private var allowNonHostToAddParticipantsUpdateListener: ChatRoomUpdateListener?
-
-    init(sdk: MEGAChatSdk) {
+    private var chatRoomUpdateListeners = [ChatRoomUpdateListener]()
+    private var openChatRooms = Set<HandleEntity>()
+    
+    private init(sdk: MEGAChatSdk) {
         self.sdk = sdk
     }
     
@@ -89,9 +92,10 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
             return
         }
         
-        let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
+            guard let self = self else { return }
             guard error.type == .MEGAChatErrorTypeOk,
-                  let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
+                  let name = self.sdk.userFullnameFromCache(byUserHandle: peerId) else {
                 MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
                 completion(.failure(.generic))
                 return
@@ -111,9 +115,10 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
         
         return try await withCheckedThrowingContinuation { continuation in
-            let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+            let delegate = MEGAChatGenericRequestDelegate { [weak self]  (request, error) in
+                guard let self = self else { return }
                 guard error.type == .MEGAChatErrorTypeOk,
-                      let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
+                      let name = self.sdk.userFullnameFromCache(byUserHandle: peerId) else {
                     MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
                     continuation.resume(throwing: ChatRoomErrorEntity.generic)
                     return
@@ -180,31 +185,60 @@ struct ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
     }
     
-    mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
-        let participantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .participants)
-        self.participantsUpdateListener = participantsUpdateListener
-        return participantsUpdateListener
+    func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
+        chatRoomUpdateListener(forChatId: chatId)
             .monitor
             .map({ $0.peers.map({ $0.handle })})
             .eraseToAnyPublisher()
     }
     
-    mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
-        let participantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .participants)
-        self.participantsUpdateListener = participantsUpdateListener
-        return participantsUpdateListener
+    func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        chatRoomUpdateListener(forChatId: chatId)
             .monitor
             .map(\.userHandle)
             .eraseToAnyPublisher()
     }
     
-    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
-        let allowNonHostToAddParticipantsUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .openInvite)
-        self.allowNonHostToAddParticipantsUpdateListener = allowNonHostToAddParticipantsUpdateListener
-        return allowNonHostToAddParticipantsUpdateListener
+    func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
+        chatRoomUpdateListener(forChatId: chatId)
             .monitor
             .map(\.isOpenInviteEnabled)
             .eraseToAnyPublisher()
+    }
+    
+    private func chatRoomUpdateListener(forChatId chatId: HandleEntity) -> ChatRoomUpdateListener {
+        guard let chatRoomUpdateListener = chatRoomUpdateListeners.filter({ $0.chatId == chatId}).first else {
+            let chatRoomUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .openInvite)
+            chatRoomUpdateListeners.append(chatRoomUpdateListener)
+            return chatRoomUpdateListener
+        }
+        
+        return chatRoomUpdateListener
+    }
+    
+    func isChatRoomOpen(chatId: HandleEntity) -> Bool {
+        openChatRooms.contains(chatId)
+    }
+    
+    func openChatRoom(chatId: HandleEntity, callback: @escaping (ChatRoomCallbackEntity) -> Void) throws {
+        try openChatRoom(chatId: chatId, delegate: ChatRoomRepoDelegate(callback: callback))
+    }
+    
+    func closeChatRoom(chatId: HandleEntity, callback: @escaping (ChatRoomCallbackEntity) -> Void) {
+        closeChatRoom(chatId: chatId, delegate: ChatRoomRepoDelegate(callback: callback))
+    }
+    
+    func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) throws {
+        openChatRooms.insert(chatId)
+        if !sdk.openChatRoom(chatId, delegate: delegate) {
+            throw ChatRoomErrorEntity.generic
+        }
+    }
+    
+    func closeChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+        openChatRooms.remove(chatId)
+        chatRoomUpdateListeners.remove(object: chatRoomUpdateListener(forChatId: chatId))
+        return sdk.closeChatRoom(chatId, delegate: delegate)
     }
 }
 
@@ -225,7 +259,7 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
 fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     private let sdk: MEGAChatSdk
     private let changeType: ChatRoomEntity.ChangeType
-    private let chatId: HandleEntity
+    let chatId: HandleEntity
     
     private let source = PassthroughSubject<ChatRoomEntity, Never>()
     
@@ -251,5 +285,17 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
             return
         }
         source.send(chatRoom)
+    }
+}
+
+fileprivate class ChatRoomRepoDelegate: NSObject, MEGAChatRoomDelegate {
+    private let callback: (ChatRoomCallbackEntity) -> Void
+    
+    init(callback: @escaping (ChatRoomCallbackEntity) -> Void) {
+        self.callback = callback
+    }
+    
+    func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+        callback(.onUpdate(ChatRoomEntity(with: chat)))
     }
 }
