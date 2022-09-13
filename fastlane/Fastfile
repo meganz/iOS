@@ -185,7 +185,7 @@ platform :ios do
 
     upload_to_testflight(
       skip_submission: false,
-      skip_waiting_for_build_processing: true,
+      groups:["MEGA"],
       api_key: api_key,
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       changelog: lane_context[SharedValues::FL_CHANGELOG],
