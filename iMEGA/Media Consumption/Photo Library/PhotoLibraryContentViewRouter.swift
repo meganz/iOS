@@ -57,10 +57,11 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         while let presentedViewController = topController.presentedViewController {
             topController = presentedViewController
         }
+        if topController.definesPresentationContext == false { return }
         
         let photoBrowser = MEGAPhotoBrowserViewController.photoBrowser(currentPhoto: photo, allPhotos: allPhotos)
         
-        topController.modalPresentationStyle = .fullScreen
+        topController.modalPresentationStyle = .popover
         topController.present(photoBrowser, animated: true)
     }
 }
