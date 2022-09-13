@@ -5,7 +5,6 @@ struct PhotoLibraryFilterView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     @ObservedObject var filterViewModel: PhotoLibraryFilterViewModel
     private let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)?
-    
     private let screen: String
     
     init(
@@ -22,7 +21,6 @@ struct PhotoLibraryFilterView: View {
     
     var btnCancel: some View {
         Button {
-            filterViewModel.restoreLastSelection()
             viewModel.showFilter.toggle()
         } label: {
             Text(filterViewModel.cancelTitle)
@@ -38,6 +36,7 @@ struct PhotoLibraryFilterView: View {
             filterViewModel.shouldShowFilterMenuOnCameraUpload
         )
         
+        viewModel.filterApplied = true
         viewModel.showFilter.toggle()
     }
     
@@ -108,7 +107,13 @@ struct PhotoLibraryFilterView: View {
         .background(Color(Colors.Photos.filterBackground.color))
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
+            viewModel.filterApplied = false
             filterViewModel.initializeLastSelection()
+        }
+        .onDisappear {
+            if !viewModel.filterApplied {
+                filterViewModel.restoreLastSelection()
+            }
         }
     }
 }
