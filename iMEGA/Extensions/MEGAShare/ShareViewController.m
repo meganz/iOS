@@ -895,6 +895,9 @@
 
 - (void)uploadToParentNode:(MEGANode *)parentNode {
     if (parentNode) {
+        NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
+        self.totalAssets = self.pendingAssets = content.attachments.count;
+        
         self.parentNode = parentNode;
         [self performUploadToParentNode:parentNode];
     } else {
