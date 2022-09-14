@@ -227,6 +227,11 @@
 
 - (void)mnz_editTextFileInViewController:(UIViewController *)viewController {
     MEGANavigationController *nav = (MEGANavigationController *)[self mnz_viewControllerForNodeInFolderLink:NO fileLink:nil inViewController:viewController];
+    
+    if (nav == nil) {
+        return;
+    }
+    
     if (nav.viewControllers.lastObject.class == TextEditorViewController.class) {
         TextEditorViewController *tevc = nav.viewControllers.lastObject;
         [tevc editAfterOpen];
