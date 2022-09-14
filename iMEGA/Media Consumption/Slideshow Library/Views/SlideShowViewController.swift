@@ -65,6 +65,16 @@ final class SlideShowViewController: UIViewController, ViewType {
             navigationBar.backgroundColor = backgroundColor
             updatePlayButtonTintColor()
         }
+        
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass || traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
+            adjustCollectionViewPosition()
+        }
+    }
+    
+    func adjustCollectionViewPosition() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+            changeSlide()
+        }
     }
     
     func update(viewModel: SlideShowViewModel) {
@@ -124,11 +134,15 @@ final class SlideShowViewController: UIViewController, ViewType {
         
         viewModel.currentSlideNumber += 1
         if viewModel.currentSlideNumber < viewModel.photos.count {
-            let index = IndexPath(item: viewModel.currentSlideNumber, section: 0)
-            collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+            changeSlide()
         } else {
             finish()
         }
+    }
+    
+    private func changeSlide() {
+        let index = IndexPath(item: viewModel?.currentSlideNumber ?? 0, section: 0)
+        collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
     }
     
     @IBAction func dismissViewController() {
