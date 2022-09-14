@@ -1539,6 +1539,7 @@
 		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
+		B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransfersUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
@@ -3904,6 +3905,7 @@
 		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
+		B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAHandleRepository.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
@@ -9073,6 +9075,14 @@
 			path = FeatureFlag;
 			sourceTree = "<group>";
 		};
+		B57AD23928C1DBEB00FB173A /* MEGASdk */ = {
+			isa = PBXGroup;
+			children = (
+				B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */,
+			);
+			path = MEGASdk;
+			sourceTree = "<group>";
+		};
 		B582965627C5DF28004DD7A5 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -9465,6 +9475,7 @@
 		B662B84C24EC6F790089376A /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B57AD23928C1DBEB00FB173A /* MEGASdk */,
 				12B1E5702874E2D800D23A58 /* Statistics */,
 				9428B98D2819226200DB7250 /* ContextMenu */,
 				129D51D32821D63000A4D4D3 /* Album */,
@@ -12944,6 +12955,7 @@
 				83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */,
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
+				B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
 				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
