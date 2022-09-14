@@ -7,6 +7,7 @@ enum SlideShowAction: ActionType {
     case pausePlaying
     case playOrPause
     case finishPlaying
+    case resetTimer
 }
 
 final class SlideShowViewModel: ViewModelType {
@@ -14,6 +15,7 @@ final class SlideShowViewModel: ViewModelType {
         case startPlaying
         case pausePlaying
         case initialPhotoLoaded
+        case resetTimer
     }
     
     static let SlideShowAutoPlayingTimeInSeconds: Double = 4
@@ -105,6 +107,8 @@ final class SlideShowViewModel: ViewModelType {
         case .finishPlaying:
             playbackStatus = .complete
             invokeCommand?(.pausePlaying)
+        case .resetTimer:
+            invokeCommand?(.resetTimer)
         }
     }
 }
