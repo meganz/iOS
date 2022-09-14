@@ -3,6 +3,7 @@ import SwiftUI
 import Combine
 import MEGASwiftUI
 import MEGADomain
+import MEGASwift
 
 @available(iOS 14.0, *)
 final class PhotoCellViewModel: ObservableObject {
@@ -28,7 +29,7 @@ final class PhotoCellViewModel: ObservableObject {
         }
     }
     
-    @Published var thumbnailContainer: ImageContainer
+    @Published var thumbnailContainer: any ImageContaining
     @Published var isSelected: Bool = false {
         didSet {
             if isSelected != oldValue && selection.isPhotoSelected(photo) != isSelected {
@@ -66,7 +67,7 @@ final class PhotoCellViewModel: ObservableObject {
     // MARK: Internal
     
     func loadThumbnailIfNeeded() {
-        guard thumbnailContainer == placeholderThumbnail else {
+        guard isShowingThumbnail(placeholderThumbnail) else {
             return
         }
         
@@ -97,7 +98,7 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updateThumbailContainer(_ container: ImageContainer) {
+    private func updateThumbailContainer(_ container: any ImageContaining) {
         thumbnailContainer = container
     }
     
@@ -110,10 +111,14 @@ final class PhotoCellViewModel: ObservableObject {
             .replaceError(with: nil)
             .compactMap { $0 }
             .filter { [weak self] in
-                $0 != self?.thumbnailContainer
+                self?.isShowingThumbnail($0) == false
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$thumbnailContainer)
+    }
+    
+    private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {
+        thumbnailContainer.isEqual(container)
     }
     
     private func configSelection() {

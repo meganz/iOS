@@ -40,8 +40,7 @@ final class PhotoCellViewModelTests: XCTestCase {
                                      viewModel: allViewModel,
                                      thumbnailUseCase: MockThumbnailUseCase())
         
-        XCTAssertEqual(sut.thumbnailContainer,
-                       ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), isPlaceholder: true))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), isPlaceholder: true)))
         XCTAssertEqual(sut.duration, "00:00")
         XCTAssertEqual(sut.isVideo, false)
         XCTAssertEqual(sut.currentZoomScaleFactor, 3)
@@ -73,7 +72,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertEqual(container, thumbnails.removeFirst())
+                XCTAssertTrue(container.isEqual(thumbnails.removeFirst()))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -136,13 +135,13 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertEqual(container, URLImageContainer(imageURL: remoteURL))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
             }
             .store(in: &subscriptions)
         
         sut.loadThumbnailIfNeeded()
         await sut.thumbnailLoadingTask?.value
-        XCTAssertEqual(sut.thumbnailContainer, URLImageContainer(imageURL: remoteURL))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
     }
     
     func testLoadThumbnail_nonPlaceholderAndLoadThumbnail_noLoadThumbnail() async throws {
@@ -168,7 +167,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.loadThumbnailIfNeeded()
         await sut.thumbnailLoadingTask?.value
-        XCTAssertEqual(sut.thumbnailContainer, ImageContainer(image: Image(systemName: "heart")))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(systemName: "heart"))))
     }
     
     func testIsSelected_notSelectedAndSelect_selected() {
