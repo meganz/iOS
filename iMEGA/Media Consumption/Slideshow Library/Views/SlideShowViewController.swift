@@ -86,6 +86,7 @@ final class SlideShowViewController: UIViewController, ViewType {
          case .startPlaying: play()
          case .pausePlaying: pause()
          case .initialPhotoLoaded: playOrPauseSlideShow()
+         case .resetTimer: resetTimer()
          }
     }
     
@@ -112,8 +113,7 @@ final class SlideShowViewController: UIViewController, ViewType {
             changeImage()
         }
         
-        slideShowTimer = Timer.scheduledTimer(timeInterval: SlideShowViewModel.SlideShowAutoPlayingTimeInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
-        UIApplication.shared.isIdleTimerDisabled = true
+        resetTimer()
     }
     
     private func pause() {
@@ -127,6 +127,12 @@ final class SlideShowViewController: UIViewController, ViewType {
         collectionView.backgroundColor = UIColor.mnz_background()
         slideShowTimer.invalidate()
         viewModel?.dispatch(.finishPlaying)
+    }
+    
+    private func resetTimer() {
+        slideShowTimer.invalidate()
+        slideShowTimer = Timer.scheduledTimer(timeInterval: SlideShowViewModel.SlideShowAutoPlayingTimeInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     @objc private func changeImage() {
@@ -204,6 +210,8 @@ extension SlideShowViewController: UIScrollViewDelegate {
             viewModel.currentSlideNumber != visibleIndexPath.row {
             viewModel.currentSlideNumber = visibleIndexPath.row
         }
+        
+        viewModel?.dispatch(.resetTimer)
     }
 }
 
