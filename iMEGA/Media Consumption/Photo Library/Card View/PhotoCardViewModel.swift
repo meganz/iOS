@@ -38,7 +38,6 @@ class PhotoCardViewModel: ObservableObject {
     private func loadThumbnailFromRemote(for photo: NodeEntity) {
         thumbnailUseCase
             .requestPreview(for: photo)
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .map { url in
                 URLImageContainer(imageURL: url)
             }

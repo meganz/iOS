@@ -104,7 +104,6 @@ final class PhotoCellViewModel: ObservableObject {
     private func requestPreview() {
         thumbnailUseCase
             .requestPreview(for: photo)
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .map {
                 URLImageContainer(imageURL: $0)
             }
