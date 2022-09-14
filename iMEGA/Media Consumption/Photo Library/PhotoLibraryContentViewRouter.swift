@@ -57,7 +57,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         while let presentedViewController = topController.presentedViewController {
             topController = presentedViewController
         }
-        if topController.definesPresentationContext == false { return }
+        
+        if topController.definesPresentationContext == false && topController.children.isEmpty { return }
         
         let photoBrowser = MEGAPhotoBrowserViewController.photoBrowser(currentPhoto: photo, allPhotos: allPhotos)
         
