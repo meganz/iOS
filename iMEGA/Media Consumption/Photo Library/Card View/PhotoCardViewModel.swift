@@ -3,6 +3,7 @@ import Combine
 import SwiftUI
 import MEGASwiftUI
 import MEGADomain
+import MEGASwift
 
 @available(iOS 14.0, *)
 class PhotoCardViewModel: ObservableObject {
@@ -10,7 +11,7 @@ class PhotoCardViewModel: ObservableObject {
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)
     
-    @Published var thumbnailContainer: ImageContainer
+    @Published var thumbnailContainer: any ImageContaining
     
     init(coverPhoto: NodeEntity?, thumbnailUseCase: ThumbnailUseCaseProtocol) {
         self.coverPhoto = coverPhoto
@@ -23,7 +24,7 @@ class PhotoCardViewModel: ObservableObject {
             return
         }
         
-        guard thumbnailContainer == placeholderImageContainer else {
+        guard isShowingThumbnail(placeholderImageContainer) else {
             return
         }
         
@@ -44,9 +45,13 @@ class PhotoCardViewModel: ObservableObject {
             .replaceError(with: nil)
             .compactMap { $0 }
             .filter { [weak self] in
-                $0 != self?.thumbnailContainer
+                self?.isShowingThumbnail($0) == false
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$thumbnailContainer)
+    }
+    
+    private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {
+        thumbnailContainer.isEqual(container)
     }
 }
