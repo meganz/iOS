@@ -4,7 +4,7 @@ protocol CallParticipantVideoDelegate: AnyObject {
     func frameData(width: Int, height: Int, buffer: Data!)
 }
 
-final class CallParticipantEntity: Equatable {
+public final class CallParticipantEntity: Equatable {
     enum CallParticipantAudioVideoFlag {
         case off
         case on
@@ -60,7 +60,7 @@ final class CallParticipantEntity: Equatable {
         self.sessionRecoverable = sessionRecoverable
     }
     
-    static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
+    public static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
         lhs.participantId == rhs.participantId && lhs.clientId == rhs.clientId
     }
     
