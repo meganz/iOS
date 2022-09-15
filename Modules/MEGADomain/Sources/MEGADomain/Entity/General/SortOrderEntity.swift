@@ -1,4 +1,4 @@
-public enum SortOrderEntity {
+public enum SortOrderEntity: CaseIterable {
     case none
     case defaultAsc
     case defaultDesc
@@ -18,4 +18,15 @@ public enum SortOrderEntity {
     case labelDesc
     case favouriteAsc
     case favouriteDesc
+    
+    public static let allValid: [SortOrderEntity] = [
+        .defaultAsc,
+        .defaultDesc,
+        .sizeDesc,
+        .sizeAsc,
+        .modificationDesc,
+        .modificationAsc,
+        .labelAsc,
+        .favouriteAsc
+    ]
 }

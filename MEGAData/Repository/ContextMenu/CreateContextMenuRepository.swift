@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
     static var newRepo: CreateContextMenuRepository {

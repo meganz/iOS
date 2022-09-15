@@ -9,11 +9,11 @@ struct ShareRepository: ShareRepositoryProtocol {
     }
     
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
-        sdk.publicLinks(order.toSortOrderType())
+        sdk.publicLinks(order.toMEGASortOrderType())
             .toNodeEntities()
     }
 
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity] {
-        sdk.outShares(order.toSortOrderType()).toShareEntities()
+        sdk.outShares(order.toMEGASortOrderType()).toShareEntities()
     }
 }

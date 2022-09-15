@@ -1,10 +1,10 @@
-@testable import MEGA
+import MEGADomain
 
-final class MockCreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
+public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
     
-    static var newRepo = MockCreateContextMenuRepository()
+    public static var newRepo = MockCreateContextMenuRepository()
     
-    func createContextMenu(config: CMConfigEntity) -> CMEntity? {
+    public func createContextMenu(config: CMConfigEntity) -> CMEntity? {
         ContextMenuBuilder()
                         .setType(config.menuType)
                         .setViewMode(config.viewMode)

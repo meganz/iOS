@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol FilesExplorerViewControllerDelegate: AnyObject {
     func updateSearchResults()
@@ -13,7 +14,7 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
     @available(iOS 14.0, *)
     func updateUploadAddMenu(menu: UIMenu)
     func changeCurrentViewType()
-    func didSelect(action: UploadAddAction)
+    func didSelect(action: UploadAddActionEntity)
 }
 
 class FilesExplorerViewController: ExplorerBaseViewController {

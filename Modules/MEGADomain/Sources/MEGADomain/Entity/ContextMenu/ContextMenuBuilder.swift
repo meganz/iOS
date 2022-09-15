@@ -1,10 +1,8 @@
-
-final class ContextMenuBuilder {
-    private var menuType: ContextMenuType = .unknown
-    private var displayMode: DisplayMode = .unknown
-    private var accessLevel: MEGAShareType = .accessUnknown
-    private var viewMode: ViewModePreference = .list
-    private var sortType: SortOrderType = .nameAscending
+public final class ContextMenuBuilder {
+    private var menuType: CMElementTypeEntity = .unknown
+    private var accessLevel: ShareAccessLevelEntity = .unknown
+    private var viewMode: ViewModePreferenceEntity = .list
+    private var sortType: SortOrderEntity = .defaultAsc
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
     private var isOfflineFolder: Bool = false
@@ -28,198 +26,194 @@ final class ContextMenuBuilder {
     private var timeRemainingToDeactiveDND: String? = nil
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
-    private var chatStatus: ChatStatus = .invalid
+    private var chatStatus: ChatStatusEntity = .invalid
     private var shouldStartMeeting = false
     private var shouldJoinMeeting = false
     
-    func setType(_ menuType: ContextMenuType?) -> ContextMenuBuilder {
+    public init() {}
+    
+    public func setType(_ menuType: CMElementTypeEntity?) -> ContextMenuBuilder {
         self.menuType = menuType ?? .unknown
         return self
     }
     
-    func setDisplayMode(_ displayMode: DisplayMode) -> ContextMenuBuilder {
-        self.displayMode = displayMode
+    public func setAccessLevel(_ accessLevel: ShareAccessLevelEntity?) -> ContextMenuBuilder {
+        self.accessLevel = accessLevel ?? .unknown
         return self
     }
     
-    func setAccessLevel(_ accessLevel: MEGAShareType?) -> ContextMenuBuilder {
-        self.accessLevel = accessLevel ?? .accessUnknown
-        return self
-    }
-    
-    func setViewMode(_ viewMode: ViewModePreference?) -> ContextMenuBuilder {
+    public func setViewMode(_ viewMode: ViewModePreferenceEntity?) -> ContextMenuBuilder {
         self.viewMode = viewMode ?? .list
         return self
     }
     
-    func setSortType(_ sortType: SortOrderType?) -> ContextMenuBuilder {
-        self.sortType = sortType ?? .nameAscending
+    public func setSortType(_ sortType: SortOrderEntity?) -> ContextMenuBuilder {
+        self.sortType = sortType ?? .defaultAsc
         return self
     }
     
-    func setIsAFolder(_ isAFolder: Bool) -> ContextMenuBuilder {
+    public func setIsAFolder(_ isAFolder: Bool) -> ContextMenuBuilder {
         self.isAFolder = isAFolder
         return self
     }
     
-    func setIsRubbishBinFolder(_ isRubbishBinFolder: Bool) -> ContextMenuBuilder {
+    public func setIsRubbishBinFolder(_ isRubbishBinFolder: Bool) -> ContextMenuBuilder {
         self.isRubbishBinFolder = isRubbishBinFolder
         return self
     }
     
-    func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
+    public func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
         self.isOfflineFolder = isOfflineFolder
         return self
     }
     
-    func setIsRestorable(_ isRestorable: Bool) -> ContextMenuBuilder {
+    public func setIsRestorable(_ isRestorable: Bool) -> ContextMenuBuilder {
         self.isRestorable = isRestorable
         return self
     }
     
-    func setIsInVersionsView(_ isInVersionsView: Bool) -> ContextMenuBuilder {
+    public func setIsInVersionsView(_ isInVersionsView: Bool) -> ContextMenuBuilder {
         self.isInVersionsView = isInVersionsView
         return self
     }
     
-    func setIsSharedItems(_ isSharedItems: Bool) -> ContextMenuBuilder {
+    public func setIsSharedItems(_ isSharedItems: Bool) -> ContextMenuBuilder {
         self.isSharedItems = isSharedItems
         return self
     }
     
-    func setIsIncomingShareChild(_ isIncomingShareChild: Bool) -> ContextMenuBuilder {
+    public func setIsIncomingShareChild(_ isIncomingShareChild: Bool) -> ContextMenuBuilder {
         self.isIncomingShareChild = isIncomingShareChild
         return self
     }
     
-    func setIsHome(_ isHome: Bool) -> ContextMenuBuilder {
+    public func setIsHome(_ isHome: Bool) -> ContextMenuBuilder {
         self.isHome = isHome
         return self
     }
     
-    func setIsFavouritesExplorer(_ isFavouritesExplorer: Bool) -> ContextMenuBuilder {
+    public func setIsFavouritesExplorer(_ isFavouritesExplorer: Bool) -> ContextMenuBuilder {
         self.isFavouritesExplorer = isFavouritesExplorer
         return self
     }
     
-    func setIsDocumentExplorer(_ isDocumentExplorer: Bool) -> ContextMenuBuilder {
+    public func setIsDocumentExplorer(_ isDocumentExplorer: Bool) -> ContextMenuBuilder {
         self.isDocumentExplorer = isDocumentExplorer
         return self
     }
     
-    func setIsAudiosExplorer(_ isAudiosExplorer: Bool) -> ContextMenuBuilder {
+    public func setIsAudiosExplorer(_ isAudiosExplorer: Bool) -> ContextMenuBuilder {
         self.isAudiosExplorer = isAudiosExplorer
         return self
     }
     
-    func setIsVideosExplorer(_ isVideosExplorer: Bool) -> ContextMenuBuilder {
+    public func setIsVideosExplorer(_ isVideosExplorer: Bool) -> ContextMenuBuilder {
         self.isVideosExplorer = isVideosExplorer
         return self
     }
     
-    func setIsCameraUploadExplorer(_ isCameraUploadExplorer: Bool) -> ContextMenuBuilder {
+    public func setIsCameraUploadExplorer(_ isCameraUploadExplorer: Bool) -> ContextMenuBuilder {
         self.isCameraUploadExplorer = isCameraUploadExplorer
         return self
     }
     
-    func setIsFilterEnabled(_ isFilterEnabled: Bool) -> ContextMenuBuilder {
+    public func setIsFilterEnabled(_ isFilterEnabled: Bool) -> ContextMenuBuilder {
         self.isFilterEnabled = isFilterEnabled
         return self
     }
     
-    func setIsDoNotDisturbEnabled(_ isDoNotDisturbEnabled: Bool) -> ContextMenuBuilder {
+    public func setIsDoNotDisturbEnabled(_ isDoNotDisturbEnabled: Bool) -> ContextMenuBuilder {
         self.isDoNotDisturbEnabled = isDoNotDisturbEnabled
         return self
     }
     
-    func setIsShareAvailable(_ isShareAvailable: Bool) -> ContextMenuBuilder {
+    public func setIsShareAvailable(_ isShareAvailable: Bool) -> ContextMenuBuilder {
         self.isShareAvailable = isShareAvailable
         return self
     }
     
-    func setIsSharedItemsChild(_ isSharedItemsChild: Bool) -> ContextMenuBuilder {
+    public func setIsSharedItemsChild(_ isSharedItemsChild: Bool) -> ContextMenuBuilder {
         self.isSharedItemsChild = isSharedItemsChild
         return self
     }
     
-    func setIsOutShare(_ isOutShare: Bool) -> ContextMenuBuilder {
+    public func setIsOutShare(_ isOutShare: Bool) -> ContextMenuBuilder {
         self.isOutShare = isOutShare
         return self
     }
     
-    func setIsExported(_ isExported: Bool) -> ContextMenuBuilder {
+    public func setIsExported(_ isExported: Bool) -> ContextMenuBuilder {
         self.isExported = isExported
         return self
     }
     
-    func setIsEmptyState(_ isEmptyState: Bool) -> ContextMenuBuilder {
+    public func setIsEmptyState(_ isEmptyState: Bool) -> ContextMenuBuilder {
         self.isEmptyState = isEmptyState
         return self
     }
     
-    func setTimeRemainingToDeactiveDND(_ timeRemainingToDeactiveDND: String?) -> ContextMenuBuilder {
+    public func setTimeRemainingToDeactiveDND(_ timeRemainingToDeactiveDND: String?) -> ContextMenuBuilder {
         self.timeRemainingToDeactiveDND = timeRemainingToDeactiveDND
         return self
     }
     
-    func setVersionsCount(_ versionsCount: Int) -> ContextMenuBuilder {
+    public func setVersionsCount(_ versionsCount: Int) -> ContextMenuBuilder {
         self.versionsCount = versionsCount
         return self
     }
     
-    func setShowMediaDiscovery(_ showMediaDiscovery: Bool) -> ContextMenuBuilder {
+    public func setShowMediaDiscovery(_ showMediaDiscovery: Bool) -> ContextMenuBuilder {
         self.showMediaDiscovery = showMediaDiscovery
         return self
     }
     
-    func setChatStatus(_ chatStatus: ChatStatus) -> ContextMenuBuilder {
+    public func setChatStatus(_ chatStatus: ChatStatusEntity) -> ContextMenuBuilder {
         self.chatStatus = chatStatus
         return self
     }
     
-    func setShouldStartMeeting(_ shouldStartMeeting: Bool) -> ContextMenuBuilder {
+    public func setShouldStartMeeting(_ shouldStartMeeting: Bool) -> ContextMenuBuilder {
         self.shouldStartMeeting = shouldStartMeeting
         return self
     }
     
-    func setShouldJoinMeeting(_ shouldJoinMeeting: Bool) -> ContextMenuBuilder {
+    public func setShouldJoinMeeting(_ shouldJoinMeeting: Bool) -> ContextMenuBuilder {
         self.shouldJoinMeeting = shouldJoinMeeting
         return self
     }
     
-    
-    func build() -> CMEntity? {
-        switch menuType {
-        case .uploadAdd:
-            return uploadAddMenu()
-        case .display:
-            return displayMenu()
-        case .rubbishBin:
-            return rubbishBinChildFolderMenu()
-        case .chat:
-            return chatMenu()
-        case .qr:
-            return myQRCodeMenu()
-        case .meeting:
-            return meetingMenu()
-        default:
-            return nil
+    public func build() -> CMEntity? {
+        /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
+        if case let .menu(type) = menuType {
+            switch type {
+            case .uploadAdd:
+                return uploadAddMenu()
+            case .display:
+                return displayMenu()
+            case .rubbishBin:
+                return rubbishBinChildFolderMenu()
+            case .chat:
+                return chatMenu()
+            case .qr:
+                return myQRCodeMenu()
+            case .meeting:
+                return meetingMenu()
+            default:
+                return nil
+            }
         }
+        return nil
     }
     
-    func currentViewMode() -> ViewModePreference {
+    func currentViewMode() -> ViewModePreferenceEntity {
         viewMode
     }
     
-    func currentSortType() -> SortOrderType {
+    func currentSortType() -> SortOrderEntity {
         sortType
     }
     
-    func currentVersionsCount() -> Int {
-        versionsCount
-    }
-    
-    func currentChatStatus() -> ChatStatus {
+    func currentChatStatus() -> ChatStatusEntity {
         chatStatus
     }
     
@@ -248,7 +242,7 @@ final class ContextMenuBuilder {
         let selectAction = select
         
         if isEmptyState {
-            selectAction.updateActionStyle(isEnabled: false)
+            selectAction.isEnabled = false
         }
         
         return CMEntity(displayInline: true,
@@ -282,9 +276,7 @@ final class ContextMenuBuilder {
     
     private func sortMenu() -> CMElement {
         if isEmptyState {
-            return CMActionEntity(title: Strings.Localizable.sortTitle,
-                                  image: Asset.Images.ActionSheetIcons.sort.image,
-                                  identifier: DisplayAction.sort.rawValue,
+            return CMActionEntity(type: .display(actionType: .sort),
                                   isEnabled: false)
         } else {
             var sortMenuActions = [sortNameAscending, sortNameDescending]
@@ -300,10 +292,8 @@ final class ContextMenuBuilder {
                     }
                 }
             }
-            return CMEntity(title: Strings.Localizable.sortTitle,
-                            detail: sortType.localizedString,
-                            image: Asset.Images.ActionSheetIcons.sort.image,
-                            identifier: DisplayAction.sort.rawValue,
+            return CMEntity(type: .display(actionType: .sort),
+                            currentSortType: sortType,
                             children: sortMenuActions)
         }
     }
@@ -318,7 +308,7 @@ final class ContextMenuBuilder {
         var displayActionsMenuChildren: [CMElement] = []
         
         if isAFolder && !isRubbishBinFolder {
-            displayActionsMenuChildren.append(quickFolderActions())
+            displayActionsMenuChildren.append(makeQuickActions())
         }
         
         if isSharedItems || isAudiosExplorer {
@@ -342,10 +332,10 @@ final class ContextMenuBuilder {
                         children: displayActionsMenuChildren)
     }
     
-    private func quickFolderActions() -> CMEntity {
+    private func makeQuickActions() -> CMEntity {
         var quickActions: [CMElement] = [info, download]
         
-        if accessLevel == .accessOwner {
+        if accessLevel == .owner {
             quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
             quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder])
             quickActions.append(rename)
@@ -373,7 +363,7 @@ final class ContextMenuBuilder {
             rubbishBinActions.append(restore)
         }
         
-        rubbishBinActions.append(info)
+        rubbishBinActions.append(infoRubbishBin)
         
         if !isInVersionsView {
             if versionsCount > 0 {
@@ -392,10 +382,9 @@ final class ContextMenuBuilder {
     }
     
     private func chatStatusMenu() -> CMEntity {
-        CMEntity(title: Strings.Localizable.status,
-                 detail: currentChatStatus().localizedIdentifier,
-                 identifier: ChatAction.status.rawValue,
-                 children: ChatStatus
+        CMEntity(type: .chat(actionType: .status),
+                 currentChatStatus: currentChatStatus(),
+                 children: ChatStatusEntity
                                     .allCases
                                     .filter { $0 != .invalid }
                                     .compactMap(chatStatus))
@@ -405,28 +394,25 @@ final class ContextMenuBuilder {
         var doNotDisturbElements = [CMElement]()
         if #available(iOS 14.0, *) {
             doNotDisturbElements.append(CMEntity(displayInline: true,
-                                                 children: [CMActionEntity(title: Strings.Localizable.off,
-                                                                           identifier: DNDDisabledAction.off.rawValue,
+                                                 children: [CMActionEntity(type: .chatDoNotDisturbDisabled(actionType: .off),
                                                                            state: isDoNotDisturbEnabled ? .off : .on)]))
         
         }
             
         if !isDoNotDisturbEnabled {
             doNotDisturbElements.append(CMEntity(displayInline: true,
-                                                 children: DNDTurnOnOption
+                                                 children: DNDTurnOnOptionEntity
                                                                         .allCases
                                                                         .filter { $0 != .forever }
                                                                         .compactMap(doNotDisturb)))
         }
                         
-        return CMEntity(title: Strings.Localizable.doNotDisturb,
-                        detail: isDoNotDisturbEnabled ? currentTimeRemainingToDeactiveDND() : nil,
-                        identifier: ChatAction.doNotDisturb.rawValue,
+        return CMEntity(type: .chat(actionType: .doNotDisturb),
+                        dndRemainingTime: isDoNotDisturbEnabled ? currentTimeRemainingToDeactiveDND() : nil,
                         children: doNotDisturbElements)
     }
     
-    //MARK:- Meeting Context Actions
-    
+    //MARK: - Meeting Context Actions
     private func meetingMenu() -> CMEntity {
         CMEntity(displayInline: true,
                  children: [startMeeting, joinMeeting])
