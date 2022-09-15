@@ -82,7 +82,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func isSlideShowEnabled() -> Bool {
         FeatureFlagProvider(useCase: FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)).isFeatureFlagEnabled(for: .slideShow) &&
-        displayMode == .cloudDrive &&
+        (displayMode == .cloudDrive || displayMode == .sharedItem) &&
         dataProvider.currentPhoto?.name?.mnz_isImagePathExtension == true
     }
     

@@ -128,11 +128,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case DisplayModeCloudDrive:
+        case DisplayModeSharedItem:
             [self activateSlideShowButton];
             break;
 
         case DisplayModeRubbishBin:
-        case DisplayModeSharedItem:
         case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
@@ -885,6 +885,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self saveToPhotosWithNode:node];
             break;
             
+        case DisplayModeSharedItem:
         case DisplayModeCloudDrive:
             [self openSlideShow];
             break;
