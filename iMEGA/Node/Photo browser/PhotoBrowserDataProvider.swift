@@ -1,7 +1,13 @@
 import Foundation
 import MEGADomain
 
-final class PhotoBrowserDataProvider: NSObject {
+protocol PhotoBrowserDataProviderProtocol {
+    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk)
+    var allPhotoEntities: [NodeEntity] { get }
+    var currentPhoto: MEGANode? { get }
+}
+
+final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol {
     private var megaNodes: [MEGANode]?
     private var nodeEntities: [NodeEntity]?
     private let sdk: MEGASdk

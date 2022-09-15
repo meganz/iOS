@@ -73,7 +73,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     func adjustCollectionViewPosition() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-            changeSlide()
+            updateSlideInView()
         }
     }
     
@@ -130,8 +130,10 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func resetTimer() {
+        guard let viewModel = viewModel else { return }
+        
         slideShowTimer.invalidate()
-        slideShowTimer = Timer.scheduledTimer(timeInterval: SlideShowViewModel.SlideShowAutoPlayingTimeInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        slideShowTimer = Timer.scheduledTimer(timeInterval: viewModel.timeIntervalForSlideInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
@@ -140,15 +142,19 @@ final class SlideShowViewController: UIViewController, ViewType {
         
         viewModel.currentSlideNumber += 1
         if viewModel.currentSlideNumber < viewModel.photos.count {
-            changeSlide()
+            updateSlideInView()
         } else {
             finish()
         }
     }
     
-    private func changeSlide() {
-        let index = IndexPath(item: viewModel?.currentSlideNumber ?? 0, section: 0)
-        collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+    private func updateSlideInView() {
+        guard let viewModel = viewModel else { return }
+        
+        let index = IndexPath(item: viewModel.currentSlideNumber, section: 0)
+        if collectionView.isValid(indexPath: index) {
+            collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+        }
     }
     
     @IBAction func dismissViewController() {
@@ -183,19 +189,21 @@ extension SlideShowViewController: UICollectionViewDelegate {
 
 extension SlideShowViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.numberOfSlideShowImages ?? 0
+        return viewModel?.numberOfSlideShowContents ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
         
         guard let viewModel = viewModel else { return cell }
-        guard indexPath.row < viewModel.photos.count else {
+        guard indexPath.row < viewModel.photos.count,
+                let image = viewModel.photos[indexPath.row].image
+        else {
             viewModel.dispatch(.finishPlaying)
             return cell
         }
         
-        cell.update(withImage: viewModel.photos[indexPath.row].image, andInteraction: self)
+        cell.update(withImage: image, andInteraction: self)
         return cell
     }
 }
