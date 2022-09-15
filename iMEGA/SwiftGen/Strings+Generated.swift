@@ -1951,10 +1951,6 @@ public enum Strings {
     public static let shortcuts = Strings.tr("Localizable", "Shortcuts")
     /// Show
     public static let show = Strings.tr("Localizable", "Show")
-    /// Show me away after 1 minute of inactivity
-    public static let showMeAwayAfter1MinuteOfInactivity = Strings.tr("Localizable", "showMeAwayAfter1MinuteOfInactivity")
-    /// Show me away after [X] minutes of inactivity
-    public static let showMeAwayAfterXMinutesOfInactivity = Strings.tr("Localizable", "showMeAwayAfterXMinutesOfInactivity")
     /// Simple Passcode
     public static let simplePasscodeLabel = Strings.tr("Localizable", "simplePasscodeLabel")
     /// Size
@@ -2843,6 +2839,10 @@ public enum Strings {
         }
       }
     }
+    public enum AutoAway {
+      /// Set status as Away after [X]
+      public static let footerDescription = Strings.tr("Localizable", "autoAway.footerDescription")
+    }
     public enum Backups {
       /// Backups
       public static let title = Strings.tr("Localizable", "backups.title")
@@ -2937,6 +2937,26 @@ public enum Strings {
         public static let filesApp = Strings.tr("Localizable", "chat.addToChatMenu.filesApp")
         /// Scan
         public static let scan = Strings.tr("Localizable", "chat.addToChatMenu.scan")
+      }
+      public enum AutoAway {
+        /// Plural format key: "%#@hour@"
+        public static func hour(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "chat.autoAway.hour", p1)
+        }
+        /// Plural format key: "%#@minute@"
+        public static func minute(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "chat.autoAway.minute", p1)
+        }
+        public enum Label {
+          /// Plural format key: "%#@hour@"
+          public static func hour(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "chat.autoAway.label.hour", p1)
+          }
+          /// Plural format key: "%#@minute@"
+          public static func minute(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "chat.autoAway.label.minute", p1)
+          }
+        }
       }
       public enum Chats {
         public enum EmptyState {

@@ -10,12 +10,7 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
-static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
-
 @interface ChatStatusTableViewController () <UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
-
-@property (nonatomic) MEGAChatPresenceConfig *presenceConfig;
-@property (weak, nonatomic) NSIndexPath *currentStatusIndexPath;
 
 @property (weak, nonatomic) IBOutlet UILabel *onlineLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *onlineRedCheckmarkImageView;
@@ -28,16 +23,12 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
 @property (weak, nonatomic) IBOutlet UILabel *autoAwayLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *autoAwaySwitch;
-@property (weak, nonatomic) IBOutlet UITextField *autoAwayTimeTextField;
-@property (weak, nonatomic) IBOutlet UIButton *autoAwayTimeSaveButton;
-@property (nonatomic) NSInteger autoAwayTimeoutInMinutes;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusPersistenceLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *statusPersistenceSwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *lastActiveLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *lastActiveSwitch;
-@property (weak, nonatomic) IBOutlet UITableViewCell *timeAutoAwayCell;
 
 @end
 
@@ -109,9 +100,12 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.autoAwayTimeTextField.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.timeoutAutoAwayLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
     
+    UIColor *disabledColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.4];
+    [self.autoAwayTimeSaveButton setTitleColor:disabledColor forState:UIControlStateDisabled];
+
     [self.tableView reloadData];
 }
 
@@ -125,9 +119,8 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     [self updateCurrentIndexPathForOnlineStatus];
     
     self.autoAwaySwitch.on = self.presenceConfig.isAutoAwayEnabled;
-    self.timeAutoAwayCell.hidden = !self.presenceConfig.isAutoAwayEnabled;
-    [self updateAutoAwayTimeLabel];
-    
+    self.timeoutAutoAwayCell.hidden = !self.presenceConfig.isAutoAwayEnabled && self.isSelectingTimeout;
+    [self updateAutoAwayTimeTitle];
     self.statusPersistenceSwitch.on = self.presenceConfig.isPersist;
     
     self.lastActiveSwitch.on = self.presenceConfig.isLastGreenVisible;
@@ -181,21 +174,11 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 }
 
 - (void)setPresenceAutoAway:(BOOL)boolValue {
+    self.isSelectingTimeout = NO;
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
     [[MEGASdkManager sharedMEGAChatSdk] setPresenceAutoaway:boolValue timeout:(self.autoAwayTimeoutInMinutes * 60)];
-}
-
-- (void)updateAutoAwayTimeLabel {
-    NSInteger minutes = (self.presenceConfig.autoAwayTimeout / 60);
-    if (minutes < 1) {
-        return;
-    }
-    
-    NSString *format = NSLocalizedString(@"chat.status.duration.minute", nil);
-    self.autoAwayTimeTextField.text = [NSString stringWithFormat:format, minutes];
-    self.autoAwayTimeSaveButton.hidden = YES;
 }
 
 #pragma mark - IBActions
@@ -205,27 +188,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 }
 
 - (IBAction)autoAwayTimeSaveButtonTouchUpInside:(UIButton *)sender {
-    [self.autoAwayTimeTextField resignFirstResponder];
-    
-    self.autoAwayTimeSaveButton.enabled = NO;
-    self.autoAwayTimeSaveButton.hidden = YES;
-    
-    if (self.autoAwayTimeTextField.text.intValue == 0) {
-        self.autoAwayTimeTextField.text = @"1";
-    }
-    
-    if (self.autoAwayTimeTextField.text.intValue > MaxAutoawayTimeout) {
-        self.autoAwayTimeTextField.text = [NSString stringWithFormat:@"%td", MaxAutoawayTimeout];
-    }
-    
-    if ([self.autoAwayTimeTextField.text isEqualToString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]]) {
-        [self updateAutoAwayTimeLabel];
-        return;
-    }
-    
-    self.autoAwayTimeoutInMinutes = self.autoAwayTimeTextField.text.intValue;
-    
-    [self setPresenceAutoAway:self.autoAwaySwitch.isOn];
+    [self saveAutoAwayTime];
 }
 
 - (IBAction)statusPersistenceValueChanged:(UISwitch *)sender {
@@ -264,6 +227,39 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     return numberOfSections;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return 4;
+            break;
+            
+        case 1:
+        case 2:
+            return 1;
+            break;
+            
+        case 3:
+            if (self.presenceConfig.isAutoAwayEnabled) {
+                if (self.isSelectingTimeout) {
+                    return 4;
+                } else {
+                    return 2;
+                }
+            } else {
+                return 1;
+            }
+            break;
+            
+        case 4:
+            return 2;
+            break;
+            
+        default:
+            return 1;
+            break;
+    }
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *titleForFooter;
     switch (section) {
@@ -280,18 +276,22 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
             break;
             
         case 3:
-            if (self.presenceConfig.isAutoAwayEnabled) {
-                if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
-                    titleForFooter = NSLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
-                    titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
-                } else {
-                    titleForFooter = NSLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
-                }
+            if (self.presenceConfig.isAutoAwayEnabled && !self.isSelectingTimeout) {
+                titleForFooter = NSLocalizedString(@"autoAway.footerDescription", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[self formatHoursAndMinutes]];
             }
             break;
     }
     
     return titleForFooter;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 3 && self.isSelectingTimeout && indexPath.item == 1) {
+        return 0;
+    }
+    
+    return UITableViewAutomaticDimension;
 }
 
 #pragma mark - UITableViewDelegate
@@ -302,10 +302,6 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (self.autoAwayTimeTextField.isEditing) {
-        [self.autoAwayTimeTextField resignFirstResponder];
-    }
     
     if (self.currentStatusIndexPath == indexPath) {
         return;
@@ -332,25 +328,19 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
                 [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:MEGAChatStatusOffline];
                 break;
         }
-    } else if (indexPath.section == 3 && indexPath.row == 1) { //Auto-away - Number of minutes for Auto-away
-        [self.autoAwayTimeTextField becomeFirstResponder];
+    } else if (indexPath.section == 3 && indexPath.row == 1 && !self.isSelectingTimeout) { //Auto-away - Number of
+        self.isSelectingTimeout = YES;
+        [self configurePickerValues];
+        [tableView reloadData];
     }
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    textField.text = [NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)];
-    
-    self.autoAwayTimeSaveButton.enabled = YES;
-    self.autoAwayTimeSaveButton.hidden = NO;
-    
-    return YES;
-}
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    self.autoAwayTimeSaveButton.enabled = YES;
-    
-    return YES;
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 3 && self.isSelectingTimeout) {
+        return 0;
+    } else {
+        return UITableViewAutomaticDimension;
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
