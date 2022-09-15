@@ -88,9 +88,9 @@ extension PhotosViewController {
     @objc func setupRightNavigationBarButtons() {
         if isEditing {
             if #available(iOS 14.0, *) {
-                self.objcWrapper_parent.navigationItem.setRightBarButton(cancelBarButtonItem, animated: true)
+                self.objcWrapper_parent.navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
             } else {
-                self.navigationItem.setRightBarButton(cancelBarButtonItem, animated: true)
+                self.navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
             }
         } else {
             if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
@@ -113,9 +113,9 @@ extension PhotosViewController {
                 }
             }  else {
                 if #available(iOS 14.0, *) {
-                    self.objcWrapper_parent.navigationItem.setRightBarButton(editBarButtonItem, animated: true)
+                    self.objcWrapper_parent.navigationItem.setRightBarButtonItems([editBarButtonItem], animated: true)
                 } else {
-                    self.navigationItem.setRightBarButton(editBarButtonItem, animated: true)
+                    self.navigationItem.setRightBarButtonItems([editBarButtonItem], animated: true)
                 }
             }
         }
