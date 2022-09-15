@@ -905,6 +905,7 @@
 		834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */; };
 		834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */; };
 		834EFDC224D9B373004BFECA /* Node.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834EFDC124D9B373004BFECA /* Node.storyboard */; };
+		8350800028CF85EF000A89FC /* ChatStatusTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */; };
 		835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */; };
 		835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
 		835223B42059588300A47438 /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
@@ -3447,6 +3448,7 @@
 		834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceContactTableViewCell.swift; sourceTree = "<group>"; };
 		834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewController.swift; sourceTree = "<group>"; };
 		834EFDC124D9B373004BFECA /* Node.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Node.storyboard; sourceTree = "<group>"; };
+		83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatStatusTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetFolderInfoRequestDelegate.h; path = API/Requests/MEGAGetFolderInfoRequestDelegate.h; sourceTree = "<group>"; };
 		835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetFolderInfoRequestDelegate.m; path = API/Requests/MEGAGetFolderInfoRequestDelegate.m; sourceTree = "<group>"; };
 		835223AF205957DD00A47438 /* ItemCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemCollectionViewCell.h; sourceTree = "<group>"; };
@@ -11045,6 +11047,7 @@
 				E8534D4A1E15231C00911C40 /* ChatSettingsTableViewController.m */,
 				E83E10281E1582E8002F3E2E /* ChatStatusTableViewController.h */,
 				E83E10291E1582E8002F3E2E /* ChatStatusTableViewController.m */,
+				83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */,
 				A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */,
 				A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */,
 				2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */,
@@ -12621,6 +12624,7 @@
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				C48CE0142732ECE40081DEC4 /* NodeLoadOperation.swift in Sources */,
+				8350800028CF85EF000A89FC /* ChatStatusTableViewController+Additions.swift in Sources */,
 				5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */,
 				2F26B3322578467E00486C40 /* PasteImagePreviewRouter.swift in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
