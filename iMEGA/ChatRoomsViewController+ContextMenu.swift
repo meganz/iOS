@@ -1,16 +1,17 @@
+import MEGADomain
 
 extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate {
     
     private func contextMenuConfiguration() -> CMConfigEntity {
-        CMConfigEntity(menuType: .chat,
+        CMConfigEntity(menuType: .menu(type: .chat),
                        isDoNotDisturbEnabled: globalDNDNotificationControl?.isGlobalDNDEnabled ?? false,
                        timeRemainingToDeactiveDND: globalDNDNotificationControl?.timeRemainingToDeactiveDND ?? "",
-                       chatStatus: ChatStatus(rawValue: MEGASdkManager.sharedMEGAChatSdk().onlineStatus().rawValue) ?? .invalid)
+                       chatStatus: ChatStatus(rawValue: MEGASdkManager.sharedMEGAChatSdk().onlineStatus().rawValue)?.toChatStatusEntity() ?? .invalid)
     }
     
     @objc func setEmptyViewButtonWithMeetingsOptions(button: UIButton) {
         if #available(iOS 14.0, *) {
-            button.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .meeting))
+            button.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .menu(type: .meeting)))
             button.showsMenuAsPrimaryAction = true
         } else {
             button.addTarget(self, action: #selector(presentMeetingActionSheet(sender:)), for: .touchUpInside)
@@ -23,7 +24,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     
     private func setAddBarButtonWithMeetingsOptions() {
         if #available(iOS 14.0, *) {
-            addBarButtonItem?.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .meeting))
+            addBarButtonItem?.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .menu(type: .meeting)))
             addBarButtonItem?.target = nil
             addBarButtonItem?.action = nil
         } else {
@@ -93,7 +94,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     @objc func presentActionSheet(actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions.compactMap { $0.identifier == ChatAction.doNotDisturb.rawValue ? convertToSwitchAction(action: $0) : $0},
+        let actionSheetVC = ActionSheetViewController(actions: actions.compactMap { $0.type == CMElementTypeEntity.chat(actionType: .doNotDisturb) ? convertToSwitchAction(action: $0) : $0},
                                                       headerTitle: nil,
                                                       dismissCompletion: nil,
                                                       sender: nil)
@@ -116,7 +117,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     @objc func presentMeetingActionSheet(sender: Any) {
-        guard let actions = contextMenuManager?.actionSheetActions(with: CMConfigEntity(menuType: .meeting)) else { return }
+        guard let actions = contextMenuManager?.actionSheetActions(with: CMConfigEntity(menuType: .menu(type: .meeting))) else { return }
         
         let actionSheetVC = ActionSheetViewController(
             actions: actions,
@@ -128,7 +129,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     //MARK: - ChatMenuDelegate functions
-    func chatStatusMenu(didSelect action: ChatStatusAction) {
+    func chatStatusMenu(didSelect action: ChatStatusEntity) {
         switch action {
         case .online:
             changeTo(onlineStatus: .online)
@@ -138,6 +139,8 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
             changeTo(onlineStatus: .busy)
         case .offline:
             changeTo(onlineStatus: .offline)
+        default:
+            break
         }
     }
     
@@ -164,7 +167,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         present(actionSheetVC, animated: true)
     }
     
-    func meetingContextMenu(didSelect action: MeetingAction) {
+    func meetingContextMenu(didSelect action: MeetingActionEntity) {
         if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
             MeetingAlreadyExistsAlert.show(presenter: self)
             return

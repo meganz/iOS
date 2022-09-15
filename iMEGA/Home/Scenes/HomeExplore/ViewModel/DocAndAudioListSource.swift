@@ -131,7 +131,7 @@ extension DocAndAudioListSource {
             ) { [weak self] in
                 self?.shareLink(node: nodeCell.node)
             }
-            let rubbishBinAction = contextualAction(
+            let RubbishBinActionEntity = contextualAction(
                 withImageName: Asset.Images.NodeActions.rubbishBin.name,
                 backgroundColor: .mnz_redError()
             ) { [weak self] in
@@ -141,7 +141,7 @@ extension DocAndAudioListSource {
                 self?.download(node: node)
             }
 
-            let actions = [rubbishBinAction, shareLinkAction, downloadAction]
+            let actions = [RubbishBinActionEntity, shareLinkAction, downloadAction]
             
             return UISwipeActionsConfiguration(actions: actions)
         }

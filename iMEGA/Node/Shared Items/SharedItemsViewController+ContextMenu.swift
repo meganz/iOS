@@ -1,4 +1,6 @@
 import Foundation
+import MEGADomain
+
 extension SharedItemsViewController: DisplayMenuDelegate {
     @objc func tableView(_ tableView: UITableView,
                          contextMenuConfigurationForRowAt indexPath: IndexPath,
@@ -34,8 +36,8 @@ extension SharedItemsViewController: DisplayMenuDelegate {
     
     //MARK: - Context Menus configuration
     func contextMenuConfiguration() -> CMConfigEntity {
-        return CMConfigEntity(menuType: .display,
-                              sortType: SortOrderType(megaSortOrderType: sortOrderType),
+        return CMConfigEntity(menuType: .menu(type: .display),
+                              sortType: SortOrderType(megaSortOrderType: sortOrderType).megaSortOrderType.toSortOrderEntity(),
                               isSharedItems: true)
     }
     
@@ -76,7 +78,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         self.present(actionSheetVC, animated: true)
     }
     
-    func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:
             didTapSelect()

@@ -10,7 +10,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         if parentNode.isFolder(),
            displayMode == .rubbishBin,
            parentNode.handle != MEGASdkManager.sharedMEGASdk().rubbishNode?.handle {
-            return CMConfigEntity(menuType: .rubbishBin,
+            return CMConfigEntity(menuType: .menu(type: .rubbishBin),
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
@@ -18,10 +18,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
             
             if #available(iOS 14.0, *) {
-                return CMConfigEntity(menuType: .display,
-                                      viewMode: isListViewModeSelected() ? ViewModePreference.list : ViewModePreference.thumbnail,
-                                      accessLevel: parentNodeAccessLevel,
-                                      sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)),
+                return CMConfigEntity(menuType: .menu(type: .display),
+                                      viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                                      accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
+                                      sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isIncomingShareChild: isIncomingSharedRootChild,
@@ -29,10 +29,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       isExported: parentNode.isExported(),
                                       showMediaDiscovery: shouldShowMediaDiscovery())
             } else {
-                return CMConfigEntity(menuType: .display,
-                                      viewMode: isListViewModeSelected() ? ViewModePreference.list : ViewModePreference.thumbnail,
-                                      accessLevel: parentNodeAccessLevel,
-                                      sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)),
+                return CMConfigEntity(menuType: .menu(type: .display),
+                                      viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                                      accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
+                                      sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isIncomingShareChild: isIncomingSharedRootChild,
@@ -43,12 +43,12 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     func uploadAddMenuConfiguration() -> CMConfigEntity? {
-        CMConfigEntity(menuType: .uploadAdd)
+        CMConfigEntity(menuType: .menu(type: .uploadAdd))
     }
     
     @objc func configureContextMenuManager() {
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self,
-                                                quickFolderActionsMenuDelegate: self,
+                                                quickActionsMenuDelegate: self,
                                                 uploadAddMenuDelegate: self,
                                                 rubbishBinMenuDelegate: self,
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
@@ -97,7 +97,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     //MARK: - CloudDriveContextMenuDelegate functions
-    func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:
             guard let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection else { return }
@@ -129,7 +129,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
-    func quickFolderActionsMenu(didSelect action: QuickFolderAction, needToRefreshMenu: Bool) {
+    func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
         guard let parentNode = parentNode else { return }
         
         switch action {
@@ -170,7 +170,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
-    func uploadAddMenu(didSelect action: UploadAddAction) {
+    func uploadAddMenu(didSelect action: UploadAddActionEntity) {
         switch action {
         case .scanDocument:
             presentScanDocument()
@@ -223,7 +223,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
-    func rubbishBinMenu(didSelect action: RubbishBinAction) {
+    func rubbishBinMenu(didSelect action: RubbishBinActionEntity) {
         guard let parentNode = parentNode else { return }
         
         switch action {

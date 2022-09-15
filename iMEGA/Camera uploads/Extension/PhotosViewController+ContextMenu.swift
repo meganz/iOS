@@ -1,20 +1,21 @@
 import UIKit
+import MEGADomain
 import MEGASwift
 
 extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         if #available(iOS 14.0, *) {
             return CMConfigEntity(
-                menuType: .display,
-                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+                menuType: .menu(type: .display),
+                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
                 isCameraUploadExplorer: true,
                 isFilterEnabled: viewModel.shouldShowFilterMenuOnCameraUpload,
                 isEmptyState: viewModel.mediaNodesArray.isEmpty
             )
         } else {
             return CMConfigEntity(
-                menuType: .display,
-                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+                menuType: .menu(type: .display),
+                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
                 isCameraUploadExplorer: true,
                 isFilterEnabled: false,
                 isEmptyState: viewModel.mediaNodesArray.isEmpty
@@ -142,7 +143,7 @@ extension PhotosViewController {
 
 // MARK: - DisplayMenuDelegate
 extension PhotosViewController: DisplayMenuDelegate {
-    func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         if action == .select {
             toggleEditing()
         } else if action == .filter {
