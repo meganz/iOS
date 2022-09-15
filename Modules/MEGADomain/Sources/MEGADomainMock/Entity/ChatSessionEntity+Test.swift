@@ -1,13 +1,13 @@
 import Foundation
-@testable import MEGA
+import MEGADomain
 
-extension ChatSessionEntity {
+public extension ChatSessionEntity {
     ///Init method with default values (0, false, nil, [], ...)
-    init(statusType: StatusType = .initial,
+    init(statusType: StatusType = .invalid,
          hasAudio: Bool = false,
          hasVideo: Bool = false,
-         peerId: UInt64 = MEGAInvalidHandle,
-         clientId: UInt64 = MEGAInvalidHandle,
+         peerId: HandleEntity = .invalid,
+         clientId: HandleEntity = .invalid,
          changes: Int = 0,
          isHighResolution: Bool = false,
          isLowResolution: Bool = false) {
