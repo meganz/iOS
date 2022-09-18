@@ -194,4 +194,9 @@ extension ContextMenuBuilder {
     var joinMeeting: CMActionEntity {
         CMActionEntity(type: .meeting(actionType: .joinMeeting))
     }
+    
+    var scheduleMeeting: CMActionEntity {
+        CMActionEntity(type: .meeting(actionType: .scheduleMeeting))
+    }
+
 }

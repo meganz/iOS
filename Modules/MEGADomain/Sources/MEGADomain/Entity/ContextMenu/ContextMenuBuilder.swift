@@ -29,6 +29,7 @@ public final class ContextMenuBuilder {
     private var chatStatus: ChatStatusEntity = .invalid
     private var shouldStartMeeting = false
     private var shouldJoinMeeting = false
+    private var shouldScheduleMeeting = false
     
     public init() {}
     
@@ -179,6 +180,11 @@ public final class ContextMenuBuilder {
     
     public func setShouldJoinMeeting(_ shouldJoinMeeting: Bool) -> ContextMenuBuilder {
         self.shouldJoinMeeting = shouldJoinMeeting
+        return self
+    }
+    
+    public func setShouldScheduleMeeting(_ shouldScheduleMeeting: Bool) -> ContextMenuBuilder {
+        self.shouldScheduleMeeting = shouldScheduleMeeting
         return self
     }
     
@@ -414,8 +420,10 @@ public final class ContextMenuBuilder {
     
     //MARK: - Meeting Context Actions
     private func meetingMenu() -> CMEntity {
-        CMEntity(displayInline: true,
-                 children: [startMeeting, joinMeeting])
+        CMEntity(
+            displayInline: true,
+            children: shouldScheduleMeeting ? [startMeeting, joinMeeting, scheduleMeeting] : [startMeeting, joinMeeting]
+        )
     }
     
     //MARK: - My QR Code Actions

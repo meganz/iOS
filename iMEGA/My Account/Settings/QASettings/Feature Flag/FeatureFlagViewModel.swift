@@ -5,6 +5,7 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case slideShow = "Slide Show"
     case contextMenuOnCameraUploadExplorer = "Context Menu On CameraUpload Explorer"
     case filterMenuOnCameraUploadExplorer = "Filter Menu On CameraUpload Explorer"
+    case scheduleMeeting = "Schedule Meeting"
     
     var isEnabled: Bool {
         switch self {
@@ -12,6 +13,7 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
         case .slideShow: return false
         case .contextMenuOnCameraUploadExplorer: return false
         case .filterMenuOnCameraUploadExplorer: return false
+        case .scheduleMeeting: return false
         }
     }
 }
