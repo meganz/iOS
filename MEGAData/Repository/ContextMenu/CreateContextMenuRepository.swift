@@ -37,6 +37,7 @@ struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsEmptyState(config.isEmptyState)
                         .setShouldStartMeeting(config.shouldStartMeeting)
                         .setShouldJoinMeeting(config.shouldJoiningMeeting)
+                        .setShouldScheduleMeeting(config.shouldScheduleMeeting)
                         .build()
     }
 }

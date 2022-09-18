@@ -24,7 +24,12 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     
     private func setAddBarButtonWithMeetingsOptions() {
         if #available(iOS 14.0, *) {
-            addBarButtonItem?.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .menu(type: .meeting)))
+            addBarButtonItem?.menu = contextMenuManager?.contextMenu(
+                with: CMConfigEntity(
+                    menuType: .menu(type: .meeting),
+                    shouldScheduleMeeting: FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting)
+                )
+            )
             addBarButtonItem?.target = nil
             addBarButtonItem?.action = nil
         } else {
@@ -186,6 +191,8 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
                 viewControllerToPresent: self,
                 isGuest: false
             ).start()
+        case .scheduleMeeting:
+            break
         }
     }
 }

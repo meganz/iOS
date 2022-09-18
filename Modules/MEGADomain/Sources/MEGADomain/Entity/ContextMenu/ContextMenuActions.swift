@@ -65,5 +65,5 @@ public enum MyQRActionEntity: CaseIterable {
 }
 
 public enum MeetingActionEntity: CaseIterable  {
-    case startMeeting, joinMeeting
+    case startMeeting, joinMeeting, scheduleMeeting
 }

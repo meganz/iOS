@@ -168,6 +168,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "startMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting, image: Asset.Images.Meetings.startMeeting.image)
         case .joinMeeting:
             return ContextMenuDataModel(identifier: "joinMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting, image: Asset.Images.Meetings.joinAMeeting.image)
+        case .scheduleMeeting:
+            return ContextMenuDataModel(identifier: "scheduleMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting, image: Asset.Images.Meetings.scheduleMeeting.image)
         }
     }
 

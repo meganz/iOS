@@ -86,7 +86,6 @@
     
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
         [self configureContextMenuManager];
-        [self configureNavigationBarButtons];
     }
     
     self.chatIdIndexPathDictionary = [[NSMutableDictionary alloc] init];
@@ -151,6 +150,7 @@
             [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
             self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
         }
+        [self configureNavigationBarButtons];
     }
     
     self.tabBarController.tabBar.hidden = NO;

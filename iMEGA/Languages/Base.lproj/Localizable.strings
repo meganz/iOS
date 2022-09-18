@@ -3078,3 +3078,5 @@
 "notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
+/* Start conversation: Schedule meeting context menu */
+"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
