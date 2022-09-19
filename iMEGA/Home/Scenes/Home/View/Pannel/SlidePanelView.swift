@@ -2,13 +2,13 @@ import UIKit
 import Combine
 
 protocol SlidePanelDelegate: AnyObject {
-
+    
     func slidePanel(_ panel: SlidePanelView, didBeginPanningWithVelocity: CGPoint)
-
+    
     func slidePanel(_ panel: SlidePanelView, didStopPanningWithVelocity: CGPoint)
-
+    
     func slidePanel(_ panel: SlidePanelView, translated: CGPoint, velocity: CGPoint)
-
+    
     func shouldEnablePanGesture(inSlidePanel slidePanel: SlidePanelView) -> Bool
     
     func shouldEnablePanGestureScrollingUp(inSlidePanel slidePanel: SlidePanelView) -> Bool
@@ -21,35 +21,35 @@ protocol SlidePanelDelegate: AnyObject {
 }
 
 final class SlidePanelView: UIView, NibOwnerLoadable {
-
+    
     // MARK: - IBOutlets
     
     @IBOutlet private var handlerView: HandlerView!
-
+    
     @IBOutlet private var titleView: SegmentTitleView!
-
+    
     // MARK: - Recents Tab
-
+    
     @IBOutlet private var recentsContainerView: UIView!
     
     public var recentScrollView: UIScrollView?
-
+    
     // MARK: - Favourites Tab
-
+    
     @IBOutlet private var favouritesContainerView: UIView!
     
     public var favouritesScrollView: UIScrollView?
     
     // MARK: - Offlines Tab
-
+    
     @IBOutlet private var offlineContainerView: UIView!
     
     public var offlineScrollView: UIScrollView?
     
     private var subscriptions = Set<AnyCancellable>()
-
+    
     // MARK: - Tab Control
-
+    
     private var currentDisplayTab: DisplayTab = .recents {
         didSet {
             switch currentDisplayTab {
@@ -76,23 +76,16 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             }
         }
     }
-
+    
     enum DisplayTab: Int {
         case recents
         case favourites
         case offline
     }
-
+    
     // MARK: - SlidePanelDelegate
     
     weak var delegate: SlidePanelDelegate?
-    
-    //MARK: - Feature Flag
-    var isRemoveHomeImageFeatureFlagEnabled = false {
-        didSet {
-            applyRemoveHomeImageFeatureFlag()
-        }
-    }
     
     // MARK: - Initialization
     
@@ -101,7 +94,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         loadNibContent()
         setupView(with: traitCollection)
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadNibContent()
@@ -109,7 +102,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     }
     
     // MARK: - Switch Tab
-
+    
     func showTab(_ tab: DisplayTab) {
         currentDisplayTab = tab
         titleView.selectTab(currentDisplayTab.rawValue)
@@ -134,16 +127,16 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             return recentScrollView.contentOffset.y <= 0
         }
     }
-
+    
     // MARK: - Add ViewControllers to Slide Panel
-
+    
     func addRecentsViewController(_ recentViewController: RecentsViewController) {
         move(recentViewController.view, toContainerView: recentsContainerView)
         let panGesture = UIPanGestureRecognizer()
         panGesture.name = "Recents Panel Pan Gesture"
         panGesture.addTarget(self, action: #selector(didPan(_:)))
         panGesture.delegate = self
-
+        
         let scrollView = firstScrollViewInSubviews(recentViewController.view.subviews)
         recentScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
@@ -155,7 +148,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         panGesture.name = "Favourites Panel Pan Gesture"
         panGesture.addTarget(self, action: #selector(didPan(_:)))
         panGesture.delegate = self
-
+        
         let scrollView = firstScrollViewInSubviews(favouritesViewController.view.subviews)
         favouritesScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
@@ -167,23 +160,23 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         panGesture.name = "Offline Panel Pan Gesture"
         panGesture.addTarget(self, action: #selector(didPan(_:)))
         panGesture.delegate = self
-
+        
         let scrollView = firstScrollViewInSubviews(offlineViewController.view.subviews)
         offlineScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
     }
-
+    
     private func move(_ content: UIView, toContainerView container: UIView) {
         container.addSubview(content)
         content.translatesAutoresizingMaskIntoConstraints = false
         content.autoPinEdgesToSuperviewEdges()
     }
-
+    
     private func firstScrollViewInSubviews(_ subviews: [UIView]) -> UIScrollView? {
         for subview in subviews where subview is UIScrollView {
             return subview as? UIScrollView
         }
-
+        
         for subview in subviews {
             let foundFirstScrollView = firstScrollViewInSubviews(subview.subviews)
             if foundFirstScrollView != nil {
@@ -192,7 +185,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         }
         return nil
     }
-
+    
     // MARK: - Privates
     private func setupView(with trait: UITraitCollection) {
         setupSegmentTitle()
@@ -200,7 +193,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         handlerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
         titleView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
     }
-
+    
     private func updateTabVisiblity(to tab: DisplayTab) {
         switch currentDisplayTab {
         case .recents:
@@ -219,23 +212,19 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             offlineContainerView.isHidden = false
         }
     }
-
+    
     private func setupSegmentTitle() {
         let recentsTitle = Strings.Localizable.recents
         let favouritesTitle = Strings.Localizable.favourites
         let offlineTitle = Strings.Localizable.offline
         
-        let segmentModel: SegmentTitleView.SegmentTitleViewModel = isRemoveHomeImageFeatureFlagEnabled ?
-                                                                                .init(titles: [.init(text: recentsTitle, index: 0),
-                                                                                                .init(text: offlineTitle, index: 1)]) :
-                                                                                .init(titles: [.init(text: recentsTitle, index: 0),
-                                                                                                .init(text: favouritesTitle, index: 1),
-                                                                                                .init(text: offlineTitle, index: 2)])
+        let segmentModel: SegmentTitleView.SegmentTitleViewModel = .init(titles: [.init(text: recentsTitle, index: 0),
+                                                                                  .init(text: offlineTitle, index: 1)])
         titleView.setSegmentTitleViewModel(model: segmentModel)
-
+        
         titleView.selectAction = { [weak self] title in
             guard let self = self else { return }
-
+            
             switch title.text {
             case recentsTitle: self.currentDisplayTab = .recents
             case favouritesTitle: self.currentDisplayTab = .favourites
@@ -244,18 +233,18 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             }
         }
     }
-
+    
     // MARK: - Handling UIScrollView's pan gesture to slide the panel view
-
+    
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
         processGesture(gesture)
     }
-
+    
     private func processGesture(_ gesture: UIPanGestureRecognizer) {
         guard let delegate = delegate else { return }
         let velocity = gesture.velocity(in: gesture.view)
         let directionUp = velocity.y < 0
-
+        
         if directionUp {
             if delegate.shouldEnablePanGestureScrollingUp(inSlidePanel: self)
                 // if delegate says scrolling up is not allowed, that is because the delegate does not know
@@ -272,7 +261,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             }
             return
         }
-
+        
         let directionDown = !directionUp
         if directionDown {
             if delegate.shouldEnablePanGestureScrollingDown(inSlidePanel: self) || gesture.state != .began {
@@ -285,7 +274,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             }
         }
     }
-
+    
     private func processScrollingUpGesture(
         withVelocity velocity: CGPoint,
         state: UIGestureRecognizer.State,
@@ -299,7 +288,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             break
         }
     }
-
+    
     private func processScrollingDownGesture(
         withVelocity velocity: CGPoint,
         state: UIGestureRecognizer.State,
@@ -333,14 +322,5 @@ extension SlidePanelView: UIGestureRecognizerDelegate {
         }
         
         return true // `true` makes only recognize the scroll view and pan
-    }
-}
-
-//MARK: - Feature Flag
-extension SlidePanelView {
-    func applyRemoveHomeImageFeatureFlag() {
-        setupSegmentTitle()
-        updateTabVisiblity(to: .recents)
-        showTab(.recents)
     }
 }

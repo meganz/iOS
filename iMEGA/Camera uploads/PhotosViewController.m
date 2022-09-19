@@ -108,7 +108,6 @@
         [self updateLimitedAccessBannerVisibility];
     }
     
-    [self applyPhotosFeatureFlags];
     [self setupNavigationBarButtons];
 }
 

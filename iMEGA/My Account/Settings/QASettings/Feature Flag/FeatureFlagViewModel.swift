@@ -1,18 +1,12 @@
 import MEGADomain
 
 enum FeatureFlagKey: FeatureFlagName, CaseIterable {
-    case removeHomeImage = "Remove Home Image"
     case slideShow = "Slide Show"
-    case contextMenuOnCameraUploadExplorer = "Context Menu On CameraUpload Explorer"
-    case filterMenuOnCameraUploadExplorer = "Filter Menu On CameraUpload Explorer"
     case scheduleMeeting = "Schedule Meeting"
     
     var isEnabled: Bool {
         switch self {
-        case .removeHomeImage: return false
         case .slideShow: return false
-        case .contextMenuOnCameraUploadExplorer: return false
-        case .filterMenuOnCameraUploadExplorer: return false
         case .scheduleMeeting: return false
         }
     }
