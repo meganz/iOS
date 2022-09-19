@@ -26,6 +26,8 @@ final class SlideShowViewModel: ViewModelType {
     private let dataProvider: PhotoBrowserDataProviderProtocol
     private let configuration: SlideShowViewConfiguration
     
+    var thumbnailLoadingTask: Task<Void, Never>?
+    
     var invokeCommand: ((Command) -> Void)?
     
     var playbackStatus: SlideshowPlaybackStatus = .initialized
@@ -95,7 +97,7 @@ final class SlideShowViewModel: ViewModelType {
             invokeCommand?(.initialPhotoLoaded)
         }
         else {
-            Task (priority: .userInitiated) {
+            thumbnailLoadingTask = Task (priority: .userInitiated) {
                 if let mediaEntity = await loadMediaEntity(forNode: node) {
                     self.photos.append(mediaEntity)
                     invokeCommand?(.initialPhotoLoaded)
@@ -140,7 +142,7 @@ final class SlideShowViewModel: ViewModelType {
         guard numberOfSlideShowContents > 0 else { return }
         guard photos.count < numberOfSlideShowContents else { return }
         
-        Task {
+        thumbnailLoadingTask = Task {
             var nextSetOfPhotos = selectNextSetOfPhotos(num)
             if configuration.playingOrder == .shuffled {
                 nextSetOfPhotos = nextSetOfPhotos.shuffled()
@@ -169,7 +171,7 @@ final class SlideShowViewModel: ViewModelType {
         let reloadIdx = currentSlideNumber - numberOfUnusedPhotosBuffer + 1
         guard reloadIdx >= 0 && photos[reloadIdx].image == nil else { return }
         
-        Task {
+        thumbnailLoadingTask = Task {
             if let mediaEntity = await loadMediaEntity(forNode: photos[reloadIdx].node) {
                 photos[reloadIdx].image = mediaEntity.image
             }
