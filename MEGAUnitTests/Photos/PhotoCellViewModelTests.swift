@@ -113,7 +113,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, 5)
         XCTAssertNil(sut.thumbnailLoadingTask)
         let result = XCTWaiter.wait(for: [exp], timeout: 3.0)
-        print("result: \(result)")
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("Thumbnail should not be changed")
             return
