@@ -89,7 +89,7 @@ pipeline {
                               def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}-simulator.zip"
                               sh "zip -r ${fileName} MEGA.app"
                               withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
-                                env.zipPath = "${WORKSPACE}/${fileName}"
+                                env.zipPath = "${WORKSPACE}/derivedData/Build/Products/Debug-iphonesimulator/${fileName}"
                                 env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/${fileName}"
                                 sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
                               }
