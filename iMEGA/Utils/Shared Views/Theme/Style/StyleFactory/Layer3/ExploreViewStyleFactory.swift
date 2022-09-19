@@ -1,7 +1,7 @@
 import Foundation
 
 enum MEGAExploreViewStyle: Int {
-    case images
+    case favourites
     case documents
     case audio
     case video
@@ -11,28 +11,22 @@ struct ExploreViewStyleFactory {
     private let style: MEGAExploreViewStyle
     private let traitCollection: UITraitCollection
     
-    private let isRemoveHomeImageFeatureFlagEnabled: Bool
-    
     var configuration: ExplorerCardConfiguration {
         switch style {
-        case .images:
-            return ExplorerCardConfiguration.photosExplorerCardConfiguration(forTraitCollection: traitCollection,
-                                                                             isRemoveHomeImageFeatureFlagEnabled: isRemoveHomeImageFeatureFlagEnabled)
+        case .favourites:
+            return ExplorerCardConfiguration.favouritesExplorerCardConfiguration(forTraitCollection: traitCollection)
         case .documents:
             return ExplorerCardConfiguration.documentsExplorerCardConfiguration(forTraitCollection: traitCollection)
         case .audio:
             return ExplorerCardConfiguration.audioExplorerCardConfiguration(forTraitCollection: traitCollection)
         case .video:
-            return ExplorerCardConfiguration.videoExplorerCardConfiguration(forTraitCollection: traitCollection,
-                                                                            isRemoveHomeImageFeatureFlagEnabled: isRemoveHomeImageFeatureFlagEnabled)
+            return ExplorerCardConfiguration.videoExplorerCardConfiguration(forTraitCollection: traitCollection)
         }
     }
     
-    init(style: MEGAExploreViewStyle, traitCollection: UITraitCollection, isRemoveHomeImageFeatureFlagEnabled: Bool = false) {
+    init(style: MEGAExploreViewStyle, traitCollection: UITraitCollection) {
         self.style = style
         self.traitCollection = traitCollection
-        
-        self.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled
     }
 }
 
@@ -50,18 +44,12 @@ extension ExplorerCardConfiguration {
     private static let foregroundColorsLight = [UIColor(white: 1.0, alpha: 0.95), UIColor.white]
     private static let foregroundColorsDark = [Colors.SharedViews.Explorer.foregroundDark.color, UIColor.black]
     
-    static func photosExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection,
-                                                isRemoveHomeImageFeatureFlagEnabled: Bool) -> ExplorerCardConfiguration {
-        var title = Strings.Localizable.Home.Images.title
-        var image = Asset.Images.Home.explorerCardImage.image
-        var borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
-                            Colors.SharedViews.Explorer.Gradient.darkBlue.color]
-        if isRemoveHomeImageFeatureFlagEnabled {
-            title = Strings.Localizable.Home.Favourites.title
-            image = Asset.Images.Home.explorerCardFavourites.image
-            borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
-                                Colors.SharedViews.Explorer.Gradient.pink.color]
-        }
+    static func favouritesExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
+        let title = Strings.Localizable.Home.Favourites.title
+        let image = Asset.Images.Home.explorerCardFavourites.image
+        let borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
+                            Colors.SharedViews.Explorer.Gradient.pink.color]
+        
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -76,6 +64,7 @@ extension ExplorerCardConfiguration {
         let image = Asset.Images.Home.explorerCardDocs.image
         let borderColors = [Colors.SharedViews.Explorer.documentsFirstGradient.color,
                             Colors.SharedViews.Explorer.documentsSecondGradient.color]
+        
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -99,20 +88,12 @@ extension ExplorerCardConfiguration {
                                          foregroundGradientOpacity: (traitCollection.theme == .dark) ? 0.9 : 1.0)
     }
     
-    static func videoExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection,
-                                               isRemoveHomeImageFeatureFlagEnabled: Bool) -> ExplorerCardConfiguration {
+    static func videoExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.videos
-        var iconForegroundImage = Asset.Images.Home.explorerCardVideoPlay.image
-        var iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStrips.image
-        var borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
-                            Colors.SharedViews.Explorer.Gradient.pink.color]
-        
-        if isRemoveHomeImageFeatureFlagEnabled {
-            iconForegroundImage = Asset.Images.Home.explorerCardVideoPlayBlue.image
-            iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStripsBlue.image
-            borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
-                            Colors.SharedViews.Explorer.Gradient.darkBlue.color]
-        }
+        let iconForegroundImage = Asset.Images.Home.explorerCardVideoPlayBlue.image
+        let iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStripsBlue.image
+        let borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
+                        Colors.SharedViews.Explorer.Gradient.darkBlue.color]
 
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: iconForegroundImage,

@@ -9,7 +9,7 @@ extension PhotosViewController {
                 menuType: .menu(type: .display),
                 sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
                 isCameraUploadExplorer: true,
-                isFilterEnabled: viewModel.shouldShowFilterMenuOnCameraUpload,
+                isFilterEnabled: true,
                 isEmptyState: viewModel.mediaNodesArray.isEmpty
             )
         } else {
@@ -94,29 +94,21 @@ extension PhotosViewController {
                 self.navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
             }
         } else {
-            if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
-                if #available(iOS 14.0, *) {
-                    var rightButtons = [UIBarButtonItem]()
-                    if photoLibraryContentViewModel.selectedMode == .all {
-                        rightButtons.append(makeContextMenuBarButton())
-                    }
-                    if viewModel.isFilterActive {
-                        rightButtons.append(filterBarButtonItem)
-                    }
-                    if objcWrapper_parent.navigationItem.rightBarButtonItems !~ rightButtons {
-                        objcWrapper_parent.navigationItem.setRightBarButtonItems(rightButtons, animated: true)
-                    }
-                } else {
-                    let contextMenuButton = [makeDefaultContextMenuButton()]
-                    if navigationItem.rightBarButtonItems !~ contextMenuButton {
-                        navigationItem.setRightBarButtonItems(contextMenuButton, animated: true)
-                    }
+            if #available(iOS 14.0, *) {
+                var rightButtons = [UIBarButtonItem]()
+                if photoLibraryContentViewModel.selectedMode == .all {
+                    rightButtons.append(makeContextMenuBarButton())
                 }
-            }  else {
-                if #available(iOS 14.0, *) {
-                    self.objcWrapper_parent.navigationItem.setRightBarButtonItems([editBarButtonItem], animated: true)
-                } else {
-                    self.navigationItem.setRightBarButtonItems([editBarButtonItem], animated: true)
+                if viewModel.isFilterActive {
+                    rightButtons.append(filterBarButtonItem)
+                }
+                if objcWrapper_parent.navigationItem.rightBarButtonItems !~ rightButtons {
+                    objcWrapper_parent.navigationItem.setRightBarButtonItems(rightButtons, animated: true)
+                }
+            } else {
+                let contextMenuButton = [makeDefaultContextMenuButton()]
+                if navigationItem.rightBarButtonItems !~ contextMenuButton {
+                    navigationItem.setRightBarButtonItems(contextMenuButton, animated: true)
                 }
             }
         }

@@ -29,7 +29,7 @@ final class PhotosViewModel: NSObject {
     var filterLocation: PhotosFilterOptions = .allLocations
     
     var isFilterActive: Bool {
-        (filterType != .allMedia || filterLocation != .allLocations) && shouldShowFilterMenuOnCameraUpload
+        filterType != .allMedia || filterLocation != .allLocations
     }
 
     init(
@@ -48,9 +48,9 @@ final class PhotosViewModel: NSObject {
         Task { [weak self] in
             do {
                 guard let container = await self?.photoLibraryUseCase.photoLibraryContainer() else { return }
-                guard isRemoveHomeImageFeatureFlagEnabled || self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
+                guard self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
 
-                await self?.loadPhotos(withFeatureFlag: isRemoveHomeImageFeatureFlagEnabled)
+                await self?.loadPhotos()
             }
         }
     }
@@ -58,7 +58,7 @@ final class PhotosViewModel: NSObject {
     @MainActor
     @objc func loadAllPhotos() {
         Task.detached(priority: .userInitiated) { [weak self] in
-            await self?.loadPhotos(withFeatureFlag: self?.isRemoveHomeImageFeatureFlagEnabled ?? false)
+            await self?.loadPhotos()
         }
     }
     
@@ -85,8 +85,7 @@ final class PhotosViewModel: NSObject {
     @MainActor
     func updateFilter(
         filterType: PhotosFilterOptions,
-        filterLocation: PhotosFilterOptions,
-        featureFlag: Bool
+        filterLocation: PhotosFilterOptions
     ) {
         guard self.filterType != filterType || self.filterLocation != filterLocation else { return }
         
@@ -97,8 +96,8 @@ final class PhotosViewModel: NSObject {
     
     // MARK: - Private
     
-    private func loadPhotos(withFeatureFlag flag: Bool) async {
-        let photos = try? await flag ? loadFilteredPhotos() : photoLibraryUseCase.cameraUploadPhotos()
+    private func loadPhotos() async {
+        let photos = try? await loadFilteredPhotos()
         mediaNodesArray = photos ?? []
     }
     
@@ -134,18 +133,5 @@ extension PhotosViewModel {
     func resetFilters() {
         self.filterType = .allMedia
         self.filterLocation = .allLocations
-    }
-    
-    var shouldShowFilterMenuOnCameraUpload: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .contextMenuOnCameraUploadExplorer) &&
-        featureFlagProvider.isFeatureFlagEnabled(for: .filterMenuOnCameraUploadExplorer)
-    }
-    
-    var isRemoveHomeImageFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .removeHomeImage)
-    }
-    
-    var isContextMenuOnCameraUploadFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .contextMenuOnCameraUploadExplorer)
     }
 }

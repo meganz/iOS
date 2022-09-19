@@ -72,32 +72,4 @@ class PhotosFilterOptionsTest: XCTestCase {
         let sut = PhotoLibraryFilterViewModel().filterOption(for: .cameraUploads)
         XCTAssert(sut == .cameraUploads)
     }
-    
-    //MARK: - Feature Flag
-    func testShouldShowFilterMenuOnCameraUploadFeatureFlag_enabledFilterMenu_and_enabledContextMenu() {
-        let testList = [FeatureFlagKey.filterMenuOnCameraUploadExplorer: true,
-                        FeatureFlagKey.contextMenuOnCameraUploadExplorer: true]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = PhotoLibraryFilterViewModel(featureFlagProvider: provider)
-        XCTAssertTrue(sut.shouldShowFilterMenuOnCameraUpload)
-    }
-    
-    func testShouldShowFilterMenuOnCameraUploadFeatureFlag_disabledFilterMenu_and_disabledContextMenu() {
-        let testList = [FeatureFlagKey.filterMenuOnCameraUploadExplorer: false,
-                        FeatureFlagKey.contextMenuOnCameraUploadExplorer: false]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = PhotoLibraryFilterViewModel(featureFlagProvider: provider)
-        XCTAssertFalse(sut.shouldShowFilterMenuOnCameraUpload)
-    }
-    
-    func testShouldShowFilterMenuOnCameraUploadFeatureFlag_enabledFilterMenu_and_disabledContextMenu() {
-        let testList = [FeatureFlagKey.filterMenuOnCameraUploadExplorer: true,
-                        FeatureFlagKey.contextMenuOnCameraUploadExplorer: false]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = PhotoLibraryFilterViewModel(featureFlagProvider: provider)
-        XCTAssertFalse(sut.shouldShowFilterMenuOnCameraUpload)
-    }
 }

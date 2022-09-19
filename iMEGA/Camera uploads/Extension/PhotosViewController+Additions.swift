@@ -103,19 +103,6 @@ extension PhotosViewController: BrowserViewControllerDelegate, ContatctsViewCont
     }
 }
 
-//MARK: - Feature Flag
-extension PhotosViewController {
-    @objc func applyPhotosFeatureFlags() {
-        if !viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
-            sortMenu(didSelect: .nameAscending)
-        }
-        
-        if !viewModel.shouldShowFilterMenuOnCameraUpload {
-            viewModel.resetFilters()
-        }
-    }
-}
-
 extension PhotosViewController {
     @objc func configureStackViewHeight(view: UIView, perviousConstraint: NSLayoutConstraint?) -> NSLayoutConstraint? {
 

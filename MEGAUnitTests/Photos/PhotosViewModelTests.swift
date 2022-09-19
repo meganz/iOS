@@ -242,66 +242,6 @@ final class PhotosViewModelTests: XCTestCase {
         return [node5, node6, node7, node8]
     }
     
-    //MARK: - Feature Flag
-    func testShouldShowFilterMenuOnCameraUploadFeatureFlag_enabledFilterMenu_and_enabledContextMenu() {
-        let testList = [FeatureFlagKey.filterMenuOnCameraUploadExplorer: true,
-                        FeatureFlagKey.contextMenuOnCameraUploadExplorer: true]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertTrue(sut.shouldShowFilterMenuOnCameraUpload)
-    }
-    
-    func testShouldShowFilterMenuOnCameraUploadFeatureFlag_disabledFilterMenu_and_disabledContextMenu() {
-        let testList = [FeatureFlagKey.filterMenuOnCameraUploadExplorer: false,
-                        FeatureFlagKey.contextMenuOnCameraUploadExplorer: false]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertFalse(sut.shouldShowFilterMenuOnCameraUpload)
-    }
-    
-    func testShouldShowFilterMenuOnCameraUploadFeatureFlag_enabledFilterMenu_and_disabledContextMenu() {
-        let testList = [FeatureFlagKey.filterMenuOnCameraUploadExplorer: true,
-                        FeatureFlagKey.contextMenuOnCameraUploadExplorer: false]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertFalse(sut.shouldShowFilterMenuOnCameraUpload)
-    }
-    
-    func testIsContextMenuOnCameraUploadFeatureFlag_isEnabled_true() {
-        let testList = [FeatureFlagKey.contextMenuOnCameraUploadExplorer: true]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertTrue(sut.isContextMenuOnCameraUploadFeatureFlagEnabled)
-    }
-    
-    func testIsContextMenuOnCameraUploadFeatureFlag_isEnabled_false() {
-        let testList = [FeatureFlagKey.contextMenuOnCameraUploadExplorer: false]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertFalse(sut.isContextMenuOnCameraUploadFeatureFlagEnabled)
-    }
-    
-    func testIsRemoveHomeImageFeatureFlag_isEnabled_true() {
-        let testList = [FeatureFlagKey.removeHomeImage: true]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertTrue(sut.isRemoveHomeImageFeatureFlagEnabled)
-    }
-    
-    func testIsRemoveHomeImageFeatureFlag_isEnabled_false() {
-        let testList = [FeatureFlagKey.removeHomeImage: false]
-        
-        let provider = MockFeatureFlagProvider(list: testList)
-        let sut = photosViewModelForFeatureFlag(provider: provider)
-        XCTAssertFalse(sut.isRemoveHomeImageFeatureFlagEnabled)
-    }
-    
     private func photosViewModelForFeatureFlag(provider: FeatureFlagProviderProtocol) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
