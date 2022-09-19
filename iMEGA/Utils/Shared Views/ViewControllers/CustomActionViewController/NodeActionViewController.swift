@@ -283,7 +283,6 @@ class NodeActionViewController: ActionSheetViewController {
         let isTakedown = node.isTakenDown()
         let nodeInboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isInboxNode = nodeInboxUC.isInboxNode(node.toNodeEntity())
-        let isSlideshow = FeatureFlagProvider(useCase: FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)).isFeatureFlagEnabled(for: .slideShow) && node.name?.mnz_isImagePathExtension == true
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
