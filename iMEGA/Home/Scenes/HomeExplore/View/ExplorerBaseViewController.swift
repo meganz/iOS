@@ -170,7 +170,8 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, sender: button)
+        let inboxUseCase = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsAnyInboxNode: inboxUseCase.containsAnyInboxNode(selectedNodes.toNodeEntities()), sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     

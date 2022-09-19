@@ -35,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL allNodesSelected;
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
 @property (assign, nonatomic) BOOL isFromSharedItem;
+@property (assign, nonatomic) MEGAShareType shareType; //Control the actions allowed for node/nodes selected
 @property (assign, nonatomic) BOOL hasMediaFiles;
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
@@ -46,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)updateNavigationBarTitle;
-- (void)toolbarActionsForNodeArray:(NSArray *)nodeArray;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(id)sender;
 - (void)didSelectNode:(MEGANode *)node;
@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showNodeInfo:(MEGANode *)node;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes;
+- (void)toolbarActionsForShareType:(MEGAShareType)shareType;
 
 - (BOOL)isListViewModeSelected;
 - (void)changeViewModePreference;

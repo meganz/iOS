@@ -31,6 +31,8 @@ struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsDoNotDisturbEnabled(config.isDoNotDisturbEnabled)
                         .setTimeRemainingToDeactiveDND(config.timeRemainingToDeactiveDND)
                         .setIsShareAvailable(config.isShareAvailable)
+                        .setIsInboxNode(config.isInboxNode)
+                        .setIsInboxChild(config.isInboxChild)
                         .setIsSharedItemsChild(config.isSharedItemsChild)
                         .setIsOutShare(config.isOutShare)
                         .setIsExported(config.isExported)

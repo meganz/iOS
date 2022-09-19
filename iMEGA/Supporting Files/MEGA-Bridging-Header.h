@@ -125,6 +125,7 @@
 #import "UICollectionView+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAUserAlert.h"
+#import "MEGAUserAlertList+MNZCategory.h"
 #import "NodeTableViewCell.h"
 #import "MyAccountHallViewController.h"
 #import "RecentsViewController.h"
@@ -161,6 +162,7 @@
 #import "HelpTableViewController.h"
 #import "CameraUploadBackgroundRefreshPerformer.h"
 #import "UsageViewController.h"
+#import "MyAccountHallTableViewCell.h"
 #import "CameraUploadOperation.h"
 #import "CameraUploadOperation+Utils.h"
 #import "AssetResourceUploadOperation.h"
@@ -171,5 +173,7 @@
 #import "AwaitingEmailConfirmationView.h"
 #import "TwoFactorAuthenticationViewController.h"
 #import "MEGAPhotoBrowserPickerViewController.h"
+
+#import "TransferTableViewCell.h"
 #import "CameraUploadsTableViewController.h"
 #import "NotificationsTableViewController.h"

@@ -16,6 +16,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         } else {
             let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
             let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
+            let inboxUseCase = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let parentNodeEntity = parentNode.toNodeEntity()
             
             if #available(iOS 14.0, *) {
                 return CMConfigEntity(menuType: .menu(type: .display),
@@ -25,6 +27,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isIncomingShareChild: isIncomingSharedRootChild,
+                                      isInboxNode: inboxUseCase.isInboxRootNode(parentNodeEntity),
+                                      isInboxChild: inboxUseCase.isInboxNode(parentNodeEntity),
                                       isOutShare: parentNode.isOutShare(),
                                       isExported: parentNode.isExported(),
                                       showMediaDiscovery: shouldShowMediaDiscovery())
@@ -36,6 +40,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isIncomingShareChild: isIncomingSharedRootChild,
+                                      isInboxNode: inboxUseCase.isInboxRootNode(parentNodeEntity),
+                                      isInboxChild: inboxUseCase.isInboxNode(parentNodeEntity),
                                       isOutShare: parentNode.isOutShare(),
                                       isExported: parentNode.isExported())
             }
@@ -64,7 +70,9 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
         
         if displayMode != .rubbishBin,
+           displayMode != .backup,
             let parentNode = parentNode,
+           !InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo).isInboxNode(parentNode.toNodeEntity()),
             MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
             if #available(iOS 14.0, *) {
                 guard let menuConfig = uploadAddMenuConfiguration() else { return }
@@ -140,7 +148,9 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .shareLink, .manageLink:
             presentGetLinkVC(for: [parentNode])
         case .shareFolder:
-            showShareFolderForNodes([parentNode])
+            BackupNodesValidator(presenter: self, nodes: [parentNode.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+                self?.showShareFolderForNodes([parentNode])
+            }
         case .rename:
             parentNode.mnz_renameNode(in: self) { [weak self] request in
                 self?.navigationItem.title = request.name

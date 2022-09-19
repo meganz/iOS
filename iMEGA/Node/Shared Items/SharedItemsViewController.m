@@ -27,7 +27,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, ContatctsViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate, SharedItemsTableViewCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate, SharedItemsTableViewCellDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -51,7 +51,6 @@
 
 @property (nonatomic, strong) NSArray *publicLinksArray;
 
-@property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
 
 @property (nonatomic, strong) NSMutableDictionary *incomingNodesForEmailMutableDictionary;
@@ -738,14 +737,7 @@
 }
 
 - (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-        ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        contactsVC.contatctsViewControllerDelegate = self;
-        contactsVC.contactsMode = ContactsModeShareFoldersWith;
-        [contactsVC setNodesArray:[_selectedNodesMutableArray copy]];
-        [self presentViewController:navigationController animated:YES completion:nil];
-    }
+    [self shareFolder];
 }
 
 - (IBAction)removeShareAction:(UIBarButtonItem *)sender {
@@ -1149,6 +1141,11 @@
             
         case MegaNodeActionTypeExportFile:
             [self exportFileFrom:node sender:sender];
+            break;
+            
+        case MegaNodeActionTypeShareFolder:
+            self.selectedNodesMutableArray = @[node].mutableCopy;
+            [self shareFolder];
             break;
             
         case MegaNodeActionTypeManageShare: {

@@ -829,6 +829,10 @@ public enum Strings {
     public static let fileNotSupported = Strings.tr("Localizable", "fileNotSupported")
     /// 1 file removed from MEGA
     public static let fileRemovedToRubbishBinMessage = Strings.tr("Localizable", "fileRemovedToRubbishBinMessage")
+    /// %d files
+    public static func files(_ p1: Int) -> String {
+      return Strings.tr("Localizable", "files", p1)
+    }
     /// %d files selected were already uploaded into this folder.
     public static func filesAlreadyExistMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "filesAlreadyExistMessage", p1)
@@ -1381,6 +1385,10 @@ public enum Strings {
     public static let oneWeek = Strings.tr("Localizable", "One Week")
     /// 1 contact
     public static let oneContact = Strings.tr("Localizable", "oneContact")
+    /// %d file
+    public static func oneFile(_ p1: Int) -> String {
+      return Strings.tr("Localizable", "oneFile", p1)
+    }
     /// 1 folder
     public static let oneFolderShared = Strings.tr("Localizable", "oneFolderShared")
     /// %lu item selected
@@ -2827,6 +2835,18 @@ public enum Strings {
         }
       }
     }
+    public enum Backups {
+      /// Backups
+      public static let title = Strings.tr("Localizable", "backups.title")
+      public enum Empty {
+        public enum State {
+          /// This is where your backed up files and folders are stored. Your backed up items are 'read-only' to protect them from being accidentally modified in your cloud drive. You can back up items form your computer to MEGA using our desktop app.
+          public static let description = Strings.tr("Localizable", "backups.empty.state.description")
+          /// No items in your backups
+          public static let message = Strings.tr("Localizable", "backups.empty.state.message")
+        }
+      }
+    }
     public enum Call {
       public enum Duration {
         /// Plural format key: "%#@hour@"
@@ -3050,24 +3070,6 @@ public enum Strings {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
         }
       }
-      public enum Root {
-        public enum Backup {
-          public enum Folder {
-            public enum Device {
-              /// %@ device
-              public static func subtitle(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "cloudDrive.root.backup.folder.device.subtitle", String(describing: p1))
-              }
-            }
-            public enum Devices {
-              /// %@ devices
-              public static func subtitle(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "cloudDrive.root.backup.folder.devices.subtitle", String(describing: p1))
-              }
-            }
-          }
-        }
-      }
       public enum ScanDocument {
         /// Scan %@
         public static func defaultName(_ p1: Any) -> String {
@@ -3218,18 +3220,6 @@ public enum Strings {
       }
       public enum Share {
         public enum Backup {
-          public enum Folder {
-            public enum Warning {
-              /// This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.
-              public static let message = Strings.tr("Localizable", "dialog.share.backup.folder.warning.message")
-            }
-          }
-          public enum Folders {
-            public enum Warning {
-              /// These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.
-              public static let message = Strings.tr("Localizable", "dialog.share.backup.folders.warning.message")
-            }
-          }
           public enum Non {
             public enum Backup {
               public enum Folders {
@@ -4025,6 +4015,18 @@ public enum Strings {
           public static let scheduleMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.scheduleMeeting")
           /// Start meeting
           public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
+        }
+      }
+    }
+    public enum Mybackups {
+      public enum Share {
+        public enum Folder {
+          public enum Warning {
+            /// Plural format key: "%#@share@"
+            public static func message(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "mybackups.share.folder.warning.message", p1)
+            }
+          }
         }
       }
     }

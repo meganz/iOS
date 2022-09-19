@@ -1,5 +1,6 @@
 
 import UIKit
+import MEGADomain
 
 protocol DocScannerFileInfoTableCellDelegate: AnyObject {
     func filenameChanged(_ newFilename: String)
@@ -28,7 +29,7 @@ class DocScannerFileNameTableCell: UITableViewCell {
         
         self.originalFilename = filename
         self.currentFilename = filename
-        fileImageView.mnz_setImage(forExtension: fileType)
+        fileImageView.image = NodeAssetsManager.shared.image(for: fileType ?? "")
     }
 }
 

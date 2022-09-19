@@ -87,6 +87,57 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
+    func testCreateContextMenuInbox_Display() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        accessLevel: .owner,
+                                                                        isAFolder: true,
+                                                                        isInboxNode: true))
+        
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+        
+        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
+                            CMElementTypeEntity.display(actionType: .thumbnailView),
+                            CMElementTypeEntity.display(actionType: .listView),
+                            CMElementTypeEntity.sort(actionType: .defaultAsc),
+                            CMElementTypeEntity.sort(actionType: .defaultDesc),
+                            CMElementTypeEntity.sort(actionType: .sizeDesc),
+                            CMElementTypeEntity.sort(actionType: .sizeAsc),
+                            CMElementTypeEntity.sort(actionType: .modificationDesc),
+                            CMElementTypeEntity.sort(actionType: .modificationAsc),
+                            CMElementTypeEntity.sort(actionType: .labelAsc),
+                            CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
+    func testCreateContextMenuInboxChild_Display() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        accessLevel: .owner,
+                                                                        isAFolder: true,
+                                                                        isInboxChild: true))
+        
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+        
+        menuActionsArray = [CMElementTypeEntity.quickActions(actionType: .info),
+                            CMElementTypeEntity.quickActions(actionType: .download),
+                            CMElementTypeEntity.quickActions(actionType: .shareLink),
+                            CMElementTypeEntity.quickActions(actionType: .shareFolder),
+                            CMElementTypeEntity.quickActions(actionType: .copy),
+                            CMElementTypeEntity.display(actionType: .select),
+                            CMElementTypeEntity.display(actionType: .thumbnailView),
+                            CMElementTypeEntity.display(actionType: .listView),
+                            CMElementTypeEntity.sort(actionType: .defaultAsc),
+                            CMElementTypeEntity.sort(actionType: .defaultDesc),
+                            CMElementTypeEntity.sort(actionType: .sizeDesc),
+                            CMElementTypeEntity.sort(actionType: .sizeAsc),
+                            CMElementTypeEntity.sort(actionType: .modificationDesc),
+                            CMElementTypeEntity.sort(actionType: .modificationAsc),
+                            CMElementTypeEntity.sort(actionType: .labelAsc),
+                            CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
     func testCreateContextMenu_UploadAdd() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .uploadAdd),
                                                                         showMediaDiscovery: true))

@@ -19,24 +19,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UsageViewController.h"
 
-typedef NS_ENUM(NSInteger, MyAccountSection) {
-    MyAccountSectionMEGA = 0,
-    MyAccountSectionOther
-};
-
-typedef NS_ENUM(NSInteger, MyAccount) {
-    MyAccountStorage = 0,
-    MyAccountUsage = 0,
-    MyAccountSettings = 0,
-    MyAccountContacts,
-    MyAccountNotifications,
-    MyAccountAchievements,
-    MyAccountTransfers,
-    MyAccountOffline,
-    MyAccountRubbishBin
-};
-
-@interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
+@interface MyAccountHallViewController () <UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
@@ -52,8 +35,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *addPhoneNumberActivityIndicator;
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet MEGALabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -95,6 +76,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     [self configAddPhoneNumberTexts];
     
     [self updateAppearance];
+    
+    self.isBackupSectionVisible = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -114,6 +97,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     }
     
     [self configAddPhoneNumberView];
+    
+    [self checkIfBackupRootNodeExistsAndIsNotEmpty];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -228,14 +213,14 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (void)openAchievements {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:MyAccountAchievements inSection:MyAccountSectionMEGA];
+        NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionAchievements inSection:MyAccountSectionMega];
         [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
     });
 }
 
 - (void)openOffline {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:MyAccountOffline inSection:MyAccountSectionMEGA];
+        NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionOffline inSection:MyAccountSectionMega];
         [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
     });
 }
@@ -297,145 +282,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     [[[SMSVerificationViewRouter alloc] initWithVerificationType:SMSVerificationTypeAddPhoneNumber presenter:self] start];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section == MyAccountSectionMEGA) ? 7 : 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = @"MyAccountHallTableViewCellID";
-    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && (indexPath.row == MyAccountUsage && indexPath.section == MyAccountSectionMEGA)) {
-        identifier = @"MyAccountHallBusinessUsageTableViewCellID";
-    }
-    MyAccountHallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[MyAccountHallTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    
-    if (indexPath.section == MyAccountSectionOther) {
-        cell.sectionLabel.text = NSLocalizedString(@"settingsTitle", @"Title of the Settings section");
-        cell.iconImageView.image = [UIImage imageNamed:@"icon-settings"].imageFlippedForRightToLeftLayoutDirection;
-        cell.pendingView.hidden = YES;
-        cell.pendingLabel.text = nil;
-        
-        return cell;
-    }
-    
-    switch (indexPath.row) {
-        case MyAccountStorage: {
-            if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-                cell.sectionLabel.text = NSLocalizedString(@"Storage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
-                cell.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
-                cell.transferLabel.text = NSLocalizedString(@"Transfer", nil);
-                MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
-                if (accountDetails) {
-                    NSString *storageUsedString =  [NSString mnz_formatStringFromByteCountFormatter:[Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue]];
-                    cell.storageUsedLabel.text = storageUsedString;
-                    NSString *transferUsedString = [NSString mnz_formatStringFromByteCountFormatter:[Helper memoryStyleStringFromByteCount:accountDetails.transferOwnUsed.longLongValue]];
-                    cell.transferUsedLabel.text = transferUsedString;
-                } else {
-                    cell.storageUsedLabel.text = @"";
-                    cell.transferUsedLabel.text = @"";
-                }
-                
-                cell.storageLabel.textColor = cell.storageUsedLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
-                cell.transferLabel.textColor = cell.transferUsedLabel.textColor = UIColor.systemGreenColor;
-            } else {
-                cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
-                cell.sectionLabel.text = NSLocalizedString(@"Storage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
-                
-                if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
-                    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
-                    cell.detailLabel.text = [NSString stringWithFormat:@"%@ / %@", [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue], [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
-                }
-            }
-            
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-            
-        case MyAccountNotifications: {
-            cell.sectionLabel.text = NSLocalizedString(@"notifications", nil);
-            cell.iconImageView.image = [UIImage imageNamed:@"icon-notifications"].imageFlippedForRightToLeftLayoutDirection;
-            NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
-            if (unseenUserAlerts == 0) {
-                cell.pendingView.hidden = YES;
-                cell.pendingLabel.text = nil;
-            } else {
-                if (cell.pendingView.hidden) {
-                    cell.pendingView.hidden = NO;
-                    cell.pendingView.clipsToBounds = YES;
-                }
-                
-                cell.pendingLabel.text = [NSString stringWithFormat:@"%tu", unseenUserAlerts];
-            }
-            break;
-        }
-            
-        case MyAccountContacts: {
-            cell.sectionLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section");
-            cell.iconImageView.image = [UIImage imageNamed:@"icon-contacts"].imageFlippedForRightToLeftLayoutDirection;
-            MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-            NSUInteger incomingContacts = incomingContactsLists.size.unsignedIntegerValue;
-            if (incomingContacts == 0) {
-                cell.pendingView.hidden = YES;
-                cell.pendingLabel.text = nil;
-            } else {
-                if (cell.pendingView.hidden) {
-                    cell.pendingView.hidden = NO;
-                    cell.pendingView.clipsToBounds = YES;
-                }
-                
-                cell.pendingLabel.text = [NSString stringWithFormat:@"%tu", incomingContacts];
-            }
-            break;
-        }
-            
-        case MyAccountAchievements: {
-            cell.sectionLabel.text = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
-            cell.iconImageView.image = [UIImage imageNamed:@"icon-achievements"].imageFlippedForRightToLeftLayoutDirection;
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-            
-        case MyAccountTransfers: {
-            cell.sectionLabel.text = NSLocalizedString(@"transfers", @"Title of the Transfers section");
-            cell.iconImageView.image = [UIImage imageNamed:@"icon-transfers"].imageFlippedForRightToLeftLayoutDirection;
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-
-        case MyAccountOffline: {
-            cell.sectionLabel.text = NSLocalizedString(@"offline", @"Title of the Offline section");
-            cell.iconImageView.image = [UIImage imageNamed:@"icon-offline"].imageFlippedForRightToLeftLayoutDirection;
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-        
-        case MyAccountRubbishBin: {
-            cell.sectionLabel.text = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-            cell.iconImageView.image = [UIImage imageNamed:@"rubbishBin"];
-            cell.detailLabel.text = [Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk];
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-    }
-    
-    [cell.sectionLabel sizeToFit];
-    
-    return cell;
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -446,7 +292,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     }
     
     switch (indexPath.row) {
-        case MyAccountStorage: {
+        case MyAccountMegaSectionStorage: {
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
                 UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"Usage" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
                 [self.navigationController pushViewController:usageVC animated:YES];
@@ -457,37 +303,42 @@ typedef NS_ENUM(NSInteger, MyAccount) {
             break;
         }
             
-        case MyAccountNotifications: {
+        case MyAccountMegaSectionNotifications: {
             NotificationsTableViewController *notificationsTVC = [[UIStoryboard storyboardWithName:@"Notifications" bundle:nil] instantiateViewControllerWithIdentifier:@"NotificationsTableViewControllerID"];
             [self.navigationController pushViewController:notificationsTVC animated:YES];
             break;
         }
             
-        case MyAccountContacts: {
+        case MyAccountMegaSectionContacts: {
             ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
             [self.navigationController pushViewController:contactsVC animated:YES];
             break;
         }
             
-        case MyAccountAchievements: {
+        case MyAccountMegaSectionBackups: {
+            [self navigateToBackups];
+            break;
+        }
+            
+        case MyAccountMegaSectionAchievements: {
             AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
             [self.navigationController pushViewController:achievementsVC animated:YES];
             break;
         }
             
-        case MyAccountTransfers: {
+        case MyAccountMegaSectionTransfers: {
             TransfersWidgetViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersWidgetViewControllerID"];
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
 
-        case MyAccountOffline: {
+        case MyAccountMegaSectionOffline: {
             OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineVC animated:YES];
             break;
         }
             
-        case MyAccountRubbishBin: {
+        case MyAccountMegaSectionRubbishBin: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
             cloudDriveVC.displayMode = DisplayModeRubbishBin;
@@ -505,7 +356,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount ? 0.0f : UITableViewAutomaticDimension;
+    return (indexPath.row == MyAccountMegaSectionAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount) ||
+            (indexPath.row == MyAccountMegaSectionBackups && !self.isBackupSectionVisible) ? 0.0f : UITableViewAutomaticDimension;
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
@@ -517,12 +369,12 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:MyAccountContacts inSection:MyAccountSectionMEGA];
+    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionContacts inSection:MyAccountSectionMega];
     [self.tableView reloadRowsAtIndexPaths:@[contactsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:MyAccountNotifications inSection:MyAccountSectionMEGA];
+    NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionNotifications inSection:MyAccountSectionMega];
     [self.tableView reloadRowsAtIndexPaths:@[notificationsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 

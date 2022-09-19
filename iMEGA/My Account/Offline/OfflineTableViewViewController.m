@@ -149,13 +149,13 @@ static NSString *kPath = @"kPath";
                         });
                     } else {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [cell.thumbnailImageView mnz_setImageForExtension:extension];
+                            [cell.thumbnailImageView setImage:[NodeAssetsManager.shared imageFor:extension]];
                         });
                     }
                 });
             }
         } else {
-            [cell.thumbnailImageView mnz_setImageForExtension:extension];
+            [cell.thumbnailImageView setImage:[NodeAssetsManager.shared imageFor:extension]];
         }
         
         NSDate *modificationDate = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil][NSFileModificationDate];

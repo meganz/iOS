@@ -1,5 +1,5 @@
 
-enum CopyOrMoveErrorEntity: Error {
+public enum CopyOrMoveErrorEntity: Error {
     case generic
     case nodeNotFound
     case nodeAuthorizeFailed

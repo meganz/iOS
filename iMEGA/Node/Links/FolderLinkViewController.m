@@ -574,7 +574,7 @@
     }
     
     if (self.parentNode.name) {
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference sender:sender];
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isInboxNode:[InboxUseCaseOCWrapper.alloc.init isInboxNode:self.parentNode] sender:sender];
         [self presentViewController:nodeActions animated:YES completion:nil];
     }
 }

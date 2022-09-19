@@ -562,5 +562,21 @@
         <string>%d minutes</string>
       </dict>
     </dict>
+    <key>mybackups.share.folder.warning.message</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@share@</string>
+        <key>share</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>This folder can only be shared as read-only, as this is a backup folder, any changes to its content could disable the backup</string>
+            <key>other</key>
+            <string>These folders can only be shared as read-only, as they are backup folders, any changes to their content could disable the backups</string>
+        </dict>
+    </dict>
   </dict>
 </plist>

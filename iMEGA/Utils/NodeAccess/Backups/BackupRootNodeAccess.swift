@@ -6,7 +6,7 @@ final class BackupRootNodeAccess: NodeAccess {
             NodeAccessConfiguration(
                 updateInMemoryNotificationName: .MEGABackupRootFolderUpdatedInMemory,
                 updateInRemoteNotificationName: .MEGABackupRootFolderUpdatedInRemote,
-                loadNodeRequest: MEGASdkManager.sharedMEGASdk().getMyBackupsFolder
+                loadNodeRequest: BackupRootNodeAccess.loadRootNode
             )
     )
     
@@ -18,5 +18,9 @@ final class BackupRootNodeAccess: NodeAccess {
     
     @objc func didReceiveNodesCurrentNotification() {
         BackupRootNodeAccess.shared.loadNode()
+    }
+    
+    private static func loadRootNode(delegate: MEGARequestDelegate) {
+        MEGASdkManager.sharedMEGASdk().getUserAttributeType(.backupsFolder, delegate: delegate)
     }
 }
