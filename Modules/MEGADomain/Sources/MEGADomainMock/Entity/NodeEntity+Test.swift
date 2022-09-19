@@ -38,7 +38,8 @@ public extension NodeEntity {
          duration: Int = .zero,
          latitude: Double? = nil,
          longitude: Double? = nil,
-         isTesting: Bool = true) {
+         isTesting: Bool = true,
+         deviceId: String? = nil) {
         self.init(
             changeTypes: changeTypes,
             nodeType: nodeType,
@@ -75,7 +76,8 @@ public extension NodeEntity {
             codecId: codecId,
             duration: duration,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            deviceId: deviceId
         )
     }
 }

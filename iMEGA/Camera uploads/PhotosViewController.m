@@ -648,7 +648,7 @@
     if ([node hasThumbnail]) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
-        [cell.thumbnailImageView mnz_imageForNode:node];
+        [cell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     }
     
     cell.nodeHandle = [node handle];

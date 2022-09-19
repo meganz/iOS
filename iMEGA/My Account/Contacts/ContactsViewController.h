@@ -27,6 +27,8 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 
 @interface ContactsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
+
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
 
@@ -34,7 +36,8 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
-
+@property (nonatomic, strong) NSMutableArray *selectedUsersArray;
+@property (strong, nonatomic) UISearchController *searchController;
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
 @property (nonatomic, copy) void(^userSelected)(NSArray<MEGAUser *> *);
@@ -45,4 +48,6 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (nonatomic, weak) id<ContatctsViewControllerDelegate> contatctsViewControllerDelegate;
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes;
+- (void)shareNodesWithLevel:(MEGAShareType)shareType;
+- (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton;
 @end

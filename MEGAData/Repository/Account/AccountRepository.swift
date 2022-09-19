@@ -33,4 +33,20 @@ struct AccountRepository: AccountRepositoryProtocol {
             }
         })
     }
+    
+    func inboxNode() -> NodeEntity? {
+        sdk.inboxNode?.toNodeEntity()
+    }
+    
+    func existsBackupNode() async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            BackupRootNodeAccess.shared.loadNode { node, error in
+                guard node != nil else {
+                    continuation.resume(throwing: BackupNodeErrorEntity.notFound)
+                    return
+                }
+                continuation.resume(with: Result.success(true))
+            }
+        }
+    }
 }

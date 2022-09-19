@@ -80,12 +80,12 @@ static NSString *kDuration = @"kDuration";
                 }
             }];
             [sdk getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            [self.thumbnailImageView mnz_imageForNode:node];
+            [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
         }
         self.thumbnailIconView.hidden = YES;
     } else {
         self.thumbnailIconView.hidden = NO;
-        [self.thumbnailIconView mnz_imageForNode:node];
+        [self.thumbnailIconView setImage:[NodeAssetsManager.shared iconFor:node]];
         self.thumbnailImageView.image = nil;
     }
     
@@ -195,7 +195,7 @@ static NSString *kDuration = @"kDuration";
                     } else {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             self.thumbnailIconView.hidden = NO;
-                            [self.thumbnailIconView mnz_setImageForExtension:extension];
+                            [self.thumbnailIconView setImage:[NodeAssetsManager.shared imageFor:extension]];
                             self.thumbnailImageView.image = nil;
                         });
                     }
@@ -203,7 +203,7 @@ static NSString *kDuration = @"kDuration";
             }
         } else {
             self.thumbnailIconView.hidden = NO;
-            [self.thumbnailIconView mnz_setImageForExtension:extension];
+            [self.thumbnailIconView setImage:[NodeAssetsManager.shared imageFor:extension]];
             self.thumbnailImageView.image = nil;
         }
         

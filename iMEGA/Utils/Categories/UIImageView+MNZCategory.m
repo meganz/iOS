@@ -87,11 +87,11 @@ static const void *base64HandleKey = &base64HandleKey;
             MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 [self sd_setImageWithURL:[NSURL fileURLWithPath:request.file]];
             }];
-            [self mnz_imageForNode:node];
+            [self setImage:[NodeAssetsManager.shared iconFor:node]];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:path delegate:delegate];
         }
     } else {
-        [self mnz_imageForNode:node];
+        [self setImage:[NodeAssetsManager.shared iconFor:node]];
     }
 }
 
@@ -114,70 +114,7 @@ static const void *base64HandleKey = &base64HandleKey;
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:node destinationFilePath:path delegate:delegate];
         }
     } else {
-        [self mnz_imageForNode:node];
-    }
-}
-
-- (void)mnz_setImageForExtension:(NSString *)extension {
-    extension = extension.lowercaseString;
-    UIImage *image;
-    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
-        image = UIImage.mnz_defaultPhotoImage;
-    } else {
-        NSDictionary *fileTypesDictionary = [Helper fileTypesDictionary];
-        NSString *filetypeImage = fileTypesDictionary[extension];
-        if (filetypeImage && filetypeImage.length > 0) {
-            image = [UIImage imageNamed:filetypeImage];
-        } else {
-            image = UIImage.mnz_genericImage;
-        }
-    }
-    
-    self.image = image;
-}
-
-- (void)mnz_imageForNode:(MEGANode *)node {
-    switch (node.type) {
-        case MEGANodeTypeFolder: {
-            if ([MyChatFilesFolderNodeAccess.shared isTargetNodeFor:node]) {
-                self.image = UIImage.mnz_folderMyChatFilesImage;
-            } else if ([node isBackupNode]) {
-                if ([node.parent isBackupRootNode]) {
-                    ![node.deviceId isEqualToString:@""] ? self.image = UIImage.mnz_devicePCFolderBackUpImage : [self mnz_commonFolderImageForNode:node];
-                } else {
-                    self.image = UIImage.mnz_folderBackUpImage;
-                }
-            } else if ([node isBackupRootNode]) {
-                self.image = UIImage.mnz_rootFolderBackUpImage;
-            } else {
-                [self mnz_commonFolderImageForNode:node];
-            }
-            
-#ifdef MAIN_APP_TARGET
-            if ([CameraUploadNodeAccess.shared isTargetNodeFor:node]) {
-                self.image = UIImage.mnz_folderCameraUploadsImage;
-            }
-#endif
-            
-            break;
-        }
-            
-        case MEGANodeTypeFile:
-            [self mnz_setImageForExtension:node.name.pathExtension];
-            break;
-            
-        default:
-            self.image = UIImage.mnz_genericImage;
-    }
-}
-
-- (void)mnz_commonFolderImageForNode:(MEGANode *)node {
-    if (node.isInShare) {
-        self.image = UIImage.mnz_incomingFolderImage;
-    } else if (node.isOutShare) {
-        self.image = UIImage.mnz_outgoingFolderImage;
-    } else {
-        self.image = UIImage.mnz_folderImage;
+        [self setImage:[NodeAssetsManager.shared iconFor:node]];
     }
 }
 

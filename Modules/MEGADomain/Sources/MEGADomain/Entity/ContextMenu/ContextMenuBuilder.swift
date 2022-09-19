@@ -19,6 +19,8 @@ public final class ContextMenuBuilder {
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
+    private var isInboxNode: Bool = false
+    private var isInboxChild: Bool = false
     private var isSharedItemsChild: Bool = false
     private var isOutShare: Bool = false
     private var isExported: Bool = false
@@ -130,6 +132,16 @@ public final class ContextMenuBuilder {
     
     public func setIsShareAvailable(_ isShareAvailable: Bool) -> ContextMenuBuilder {
         self.isShareAvailable = isShareAvailable
+        return self
+    }
+    
+    public func setIsInboxNode(_ isInboxNode: Bool) -> ContextMenuBuilder {
+        self.isInboxNode = isInboxNode
+        return self
+    }
+    
+    public func setIsInboxChild(_ isInboxChild: Bool) -> ContextMenuBuilder {
+        self.isInboxChild = isInboxChild
         return self
     }
     
@@ -259,7 +271,7 @@ public final class ContextMenuBuilder {
     private func viewTypeMenu() -> CMEntity {
         var viewTypeMenuActions: [CMElement] = []
         
-        if showMediaDiscovery && !isRubbishBinFolder {
+        if showMediaDiscovery && !isRubbishBinFolder && !isInboxChild {
             viewTypeMenuActions.append(mediaDiscovery)
         }
         
@@ -313,7 +325,7 @@ public final class ContextMenuBuilder {
     private func displayMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         
-        if isAFolder && !isRubbishBinFolder {
+        if isAFolder && !isRubbishBinFolder && !isInboxNode {
             displayActionsMenuChildren.append(makeQuickActions())
         }
         
@@ -344,7 +356,9 @@ public final class ContextMenuBuilder {
         if accessLevel == .owner {
             quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
             quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder])
-            quickActions.append(rename)
+            if !isInboxChild {
+                quickActions.append(rename)
+            }
         }
         
         quickActions.append(copy)

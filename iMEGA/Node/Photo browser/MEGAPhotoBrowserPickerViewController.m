@@ -9,6 +9,8 @@
 #import "UICollectionView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "MEGA-Swift.h"
+
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
@@ -77,7 +79,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
         cell.imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
     } else {
-        [cell.imageView mnz_imageForNode:node];
+        [cell.imageView setImage:[NodeAssetsManager.shared iconFor:node]];
         [self updateCollectionView:collectionView withThumbnailOfNode:node];
     }
     

@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 final class PlaylistItemTableViewCell: UITableViewCell {
     
@@ -36,7 +37,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
                     })
                 }
             } else {
-                thumbnailImageView.mnz_image(for: node)
+                thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             }
             
         } else {

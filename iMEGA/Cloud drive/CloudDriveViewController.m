@@ -58,7 +58,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
-
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -125,7 +124,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self setNavigationBarButtonItems];
     
-    MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+    MEGAShareType shareType = [InboxUseCaseOCWrapper.alloc.init isInboxNode:self.parentNode] ? MEGAShareTypeAccessRead : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     [self toolbarActionsForShareType:shareType];
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
@@ -417,6 +416,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             self.nodes = self.recentActionBucket.nodesList;
             [self updateNavigationBarTitle];
             break;
+            
+        case DisplayModeBackup:
+            [self updateNavigationBarTitle];
+            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            break;
         }
             
         default:
@@ -471,12 +475,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)toolbarActionsForShareType:(MEGAShareType )shareType {
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    lowShareType = shareType;
+    self.shareType = shareType;
     
     switch (shareType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
-            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem];
+            if ([InboxUseCaseOCWrapper.alloc.init isInboxNode:self.parentNode]) {
+                self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.shareLinkBarButtonItem, flexibleItem, self.actionsBarButtonItem];
+            } else {
+                self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem];
+            }
             break;
         }
             
@@ -519,35 +527,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-- (void)toolbarActionsForNodeArray:(NSArray *)nodeArray {
-    if (nodeArray.count == 0) {
-        return;
-    }
-    
-    MEGAShareType shareType;
-    lowShareType = MEGAShareTypeAccessOwner;
-    
-    for (MEGANode *n in nodeArray) {
-        shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:n];
-        
-        if (shareType == MEGAShareTypeAccessRead  && shareType < lowShareType) {
-            lowShareType = shareType;
-            break;
-        }
-        
-        if (shareType == MEGAShareTypeAccessReadWrite && shareType < lowShareType) {
-            lowShareType = shareType;
-        }
-        
-        if (shareType == MEGAShareTypeAccessFull && shareType < lowShareType) {
-            lowShareType = shareType;
-            
-        }
-    }
-    
-    [self toolbarActionsForShareType:lowShareType];
-}
-
 - (void)internetConnectionChanged {
     [self reloadUI];
 }
@@ -555,7 +534,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)setNavigationBarButtonItems {
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin: {
+        case DisplayModeRubbishBin:
+        case DisplayModeBackup: {
             [self setNavigationBarButtons];
             break;
         }
@@ -592,6 +572,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
             
         case DisplayModeRecents: {
+            break;
+        }
+        case DisplayModeBackup: {
+            self.moreMinimizedBarButtonItem.enabled = boolValue;
             break;
         }
             
@@ -656,6 +640,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 navigationTitle = [NSString stringWithFormat:NSLocalizedString(@"%1$d items", @"Plural of items which contains a folder. 2 items"), self.nodes.size.intValue];
                 break;
             }
+                
+            case DisplayModeBackup:
+                navigationTitle = NSLocalizedString(@"backups.title", @"Title of the backups section");
+                break;
                 
             default:
                 break;
@@ -857,7 +845,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         
         self.allNodesSelected = YES;
         
-        [self toolbarActionsForNodeArray:self.selectedNodesArray];
+        [self toolbarActionsWithNodeArray:self.selectedNodesArray];
     } else {
         self.allNodesSelected = NO;
     }

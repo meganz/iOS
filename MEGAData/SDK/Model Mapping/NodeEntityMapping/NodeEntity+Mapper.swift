@@ -78,7 +78,10 @@ fileprivate extension NodeEntity {
 
             // MARK: - Photo
             latitude                           : node.latitude?.doubleValue,
-            longitude                          : node.longitude?.doubleValue
+            longitude                          : node.longitude?.doubleValue,
+            
+            // MARK: - Backup
+            deviceId                           : node.deviceId
         )
     }
 }

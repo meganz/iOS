@@ -168,6 +168,47 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                                                         .allValid
                                                                                                         .filter { !excludedSortOptions.contains($0) })
     }
+    
+    func testDisplayMenuInboxNode() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .display))
+                                                .setAccessLevel(.owner)
+                                                .setIsAFolder(true)
+                                                .setIsInboxNode(true)
+                                                .build())
+
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort]
+        
+        XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
+                                                                                                                .allCases
+                                                                                                                .filter { !excludedDisplayActions.contains($0) })
+                                                            
+        XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
+                                                                                                        .allValid)
+    }
+    
+    func testDisplayMenuInboxChild() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .display))
+                                                .setAccessLevel(.owner)
+                                                .setIsAFolder(true)
+                                                .setIsInboxChild(true)
+                                                .build())
+
+        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing]
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort]
+        
+        XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
+                                                                                                            .allCases
+                                                                                                            .filter { !excludedQuickActions.contains($0) })
+        
+        XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
+                                                                                                                .allCases
+                                                                                                                .filter { !excludedDisplayActions.contains($0) })
+                                                            
+        XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
+                                                                                                        .allValid)
+    }
 
     func testRubbishBinSubFoldersMenu() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()

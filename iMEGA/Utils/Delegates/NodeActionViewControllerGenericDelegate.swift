@@ -41,11 +41,14 @@ final class NodeActionViewControllerGenericDelegate:
             exportFile(node: node, sender: sender)
 
         case .shareFolder:
-            shareFolder(node)
+            BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+                self?.shareFolder(node)
+            }
             
         case .manageShare:
-            manageShare(node)
-            
+            BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+                self?.manageShare(node)
+            }
         case .info:
             showNodeInfo(node)
             

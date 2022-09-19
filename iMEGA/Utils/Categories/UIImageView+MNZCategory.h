@@ -11,9 +11,6 @@ typedef void (^MNZWebImageCompletionBlock)(MEGARequest *request);
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle;
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name;
 
-- (void)mnz_setImageForExtension:(nullable NSString *)extension;
-- (void)mnz_imageForNode:(MEGANode *)node;
-
 /**
  A convenient method to set thumbnail image by a MEGANode object
  

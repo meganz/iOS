@@ -146,12 +146,12 @@
     [self setTitle:self.node.name];
     
     self.navigationItem.rightBarButtonItem = nil;
-
+    
     if (self.node) {
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
-        [self.imageView mnz_imageForNode:self.node];
+        [self.imageView setImage:[NodeAssetsManager.shared iconFor:self.node]];
     } else {
-        [self.imageView mnz_setImageForExtension:self.filePath.pathExtension];
+        [self.imageView setImage:[NodeAssetsManager.shared imageFor:self.filePath.pathExtension]];
     }
     
     [self.navigationController.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
@@ -328,6 +328,7 @@
                                              isPageView:self.collectionView.hidden
                                              displayMode:displayMode
                                              isInVersionsView:[self isPreviewingVersion]
+                                             isInboxNode:[InboxUseCaseOCWrapper.alloc.init isInboxNode:self.node]
                                              sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
