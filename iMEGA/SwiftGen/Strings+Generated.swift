@@ -2814,6 +2814,14 @@ public enum Strings {
         /// [B]20 GB+[/B] Storage
         public static let freePlan = Strings.tr("Localizable", "account.storage.freePlan")
       }
+      public enum Suspension {
+        public enum Message {
+          /// Account suspended due to copyright violations. We sent you an email with more information about this.
+          public static let copyright = Strings.tr("Localizable", "account.suspension.message.copyright")
+          /// Account terminated due to a breach of MEGA's Terms of Service, such as abuse of others' rights, sharing and importing illegal data, or system abuse.
+          public static let nonCopyright = Strings.tr("Localizable", "account.suspension.message.nonCopyright")
+        }
+      }
       public enum TransferQuota {
         /// [B]Limited[/B] Transfer
         public static let freePlan = Strings.tr("Localizable", "account.transferQuota.freePlan")
