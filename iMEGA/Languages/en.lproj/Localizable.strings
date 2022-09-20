@@ -3086,3 +3086,7 @@
 "meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+/* Error message when trying to login and the account is blocked due to copyright violation */
+"account.suspension.message.copyright" = "Account suspended due to copyright violations. We sent you an email with more information about this.";
+/* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
+"account.suspension.message.nonCopyright" = "Account terminated due to a breach of MEGA's Terms of Service, such as abuse of others' rights, sharing and importing illegal data, or system abuse.";
