@@ -219,7 +219,9 @@ extension SlideShowViewController: UIScrollViewDelegate {
             viewModel.currentSlideNumber = visibleIndexPath.row
         }
         
-        viewModel?.dispatch(.resetTimer)
+        if viewModel?.playbackStatus == .playing {
+            viewModel?.dispatch(.resetTimer)
+        }
     }
 }
 
