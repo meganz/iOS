@@ -29,8 +29,8 @@ enum AudioPlayerAction: ActionType {
 protocol AudioPlayerViewRouting: Routing {
     func dismiss()
     func goToPlaylist()
-    func showMiniPlayer(shouldReload: Bool)
-    func showOfflineMiniPlayer(file: String, shouldReload: Bool)
+    func showMiniPlayer(node: MEGANode?, shouldReload: Bool)
+    func showMiniPlayer(file: String, shouldReload: Bool)
     func importNode(_ node: MEGANode)
     func share()
     func sendToChat()
@@ -69,34 +69,27 @@ final class AudioPlayerViewModel: ViewModelType {
         case nextTrackAction(enabled: Bool)
     }
     
-    var playerType: PlayerType = .default
-    
     // MARK: - Private properties
-    private let node: MEGANode?
-    private let fileLink: String?
-    private let selectedFilePath: String?
-    private let filePaths: [String]?
+    private var configEntity: AudioPlayerConfigEntity
     private let router: AudioPlayerViewRouting
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
     private let dispatchQueue: DispatchQueueProtocol
-    private var isFolderLink: Bool = false
-    private var playerHandler: AudioPlayerHandlerProtocol
     private var repeatItemsState: RepeatMode {
         didSet {
             invokeCommand?(.updateRepeat(status: repeatItemsState))
             switch repeatItemsState {
-            case .none: playerHandler.playerRepeatDisabled()
-            case .loop: playerHandler.playerRepeatAll(active: true)
-            case .repeatOne: playerHandler.playerRepeatOne(active: true)
+            case .none: configEntity.playerHandler.playerRepeatDisabled()
+            case .loop: configEntity.playerHandler.playerRepeatAll(active: true)
+            case .repeatOne: configEntity.playerHandler.playerRepeatOne(active: true)
             }
         }
     }
     private var speedModeState: SpeedMode {
         didSet {
             invokeCommand?(.updateSpeed(mode: speedModeState))
-            playerHandler.changePlayer(speed: speedModeState)
+            configEntity.playerHandler.changePlayer(speed: speedModeState)
         }
     }
     private var isSingleTrackPlayer: Bool = false
@@ -104,61 +97,33 @@ final class AudioPlayerViewModel: ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    // MARK: - Node Init
-    init(node: MEGANode?,
-         fileLink: String?,
-         isFolderLink: Bool,
+    // MARK: - Init
+    init(configEntity: AudioPlayerConfigEntity,
          router: AudioPlayerViewRouting,
-         playerHandler: AudioPlayerHandlerProtocol,
-         nodeInfoUseCase: NodeInfoUseCaseProtocol,
-         streamingInfoUseCase: StreamingInfoUseCaseProtocol,
+         nodeInfoUseCase: NodeInfoUseCaseProtocol? = nil,
+         streamingInfoUseCase: StreamingInfoUseCaseProtocol? = nil,
+         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol? = nil,
          dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
-        self.node = node
-        self.fileLink = fileLink
-        self.isFolderLink = isFolderLink
-        self.selectedFilePath = nil
-        self.filePaths = nil
+        self.configEntity = configEntity
         self.router = router
-        self.playerHandler = playerHandler
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
-        self.offlineInfoUseCase = nil
-        self.repeatItemsState = playerHandler.currentRepeatMode()
-        self.speedModeState = playerHandler.currentSpeedMode()
-        self.dispatchQueue = dispatchQueue
-    }
-    
-    // MARK: - Offline Init
-    init(selectedFile: String,
-         filePaths: [String]?,
-         router: AudioPlayerViewRouting,
-         playerHandler: AudioPlayerHandlerProtocol,
-         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol,
-         dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
-        self.node = nil
-        self.fileLink = nil
-        self.selectedFilePath = selectedFile
-        self.filePaths = filePaths
-        self.router = router
-        self.playerHandler = playerHandler
-        self.nodeInfoUseCase = nil
-        self.streamingInfoUseCase = nil
         self.offlineInfoUseCase = offlineInfoUseCase
-        self.repeatItemsState = playerHandler.currentRepeatMode()
-        self.speedModeState = playerHandler.currentSpeedMode()
+        self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
+        self.speedModeState = configEntity.playerHandler.currentSpeedMode()
         self.dispatchQueue = dispatchQueue
     }
     
     // MARK: - Private functions
     private func shouldInitializePlayer() -> Bool {
-        if playerHandler.isPlayerDefined() {
-            guard let node = node else {
-                return selectedFilePath != playerHandler.playerCurrentItem()?.url.absoluteString
+        if configEntity.playerHandler.isPlayerDefined() {
+            guard let node = configEntity.node else {
+                return configEntity.fileLink != configEntity.playerHandler.playerCurrentItem()?.url.absoluteString
             }
-            if fileLink != nil {
-                return streamingInfoUseCase?.info(from: node)?.node != playerHandler.playerCurrentItem()?.node
+            if configEntity.fileLink != nil {
+                return streamingInfoUseCase?.info(from: node)?.node != configEntity.playerHandler.playerCurrentItem()?.node
             } else {
-                return node.handle != playerHandler.playerCurrentItem()?.node?.handle
+                return node.handle != configEntity.playerHandler.playerCurrentItem()?.node?.handle
             }
         } else {
             return true
@@ -166,24 +131,33 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func preparePlayer() {
-        if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
-            streamingInfoUseCase?.startServer()
-        }
-        
-        if let node = node {
-            initialize(with: node)
-        } else if let offlineFilePaths = filePaths {
+        if configEntity.playerType == .offline {
+            guard let offlineFilePaths = configEntity.relatedFiles else {
+                router.dismiss()
+                return
+            }
             initialize(with: offlineFilePaths)
+        } else {
+            guard let node = configEntity.node else {
+                router.dismiss()
+                return
+            }
+            
+            if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
+                streamingInfoUseCase?.startServer()
+            }
+            
+            initialize(with: node)
         }
-        playerHandler.addPlayer(listener: self)
+        configEntity.playerHandler.addPlayer(listener: self)
     }
     
     private func configurePlayer() {
-        playerHandler.addPlayer(listener: self)
+        configEntity.playerHandler.addPlayer(listener: self)
         
-        guard !playerHandler.isPlayerEmpty(),
-              let tracks = playerHandler.currentPlayer()?.tracks,
-              let currentTrack = playerHandler.playerCurrentItem() else {
+        guard !configEntity.playerHandler.isPlayerEmpty(),
+              let tracks = configEntity.playerHandler.currentPlayer()?.tracks,
+              let currentTrack = configEntity.playerHandler.playerCurrentItem() else {
             DispatchQueue.main.async { [weak self] in
                 self?.router.dismiss()
             }
@@ -192,16 +166,13 @@ final class AudioPlayerViewModel: ViewModelType {
         
         reloadNodeInfoWithCurrentItem()
         
-        if node == nil && (filePaths != nil) {
-            playerType = .offline
-        }
         configurePlayerType(tracks: tracks, currentTrack: currentTrack)
     }
     
     private func configurePlayerType(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
-        switch playerType {
+        switch configEntity.playerType {
         case .default, .folderLink, .offline:
-            invokeCommand?(playerType == .offline ? .configureOfflinePlayer : .configureDefaultPlayer)
+            invokeCommand?(configEntity.playerType == .offline ? .configureOfflinePlayer : .configureDefaultPlayer)
             updateTracksActionStatus(enabled: tracks.count > 1)
             isSingleTrackPlayer = tracks.count == 1
         case .fileLink:
@@ -211,17 +182,17 @@ final class AudioPlayerViewModel: ViewModelType {
     
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
-        CrashlyticsLogger.log("[AudioPlayer] type: \(playerType)")
+        CrashlyticsLogger.log("[AudioPlayer] type: \(configEntity.playerType)")
         
-        if !(playerHandler.isPlayerDefined()) {
-            playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: fileLink == nil, tracks: mutableTracks)
+        if !(configEntity.playerHandler.isPlayerDefined()) {
+            configEntity.playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
         } else {
             if shouldInitializePlayer() {
-                playerHandler.autoPlay(enable: playerType != .fileLink)
-                playerHandler.addPlayer(tracks: mutableTracks)
+                configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
+                configEntity.playerHandler.addPlayer(tracks: mutableTracks)
                 
-                if fileLink != nil && playerHandler.isPlayerPlaying() {
-                    playerHandler.playerPause()
+                if configEntity.fileLink != nil && configEntity.playerHandler.isPlayerPlaying() {
+                    configEntity.playerHandler.playerPause()
                 }
             } else {
                 self.reloadNodeInfoWithCurrentItem()
@@ -244,18 +215,16 @@ final class AudioPlayerViewModel: ViewModelType {
 
     // MARK: - Node Initialize
     private func initialize(with node: MEGANode) {
-        if fileLink != nil {
+        if configEntity.fileLink != nil {
             guard let track = streamingInfoUseCase?.info(from: node) else {
                 DispatchQueue.main.async { [weak self] in
                     self?.router.dismiss()
                 }
                 return
             }
-            
-            playerType = .fileLink
             initialize(tracks: [track], currentTrack: track)
         } else {
-            guard let children = isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
+            guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                                                 nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
                   let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
                 
@@ -265,13 +234,9 @@ final class AudioPlayerViewModel: ViewModelType {
                     }
                     return
                 }
-                
-                playerType = .default
                 initialize(tracks: [track], currentTrack: track)
                 return
             }
-            
-            playerType = isFolderLink ? .folderLink : .default
             initialize(tracks: children, currentTrack: currentTrack)
         }
     }
@@ -279,7 +244,7 @@ final class AudioPlayerViewModel: ViewModelType {
     // MARK: - Offline Files Initialize
     private func initialize(with offlineFilePaths: [String]) {
         guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
-              let currentFilePath = selectedFilePath,
+              let currentFilePath = configEntity.fileLink,
               let currentTrack = files.first(where: { $0.url.path == currentFilePath ||
                                                 $0.url.absoluteString == currentFilePath }) else {
             invokeCommand?(.configureOfflinePlayer)
@@ -289,19 +254,17 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             return
         }
-        
-        playerType = .offline
         initialize(tracks: files, currentTrack: currentTrack)
     }
     
     private func reloadNodeInfoWithCurrentItem() {
-        guard let currentItem = playerHandler.playerCurrentItem() else { return }
+        guard let currentItem = configEntity.playerHandler.playerCurrentItem() else { return }
         invokeCommand?(.reloadNodeInfo(name: currentItem.name,
                                        artist: currentItem.artist ?? "",
                                        thumbnail: currentItem.artwork,
-                                       size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
+                                       size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
         
-        playerHandler.refreshCurrentItemState()
+        configEntity.playerHandler.refreshCurrentItemState()
         
         invokeCommand?(.showLoading(false))
     }
@@ -319,32 +282,32 @@ final class AudioPlayerViewModel: ViewModelType {
                 invokeCommand?(.showLoading(false))
                 configurePlayer()
             }
-            invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
+            invokeCommand?(.updateShuffle(status: configEntity.playerHandler.isShuffleEnabled()))
             invokeCommand?(.updateSpeed(mode: speedModeState))
         case .updateCurrentTime(let percentage):
-            playerHandler.playerProgressCompleted(percentage: percentage)
+            configEntity.playerHandler.playerProgressCompleted(percentage: percentage)
         case .progressDragEventBegan:
-            playerHandler.playerProgressDragEventBegan()
+            configEntity.playerHandler.playerProgressDragEventBegan()
         case .progressDragEventEnded:
-            playerHandler.playerProgressDragEventEnded()
+            configEntity.playerHandler.playerProgressDragEventEnded()
         case .onShuffle(let active):
-            playerHandler.playerShuffle(active: active)
+            configEntity.playerHandler.playerShuffle(active: active)
         case .onPrevious:
-            if playerHandler.playerCurrentItemTime() == 0.0 && repeatItemsState == .repeatOne {
+            if configEntity.playerHandler.playerCurrentItemTime() == 0.0 && repeatItemsState == .repeatOne {
                 repeatItemsState = .loop
             }
-            playerHandler.playPrevious()
+            configEntity.playerHandler.playPrevious()
         case .onPlayPause:
-            playerHandler.playerTogglePlay()
+            configEntity.playerHandler.playerTogglePlay()
         case .onNext:
             if repeatItemsState == .repeatOne {
                 repeatItemsState = .loop
             }
-            playerHandler.playNext()
+            configEntity.playerHandler.playNext()
         case .onGoBackward:
-            playerHandler.goBackward()
+            configEntity.playerHandler.goBackward()
         case .onGoForward:
-            playerHandler.goForward()
+            configEntity.playerHandler.goForward()
         case .onRepeatPressed:
             switch repeatItemsState {
             case .none: repeatItemsState = .loop
@@ -361,13 +324,18 @@ final class AudioPlayerViewModel: ViewModelType {
         case .showPlaylist:
             router.goToPlaylist()
         case .initMiniPlayer:
-            if selectedFilePath == nil {
-                router.showMiniPlayer(shouldReload: true)
-            } else {
-                router.showOfflineMiniPlayer(file: playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+            switch configEntity.playerType {
+            case .`default`:
+                router.showMiniPlayer(node: configEntity.playerHandler.playerCurrentItem()?.node, shouldReload: true)
+            case .folderLink:
+                router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+            case .fileLink:
+                router.showMiniPlayer(file: configEntity.fileLink ?? "", shouldReload: true)
+            case .offline:
+                router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
             }
         case .`import`:
-            if let node = node {
+            if let node = configEntity.node {
                 router.importNode(node)
             }
         case .sendToChat:
@@ -379,9 +347,9 @@ final class AudioPlayerViewModel: ViewModelType {
         case .refreshRepeatStatus:
             invokeCommand?(.updateRepeat(status: repeatItemsState))
         case .refreshShuffleStatus:
-            invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
+            invokeCommand?(.updateShuffle(status: configEntity.playerHandler.isShuffleEnabled()))
         case .showActionsforCurrentNode(let sender):
-            guard let node = playerHandler.playerCurrentItem()?.node else { return }
+            guard let node = configEntity.playerHandler.playerCurrentItem()?.node else { return }
             guard let nodeUseCase = nodeInfoUseCase,
                   let latestNode = nodeUseCase.node(fromHandle: node.handle) else {
                     self.router.showAction(for: node, sender: sender)
@@ -389,8 +357,8 @@ final class AudioPlayerViewModel: ViewModelType {
                 }
             router.showAction(for: latestNode, sender: sender)
         case .deinit:
-            playerHandler.removePlayer(listener: self)
-            if !playerHandler.isPlayerDefined() {
+            configEntity.playerHandler.removePlayer(listener: self)
+            if !configEntity.playerHandler.isPlayerDefined() {
                 streamingInfoUseCase?.stopServer()
             }
         }
@@ -418,8 +386,8 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
-        if fileLink != nil, !isFolderLink {
-            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: node?.size?.int64Value ?? Int64(0))))
+        if configEntity.fileLink != nil, !configEntity.isFolderLink {
+            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
         } else {
             self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
         }
@@ -450,8 +418,8 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     func audioPlayerDidFinishBuffering() {
-        if playerHandler.currentSpeedMode() != speedModeState {
-            playerHandler.changePlayer(speed: speedModeState)
+        if configEntity.playerHandler.currentSpeedMode() != speedModeState {
+            configEntity.playerHandler.changePlayer(speed: speedModeState)
         }
     }
 }

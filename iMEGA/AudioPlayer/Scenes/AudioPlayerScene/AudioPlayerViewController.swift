@@ -38,6 +38,7 @@ final class AudioPlayerViewController: UIViewController {
     private var toolbarConfigurator: AudioPlayerFileToolbarConfigurator?
     private var shadowLayer: CAShapeLayer?
     private var pendingDragEvent: Bool = false
+    private var playerType: PlayerType = .default
 
     // MARK: - Internal properties
     var viewModel: AudioPlayerViewModel!
@@ -66,15 +67,16 @@ final class AudioPlayerViewController: UIViewController {
                 AppearanceManager.forceNavigationBarUpdate(navController.navigationBar, traitCollection: traitCollection)
                 AppearanceManager.forceToolbarUpdate(navController.toolbar, traitCollection: traitCollection)
             }
-            updateAppearance()
+            style(with: traitCollection)
         }
     }
     
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.updateAppearance()
+        coordinator.animate(alongsideTransition: { [weak self] context in
+            guard let `self` = self else { return }
+            self.style(with: self.traitCollection)
         })
     }
     
@@ -191,7 +193,7 @@ final class AudioPlayerViewController: UIViewController {
         playPauseButton.isEnabled = enabled
         nextButton.isEnabled = enabled
         goForwardButton.isEnabled = enabled
-        if viewModel.playerType != .fileLink {
+        if playerType != .fileLink {
             shuffleButton.isEnabled = enabled
             repeatButton.isEnabled = enabled
             gotoplaylistButton.isEnabled = enabled
@@ -206,11 +208,12 @@ final class AudioPlayerViewController: UIViewController {
     
     private func configureDefaultPlayer() {
         compactPlayer(active: false)
+        defaultPlayerAppearance()
+        updateAppearance()
     }
     
     private func configureOfflinePlayer() {
         configureDefaultPlayer()
-        moreButton.isHidden = true
     }
     
     private func configureFileLinkPlayer(title: String, subtitle: String) {
@@ -218,24 +221,24 @@ final class AudioPlayerViewController: UIViewController {
         configureToolbarButtons()
         showToolbar()
         compactPlayer(active: true)
+        fileLinkPlayerAppearance()
+        updateAppearance()
     }
     
     private func compactPlayer(active: Bool) {
         detailLabel.isHidden = !active
         shuffleButton.alpha = active ? 0.0 : 1.0
         repeatButton.alpha = active ? 0.0 : 1.0
-        moreButton.isHidden = active
         gotoplaylistButton.isHidden = active
         shuffleButton.isUserInteractionEnabled = !active
         repeatButton.isUserInteractionEnabled = !active
         dataStackView.alignment = active ? .leading : .center
         toolbarView.isHidden = active
-        
-        updateAppearance()
+        navigationController?.isNavigationBarHidden = !active
     }
     
     private func updateCloseButtonState() {
-        closeButton.isHidden = viewModel.playerType == .fileLink
+        closeButton.isHidden = playerType == .fileLink
         
         if !closeButton.isHidden {
             closeButton.setTitle(Strings.Localizable.close, for: .normal)
@@ -243,24 +246,31 @@ final class AudioPlayerViewController: UIViewController {
         }
     }
     
+    private func updateMoreButtonState() {
+        moreButton.isHidden = playerType == .fileLink || playerType == .offline
+    }
+    
     // MARK: - UI configurations
     private func updateAppearance() {
-        if viewModel.playerType == .fileLink {
-            bottomView.backgroundColor = .mnz_Elevated(traitCollection)
-            view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-            separatorView.isHidden = false
-            separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        } else {
-            view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-            bottomView.backgroundColor = .clear
-            viewModel.dispatch(.refreshRepeatStatus)
-            viewModel.dispatch(.refreshShuffleStatus)
-            separatorView.isHidden = true
-        }
-        
         updateCloseButtonState()
+        updateMoreButtonState()
         style(with: traitCollection)
         imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
+    }
+    
+    private func fileLinkPlayerAppearance() {
+        bottomView.backgroundColor = .mnz_Elevated(traitCollection)
+        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        separatorView.isHidden = false
+        separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+    }
+    
+    private func defaultPlayerAppearance() {
+        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        bottomView.backgroundColor = .clear
+        viewModel.dispatch(.refreshRepeatStatus)
+        viewModel.dispatch(.refreshShuffleStatus)
+        separatorView.isHidden = true
     }
     
     private func style(with trait: UITraitCollection) {
@@ -382,10 +392,13 @@ final class AudioPlayerViewController: UIViewController {
         case .updateShuffle(let status):
             updateShuffle(status)
         case .configureDefaultPlayer:
+            playerType = .`default`
             configureDefaultPlayer()
         case .configureOfflinePlayer:
+            playerType = .offline
             configureOfflinePlayer()
         case .configureFileLinkPlayer(let title, let subtitle):
+            playerType = .fileLink
             configureFileLinkPlayer(title: title, subtitle: subtitle)
         case .enableUserInteraction(let enabled):
             userInteraction(enabled: enabled)

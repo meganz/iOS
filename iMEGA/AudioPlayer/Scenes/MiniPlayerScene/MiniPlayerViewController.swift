@@ -13,6 +13,7 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
     
     // MARK: - Private properties
+    private let containerViewDefaultMargin: CGFloat = 12.0
     private var miniPlayerSource: MiniPlayerDataSource? {
         didSet {
             collectionView.dataSource = miniPlayerSource
@@ -24,7 +25,6 @@ final class MiniPlayerViewController: UIViewController {
         }
     }
     private var lastMovementIndexPath: IndexPath?
-    private let containerViewDefaultMargin: CGFloat = 12.0
     
     // MARK: - Internal properties
     var viewModel: MiniPlayerViewModel!
