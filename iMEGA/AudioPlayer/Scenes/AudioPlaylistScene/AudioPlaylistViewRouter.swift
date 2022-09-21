@@ -3,20 +3,17 @@ import Foundation
 final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
-    private weak var playerHandler: AudioPlayerHandlerProtocol?
-    private var parentNode: MEGANode?
+    private var configEntity: AudioPlayerConfigEntity
     
-    init(presenter: UIViewController, parentNode: MEGANode?, playerHandler: AudioPlayerHandlerProtocol?) {
+    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
+        self.configEntity = configEntity
         self.presenter = presenter
-        self.parentNode = parentNode
-        self.playerHandler = playerHandler
-        super.init()
     }
     
     func build() -> UIViewController {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "AudioPlaylistViewControllerID") as! AudioPlaylistViewController
 
-        vc.viewModel = AudioPlaylistViewModel(router: self, parentNode: parentNode, nodeInfoUseCase: NodeInfoUseCase(), playerHandler: playerHandler)
+        vc.viewModel = AudioPlaylistViewModel(configEntity: configEntity, router: self, nodeInfoUseCase: NodeInfoUseCase())
         baseViewController = vc
         
         return vc
