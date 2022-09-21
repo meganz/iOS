@@ -112,7 +112,7 @@ extension ContextMenuModel {
         case .select:
             return ContextMenuDataModel(identifier: "select", title: Strings.Localizable.select, image: Asset.Images.ActionSheetIcons.select.image)
         case .mediaDiscovery:
-            return ContextMenuDataModel(identifier: "select", title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, image: Asset.Images.ActionSheetIcons.mediaDiscovery.image)
+            return ContextMenuDataModel(identifier: "mediaDiscovery", title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, image: Asset.Images.ActionSheetIcons.mediaDiscovery.image)
         case .thumbnailView:
             return ContextMenuDataModel(identifier: "thumbnailView", title: Strings.Localizable.thumbnailView, image: Asset.Images.ActionSheetIcons.thumbnailsThin.image)
         case .listView:
