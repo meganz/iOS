@@ -100,8 +100,10 @@ pipeline {
                               sh "zip -r ${fileName} MEGA.app"
                               withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
                                 env.zipPath = "${WORKSPACE}/derivedData/Build/Products/Debug-iphonesimulator/${fileName}"
-                                env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/${fileName}"
+                                env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator/${fileName}"
+                                env.targetPathLatest = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator/latest/ios-mega-simulator-latest.zip"
                                 sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
+                                sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathLatest}\"'
                               }
                             }
                         }
