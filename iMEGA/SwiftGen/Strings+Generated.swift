@@ -13,7 +13,7 @@ public enum Strings {
   public enum InfoPlist {
     /// MEGA accesses your camera when you capture a video, photo or make a call inside the app.
     public static let nsCameraUsageDescription = Strings.tr("InfoPlist", "NSCameraUsageDescription")
-    /// Allowing access to your address book helps you and others to find friends and helps us provide a better service.
+    /// If you allow access, MEGA will save the information in your address book on its servers. This will help you find existing MEGA users in your contacts and connect with them on MEGA. MEGA will never send messages to your contacts or share this information with third parties.
     public static let nsContactsUsageDescription = Strings.tr("InfoPlist", "NSContactsUsageDescription")
     /// MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.
     public static let nsFaceIDUsageDescription = Strings.tr("InfoPlist", "NSFaceIDUsageDescription")
