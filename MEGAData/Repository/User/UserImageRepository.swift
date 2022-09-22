@@ -43,6 +43,10 @@ struct UserImageRepository: UserImageRepositoryProtocol {
         }
     }
     
+    func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String? {
+        MEGASdk.avatarColor(forBase64UserHandle: handle)
+    }
+    
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         let userAvatarChangeSubscriber = UserAvatarChangeSubscriber(sdk: sdk, handles: handles)
         self.userAvatarChangeSubscriber = userAvatarChangeSubscriber

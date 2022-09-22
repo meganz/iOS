@@ -65,6 +65,16 @@ final class SlideShowViewController: UIViewController, ViewType {
             navigationBar.backgroundColor = backgroundColor
             updatePlayButtonTintColor()
         }
+        
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass || traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
+            adjustCollectionViewPosition()
+        }
+    }
+    
+    func adjustCollectionViewPosition() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+            updateSlideInView()
+        }
     }
     
     func update(viewModel: SlideShowViewModel) {
@@ -76,6 +86,7 @@ final class SlideShowViewController: UIViewController, ViewType {
          case .startPlaying: play()
          case .pausePlaying: pause()
          case .initialPhotoLoaded: playOrPauseSlideShow()
+         case .resetTimer: resetTimer()
          }
     }
     
@@ -102,8 +113,7 @@ final class SlideShowViewController: UIViewController, ViewType {
             changeImage()
         }
         
-        slideShowTimer = Timer.scheduledTimer(timeInterval: SlideShowViewModel.SlideShowAutoPlayingTimeInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
-        UIApplication.shared.isIdleTimerDisabled = true
+        resetTimer()
     }
     
     private func pause() {
@@ -119,15 +129,31 @@ final class SlideShowViewController: UIViewController, ViewType {
         viewModel?.dispatch(.finishPlaying)
     }
     
+    private func resetTimer() {
+        guard let viewModel = viewModel else { return }
+        
+        slideShowTimer.invalidate()
+        slideShowTimer = Timer.scheduledTimer(timeInterval: viewModel.timeIntervalForSlideInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
     @objc private func changeImage() {
         guard let viewModel = viewModel else { return }
         
         viewModel.currentSlideNumber += 1
         if viewModel.currentSlideNumber < viewModel.photos.count {
-            let index = IndexPath(item: viewModel.currentSlideNumber, section: 0)
-            collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+            updateSlideInView()
         } else {
             finish()
+        }
+    }
+    
+    private func updateSlideInView() {
+        guard let viewModel = viewModel else { return }
+        
+        let index = IndexPath(item: viewModel.currentSlideNumber, section: 0)
+        if collectionView.isValid(indexPath: index) {
+            collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
         }
     }
     
@@ -163,19 +189,21 @@ extension SlideShowViewController: UICollectionViewDelegate {
 
 extension SlideShowViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.numberOfSlideShowImages ?? 0
+        return viewModel?.numberOfSlideShowContents ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
         
         guard let viewModel = viewModel else { return cell }
-        guard indexPath.row < viewModel.photos.count else {
+        guard indexPath.row < viewModel.photos.count,
+                let image = viewModel.photos[indexPath.row].image
+        else {
             viewModel.dispatch(.finishPlaying)
             return cell
         }
         
-        cell.update(withImage: viewModel.photos[indexPath.row].image, andInteraction: self)
+        cell.update(withImage: image, andInteraction: self)
         return cell
     }
 }
@@ -189,6 +217,10 @@ extension SlideShowViewController: UIScrollViewDelegate {
         if let viewModel = viewModel, let visibleIndexPath = visibleIndexPath,
             viewModel.currentSlideNumber != visibleIndexPath.row {
             viewModel.currentSlideNumber = visibleIndexPath.row
+        }
+        
+        if viewModel?.playbackStatus == .playing {
+            viewModel?.dispatch(.resetTimer)
         }
     }
 }

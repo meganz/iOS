@@ -95,10 +95,10 @@
                 }
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            [self.thumbnailImageView mnz_imageForNode:node];
+            [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
         }
     } else {
-        [self.thumbnailImageView mnz_imageForNode:node];
+        [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     }
     
     if (!node.name.mnz_isVideoPathExtension) {
@@ -163,7 +163,7 @@
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
     MEGANode *node = nodesArray.firstObject;
-    [self.thumbnailImageView mnz_imageForNode:node];
+    [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;

@@ -204,7 +204,6 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         myAvatarViewModel.inputs.viewIsAppearing()
-        applyRemoveHomeImageFeatureFlag()
     }
 
     override func viewDidLayoutSubviews() {
@@ -493,11 +492,7 @@ extension HomeViewController: ExploreViewStackDelegate {
     func tappedCard(_ card: MEGAExploreViewStyle) {
 
         switch card {
-        case .images:
-            guard isRemoveHomeImageFeatureFlagEnabled else {
-                router.photosExplorerSelected()
-                return
-            }
+        case .favourites:
             router.favouriteExplorerSelected()
         case .documents:
             router.documentsExplorerSelected()
@@ -729,19 +724,5 @@ extension HomeViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
         slidePanelView.offlineScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         slidePanelView.recentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-    }
-}
-
-//MARK: - Feature Flag
-extension HomeViewController {
-    func applyRemoveHomeImageFeatureFlag() {
-        guard let slidePanelView = slidePanelView,
-                let exploreView = exploreView else { return }
-        slidePanelView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled
-        exploreView.isRemoveHomeImageFeatureFlagEnabled = isRemoveHomeImageFeatureFlagEnabled
-    }
-
-    var isRemoveHomeImageFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .removeHomeImage)
     }
 }

@@ -16,7 +16,9 @@ struct SlideShowRouter: Routing {
     func build() -> UIViewController {
         let slideShowViewModel = SlideShowViewModel(
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            dataProvider: dataProvider
+            dataProvider: dataProvider,
+            mediaUseCase: MediaUseCase(),
+            configuration: .init(playingOrder: .shuffled, timeIntervalForSlideInSeconds: 4)
         )
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)

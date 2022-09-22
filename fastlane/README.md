@@ -111,6 +111,14 @@ Upload to iTunesConnect
 
 MEGA unit tests
 
+### ios code_coverage
+
+```sh
+[bundle exec] fastlane ios code_coverage
+```
+
+
+
 ### ios download_metadata
 
 ```sh

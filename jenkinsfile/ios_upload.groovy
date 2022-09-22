@@ -1,6 +1,6 @@
 def injectEnvironments(Closure body) {
     withEnv([
-        "PATH=~/.rbenv/shims:~/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
+        "PATH=/var/lib/jenkins/.rbenv/shims:/var/lib/jenkins/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
         "LC_ALL=en_US.UTF-8",
         "LANG=en_US.UTF-8"
     ]) {
@@ -9,7 +9,7 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-    agent { label 'mac-jenkins-slave-temp' }
+    agent { label 'mac-jenkins-slave-ios' }
     options {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
@@ -87,6 +87,15 @@ pipeline {
         }
     }
     stages {
+        stage('Bundle install') {
+            steps {
+                gitlabCommitStatus(name: 'Bundle install') {
+                    injectEnvironments({
+                        sh "bundle install"
+                    })
+                }
+            }
+        }
         stage('Prepare') {
             parallel {
                 stage('Set build number and fetch version') {

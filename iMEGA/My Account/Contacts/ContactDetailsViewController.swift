@@ -1,3 +1,4 @@
+import MEGADomain
 
 extension ContactDetailsViewController {
     @objc func joinMeeting(withChatRoom chatRoom: MEGAChatRoom) {
@@ -7,6 +8,13 @@ extension ContactDetailsViewController {
                                chatRoom: ChatRoomEntity(with: chatRoom),
                                call: CallEntity(with: call),
                                isSpeakerEnabled: isSpeakerEnabled).start()
+    }
+    
+    @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatId: chatId) {
+            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
+        }
+        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)
     }
     
     open override func viewDidLayoutSubviews() {

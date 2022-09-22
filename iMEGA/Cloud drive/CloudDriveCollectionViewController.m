@@ -114,7 +114,7 @@
         
         [self.cloudDrive updateNavigationBarTitle];
         
-        [self.cloudDrive toolbarActionsForNodeArray:self.cloudDrive.selectedNodesArray];
+        [self.cloudDrive toolbarActionsWithNodeArray:self.cloudDrive.selectedNodesArray];
         
         [self.cloudDrive setToolbarActionsEnabled:YES];
         
@@ -145,7 +145,7 @@
         
         [self.cloudDrive updateNavigationBarTitle];
         
-        [self.cloudDrive toolbarActionsForNodeArray:self.cloudDrive.selectedNodesArray];
+        [self.cloudDrive toolbarActionsWithNodeArray:self.cloudDrive.selectedNodesArray];
         
         if (self.cloudDrive.selectedNodesArray.count == 0) {
             [self.cloudDrive setToolbarActionsEnabled:NO];

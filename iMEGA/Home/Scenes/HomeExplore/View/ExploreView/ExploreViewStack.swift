@@ -14,13 +14,6 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     
     var subscriptions = Set<AnyCancellable>()
     
-    //MARK: - Feature Flag
-    var isRemoveHomeImageFeatureFlagEnabled = false {
-        didSet {
-            applyRemoveHomeImageFeatureFlag()
-        }
-    }
-    
     // MARK: - Initialization
     
     override init(frame: CGRect) {
@@ -61,9 +54,8 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
         fillEqualStackView.spacing = 8
         
         (0..<cards.count).forEach {
-           let exploreViewStyleFactory = ExploreViewStyleFactory(style: MEGAExploreViewStyle(rawValue: $0) ?? .images,
-                                                                 traitCollection: trait,
-                                                                 isRemoveHomeImageFeatureFlagEnabled: isRemoveHomeImageFeatureFlagEnabled)
+           let exploreViewStyleFactory = ExploreViewStyleFactory(style: MEGAExploreViewStyle(rawValue: $0) ?? .favourites,
+                                                                 traitCollection: trait)
             cards[$0].configuration = exploreViewStyleFactory.configuration
         }
     }
@@ -92,12 +84,5 @@ extension ExploreViewStack: TraitEnviromentAware {
 
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         setupView(with: currentTrait)
-    }
-}
-
-//MARK: - Feature Flag
-extension ExploreViewStack {
-    func applyRemoveHomeImageFeatureFlag() {
-        self.setupView(with: self.traitCollection)
     }
 }

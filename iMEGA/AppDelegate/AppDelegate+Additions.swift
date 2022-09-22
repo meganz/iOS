@@ -197,12 +197,18 @@ extension AppDelegate {
             UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
         } else {
             var message: String
-            if suspensionType == .businessDisabled {
+            
+            switch suspensionType {
+            case .businessDisabled:
                 message = Strings.Localizable.YourAccountHasBeenDisabledByYourAdministrator.pleaseContactYourBusinessAccountAdministratorForFurtherDetails
-            } else if suspensionType == .businessRemoved {
+            case .businessRemoved:
                 message = Strings.Localizable.YourAccountHasBeenRemovedByYourAdministrator.pleaseContactYourBusinessAccountAdministratorForFurtherDetails
-            } else {
-                message = Strings.Localizable.accountBlocked
+            case .copyright:
+                message = Strings.Localizable.Account.Suspension.Message.copyright
+            case .nonCopyright:
+                message = Strings.Localizable.Account.Suspension.Message.nonCopyright
+            default:
+                return
             }
             
             let alert = UIAlertController(title: Strings.Localizable.error, message:message, preferredStyle: .alert)

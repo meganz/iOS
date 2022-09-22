@@ -1,7 +1,8 @@
+import MEGADomain
 
 extension ContactLinkQRViewController: QRMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity {
-        CMConfigEntity(menuType: .qr,
+        CMConfigEntity(menuType: .menu(type: .qr),
                        isShareAvailable:!(contactLinkLabel?.text?.isEmpty ?? true))
     }
     
@@ -34,7 +35,7 @@ extension ContactLinkQRViewController: QRMenuDelegate {
     }
     
     //MARK: - QRMenuDelegate functions
-    func qrMenu(didSelect action: MyQRAction) {
+    func qrMenu(didSelect action: MyQRActionEntity) {
         switch action {
         case .share:
             let activityVC = UIActivityViewController(activityItems: [contactLinkLabel?.text ?? ""], applicationActivities: nil)

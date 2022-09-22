@@ -1,7 +1,7 @@
 
 def injectEnvironments(Closure body) {
     withEnv([
-        "PATH=~/.rbenv/shims:~/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
+        "PATH=/var/lib/jenkins/.rbenv/shims:/var/lib/jenkins/.rbenv/bin:/Applications/MEGAcmd.app/Contents/MacOS:/Applications/CMake.app/Contents/bin:$PATH:/usr/local/bin",
         "LC_ALL=en_US.UTF-8",
         "LANG=en_US.UTF-8"
     ]) {
@@ -10,7 +10,7 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-    agent { label 'mac-jenkins-slave-temp' }
+    agent { label 'mac-jenkins-slave-ios' }
     options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
@@ -22,6 +22,16 @@ pipeline {
         }
     }
     stages {
+        stage('Bundle install') {
+            steps {
+                gitlabCommitStatus(name: 'Bundle install') {
+                    injectEnvironments({
+                        sh "bundle install"
+                    })
+                }
+            }
+        }
+        
         stage('Installing dependencies') {
             parallel {
                 stage('Set build number and fetch version') {
@@ -85,7 +95,17 @@ pipeline {
                 gitlabCommitStatus(name: 'Upload app to Artifactory') {
                     injectEnvironments({
                         dir("${WORKSPACE}/derivedData/Build/Products/Debug-iphonesimulator"){ 
-                            archiveArtifacts artifacts: "MEGA.app/**", fingerprint: true
+                            script {
+                              def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}-simulator.zip"
+                              sh "zip -r ${fileName} MEGA.app"
+                              withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
+                                env.zipPath = "${WORKSPACE}/derivedData/Build/Products/Debug-iphonesimulator/${fileName}"
+                                env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator/${fileName}"
+                                env.targetPathLatest = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator/latest/ios-mega-simulator-latest.zip"
+                                sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
+                                sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathLatest}\"'
+                              }
+                            }
                         }
                     })
                 }

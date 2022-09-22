@@ -6,6 +6,7 @@ import SwiftUI
     @Published var library: PhotoLibrary
     @Published var selectedMode: PhotoLibraryViewMode = .all
     @Published var showFilter = false
+    @Published var filterApplied = false
     
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?

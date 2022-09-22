@@ -4,15 +4,14 @@ import SwiftUI
 struct PhotoLibraryFilterView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     @ObservedObject var filterViewModel: PhotoLibraryFilterViewModel
-    private let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)?
-    
+    private let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
     private let screen: String
     
     init(
         _ viewModel: PhotoLibraryContentViewModel,
         filterViewModel: PhotoLibraryFilterViewModel,
         forScreen screen: String,
-        onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)?
+        onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
     ) {
         self.viewModel = viewModel
         self.filterViewModel = filterViewModel
@@ -22,7 +21,6 @@ struct PhotoLibraryFilterView: View {
     
     var btnCancel: some View {
         Button {
-            filterViewModel.restoreLastSelection()
             viewModel.showFilter.toggle()
         } label: {
             Text(filterViewModel.cancelTitle)
@@ -34,10 +32,10 @@ struct PhotoLibraryFilterView: View {
     private func onDone() {
         onFilterUpdate?(
             filterViewModel.filterOption(for: filterViewModel.selectedMediaType),
-            filterViewModel.filterOption(for: filterViewModel.selectedLocation),
-            filterViewModel.shouldShowFilterMenuOnCameraUpload
+            filterViewModel.filterOption(for: filterViewModel.selectedLocation)
         )
         
+        viewModel.filterApplied = true
         viewModel.showFilter.toggle()
     }
     
@@ -108,7 +106,13 @@ struct PhotoLibraryFilterView: View {
         .background(Color(Colors.Photos.filterBackground.color))
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
+            viewModel.filterApplied = false
             filterViewModel.initializeLastSelection()
+        }
+        .onDisappear {
+            if !viewModel.filterApplied {
+                filterViewModel.restoreLastSelection()
+            }
         }
     }
 }

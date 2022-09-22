@@ -128,11 +128,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case DisplayModeCloudDrive:
+        case DisplayModeSharedItem:
             [self activateSlideShowButton];
             break;
 
         case DisplayModeRubbishBin:
-        case DisplayModeSharedItem:
         case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
@@ -747,8 +747,22 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)correctOriginForView:(UIView *)view scaledAt:(CGFloat)scale {
     UIView *zoomableView = view.superview;
     CGRect frame = view.frame;
-    frame.origin.x = MAX(frame.origin.x + (zoomableView.frame.size.width - (view.frame.size.width * scale)) / 2, 0);
-    frame.origin.y = MAX(frame.origin.y + (zoomableView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
+    
+    CGFloat zoomableViewOriginX = (zoomableView.frame.size.width - (view.frame.size.width * scale)) / 2;
+    CGFloat zoomableViewOriginY = (zoomableView.frame.size.height - (view.frame.size.height * scale)) / 2;
+    
+    if (isnan(zoomableViewOriginX)) {
+        MEGALogDebug(@"[Photo browser] Calculated scrollview origin x is Nan");
+        zoomableViewOriginX = 0;
+    }
+    
+    if (isnan(zoomableViewOriginY)) {
+        MEGALogDebug(@"[Photo browser] Calculated scrollview origin y is Nan");
+        zoomableViewOriginY = 0;
+    }
+    
+    frame.origin.x = MAX(frame.origin.x + zoomableViewOriginX, 0);
+    frame.origin.y = MAX(frame.origin.y + zoomableViewOriginY, 0);
     view.frame = frame;
 }
 
@@ -885,6 +899,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self saveToPhotosWithNode:node];
             break;
             
+        case DisplayModeSharedItem:
         case DisplayModeCloudDrive:
             [self openSlideShow];
             break;

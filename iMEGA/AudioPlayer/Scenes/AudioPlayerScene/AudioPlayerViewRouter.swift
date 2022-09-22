@@ -3,65 +3,40 @@ import Foundation
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
-    private var playerHandler: AudioPlayerHandlerProtocol
-    private var node: MEGANode?
-    private var fileLink: String?
-    private var isFolderLink: Bool?
-    private var selectedFile: String?
-    private var relatedFiles: [String]?
+    private var configEntity: AudioPlayerConfigEntity
     private var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
     private var fileLinkActionViewControllerDelegate : FileLinkActionViewControllerDelegate?
     
-    // Nodes, File Links, Folder Links Init
-    @objc init(node: MEGANode, fileLink: String?, isFolderLink: Bool, presenter: UIViewController, playerHandler: AudioPlayerHandlerProtocol) {
+    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
+        self.configEntity = configEntity
         self.presenter = presenter
-        self.playerHandler = playerHandler
-        self.node = node
-        self.fileLink = fileLink
-        self.isFolderLink = isFolderLink
-        super.init()
-    }
-    
-    // Offline Files Init
-    @objc init(selectedFile: String, relatedFiles: [String]?, presenter: UIViewController, playerHandler: AudioPlayerHandlerProtocol) {
-        self.presenter = presenter
-        self.playerHandler = playerHandler
-        self.selectedFile = selectedFile
-        self.relatedFiles = relatedFiles
         super.init()
     }
     
     func build() -> UIViewController {
-       
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil)
             .instantiateViewController(withIdentifier: "AudioPlayerViewControllerID") as! AudioPlayerViewController
         
-        if let node = node {
-            vc.viewModel = AudioPlayerViewModel(node: node,
-                                                fileLink: fileLink,
-                                                isFolderLink: isFolderLink ?? false,
+        if configEntity.playerType == .offline {
+            vc.viewModel = AudioPlayerViewModel(configEntity: configEntity,
                                                 router: self,
-                                                playerHandler: playerHandler,
-                                                nodeInfoUseCase: NodeInfoUseCase(),
-                                                streamingInfoUseCase: StreamingInfoUseCase())
-            
-        } else if let filePaths = relatedFiles, let selectedFilePath = selectedFile {
-            vc.viewModel = AudioPlayerViewModel(selectedFile: selectedFilePath,
-                                                filePaths: filePaths,
+                                                offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()))
+        } else {
+            vc.viewModel = AudioPlayerViewModel(configEntity: configEntity,
                                                 router: self,
-                                                playerHandler: playerHandler,
-                                                offlineInfoUseCase: OfflineFileInfoUseCase())
+                                                nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
+                                                streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()))
         }
 
         baseViewController = vc
         
-        if let fileLink = fileLink {
+        if let fileLink = configEntity.fileLink {
             self.fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(link: fileLink, viewController: vc)
         } else {
             self.nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(viewController: vc)
         }
         
-        return fileLink != nil ? MEGANavigationController(rootViewController: vc) : vc
+        return configEntity.fileLink != nil ? MEGANavigationController(rootViewController: vc) : vc
     }
     
     @objc func start() {
@@ -75,19 +50,19 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     
     func goToPlaylist() {
         guard let presenter = self.baseViewController else { return }
-        AudioPlaylistViewRouter(presenter: presenter, parentNode: node?.parent, playerHandler: playerHandler).start()
+        AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler), presenter: presenter).start()
     }
     
-    func showMiniPlayer(shouldReload: Bool) {
+    func showMiniPlayer(node: MEGANode?, shouldReload: Bool) {
         guard let presenter = presenter else { return }
         
-        playerHandler.initMiniPlayer(node: nil, fileLink: fileLink, filePaths: relatedFiles, isFolderLink: isFolderLink ?? false, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
+        configEntity.playerHandler.initMiniPlayer(node: node, fileLink: configEntity.fileLink, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
     }
     
-    func showOfflineMiniPlayer(file: String, shouldReload: Bool) {
+    func showMiniPlayer(file: String, shouldReload: Bool) {
         guard let presenter = presenter else { return }
         
-        playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: relatedFiles, isFolderLink: false, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
+        configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
     }
     
     func importNode(_ node: MEGANode) {
@@ -122,7 +97,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
 extension AudioPlayerViewRouter: NodeActionViewControllerDelegate {
 
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        fileLink != nil ?
+        configEntity.fileLink != nil ?
             fileLinkActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender) :
             nodeActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender)
     }

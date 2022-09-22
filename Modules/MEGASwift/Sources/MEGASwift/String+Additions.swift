@@ -35,3 +35,9 @@ public extension String {
         return URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
     }
 }
+
+public extension String {
+    func matches(regex: String) -> Bool {
+        return (self.range(of: regex, options: .regularExpression) ?? nil) != nil
+    }
+}

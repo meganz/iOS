@@ -22,6 +22,7 @@ final class NodeActionBuilder {
     private var selectedNodeCount = 1
     private var viewMode: ViewModePreference = .list
     private var nodeSelectionType: NodeSelectionType = .single
+    private var isInboxNode: Bool = false
     private var isTakedown = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
@@ -131,6 +132,11 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setIsInboxNode(_ isInboxNode: Bool) -> NodeActionBuilder {
+        self.isInboxNode = isInboxNode
+        return self
+    }
+    
     func setIsTakedown(_ isTakedown: Bool) -> NodeActionBuilder {
         self.isTakedown = isTakedown
         return self
@@ -146,7 +152,7 @@ final class NodeActionBuilder {
                 nodeActions.append(NodeAction.restoreAction())
             }
             
-            nodeActions.append(contentsOf: nodeActionsForDispalyModeOrAccessLevels())
+            nodeActions.append(contentsOf: nodeActionsForDisplayModeOrAccessLevels())
         }
     
         return nodeActions
@@ -221,7 +227,7 @@ final class NodeActionBuilder {
     private func textEditorActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if (accessLevel != .accessRead) && (accessLevel != .accessUnknown) {
+        if !isInboxNode && accessLevel != .accessRead && accessLevel != .accessUnknown  {
             nodeActions.append(NodeAction.textEditorAction())
         }
         nodeActions.append(NodeAction.downloadAction())
@@ -297,7 +303,7 @@ final class NodeActionBuilder {
     private func readAndWriteAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+        if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) && !isInboxNode {
             nodeActions.append(NodeAction.textEditorAction())
         }
         
@@ -329,16 +335,18 @@ final class NodeActionBuilder {
     private func fullAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+        if !isInboxNode && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
         }
         if displayMode != .nodeInfo && displayMode != .nodeVersions {
             nodeActions.append(NodeAction.infoAction())
-            if versionCount > 0 {
-                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            if !isInboxNode {
+                if versionCount > 0 {
+                    nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+                }
+                nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                nodeActions.append(NodeAction.labelAction(label: label))
             }
-            nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
-            nodeActions.append(NodeAction.labelAction(label: label))
         }
         
         if isMediaFile {
@@ -351,7 +359,7 @@ final class NodeActionBuilder {
             }
             nodeActions.append(NodeAction.removeVersionAction())
         } else {
-            if !isBackupFolder {
+            if !isInboxNode {
                 nodeActions.append(NodeAction.renameAction())
             }
             nodeActions.append(NodeAction.copyAction())
@@ -373,7 +381,11 @@ final class NodeActionBuilder {
         case .unknown: break
             
         case .cloudDrive, .sharedItem, .nodeInfo, .recents:
-            nodeActions = ownerAccessLevelNodeActionsForCloudLikeViews()
+            if isInboxNode {
+                nodeActions = inboxNodeActions()
+            } else {
+                nodeActions = cloudLikeViewsNodeActions()
+            }
             
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
@@ -381,10 +393,13 @@ final class NodeActionBuilder {
         case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor, .selectionToolBar: break
             
         case .nodeVersions:
-            nodeActions = ownerAccessLevelNodeActionsForNodeVersions()
+            nodeActions = nodeVersionsNodeActions()
             
         case .chatAttachment:
-            nodeActions = ownerAccessLevelNodeActionsForChatAttachment()
+            nodeActions = chatAttachmentNodeActions()
+
+        case .backup:
+            nodeActions = inboxNodeActions()
             
         case .favouriteAlbumSelectionToolBar:
             nodeActions = albumActions()
@@ -395,7 +410,7 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
-    private func nodeActionsForDispalyModeOrAccessLevels() -> [NodeAction] {
+    private func nodeActionsForDisplayModeOrAccessLevels() -> [NodeAction] {
         switch displayMode {
         case .folderLink:
             return folderLinkNodeActions()
@@ -431,20 +446,22 @@ final class NodeActionBuilder {
         }
     }
     
-    private func ownerAccessLevelNodeActionsForCloudLikeViews() -> [NodeAction] {
+    private func cloudLikeViewsNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
         
-        if isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
+        if !isInboxNode && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
         }
         
         if displayMode != .nodeInfo {
             nodeActions.append(NodeAction.infoAction())
-            if versionCount > 0 {
-                nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+            if !isInboxNode {
+                if versionCount > 0 {
+                    nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
+                }
+                nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                nodeActions.append(NodeAction.labelAction(label: label))
             }
-            nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
-            nodeActions.append(NodeAction.labelAction(label: label))
         }
         
         if isMediaFile {
@@ -469,19 +486,23 @@ final class NodeActionBuilder {
             nodeActions.append(NodeAction.sendToChatAction())
         }
         
-        if !isBackupFolder {
+        if !isInboxNode {
             nodeActions.append(NodeAction.renameAction())
         }
         
-        if displayMode != .sharedItem {
+        if displayMode != .sharedItem && !isInboxNode {
             nodeActions.append(NodeAction.moveAction())
         }
         
         nodeActions.append(NodeAction.copyAction())
         
-        if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
-            nodeActions.append(NodeAction.moveToRubbishBinAction())
-        } else if displayMode == .sharedItem {
+        if !isInboxNode {
+            if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
+                nodeActions.append(NodeAction.moveToRubbishBinAction())
+            }
+        }
+        
+        if displayMode == .sharedItem {
             nodeActions.append(NodeAction.removeSharingAction())
         }
         
@@ -503,7 +524,7 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
-    private func ownerAccessLevelNodeActionsForNodeVersions() -> [NodeAction] {
+    private func nodeVersionsNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
         
         if isMediaFile {
@@ -519,7 +540,7 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
-    private func ownerAccessLevelNodeActionsForChatAttachment() -> [NodeAction] {
+    private func chatAttachmentNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
         
         nodeActions.append(NodeAction.infoAction())
@@ -537,6 +558,44 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
+    private func inboxNodeActions() -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        
+        nodeActions.append(.infoAction())
+        
+        if isMediaFile {
+            nodeActions.append(.saveToPhotosAction())
+        }
+        
+        nodeActions.append(.downloadAction())
+        
+        if isExported {
+            nodeActions.append(.manageLinkAction())
+            nodeActions.append(.removeLinkAction())
+        } else {
+            nodeActions.append(.shareLinkAction())
+        }
+        
+        if isFile {
+            nodeActions.append(.exportFileAction())
+            nodeActions.append(.sendToChatAction())
+        } else {
+            if isOutShare {
+                nodeActions.append(.manageFolderAction())
+            } else {
+                nodeActions.append(.shareFolderAction())
+            }
+        }
+        
+        nodeActions.append(.copyAction())
+        
+        if isOutShare && displayMode == .sharedItem {
+            nodeActions.append(NodeAction.removeSharingAction())
+        }
+        
+        return nodeActions
+    }
+    
     private func multiselectedLinkNodesAction() -> NodeAction {
         isAllLinkedNode ?
             NodeAction.manageLinkAction(nodeCount: linkedNodeCount) :
@@ -546,10 +605,14 @@ final class NodeActionBuilder {
     private func multiselectFoldersActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
                        multiselectedLinkNodesAction(),
-                       NodeAction.shareFolderAction(nodeCount: selectedNodeCount),
-                       NodeAction.moveAction(),
-                       NodeAction.copyAction(),
-                       NodeAction.moveToRubbishBinAction()]
+                       NodeAction.shareFolderAction(nodeCount: selectedNodeCount)]
+        
+        if isInboxNode {
+            actions.append(NodeAction.copyAction())
+        } else {
+            actions.append(contentsOf: [NodeAction.moveAction(), NodeAction.copyAction(), NodeAction.moveToRubbishBinAction()])
+        }
+        
         if linkedNodeCount > 0 {
             actions.insert(NodeAction.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
@@ -560,10 +623,14 @@ final class NodeActionBuilder {
         var actions = [NodeAction.downloadAction(),
                        multiselectedLinkNodesAction(),
                        NodeAction.exportFileAction(nodeCount: selectedNodeCount),
-                       NodeAction.sendToChatAction(),
-                       NodeAction.moveAction(),
-                       NodeAction.copyAction(),
-                       NodeAction.moveToRubbishBinAction()]
+                       NodeAction.sendToChatAction()]
+        
+        if isInboxNode {
+            actions.append(NodeAction.copyAction())
+        } else {
+            actions.append(contentsOf: [NodeAction.moveAction(), NodeAction.copyAction(), NodeAction.moveToRubbishBinAction()])
+        }
+        
         if linkedNodeCount > 0 {
             actions.insert(NodeAction.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
@@ -572,10 +639,14 @@ final class NodeActionBuilder {
     
     private func multiselectFoldersAndFilesActions() -> [NodeAction] {
         var actions = [NodeAction.downloadAction(),
-                       multiselectedLinkNodesAction(),
-                       NodeAction.moveAction(),
-                       NodeAction.copyAction(),
-                       NodeAction.moveToRubbishBinAction()]
+                       multiselectedLinkNodesAction()]
+        
+        if isInboxNode {
+            actions.append(NodeAction.copyAction())
+        } else {
+            actions.append(contentsOf: [NodeAction.moveAction(), NodeAction.copyAction(), NodeAction.moveToRubbishBinAction()])
+        }
+        
         if linkedNodeCount > 0 {
             actions.insert(NodeAction.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }

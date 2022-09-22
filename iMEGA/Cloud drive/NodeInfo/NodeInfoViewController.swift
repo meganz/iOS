@@ -1,5 +1,6 @@
 
 import UIKit
+import MEGADomain
 
 enum NodeInfoTableViewSection: Int {
     case info
@@ -155,13 +156,15 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func showAddShareContactView() {
-        guard let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else {
-            fatalError("Could not instantiate ContactsViewController")
+        BackupNodesValidator(presenter: self, inboxUseCase: InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+            guard let `self` = self, let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else {
+                fatalError("Could not instantiate ContactsViewController")
+            }
+            contactsVC.contactsMode = .shareFoldersWith
+            contactsVC.nodesArray = [self.node]
+            let navigation = MEGANavigationController.init(rootViewController: contactsVC)
+            self.present(navigation, animated: true, completion: nil)
         }
-        contactsVC.contactsMode = .shareFoldersWith
-        contactsVC.nodesArray = [node]
-        let navigation = MEGANavigationController.init(rootViewController: contactsVC)
-        present(navigation, animated: true, completion: nil)
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
@@ -228,22 +231,25 @@ class NodeInfoViewController: UIViewController {
             return
         }
         var actions = [ActionSheetAction]()
-
-        actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: Asset.Images.SharedItems.fullAccessPermissions.image, style: .default) { [weak self] in
-            self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
-        })
-        actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readWritePermissions.image, style: .default) { [weak self] in
-            self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
-        })
-        actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readPermissions.image, style: .default) { [weak self] in
-            self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
-        })
+        let isInboxNode = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo).isInboxNode(node.toNodeEntity())
         
+        if !isInboxNode {
+            actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: Asset.Images.SharedItems.fullAccessPermissions.image, style: .default) { [weak self] in
+                self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
+            })
+            actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readWritePermissions.image, style: .default) { [weak self] in
+                self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
+            })
+            actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readPermissions.image, style: .default) { [weak self] in
+                self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
+            })
+        }
+
         actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
-        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: Strings.Localizable.permissions, dismissCompletion: nil, sender: cell.permissionsImageView)
+        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: isInboxNode ? nil : Strings.Localizable.permissions, dismissCompletion: nil, sender: cell.permissionsImageView)
         
         present(permissionsActionSheet, animated: true, completion: nil)
     }

@@ -1,3 +1,4 @@
+import MEGADomain
 
 extension CallEntity {
     init(with call: MEGAChatCall) {
@@ -19,7 +20,7 @@ extension CallEntity {
         self.sessionClientIds = (0..<call.sessionsClientId.size).map { call.sessionsClientId.megaHandle(at: $0) }
         self.clientSessions = self.sessionClientIds.compactMap({ sessionClientId in
             guard let session = call.session(forClientId: sessionClientId) else { return nil }
-            return ChatSessionEntity(with: session)
+            return session.toChatSessionEntity()
         })
             
         self.participants = (0..<call.participants.size).map { call.participants.megaHandle(at: $0) }

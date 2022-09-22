@@ -5,19 +5,19 @@ final class MiniPlayerViewModelTests: XCTestCase {
     let router = MockMiniPlayerViewRouter()
     let playerHandler = MockAudioPlayerHandler()
     
-    lazy var viewModel = MiniPlayerViewModel(fileLink: "",
-                                             filePaths: nil,
-                                             isFolderLink: false,
+    lazy var viewModel = MiniPlayerViewModel(configEntity: AudioPlayerConfigEntity(node: nil,
+                                                                                   isFolderLink: false,
+                                                                                   fileLink: nil,
+                                                                                   relatedFiles: nil,
+                                                                                   playerHandler: playerHandler),
                                              router: router,
-                                             playerHandler: playerHandler,
                                              nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
                                              streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
                                              offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()))
     
     func testAudioPlayerActions() {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands:[.showLoading(false),
-                                                                             .initTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, loopMode: false),
-                                                                             ])
+                                                                             .initTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, loopMode: false)])
         XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
         
         test(viewModel: viewModel, action: .onPlayPause, expectedCommands: [])

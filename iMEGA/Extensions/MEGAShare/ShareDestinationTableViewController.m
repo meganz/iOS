@@ -159,7 +159,8 @@
         }
         UIImageView *imageView = cell.contentView.subviews.firstObject;
         UITextField *textField = cell.contentView.subviews.lastObject;
-        [imageView mnz_setImageForExtension:extension];
+        
+        [imageView setImage:[NodeAssetsManager.shared imageFor:extension]];
         textField.text = attachment.name;
         textField.tag = indexPath.row;
         textField.delegate = self;

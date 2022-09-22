@@ -1,10 +1,11 @@
+import MEGADomain
 
 extension OfflineViewController: DisplayMenuDelegate {
     //MARK: - Context Menus configuration
     func contextMenuConfiguration() -> CMConfigEntity {
-        return CMConfigEntity(menuType: .display,
-                              viewMode: isListViewModeSelected() ? ViewModePreference.list : ViewModePreference.thumbnail,
-                              sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: currentOfflinePath)),
+        return CMConfigEntity(menuType: .menu(type: .display),
+                              viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                              sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: currentOfflinePath)).megaSortOrderType.toSortOrderEntity(),
                               isOfflineFolder: true)
     }
     
@@ -38,7 +39,7 @@ extension OfflineViewController: DisplayMenuDelegate {
         self.present(actionSheetVC, animated: true)
     }
     
-    func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:
             changeEditingModeStatus()

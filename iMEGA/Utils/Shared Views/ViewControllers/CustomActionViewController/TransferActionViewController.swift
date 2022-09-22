@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 @objc protocol TransferActionViewControllerDelegate: NodeActionViewControllerDelegate {
    @objc optional func transferAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for transfer: MEGATransfer, from sender: Any) ->  ()
@@ -21,7 +22,7 @@ class TransferActionViewController: NodeActionViewController {
             return
         }
         let pathExtension = (transfer.fileName as NSString).pathExtension
-        nodeImageView.mnz_setImage(forExtension: pathExtension)
+        nodeImageView.image = NodeAssetsManager.shared.image(for: pathExtension)
         titleLabel.text = transfer.fileName
         switch transfer.state {
         case .cancelled:

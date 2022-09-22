@@ -178,7 +178,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         currentState.toggleState()
     }
     
-    func didSelect(action: UploadAddAction) {
+    func didSelect(action: UploadAddActionEntity) {
         if uploadViewModel == nil {
             let uploadViewModel = HomeUploadingViewModel(
                 uploadFilesUseCase: UploadPhotoAssetsUseCase(

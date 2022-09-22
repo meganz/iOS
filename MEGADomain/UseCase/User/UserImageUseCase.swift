@@ -84,16 +84,15 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                       avatarBackgroundHexColor: String,
                       name: String) async throws -> UIImage {
         let displayName = await userStoreRepo.displayName(forUserHandle: handle)
-        return try await createAvatarImage(usingName: displayName ?? name,
-                                           base64Handle: base64Handle,
-                                           avatarBackgroundHexColor: avatarBackgroundHexColor)
+        return try createAvatarImage(usingName: displayName ?? name,
+                                     base64Handle: base64Handle,
+                                     avatarBackgroundHexColor: avatarBackgroundHexColor)
     }
     
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         userImageRepo.requestAvatarChangeNotification(forUserHandles: handles)
     }
     
-    @MainActor
     private func createAvatarImage(usingName name: String,
                                    base64Handle: Base64HandleEntity,
                                    avatarBackgroundHexColor: String) throws -> UIImage {
@@ -133,11 +132,11 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
     }
     
     private func fetchImage(fromPath path: String) -> UIImage? {
-        if FileManager.default.fileExists(atPath: path),
-           let image = UIImage(contentsOfFile: path) {
-                return image
+        guard let url = URL(string: path),
+              fileSystemRepo.fileExists(at: url),
+              let image = UIImage(contentsOfFile: path) else {
+            return nil
         }
-        
-        return nil
+        return image
     }
 }

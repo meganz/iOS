@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
     static var newRepo: CreateContextMenuRepository {
@@ -30,12 +31,15 @@ struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsDoNotDisturbEnabled(config.isDoNotDisturbEnabled)
                         .setTimeRemainingToDeactiveDND(config.timeRemainingToDeactiveDND)
                         .setIsShareAvailable(config.isShareAvailable)
+                        .setIsInboxNode(config.isInboxNode)
+                        .setIsInboxChild(config.isInboxChild)
                         .setIsSharedItemsChild(config.isSharedItemsChild)
                         .setIsOutShare(config.isOutShare)
                         .setIsExported(config.isExported)
                         .setIsEmptyState(config.isEmptyState)
                         .setShouldStartMeeting(config.shouldStartMeeting)
                         .setShouldJoinMeeting(config.shouldJoiningMeeting)
+                        .setShouldScheduleMeeting(config.shouldScheduleMeeting)
                         .build()
     }
 }

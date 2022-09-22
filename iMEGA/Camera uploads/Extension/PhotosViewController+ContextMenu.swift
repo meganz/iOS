@@ -1,19 +1,21 @@
 import UIKit
+import MEGADomain
+import MEGASwift
 
 extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         if #available(iOS 14.0, *) {
             return CMConfigEntity(
-                menuType: .display,
-                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+                menuType: .menu(type: .display),
+                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
                 isCameraUploadExplorer: true,
-                isFilterEnabled: viewModel.shouldShowFilterMenuOnCameraUpload,
+                isFilterEnabled: true,
                 isEmptyState: viewModel.mediaNodesArray.isEmpty
             )
         } else {
             return CMConfigEntity(
-                menuType: .display,
-                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed),
+                menuType: .menu(type: .display),
+                sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
                 isCameraUploadExplorer: true,
                 isFilterEnabled: false,
                 isEmptyState: viewModel.mediaNodesArray.isEmpty
@@ -28,30 +30,30 @@ extension PhotosViewController {
         )
     }
     
+    @objc func makeFilterActiveBarButton() -> UIBarButtonItem {
+        let image = UIImage(named: Asset.Images.ActionSheetIcons.filterActive.name)?.withRenderingMode(.alwaysOriginal)
+        let filterBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onFilter))
+        filterBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
+        )
+        return filterBarButtonItem
+    }
+    
+    @objc func makeContextMenuBarButton() -> UIBarButtonItem {
+        guard #available(iOS 14.0, *), let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return makeDefaultContextMenuButton() }
+        let button = makeDefaultContextMenuButton()
+        button.action = nil
+        button.menu = menu
+        return button
+    }
+    
+    @objc private func makeDefaultContextMenuButton() -> UIBarButtonItem {
+        UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
+    }
+    
     @objc private func presentActionSheet(sender: Any) {
         guard let menuConfig = contextMenuConfiguration(),
               let actions = contextMenuManager?.actionSheetActions(with: menuConfig) else { return }
         presentActionSheet(actions: actions)
-    }
-    
-    @objc func updateRightNavigationBarButtons() {
-        setEditing(false, animated: false)
-        setRightNavigationBarButtons()
-    }
-    
-    func updateMenuBarButtonItems(_ activeTabSelectionMode: PhotoLibraryViewMode) {
-        if activeTabSelectionMode == .all {
-            enableContextMenuOnCameraUploader()
-        } else if activeTabSelectionMode != .all && viewModel.isFilterActive {
-            objcWrapper_parent.navigationItem.rightBarButtonItem = filterActiveBarButtonItem
-        } else {
-            if #available(iOS 14.0, *) {
-                self.objcWrapper_parent.navigationItem.rightBarButtonItems = nil;
-            }
-            else {
-                self.navigationItem.rightBarButtonItem = nil;
-            }
-        }
     }
     
     private func presentActionSheet(actions: [ContextActionSheetAction]) {
@@ -63,116 +65,67 @@ extension PhotosViewController {
         present(actionSheetVC, animated: true)
     }
     
-    private var filterActiveBarButtonItem: UIBarButtonItem {
-        let image = UIImage(named: Asset.Images.ActionSheetIcons.filterActive.name)?.withRenderingMode(.alwaysOriginal)
-        return UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onFilter))
+    @objc func setupNavigationBarButtons() {
+        setupLeftNavigationBarButtons()
+        setupRightNavigationBarButtons()
     }
     
-    private func enableContextMenuOnCameraUploader() {
-        if #available(iOS 14.0, *) {
-            guard let menuConfig = contextMenuConfiguration(), let editBarButtonItem = editBarButtonItem else { return }
-            let newMenuItem = contextMenuManager?.contextMenu(with: menuConfig)
-            if UIMenu.compareMenuItem(newMenuItem, editBarButtonItem.menu) == false {
-                editBarButtonItem.image = Asset.Images.NavigationBar.moreNavigationBar.image
-                editBarButtonItem.menu = newMenuItem
-                editBarButtonItem.isEnabled = true
-                editBarButtonItem.target = nil
-                editBarButtonItem.action = nil
-                
-                var rightBarButtonItems = [editBarButtonItem]
-                if viewModel.isFilterActive {
-                    rightBarButtonItems.append(filterActiveBarButtonItem)
-                }
-                objcWrapper_parent.navigationItem.rightBarButtonItems = rightBarButtonItems
-                editBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-                )
+    func setupLeftNavigationBarButtons() {
+        if isEditing {
+            if #available(iOS 14.0, *) {
+                self.objcWrapper_parent.navigationItem.setLeftBarButton(selectAllBarButtonItem, animated: false)
+            } else {
+                self.navigationItem.setLeftBarButton(selectAllBarButtonItem, animated: false)
             }
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
+            if #available(iOS 14.0, *) {
+                self.objcWrapper_parent.navigationItem.setLeftBarButton(self.myAvatarManager?.myAvatarBarButton, animated: false)
+            } else {
+                self.navigationItem.setLeftBarButton(self.myAvatarManager?.myAvatarBarButton, animated: false)
+            }
         }
     }
     
-    private func disableContextMenuOnCameraUploader() {
-        if #available(iOS 14.0, *) {
-            editBarButtonItem?.image = Asset.Images.NavigationBar.selectAll.image
-            editBarButtonItem?.menu = nil
-            editBarButtonItem?.isEnabled = true
-            editBarButtonItem?.target = self
-            editBarButtonItem?.action = #selector(onSelect)
-            
-            objcWrapper_parent.navigationItem.rightBarButtonItem = editBarButtonItem
-            objcWrapper_parent.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-            )
+    @objc func setupRightNavigationBarButtons() {
+        if isEditing {
+            if #available(iOS 14.0, *) {
+                self.objcWrapper_parent.navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
+            } else {
+                self.navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
+            }
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(onSelect))
+            if #available(iOS 14.0, *) {
+                var rightButtons = [UIBarButtonItem]()
+                if photoLibraryContentViewModel.selectedMode == .all {
+                    rightButtons.append(makeContextMenuBarButton())
+                }
+                if viewModel.isFilterActive {
+                    rightButtons.append(filterBarButtonItem)
+                }
+                if objcWrapper_parent.navigationItem.rightBarButtonItems !~ rightButtons {
+                    objcWrapper_parent.navigationItem.setRightBarButtonItems(rightButtons, animated: true)
+                }
+            } else {
+                let contextMenuButton = [makeDefaultContextMenuButton()]
+                if navigationItem.rightBarButtonItems !~ contextMenuButton {
+                    navigationItem.setRightBarButtonItems(contextMenuButton, animated: true)
+                }
+            }
         }
     }
     
-    @objc func setRightNavigationBarButtons() {
-        if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
-            updateMenuBarButtonItems(photoLibraryContentViewModel.selectedMode)
-        } else {
-            disableContextMenuOnCameraUploader()
-        }
+    @objc func makeCancelBarButton() -> UIBarButtonItem {
+        UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(toggleEditing))
     }
     
-    @objc func cancelEditing() {
+    @objc func makeEditBarButton() -> UIBarButtonItem {
+        UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(toggleEditing))
+    }
+    
+    
+    @objc func toggleEditing() {
         setEditing(!isEditing, animated: true)
-        setRightNavigationBarButtons()
-        
-        if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled  {
-            editBarButtonItem?.action = nil
-        }
-    }
-    
-    private func enableContextMenuOnCameraUploaderOnSelect() {
-        if #available(iOS 14.0, *) {
-            guard let editBarButtonItem = editBarButtonItem else { return }
-            setEditing(!isEditing, animated: true)
-            editBarButtonItem.menu = nil
-            editBarButtonItem.target = self
-            editBarButtonItem.action = #selector(cancelEditing)
-            
-            objcWrapper_parent.navigationItem.rightBarButtonItems = nil
-            objcWrapper_parent.navigationItem.rightBarButtonItem = editBarButtonItem
-        } else {
-            setEditing(!isEditing, animated: true)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: Strings.Localizable.cancel,
-                style: .plain,
-                target: self,
-                action: #selector(cancelEditing)
-            )
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-            )
-        }
-    }
-    
-    private func disableContextMenuOnCameraUploaderOnSelect() {
-        if #available(iOS 14.0, *) {
-            setEditing(!isEditing, animated: true)
-            editBarButtonItem?.menu = nil
-            editBarButtonItem?.target = self
-            editBarButtonItem?.action = #selector(cancelEditing)
-        } else {
-            setEditing(!isEditing, animated: true)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: Strings.Localizable.cancel,
-                style: .plain,
-                target: self,
-                action: #selector(cancelEditing)
-            )
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-            )
-        }
-    }
-    
-    @objc private func onSelect() {
-        if viewModel.isContextMenuOnCameraUploadFeatureFlagEnabled {
-            enableContextMenuOnCameraUploaderOnSelect()
-        } else {
-            disableContextMenuOnCameraUploaderOnSelect()
-        }
+        setupNavigationBarButtons()
     }
     
     @objc private func onFilter() {
@@ -182,9 +135,9 @@ extension PhotosViewController {
 
 // MARK: - DisplayMenuDelegate
 extension PhotosViewController: DisplayMenuDelegate {
-    func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         if action == .select {
-            onSelect()
+            toggleEditing()
         } else if action == .filter {
             onFilter()
         }
@@ -194,7 +147,7 @@ extension PhotosViewController: DisplayMenuDelegate {
         guard sortType != viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed) else { return }
         viewModel.cameraUploadExplorerSortOrderType = sortType
         Helper.save(sortType.megaSortOrderType, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
-        setRightNavigationBarButtons()
+        setupNavigationBarButtons()
     }
     
     func showActionSheet(with actions: [ContextActionSheetAction]) {

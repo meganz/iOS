@@ -25,7 +25,7 @@ final class FilesExplorerViewModel {
         case sortTypeHasChanged
         case editingModeStatusChanges
         case viewTypeHasChanged
-        case didSelect(UploadAddAction)
+        case didSelect(UploadAddActionEntity)
     }
     
     private enum ViewTypePreference {
@@ -112,7 +112,7 @@ final class FilesExplorerViewModel {
         if explorerType == .document {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, uploadAddMenuDelegate: self, createContextMenuUseCase: createContextMenuUseCase)
             
-            configForUploadAddMenu = CMConfigEntity(menuType: .uploadAdd,
+            configForUploadAddMenu = CMConfigEntity(menuType: .menu(type: .uploadAdd),
                                                     isDocumentExplorer: explorerType == .document)
             
             if #available(iOS 14.0, *) {
@@ -125,9 +125,9 @@ final class FilesExplorerViewModel {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: createContextMenuUseCase)
         }
         
-        configForDisplayMenu = CMConfigEntity(menuType: .display,
-                                              viewMode: viewTypePreference == .list ? ViewModePreference.list : ViewModePreference.thumbnail,
-                                              sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: nil)),
+        configForDisplayMenu = CMConfigEntity(menuType: .menu(type: .display),
+                                              viewMode: viewTypePreference == .list ? .list : .thumbnail,
+                                              sortType: Helper.sortType(for: nil).toSortOrderEntity(),
                                               isFavouritesExplorer: explorerType == .favourites,
                                               isDocumentExplorer: explorerType == .document,
                                               isAudiosExplorer: explorerType == .audio,
@@ -222,7 +222,7 @@ final class FilesExplorerViewModel {
 }
 
 extension FilesExplorerViewModel: DisplayMenuDelegate, UploadAddMenuDelegate {
-    func displayMenu(didSelect action: DisplayAction, needToRefreshMenu: Bool) {
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:
             invokeCommand?(.editingModeStatusChanges)
@@ -245,7 +245,7 @@ extension FilesExplorerViewModel: DisplayMenuDelegate, UploadAddMenuDelegate {
         invokeCommand?(.showActionSheet(actions))
     }
     
-    func uploadAddMenu(didSelect action: UploadAddAction) {
+    func uploadAddMenu(didSelect action: UploadAddActionEntity) {
         invokeCommand?(.didSelect(action))
     }
 }

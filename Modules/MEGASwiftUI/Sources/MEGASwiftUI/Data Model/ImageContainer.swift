@@ -1,35 +1,32 @@
 import SwiftUI
 
-public class ImageContainer {
+public protocol ImageContaining: Equatable {
+    var image: Image { get }
+    var isPlaceholder: Bool { get }
+}
+
+public struct ImageContainer: ImageContaining {
     public let image: Image
-    public var isPlaceholder = false
+    public let isPlaceholder: Bool
     
     public init(image: Image, isPlaceholder: Bool = false) {
         self.image = image
         self.isPlaceholder = isPlaceholder
     }
     
-    public convenience init?(image: Image?, isPlaceholder: Bool = false) {
+    public init?(image: Image?, isPlaceholder: Bool = false) {
         guard let image = image else {
             return nil
         }
         
         self.init(image: image, isPlaceholder: isPlaceholder)
     }
-    
-    func isEqual(to container: ImageContainer) -> Bool {
-        image == container.image && isPlaceholder == container.isPlaceholder
-    }
 }
 
-extension ImageContainer: Equatable {
-    public static func == (lhs: ImageContainer, rhs: ImageContainer) -> Bool {
-        lhs.isEqual(to: rhs)
-    }
-}
-
-public final class URLImageContainer: ImageContainer {
+public struct URLImageContainer: ImageContaining {
     public let imageURL: URL
+    public let image: Image
+    public let isPlaceholder: Bool
     
     public init?(imageURL: URL, isPlaceholder: Bool = false) {
         guard let image = Image(contentsOfFile: imageURL.path) else {
@@ -37,14 +34,11 @@ public final class URLImageContainer: ImageContainer {
         }
         
         self.imageURL = imageURL
-        super.init(image: image, isPlaceholder: isPlaceholder)
+        self.image = image
+        self.isPlaceholder = isPlaceholder
     }
     
-    override func isEqual(to container: ImageContainer) -> Bool {
-        guard let container = container as? URLImageContainer else {
-            return false
-        }
-        
-        return imageURL == container.imageURL && isPlaceholder == container.isPlaceholder
+    public static func == (lhs: URLImageContainer, rhs: URLImageContainer) -> Bool {
+        lhs.imageURL == rhs.imageURL && lhs.isPlaceholder == rhs.isPlaceholder
     }
 }

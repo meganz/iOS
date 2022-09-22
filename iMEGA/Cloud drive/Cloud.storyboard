@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -701,11 +701,7 @@
                         <action selector="editTapped:" destination="MwH-YC-3hO" id="H7S-a5-7Tg"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="TfH-jP-898" userLabel="More Minimized Bar Button Item">
-                    <connections>
-                        <action selector="moreMinimizedAction:" destination="MwH-YC-3hO" id="4Dd-LR-xOs"/>
-                    </connections>
-                </barButtonItem>
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="TfH-jP-898" userLabel="More Minimized Bar Button Item"/>
                 <barButtonItem enabled="NO" image="link" width="32" style="plain" id="ZLw-VN-spf" userLabel="Share Link Bar Button Item">
                     <connections>
                         <action selector="shareLinkAction:" destination="MwH-YC-3hO" id="FF8-kZ-90c"/>
@@ -716,11 +712,7 @@
                         <action selector="selectAllAction:" destination="MwH-YC-3hO" id="UVu-sE-Ne4"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="xmA-ZO-bvH" userLabel="More Bar Button Item">
-                    <connections>
-                        <action selector="moreAction:" destination="MwH-YC-3hO" id="5dm-9a-qDF"/>
-                    </connections>
-                </barButtonItem>
+                <barButtonItem image="moreNavigationBar" width="22" style="plain" id="xmA-ZO-bvH" userLabel="More Bar Button Item"/>
                 <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="T78-eD-QmZ" userLabel="Rubbish Bin Delete Bar Button Item">
                     <connections>
                         <action selector="deleteActionWithSender:" destination="MwH-YC-3hO" id="2Ei-Ih-U7n"/>

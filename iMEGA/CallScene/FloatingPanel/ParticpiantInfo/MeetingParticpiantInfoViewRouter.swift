@@ -38,9 +38,8 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
             fileSystemRepo: FileSystemRepository.newRepo
         )
         
-        let chatRoomRepository = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: chatRoomRepository,
-                                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
+                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
 
         let userInviteUseCase = UserInviteUseCase(repo: UserInviteRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
