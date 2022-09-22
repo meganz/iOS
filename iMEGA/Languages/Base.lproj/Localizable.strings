@@ -975,7 +975,7 @@
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20 GB+[/B] Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Transfer Quota";
+"Transfer Quota"="Transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ Transfer";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
@@ -2879,9 +2879,9 @@
 /* Backups title */
 "backups.title"="Backups";
 /* No backups and old inbox files in the account message */
-"backups.empty.state.message"="No items in your backups";
-/* No backups and old inbox files in the account description message*/
-"backups.empty.state.description"="This is where your backed up files and folders are stored. Your backed up items are 'read-only' to protect them from being accidentally modified in your cloud drive. You can back up items form your computer to MEGA using our desktop app.";
+"backups.empty.state.message"="No items in backups";
+/* No backups and old inbox files in the account description message */
+"backups.empty.state.description"="This is where your backed up files and folders are stored. Your backed up items are “read-only” to protect them from being accidentally modified in your cloud drive.\nYou can back up items from your computer to MEGA using our desktop app.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Cancel transfers?";
 /* Message for action of cancelling a transfer */
@@ -3069,18 +3069,18 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Send invitation";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated.";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright" = "Account suspended due to copyright violations. We sent you an email with more information about this.";
+"account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright" = "Account terminated due to a breach of MEGA's Terms of Service, such as abuse of others' rights, sharing and importing illegal data, or system abuse.";
+"account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";

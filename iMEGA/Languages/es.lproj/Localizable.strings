@@ -250,10 +250,10 @@
 "transfersEmptyState_titleUpload"="No hay Subidas";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Nube";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
-"cloudDrive.root.backup.folder.device.subtitle"="%@ dispositivo";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ dispositivos";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d archivo";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d archivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cola";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -975,7 +975,7 @@
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20 GB+[/B] de almacenamiento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Cuota de transferencia";
+"Transfer Quota"="Transferencia";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ de transferencia ";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
@@ -1201,9 +1201,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Inactividad automática";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Cambiar estado a ausente después de [X] minutos de inactividad";
-/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Cambiar estado a ausente después de 1 minuto de inactividad";
+"autoAway.footerDescription"="";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bloquear estado";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -2549,11 +2547,11 @@
 /* Backup setup warning title */
 "dialog.backup.setup.title"="Copia de seguridad";
 /* Backup setup warning message */
-"dialog.backup.setup.message"="Utiliza nuestra aplicación de escritorio para que tu carpeta de respaldo esté sincronizada con tu nube de MEGA.";
+"dialog.backup.setup.message"="Utiliza nuestra aplicación de escritorio para que tu carpeta de backup esté sincronizada con tu nube de MEGA.";
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Mover “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="Vas a cambiar la ubicación de tu carpeta de respaldo. Esto puede afectar tu capacidad para encontrar esa carpeta en el futuro. Recuerda la nueva ubicación para que puedas encontrarla en el futuro.";
+"dialog.root.backup.folder.location.warning.message"="Vas a cambiar la ubicación de tu carpeta de backup. Esto puede afectar tu capacidad para encontrar esa carpeta en el futuro. Recuerda la nueva ubicación para que puedas encontrarla en el futuro.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Al mover esta carpeta se cambiará el destino de las copias de seguridad y se desactivará esta función. ¿Es esto lo que quieres hacer? Puedes volver a activar las copias de seguridad a través de la aplicación de escritorio de MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2561,7 +2559,7 @@
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Vas a eliminar tu carpeta de copias de seguridad. Se borrarán todas las copias de seguridad que hayas configurado. ¿Seguro que quieres hacer esto?";
 /* Delete the default backup folder warning message */
-"dialog.delete.backup.folder.warning.message"="¿Estás seguro de que quieres eliminar tu carpeta de respaldo y desactivar las copias de seguridad que has configurado?";
+"dialog.delete.backup.folder.warning.message"="¿Estás seguro de que quieres eliminar tu carpeta de backup y desactivar las copias de seguridad que has configurado?";
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Añadir elemento a “%@”";
 /* Add new items to a backup folder warning message */
@@ -2580,12 +2578,8 @@
 "dialog.add.items.backup.action.title"="Añadir";
 /* Backup action confirmation error message */
 "dialog.confirmation.error.message"="El texto no coincide";
-/* Alert the user when trying to share a backup folder */
-"dialog.share.backup.folder.warning.message"="Esta carpeta solo se puede compartir en solo lectura porque es una carpeta de respaldo. Cualquier cambio en su contenido podría desactivar la copia de seguridad.";
-/* Alert the user when trying to share several backup folders */
-"dialog.share.backup.folders.warning.message"="Estas carpetas solo se pueden compartir en solo lectura porque son carpetas de respaldo. Cualquier cambio en su contenido podría desactivar las copias de seguridad.";
 /* Alert the user when trying to share several backup and non-backup folders */
-"dialog.share.backup.non.backup.folders.warning.message"="Algunas carpetas compartidas son carpetas de respaldo y de solo lectura. ¿Quieres continuar?";
+"dialog.share.backup.non.backup.folders.warning.message"="Algunas carpetas compartidas son carpetas de backup y de solo lectura. ¿Quieres continuar?";
 /* Message to inform the local user that someone has joined the current group call */
 "meetings.message.joinedCall"="%@ se ha unido a la llamada";
 /* Message to inform the local user that someone has left the current group call */
@@ -2882,6 +2876,12 @@
 "help.reportIssue.attachLogFiles.title"="Incluir logs";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="¿Quieres incluir los logs para ayudar a depurar el problema?";
+/* Backups title */
+"backups.title"="Copias de seguridad";
+/* No backups and old inbox files in the account message */
+"backups.empty.state.message"="No hay copias de seguridad";
+/* No backups and old inbox files in the account description message */
+"backups.empty.state.description"="Aquí es donde se almacenan las copias de seguridad de tus archivos y carpetas. Estas copias de seguridad son de “solo lectura” para protegerlas de modificaciones accidentales en tu nube.\nPuedes crear copias de seguridad en MEGA desde tu ordenador usando nuestra aplicación de escritorio.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="¿Cancelar transferencias?";
 /* Message for action of cancelling a transfer */
@@ -3069,12 +3069,18 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Send invitation";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.file"="La retirada del archivo “%@” ha sido revocada.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.folder"="La retirada de la carpeta “%@” ha sido revocada.";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.file"="Tu archivo “%@” que has compartido públicamente ha sido retirado.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.folder"="Tu carpeta “%@” que has compartido públicamente ha sido retirada.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
-"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
+"meetings.addContacts.allowNonHost.message"="Permitir a los no anfitriones añadir participantes";
+/* Start conversation: Schedule meeting context menu */
+"meetings.startConversation.contextMenu.scheduleMeeting"="Programar reunión";
+/* Error message when trying to login and the account is blocked due to copyright violation */
+"account.suspension.message.copyright"="Cuenta suspendida por violar los derechos de autor. Te hemos enviado un correo electrónico con más información al respecto.";
+/* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
+"account.suspension.message.nonCopyright"="Cuenta cerrada por incumplir los Términos de servicio de MEGA, como el abuso de los derechos de otros, el intercambio e importación de datos ilegales o el abuso del sistema.";

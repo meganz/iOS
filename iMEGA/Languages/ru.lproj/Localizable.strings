@@ -191,7 +191,7 @@
 /*  */
 "folderLinkUnavailableText2"="Ссылка на папку была удалёна из-за нарушения наших условий использования.";
 /*  */
-"folderLinkUnavailableText3"="Запрошенная вами страница не существует. Возможно ссылка, по которой вы перешли, не существует";
+"folderLinkUnavailableText3"="Неправильная ссылка — ссылка, по которой вы перешли, не существует";
 /*  */
 "folderLinkUnavailableText4"="Ссылка была деактивирована пользователем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -250,10 +250,10 @@
 "transfersEmptyState_titleUpload"="Нет загрузок в облако";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Облачный диск";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
-"cloudDrive.root.backup.folder.device.subtitle"="%@ устройство";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
-"cloudDrive.root.backup.folder.devices.subtitle"="Устройства (%@)";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d файл";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d файла";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="В очереди";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -269,9 +269,9 @@
 /* Button title to 'Save' the selected option */
 "save"="Сохранить";
 /* Sort by option (1/6). This one orders the files alphabethically */
-"nameAscending"="Имя (по возрастанию)";
+"nameAscending"="Название (по возрастанию)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="Имя (по убыванию)";
+"nameDescending"="Название (по убыванию)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
 "largest"="Самые большие";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
@@ -861,7 +861,7 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Отправить";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Сбросить учётную запись";
+"parkAccount"="Сбросить аккаунт";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="Я понимаю, что создаю новую чистую учётную запись, и что я потеряю все данные в существующей, если не вспомню пароль или не найду ключ восстановления.";
 /* Caption of the button to proceed */
@@ -975,7 +975,7 @@
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20+ ГБ[/B] на диске";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Квота на передачу";
+"Transfer Quota"="Передача данных";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ передач";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
@@ -1069,7 +1069,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
-"Storage"="Хранилище";
+"Storage"="Хранилище данных";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="При условии вашего участия в программе достижений.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -1077,7 +1077,7 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Выберите один из планов ниже:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Выберите тип учётной записи:";
+"selectOneAccountType"="Выберите тип аккаунта:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Годовая подписка на 16 % дешевле 12 месячных платежей";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
@@ -1193,7 +1193,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Расширьте возможности MEGAchat. Содержимое URL-адреса будет извлекаться без сквозного шифрования.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Голосовые и Видео Звонки";
+"voiceAndVideoCalls"="Голосовые и видеозвонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Использовать данные мобильного устройства";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1201,9 +1201,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Отсутствие";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
-/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Менять статус на «отошёл» после 1 минуты неактивности";
+"autoAway.footerDescription"="Менять статус на «Отсутствует» после [X] неактивности.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сохранение статуса";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1353,7 +1351,7 @@
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
 "sentContact"="Отправлено контакту: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
-"sentXContacts"="Отправлено %s контактам.";
+"sentXContacts"="Отправлены контакты (%s).";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
 "attachedFile"="Прикреплено: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
@@ -1391,7 +1389,7 @@
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="Окончательная ошибка";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
-"Too many concurrent connections or transfers"="Слишком много одновременных соединений или пересылок";
+"Too many concurrent connections or transfers"="Слишком много одновременных соединений или передач";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
 "Out of range"="Вне диапазона";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
@@ -1537,7 +1535,7 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Больше не показывать";
 /* Label for test password button and titles */
-"testPassword"="Тест пароля";
+"testPassword"="Проверить пароль";
 /* Label for recovery key button */
 "backupRecoveryKey"="Сохранить ключ восстановления";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1565,7 +1563,7 @@
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Возобновить воспроизведение?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s продолжится на %2$s";
+"continueOrRestartVideoMessage"="%1$s продолжится с %2$s";
 /*  */
 "resume"="Возобновить";
 /* Title to preview document */
@@ -1573,19 +1571,19 @@
 /* Title of the notification for a missed call */
 "missedCall"="Пропущенный звонок";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Вызов был отклонён";
+"callWasRejected"="Звонок был отклонён";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Вызов был отменён";
+"callWasCancelled"="Звонок был отменён";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Вызов был пропущен";
+"callWasNotAnswered"="Звонок был пропущен";
 /* When an active call of user A with user B had failed */
-"callFailed"="Вызов не удался";
+"callFailed"="Звонок не удался";
 /* When an active call of user A with user B had ended */
-"callEnded"="Вызов окончен.";
+"callEnded"="Звонок окончен.";
 /* When an active goup call is ended */
-"Group call ended"="Групповой вызов окончен";
+"Group call ended"="Групповой звонок окончен";
 /* When an active goup call is ended, shows the duration */
-"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Групповой вызов завершен[/A][C]. Длительность: [/C]";
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Групповой звонок завершён[/A][C]. Длительность: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Длительность: %@";
 /* Alert title shown when users try to stream an unsupported audio/video file */
@@ -1863,7 +1861,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Ваша оплата плана %1 получена.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Ваша оплата %1 плана не удалась.";
+"Your payment for the %1 plan was unsuccessful."="Ваша оплата плана %1 не удалась.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Ваша Pro-подписка истекает завтра.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2017,7 +2015,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Вы не можете удалить %1$s как контакт, поскольку он является частью вашего бизнес-аккаунта.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Требовать пароль";
+"Require Passcode"="Требовать код доступа";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Сразу же";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2267,7 +2265,7 @@
 /* Title for action to remove the registered phone number. */
 "Remove Phone Number"="Удалить телефонный номер";
 /* Message for action to remove the registered phone number. */
-"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Это удалит привязанный номер телефона из вашего аккаунта. Если позжк вы решите добавить номер телефона, вам потребуется подтвердить его.";
+"This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Это удалит привязанный номер телефона из вашего аккаунта. Если позже вы решите добавить номер телефона, вам потребуется подтвердить его.";
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Эта операция удалит ваш текущий номер телефона и начнёт привязку нового номера к вашему аккаунту.";
 /* Information message shown to users when the operation of removing phone number succeed. */
@@ -2580,10 +2578,6 @@
 "dialog.add.items.backup.action.title"="Добавить";
 /* Backup action confirmation error message */
 "dialog.confirmation.error.message"="Введённый текст не подходит";
-/* Alert the user when trying to share a backup folder */
-"dialog.share.backup.folder.warning.message"="Эта папка может быть доступна только для чтения, потому что это папка резервных копий. Любые изменения её содержимого могут отключить резервное копирование.";
-/* Alert the user when trying to share several backup folders */
-"dialog.share.backup.folders.warning.message"="Эти папки могут быть доступны только для чтения, потому что это папки резервных копий. Любые изменения их содержимого могут отключить резервное копирование.";
 /* Alert the user when trying to share several backup and non-backup folders */
 "dialog.share.backup.non.backup.folders.warning.message"="Некоторые папки, которыми вы собираетесь поделиться, являются папками резервных копий и предназначены только для чтения. Продолжить?";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2882,6 +2876,12 @@
 "help.reportIssue.attachLogFiles.title"="Прикрепить лог-файлы";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Прикрепить файлы журналов диагностики, чтобы облегчить отладку?";
+/* Backups title */
+"backups.title"="Резервные копии";
+/* No backups and old inbox files in the account message */
+"backups.empty.state.message"="Нет резервных копий устройств";
+/* No backups and old inbox files in the account description message */
+"backups.empty.state.description"="Здесь хранятся резервные копии файлов и папок. Резервные копии доступны «только для чтения», чтобы защитить их от случайного изменения на облачном диске.\nВы можете делать резервные копии элементов со своего компьютера в MEGA с помощью нашего настольного приложения.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Отменить передачи?";
 /* Message for action of cancelling a transfer */
@@ -3078,3 +3078,9 @@
 "notifications.message.takenDownPubliclyShared.folder"="Ваша общедоступная папка «%@» была изъята.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Разрешить не организаторам добавлять участников";
+/* Start conversation: Schedule meeting context menu */
+"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+/* Error message when trying to login and the account is blocked due to copyright violation */
+"account.suspension.message.copyright"="Аккаунт заблокирован из-за нарушения авторских прав. Мы отправили вам электронное письмо с дополнительной информацией об этом.";
+/* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
+"account.suspension.message.nonCopyright"="Аккаунт заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц, обмен и импорт незаконных данных или злоупотребление системой.";

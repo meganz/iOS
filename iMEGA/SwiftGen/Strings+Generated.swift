@@ -2123,7 +2123,7 @@ public enum Strings {
     public static let transferFailed = Strings.tr("Localizable", "Transfer failed:")
     /// Transfer over quota
     public static let transferOverQuota = Strings.tr("Localizable", "Transfer over quota")
-    /// Transfer Quota
+    /// Transfer
     public static let transferQuota = Strings.tr("Localizable", "Transfer Quota")
     /// Transfer cancelled
     public static let transferCancelled = Strings.tr("Localizable", "transferCancelled")
@@ -2814,7 +2814,7 @@ public enum Strings {
         public enum Message {
           /// Account suspended due to copyright violations. We sent you an email with more information about this.
           public static let copyright = Strings.tr("Localizable", "account.suspension.message.copyright")
-          /// Account terminated due to a breach of MEGA's Terms of Service, such as abuse of others' rights, sharing and importing illegal data, or system abuse.
+          /// Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.
           public static let nonCopyright = Strings.tr("Localizable", "account.suspension.message.nonCopyright")
         }
       }
@@ -2848,9 +2848,10 @@ public enum Strings {
       public static let title = Strings.tr("Localizable", "backups.title")
       public enum Empty {
         public enum State {
-          /// This is where your backed up files and folders are stored. Your backed up items are 'read-only' to protect them from being accidentally modified in your cloud drive. You can back up items form your computer to MEGA using our desktop app.
+          /// This is where your backed up files and folders are stored. Your backed up items are “read-only” to protect them from being accidentally modified in your cloud drive.
+          /// You can back up items from your computer to MEGA using our desktop app.
           public static let description = Strings.tr("Localizable", "backups.empty.state.description")
-          /// No items in your backups
+          /// No items in backups
           public static let message = Strings.tr("Localizable", "backups.empty.state.message")
         }
       }
@@ -4117,21 +4118,21 @@ public enum Strings {
     public enum Notifications {
       public enum Message {
         public enum TakenDownPubliclyShared {
-          /// Your publicly shared file ”%@” has been taken down.
+          /// Your publicly shared file “%@” has been taken down.
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.file", String(describing: p1))
           }
-          /// Your publicly shared folder ”%@” has been taken down.
+          /// Your publicly shared folder “%@” has been taken down.
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.folder", String(describing: p1))
           }
         }
         public enum TakenDownReinstated {
-          /// Your taken-down file ”%@” has been reinstated.
+          /// Your taken-down file “%@” has been reinstated.
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.file", String(describing: p1))
           }
-          /// Your taken-down folder ”%@” has been reinstated.
+          /// Your taken-down folder “%@” has been reinstated.
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.folder", String(describing: p1))
           }
