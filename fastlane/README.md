@@ -103,18 +103,26 @@ Upload to iTunesConnect
 
 
 
-### ios tests
+### ios run_tests_app
 
 ```sh
-[bundle exec] fastlane ios tests
+[bundle exec] fastlane ios run_tests_app
 ```
 
-MEGA unit tests
+Run unit tests for main app
 
-### ios code_coverage
+### ios code_coverage_main_app
 
 ```sh
-[bundle exec] fastlane ios code_coverage
+[bundle exec] fastlane ios code_coverage_main_app
+```
+
+Generate code coverage for main app
+
+### ios module_coverage
+
+```sh
+[bundle exec] fastlane ios module_coverage
 ```
 
 

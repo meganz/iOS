@@ -74,6 +74,16 @@ pipeline {
     stages {
         stage('Installing dependencies') {
             parallel {
+                stage('Bundle install') {
+                    steps {
+                        gitlabCommitStatus(name: 'Bundle install') {
+                            injectEnvironments({
+                                sh "bundle install"
+                            })
+                        }
+                    }
+                }
+
                 stage('Submodule update and run cmake') {
                     steps {
                         gitlabCommitStatus(name: 'Submodule update and run cmake') {
@@ -105,11 +115,82 @@ pipeline {
             }
         }
 
-        stage('Run Unit test') {
+        stage('MEGADomain - Run unit tests and generate code coverage') {
             steps {
-                gitlabCommitStatus(name: 'Run unit test') {
+                gitlabCommitStatus(name: 'MEGADomain - Run unit tests and generate code coverage') {
                     injectEnvironments({
-                        sh "arch -x86_64 bundle exec fastlane tests"
+                        sh "bundle exec fastlane module_coverage module:MEGADomain"
+                    })
+                }
+            }
+        }
+
+        stage('MEGAData - Run unit tests and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'MEGAData - Run unit tests and generate code coverage') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane module_coverage module:MEGAData"
+                    })
+                }
+            }
+        }
+
+        stage('MEGASwift - Run unit tests and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'MEGASwift - Run unit tests and generate code coverage') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane module_coverage module:MEGASwift"
+                    })
+                }
+            }
+        }
+
+        stage('MEGAFoundation - Run unit tests and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'MEGAFoundation - Run unit tests and generate code coverage') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane module_coverage module:MEGAFoundation"
+                    })
+                }
+            }
+        }
+
+        stage('MEGAUI - Run unit tests and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'MEGAUI - Run unit tests and generate code coverage') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane module_coverage module:MEGAUI"
+                    })
+                }
+            }
+        }
+
+        stage('MEGASwiftUI - Run unit tests and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'MEGASwiftUI - Run unit tests and generate code coverage') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane module_coverage module:MEGASwiftUI"
+                    })
+                }
+            }
+        }
+
+        stage('MEGAUIKit - Run unit tests and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'MEGAUIKit - Run unit tests and generate code coverage') {
+                    injectEnvironments({
+                        sh "bundle exec fastlane module_coverage module:MEGAUIKit"
+                    })
+                }
+            }
+        }
+
+        stage('main app - Run Unit test and generate code coverage') {
+            steps {
+                gitlabCommitStatus(name: 'main app - Run unit tes and generate code coveraget') {
+                    injectEnvironments({
+                        sh "arch -x86_64 bundle exec fastlane run_tests_app"
+                        sh "bundle exec fastlane code_coverage_main_app"
                     })
                 }
             }
@@ -119,10 +200,9 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Generate code Coverage Results') {
                     injectEnvironments({
-                        sh "bundle exec fastlane code_coverage"
                         script {
                             dir("scripts/CodeCoverageParser/") {
-                                sh "swift run CodeCoverageParser  --input './../../xcov_output/report.json' --output 'coverage.txt'"
+                                sh "swift run CodeCoverageParser  --input './../../CodeCoverage/report.json' --output 'coverage.txt'"
                                 env.CODE_COVERAGE_MESSAGE = readFile(file: 'coverage.txt', encoding: "UTF-8")
                             }
                         }

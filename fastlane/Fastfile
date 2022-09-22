@@ -22,6 +22,7 @@ BUILD_DIR       = File.expand_path('build')
 PROJECT                 = "MEGA.xcodeproj"
 WORKSPACE               = "iMEGA.xcworkspace"
 SCHEME                  = 'MEGA'
+TEST_PLAN               = 'MEGA'
 TEMP_KEYCHAIN_NAME      = "fastlane_appstore"
 TEMP_KEYCHAIN_PASSWORD  = "TEMP_KEYCHAIN_PASSWORD"
 
@@ -205,27 +206,79 @@ platform :ios do
     )
   end
 
-  desc "MEGA unit tests"
-  lane :tests do
+  desc "Run unit tests for main app"
+  lane :run_tests_app do
     scan(
-      scheme: "MEGA",
-      devices: ["iPhone 13 Pro Max"],
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      clean: true,
+      device: "iPhone 14 Pro Max",
       cloned_source_packages_path: "SwiftPackages",
       disable_package_automatic_updates: true,
       output_directory: ".",
       derived_data_path: "derivedData",
-      code_coverage: true
+      code_coverage: true,
     )
   end
 
-  lane :code_coverage do
+  desc "Generate code coverage for main app"
+  lane :code_coverage_main_app do
     xcov(
       workspace: WORKSPACE,
       scheme: SCHEME,
       output_directory: "xcov_output",
       derived_data_path: "derivedData",
+      include_targets: "MEGA.app,MEGAIntent.appex,MEGANotifications.appex,MEGAPicker.appex,MEGAPickerFileProvider.appex,MEGAShare.appex,MEGAWidgetExtension.appex",
       json_report: true
-    )  
+    ) 
+
+    mainapp_report_json = read_json(json_path: "xcov_output/report.json") 
+    complete_report_json = read_json(json_path: "CodeCoverage/report.json")
+
+    targets = mainapp_report_json[:targets]
+    targets.each do |target|
+      complete_report_json[target[:name]] = target[:coverage]
+    end
+
+    write_json(file_path: "#{__dir__}/CodeCoverage/report.json", hash: complete_report_json)
+  end
+
+  lane :module_coverage do |options|
+    spm(
+      command: 'generate-xcodeproj',
+      enable_code_coverage: true,
+      package_path: "Modules/#{options[:module]}",
+      build_path: "Modules/#{options[:module]}/build"
+    )
+
+    scan(
+      project: "Modules/#{options[:module]}/#{options[:module]}.xcodeproj",
+      scheme: "#{options[:module]}-Package",
+      device: "iPhone 14 Pro Max",
+      output_directory: "Modules/#{options[:module]}/reports",
+      derived_data_path: "Modules/#{options[:module]}/derivedData",
+      clean: true
+    )
+
+    xcov(
+      project: "Modules/#{options[:module]}/#{options[:module]}.xcodeproj",
+      scheme: "#{options[:module]}-Package",
+      output_directory: "Modules/#{options[:module]}/CodeCoverage",
+      derived_data_path: "Modules/#{options[:module]}/derivedData",
+      include_targets: "#{options[:module]}.framework",
+      json_report: true
+    )
+
+    module_report_json = read_json(json_path: "Modules/#{options[:module]}/CodeCoverage/report.json")
+
+    if File.exist?(File.expand_path('../CodeCoverage/report.json'))
+      complete_report_json = read_json(json_path: "CodeCoverage/report.json")
+      complete_report_json[options[:module]] = module_report_json[:coverage]
+      write_json(file_path: "#{__dir__}/CodeCoverage/report.json", hash: complete_report_json)
+    else
+      json = { options[:module] => module_report_json[:coverage] }.to_json
+      write_json(file_path: "#{__dir__}/CodeCoverage/report.json", hash: json)
+    end
   end
 
   desc "Download metadata"

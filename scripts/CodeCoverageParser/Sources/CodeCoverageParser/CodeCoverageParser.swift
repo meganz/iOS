@@ -17,14 +17,18 @@ struct CodeCoverageParser: ParsableCommand {
     mutating func run() throws {
         let jsonFileURL = URL(fileURLWithPath: input)
         let jsonData = try Data(contentsOf: jsonFileURL)
-        let codeCoverage = try JSONDecoder().decode(CodeCoverage.self, from: jsonData)
+        guard let coverageDetails = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Double] else {
+            throw "Unable to read the coverage data from file"
+        }
+        
+        let targetCoverages = coverageDetails.map { key, value in CodeCoverage(name: key, coverage: value) }
         var outputString = """
         
         ## Unit test coverage result
         Target | Percentage
         --- | --- \n
         """
-        for targetCoverage in codeCoverage.targetCodeCoverages {
+        for targetCoverage in targetCoverages {
             if let coveragePercent = (targetCoverage.coverage).percent {
                 let targetCoverageString = targetCoverage.name + " | " + "\(coveragePercent) \n"
                 outputString.append(targetCoverageString)
@@ -35,7 +39,6 @@ struct CodeCoverageParser: ParsableCommand {
         try outputString.write(to: outputURL, atomically: true, encoding: .utf8)
     }
 }
-
 
 
 
