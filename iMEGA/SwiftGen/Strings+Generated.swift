@@ -2840,7 +2840,7 @@ public enum Strings {
       }
     }
     public enum AutoAway {
-      /// Set status as Away after [X]
+      /// Set status as Away after [X] of inactivity.
       public static let footerDescription = Strings.tr("Localizable", "autoAway.footerDescription")
     }
     public enum Backups {
