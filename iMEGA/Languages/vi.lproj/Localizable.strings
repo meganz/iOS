@@ -250,10 +250,10 @@
 "transfersEmptyState_titleUpload"="Không có Phiên Tải Lên";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Ổ Mây";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
-"cloudDrive.root.backup.folder.device.subtitle"="%@ thiết bị";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ thiết bị";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d tệp";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d tệp tin";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Đang chờ";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -975,7 +975,7 @@
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20 GB+[/B] Lưu Trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Lượng Băng Thông";
+"Transfer Quota"="Truyền Tải";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ Truyền Tải";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
@@ -1201,9 +1201,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Tự động vắng mặt";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Tự chuyển trạng thái thành “Vắng mặt” sau [X] phút không hoạt động";
-/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Tự chuyển trạng thái thành “Vắng mặt” sau 1 phút không hoạt động";
+"autoAway.footerDescription"="Đặt trạng thái thành \"Vắng mặt\" sau [X] không có hoạt động.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bảo Toàn Trạng Thái";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -2249,7 +2247,7 @@
 /* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="Hết Không Gian Lưu Trữ";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Dữ Liệu Sắp Bị Mất!";
+"Your Data is at Risk!"="Dữ liệu của bạn đang gặp rủi ro!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Chúng tôi đã gửi thông báo vào địa chỉ email <b>%@</b> của quý khách vào ngày <b>%@</b> nhưng quý khách vẫn còn %@ tệp tin chiếm tới <b>%@</b> trong tài khoản MEGA, quý khách cần phải nâng câp lên <b>%@</b> để đáp ứng dung lượng.</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
@@ -2535,7 +2533,7 @@
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Tài Khoản Bị Khóa";
 /* Over Disk Quota paywall final title. */
-"dialog.storage.paywall.final.title"="Dữ Liệu Đang Gặp Rủi Ro!";
+"dialog.storage.paywall.final.title"="Dữ liệu của bạn đang gặp rủi ro!";
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Quý khách đã không giải quyết tình trạng tài khoản của mình trong <b>%@</b> từ khi chúng tôi gửi email thông báo tới địa chỉ <b>%@</b> của quý khách, vào ngày <b>%@</b>. Quý khách hiện vẫn đang dùng <b>%@</b> trong không gian lưu trữ, vượt quá mức hạn của tài khoản miễn phí. Xin kiểm tra hộp thư email để xem thư chúng tôi đã gửi để biết thêm chi tiết và các cách xử lý.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
@@ -2580,10 +2578,6 @@
 "dialog.add.items.backup.action.title"="Thêm";
 /* Backup action confirmation error message */
 "dialog.confirmation.error.message"="chữ đã nhập không trùng khớp";
-/* Alert the user when trying to share a backup folder */
-"dialog.share.backup.folder.warning.message"="Thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì là thư mục lưu dự phòng. Bất kỳ thay đổi trong nội dung sẽ vô hiệu hóa việc sao lưu.";
-/* Alert the user when trying to share several backup folders */
-"dialog.share.backup.folders.warning.message"="Các thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì đây là các thư mục lưu dự phòng. Bất kỳ thay đổi trong nội dung sẽ vô hiệu hóa việc sao lưu.";
 /* Alert the user when trying to share several backup and non-backup folders */
 "dialog.share.backup.non.backup.folders.warning.message"="Vài trong các thư mục chia sẻ này là thư mục lưu dự phòng và chỉ-được-xem. Bạn có muốn tiếp tục không?";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2882,6 +2876,12 @@
 "help.reportIssue.attachLogFiles.title"="Kèm theo tệp tin ghi nhật ký log";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Bạn có muốn đính kèm tệp tin ghi nhật ký log để chẩn đoán việc gỡ lỗi không?";
+/* Backups title */
+"backups.title"="Sao lưu dự phòng";
+/* No backups and old inbox files in the account message */
+"backups.empty.state.message"="Không có thiết bị nào được sao lưu";
+/* No backups and old inbox files in the account description message */
+"backups.empty.state.description"="Đây là thư mục chứa các tệp tin và thư mục đã được sao lưu dự phòng. Các mục lưu dự phòng là dạng “chỉ-được-xem” để phòng tránh bị chỉnh sửa trong Ổ Mây của bạn.\nBạn có thể lưu dự phòng dữ liệu của mình từ máy tính lên MEGA bằng cách sử dụng App MEGA cho Máy Tính.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Hủy các phiên truyền tải?";
 /* Message for action of cancelling a transfer */
@@ -3035,7 +3035,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B] đã đổi quyền hạn của [A] thành [S]người chủ trì[/S]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[B] đã đổi quyền hạn của [A] thành [S]bình thường[/S]";
+"chat.message.changedRole.standard"="[B] đã đổi quyền hạn của [A] thành [S]thông thường[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Thường";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3067,14 +3067,20 @@
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.description"="Bạn không có tên nào trong sổ liên lạc để thêm vào cuộc chát này. Nếu bạn muốn thêm thành viên, trước hết hãy thêm tên của họ vào sổ liên lạc.";
 /* Text title showed when users share the contact link */
-"invite.contactLink.share.title"="Send invitation";
+"invite.contactLink.share.title"="Gửi lời mời";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.file"="Tệp tin “%@” bị gỡ xuống của bạn đã được khôi phục.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.folder"="Thư mục “%@” bị gỡ xuống của bạn đã được khôi phục.";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.file"="Tệp tin chia sẻ công khai “%@” bị gỡ xuống của bạn đã được khôi phục.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.folder"="Thư mục chia sẻ công khai “%@” bị gỡ xuống của bạn đã được khôi phục.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
-"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
+"meetings.addContacts.allowNonHost.message"="Cho phép các thành viên không chủ trì mời thêm người";
+/* Start conversation: Schedule meeting context menu */
+"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+/* Error message when trying to login and the account is blocked due to copyright violation */
+"account.suspension.message.copyright"="Tài khoản bị đình chỉ do vi phạm bản quyền. Chúng tôi đã gửi cho bạn một email với nhiều thông tin hơn về việc này.";
+/* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
+"account.suspension.message.nonCopyright"="Tài khoản đã bị chấm dứt hoạt động do vi phạm Điều Khoản Dịch Vụ của MEGA; chẳng hạn như lạm dụng hệ thống, quyền hạn sử dụng của người khác hoặc chia sẻ nội dung cấm.";

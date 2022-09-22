@@ -492,5 +492,79 @@
         <string>%d분</string>
       </dict>
     </dict>
+    <key>mybackups.share.folder.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@share@</string>
+      <key>share</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>이 폴더들은 백업 폴더이기 때문에 읽기 전용으로 공유 되었습니다. 항목에 대한 어떠한 변경은 백업을 비활성화 합니다.</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d hour</string>
+        <key>other</key>
+        <string>%d hours</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minute</string>
+        <key>other</key>
+        <string>%d minutes</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.label.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>시간</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.label.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>분</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -564,83 +564,83 @@
     </dict>
     <key>mybackups.share.folder.warning.message</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@share@</string>
-        <key>share</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>This folder can only be shared as read-only, as this is a backup folder, any changes to its content could disable the backup</string>
-            <key>other</key>
-            <string>These folders can only be shared as read-only, as they are backup folders, any changes to their content could disable the backups</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@share@</string>
+      <key>share</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.</string>
+        <key>other</key>
+        <string>These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.</string>
+      </dict>
     </dict>
     <key>chat.autoAway.hour</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@hour@</string>
-        <key>hour</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>%d hour</string>
-            <key>other</key>
-            <string>%d hours</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d hour</string>
+        <key>other</key>
+        <string>%d hours</string>
+      </dict>
     </dict>
     <key>chat.autoAway.minute</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@minute@</string>
-        <key>minute</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>%d minute</string>
-            <key>other</key>
-            <string>%d minutes</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minute</string>
+        <key>other</key>
+        <string>%d minutes</string>
+      </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@hour@</string>
-        <key>hour</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>hour</string>
-            <key>other</key>
-            <string>hours</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>hour</string>
+        <key>other</key>
+        <string>hours</string>
+      </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@minute@</string>
-        <key>minute</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>one</key>
-            <string>minute</string>
-            <key>other</key>
-            <string>minutes</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>minute</string>
+        <key>other</key>
+        <string>minutes</string>
+      </dict>
     </dict>
   </dict>
 </plist>

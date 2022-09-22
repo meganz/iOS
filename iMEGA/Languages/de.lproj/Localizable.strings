@@ -250,10 +250,10 @@
 "transfersEmptyState_titleUpload"="Keine Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "1 device" */
-"cloudDrive.root.backup.folder.device.subtitle"="%@ Gerät";
-/* Subtitle shown on folders that gives you information about its content. This case for the root backup folder "%@ devices" */
-"cloudDrive.root.backup.folder.devices.subtitle"="%@ Geräte";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d Dateien";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Bereit";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -763,7 +763,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Der Rettungsschlüssel wurde als MEGA-RETTUNGSSCHLUESSEL.txt in den Offlinebereich exportiert. Hinweis: Wenn Sie sich abmelden, wird die Datei gelöscht. Bitte speichern Sie sie daher an einem sicheren Ort.";
+"masterKeyExported_alertMessage"="Der Rettungsschlüssel wurde als MEGA-RETTUNGSSCHLUESSEL.txt in den Offlinebereich exportiert. Bitte beachten Sie: Wenn Sie sich abmelden, wird die Datei gelöscht. Bitte speichern Sie sie daher an einem sicheren Ort.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -975,7 +975,7 @@
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
 "account.storage.freePlan"="[B]20 GB[/B] Speicherplatz";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"Transfer Quota"="Übertragungsvolumen";
+"Transfer Quota"="Transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ Transfervolumen";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
@@ -1201,9 +1201,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-Abwesend";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Mich nach [X] Minuten ohne Aktivität als abwesend anzeigen";
-/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Nach einer Minute Inaktivität als abwesend anzeigen";
+"autoAway.footerDescription"="";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Fester Status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1717,7 +1715,7 @@
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Alle alten Dateiversionen werden gelöscht. Dateiversionen in Ordnerfreigaben eines Kontakts müssen vom Eigentümer entfernt werden.";
 /* Text of the dialog to delete all the file versions of the account */
-"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Sie löschen die Versionshistorie aller Dateien. Dateiversionen in Ordnerfreigaben eines Kontakts müssen durch diesen gelöscht werden.\n\nDie aktuelle Version jeder Datei bleibt erhalte.";
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Sie löschen die Versionshistorie aller Dateien. Dateiversionen in Ordnerfreigaben eines Kontakts müssen durch diesen gelöscht werden.\n\nBitte beachten Sie: Die aktuelle Version jeder Datei bleibt erhalten.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
 "Rubbish-Bin Cleaning Scheduler:"="Automatische Leerung des Papierkorbs";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
@@ -2580,10 +2578,6 @@
 "dialog.add.items.backup.action.title"="Hinzufügen";
 /* Backup action confirmation error message */
 "dialog.confirmation.error.message"="Der eingegebene Text ist nicht korrekt";
-/* Alert the user when trying to share a backup folder */
-"dialog.share.backup.folder.warning.message"="Dieser Ordner kann nur schreibgeschützt freigegeben werden, da es sich um einen Backup-Ordner handelt. Jegliche Änderungen am Inhalt des Ordners können dazu führen, dass das Backup deaktiviert wird.";
-/* Alert the user when trying to share several backup folders */
-"dialog.share.backup.folders.warning.message"="Diese Ordner können nur schreibgeschützt freigegeben werden, da es sich um Backup-Ordner handelt. Jegliche Änderungen am Inhalt der Ordner können dazu führen, dass die Backups deaktiviert werden.";
 /* Alert the user when trying to share several backup and non-backup folders */
 "dialog.share.backup.non.backup.folders.warning.message"="Einige freigegebene Ordner sind Backup-Ordner und daher schreibgeschützt. Möchten Sie fortfahren?";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2882,6 +2876,12 @@
 "help.reportIssue.attachLogFiles.title"="Protokolldateien anhängen";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.message"="Möchten Sie zur Unterstützung der Fehlersuche die Diagnoseprotokolldateien anhängen?";
+/* Backups title */
+"backups.title"="Backups";
+/* No backups and old inbox files in the account message */
+"backups.empty.state.message"="Keine Geräte in Backups";
+/* No backups and old inbox files in the account description message */
+"backups.empty.state.description"="Hier werden Ihre gesicherten Dateien und Ordner gespeichert. Die gesicherten Objekte sind schreibgeschützt, damit sie nicht versehentlich in Ihrem Cloud Drive geändert werden.\nMit unserer Desktop-App können Sie die Inhalte Ihres Computers auf MEGA sichern.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Transfers stornieren?";
 /* Message for action of cancelling a transfer */
@@ -3065,16 +3065,22 @@
 /* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.title"="Keine Kontakte";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
-"meetings.addContacts.zeroContactsAvailable.description"="You have no contacts to add to this chat. If you want to add participants, first invite them to your contact list.";
+"meetings.addContacts.zeroContactsAvailable.description"="Sie haben keine Kontakte, die Sie zu diesem Chat hinzufügen können. Wenn Sie Teilnehmer hinzufügen möchten, laden Sie diese zunächst in Ihre Kontaktliste ein.";
 /* Text title showed when users share the contact link */
-"invite.contactLink.share.title"="Send invitation";
+"invite.contactLink.share.title"="Einladung senden";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.file"="Die Löschung Ihrer Datei „%@“ wurde rückgängig gemacht.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder \”%@\” has been reinstated.";
+"notifications.message.takenDownReinstated.folder"="Die Löschung Ihres Ordners „%@“ wurde rückgängig gemacht.";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.file"="Ihre öffentliche Dateifreigabe „%@“ wurde gelöscht.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder \”%@\” has been taken down.";
+"notifications.message.takenDownPubliclyShared.folder"="Ihre öffentliche Ordnerfreigabe „%@“ wurde gelöscht.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
-"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
+"meetings.addContacts.allowNonHost.message"="Nicht-Gastgebern erlauben, Teilnehmer hinzuzufügen";
+/* Start conversation: Schedule meeting context menu */
+"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+/* Error message when trying to login and the account is blocked due to copyright violation */
+"account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
+/* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
+"account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";
