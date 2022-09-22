@@ -2,32 +2,39 @@ import UIKit
 
 extension MyAccountHallTableViewCell {
     func setup(data: MyAccountHallCellData) {
-        sectionLabel.text = data.sectionText
-        iconImageView.image = data.icon
-        pendingView.isHidden = !data.isPendingViewVisible
-        if data.isPendingViewVisible {
-            pendingLabel.text = data.pendingText
+        if let sectionText = data.sectionText, sectionLabel != nil {
+            sectionLabel.text = sectionText
+        }
+        
+        if let icon = data.icon, iconImageView != nil {
+            iconImageView.image = icon
+        }
+        
+        if data.isPendingViewVisible, let pendingText = data.pendingText, pendingLabel != nil {
+            pendingLabel.text = pendingText
             pendingView.clipsToBounds = true
         }
         
-        detailLabel.text = data.detailText
+        if let detailText = data.detailText, detailLabel != nil {
+            detailLabel.text = detailText
+        }
         
-        if let storageText = data.storageText {
+        if let storageText = data.storageText, storageLabel != nil {
             storageLabel.text = storageText
             storageLabel.textColor = UIColor.mnz_blue(for: traitCollection)
         }
         
-        if let storageUsedText = data.storageUsedText {
+        if let storageUsedText = data.storageUsedText, storageUsedLabel != nil {
             storageUsedLabel.text = storageUsedText
             storageUsedLabel.textColor = UIColor.mnz_blue(for: traitCollection)
         }
         
-        if let transferText = data.transferText {
+        if let transferText = data.transferText, transferLabel != nil {
             transferLabel.text = transferText
             transferLabel.textColor = .systemGreen
         }
         
-        if let transferUsedText = data.transferUsedText {
+        if let transferUsedText = data.transferUsedText, transferUsedLabel != nil {
             transferUsedLabel.text = transferUsedText
             transferUsedLabel.textColor = .systemGreen
         }
