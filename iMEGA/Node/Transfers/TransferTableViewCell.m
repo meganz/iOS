@@ -56,7 +56,7 @@
             if (node) {
                 [self.iconImageView mnz_setThumbnailByNode:node];
             } else {
-                [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
             }
             self.thumbnailSet = YES;
             break;
@@ -69,11 +69,11 @@
                     self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
                     self.thumbnailSet = YES;
                 } else {
-                    [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                    [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
                     self.thumbnailSet = NO;
                 }
             } else {
-                [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
                 self.thumbnailSet = YES;
             }
             break;
@@ -141,7 +141,7 @@
         if (result) {
             self.iconImageView.image = result;
         } else {
-            [self.iconImageView mnz_setImageForExtension:extension];
+            [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:extension]];
         }
     }];
     

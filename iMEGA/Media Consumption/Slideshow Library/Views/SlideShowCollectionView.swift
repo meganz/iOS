@@ -15,8 +15,6 @@ final class SlideShowCollectionView: UICollectionView {
     
     func updateLayout() {
         guard let layout = layout else { return }
-
-        layout.itemSize = CGSize(width:frame.width, height:frame.height)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0

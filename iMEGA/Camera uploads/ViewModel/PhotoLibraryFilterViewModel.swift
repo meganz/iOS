@@ -102,18 +102,3 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     var chooseTypeTitle = Strings.Localizable.CameraUploads.Timeline.Filter.chooseType
     var showItemsFromTitle = Strings.Localizable.CameraUploads.Timeline.Filter.showItemsFrom
 }
-
-//MARK: - Feature Flag
-extension PhotoLibraryFilterViewModel {
-    
-    var shouldShowFilterMenuOnCameraUpload: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .contextMenuOnCameraUploadExplorer) &&
-        featureFlagProvider.isFeatureFlagEnabled(for: .filterMenuOnCameraUploadExplorer)
-    }
-    
-    func applyFiltersFeatureFlags() {
-        guard !shouldShowFilterMenuOnCameraUpload else { return }
-        selectedMediaType = .allMedia
-        selectedLocation = .allLocations
-    }
-}

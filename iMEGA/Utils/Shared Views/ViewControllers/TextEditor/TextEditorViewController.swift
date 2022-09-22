@@ -52,8 +52,8 @@ final class TextEditorViewController: UIViewController {
 extension TextEditorViewController: ViewType {
     func executeCommand(_ command: TextEditorViewModel.Command) {
         switch command {
-        case .configView(let textEditorModel, let shallUpdateContent, let isInRubbishBin):
-            configView(textEditorModel, shallUpdateContent: shallUpdateContent, isInRubbishBin: isInRubbishBin)
+        case .configView(let textEditorModel, let shallUpdateContent, let isInRubbishBin, let isAnInboxNode):
+            configView(textEditorModel, shallUpdateContent: shallUpdateContent, isInRubbishBin: isInRubbishBin, isAnInboxNode: isAnInboxNode)
         case .setupNavbarItems(let navbarItemsModel):
             setupNavbarItems(navbarItemsModel)
         case .setupLoadViews:
@@ -81,7 +81,7 @@ extension TextEditorViewController: ViewType {
         viewModel.dispatch(.editAfterOpen)
     }
     
-    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool) {
+    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isAnInboxNode: Bool) {
         navigationItem.title = textEditorModel.textFile.fileName
         
         let contentOffset = textView.contentOffset
@@ -100,7 +100,7 @@ extension TextEditorViewController: ViewType {
         }
         
         if textEditorModel.textEditorMode == .load {
-            imageView?.mnz_setImage(forExtension: NSString(string: textEditorModel.textFile.fileName).pathExtension)
+            imageView?.image = NodeAssetsManager.shared.image(for: NSString(string: textEditorModel.textFile.fileName).pathExtension)
         } else {
             imageView?.isHidden = true
             activityIndicator?.isHidden = true

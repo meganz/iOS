@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 class GetLinkInfoTableViewCell: UITableViewCell {
 
@@ -12,7 +13,7 @@ class GetLinkInfoTableViewCell: UITableViewCell {
             thumbnailImageView.mnz_setThumbnail(by: node)
             subtitleLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
         } else {
-            thumbnailImageView.mnz_image(for: node)
+            thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
         }
     }

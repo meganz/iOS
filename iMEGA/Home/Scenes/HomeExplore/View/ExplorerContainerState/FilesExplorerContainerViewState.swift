@@ -1,3 +1,4 @@
+import MEGADomain
 
 class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     class var identifier: AnyHashable {
@@ -140,7 +141,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.updateCurrentState()
     }
     
-    func didSelect(action: UploadAddAction) {
+    func didSelect(action: UploadAddActionEntity) {
         containerViewController.didSelect(action: action)
     }
 

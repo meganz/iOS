@@ -54,7 +54,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (assign, nonatomic) BOOL showToolBar;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
@@ -79,13 +78,18 @@
     [self configureContextMenuManager];
     [self configPhotoContainerView];
     [self updateAppearance];
+    [self setupBarButtons];
+}
+
+- (void)setupBarButtons {
+    self.editBarButtonItem = [self makeEditBarButton];
+    self.cancelBarButtonItem = [self makeCancelBarButton];
+    self.filterBarButtonItem = [self makeFilterActiveBarButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self setEditing:NO animated:NO];
-    
+        
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
@@ -104,7 +108,7 @@
         [self updateLimitedAccessBannerVisibility];
     }
     
-    [self applyPhotosFeatureFlags];
+    [self setupNavigationBarButtons];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -163,8 +167,8 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-        
         [self updateAppearance];
+        [self setEditing:false animated:false];
     }
     
     [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
@@ -216,26 +220,15 @@
 
 #pragma mark - uploads state
 
-- (void)showEditBarButton:(BOOL)show {
-    if (show) {
-        [self setRightNavigationBarButtons];
-    }
-    else {
-        self.editBarButtonItem.image = nil;
-        self.editBarButtonItem.title = @"";
-        if (@available(iOS 14.0, *)) {
-            self.editBarButtonItem.menu = nil;
-        }
-    }
-}
-
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
-    self.shouldShowRightBarButton = !shouldHide;
-    
-    if (self.shouldShowRightBarButton && self.showToolBar) {
-        [self showEditBarButton:YES];
-    } else {
-        [self showEditBarButton:NO];
+    if (shouldHide) {
+        if (@available(iOS 14.0, *)) {
+            [self.objcWrapper_parent.navigationItem setRightBarButtonItem:nil];
+            [self.objcWrapper_parent.navigationItem setRightBarButtonItems:nil];
+        } else {
+            [self.navigationItem setRightBarButtonItem:nil];
+            [self.navigationItem setRightBarButtonItems:nil];
+        }
     }
 }
 
@@ -254,7 +247,6 @@
         } else {
             self.currentState = MEGACameraUploadsStateDisabled;
         }
-        
         return;
     }
     
@@ -388,14 +380,12 @@
     self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    
-    [self updateRightNavigationBarButtons];
 }
 
 - (void)reloadPhotos {
     [self updateNavigationTitleBar];
     [self reloadHeader];
-    
+    [self setupNavigationBarButtons];
     if (@available(iOS 14.0, *)) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
@@ -403,6 +393,7 @@
             if (self.viewModel.mediaNodesArray.count == 0) {
                 [self reloadPhotosCollectionView];
             }
+            [self setupNavigationBarButtons];
         });
     } else {
         NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -424,6 +415,7 @@
         }
         
         [self reloadPhotosCollectionView];
+        [self setupNavigationBarButtons];
     }
 }
 
@@ -433,38 +425,14 @@
     });
 }
 
-- (void)updateEditBarButton {
-    if (!self.isEditing) {
-        if (self.showToolBar && self.shouldShowRightBarButton) {
-            [self showEditBarButton: YES];
-        } else {
-            [self showEditBarButton: NO];
-        }
-
-        if (@available(iOS 14.0, *)) {}
-        else {
-            [self setRightNavigationBarButtons];
-        }
-    } else {
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
-        self.editBarButtonItem.image = nil;
-        if (@available(iOS 14.0, *)) {
-            self.editBarButtonItem.menu = nil;
-        }
-    }
-}
-
 - (void)updateNavigationTitleBar {
     if (@available(iOS 14.0, *)) {
-        [self updateEditBarButton];
     } else {
         if ([self.photosCollectionView allowsMultipleSelection]) {
             self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
         } else {
             self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
         }
-        
-        [self updateEditBarButton];
     }
 }
 
@@ -565,12 +533,9 @@
         self.photosCollectionView.allowsMultipleSelection = editing;
     }
     
-    [self updateEditBarButton];
-    
     if (editing) {
         [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
-        self.objcWrapper_parent.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
         UITabBar *tabBar = self.tabBarController.tabBar;
         if (tabBar == nil) {
@@ -600,8 +565,6 @@
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selection removeAll];
         [self.photosCollectionView reloadData];
-        self.objcWrapper_parent.navigationItem.leftBarButtonItems = @[self.myAvatarManager.myAvatarBarButton];
-        
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
         } completion:^(BOOL finished) {
@@ -617,18 +580,7 @@
 }
 
 - (void)showToolbar:(BOOL)showToolbar {
-    BOOL result = self.shouldShowRightBarButton && showToolbar && self.viewModel.mediaNodesArray.count > 0;
     self.showToolBar = showToolbar;
-    
-    if (result) {
-        [self showEditBarButton: YES];
-    } else {
-        [self showEditBarButton: NO];
-    }
-    
-    [UIView animateWithDuration:0.33f animations:^ {
-        self.objcWrapper_parent.navigationItem.rightBarButtonItem = result ? self.editBarButtonItem : nil;
-    } completion: NULL];
 }
 
 - (void)didSelectedPhotoCountChange:(NSInteger)count {
@@ -696,7 +648,7 @@
     if ([node hasThumbnail]) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
-        [cell.thumbnailImageView mnz_imageForNode:node];
+        [cell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     }
     
     cell.nodeHandle = [node handle];

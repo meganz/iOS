@@ -27,7 +27,7 @@ extension PhotosViewController {
                               description: String? = nil,
                               buttonTitle: String? = nil) -> EmptyStateView {
         
-        var emptyView: EmptyStateView = EmptyStateView.create(for: EmptyStateType.timeline)
+        var emptyView: EmptyStateView = EmptyStateView.create(for: .timeline(image: image, title: title, description: description, buttonTitle: buttonTitle))
         let filterType = viewModel.filterType
         let filterLocation = viewModel.filterLocation
                 
@@ -47,7 +47,7 @@ extension PhotosViewController {
             } else if filterType == .videos && filterLocation == .cloudDrive {
                 emptyView = EmptyStateView.create(for: EmptyStateType.videos)
             } else if isEmptyStateView(filterType: filterType, filterLocation: filterLocation) {
-                emptyView = EmptyStateView.create(for: .timeline, image: image, title: title, description: description, buttonTitle: buttonTitle)
+                emptyView = EmptyStateView.create(for: .timeline(image: image, title: title, description: description, buttonTitle: buttonTitle))
                 emptyView.button?.addTarget(self, action: #selector(buttonTouchUpInsideEmptyState), for: .touchUpInside)
             } 
         }

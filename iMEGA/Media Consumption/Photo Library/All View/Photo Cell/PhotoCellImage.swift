@@ -2,7 +2,7 @@ import SwiftUI
 import MEGASwiftUI
 
 struct PhotoCellImage: View {
-    let container: ImageContainer
+    let container: any ImageContaining
     var aspectRatio: CGFloat?
     var bgColor = Color.clear
     

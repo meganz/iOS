@@ -233,13 +233,12 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="hxz-Hg-nRC">
                         <barButtonItem key="backBarButtonItem" title=" " id="JzG-HA-4B2"/>
-                        <barButtonItem key="rightBarButtonItem" image="selectAll" width="22" id="jcN-8Q-JdP" userLabel="Edit Bar Button Item"/>
+                        <barButtonItem key="rightBarButtonItem" id="e96-q3-UGc"/>
                     </navigationItem>
                     <connections>
                         <outlet property="actionBarButtonItem" destination="wpV-mF-Nm9" id="G5P-wD-QWj"/>
                         <outlet property="deleteBarButtonItem" destination="bVv-a0-Fx7" id="BwD-Lu-tJf"/>
                         <outlet property="downloadBarButtonItem" destination="mZb-63-wxw" id="I4p-73-knY"/>
-                        <outlet property="editBarButtonItem" destination="jcN-8Q-JdP" id="hg4-YD-HM9"/>
                         <outlet property="enableCameraUploadsButton" destination="zhm-WP-YFw" id="OZt-j7-0eb"/>
                         <outlet property="moveBarButtonItem" destination="k2g-A4-j6f" id="sR6-Zh-J43"/>
                         <outlet property="photoContainerView" destination="4Ta-Ix-lgL" id="IwW-Cr-dta"/>
@@ -355,6 +354,11 @@
             <point key="canvasLocation" x="1738" y="1160"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="zhm-WP-YFw">
+            <size key="intrinsicContentSize" width="53" height="33"/>
+        </designable>
+    </designables>
     <resources>
         <image name="cameraUploadsIcon" width="27" height="20"/>
         <image name="link" width="28" height="28"/>

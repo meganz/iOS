@@ -6,19 +6,19 @@ final class AudioPlayerViewModelTests: XCTestCase {
     let router = MockAudioPlayerViewRouter()
     let playerHandler = MockAudioPlayerHandler()
 
-    lazy var viewModel = AudioPlayerViewModel(node: MEGANode(),
-                                              fileLink: "",
-                                              isFolderLink: false,
+    lazy var viewModel = AudioPlayerViewModel(configEntity: AudioPlayerConfigEntity(node: MEGANode(),
+                                                                                    isFolderLink: false,
+                                                                                    fileLink: "",
+                                                                                    playerHandler: playerHandler),
                                               router: router,
-                                              playerHandler: playerHandler,
                                               nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
                                               streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
                                               dispatchQueue: MockDispatchQueue())
     
-    lazy var offlineViewModel = AudioPlayerViewModel(selectedFile: "file_path",
-                                                     filePaths: nil,
+    lazy var offlineViewModel = AudioPlayerViewModel(configEntity: AudioPlayerConfigEntity(fileLink: "file_path",
+                                                                                           playerHandler: playerHandler),
+
                                                      router: router,
-                                                     playerHandler: playerHandler,
                                                      offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
                                                      dispatchQueue: MockDispatchQueue())
     
@@ -27,9 +27,6 @@ final class AudioPlayerViewModelTests: XCTestCase {
                                                                               .configureFileLinkPlayer(title: "Track 5", subtitle: Strings.Localizable.fileLink),
                                                                               .updateShuffle(status: playerHandler.isShuffleEnabled()),
                                                                               .updateSpeed(mode: .normal)], timeout: 0.5)
-        XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
-        XCTAssertEqual(playerHandler.addPlayer_calledTimes, 1)
-        XCTAssertEqual(playerHandler.addPlayerTracks_calledTimes, 1)
         
         test(viewModel: viewModel, action: .updateCurrentTime(percentage: 0.2), expectedCommands: [])
         XCTAssertEqual(playerHandler.updateProgressCompleted_calledTimes, 1)
@@ -94,7 +91,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
         
         test(viewModel: offlineViewModel, action: .initMiniPlayer, expectedCommands: [])
-        XCTAssertEqual(router.showOfflineMiniPlayer_calledTimes, 1)
+        XCTAssertEqual(router.showMiniPlayer_calledTimes, 2)
         
         test(viewModel: viewModel, action: .`import`, expectedCommands: [])
         XCTAssertEqual(router.importNode_calledTimes, 1)

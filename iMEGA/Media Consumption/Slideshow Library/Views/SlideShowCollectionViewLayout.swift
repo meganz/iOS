@@ -1,6 +1,16 @@
 import UIKit
 
 final class SlideShowCollectionViewLayout: UICollectionViewFlowLayout {
+    
+    override func prepare() {
+        super.prepare()
+
+        guard let collectionView = collectionView else { return }
+        
+        let cellWidth = collectionView.bounds.width
+        let cellHeight = collectionView.bounds.height
+        self.itemSize = CGSize(width: cellWidth, height: cellHeight)
+    }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
@@ -25,10 +35,15 @@ final class SlideShowCollectionViewLayout: UICollectionViewFlowLayout {
 
     override init() { super.init() }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool { return true }
+    
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        guard let collectionView = collectionView else { return false }
+        return !newBounds.size.equalTo(collectionView.bounds.size)
+    }
+    
     override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
         let context = super.invalidationContext(forBoundsChange: newBounds) as! UICollectionViewFlowLayoutInvalidationContext
-        context.invalidateFlowLayoutDelegateMetrics = newBounds.size != collectionView?.bounds.size
+        context.invalidateFlowLayoutDelegateMetrics = !newBounds.size.equalTo(collectionView?.bounds.size ?? .zero)
         return context
     }
 }

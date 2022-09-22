@@ -4,7 +4,7 @@ import SwiftUI
 struct PhotoLibraryContentView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     var router: PhotoLibraryContentViewRouting
-    let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions, Bool) -> Void)?
+    let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
     
     @State private var editMode: EditMode = .inactive
     @StateObject private var filterViewModel = PhotoLibraryFilterViewModel()
@@ -32,16 +32,13 @@ struct PhotoLibraryContentView: View {
                 }
             }
         }
-        .popover(isPresented: $viewModel.showFilter) {
+        .sheet(isPresented: $viewModel.showFilter){
             PhotoLibraryFilterView(
                 viewModel,
                 filterViewModel: filterViewModel,
                 forScreen: PhotosFilterOptionKeys.cameraUploadTimeline,
                 onFilterUpdate: onFilterUpdate
             )
-        }
-        .onAppear {
-            filterViewModel.applyFiltersFeatureFlags()
         }
     }
     

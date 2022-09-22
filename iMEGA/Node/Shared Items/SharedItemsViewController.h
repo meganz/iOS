@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) MyAvatarManager *myAvatarManager;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
+@property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 
 @property (nonatomic) UISearchController *searchController;
 

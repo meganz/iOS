@@ -44,7 +44,7 @@ protocol TextEditorViewRouting: Routing {
 
 final class TextEditorViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool)
+        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isAnInboxNode: Bool)
         case setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel)
         case setupLoadViews
         case showDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel)
@@ -66,6 +66,7 @@ final class TextEditorViewModel: ViewModelType {
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
     private var nodeActionUseCase: NodeActionUseCaseProtocol
+    private var inboxUseCase: InboxUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     
@@ -76,6 +77,7 @@ final class TextEditorViewModel: ViewModelType {
         uploadFileUseCase: UploadFileUseCaseProtocol,
         downloadNodeUseCase: DownloadNodeUseCaseProtocol,
         nodeActionUseCase: NodeActionUseCaseProtocol,
+        inboxUseCase : InboxUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil
     ) {
@@ -85,6 +87,7 @@ final class TextEditorViewModel: ViewModelType {
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadNodeUseCase = downloadNodeUseCase
         self.nodeActionUseCase = nodeActionUseCase
+        self.inboxUseCase = inboxUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
     }
@@ -130,13 +133,14 @@ final class TextEditorViewModel: ViewModelType {
             isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
         }
         
+        let isAnInboxNode = nodeEntity.flatMap{inboxUseCase.isInboxNode($0)} ?? false
         if textEditorMode == .load {
             invokeCommand?(.setupLoadViews)
-            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin))
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin, isAnInboxNode: isAnInboxNode))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
             downloadToTempFolder()
         } else {
-            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin))
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin, isAnInboxNode: isAnInboxNode))
             invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
         }
         
@@ -274,7 +278,7 @@ final class TextEditorViewModel: ViewModelType {
                         self.shouldEditAfterOpen = false
                     } else {
                         self.textEditorMode = .view
-                        self.setupView(shallUpdateContent: true)
+                        self.setupView(shallUpdateContent: !(self.nodeEntity.flatMap({self.inboxUseCase.isInboxNode($0)}) ?? false))
                     }
                 } catch {
                     self.router.showPreviewDocVC(fromFilePath: path, showUneditableError: self.shouldEditAfterOpen)
@@ -327,6 +331,9 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func nodeAccessLevel() -> NodeAccessTypeEntity {
+        if nodeEntity.flatMap({inboxUseCase.isInboxNode($0)}) ?? false {
+            return .read
+        }
         return nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     

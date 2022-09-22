@@ -41,7 +41,7 @@
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *visibleUsersIndexedMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAUser *> *recentlyAddedUsersArray;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
-@property (nonatomic, strong) NSMutableArray *selectedUsersArray;
+
 @property (nonatomic, strong) NSMutableArray *outSharesForNodeMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAShare *> *pendingShareUsersArray;
 @property (nonatomic) NSArray<MEGAChatListItem *> *recentsArray;
@@ -61,7 +61,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
 @property (strong, nonatomic) NSString *insertedEmail;
 @property (strong, nonatomic) NSString *insertedGroupName;
 
@@ -72,7 +71,7 @@
 @property (nonatomic, getter=isKeyRotationEnabled) BOOL keyRotationEnabled;
 
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
-@property (strong, nonatomic) UISearchController *searchController;
+
 @property (strong, nonatomic) ItemListViewController *itemListVC;
 
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
@@ -1303,15 +1302,7 @@
 }
 
 - (IBAction)shareFolderWithAction:(UIBarButtonItem *)sender {
-    if (self.selectedUsersArray.count == 0) {
-        return;
-    }
-    
-    if (self.searchController.isActive) {
-        self.searchController.active = NO;
-    }
-    
-    [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
+    [self shareFolderAction];
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -1706,7 +1697,10 @@
         case ContactsModeFolderSharedWith: {
             if (indexPath.section == 0) {
                 if (indexPath.row == 0) {
-                    [self addShareWith:nil];
+                    __weak __typeof__(self) weakSelf = self;
+                    [self showBackupNodesWarningIfNeededWithCompletion:^{
+                        [weakSelf addShareWith:nil];
+                    }];
                 } else {
                     MEGAUser *user = self.visibleUsersArray[indexPath.row - 1];
                     if (!user) {
@@ -1719,8 +1713,10 @@
                         return;
                     }
                     
-                    self.userTapped = user;
-                    [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
+                    if (![InboxUseCaseOCWrapper.alloc.init isInboxNode:self.node]) {
+                        self.userTapped = user;
+                        [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
+                    }
                 }
             } else {
                 if (!tableView.isEditing) {

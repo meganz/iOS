@@ -581,10 +581,10 @@
         [api getThumbnailNode:node destinationFilePath:thumbnailFilePath];
         if ([cell isKindOfClass:[NodeTableViewCell class]]) {
             NodeTableViewCell *nodeTableViewCell = cell;
-            [nodeTableViewCell.thumbnailImageView mnz_imageForNode:node];
+            [nodeTableViewCell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
         } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
             PhotoCollectionViewCell *photoCollectionViewCell = cell;
-            [photoCollectionViewCell.thumbnailImageView mnz_imageForNode:node];
+            [photoCollectionViewCell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
         }
     }
 }

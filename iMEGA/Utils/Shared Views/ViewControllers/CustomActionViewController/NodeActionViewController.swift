@@ -41,24 +41,26 @@ class NodeActionViewController: ActionSheetViewController {
         nodeHandle: HandleEntity,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
+        isInboxNode: Bool = false,
         sender: Any) {
-            
-            guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
-            self.nodes = [node]
-            self.displayMode = displayMode
-            self.delegate = delegate
-            self.sender = sender
-            
-            super.init(nibName: nil, bundle: nil)
-            
-            configurePresentationStyle(from: sender)
-            
-            self.actions = NodeActionBuilder()
-                .setDisplayMode(displayMode)
-                .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-                .build()
-        }
-    
+        
+        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
+        self.nodes = [node]
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setIsInboxNode(isInboxNode)
+            .build()
+    }
+
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
@@ -74,7 +76,7 @@ class NodeActionViewController: ActionSheetViewController {
                           isIncoming: isIncoming)
     }
     
-    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
+    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsAnyInboxNode: Bool = false, sender: Any) {
         self.nodes = nodes
         self.displayMode = displayMode
         self.delegate = delegate
@@ -97,6 +99,7 @@ class NodeActionViewController: ActionSheetViewController {
             actions = NodeActionBuilder()
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsFavourite(true)
+                .setIsInboxNode(containsAnyInboxNode)
                 .multiselectAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
@@ -104,6 +107,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setLinkedNodeCount(linkedNodeCount)
                 .setIsAllLinkedNode(linkedNodeCount == nodesCount)
+                .setIsInboxNode(containsAnyInboxNode)
                 .multiselectBuild()
         }
     }
@@ -123,7 +127,7 @@ class NodeActionViewController: ActionSheetViewController {
                           isInVersionsView: isInVersionsView)
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, isInboxNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -137,10 +141,11 @@ class NodeActionViewController: ActionSheetViewController {
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
             .setViewMode(viewMode)
+            .setIsInboxNode(isInboxNode)
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, isInboxNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -156,10 +161,11 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsLink(isLink)
             .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .setIsRestorable(node.mnz_isRestorable())
+            .setIsRestorable(isInboxNode ? false : node.mnz_isRestorable())
             .setVersionCount(node.mnz_numberOfVersions())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
+            .setIsInboxNode(isInboxNode)
             .build()
     }
     
@@ -275,6 +281,8 @@ class NodeActionViewController: ActionSheetViewController {
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         let isTakedown = node.isTakenDown()
+        let nodeInboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isInboxNode = nodeInboxUC.isInboxNode(node.toNodeEntity())
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
@@ -285,7 +293,8 @@ class NodeActionViewController: ActionSheetViewController {
             .setVersionCount(node.mnz_numberOfVersions())
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)
-            .setIsRestorable(node.mnz_isRestorable())
+            .setIsInboxNode(isInboxNode)
+            .setIsRestorable(isInboxNode ? false : node.mnz_isRestorable())
             .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
             .setisIncomingShareChildView(isIncoming)
             .setIsExported(node.isExported())

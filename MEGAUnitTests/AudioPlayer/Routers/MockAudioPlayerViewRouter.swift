@@ -3,8 +3,8 @@
 final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
     var dismiss_calledTimes = 0
     var goToPlaylist_calledTimes = 0
+    var showNodesMiniPlayer_calledTimes = 0
     var showMiniPlayer_calledTimes = 0
-    var showOfflineMiniPlayer_calledTimes = 0
     var importNode_calledTimes = 0
     var share_calledTimes = 0
     var sendToContact_calledTimes = 0
@@ -18,12 +18,12 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
         goToPlaylist_calledTimes += 1
     }
     
-    func showMiniPlayer(shouldReload: Bool) {
-        showMiniPlayer_calledTimes += 1
+    func showMiniPlayer(node: MEGANode?, shouldReload: Bool) {
+        showNodesMiniPlayer_calledTimes += 1
     }
     
-    func showOfflineMiniPlayer(file: String, shouldReload: Bool) {
-        showOfflineMiniPlayer_calledTimes += 1
+    func showMiniPlayer(file: String, shouldReload: Bool) {
+        showMiniPlayer_calledTimes += 1
     }
     
     func importNode(_ node: MEGANode) {
@@ -42,4 +42,3 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
         showAction_calledTimes += 1
     }
 }
-

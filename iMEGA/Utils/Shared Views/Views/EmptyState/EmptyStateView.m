@@ -10,10 +10,7 @@
 #import "MEGA-Swift.h"
 #endif
 
-
 @interface EmptyStateView ()
-
-@property (nullable, weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYDefaultConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewYTimelineConstraint;
@@ -23,9 +20,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomStackViewTopRegularConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topStackViewCenterConstraint;
 
-@property (nullable, weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (nullable, weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (nullable, weak, nonatomic) IBOutlet UIView *audioPlayerShownView;
+
+@property (nonatomic) BOOL isTimeline;
 
 @end
 
@@ -82,6 +79,17 @@
     return self;
 }
 
+- (UIView *)initForTimelineWithImage:(nullable UIImage *)image
+                    title:(nullable NSString *)title
+              description:(nullable NSString *)description
+              buttonTitle:(nullable NSString *)buttonTitle {
+    self = [self initWithImage:image title:title description:description buttonTitle:buttonTitle];
+    
+    self.isTimeline = true;
+    
+    return self;
+}
+
 - (void)enableTimelineLayoutConstraint {
     self.imageViewYDefaultConstraint.active = NO;
     self.imageViewYTimelineConstraint.active = YES;
@@ -120,7 +128,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    if (self.type == EmptyStateTypeTimeline) {
+    if (self.isTimeline) {
         [self updateLayoutForTimeline];
     }
     

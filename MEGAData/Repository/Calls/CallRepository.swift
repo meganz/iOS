@@ -143,9 +143,9 @@ extension CallRepository: MEGAChatCallDelegate {
         if session.hasChanged(.status) {
             switch session.status {
             case .inProgress:
-                callbacksDelegate?.createdSession(ChatSessionEntity(with: session), in: chatId)
+                callbacksDelegate?.createdSession(session.toChatSessionEntity(), in: chatId)
             case .destroyed:
-                callbacksDelegate?.destroyedSession(ChatSessionEntity(with: session), in: chatId)
+                callbacksDelegate?.destroyedSession(session.toChatSessionEntity(), in: chatId)
             default:
                 break
             }
@@ -153,19 +153,19 @@ extension CallRepository: MEGAChatCallDelegate {
         
         if session.status == .inProgress {
             if session.hasChanged(.remoteAvFlags) {
-                callbacksDelegate?.avFlagsUpdated(for: ChatSessionEntity(with: session), in: chatId)
+                callbacksDelegate?.avFlagsUpdated(for: session.toChatSessionEntity(), in: chatId)
             }
             
             if session.hasChanged(.audioLevel) {
-                callbacksDelegate?.audioLevel(for: ChatSessionEntity(with: session), in: chatId)
+                callbacksDelegate?.audioLevel(for: session.toChatSessionEntity(), in: chatId)
             }
             
             if session.hasChanged(.onHiRes) {
-                callbacksDelegate?.onHiResSessionChanged(ChatSessionEntity(with: session), in: chatId)
+                callbacksDelegate?.onHiResSessionChanged(session.toChatSessionEntity(), in: chatId)
             }
             
             if session.hasChanged(.onLowRes) {
-                callbacksDelegate?.onLowResSessionChanged(ChatSessionEntity(with: session), in: chatId)
+                callbacksDelegate?.onLowResSessionChanged(session.toChatSessionEntity(), in: chatId)
             }
         }
     }

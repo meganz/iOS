@@ -1,5 +1,6 @@
 
 import UIKit
+import MEGADomain
 
 class ChatSharedItemTableViewCell: UITableViewCell {
 
@@ -45,7 +46,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
                 }))
             }
         } else {
-            thumbnailImage.mnz_image(for: node)
+            thumbnailImage.image = NodeAssetsManager.shared.icon(for: node)
         }
     }
 }

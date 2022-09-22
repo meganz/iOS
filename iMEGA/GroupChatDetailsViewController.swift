@@ -12,16 +12,25 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func addChatRoomDelegate() {
+        guard let chatRoom else { return }
         MEGASdkManager.sharedMEGAChatSdk().addChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func removeChatRoomDelegate() {
+        guard let chatRoom else { return }
         MEGASdkManager.sharedMEGAChatSdk().removeChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func shouldShowAddParticipants() -> Bool {
         guard let chatRoom = chatRoom else { return false }
         return (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdkManager.sharedMEGASdk().isGuestAccount
+    }
+    
+    @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatId: chatId) {
+            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
+        }
+        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)
     }
     
     @objc func showEndCallForAll() {
@@ -50,7 +59,7 @@ extension GroupChatDetailsViewController {
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()),
+            chatRoomRepo: ChatRoomRepository.sharedRepo,
             userStoreRepo: UserStoreRepository(store: .shareInstance()))
         return ParticipantsAddingViewFactory(
             userUseCase: UserUseCase(repo: .live),
@@ -65,6 +74,7 @@ extension GroupChatDetailsViewController {
     }
     
     private func changeChatNotificationStatus(sender: UISwitch) {
+        guard let chatRoom else { return }
         if sender.isOn {
             chatNotificationControl.turnOffDND(chatId: Int64(chatRoom.chatId))
         } else {

@@ -42,7 +42,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromSourceItems() -> [ContextActionSheetAction]? {
-        let cmConfigEntity = CMConfigEntity(menuType: .uploadAdd, isHome: true)
+        let cmConfigEntity = CMConfigEntity(menuType: .menu(type: .uploadAdd), isHome: true)
         return contextMenuManager?.actionSheetActions(with: cmConfigEntity)
     }
 
@@ -115,7 +115,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     var outputs: HomeUploadingViewModelOutputs {
         let networkReachable = networkMonitorUseCase.isConnected()
-        let cmConfigEntity = CMConfigEntity(menuType: .uploadAdd, isHome: true)
+        let cmConfigEntity = CMConfigEntity(menuType: .menu(type: .uploadAdd), isHome: true)
         if let error = error {
             if #available(iOS 14.0, *) {
                 return ViewState(
@@ -183,7 +183,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 }
 
 extension HomeUploadingViewModel: UploadAddMenuDelegate {
-    func uploadAddMenu(didSelect action: UploadAddAction) {
+    func uploadAddMenu(didSelect action: UploadAddActionEntity) {
         switch action {
         case .chooseFromPhotos:
             didTapUploadFromPhotoAlbum()

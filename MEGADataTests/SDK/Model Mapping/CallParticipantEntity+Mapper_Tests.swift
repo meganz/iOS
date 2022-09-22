@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+@testable import MEGADomain
 
 final class CallParticipantEntity_Mapper_Tests: XCTestCase {
     

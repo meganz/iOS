@@ -54,5 +54,6 @@ struct ReportIssueView: View {
             )
             .accentColor(Color.primary)
         }
+        .navigationViewStyle(.stack)
     }
 }

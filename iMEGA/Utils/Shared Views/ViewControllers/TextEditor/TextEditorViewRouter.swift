@@ -64,6 +64,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             nodeRepository: nodeRepository,
             fileCacheRepository: FileCacheRepository.newRepo)
         let nodeActionUC = NodeActionUseCase(repo: NodeRepository.newRepo)
+        let inboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
@@ -71,6 +72,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             uploadFileUseCase: uploadUC,
             downloadNodeUseCase: downloadUC,
             nodeActionUseCase: nodeActionUC,
+            inboxUseCase: inboxUC,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity
         )

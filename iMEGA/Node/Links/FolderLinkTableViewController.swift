@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 class FolderLinkTableViewController: UIViewController  {
     
@@ -111,11 +112,11 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             if node.hasThumbnail() {
                 Helper.thumbnail(for: node, api: MEGASdkManager.sharedMEGASdkFolder(), cell: cell)
             } else {
-                cell.thumbnailImageView.mnz_image(for: node)
+                cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             }
             cell.infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdkManager.sharedMEGASdkFolder())
         } else if node.isFolder() {
-            cell.thumbnailImageView.mnz_image(for: node)
+            cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             cell.infoLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdkFolder())
         }
         

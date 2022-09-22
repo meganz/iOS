@@ -30,11 +30,12 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (assign, nonatomic) BOOL shouldShowRightBarButton;
 
 @property (nonatomic) IBOutlet UIView *photosBannerView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *editBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *filterBarButtonItem;
 @property (nonatomic, strong) PhotosViewModel *viewModel;
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
-
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 
 - (void)reloadHeader;
@@ -44,6 +45,11 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 - (void)didSelectedPhotoCountChange:(NSInteger)count;
 - (void)hideRightBarButtonItem:(BOOL)shouldHide;
 - (void)buttonTouchUpInsideEmptyState;
+
+- (NSString *)titleForEmptyState;
+- (NSString *)descriptionForEmptyState;
+- (UIImage *)imageForEmptyState;
+- (NSString *)buttonTitleForEmptyState;
 
 @end
 

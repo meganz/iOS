@@ -290,6 +290,19 @@ struct NodeRepository: NodeRepositoryProtocol {
         MEGASdkManager.sharedMEGASdk().rubbishNode?.toNodeEntity()
     }
     
+    func isNode(_ node: NodeEntity, descendantOf ancestor: NodeEntity) -> Bool {
+        guard let parent = ancestor.toMEGANode(in: sdk) else { return false }
+    
+        var megaNode = node.toMEGANode(in: sdk)
+        while let node = megaNode {
+            if node == parent {
+                return true
+            }
+            megaNode = sdk.parentNode(for: node)
+        }
+        return false
+    }
+    
     // MARK: - Private
     
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {

@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 class BaseAction: NSObject {
     var title: String?
@@ -84,6 +85,22 @@ class NodeAction: BaseAction {
         self.title = title
         self.detail = detail
         self.accessoryView = accessoryView
+        self.image = image
+    }
+}
+
+final class ContextActionSheetAction: BaseAction {
+    let identifier: String?
+    let type: CMElementTypeEntity?
+    var actionHandler: (ContextActionSheetAction) -> Void
+    
+    init(title: String?, detail: String?, image: UIImage?, identifier: String?, type: CMElementTypeEntity?, actionHandler: @escaping (ContextActionSheetAction) -> Void) {
+        self.identifier = identifier
+        self.type = type
+        self.actionHandler = actionHandler
+        super.init()
+        self.title = title
+        self.detail = detail
         self.image = image
     }
 }

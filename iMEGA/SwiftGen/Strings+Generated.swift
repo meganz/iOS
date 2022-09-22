@@ -829,6 +829,10 @@ public enum Strings {
     public static let fileNotSupported = Strings.tr("Localizable", "fileNotSupported")
     /// 1 file removed from MEGA
     public static let fileRemovedToRubbishBinMessage = Strings.tr("Localizable", "fileRemovedToRubbishBinMessage")
+    /// %d files
+    public static func files(_ p1: Int) -> String {
+      return Strings.tr("Localizable", "files", p1)
+    }
     /// %d files selected were already uploaded into this folder.
     public static func filesAlreadyExistMessage(_ p1: Int) -> String {
       return Strings.tr("Localizable", "filesAlreadyExistMessage", p1)
@@ -1381,6 +1385,10 @@ public enum Strings {
     public static let oneWeek = Strings.tr("Localizable", "One Week")
     /// 1 contact
     public static let oneContact = Strings.tr("Localizable", "oneContact")
+    /// %d file
+    public static func oneFile(_ p1: Int) -> String {
+      return Strings.tr("Localizable", "oneFile", p1)
+    }
     /// 1 folder
     public static let oneFolderShared = Strings.tr("Localizable", "oneFolderShared")
     /// %lu item selected
@@ -1943,10 +1951,6 @@ public enum Strings {
     public static let shortcuts = Strings.tr("Localizable", "Shortcuts")
     /// Show
     public static let show = Strings.tr("Localizable", "Show")
-    /// Show me away after 1 minute of inactivity
-    public static let showMeAwayAfter1MinuteOfInactivity = Strings.tr("Localizable", "showMeAwayAfter1MinuteOfInactivity")
-    /// Show me away after [X] minutes of inactivity
-    public static let showMeAwayAfterXMinutesOfInactivity = Strings.tr("Localizable", "showMeAwayAfterXMinutesOfInactivity")
     /// Simple Passcode
     public static let simplePasscodeLabel = Strings.tr("Localizable", "simplePasscodeLabel")
     /// Size
@@ -2806,6 +2810,14 @@ public enum Strings {
         /// [B]20 GB+[/B] Storage
         public static let freePlan = Strings.tr("Localizable", "account.storage.freePlan")
       }
+      public enum Suspension {
+        public enum Message {
+          /// Account suspended due to copyright violations. We sent you an email with more information about this.
+          public static let copyright = Strings.tr("Localizable", "account.suspension.message.copyright")
+          /// Account terminated due to a breach of MEGA's Terms of Service, such as abuse of others' rights, sharing and importing illegal data, or system abuse.
+          public static let nonCopyright = Strings.tr("Localizable", "account.suspension.message.nonCopyright")
+        }
+      }
       public enum TransferQuota {
         /// [B]Limited[/B] Transfer
         public static let freePlan = Strings.tr("Localizable", "account.transferQuota.freePlan")
@@ -2824,6 +2836,22 @@ public enum Strings {
           public static let message = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.message")
           /// You already have an active subscription
           public static let title = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.title")
+        }
+      }
+    }
+    public enum AutoAway {
+      /// Set status as Away after [X]
+      public static let footerDescription = Strings.tr("Localizable", "autoAway.footerDescription")
+    }
+    public enum Backups {
+      /// Backups
+      public static let title = Strings.tr("Localizable", "backups.title")
+      public enum Empty {
+        public enum State {
+          /// This is where your backed up files and folders are stored. Your backed up items are 'read-only' to protect them from being accidentally modified in your cloud drive. You can back up items form your computer to MEGA using our desktop app.
+          public static let description = Strings.tr("Localizable", "backups.empty.state.description")
+          /// No items in your backups
+          public static let message = Strings.tr("Localizable", "backups.empty.state.message")
         }
       }
     }
@@ -2909,6 +2937,26 @@ public enum Strings {
         public static let filesApp = Strings.tr("Localizable", "chat.addToChatMenu.filesApp")
         /// Scan
         public static let scan = Strings.tr("Localizable", "chat.addToChatMenu.scan")
+      }
+      public enum AutoAway {
+        /// Plural format key: "%#@hour@"
+        public static func hour(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "chat.autoAway.hour", p1)
+        }
+        /// Plural format key: "%#@minute@"
+        public static func minute(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "chat.autoAway.minute", p1)
+        }
+        public enum Label {
+          /// Plural format key: "%#@hour@"
+          public static func hour(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "chat.autoAway.label.hour", p1)
+          }
+          /// Plural format key: "%#@minute@"
+          public static func minute(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "chat.autoAway.label.minute", p1)
+          }
+        }
       }
       public enum Chats {
         public enum EmptyState {
@@ -3048,24 +3096,6 @@ public enum Strings {
         /// %@ (Owner)
         public static func owner(_ p1: Any) -> String {
           return Strings.tr("Localizable", "cloudDrive.nodeInfo.owner", String(describing: p1))
-        }
-      }
-      public enum Root {
-        public enum Backup {
-          public enum Folder {
-            public enum Device {
-              /// %@ device
-              public static func subtitle(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "cloudDrive.root.backup.folder.device.subtitle", String(describing: p1))
-              }
-            }
-            public enum Devices {
-              /// %@ devices
-              public static func subtitle(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "cloudDrive.root.backup.folder.devices.subtitle", String(describing: p1))
-              }
-            }
-          }
         }
       }
       public enum ScanDocument {
@@ -3218,18 +3248,6 @@ public enum Strings {
       }
       public enum Share {
         public enum Backup {
-          public enum Folder {
-            public enum Warning {
-              /// This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.
-              public static let message = Strings.tr("Localizable", "dialog.share.backup.folder.warning.message")
-            }
-          }
-          public enum Folders {
-            public enum Warning {
-              /// These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.
-              public static let message = Strings.tr("Localizable", "dialog.share.backup.folders.warning.message")
-            }
-          }
           public enum Non {
             public enum Backup {
               public enum Folders {
@@ -3819,7 +3837,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "meetings.addContacts.allContactsAdded.title")
         }
         public enum AllowNonHost {
-          /// Allow non-host to add participants
+          /// Allow non-hosts to add participants
           public static let message = Strings.tr("Localizable", "meetings.addContacts.allowNonHost.message")
         }
         public enum ZeroContactsAvailable {
@@ -4021,8 +4039,22 @@ public enum Strings {
         public enum ContextMenu {
           /// Join meeting
           public static let joinMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.joinMeeting")
+          /// Schedule meeting
+          public static let scheduleMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.scheduleMeeting")
           /// Start meeting
           public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
+        }
+      }
+    }
+    public enum Mybackups {
+      public enum Share {
+        public enum Folder {
+          public enum Warning {
+            /// Plural format key: "%#@share@"
+            public static func message(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "mybackups.share.folder.warning.message", p1)
+            }
+          }
         }
       }
     }
@@ -4085,21 +4117,21 @@ public enum Strings {
     public enum Notifications {
       public enum Message {
         public enum TakenDownPubliclyShared {
-          /// Your publicly shared file (%@) has been taken down.
+          /// Your publicly shared file ”%@” has been taken down.
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.file", String(describing: p1))
           }
-          /// Your publicly shared folder (%@) has been taken down.
+          /// Your publicly shared folder ”%@” has been taken down.
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.folder", String(describing: p1))
           }
         }
         public enum TakenDownReinstated {
-          /// Your taken down file (%@) has been reinstated.
+          /// Your taken-down file ”%@” has been reinstated.
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.file", String(describing: p1))
           }
-          /// Your taken down folder (%@) has been reinstated.
+          /// Your taken-down folder ”%@” has been reinstated.
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.folder", String(describing: p1))
           }

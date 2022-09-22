@@ -306,9 +306,11 @@ static const float BPS_MEDIUM = 3000000.0f;
                          NSError *error;
                          self.currentProgress += asset.duration;
                          if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
-                             NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
-                             if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                                 MEGALogError(@"[PA] Set attributes failed with error: %@", error);
+                             if (asset.creationDate != nil) {
+                                 NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:asset.creationDate forKey:NSFileModificationDate];
+                                 if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                                     MEGALogError(@"[PA] Set attributes failed with error: %@", error);
+                                 }
                              }
                              
                              if (self.filePath) {

@@ -231,11 +231,7 @@ import Foundation
     }
     
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
-        if let node = node {
-            AudioPlayerViewRouter(node: node, fileLink: fileLink, isFolderLink: isFolderLink, presenter: presenter, playerHandler: self).start()
-        } else if let fileLink = fileLink {
-            AudioPlayerViewRouter(selectedFile: fileLink, relatedFiles: filePaths, presenter: presenter, playerHandler: self).start()
-        }
+        AudioPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, playerHandler: self), presenter: presenter).start()
     }
     
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {
@@ -244,9 +240,7 @@ import Foundation
             
             guard player != nil else { return }
             
-            miniPlayerRouter = shouldResetPlayer ?
-                MiniPlayerViewRouter(node: node, fileLink: fileLink, relatedFiles: filePaths, isFolderLink: isFolderLink, presenter: presenter, playerHandler: self) :
-                MiniPlayerViewRouter(fileLink: fileLink, relatedFiles: filePaths, isFolderLink: isFolderLink, presenter: presenter, playerHandler: self)
+            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, playerHandler: self, shouldResetPlayer: shouldResetPlayer), presenter: presenter)
             
             miniPlayerVC = nil
             

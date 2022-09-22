@@ -6,7 +6,7 @@ import MEGADomain
 @available(iOS 14.0, *)
 final class AlbumCellViewModel: NSObject, ObservableObject {
     @Published var numberOfNodes = 0
-    @Published var thumbnailContainer: ImageContainer
+    @Published var thumbnailContainer: any ImageContaining
     @Published var isLoading: Bool
     
     var title = Strings.Localizable.CameraUploads.Albums.Favourites.title
@@ -72,12 +72,12 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
-        guard let image = try? await thumbnailUseCase.loadThumbnailImage(for: node, type: .thumbnail) else {
+        guard let imageContainer = try? await thumbnailUseCase.loadThumbnailImageContainer(for: node, type: .thumbnail) else {
             isLoading = false
             return
         }
         
-        thumbnailContainer = ImageContainer(image: image)
+        thumbnailContainer = imageContainer
         isLoading = false
     }
     
