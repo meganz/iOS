@@ -1,17 +1,16 @@
-import MEGADomain
 
-protocol SaveMediaToPhotosUseCaseProtocol {
+public protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
     func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
     func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
 }
         
-struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
+public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
     private let downloadFileRepository: T
     private let fileCacheRepository: U
     private let nodeRepository: V
 
-    init(downloadFileRepository: T,
+    public init(downloadFileRepository: T,
          fileCacheRepository: U,
          nodeRepository: V) {
         self.downloadFileRepository = downloadFileRepository
@@ -19,10 +18,10 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         self.nodeRepository = nodeRepository
     }
     
-    func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
+    public func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
        
-        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp()) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, appData: AppDataEntity.saveInPhotos.rawValue) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -32,7 +31,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         }
     }
     
-    func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
+    public func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         guard let node = nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
             completion(.failure(.nodeNotFound))
             return
@@ -40,7 +39,7 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
 
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
 
-        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, appData: NSString().mnz_appDataToSaveInPhotosApp()) { result in
+        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, appData: AppDataEntity.saveInPhotos.rawValue) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -50,8 +49,8 @@ struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheR
         }
     }
     
-    func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        let transferMetaData = TransferMetaDataEntity(metaData: NSString().mnz_appDataToSaveInPhotosApp())
+    public func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
+        let transferMetaData = TransferMetaDataEntity(metaData: AppDataEntity.saveInPhotos.rawValue)
         nodeRepository.nodeFor(fileLink: fileLink) { result in
             switch result {
             case .success(let node):
