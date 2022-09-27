@@ -104,4 +104,11 @@ extension CloudDriveViewController {
         self.parentNode = updatedParentNode
         setNavigationBarButtons()
     }
+    
+    @objc func sortNodes(_ nodes: [MEGANode], sortBy order: MEGASortOrderType) -> [MEGANode] {
+        let sortOrder = SortOrderType(megaSortOrderType: order)
+        let folderNodes = nodes.filter { $0.isFolder() }.sort(by: sortOrder)
+        let fileNodes = nodes.filter { $0.isFile() }.sort(by: sortOrder)
+        return folderNodes + fileNodes
+    }
 }

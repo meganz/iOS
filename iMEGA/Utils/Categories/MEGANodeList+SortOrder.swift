@@ -9,6 +9,7 @@ extension Array where Element == MEGANode {
         case .newest: return sortByDate(.orderedDescending)
         case .oldest: return sortByDate(.orderedAscending)
         case .label: return sortByLabel()
+        case .favourite: return sortByFavourites()
         default: return sortByName(.orderedAscending)
         }
     }
@@ -68,5 +69,11 @@ extension Array where Element == MEGANode {
             .flatMap({ $0 })
  
         return nodeList
+    }
+    
+    private func sortByFavourites() -> [MEGANode] {
+        let favouriteList = filter { $0.isFavourite }.sortByName()
+        let notFavouriteList = filter { !$0.isFavourite }.sortByName()
+        return favouriteList + notFavouriteList
     }
 }

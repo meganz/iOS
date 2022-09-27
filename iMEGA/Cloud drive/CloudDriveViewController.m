@@ -385,6 +385,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)nodesSortTypeHasChanged {
     [self reloadUI];
+    
+    if (self.searchController.isActive) {
+        NSArray *sortedSearchedNodes = [self sortNodes:self.searchNodesArray
+                                                sortBy:[Helper sortTypeFor:self.parentNode]];
+        self.searchNodesArray = [NSMutableArray arrayWithArray:sortedSearchedNodes];
+        [self reloadData];
+    }
 }
 
 #pragma mark - Private
