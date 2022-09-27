@@ -42,7 +42,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     func testShortTemplateDateFormatter_FormatDates_InDifferentLanguage_CalendarGregorian() {
@@ -70,7 +70,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     // MARK: - Medium Formatter
@@ -99,8 +99,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
-
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     func testMediumTemplateDateFormatter_FormatDates_InDifferentLanguage_CalendarGregorian() {
@@ -128,8 +127,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
-
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     // MARK: - Long Formatter
@@ -158,7 +156,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     func testLongTemplateDateFormatter_FormatDates_InDifferentLanguage_CalendarGregorian() {
@@ -186,8 +184,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
-
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     // MARK: - Full Formatter
@@ -216,7 +213,7 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
         XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
         XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
         XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
+        XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 
     func testFullTemplateDateFormatter_FormatDates_InDifferentLanguage_CalendarGregorian() {
@@ -244,7 +241,6 @@ class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
        XCTAssertEqual(formattedDates.map { $0.1 }, ["Tomorrow", "mañana", "domani", "Morgen", "Завтра", "明天", "Amanhã", "demain", "明日", "Morgen", "내일", "Jutro", "Besok", "mâine", "Ngày mai", "明天", "غدًا", "พรุ่งนี้"])
        XCTAssertEqual(formattedDates.map { $0.2 }, ["Yesterday", "ayer", "ieri", "Gisteren", "Вчера", "昨天", "Ontem", "hier", "昨日", "Gestern", "어제", "Wczoraj", "Kemarin", "ieri", "Hôm qua", "昨天", "أمس", "เมื่อวาน"])
        XCTAssertEqual(formattedDates.map { $0.3 }[1...], ["pasado mañana", "dopodomani", "Overmorgen", "Послезавтра", "後天", "Depois de amanhã", "après-demain", "明後日", "Übermorgen", "모레", "Pojutrze", "Lusa", "poimâine", "Ngày kia", "后天", "بعد الغد", "มะรืนนี้"])
-//       XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
-
+       XCTAssertEqual(formattedDates.map { $0.4 }[1...], ["anteayer", "l'altro ieri", "Eergisteren", "Позавчера", "前天", "Anteontem", "avant-hier", "一昨日", "Vorgestern", "그저께", "Przedwczoraj", "Kemarin lusa", "alaltăieri", "Hôm kia", "前天", "أول أمس", "เมื่อวานซืน"])
     }
 }
