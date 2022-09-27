@@ -3,10 +3,10 @@ import MEGADomain
 public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     public var isBluetoothAudioRouteAvailable: Bool
     public var currentSelectedAudioPort: AudioPort
-    public var audioPortOutput: AudioPort
+    private let audioPortOutput: AudioPort
     public var enableLoudSpeaker_calledTimes: Int
     public var disableLoudSpeaker_calledTimes: Int
-    public var configureAudioSession_calledTimes: Int
+    private var configureAudioSession_calledTimes: Int
     
     public init(isBluetoothAudioRouteAvailable: Bool = false, currentSelectedAudioPort: AudioPort = .builtInReceiver, audioPortOutput: AudioPort = .builtInReceiver, enableLoudSpeaker_calledTimes: Int = 0, disableLoudSpeaker_calledTimes: Int = 0, configureAudioSession_calledTimes: Int = 0) {
         self.isBluetoothAudioRouteAvailable = isBluetoothAudioRouteAvailable

@@ -2,13 +2,13 @@ import MEGADomain
 import Foundation
 
 public struct MockInboxUseCase: InboxUseCaseProtocol {
-    var isInboxNode: Bool
-    var containsAnyInboxNode: Bool
-    var isInboxRootNode: Bool
-    var nodeSize: UInt64
-    var isBackupDeviceFolder: Bool
-    var isBackupRootFolderEmpty: Bool
-    var isInInbox: Bool
+    private let isInboxNode: Bool
+    private let containsAnyInboxNode: Bool
+    private let isInboxRootNode: Bool
+    private let nodeSize: UInt64
+    private let isBackupDeviceFolder: Bool
+    private let isBackupRootFolderEmpty: Bool
+    private let isInInbox: Bool
     
     public init(isInboxNode: Bool = false, containsAnyInboxNode: Bool = false, isInboxRootNode: Bool = false, nodeSize: UInt64 = 0, isBackupDeviceFolder: Bool = false, isBackupRootFolderEmpty: Bool = false, isInInbox: Bool = false) {
         self.isInboxNode = isInboxNode

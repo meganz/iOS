@@ -2,7 +2,7 @@ import MEGADomain
 
 public struct MockNetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
     
-    public var connected: Bool
+    private let connected: Bool
     
     public init(connected: Bool = false) {
         self.connected = connected
