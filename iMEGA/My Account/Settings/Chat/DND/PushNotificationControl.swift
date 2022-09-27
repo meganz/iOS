@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 @objc protocol PushNotificationControlProtocol where Self: UIViewController {
     weak var tableView: UITableView? { get }
@@ -7,7 +8,7 @@ import UIKit
 
 protocol DNDTurnOnAlertControllerAction {
     var cancelAction: ((UIAlertAction) -> Void)? { get }
-    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?)-> (((UIAlertAction) -> Void)?)
+    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: ChatIdEntity?)-> (((UIAlertAction) -> Void)?)
 }
 
 class PushNotificationControl: NSObject, MEGARequestDelegate {

@@ -1,5 +1,6 @@
 import Foundation
 import MEGAFoundation
+import MEGADomain
 
 enum DNDTurnOnOption: String, CaseIterable {
     case thirtyMinutes
@@ -72,7 +73,7 @@ enum DNDTurnOnOption: String, CaseIterable {
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
                                 isGlobalSetting: Bool,
-                                identifier: Int64?) -> UIAlertController {
+                                identifier: ChatIdEntity?) -> UIAlertController {
         let alertMessage = Strings.Localizable.muteChatNotificationsFor
 
         let alertController = UIAlertController(title: nil,
@@ -95,7 +96,7 @@ enum DNDTurnOnOption: String, CaseIterable {
     private static func addAction(for alertController: UIAlertController,
                                   delegate: DNDTurnOnAlertControllerAction,
                                   options: [DNDTurnOnOption],
-                                  identifier: Int64?) {
+                                  identifier: ChatIdEntity?) {
         options
             .map({ UIAlertAction(title: $0.localizedTitle,
                                  style: .default,
