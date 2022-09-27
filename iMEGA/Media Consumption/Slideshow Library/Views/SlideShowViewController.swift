@@ -36,7 +36,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         view.backgroundColor = backgroundColor
         statusBarBackground.backgroundColor = backgroundColor
         navigationBar.backgroundColor = backgroundColor
-        bottomBarBackground.isHidden = true
         
         updatePlayButtonTintColor()
         collectionView.updateLayout()
@@ -91,15 +90,12 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func setVisibility(_ visible: Bool) {
-        navigationBar.isHidden = !visible
-        bottomToolbar.isHidden = !visible
-        bottomBarBackground.isHidden = visible
-        
-        if !visible {
-            statusBarBackground.backgroundColor = UIColor.black
-        } else {
-            statusBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        }
+        navigationBar.alpha = visible ? 1 : 0
+        bottomToolbar.alpha = visible ? 1 : 0
+        bottomBarBackground.alpha = visible ? 1 : 0
+        statusBarBackground.alpha = visible ? 1 : 0
+        statusBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        bottomBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
     
     private func play() {
