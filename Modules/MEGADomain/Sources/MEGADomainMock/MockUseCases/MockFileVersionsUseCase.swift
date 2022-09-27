@@ -1,11 +1,11 @@
 import MEGADomain
 
 public struct MockFileVersionsUseCase: FileVersionsUseCaseProtocol {
-    var versions: Int64
-    var versionsSize: Int64
-    var isFileVersionsEnabled: (Result<Bool, FileVersionErrorEntity>)
-    var enableFileVersions: (Result<Bool, FileVersionErrorEntity>)
-    var deletePreviousFileVersions: (Result<Bool, FileVersionErrorEntity>)
+    private let versions: Int64
+    private let versionsSize: Int64
+    private let isFileVersionsEnabled: (Result<Bool, FileVersionErrorEntity>)
+    private let enableFileVersions: (Result<Bool, FileVersionErrorEntity>)
+    private let deletePreviousFileVersions: (Result<Bool, FileVersionErrorEntity>)
     
     public init(versions: Int64 = 0,
          versionsSize: Int64 = 0,

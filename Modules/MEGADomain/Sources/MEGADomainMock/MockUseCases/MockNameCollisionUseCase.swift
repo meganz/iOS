@@ -2,15 +2,15 @@ import MEGADomain
 import Foundation
 
 public struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
-    var nameCollisions: [NameCollisionEntity]?
-    var copiedNodes: [HandleEntity]?
-    var movedNodes: [HandleEntity]?
-    var nodeSize: String?
-    var nodeCrationDate: String?
-    var fileSize: String?
-    var fileCrationDate: String?
-    var nodeRename: String?
-    var node: NodeEntity?
+    private let nameCollisions: [NameCollisionEntity]?
+    private let copiedNodes: [HandleEntity]?
+    private let movedNodes: [HandleEntity]?
+    private let nodeSize: String?
+    private let nodeCrationDate: String?
+    private let fileSize: String?
+    private let fileCrationDate: String?
+    private let nodeRename: String?
+    private let node: NodeEntity?
     
     public init(nameCollisions: [NameCollisionEntity]? = nil,
                 copiedNodes: [HandleEntity]? = nil,

@@ -4,9 +4,9 @@ import Foundation
 public struct MockInboxRepository: InboxRepositoryProtocol {
     public static let newRepo = MockInboxRepository()
     
-    let currentBackupNode: NodeEntity?
-    let isBackupRootNodeEmpty: Bool
-    let currentInboxNode: NodeEntity?
+    private let currentBackupNode: NodeEntity?
+    private let isBackupRootNodeEmpty: Bool
+    private let currentInboxNode: NodeEntity?
     
     public init(currentBackupNode: NodeEntity? = nil, isBackupRootNodeEmpty: Bool = false, currentInboxNode: NodeEntity? = nil) {
         self.currentBackupNode = currentBackupNode
