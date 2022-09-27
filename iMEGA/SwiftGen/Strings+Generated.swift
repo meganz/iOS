@@ -4042,7 +4042,7 @@ public enum Strings {
           public static let joinMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.joinMeeting")
           /// Schedule meeting
           public static let scheduleMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.scheduleMeeting")
-          /// Start meeting
+          /// Start meeting now
           public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
         }
       }

@@ -3043,7 +3043,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Hybrid";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Start meeting";
+"meetings.startConversation.contextMenu.startMeeting"="Start meeting now";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Join meeting";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
