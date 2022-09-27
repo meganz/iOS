@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 class GlobalDNDNotificationControl: PushNotificationControl {
     
@@ -85,7 +86,7 @@ extension GlobalDNDNotificationControl: DNDTurnOnAlertControllerAction {
         }
     }
     
-    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?) -> (((UIAlertAction) -> Void)?) {
+    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: ChatIdEntity?) -> (((UIAlertAction) -> Void)?) {
         return { _ in
             self.turnOnDND(dndTurnOnOption: dndTurnOnOption)
         }

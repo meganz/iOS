@@ -76,9 +76,9 @@ extension GroupChatDetailsViewController {
     private func changeChatNotificationStatus(sender: UISwitch) {
         guard let chatRoom else { return }
         if sender.isOn {
-            chatNotificationControl.turnOffDND(chatId: Int64(chatRoom.chatId))
+            chatNotificationControl.turnOffDND(chatId: ChatIdEntity(chatRoom.chatId))
         } else {
-            chatNotificationControl.turnOnDND(chatId: Int64(chatRoom.chatId), sender: sender)
+            chatNotificationControl.turnOnDND(chatId: ChatIdEntity(chatRoom.chatId), sender: sender)
         }
     }
     

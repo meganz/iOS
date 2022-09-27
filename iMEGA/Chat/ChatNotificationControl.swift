@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 @objc protocol ChatNotificationControlCellProtocol {
     weak var nameLabel: UILabel? { get }
@@ -9,7 +10,7 @@ import UIKit
 @objc class ChatNotificationControl: PushNotificationControl {
     // MARK:- Interface methods.
 
-    @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: Int64) {
+    @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: ChatIdEntity) {
         
         cell.nameLabel?.text = Strings.Localizable.chatNotifications
         
@@ -18,7 +19,7 @@ import UIKit
         cell.iconImageView?.image = Asset.Images.Chat.chatNotifications.image
     }
     
-    @objc func isChatDNDEnabled(chatId: Int64) -> Bool {
+    @objc func isChatDNDEnabled(chatId: ChatIdEntity) -> Bool {
         guard let pushNotificationSettings = pushNotificationSettings else {
             return false
         }
@@ -26,18 +27,18 @@ import UIKit
         return pushNotificationSettings.isChatDndEnabled(forChatId: chatId)
     }
     
-    @objc func turnOnDND(chatId: Int64, sender: UIView) {
+    @objc func turnOnDND(chatId: ChatIdEntity, sender: UIView) {
         let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: false, identifier: chatId)
         show(alertController: alertController, sender: sender)
     }
     
-    @objc func turnOffDND(chatId: Int64) {
+    @objc func turnOffDND(chatId: ChatIdEntity) {
         updatePushNotificationSettings {
             self.pushNotificationSettings?.setChatEnabled(true, forChatId: chatId)
         }
     }
     
-    @objc func timeRemainingForDNDDeactivationString(chatId: Int64) -> String? {
+    @objc func timeRemainingForDNDDeactivationString(chatId: ChatIdEntity) -> String? {
         if isChatDNDEnabled(chatId: chatId) == false {
             return nil
         }
@@ -51,7 +52,7 @@ import UIKit
 
 extension ChatNotificationControl {
 
-    private func chatDND(chatId: Int64) -> Int64 {
+    private func chatDND(chatId: ChatIdEntity) -> Int64 {
         guard let pushNotificationSettings = pushNotificationSettings else {
             return -1;
         }
@@ -59,7 +60,7 @@ extension ChatNotificationControl {
         return pushNotificationSettings.timestamp(forChatId: chatId)
     }
     
-    private func turnOnDND(chatId: Int64, option: DNDTurnOnOption) {
+    private func turnOnDND(chatId: ChatIdEntity, option: DNDTurnOnOption) {
         updatePushNotificationSettings {
             if let timeStamp = dndTimeInterval(dndTurnOnOption: option) {
                 if option == .forever {
@@ -84,7 +85,7 @@ extension ChatNotificationControl: DNDTurnOnAlertControllerAction {
         }
     }
     
-    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?) -> (((UIAlertAction) -> Void)?) {
+    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: ChatIdEntity?) -> (((UIAlertAction) -> Void)?) {
         return { _ in
             guard let chatId = identifier else { return }
             self.turnOnDND(chatId: chatId, option: dndTurnOnOption)
