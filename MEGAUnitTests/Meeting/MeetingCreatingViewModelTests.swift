@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomainMock
+import MEGADomain
 
 final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_onViewReady_createMeeting() {

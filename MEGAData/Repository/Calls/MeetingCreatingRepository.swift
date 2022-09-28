@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol {
     
@@ -55,7 +56,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                         completion(.failure(.generic))
                         return
                     }
-                    completion(.success(ChatRoomEntity(with: chatroom)))
+                    completion(.success(chatroom.toChatRoomEntity()))
                 } else {
                     completion(.failure(.generic))
                 }
@@ -82,7 +83,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 return
             }
 
-            let chatRoom = ChatRoomEntity(with: megaChatRoom)
+            let chatRoom = megaChatRoom.toChatRoomEntity()
             MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
             self.answerCall(for: chatRoom, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
         }
@@ -120,7 +121,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             }
             
             MEGALogDebug("Create meeting: check chat link succeded with chatroom \(chatroom)")
-            completion(.success(ChatRoomEntity(with: chatroom)))
+            completion(.success(chatroom.toChatRoomEntity()))
         }))
     }
     

@@ -49,7 +49,7 @@ extension CallParticipantEntity {
                                                 clientId: 0,
                                                 networkQuality: 0,
                                                 email: email,
-                                                isModerator: ChatRoomEntity(with: chatRoom).ownPrivilege == .moderator,
+                                                isModerator: chatRoom.toChatRoomEntity().ownPrivilege == .moderator,
                                                 isInContactList: false,
                                                 isVideoHiRes: true,
                                                 isVideoLowRes: false,

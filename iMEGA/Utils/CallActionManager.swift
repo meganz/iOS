@@ -1,3 +1,4 @@
+import MEGADomain
 
 @objc final class CallActionManager: NSObject {
     @objc static let shared = CallActionManager()
@@ -157,7 +158,7 @@
     
     private func isOneToOneChatRoom(forChatId chatId:UInt64) -> Bool {
         guard let megaChatRoom = chatSdk.chatRoom(forChatId: chatId) else { return false }
-        return ChatRoomEntity(with: megaChatRoom).chatType == .oneToOne
+        return megaChatRoom.toChatRoomEntity().chatType == .oneToOne
     }
     
     private func enableRTCAudioIfRequiredWhenCallInProgress(chatId: UInt64) {

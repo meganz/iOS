@@ -1,6 +1,7 @@
 import XCTest
 import Combine
 @testable import MEGA
+import MEGADomain
 
 final class MeetingContainerViewModelTests: XCTestCase {
 
