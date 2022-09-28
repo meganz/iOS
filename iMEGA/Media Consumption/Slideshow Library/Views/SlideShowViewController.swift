@@ -13,7 +13,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     @IBOutlet var statusBarBackground: UIView!
     @IBOutlet var bottomBarBackground: UIView!
     @IBOutlet var btnPlay: UIBarButtonItem!
-    
+    @IBOutlet weak var slideShowOptionButton: UIBarButtonItem!
     private var slideShowTimer = Timer()
     
     private var backgroundColor: UIColor {
@@ -24,10 +24,13 @@ final class SlideShowViewController: UIViewController, ViewType {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             btnPlay.tintColor = UIColor.mnz_gray515151()
+            slideShowOptionButton.tintColor = UIColor.mnz_gray515151()
         case .dark:
             btnPlay.tintColor = UIColor.mnz_grayD1D1D1()
+            slideShowOptionButton.tintColor = UIColor.mnz_grayD1D1D1()
         @unknown default:
             btnPlay.tintColor = UIColor.mnz_gray515151()
+            slideShowOptionButton.tintColor = UIColor.mnz_gray515151()
         }
     }
     
@@ -156,6 +159,12 @@ final class SlideShowViewController: UIViewController, ViewType {
     @IBAction func dismissViewController() {
         viewModel?.dispatch(.finishPlaying)
         dismiss(animated: true)
+    }
+    
+    @IBAction func slideShowOptonTapped(_ sender: Any) {
+        if #available(iOS 14.0, *) {
+            SlideShowOptionRouter(presenter: self).start()
+        }
     }
     
     @IBAction func playOrPauseSlideShow() {
