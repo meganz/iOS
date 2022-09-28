@@ -15,7 +15,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity? {
         if let megaChatRoom = sdk.chatRoom(forChatId: chatId) {
-            return ChatRoomEntity(with: megaChatRoom)
+            return megaChatRoom.toChatRoomEntity()
         }
         
         return nil
@@ -23,7 +23,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity? {
         if let megaChatRoom = sdk.chatRoom(byUser: userHandle) {
-            return ChatRoomEntity(with: megaChatRoom)
+            return megaChatRoom.toChatRoomEntity()
         }
         
         return nil
@@ -35,7 +35,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege? {
-        guard let chatRoom = sdk.chatRoom(forChatId: chatId), let privilege = ChatRoomEntity.Privilege(rawValue: chatRoom.peerPrivilege(byHandle: userHandle)) else {
+        guard let chatRoom = sdk.chatRoom(forChatId: chatId), let privilege = MEGAChatRoomPrivilege(rawValue: chatRoom.peerPrivilege(byHandle: userHandle))?.toOwnPrivilegeEntity() else {
             return nil
         }
         return privilege
@@ -47,7 +47,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
         
         sdk.mnz_createChatRoom(userHandle: userHandle) { megaChatRoom in
-            completion(.success(ChatRoomEntity(with: megaChatRoom)))
+            completion(.success(megaChatRoom.toChatRoomEntity()))
         }
     }
     
@@ -280,7 +280,7 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     }
     
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
-        guard case let chatRoom = ChatRoomEntity(with: chat),
+        guard case let chatRoom = chat.toChatRoomEntity(),
               chatRoom.changeType == changeType else {
             return
         }
@@ -296,6 +296,6 @@ fileprivate class ChatRoomRepoDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
-        callback(.onUpdate(ChatRoomEntity(with: chat)))
+        callback(.onUpdate(chat.toChatRoomEntity()))
     }
 }

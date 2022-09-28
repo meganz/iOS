@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 extension ChatRoomsViewController {
     @objc func joinActiveCall(withChatRoom chatRoom: MEGAChatRoom) {
@@ -8,7 +9,7 @@ extension ChatRoomsViewController {
         
         let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
         MeetingContainerRouter(presenter: self,
-                               chatRoom: ChatRoomEntity(with: chatRoom),
+                               chatRoom: chatRoom.toChatRoomEntity(),
                                call: CallEntity(with: call),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }

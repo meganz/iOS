@@ -2,6 +2,7 @@ import UIKit
 import MessageKit
 import KeyboardLayoutGuide
 import Combine
+import MEGADomain
 
 class ChatViewController: MessagesViewController {
 
@@ -1038,7 +1039,7 @@ class ChatViewController: MessagesViewController {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         
         let callEntity = CallEntity(with: call)
-        let chatRoomEntity = ChatRoomEntity(with: chatRoom)
+        let chatRoomEntity = chatRoom.toChatRoomEntity()
         
         MeetingContainerRouter(presenter: self,
                                chatRoom: chatRoomEntity,

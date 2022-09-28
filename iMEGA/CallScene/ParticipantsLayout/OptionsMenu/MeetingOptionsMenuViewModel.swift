@@ -1,3 +1,4 @@
+import MEGADomain
 
 enum MeetingOptionsMenuAction: ActionType {
     case onViewReady

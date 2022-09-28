@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct MeetingOptionsMenuRouter: Routing {
     private weak var baseViewController: UIViewController?

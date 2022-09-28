@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     let userName: String
