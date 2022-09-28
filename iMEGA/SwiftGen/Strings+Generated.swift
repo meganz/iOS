@@ -4259,6 +4259,36 @@ public enum Strings {
         }
       }
     }
+    public enum Slideshow {
+      public enum PreferenceSetting {
+        /// Include media in sub-folders in the slideshow
+        public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
+        /// Slideshow Order
+        public static let order = Strings.tr("Localizable", "slideshow.preferenceSetting.order")
+        /// Slideshow Options
+        public static let slideshowOptions = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions")
+        /// Slideshow Speed
+        public static let speed = Strings.tr("Localizable", "slideshow.preferenceSetting.speed")
+        public enum Order {
+          /// Shuffle
+          public static let shuffle = Strings.tr("Localizable", "slideshow.preferenceSetting.order.shuffle")
+        }
+        public enum SlideshowOptions {
+          /// Repeat
+          public static let `repeat` = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions.repeat")
+          /// Include sub-folders
+          public static let subFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions.subFolders")
+        }
+        public enum Speed {
+          /// Fast (1s)
+          public static let fast = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.fast")
+          /// Normal (4s)
+          public static let normal = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.normal")
+          /// Slow (8s)
+          public static let slow = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.slow")
+        }
+      }
+    }
     public enum Transfer {
       public enum Cell {
         public enum ShareOwnerStorageQuota {

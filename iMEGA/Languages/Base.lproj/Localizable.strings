@@ -208,6 +208,26 @@
 "cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Slideshow";
+/*NavigationBar Title shown on Slideshow Preference Setting*/
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/*Footer note for media in sub folders*/
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/*NavigationBar Title shown on Slideshow Speed preference*/
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/*Slideshow Speed preference slow*/
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/*Slideshow Speed preference normal*/
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/*Slideshow Speed preference fast*/
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/*NavigationBar Title shown on Slideshow Order preference*/
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/*Slideshow Speed Order shuffle*/
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/*Slideshow Preference Setting repeat*/
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/*Slideshow Preference Setting include subFolders*/
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
