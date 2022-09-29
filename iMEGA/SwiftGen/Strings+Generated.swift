@@ -4263,6 +4263,8 @@ public enum Strings {
       public enum PreferenceSetting {
         /// Include media in sub-folders in the slideshow
         public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
+        /// Options
+        public static let options = Strings.tr("Localizable", "slideshow.preferenceSetting.options")
         /// Slideshow Order
         public static let order = Strings.tr("Localizable", "slideshow.preferenceSetting.order")
         /// Slideshow Options
