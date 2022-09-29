@@ -2,6 +2,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct SlideShowOptionView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: SlideShowOptionViewModel
     let router: SlideShowOptionContentRouting
@@ -42,7 +43,7 @@ struct SlideShowOptionView: View {
         } label: {
             Text(viewModel.doneButtonTitle)
                 .font(.system(size: 17, weight: .bold))
-                .foregroundColor(Color(Colors.General.Black._161616.color))
+                .foregroundColor(colorScheme == .dark ? .white.opacity(0.8) : Color(Colors.General.Black._161616.color))
         }
     }
 }
