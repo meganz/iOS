@@ -1,3 +1,4 @@
+import Foundation
 
 /// Preference use case should be mainly used inside `PreferenceWrapper` to manage preferences
 public protocol PreferenceUseCaseProtocol {
