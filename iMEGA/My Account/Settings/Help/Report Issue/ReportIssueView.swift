@@ -34,7 +34,7 @@ struct ReportIssueView: View {
                 if viewModel.shouldShowUploadLogFileView {
                     UploadLogFileView(title: Strings.Localizable.Help.ReportIssue.uploadingLogFile,
                                       progress: viewModel.progress) {
-                        viewModel.cancelUploadReport()
+                        viewModel.showCancelUploadReportAlert()
                     }
                 }
             }
@@ -43,8 +43,17 @@ struct ReportIssueView: View {
             .navigationBarItems(
                 leading:
                     Button(Strings.Localizable.cancel) {
-                        viewModel.cancelReport()
-                    },
+                        viewModel.showReportIssueActionSheetIfNeeded()
+                    }
+                    .actionSheet(isPresented: $viewModel.showingReportIssueActionSheet) {
+                        ActionSheet(title: Text(""), buttons: [
+                            .destructive(Text(Strings.Localizable.Help.ReportIssue.discardReport)) {
+                                viewModel.cancelReport()
+                            },
+                            .cancel()
+                        ])
+                    }
+                ,
                 trailing:
                     Button(Strings.Localizable.send) {
                         viewModel.createTicket()
@@ -53,6 +62,21 @@ struct ReportIssueView: View {
                     .disabled(viewModel.shouldDisableSendButton)
             )
             .accentColor(Color.primary)
+            .alert(isPresented: $viewModel.showingReportIssueAlert) {
+                let alertData = viewModel.reportIssueAlertData()
+                if let secondaryButtonAlert = alertData.secondaryButtoTitle {
+                    return Alert(title: Text(alertData.title),
+                                 message: Text(alertData.message),
+                                 primaryButton: .cancel(Text(alertData.primaryButtonTitle)),
+                                 secondaryButton: .destructive(Text(secondaryButtonAlert), action: {
+                        alertData.secondaryButtonAction?()
+                    }))
+                } else {
+                    return Alert(title: Text(alertData.title),
+                                 message: Text(alertData.message),
+                                 dismissButton: .default(Text(alertData.primaryButtonTitle)))
+                }
+            }
         }
         .navigationViewStyle(.stack)
     }
