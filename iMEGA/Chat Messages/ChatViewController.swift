@@ -463,6 +463,11 @@ class ChatViewController: MessagesViewController {
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
             } else if chatMessage.message.containsMEGALink() {
+                if (chatMessage.message.megaLink as? NSURL)?.mnz_type() == .contactLink {
+                    let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ContactLinkCollectionViewCell.reuseIdentifier, for: indexPath) as! ContactLinkCollectionViewCell
+                    cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                    return cell
+                }
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
@@ -725,6 +730,8 @@ class ChatViewController: MessagesViewController {
                                          forCellWithReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatRichPreviewMediaCollectionViewCell.self,
                                                forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ContactLinkCollectionViewCell.self,
+                                               forCellWithReuseIdentifier: ContactLinkCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatVoiceClipCollectionViewCell.self,
                                                  forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatTextMessageViewCell.self,
