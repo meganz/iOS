@@ -92,6 +92,7 @@ class SlideshowViewModelTests: XCTestCase {
     func testSlideshowPlaying_secondPageDownload_photosShouldReturn40() async throws {
         let sut = try makeSlideshowViewModel()
         
+        await sut.thumbnailLoadingTask?.value
         sut.currentSlideNumber = 11
         await sut.thumbnailLoadingTask?.value
         XCTAssertTrue(sut.photos.count == 40)
