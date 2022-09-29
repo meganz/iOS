@@ -33,6 +33,7 @@ struct SlideShowOptionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: EmptyView(), trailing: navBarButton)
         }
+        .navigationViewStyle(.stack)
     }
     
     var navBarButton: some View {
