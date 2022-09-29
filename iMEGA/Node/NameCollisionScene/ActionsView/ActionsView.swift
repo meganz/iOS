@@ -10,13 +10,11 @@ struct ActionsView: View {
     
     var body: some View {
         ForEach(actions) { actionItem in
-            ActionView(viewModel: ActionViewModel(actionItem: actionItem))
-                .gesture(
-                    TapGesture()
-                        .onEnded({ _ in
-                            action(actionItem.actionType)
-                        })
-                )
+            Button() {
+                action(actionItem.actionType)
+            } label: {
+                ActionView(viewModel: ActionViewModel(actionItem: actionItem))
+            }
         }
     }
 }
@@ -48,6 +46,7 @@ struct ActionView: View {
                             .foregroundColor(Color(Colors.General.Green._00C29A.name))
                         if let description = viewModel.actionDescription {
                             Text(description)
+                                .multilineTextAlignment(.leading)
                                 .font(.footnote)
                                 .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.8))
                         }
