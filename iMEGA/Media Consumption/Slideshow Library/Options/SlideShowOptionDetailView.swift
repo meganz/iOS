@@ -28,5 +28,6 @@ struct SlideShowOptionDetailView: View {
             .navigationTitle(viewModel.title)
             .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationViewStyle(.stack)
     }
 }
