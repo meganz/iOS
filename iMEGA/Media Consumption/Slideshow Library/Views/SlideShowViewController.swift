@@ -13,7 +13,10 @@ final class SlideShowViewController: UIViewController, ViewType {
     @IBOutlet var statusBarBackground: UIView!
     @IBOutlet var bottomBarBackground: UIView!
     @IBOutlet var btnPlay: UIBarButtonItem!
+    @IBOutlet weak var bottomBarBackgroundViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var statusBarBackgroundViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var slideShowOptionButton: UIBarButtonItem!
+    
     private var slideShowTimer = Timer()
     
     private var backgroundColor: UIColor {
@@ -39,7 +42,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         view.backgroundColor = backgroundColor
         statusBarBackground.backgroundColor = backgroundColor
         navigationBar.backgroundColor = backgroundColor
-        
+        slideShowOptionButton.title = Strings.Localizable.Slideshow.PreferenceSetting.options
         updatePlayButtonTintColor()
         collectionView.updateLayout()
         
@@ -52,6 +55,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         if let viewModel = viewModel, viewModel.photos.isNotEmpty {
             playOrPauseSlideShow()
         }
+        adjustHeightOfTopAndBottomView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,10 +77,17 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
     }
     
-    func adjustCollectionViewPosition() {
+    private func adjustCollectionViewPosition() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+            adjustHeightOfTopAndBottomView()
             updateSlideInView()
         }
+    }
+    
+    private func adjustHeightOfTopAndBottomView() {
+        let safeArea = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.safeAreaInsets
+        statusBarBackgroundViewHeightConstraint.constant = safeArea?.top ?? .zero
+        bottomBarBackgroundViewHeightConstraint.constant = safeArea?.bottom ?? .zero
     }
     
     func update(viewModel: SlideShowViewModel) {
@@ -105,19 +116,30 @@ final class SlideShowViewController: UIViewController, ViewType {
         guard let viewModel = viewModel else { return }
 
         setVisibility(false)
-        collectionView.backgroundColor = UIColor.black
-        
-        if viewModel.currentSlideNumber >= viewModel.photos.count {
-            viewModel.currentSlideNumber = -1
-            changeImage()
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+            self.collectionView.backgroundColor = UIColor.black
+            self.view.backgroundColor = .black
+            self.statusBarBackgroundViewHeightConstraint.constant = .zero
+            self.bottomBarBackgroundViewHeightConstraint.constant = .zero
+            self.navigationBar.isHidden = true
+            self.bottomToolbar.isHidden = true
+            if viewModel.currentSlideNumber >= viewModel.photos.count {
+                viewModel.currentSlideNumber = -1
+                self.changeImage()
+            }
         }
-        
         resetTimer()
     }
     
     private func pause() {
         setVisibility(true)
-        collectionView.backgroundColor = UIColor.mnz_background()
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+            self.collectionView.backgroundColor = UIColor.mnz_background()
+            self.view.backgroundColor = self.backgroundColor
+            self.adjustHeightOfTopAndBottomView()
+            self.navigationBar.isHidden = false
+            self.bottomToolbar.isHidden = false
+        }
         slideShowTimer.invalidate()
         UIApplication.shared.isIdleTimerDisabled = false
     }
@@ -181,10 +203,6 @@ extension SlideShowViewController: UICollectionViewDelegate {
         cell.alpha = 0
         UIView.animate(withDuration: 0.8) {
             cell.alpha = 1
-        }
-        
-        if let viewModel = viewModel, viewModel.currentSlideNumber != indexPath.row {
-            viewModel.currentSlideNumber = indexPath.row
         }
         
         guard let cell = cell as? SlideShowCollectionViewCell else { return }

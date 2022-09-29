@@ -208,6 +208,8 @@
 "cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Slideshow";
+/*Option button Title shown on Slideshow Preference Setting*/
+"slideshow.preferenceSetting.options"="Options";
 /*NavigationBar Title shown on Slideshow Preference Setting*/
 "slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
 /*Footer note for media in sub folders*/
