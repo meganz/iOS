@@ -14,6 +14,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatViewAttachmentCellCalculator = ChatViewAttachmentCellCalculator(layout: self)
     lazy var chatMediaCollectionViewSizeCalculator = ChatMediaCollectionViewSizeCalculator(layout: self)
     lazy var chatRichPreviewMediaCollectionViewSizeCalculator = ChatRichPreviewMediaCollectionViewSizeCalculator(layout: self)
+    lazy var chatContactLinkCollectionViewSizeCalculator = ChatContactLinkCollectionViewSizeCalculator(layout: self)
     lazy var chatVoiceClipCollectionViewSizeCalculator = ChatVoiceClipCollectionViewSizeCalculator(layout: self)
     lazy var chatLocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     lazy var chatGiphyCollectionViewSizeCalculator = ChatGiphyCollectionViewSizeCalculator(layout: self)
@@ -133,6 +134,9 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 if chatMessage.message.warningDialog.rawValue > MEGAChatMessageWarningDialog.none.rawValue {
                     return chatRichPreviewDialogCollectionViewSizeCalculator
                 } else if chatMessage.message.containsMEGALink() {
+                    if (chatMessage.message.megaLink as? NSURL)?.mnz_type() == .contactLink {
+                        return chatContactLinkCollectionViewSizeCalculator
+                    }
                     return chatRichPreviewMediaCollectionViewSizeCalculator
                 }
                 return chatAttributedTextMessageSizeCalculator
@@ -170,6 +174,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatViewAttachmentCellCalculator,
             chatMediaCollectionViewSizeCalculator,
             chatRichPreviewMediaCollectionViewSizeCalculator,
+            chatContactLinkCollectionViewSizeCalculator,
             chatVoiceClipCollectionViewSizeCalculator,
             chatLocationCollectionViewSizeCalculator,
             chatGiphyCollectionViewSizeCalculator,

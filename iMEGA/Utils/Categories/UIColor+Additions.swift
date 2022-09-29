@@ -307,6 +307,14 @@ extension UIColor {
         return UIColor.secondaryLabel
     }
     
+    @objc class func mnz_subtitles(_ traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: return UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        case .dark: return UIColor(white: 1, alpha: 0.8)
+        @unknown default: return UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        }
+    }
+    
     // MARK: - PRO account colors
     
     /**
