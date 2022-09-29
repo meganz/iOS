@@ -62,7 +62,9 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
             fileSystemRepository: fileSystemRepository,
             nodeRepository: nodeRepository,
-            fileCacheRepository: FileCacheRepository.newRepo)
+            fileCacheRepository: FileCacheRepository.newRepo,
+            mediaUseCase: MediaUseCase(),
+            preferenceRepository: PreferenceRepository.newRepo)
         let nodeActionUC = NodeActionUseCase(repo: NodeRepository.newRepo)
         let inboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let vm = TextEditorViewModel(

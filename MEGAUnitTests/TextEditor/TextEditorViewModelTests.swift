@@ -72,11 +72,9 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         
-        let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let testPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(textFile.fileName)
         let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
-        mockDownloadNodeUC.transferEntity = transferEntity
-        mockDownloadNodeUC.result = .success(transferEntity)
+        let mockDownloadNodeUC = MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity))
         
         let mockInboxUC = MockInboxUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
@@ -150,11 +148,9 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         
-        let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let testPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(textFile.fileName)
         let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
-        mockDownloadNodeUC.transferEntity = transferEntity
-        mockDownloadNodeUC.result = .success(transferEntity)
+        let mockDownloadNodeUC = MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity))
         
         let mockInboxUC = MockInboxUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
@@ -206,10 +202,8 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         
-        let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let transferEntity = mockTransferEntity(transferTypeEntity: .download)
-        mockDownloadNodeUC.result = .failure(TransferErrorEntity.download)
-        mockDownloadNodeUC.transferEntity = transferEntity
+        let mockDownloadNodeUC = MockDownloadNodeUseCase(transferEntity: transferEntity, result: .failure(TransferErrorEntity.download))
         
         let mockInboxUC = MockInboxUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
