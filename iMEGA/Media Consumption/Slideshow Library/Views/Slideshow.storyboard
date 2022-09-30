@@ -25,20 +25,8 @@
                                     <constraint firstAttribute="height" constant="44" id="woa-Mr-tlg"/>
                                 </constraints>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EkV-tA-Shi">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="Slideshow" id="f4Y-5r-c9F">
-                                        <barButtonItem key="leftBarButtonItem" title="Close" id="OoN-2i-7VI">
-                                            <connections>
-                                                <action selector="dismissViewController" destination="BYZ-38-t0r" id="WJu-C1-bGt"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KtJ-lR-pKZ" customClass="SlideShowCollectionView" customModule="MEGA" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="375" height="631"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="724"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dbO-23-y5h">
                                     <size key="itemSize" width="374" height="628"/>
@@ -55,19 +43,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q5x-Ja-KWg">
-                                                    <rect key="frame" x="0.0" y="8" width="374" height="628"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="631"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bMC-9Y-bxt">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="628"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="631"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="bottom" secondItem="7k9-fY-3ua" secondAttribute="bottom" constant="628" id="4kq-Pa-FPC"/>
-                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="width" secondItem="nVO-JU-dqs" secondAttribute="width" id="LXz-yU-XWA"/>
-                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="top" secondItem="7k9-fY-3ua" secondAttribute="top" id="Nr4-02-quG"/>
-                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="height" secondItem="nVO-JU-dqs" secondAttribute="height" id="hX8-a5-b3J"/>
-                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="leading" secondItem="7k9-fY-3ua" secondAttribute="leading" id="uxA-du-Mlm"/>
-                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="trailing" secondItem="7k9-fY-3ua" secondAttribute="trailing" constant="374" id="ysT-qm-qxD"/>
+                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="centerX" secondItem="nVO-JU-dqs" secondAttribute="centerX" id="2OI-iY-cED"/>
+                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="bottom" secondItem="7k9-fY-3ua" secondAttribute="bottom" id="HW0-Cs-2Ai"/>
+                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="leading" secondItem="7k9-fY-3ua" secondAttribute="leading" id="SUa-Rt-mfY"/>
+                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="trailing" secondItem="7k9-fY-3ua" secondAttribute="trailing" id="YZs-Bc-1Du"/>
+                                                        <constraint firstItem="bMC-9Y-bxt" firstAttribute="centerY" secondItem="nVO-JU-dqs" secondAttribute="centerY" id="d8k-H7-W3P"/>
+                                                        <constraint firstItem="7k9-fY-3ua" firstAttribute="top" secondItem="bMC-9Y-bxt" secondAttribute="top" id="zMG-Q2-dlS"/>
                                                     </constraints>
                                                     <viewLayoutGuide key="contentLayoutGuide" id="7k9-fY-3ua"/>
                                                     <viewLayoutGuide key="frameLayoutGuide" id="nVO-JU-dqs"/>
@@ -75,9 +63,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Q5x-Ja-KWg" firstAttribute="leading" secondItem="xz5-Wh-u2j" secondAttribute="leading" id="DpU-iM-GRr"/>
-                                                <constraint firstAttribute="bottom" secondItem="Q5x-Ja-KWg" secondAttribute="bottom" constant="-5" id="FJC-za-i5Z"/>
-                                                <constraint firstItem="Q5x-Ja-KWg" firstAttribute="top" secondItem="xz5-Wh-u2j" secondAttribute="top" constant="8" id="bNM-gi-GLT"/>
-                                                <constraint firstAttribute="trailing" secondItem="Q5x-Ja-KWg" secondAttribute="trailing" constant="1" id="n4P-5h-ffK"/>
+                                                <constraint firstAttribute="bottom" secondItem="Q5x-Ja-KWg" secondAttribute="bottom" id="FJC-za-i5Z"/>
+                                                <constraint firstItem="Q5x-Ja-KWg" firstAttribute="top" secondItem="xz5-Wh-u2j" secondAttribute="top" id="bNM-gi-GLT"/>
+                                                <constraint firstAttribute="trailing" secondItem="Q5x-Ja-KWg" secondAttribute="trailing" id="n4P-5h-ffK"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="375" height="631"/>
@@ -92,6 +80,18 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Q1w-Il-w1n"/>
                                 </connections>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EkV-tA-Shi">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Slideshow" id="f4Y-5r-c9F">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="OoN-2i-7VI">
+                                            <connections>
+                                                <action selector="dismissViewController" destination="BYZ-38-t0r" id="WJu-C1-bGt"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zc2-pp-S4I">
                                 <rect key="frame" x="0.0" y="719" width="375" height="49"/>
                                 <items>
@@ -99,13 +99,13 @@
                                     <barButtonItem style="plain" systemItem="play" id="OF7-sI-b6y">
                                         <color key="tintColor" name="515151"/>
                                         <connections>
-                                            <action selector="playSlideShow" destination="BYZ-38-t0r" id="d9D-Ii-Kg3"/>
+                                            <action selector="playSlideShow" destination="BYZ-38-t0r" id="rCX-Tm-3v7"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="G82-pG-E0l"/>
                                     <barButtonItem title="Item" id="VsL-dn-ZOm">
                                         <connections>
-                                            <action selector="slideShowOptionTapped:" destination="BYZ-38-t0r" id="VST-2f-bxL"/>
+                                            <action selector="slideShowOptionTapped:" destination="BYZ-38-t0r" id="TK5-jn-Udc"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -124,7 +124,6 @@
                             <constraint firstAttribute="bottom" secondItem="is7-Vp-QJW" secondAttribute="bottom" id="4wR-IU-0Zs"/>
                             <constraint firstItem="EkV-tA-Shi" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="AcI-Mn-bq9"/>
                             <constraint firstAttribute="trailing" secondItem="IKa-1F-tzk" secondAttribute="trailing" id="D7s-c1-5wg"/>
-                            <constraint firstItem="KtJ-lR-pKZ" firstAttribute="top" secondItem="EkV-tA-Shi" secondAttribute="bottom" id="GJF-xF-onl"/>
                             <constraint firstItem="EkV-tA-Shi" firstAttribute="top" secondItem="IKa-1F-tzk" secondAttribute="bottom" id="H3i-Pa-rSz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zc2-pp-S4I" secondAttribute="trailing" id="JQr-uB-GDU"/>
                             <constraint firstItem="IKa-1F-tzk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KQP-AQ-YNv"/>
@@ -133,9 +132,10 @@
                             <constraint firstItem="IKa-1F-tzk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="dPT-zv-x0i"/>
                             <constraint firstItem="EkV-tA-Shi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jZ9-bF-HkN"/>
                             <constraint firstItem="zc2-pp-S4I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="l6T-x3-C6l"/>
+                            <constraint firstItem="is7-Vp-QJW" firstAttribute="top" secondItem="KtJ-lR-pKZ" secondAttribute="bottom" id="lQa-QA-XQF"/>
                             <constraint firstAttribute="trailing" secondItem="is7-Vp-QJW" secondAttribute="trailing" id="mIa-sD-1HB"/>
+                            <constraint firstItem="KtJ-lR-pKZ" firstAttribute="top" secondItem="IKa-1F-tzk" secondAttribute="bottom" id="tTE-k8-WMO"/>
                             <constraint firstItem="is7-Vp-QJW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xTs-Yo-BLw"/>
-                            <constraint firstItem="zc2-pp-S4I" firstAttribute="top" secondItem="KtJ-lR-pKZ" secondAttribute="bottom" id="xoZ-gJ-DNk"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
