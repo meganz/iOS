@@ -3,17 +3,22 @@ import MEGASwiftUI
 import Foundation
 
 enum SlideShowAction: ActionType {
-    case startPlaying
-    case pausePlaying
-    case playOrPause
-    case finishPlaying
+    case play
+    case pause
+    case finish
     case resetTimer
+}
+
+protocol SlideShowViewModelPreferenceProtocol {
+    func pause()
+    func cancel()
+    func restart(withConfig config: SlideShowViewConfiguration)
 }
 
 final class SlideShowViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case startPlaying
-        case pausePlaying
+        case play
+        case pause
         case initialPhotoLoaded
         case resetTimer
     }
@@ -24,7 +29,7 @@ final class SlideShowViewModel: ViewModelType {
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private let mediaUseCase: MediaUseCaseProtocol
     private let dataProvider: PhotoBrowserDataProviderProtocol
-    private let configuration: SlideShowViewConfiguration
+    var configuration: SlideShowViewConfiguration
     
     var thumbnailLoadingTask: Task<Void, Never>?
     
@@ -39,7 +44,7 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     var timeIntervalForSlideInSeconds: Double {
-        configuration.timeIntervalForSlideInSeconds
+        configuration.timeIntervalForSlideInSeconds.value
     }
     
     private var shouldLoadMorePhotos: Bool {
@@ -182,29 +187,51 @@ final class SlideShowViewModel: ViewModelType {
         guard playbackStatus == .playing
         else {
             playbackStatus = .playing
-            invokeCommand?(.startPlaying)
+            invokeCommand?(.play)
             return
         }
         
         playbackStatus = .pause
-        invokeCommand?(.pausePlaying)
+        invokeCommand?(.pause)
+    }
+    
+    func pauseSlideShow() {
+        playbackStatus = .pause
+        invokeCommand?(.pause)
+    }
+    
+    func resumeSlideShow() {
+        playbackStatus = .playing
+        invokeCommand?(.play)
     }
     
     func dispatch(_ action: SlideShowAction) {
         switch action {
-        case .startPlaying:
-            playbackStatus = .playing
-            invokeCommand?(.startPlaying)
-        case .pausePlaying:
-            playbackStatus = .pause
-            invokeCommand?(.pausePlaying)
-        case .playOrPause:
-            playOrPauseSlideShow()
-        case .finishPlaying:
+        case .play:
+            resumeSlideShow()
+        case .pause:
+            pauseSlideShow()
+        case .finish:
             playbackStatus = .complete
-            invokeCommand?(.pausePlaying)
+            invokeCommand?(.pause)
         case .resetTimer:
             invokeCommand?(.resetTimer)
         }
+    }
+}
+
+// MARK: - SlideShowViewModelPreferenceProtocol
+extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
+    func pause() {
+        pauseSlideShow()
+    }
+    
+    func cancel() {
+        resumeSlideShow()
+    }
+    
+    func restart(withConfig config: SlideShowViewConfiguration) {
+        configuration = config != configuration ? config : configuration
+        resumeSlideShow()
     }
 }
