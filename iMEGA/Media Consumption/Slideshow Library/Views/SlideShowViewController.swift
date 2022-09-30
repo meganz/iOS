@@ -60,7 +60,6 @@ final class SlideShowViewController: UIViewController, ViewType {
             slideShowOptionButton.isEnabled = false
             slideShowOptionButton.tintColor = UIColor.clear
         }
-        
         adjustHeightOfTopAndBottomView()
     }
     
