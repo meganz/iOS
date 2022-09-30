@@ -2,6 +2,7 @@ import Foundation
 
 final class SlideShowOptionCellViewModel: Identifiable, ObservableObject {
     let id: String
+    let name: SlideShowOptionName
     let title: String
     let type: OptionType
     
@@ -15,11 +16,19 @@ final class SlideShowOptionCellViewModel: Identifiable, ObservableObject {
         case toggle
     }
     
-    init(id: String = UUID().uuidString, title: String, type: SlideShowOptionCellViewModel.OptionType, children: [SlideShowOptionDetailCellViewModel]) {
+    init(
+        id: String = UUID().uuidString,
+        name: SlideShowOptionName,
+        title: String,
+        type: SlideShowOptionCellViewModel.OptionType,
+        children: [SlideShowOptionDetailCellViewModel], isOn: Bool = false
+    ) {
         self.id = id
+        self.name = name
         self.title = title
         self.type = type
         self.children = children
+        self.isOn = isOn
         detail = type == .detail ? (children.first(where: { $0.isSelcted })?.title ?? "") : ""
     }
     

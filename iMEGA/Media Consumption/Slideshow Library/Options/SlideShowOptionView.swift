@@ -5,6 +5,7 @@ struct SlideShowOptionView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: SlideShowOptionViewModel
+    let preference: SlideShowViewModelPreferenceProtocol
     let router: SlideShowOptionContentRouting
     
     var body: some View {
@@ -19,11 +20,6 @@ struct SlideShowOptionView: View {
                             }
                     }
                 }
-                Text(viewModel.footerNote)
-                    .foregroundColor(.secondary)
-                    .font(.caption2)
-                    .padding(.top, 6)
-                    .padding(.leading)
                 Spacer()
             }
             .sheet(isPresented: $viewModel.shouldShowDetail, content: {
@@ -39,6 +35,7 @@ struct SlideShowOptionView: View {
     
     var navBarButton: some View {
         Button {
+            preference.restart(withConfig: viewModel.configuration())
             presentationMode.wrappedValue.dismiss()
         } label: {
             Text(viewModel.doneButtonTitle)

@@ -53,8 +53,14 @@ final class SlideShowViewController: UIViewController, ViewType {
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSlideShow), name: UIApplication.willResignActiveNotification, object: nil)
         
         if let viewModel = viewModel, viewModel.photos.isNotEmpty {
-            playOrPauseSlideShow()
+            playSlideShow()
         }
+        
+        if !FeatureFlagProvider().isFeatureFlagEnabled(for: .slideShowPreference) {
+            slideShowOptionButton.isEnabled = false
+            slideShowOptionButton.tintColor = UIColor.clear
+        }
+        
         adjustHeightOfTopAndBottomView()
     }
     
@@ -96,9 +102,9 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     func executeCommand(_ command: SlideShowViewModel.Command) {
          switch command {
-         case .startPlaying: play()
-         case .pausePlaying: pause()
-         case .initialPhotoLoaded: playOrPauseSlideShow()
+         case .play: play()
+         case .pause: pause()
+         case .initialPhotoLoaded: playSlideShow()
          case .resetTimer: resetTimer()
          }
     }
@@ -147,7 +153,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func finish() {
         collectionView.backgroundColor = UIColor.mnz_background()
         slideShowTimer.invalidate()
-        viewModel?.dispatch(.finishPlaying)
+        viewModel?.dispatch(.finish)
     }
     
     private func resetTimer() {
@@ -164,6 +170,9 @@ final class SlideShowViewController: UIViewController, ViewType {
         viewModel.currentSlideNumber += 1
         if viewModel.currentSlideNumber < viewModel.photos.count {
             updateSlideInView()
+        } else if viewModel.configuration.isRepeat {
+            viewModel.currentSlideNumber = 0
+            updateSlideInView()
         } else {
             finish()
         }
@@ -179,22 +188,27 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     @IBAction func dismissViewController() {
-        viewModel?.dispatch(.finishPlaying)
+        viewModel?.dispatch(.finish)
         dismiss(animated: true)
     }
     
-    @IBAction func slideShowOptonTapped(_ sender: Any) {
+    @IBAction func slideShowOptionTapped(_ sender: Any) {
         if #available(iOS 14.0, *) {
-            SlideShowOptionRouter(presenter: self).start()
+            guard let viewModel = viewModel else { return }
+            SlideShowOptionRouter(
+                presenter: self,
+                preference: viewModel,
+                currentConfiguration: viewModel.configuration
+            ).start()
         }
     }
     
-    @IBAction func playOrPauseSlideShow() {
-        viewModel?.dispatch(.playOrPause)
+    @IBAction func playSlideShow() {
+        viewModel?.dispatch(.play)
     }
     
     @objc private func pauseSlideShow() {
-        viewModel?.dispatch(.pausePlaying)
+        viewModel?.dispatch(.pause)
     }
 }
 
@@ -222,7 +236,7 @@ extension SlideShowViewController: UICollectionViewDataSource {
         guard indexPath.row < viewModel.photos.count,
                 let image = viewModel.photos[indexPath.row].image
         else {
-            viewModel.dispatch(.finishPlaying)
+            viewModel.dispatch(.finish)
             return cell
         }
         
@@ -250,6 +264,6 @@ extension SlideShowViewController: UIScrollViewDelegate {
 
 extension SlideShowViewController: SlideShowInteraction {
     func pausePlaying() {
-        viewModel?.dispatch(.pausePlaying)
+        viewModel?.dispatch(.pause)
     }
 }

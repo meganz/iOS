@@ -99,13 +99,13 @@
                                     <barButtonItem style="plain" systemItem="play" id="OF7-sI-b6y">
                                         <color key="tintColor" name="515151"/>
                                         <connections>
-                                            <action selector="playOrPauseSlideShow" destination="BYZ-38-t0r" id="wIq-Tz-hR4"/>
+                                            <action selector="playSlideShow" destination="BYZ-38-t0r" id="d9D-Ii-Kg3"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="G82-pG-E0l"/>
                                     <barButtonItem title="Item" id="VsL-dn-ZOm">
                                         <connections>
-                                            <action selector="slideShowOptonTapped:" destination="BYZ-38-t0r" id="LZr-0i-fRX"/>
+                                            <action selector="slideShowOptionTapped:" destination="BYZ-38-t0r" id="VST-2f-bxL"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>

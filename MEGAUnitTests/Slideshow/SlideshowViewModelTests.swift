@@ -34,7 +34,7 @@ class SlideshowViewModelTests: XCTestCase {
                 sdk: MockSdk()
             ),
             mediaUseCase: MockMediaUseCase(isURLVideo: false, isURLImage: true),
-            configuration: .init(playingOrder: .shuffled, timeIntervalForSlideInSeconds: 4)
+            configuration: .init(playingOrder: .shuffled, timeIntervalForSlideInSeconds: .normal, isRepeat: false, includeSubfolders: false)
         )
     }
     
@@ -43,25 +43,6 @@ class SlideshowViewModelTests: XCTestCase {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return try XCTUnwrap(image)
-    }
-    
-    func testSlideshowPlay_UpdatePlaybackStatus_toPlaying() throws {
-        let sut = try makeSlideshowViewModel()
-        sut.dispatch(.playOrPause)
-        XCTAssert(sut.playbackStatus == .playing)
-    }
-    
-    func testSlideshowPause_UpdatePlaybackStatus_toPause() throws {
-        let sut = try makeSlideshowViewModel()
-        sut.dispatch(.playOrPause)
-        sut.dispatch(.playOrPause)
-        XCTAssert(sut.playbackStatus == .pause)
-    }
-    
-    func testSlideshowExit_UpdatePlaybackStatus_toComplete() throws {
-        let sut = try makeSlideshowViewModel()
-        sut.dispatch(.finishPlaying)
-        XCTAssert(sut.playbackStatus == .complete)
     }
     
     func testSlideshowPlaying_isInitialDownloads_shouldReturnTrue() async throws {
@@ -96,5 +77,90 @@ class SlideshowViewModelTests: XCTestCase {
         sut.currentSlideNumber = 11
         await sut.thumbnailLoadingTask?.value
         XCTAssertTrue(sut.photos.count == 40)
+    }
+    
+    func testSlideshowPlaying_reloadUnusedPhoto_firstPhotoInPhotosShouldBeNotNil() async throws {
+        let sut = try makeSlideshowViewModel()
+        
+        sut.currentSlideNumber = 11
+        await sut.thumbnailLoadingTask?.value
+        sut.currentSlideNumber = 20
+        XCTAssertNil(sut.photos[0].image)
+        
+        sut.currentSlideNumber = 19
+        await sut.thumbnailLoadingTask?.value
+        XCTAssertNotNil(sut.photos[0].image)
+    }
+    
+    func testSlideshowPlaying_removeUnusedPhotos_firstPhotoInPhotosShouldBeNil() async throws {
+        let sut = try makeSlideshowViewModel()
+        
+        sut.currentSlideNumber = 11
+        await sut.thumbnailLoadingTask?.value
+        sut.currentSlideNumber = 20
+        
+        XCTAssertNil(sut.photos[0].image)
+    }
+    
+    func testSlideShowViewModel_play_playbackStatusShouldBePlaying() throws {
+        let slideShowViewModel = try makeSlideshowViewModel()
+
+        slideShowViewModel.dispatch(.play)
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
+    }
+    
+    func testSlideShowViewModel_pause_playbackStatusShouldBePaused() throws {
+        let slideShowViewModel = try makeSlideshowViewModel()
+        slideShowViewModel.dispatch(.pause)
+
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
+    }
+    
+    func testSlideShowViewModel_finish_playbackStatusShouldBeComplete() throws {
+        let slideShowViewModel = try makeSlideshowViewModel()
+
+        slideShowViewModel.dispatch(.finish)
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .complete)
+    }
+    
+    func testSlideShowViewModel_resetTimer_playbackStatusShouldBePlaying() throws {
+        let slideShowViewModel = try makeSlideshowViewModel()
+
+        slideShowViewModel.dispatch(.play)
+        slideShowViewModel.dispatch(.resetTimer)
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
+    }
+    
+    func testSlideShowViewModel_cancel_playbackStatusShouldBePlaying() throws {
+        let slideShowViewModel = try makeSlideshowViewModel()
+        let sut: SlideShowViewModelPreferenceProtocol = slideShowViewModel
+        
+        slideShowViewModel.dispatch(.pause)
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
+        
+        sut.cancel()
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
+    }
+    
+    func testSlideShowViewModel_restart_repeatShouldBeTrueAndTimeShouldBe8AndCurrentSlideShouldBeNeg1() throws {
+        let slideShowViewModel = try makeSlideshowViewModel()
+        let sut: SlideShowViewModelPreferenceProtocol = slideShowViewModel
+        
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .initialized)
+        slideShowViewModel.dispatch(.play)
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
+        slideShowViewModel.dispatch(.pause)
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
+        XCTAssertTrue(slideShowViewModel.currentSlideNumber == 0)
+        XCTAssertTrue(slideShowViewModel.timeIntervalForSlideInSeconds == 4)
+        XCTAssertTrue(slideShowViewModel.configuration.isRepeat == false)
+        
+        sut.restart(withConfig: SlideShowViewConfiguration(
+            playingOrder: .shuffled, timeIntervalForSlideInSeconds: .normal, isRepeat: true, includeSubfolders: false)
+        )
+        
+        XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
+        XCTAssertTrue(slideShowViewModel.timeIntervalForSlideInSeconds == 4)
+        XCTAssertTrue(slideShowViewModel.configuration.isRepeat == true)
     }
 }
