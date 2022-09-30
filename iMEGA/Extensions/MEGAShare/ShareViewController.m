@@ -580,6 +580,8 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
+    self.transfers = NSMutableArray.new;
+    
     for (ShareAttachment *attachment in [[ShareAttachment attachmentsArray] copy]) {
         switch (attachment.type) {
             case ShareAttachmentTypeGIF: {
