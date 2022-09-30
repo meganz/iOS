@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct SlideShowOptionDetailCellView: View {
     @ObservedObject var viewModel: SlideShowOptionDetailCellViewModel
     
@@ -13,11 +14,12 @@ struct SlideShowOptionDetailCellView: View {
                 }
                 
                 Text(viewModel.title)
-                    .font(.system(size: 17, weight: .regular, design: .rounded))
+                    .font(.title3)
                 
                 Spacer()
                 if viewModel.isSelcted {
                     Image(uiImage: Asset.Images.Generic.turquoiseCheckmark.image)
+                        .scaledToFit()
                         .foregroundColor(.green)
                         .padding(.trailing, 14)
                 }
