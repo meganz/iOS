@@ -23,7 +23,7 @@ final class UIBarButtonTests: XCTestCase {
         
         let buttonC = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
         let buttonD = UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: nil, action: nil)
-        XCTAssertFalse(buttonA ~~ buttonB)
+        XCTAssertFalse(buttonC ~~ buttonD)
     }
     
     func testMatches_buttonsAreSame_equal() {
@@ -33,6 +33,6 @@ final class UIBarButtonTests: XCTestCase {
         
         let buttonC = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
         let buttonD = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: nil, action: nil)
-        XCTAssertTrue(buttonA ~~ buttonB)
+        XCTAssertTrue(buttonC ~~ buttonD)
     }
 }

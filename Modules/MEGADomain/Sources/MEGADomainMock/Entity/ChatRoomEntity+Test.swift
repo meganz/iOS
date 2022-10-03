@@ -1,16 +1,15 @@
 import Foundation
-@testable import MEGA
 import MEGADomain
 
-extension ChatRoomEntity {
+public extension ChatRoomEntity {
     ///Init method with default values (0, false, nil, [], ...)
-    init(chatId: HandleEntity = MEGAInvalidHandle,
+    init(chatId: HandleEntity = .invalid,
          ownPrivilege: Privilege = .unknown,
          changeType: ChangeType = .status,
          peerCount: UInt = 0,
          title: String? = "Unit tests",
          unreadCount: Int = 0,
-         userTypingHandle: HandleEntity = MEGAInvalidHandle,
+         userTypingHandle: HandleEntity = .invalid,
          retentionTime: UInt = 0,
          creationTimeStamp: UInt64 = 0,
          hasCustomTitle: Bool = false,

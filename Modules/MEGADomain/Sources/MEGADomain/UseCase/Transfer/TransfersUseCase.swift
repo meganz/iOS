@@ -14,11 +14,6 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     
     private let transfersRepository: T
     private let fileSystemRepository: U
-    
-    private enum AppDataConstants: String {
-        case exportFile = ">exportFile"
-        case saveInPhotos = ">SaveInPhotosApp"
-    }
 
     public init(transfersRepository: T, fileSystemRepository: U) {
         self.transfersRepository = transfersRepository
@@ -72,11 +67,11 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(AppDataConstants.exportFile.rawValue) ?? false
+        transfer.appData?.contains(AppDataEntity.exportFile.rawValue) ?? false
     }
     
     private func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(AppDataConstants.saveInPhotos.rawValue) ?? false
+        transfer.appData?.contains(AppDataEntity.saveInPhotos.rawValue) ?? false
     }
     
     public func documentsDirectory() -> URL {

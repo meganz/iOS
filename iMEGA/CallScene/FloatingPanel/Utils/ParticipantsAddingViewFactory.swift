@@ -65,7 +65,7 @@ struct ParticipantsAddingViewFactory {
         guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
         let chatRoomCurrentParticipants = chatRoomEntity
             .peers
-            .compactMap { ($0.privilege.rawValue > ChatRoomEntity.Privilege.removed.rawValue) ? $0.handle : nil }
+            .compactMap { $0.privilege.isPeerVisibleByPrivilege() ? $0.handle : nil }
         
         let excludedParticipantsId = (additionallyExcludedParticipantsId ?? []).union(chatRoomCurrentParticipants)
         

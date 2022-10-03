@@ -2,6 +2,7 @@
 import UIKit
 import Photos
 import AVKit
+import Combine
 
 // MARK:- PhotoCarouselViewControllerDelegate.
 
@@ -35,6 +36,8 @@ final class PhotoCarouselViewController: UIViewController {
     
     private var collectionViewDataSource: PhotoCarouselDataSource?
     private var collectionViewDelegate: PhotoCarouselDelegate?
+    
+    private var playerItemDidPlayToEndTimeSubscription: AnyCancellable?
     
     private var senderBarButtonText: String {
         return selectedAssets.isNotEmpty ? selectionActionType.localizedTextWithCount(selectedAssets.count) : selectionActionDisabledText
@@ -194,15 +197,14 @@ final class PhotoCarouselViewController: UIViewController {
     private func loaded(playerViewController: AVPlayerViewController) {
         playerViewController.player?.play()
         
-        let center = NotificationCenter.default
-        var token: NSObjectProtocol?
-        
-        token = center.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                   object: nil,
-                                   queue: OperationQueue.main) { _ in
-                                    playerViewController.dismissView()
-                                    center.removeObserver(token!)
-        }
+        playerItemDidPlayToEndTimeSubscription = NotificationCenter.default
+            .publisher(for: NSNotification.Name.AVPlayerItemDidPlayToEndTime)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                playerViewController.dismissView()
+                self?.playerItemDidPlayToEndTimeSubscription?.cancel()
+                self?.playerItemDidPlayToEndTimeSubscription = nil
+            }
     }
     
     @objc private func sendBarButtonTapped() {

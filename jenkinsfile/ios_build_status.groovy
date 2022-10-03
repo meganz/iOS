@@ -74,16 +74,6 @@ pipeline {
     stages {
         stage('Installing dependencies') {
             parallel {
-                stage('Bundle install') {
-                    steps {
-                        gitlabCommitStatus(name: 'Bundle install') {
-                            injectEnvironments({
-                                sh "bundle install"
-                            })
-                        }
-                    }
-                }
-
                 stage('Submodule update and run cmake') {
                     steps {
                         gitlabCommitStatus(name: 'Submodule update and run cmake') {

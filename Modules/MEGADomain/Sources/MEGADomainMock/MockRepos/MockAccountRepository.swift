@@ -1,10 +1,10 @@
 import MEGADomain
 
 public struct MockAccountRepository: AccountRepositoryProtocol {
-    let nodesCount: UInt
-    let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
-    let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
-    let existsBackupNode: Bool
+    private let nodesCount: UInt
+    private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
+    private let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
+    private let existsBackupNode: Bool
     
     public init(nodesCount: UInt,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),

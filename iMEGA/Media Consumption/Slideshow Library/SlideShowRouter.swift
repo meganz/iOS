@@ -18,7 +18,12 @@ struct SlideShowRouter: Routing {
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             dataProvider: dataProvider,
             mediaUseCase: MediaUseCase(),
-            configuration: .init(playingOrder: .shuffled, timeIntervalForSlideInSeconds: 4)
+            configuration: .init(
+                playingOrder: .shuffled,
+                timeIntervalForSlideInSeconds: .normal,
+                isRepeat: false,
+                includeSubfolders: false
+            )
         )
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)

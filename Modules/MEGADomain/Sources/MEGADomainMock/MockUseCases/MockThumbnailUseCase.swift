@@ -3,15 +3,15 @@ import Foundation
 import MEGADomain
 
 public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
-    let hasCachedThumbnail: Bool
-    let hasCachedPreview: Bool
-    let hasCachedOriginal: Bool
-    let cachedThumbnailURL: URL
-    let cachedPreviewURL: URL
-    let cachedOriginalURL: URL
-    let loadThumbnailResult: Result<URL, ThumbnailErrorEntity>
-    let loadPreviewResult: Result<URL, ThumbnailErrorEntity>
-    let loadThumbnailAndPreviewResult: Result<(URL?, URL?), ThumbnailErrorEntity>
+    private let hasCachedThumbnail: Bool
+    private let hasCachedPreview: Bool
+    private let hasCachedOriginal: Bool
+    private let cachedThumbnailURL: URL
+    private let cachedPreviewURL: URL
+    private let cachedOriginalURL: URL
+    private let loadThumbnailResult: Result<URL, ThumbnailErrorEntity>
+    private let loadPreviewResult: Result<URL, ThumbnailErrorEntity>
+    private let loadThumbnailAndPreviewResult: Result<(URL?, URL?), ThumbnailErrorEntity>
     
     public init(hasCachedThumbnail: Bool = false,
                 hasCachedPreview: Bool = false,

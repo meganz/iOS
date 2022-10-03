@@ -4042,7 +4042,7 @@ public enum Strings {
           public static let joinMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.joinMeeting")
           /// Schedule meeting
           public static let scheduleMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.scheduleMeeting")
-          /// Start meeting
+          /// Start meeting now
           public static let startMeeting = Strings.tr("Localizable", "meetings.startConversation.contextMenu.startMeeting")
         }
       }
@@ -4256,6 +4256,38 @@ public enum Strings {
         public enum Slideshow {
           /// Slideshow
           public static let title = Strings.tr("Localizable", "sharedItems.menu.slideshow.title")
+        }
+      }
+    }
+    public enum Slideshow {
+      public enum PreferenceSetting {
+        /// Include media in sub-folders in the slideshow
+        public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
+        /// Options
+        public static let options = Strings.tr("Localizable", "slideshow.preferenceSetting.options")
+        /// Slideshow Order
+        public static let order = Strings.tr("Localizable", "slideshow.preferenceSetting.order")
+        /// Slideshow Options
+        public static let slideshowOptions = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions")
+        /// Slideshow Speed
+        public static let speed = Strings.tr("Localizable", "slideshow.preferenceSetting.speed")
+        public enum Order {
+          /// Shuffle
+          public static let shuffle = Strings.tr("Localizable", "slideshow.preferenceSetting.order.shuffle")
+        }
+        public enum SlideshowOptions {
+          /// Repeat
+          public static let `repeat` = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions.repeat")
+          /// Include sub-folders
+          public static let subFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions.subFolders")
+        }
+        public enum Speed {
+          /// Fast (1s)
+          public static let fast = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.fast")
+          /// Normal (4s)
+          public static let normal = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.normal")
+          /// Slow (8s)
+          public static let slow = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.slow")
         }
       }
     }

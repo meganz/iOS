@@ -112,7 +112,7 @@ extension AppDelegate {
     @objc func performCall(presenter: UIViewController, chatRoom: MEGAChatRoom, isSpeakerEnabled: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         MeetingContainerRouter(presenter: presenter,
-                               chatRoom: ChatRoomEntity(with: chatRoom),
+                               chatRoom: chatRoom.toChatRoomEntity(),
                                call: CallEntity(with: call),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }

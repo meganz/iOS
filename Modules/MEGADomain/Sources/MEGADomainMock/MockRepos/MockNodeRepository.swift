@@ -4,29 +4,29 @@ import Foundation
 public struct MockNodeRepository: NodeRepositoryProtocol {
     public static let newRepo = MockNodeRepository()
     
-    var node: NodeEntity?
-    var rubbisNode: NodeEntity?
-    var nodeAccessLevel:NodeAccessTypeEntity
-    var isDownloaded: Bool
-    var hasVersions: Bool
-    var isInRubbishBin: Bool
-    var labelString: String
-    var childNodeNamed: NodeEntity?
-    var filesAndFoldersCount: (Int, Int)
-    var name: String?
-    var size: UInt64?
-    var base64Handle: String?
-    var isFile: Bool
-    var copiedNodeIfExists: Bool
-    var fingerprint: String?
-    var existsChildNode: Bool
-    var childNode: NodeEntity?
-    var modificationDate: Date
-    var copiedNodeHandle: UInt64?
-    var movedNodeHandle: UInt64?
-    var images: [NodeEntity]
-    var fileLinkNode: NodeEntity?
-    var isNodeDescendant: Bool
+    private let node: NodeEntity?
+    private let rubbisNode: NodeEntity?
+    private let nodeAccessLevel:NodeAccessTypeEntity
+    private let isDownloaded: Bool
+    private let hasVersions: Bool
+    private let isInRubbishBin: Bool
+    private let labelString: String
+    private let childNodeNamed: NodeEntity?
+    private let filesAndFoldersCount: (Int, Int)
+    private let name: String?
+    private let size: UInt64?
+    private let base64Handle: String?
+    private let isFile: Bool
+    private let copiedNodeIfExists: Bool
+    private let fingerprint: String?
+    private let existsChildNode: Bool
+    private let childNode: NodeEntity?
+    private let modificationDate: Date
+    private let copiedNodeHandle: UInt64?
+    private let movedNodeHandle: UInt64?
+    private let images: [NodeEntity]
+    private let fileLinkNode: NodeEntity?
+    private let isNodeDescendant: Bool
     
     public init(node: NodeEntity? = nil, rubbishNode: NodeEntity? = nil, nodeAccessLevel:NodeAccessTypeEntity = .unknown, isDownloaded: Bool = false, hasVersions: Bool = false, isInRubbishBin: Bool = false, labelString: String = "", childNodeNamed: NodeEntity? = nil, filesAndFoldersCount: (Int, Int) = (0, 0), name: String? = nil, size: UInt64? = nil, base64Handle: String? = nil, isFile: Bool = false, copiedNodeIfExists: Bool = false, fingerprint: String? = nil, existsChildNode: Bool = false, childNode: NodeEntity? = nil, modificationDate: Date = Date(), copiedNodeHandle: UInt64? = nil, movedNodeHandle: UInt64? = nil, images: [NodeEntity] = [], fileLinkNode: NodeEntity? = nil, isNodeDescendant: Bool = false) {
         self.node = node

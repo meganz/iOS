@@ -31,7 +31,9 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
                 offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
                 fileSystemRepository: fileSystemRepository,
                 nodeRepository: nodeRepository,
-                fileCacheRepository: FileCacheRepository.newRepo),
+                fileCacheRepository: FileCacheRepository.newRepo,
+                mediaUseCase: MediaUseCase(),
+                preferenceRepository: PreferenceRepository.newRepo),
             transfers: transfers,
             transferType: transferType)
         

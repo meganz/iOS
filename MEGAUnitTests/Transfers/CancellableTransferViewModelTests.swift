@@ -1,6 +1,7 @@
 
 import XCTest
 @testable import MEGA
+import MEGADomainMock
 
 final class CancellableTransferViewModelTests: XCTestCase {
 

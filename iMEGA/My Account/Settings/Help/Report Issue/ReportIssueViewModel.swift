@@ -11,6 +11,7 @@ final class ReportIssueViewModel: ObservableObject {
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
     private var subscriptions: AnyCancellable?
     private let monitorUseCase: NetworkMonitorUseCaseProtocol
+    private var reportAlertType: ReportIssueAlertTypeModel = .none
     var areLogsEnabled: Bool
     var shouldDisableSendButton: Bool {
         details.isEmpty || details == detailsPlaceholder || !isConnected
@@ -24,10 +25,17 @@ final class ReportIssueViewModel: ObservableObject {
         isUploadingLog && areLogsEnabled && isSendLogFileToggleOn
     }
     
+    var isReportDiscardable: Bool {
+        !(details.isEmpty || details == detailsPlaceholder)
+    }
+    
     @Published var progress: Float = 0
     @Published var isUploadingLog = false
     @Published var details = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
     @Published var isConnected = true
+    @Published var showingReportIssueActionSheet = false
+    @Published var showingReportIssueAlert = false
+    
     var isSendLogFileToggleOn = true
     
     init(router: ReportIssueViewRouting,
@@ -48,11 +56,11 @@ final class ReportIssueViewModel: ObservableObject {
     }
     
     private func uploadLogFileIfNeeded() {
-        guard let url = sourceUrl else {
+        guard let sourceUrl else {
             createTicketForSupport()
             return
         }
-        uploadFileUseCase.uploadSupportFile(url) { [weak self] (transferEntity) in
+        uploadFileUseCase.uploadSupportFile(sourceUrl) { [weak self] (transferEntity) in
             DispatchQueue.main.async {
                 self?.transfer = transferEntity
                 self?.isUploadingLog = true
@@ -66,8 +74,8 @@ final class ReportIssueViewModel: ObservableObject {
                 self?.isUploadingLog = false
                 switch result {
                 case .failure:
-                    self?.router.showAlert(title: Strings.Localizable.somethingWentWrong,
-                                           message: Strings.Localizable.Help.ReportIssue.Fail.message)
+                    self?.reportAlertType = .uploadLogFileFailure
+                    self?.showingReportIssueAlert = true
                 case .success(let transferEntity):
                     self?.progress = 100
                     self?.createTicketForSupport(filename: transferEntity.fileName)
@@ -86,12 +94,11 @@ final class ReportIssueViewModel: ObservableObject {
             .sink(receiveCompletion: { [weak self] (completion) in
                 switch completion {
                 case .failure:
-                    self?.router.showAlert(title: Strings.Localizable.somethingWentWrong,
-                                           message: Strings.Localizable.Help.ReportIssue.Fail.message)
+                    self?.reportAlertType = .createSupportTicketFailure
                 case .finished:
-                    self?.router.showAlert(title: Strings.Localizable.Help.ReportIssue.Success.title,
-                                           message: Strings.Localizable.Help.ReportIssue.Success.message)
+                    self?.reportAlertType = .createSupportTicketFinished
                 }
+                self?.showingReportIssueAlert = true
             }, receiveValue: { _ in })
     }
     
@@ -104,30 +111,55 @@ final class ReportIssueViewModel: ObservableObject {
     }
     
     func cancelReport() {
-        if details.isEmpty || details == detailsPlaceholder {
-            router.dismiss()
-        } else {
-            router.discardReportAlert()
-        }
+        router.dismiss()
     }
     
     func cancelUploadReport() {
-        router.cancelUploadReport { [weak self] (cancelUpload) in
-            if cancelUpload {
-                guard let t = self?.transfer else {
-                    self?.router.dismiss()
-                    return
-                }
-                self?.uploadFileUseCase.cancel(transfer: t) { (result) in
-                    switch result {
-                    case .success():
-                        MEGALogDebug("[Report issue] report canceled")
-                    case .failure(_):
-                        MEGALogError("[Report issue] fail cancel the report")
-                        self?.router.dismiss()
-                    }
-                }
+        guard let transfer else {
+            router.dismiss()
+            return
+        }
+        uploadFileUseCase.cancel(transfer: transfer) { [weak self] (result) in
+            switch result {
+            case .success:
+                MEGALogDebug("[Report issue] report canceled")
+            case .failure:
+                MEGALogError("[Report issue] fail cancel the report")
+                self?.router.dismiss()
             }
+        }
+    }
+    
+    func showCancelUploadReportAlert() {
+        reportAlertType = .cancelUploadReport
+        showingReportIssueAlert = true
+    }
+    
+    func showReportIssueActionSheetIfNeeded() {
+        showingReportIssueActionSheet = isReportDiscardable
+        if !showingReportIssueActionSheet {
+            cancelReport()
+        }
+    }
+    
+    func reportIssueAlertData() -> ReportIssueAlertDataModel  {
+        switch reportAlertType {
+        case .uploadLogFileFailure, .createSupportTicketFailure:
+            return ReportIssueAlertDataModel(title: Strings.Localizable.somethingWentWrong,
+                                             message: Strings.Localizable.Help.ReportIssue.Fail.message,
+                                             primaryButtonTitle: Strings.Localizable.ok)
+        case .createSupportTicketFinished:
+            return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Success.title,
+                                             message: Strings.Localizable.Help.ReportIssue.Success.message,
+                                             primaryButtonTitle: Strings.Localizable.ok)
+        case .cancelUploadReport:
+            return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Creating.Cancel.title,
+                                             message: Strings.Localizable.Help.ReportIssue.Creating.Cancel.message,
+                                             primaryButtonTitle: Strings.Localizable.continue,
+                                             secondaryButtoTitle: Strings.Localizable.yes,
+                                             secondaryButtonAction: cancelUploadReport)
+        case .none:
+            return ReportIssueAlertDataModel()
         }
     }
 }

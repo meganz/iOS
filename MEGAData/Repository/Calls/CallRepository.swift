@@ -242,13 +242,13 @@ extension CallRepository: MEGAChatDelegate {
         
         switch item.changes {
         case .ownPrivilege:
-            guard let updatedPrivilage = ChatRoomEntity.Privilege(rawValue: item.ownPrivilege.rawValue), let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
+            guard let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
                 return
             }
-            callbacksDelegate?.ownPrivilegeChanged(to: updatedPrivilage, in: ChatRoomEntity(with: chatRoom))
+            callbacksDelegate?.ownPrivilegeChanged(to: item.ownPrivilege.toOwnPrivilegeEntity(), in: chatRoom.toChatRoomEntity())
         case .title:
             guard let chatRoom = chatSdk.chatRoom(forChatId: item.chatId) else { return }
-            callbacksDelegate?.chatTitleChanged(chatRoom: ChatRoomEntity(with: chatRoom))
+            callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom.toChatRoomEntity())
         default:
             break
         }

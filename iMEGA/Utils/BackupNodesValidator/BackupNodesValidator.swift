@@ -23,12 +23,12 @@ final class BackupNodesValidator {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: Strings.Localizable.yes, style: .default) { _ in
+        let continueAction = UIAlertAction(title: Strings.Localizable.yes, style: .default) { _ in
             completion()
-        })
-        
+        }
+        alert.addAction(continueAction)
         alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
+        alert.preferredAction = continueAction
         
         presenter.present(alert, animated: true, completion: nil)
     }
