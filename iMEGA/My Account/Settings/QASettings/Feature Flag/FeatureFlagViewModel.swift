@@ -1,13 +1,11 @@
 import MEGADomain
 
 enum FeatureFlagKey: FeatureFlagName, CaseIterable {
-    case slideShow = "Slide Show"
     case scheduleMeeting = "Schedule Meeting"
     case slideShowPreference = "Slide Show Preference"
     
     var isEnabled: Bool {
         switch self {
-        case .slideShow: return false
         case .scheduleMeeting: return false
         case .slideShowPreference: return false
         }
