@@ -2914,10 +2914,20 @@
 "transfers.cancellable.proceed"="Yes, cancel";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="No, continue";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Scanning…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Creating folders...";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Transferring...";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Cancelling transfers...";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@ / %@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="Don't close the app. If you close, transfers not yet queued will be lost.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer cancelled";
 /* Title of the dialog used to send bug reports to support team. */

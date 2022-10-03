@@ -4,15 +4,18 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
     var start: ((TransferEntity) -> Void)?
     var progress: ((TransferEntity) -> Void)?
     var completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    var folderUpdate: ((FolderTransferUpdateEntity) -> Void)?
     
     init(
         start: ((TransferEntity) -> Void)? = nil,
         progress: ((TransferEntity) -> Void)? = nil,
-        completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void
+        completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void,
+        folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil
     ) {
         self.start = start
         self.progress = progress
         self.completion = completion
+        self.folderUpdate = folderUpdate
     }
     
     init(completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -44,6 +47,12 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
             } else {
                 completion(.success(transfer.toTransferEntity()))
             }
+        }
+    }
+    
+    func onFolderTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer, stage: MEGATransferStage, folderCount: UInt, createdFolderCount: UInt, fileCount: UInt, currentFolder: String, currentFileLeafName: String) {
+        if let folderUpdate = folderUpdate {
+            folderUpdate(FolderTransferUpdateEntity(transfer: transfer.toTransferEntity(), stage: TransferStageEntity(transferStage: stage) ?? .none, folderCount: folderCount, createdFolderCount: createdFolderCount, fileCount: fileCount))
         }
     }
 }

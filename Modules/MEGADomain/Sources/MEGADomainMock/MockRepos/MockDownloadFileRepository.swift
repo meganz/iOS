@@ -2,6 +2,7 @@ import MEGADomain
 import Foundation
 
 public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
+    
     public static let newRepo = MockDownloadFileRepository()
     
     private let completionResult: Result<TransferEntity, TransferErrorEntity>
@@ -28,7 +29,7 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         completion(completionResult)
     }
     
-    public func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    public func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         completion?(completionResult)
     }
     

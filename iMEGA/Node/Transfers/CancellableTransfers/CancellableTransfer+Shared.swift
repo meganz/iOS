@@ -5,17 +5,16 @@ protocol CancellableTransferRouting: Routing {
     func transferCancelled(with message: String)
     func transferFailed(error: String)
     func transferCompletedWithError(error: String)
-    func showConfirmCancel()
-    func dismissConfirmCancel()
 }
 
 enum CancellableTransferViewAction: ActionType {
     case onViewReady
     case didTapCancelButton
-    case didTapDismissConfirmCancel
-    case didTapProceedCancel
 }
 
 enum Command: Equatable, CommandType {
-    case confirmCancel
+    case scanning(name: String, folders: UInt, files: UInt)
+    case creatingFolders(createdFolders: UInt, totalFolders: UInt)
+    case transferring
+    case cancelling
 }

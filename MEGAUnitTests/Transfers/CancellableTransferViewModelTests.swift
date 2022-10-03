@@ -11,6 +11,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
         
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
+        XCTAssert(router.prepareTransfersWidget_calledTimes == 1)
     }
     
     func testAction_cancelTransfer() {
@@ -18,17 +19,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
         let router = MockCancellableTransferRouter()
         let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
         
-        test(viewModel: viewModel, action: .didTapCancelButton, expectedCommands: [])
-        XCTAssert(router.showConfirmCancel_calledTimes == 1)
-    }
-    
-    func testAction_dismissCancelTransfer() {
-        let transfer = CancellableTransfer(handle: .invalid, messageId: .invalid, chatId: .invalid, localFileURL: URL(fileURLWithPath: "PathToFile"), name: nil, appData: nil, priority: false, isFile: true, type: .download)
-        let router = MockCancellableTransferRouter()
-        let viewModel = CancellableTransferViewModel(router: router, uploadFileUseCase: MockUploadFileUseCase(), downloadNodeUseCase: MockDownloadNodeUseCase(), transfers: [transfer], transferType: .download)
-        
-        test(viewModel: viewModel, action: .didTapDismissConfirmCancel, expectedCommands: [])
-        XCTAssert(router.dismissConfirmCancel_calledTimes == 1)
+        test(viewModel: viewModel, action: .didTapCancelButton, expectedCommands: [.cancelling])
     }
 }
 
@@ -38,8 +29,6 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, TransferW
     var transferCancelled_calledTimes = 0
     var transferFailed_calledTimes = 0
     var transferCompletedWithError_calledTimes = 0
-    var showConfirmCancel_calledTimes = 0
-    var dismissConfirmCancel_calledTimes = 0
     var prepareTransfersWidget_calledTimes = 0
 
     func showTransfersAlert() {
@@ -60,14 +49,6 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, TransferW
     
     func transferCompletedWithError(error: String) {
         transferCompletedWithError_calledTimes += 1
-    }
-    
-    func showConfirmCancel() {
-        showConfirmCancel_calledTimes += 1
-    }
-    
-    func dismissConfirmCancel() {
-        dismissConfirmCancel_calledTimes += 1
     }
     
     func prepareTransfersWidget() {

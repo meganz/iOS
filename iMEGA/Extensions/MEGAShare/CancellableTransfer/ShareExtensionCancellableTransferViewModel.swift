@@ -42,10 +42,6 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
             if processingComplete {
                 return
             }
-            router.showConfirmCancel()
-        case .didTapDismissConfirmCancel:
-            router.dismissConfirmCancel()
-        case .didTapProceedCancel:
             transfersCancelled = true
             uploadFileUseCase.cancelUploadTransfers()
         }

@@ -4311,11 +4311,15 @@ public enum Strings {
       public enum Cancellable {
         /// Cancel transfer
         public static let cancel = Strings.tr("Localizable", "transfers.cancellable.cancel")
+        /// Cancelling transfers...
+        public static let cancellingTransfers = Strings.tr("Localizable", "transfers.cancellable.cancellingTransfers")
         /// Interrupting the transfer process may render some of the items incomplete.
         public static let confirmCancel = Strings.tr("Localizable", "transfers.cancellable.confirmCancel")
+        /// Creating folders...
+        public static let creatingFolders = Strings.tr("Localizable", "transfers.cancellable.creatingFolders")
         /// No, continue
         public static let dismiss = Strings.tr("Localizable", "transfers.cancellable.dismiss")
-        /// Please don’t close the application.
+        /// Don't close the app. If you close, transfers not yet queued will be lost.
         public static let donotclose = Strings.tr("Localizable", "transfers.cancellable.donotclose")
         /// Yes, cancel
         public static let proceed = Strings.tr("Localizable", "transfers.cancellable.proceed")
@@ -4323,8 +4327,22 @@ public enum Strings {
         public static let scanning = Strings.tr("Localizable", "transfers.cancellable.scanning")
         /// Cancel transfers?
         public static let title = Strings.tr("Localizable", "transfers.cancellable.title")
+        /// Transferring...
+        public static let transferring = Strings.tr("Localizable", "transfers.cancellable.transferring")
         /// Transfer cancelled
         public static let trasnferCancelled = Strings.tr("Localizable", "transfers.cancellable.trasnferCancelled")
+        public enum CreatingFolders {
+          /// %@ / %@
+          public static func count(_ p1: Any, _ p2: Any) -> String {
+            return Strings.tr("Localizable", "transfers.cancellable.creatingFolders.count", String(describing: p1), String(describing: p2))
+          }
+        }
+        public enum Scanning {
+          /// Found %@ and %@
+          public static func count(_ p1: Any, _ p2: Any) -> String {
+            return Strings.tr("Localizable", "transfers.cancellable.scanning.count", String(describing: p1), String(describing: p2))
+          }
+        }
       }
     }
   }

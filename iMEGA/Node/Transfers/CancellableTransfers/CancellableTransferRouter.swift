@@ -76,24 +76,6 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
         })
     }
     
-    func showConfirmCancel() {
-        guard let wrapper = wrapper else {
-            return
-        }
-        presenter?.dismiss(animated: true, completion: {
-            self.presenter?.present(wrapper.confirmCancelAlertController(), animated: true)
-        })
-    }
-    
-    func dismissConfirmCancel() {
-        guard let wrapper = wrapper else {
-            return
-        }
-        presenter?.dismiss(animated: true, completion: {
-            self.presenter?.present(wrapper.cancelAlertController(), animated: true)
-        })
-    }
-    
     func prepareTransfersWidget() {
         TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
