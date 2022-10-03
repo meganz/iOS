@@ -1,17 +1,13 @@
 import MEGADomain
 
 public struct MockFileVersionsRepository: FileVersionsRepositoryProtocol {
-    public static let newRepo = MockFileVersionsRepository(versions: 0,
-                                                    versionsSize: 0,
-                                                    isFileVersionsEnabled: .failure(.generic),
-                                                    enableFileVersions: .failure(.generic),
-                                                    deletePreviousFileVersions: .failure(.generic))
+    public static let newRepo = MockFileVersionsRepository()
     
-    private var versions: Int64
-    private var versionsSize: Int64
-    private var isFileVersionsEnabled: (Result<Bool, FileVersionErrorEntity>)
-    private var enableFileVersions: (Result<Bool, FileVersionErrorEntity>)
-    private var deletePreviousFileVersions: (Result<Bool, FileVersionErrorEntity>)
+    private let versions: Int64
+    private let versionsSize: Int64
+    private let isFileVersionsEnabled: (Result<Bool, FileVersionErrorEntity>)
+    private let enableFileVersions: (Result<Bool, FileVersionErrorEntity>)
+    private let deletePreviousFileVersions: (Result<Bool, FileVersionErrorEntity>)
     
     public init(versions: Int64 = 0,
          versionsSize: Int64 = 0,

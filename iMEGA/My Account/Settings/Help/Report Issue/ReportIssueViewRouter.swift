@@ -6,9 +6,6 @@ import MEGAData
 @available(iOS 14.0, *)
 protocol ReportIssueViewRouting: Routing {
     func dismiss()
-    func showAlert(title: String, message: String)
-    func discardReportAlert()
-    func cancelUploadReport(completion: @escaping (Bool) -> Void)
 }
 
 @available(iOS 14.0, *)
@@ -59,33 +56,5 @@ protocol ReportIssueViewRouting: Routing {
     
     func dismiss() {
         baseViewController?.dismiss(animated: true)
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { [weak self] _ in
-            self?.dismiss()
-        }))
-        baseViewController?.present(alertController, animated: true, completion: nil)
-    }
-    
-    func discardReportAlert() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.Help.ReportIssue.discardReport, style: .destructive, handler: { [weak self] _ in
-            self?.dismiss()
-        }))
-        baseViewController?.present(alertController, animated: true, completion: nil)
-    }
-    
-    func cancelUploadReport(completion: @escaping (Bool) -> Void) {
-        let title = Strings.Localizable.Help.ReportIssue.Creating.Cancel.title
-        let message = Strings.Localizable.Help.ReportIssue.Creating.Cancel.message
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.continue, style: .cancel, handler:nil))
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.yes, style: .destructive, handler: { _ in
-            completion(true)
-        }))
-        baseViewController?.present(alertController, animated: true, completion: nil)
     }
 }

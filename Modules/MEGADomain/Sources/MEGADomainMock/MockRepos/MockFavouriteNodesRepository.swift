@@ -3,7 +3,7 @@ import MEGADomain
 public final class MockFavouriteNodesRepository: FavouriteNodesRepositoryProtocol {
     public static var newRepo: MockFavouriteNodesRepository = MockFavouriteNodesRepository(result: .success([]))
     
-    private var result: Result<[NodeEntity], GetFavouriteNodesErrorEntity>
+    private let result: Result<[NodeEntity], GetFavouriteNodesErrorEntity>
     
     public init(result: Result<[NodeEntity], GetFavouriteNodesErrorEntity> = .success([])) {
         self.result = result

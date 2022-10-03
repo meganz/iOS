@@ -6,8 +6,8 @@ public final class MockFeatureFlagRepository: FeatureFlagRepositoryProtocol {
         MockFeatureFlagRepository()
     }
 
-    private var featureList: [FeatureFlagEntity]
-    private var isFeatureFlagEnabled: Bool
+    private let featureList: [FeatureFlagEntity]
+    private let isFeatureFlagEnabled: Bool
     
     public init(featureList: [FeatureFlagEntity] = [], isFeatureFlagEnabled: Bool = false) {
         self.featureList = featureList

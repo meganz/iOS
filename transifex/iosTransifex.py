@@ -131,7 +131,7 @@ def run_download(resource, folder = DOWNLOAD_FOLDER):
 # Call this function to download each reserved resource to the Production folder
 def run_fetch(merge = False):
     resources = get_resources()
-    branch = get_branch_name();
+    branch = get_branch_name()
     for resource in resources:
         resource_name = resources[resource]["name"]
         if resource_name in RESERVED_RESOURCES:
@@ -571,8 +571,12 @@ def do_request(url, json_payload = None, type = "GET"):
         elif e.code == 204:
             return "No Content"
         else:
-            a = json.loads(e.read().decode('utf-8'))
-            return {"a": a, "u": url, "p": json_payload}
+            errContent = json.loads(e.read().decode('utf-8'))
+            errMsg = "Error: Requesting " + url + " failed"
+            if json_payload != None:
+                errMsg = errMsg + " with payload " + json.dumps(json_payload)
+            print(errMsg)
+            return errContent
     res = response.read()
     if res == "":
         return {"code": res.code}
@@ -586,6 +590,10 @@ def get_resources():
     if resources:
         return resources
     response = do_request(BASE_URL + "/resources?filter[project]=" + PROJECT_ID)
+    if "errors" in response:
+        print("Error: Failed to fetch resource data")
+        print_error(response["errors"])
+        return resources
     for data in response["data"]:
         resources[data["id"]] = {
             "name": data["attributes"]["name"],
@@ -634,6 +642,10 @@ def get_languages():
     if language_cache:
         return language_cache
     response = do_request(BASE_URL + "/projects/" + PROJECT_ID + "/languages")
+    if "errors" in response:
+        print("Error: Failed to retrieve languages")
+        print_error(response["errors"])
+        return language_cache
     for data in response["data"]:
         language_cache[data["id"]] = {
             "code": data["attributes"]["code"],
@@ -647,6 +659,8 @@ def get_username_from_id(id):
     if id in user_cache:
         return user_cache[id]
     response = do_request(BASE_URL + "/users/" + id)
+    if "errors" in response:
+        return id
     if response["data"] and response["data"]["attributes"]["username"]:
         user_cache[id] = response["data"]["attributes"]["username"]
         return user_cache[id]
@@ -745,7 +759,7 @@ def gitlab_download(resource, language = "Base"):
     url = GITLAB_URL.replace("$file", get_file_basename(resource))
     if language != "Base":
         if language in REMAPPED_CODE:
-            language = REMAPPED_CODE[language];
+            language = REMAPPED_CODE[language]
         url = url.replace("Base.lproj", language + ".lproj")
     content = do_request(url)
     if content:

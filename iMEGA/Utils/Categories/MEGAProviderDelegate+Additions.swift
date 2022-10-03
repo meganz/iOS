@@ -1,9 +1,10 @@
+import MEGADomain
 
 extension MEGAProviderDelegate {
     @objc func answer(call: MEGAChatCall, chatRoom: MEGAChatRoom, presenter: UIViewController) {
         MeetingContainerRouter(
             presenter: presenter,
-            chatRoom: ChatRoomEntity(with: chatRoom),
+            chatRoom: chatRoom.toChatRoomEntity(),
             call: CallEntity(with: call),
             isSpeakerEnabled: chatRoom.isMeeting
         ).start()
@@ -23,6 +24,6 @@ extension MEGAProviderDelegate {
     
     @objc func isOneToOneChatRoom(_ chatRoom: MEGAChatRoom?) -> Bool {
         guard let chatRoom = chatRoom else { return false }
-        return ChatRoomEntity(with: chatRoom).chatType == .oneToOne
+        return chatRoom.toChatRoomEntity().chatType == .oneToOne
     }
 }

@@ -1,3 +1,5 @@
+import MEGADomain
+
 protocol MeetingCreatingRepositoryProtocol {
     func getUsername() -> String
     func getCall(forChatId chatId: UInt64) -> CallEntity?

@@ -1,6 +1,6 @@
-import MEGADomain
+import Foundation
 
-protocol DownloadNodeUseCaseProtocol {
+public protocol DownloadNodeUseCaseProtocol {
     func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?)
     func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?)
     func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
@@ -8,27 +8,33 @@ protocol DownloadNodeUseCaseProtocol {
     func cancelDownloadTransfers()
 }
 
-struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Z: FileCacheRepositoryProtocol>: DownloadNodeUseCaseProtocol {
+public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol>: DownloadNodeUseCaseProtocol {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileSystemRepository: V
     private let nodeRepository: W
     private let fileCacheRepository: Z
+    private let mediaUseCase: M
+    private let preferenceRepository: P
     
-    @PreferenceWrapper(key: .savePhotoToGallery, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: .savePhotoToGallery, defaultValue: false)
     private var savePhotoInGallery: Bool
-    @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
-    init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, fileCacheRepository: Z) {
+    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileSystemRepository = fileSystemRepository
         self.nodeRepository = nodeRepository
         self.fileCacheRepository = fileCacheRepository
+        self.mediaUseCase = mediaUseCase
+        self.preferenceRepository = preferenceRepository
+        $savePhotoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
+        $saveVideoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
     }
     
-    func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    public func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         
         guard let node = nodeRepository.nodeForHandle(handle) else {
             completion?(.failure(.couldNotFindNodeByHandle))
@@ -74,7 +80,7 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
         }
     }
     
-    func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    public func downloadChatFileToOffline(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         
         guard let node = nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
             completion?(.failure(.couldNotFindNodeByHandle))
@@ -113,11 +119,11 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
         }
     }
 
-    func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    public func downloadFileToTempFolder(nodeHandle: HandleEntity, appData: String?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         downloadFileRepository.downloadTo(fileCacheRepository.tempFolder, nodeHandle: nodeHandle, appData: appData, progress: update, completion: completion)
     }
     
-    func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    public func downloadFileLinkToOffline(_ fileLink: FileLinkEntity, filename: String?, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         nodeRepository.nodeFor(fileLink: fileLink) { result in
             switch result {
             case .success(let node):
@@ -132,19 +138,19 @@ struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRep
         }
     }
     
-    func cancelDownloadTransfers() {
+    public func cancelDownloadTransfers() {
         downloadFileRepository.cancelDownloadTransfers()
     }
 
     //MARK: - Private
     private func tempURL(for node: NodeEntity) -> URL {
-        node.name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalURL(for: node.base64Handle, name: node.name) : fileCacheRepository.tempFileURL(for: node)
+        mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalURL(for: node.base64Handle, name: node.name) : fileCacheRepository.tempFileURL(for: node)
     }
     
     private func shouldDownloadToGallery(name: String?) -> Bool {
         guard let name = name else {
             return false
         }
-        return name.mnz_isImagePathExtension && savePhotoInGallery || name.mnz_isVideoPathExtension && saveVideoInGallery
+        return mediaUseCase.isImage(name) && savePhotoInGallery || mediaUseCase.isVideo(name) && saveVideoInGallery
     }
 }

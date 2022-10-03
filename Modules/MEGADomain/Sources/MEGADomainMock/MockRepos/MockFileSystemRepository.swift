@@ -4,13 +4,13 @@ import Foundation
 public struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     public static let newRepo = MockFileSystemRepository()
     
-    private var sizeAvailability: Int64
-    private var fileExists: Bool
-    private var copiedNode: Bool
-    private var movedNode: Bool
-    private var containsOriginalsDirectory: Bool
-    private var fileSize: UInt64
-    private var creationDate: Date
+    private let sizeAvailability: Int64
+    private let fileExists: Bool
+    private let copiedNode: Bool
+    private let movedNode: Bool
+    private let containsOriginalsDirectory: Bool
+    private let fileSize: UInt64
+    private let creationDate: Date
 
     public init(sizeAvailability: Int64 = 0,
                 fileExists: Bool = false,

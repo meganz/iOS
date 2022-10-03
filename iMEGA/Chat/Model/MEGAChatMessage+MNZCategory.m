@@ -84,7 +84,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
         URLType type = [match.URL mnz_type];
-        if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink) {
+        if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink || type == URLTypeContactLink) {
             self.MEGALink = match.URL;
 
             return YES;

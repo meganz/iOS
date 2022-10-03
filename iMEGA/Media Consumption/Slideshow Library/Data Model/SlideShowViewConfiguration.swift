@@ -6,7 +6,23 @@ enum SlideShowPlayingOrder {
     case oldest
 }
 
-struct SlideShowViewConfiguration {
+enum SlideShowTimeIntervalOption {
+    case slow
+    case normal
+    case fast
+    
+    var value: Double {
+        switch self {
+        case .slow: return 8
+        case .normal: return 4
+        case .fast: return 1
+        }
+    }
+}
+
+struct SlideShowViewConfiguration: Equatable {
     var playingOrder: SlideShowPlayingOrder
-    var timeIntervalForSlideInSeconds: Double
+    var timeIntervalForSlideInSeconds: SlideShowTimeIntervalOption
+    var isRepeat: Bool
+    var includeSubfolders: Bool
 }

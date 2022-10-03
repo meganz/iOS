@@ -1,5 +1,5 @@
 
-enum SaveMediaToPhotosErrorEntity: Error {
+public enum SaveMediaToPhotosErrorEntity: Error {
     case imageNotSaved
     case videoNotSaved
     case wrongExtensionFormat

@@ -1,4 +1,5 @@
 import Photos
+import MEGADomain
 
 struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
     static var newRepo: PhotosLibraryRepository {

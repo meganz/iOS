@@ -6,25 +6,33 @@ final class MediaUseCaseTests: XCTestCase {
     
     func testIsImage() {
         for fileExtension in ImageFileExtensionEntity().imagesSupportedExtensions {
-            let url = URL(fileURLWithPath: "image.\(fileExtension)")
+            let name = "image.\(fileExtension)"
+            XCTAssertTrue(sut.isImage(name))
+            let url = URL(fileURLWithPath: name)
             XCTAssertTrue(sut.isImage(for: url))
         }
     }
     
     func testIsNotImage() {
-        let url = URL(fileURLWithPath: "notImage.doc")
+        let name = "notImage.doc"
+        XCTAssertFalse(sut.isImage(name))
+        let url = URL(fileURLWithPath: name)
         XCTAssertFalse(sut.isImage(for: url))
     }
     
     func testIsVideo() {
         for fileExtension in VideoFileExtensionEntity().videoSupportedExtensions {
-            let url = URL(fileURLWithPath: "video.\(fileExtension)")
+            let name = "video.\(fileExtension)"
+            XCTAssertTrue(sut.isVideo(name))
+            let url = URL(fileURLWithPath: name)
             XCTAssertTrue(sut.isVideo(for: url))
         }
     }
     
     func testIsNotVideo() {
-        let url = URL(fileURLWithPath: "notVideo.pdf")
+        let name = "notVideo.pdf"
+        XCTAssertFalse(sut.isVideo(name))
+        let url = URL(fileURLWithPath: name)
         XCTAssertFalse(sut.isVideo(for: url))
     }
 }

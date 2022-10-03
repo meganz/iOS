@@ -5,7 +5,7 @@ extension ContactDetailsViewController {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
         MeetingContainerRouter(presenter: self,
-                               chatRoom: ChatRoomEntity(with: chatRoom),
+                               chatRoom: chatRoom.toChatRoomEntity(),
                                call: CallEntity(with: call),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
