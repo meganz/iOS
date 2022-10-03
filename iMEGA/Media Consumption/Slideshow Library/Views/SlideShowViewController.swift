@@ -68,6 +68,11 @@ final class SlideShowViewController: UIViewController, ViewType {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        resizeCollectionViewCellPosition()
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
@@ -76,14 +81,10 @@ final class SlideShowViewController: UIViewController, ViewType {
             navigationBar.backgroundColor = backgroundColor
             updatePlayButtonTintColor()
         }
-        
-        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass || traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
-            adjustCollectionViewPosition()
-        }
     }
     
-    private func adjustCollectionViewPosition() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+    private func resizeCollectionViewCellPosition() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) { [self] in
             adjustHeightOfTopAndBottomView()
             updateSlideInView()
         }
