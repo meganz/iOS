@@ -17,7 +17,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
             }
-        }
+        } folderUpdate: { _ in }
     }
     
     func testDownloadNode_copiedFromTempFolderError() {
@@ -33,7 +33,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
             }
-        }
+        } folderUpdate: { _ in }
     }
     
     func testDownloadNode_folderNamedInboxError() {
@@ -48,7 +48,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
             }
-        }
+        } folderUpdate: { _ in }
     }
     
     func testDownloadNode_notEnoughSpaceError() {
@@ -64,7 +64,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
             }
-        }
+        } folderUpdate: { _ in }
     }
     
     func testDownloadNode_downloadSuccess() {
@@ -82,6 +82,6 @@ class DownloadNodeUseCaseTests: XCTestCase {
             case .failure(let error):
                 XCTFail("Not expected error: \(error)")
             }
-        }
+        } folderUpdate: { _ in }
     }
 }

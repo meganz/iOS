@@ -72,16 +72,13 @@ final class CancellableTransferViewModel: ViewModelType {
             if processingComplete {
                 return
             }
-            router.showConfirmCancel()
-        case .didTapDismissConfirmCancel:
-            router.dismissConfirmCancel()
-        case .didTapProceedCancel:
             transfersCancelled = true
             if transferType == .upload {
                 uploadFileUseCase.cancelUploadTransfers()
             } else {
                 downloadNodeUseCase.cancelDownloadTransfers()
             }
+            invokeCommand?(.cancelling)
         }
     }
     
@@ -126,20 +123,16 @@ final class CancellableTransferViewModel: ViewModelType {
             return
         }
         
-        if transfersCancelled {
-            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+        if folderTransfers.isEmpty {
+            manageTransfersCompletion()
         } else {
-            if folderTransfers.isEmpty {
-                manageTransfersCompletion()
-            } else {
-                switch transferType {
-                case .download:
-                    startFolderDownloads()
-                case .upload:
-                    startFolderUploads()
-                default:
-                    break
-                }
+            switch transferType {
+            case .download:
+                startFolderDownloads()
+            case .upload:
+                startFolderUploads()
+            default:
+                break
             }
         }
     }
@@ -148,11 +141,7 @@ final class CancellableTransferViewModel: ViewModelType {
         guard folderTransfersStartedTransferring() else {
             return
         }
-        if transfersCancelled {
-            router.transferCancelled(with: Strings.Localizable.transferCancelled)
-        } else {
-            manageTransfersCompletion()
-        }
+        manageTransfersCompletion()
     }
     
     private func manageTransfersCompletion() {
@@ -162,8 +151,11 @@ final class CancellableTransferViewModel: ViewModelType {
         processingComplete = true
         alertSubscription?.cancel()
         alertSubscription = nil
-        if transferErrors.isEmpty {
-            switch self.transferType {
+        
+        if transfersCancelled {
+            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+        } else if transferErrors.isEmpty {
+            switch transferType {
             case .download, .downloadChat, .downloadFileLink:
                 router.transferSuccess(with: Strings.Localizable.downloadStarted)
             case .upload:
@@ -285,7 +277,7 @@ final class CancellableTransferViewModel: ViewModelType {
                     }
                     self?.continueFolderTransfersIfNeeded()
                 }
-            }
+            } folderUpdate: { _ in }
         }
     }
     
@@ -343,6 +335,18 @@ final class CancellableTransferViewModel: ViewModelType {
                     }
                 }
                 self?.checkIfAllTransfersStartedTranferring()
+            } folderUpdate: { [weak self] folderUpdate in
+                guard let self = self else { return }
+                switch folderUpdate.stage {
+                case .scan:
+                    self.invokeCommand?(.scanning(name: folderUpdate.transfer.fileName ?? "", folders: folderUpdate.folderCount, files: folderUpdate.fileCount))
+                case .createTree:
+                    self.invokeCommand?(.creatingFolders(createdFolders: folderUpdate.createdFolderCount, totalFolders: folderUpdate.folderCount))
+                case .transferringFiles:
+                    self.checkIfAllTransfersStartedTranferring()
+                default:
+                    break
+                }
             }
         }
     }

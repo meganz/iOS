@@ -70,22 +70,4 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
             self.presenter?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
         }
     }
-    
-    func showConfirmCancel() {
-        guard let wrapper = wrapper else {
-            return
-        }
-        presenter?.dismiss(animated: true, completion: {
-            self.presenter?.present(wrapper.confirmCancelAlertController(), animated: true)
-        })
-    }
-    
-    func dismissConfirmCancel() {
-        guard let wrapper = wrapper else {
-            return
-        }
-        presenter?.dismiss(animated: true, completion: {
-            self.presenter?.present(wrapper.cancelAlertController(), animated: true)
-        })
-    }
 }

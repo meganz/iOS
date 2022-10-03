@@ -77,7 +77,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         }
     }
     
-    func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    func downloadFile(forNodeHandle handle: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         var megaNode: MEGANode
         var nodeName: String
         
@@ -97,7 +97,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             megaNode = node
         }
         
-        downloadFile(for: megaNode, name: nodeName, to: url, completion: completion, start: start, update: update, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: self.cancelToken)
+        downloadFile(for: megaNode, name: nodeName, to: url, completion: completion, start: start, update: update, folderUpdate: folderUpdate, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: self.cancelToken)
     }
     
     func downloadChatFile(forNodeHandle handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
@@ -128,7 +128,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
     
     //MARK: - Private
-    private func downloadFile(for node: MEGANode, name: String, to url: URL, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, filename: String? = nil, appdata: String? = nil, startFirst: Bool, cancelToken: MEGACancelToken?) {
+    private func downloadFile(for node: MEGANode, name: String, to url: URL, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil, filename: String? = nil, appdata: String? = nil, startFirst: Bool, cancelToken: MEGACancelToken?) {
         let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
         let filePath = url.path + "/" + (offlineNameString ?? name)
 
@@ -140,7 +140,10 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             if let update = update {
                 transferDelegate.progress = update
             }
-            sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: self.cancelToken, delegate: transferDelegate)
+            if let folderUpdate = folderUpdate {
+                transferDelegate.folderUpdate = folderUpdate
+            }
+            sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
         } else {
             sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: self.cancelToken)
         }
