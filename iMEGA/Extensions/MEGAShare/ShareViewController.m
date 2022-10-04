@@ -98,6 +98,8 @@
         [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     }
     
+    [MEGASdk setLogToConsole:YES];
+    
     [self copyDatabasesFromMainApp];
     
     self.fetchNodesDone = NO;
@@ -106,8 +108,6 @@
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
-        
-    [MEGASdk setLogToConsole:YES];
     
     // Add observers to get notified when the extension goes to background and comes back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
