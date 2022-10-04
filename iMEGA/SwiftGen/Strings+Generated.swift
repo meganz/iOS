@@ -3372,8 +3372,10 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "general.chooseLabel.title")
       }
       public enum Error {
-        /// The following characters are not allowed: ” * / : < > ? \ |
-        public static let charactersNotAllowed = Strings.tr("Localizable", "general.error.charactersNotAllowed")
+        /// The following characters are not allowed: %@
+        public static func charactersNotAllowed(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "general.error.charactersNotAllowed", String(describing: p1))
+        }
       }
       public enum Filetype {
         /// 3D Model

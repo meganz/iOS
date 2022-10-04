@@ -24,4 +24,11 @@ extension MEGANode {
         
         return name
     }
+    
+    @objc func fileFolderRenameAlertTitle(invalidChars containsInvalidChars: Bool) -> String {
+        guard containsInvalidChars else {
+            return Strings.Localizable.rename
+        }
+        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
+    }
 }

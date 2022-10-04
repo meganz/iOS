@@ -111,4 +111,11 @@ extension CloudDriveViewController {
         let fileNodes = nodes.filter { $0.isFile() }.sort(by: sortOrder)
         return folderNodes + fileNodes
     }
+    
+    @objc func newFolderNameAlertTitle(invalidChars containsInvalidChars: Bool) -> String {
+        guard containsInvalidChars else {
+            return Strings.Localizable.newFolder
+        }
+        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
+    }
 }
