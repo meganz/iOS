@@ -596,7 +596,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if ([newFolderAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        newFolderAlertController.title = containsInvalidChars ? NSLocalizedString(@"general.error.charactersNotAllowed", @"Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code") : NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
+        newFolderAlertController.title = [self newFolderNameAlertTitleWithInvalidChars:containsInvalidChars];
         textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }

@@ -223,7 +223,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case 0:
-            return charactersNotAllowed ? Strings.Localizable.General.Error.charactersNotAllowed : Strings.Localizable.tapFileToRename
+            return charactersNotAllowed ? Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters) : Strings.Localizable.tapFileToRename
             
         default:
             return nil

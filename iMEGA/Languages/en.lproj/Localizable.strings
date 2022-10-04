@@ -460,8 +460,8 @@
 "rename"="Rename";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Enter the new name";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="The following characters are not allowed: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="The following characters are not allowed: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rename file %@?";
 /* Title for the action that allows you to replace a file. */

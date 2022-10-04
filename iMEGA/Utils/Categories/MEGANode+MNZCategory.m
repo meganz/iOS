@@ -960,17 +960,13 @@
         
         if (self.isFile || self.isFolder) {
             BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-            if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars || (self.isFile && [newName.mnz_fileNameWithoutExtension isEqualToString:@""])) {
-                enableRightButton = NO;
-                if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty) {
-                    renameAlertController.title = NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder");
-                } else if (containsInvalidChars) {
-                    renameAlertController.title = NSLocalizedString(@"general.error.charactersNotAllowed", @"Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code");
-                }
-            } else {
-                enableRightButton = YES;
-                renameAlertController.title = NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder");
-            }
+            enableRightButton = !([newName isEqualToString:@""] ||
+                                  [newName isEqualToString:nodeNameString] ||
+                                  newName.mnz_isEmpty ||
+                                  containsInvalidChars ||
+                                  (self.isFile && [newName.mnz_fileNameWithoutExtension isEqualToString:@""]));
+            
+            renameAlertController.title = [self fileFolderRenameAlertTitleWithInvalidChars:containsInvalidChars];
             textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         }
         
