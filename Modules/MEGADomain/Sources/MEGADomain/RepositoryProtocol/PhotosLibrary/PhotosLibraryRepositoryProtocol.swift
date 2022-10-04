@@ -1,5 +1,5 @@
-import MEGADomain
+import Foundation
 
-protocol PhotosLibraryRepositoryProtocol: RepositoryProtocol {
+public protocol PhotosLibraryRepositoryProtocol: RepositoryProtocol {
     func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?)
 }
