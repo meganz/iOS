@@ -2,7 +2,7 @@ import UIKit
 import MEGADomain
 
 @objc protocol PushNotificationControlProtocol where Self: UIViewController {
-    weak var tableView: UITableView? { get }
+    @objc optional func reloadDataIfNeeded()
     @objc optional func pushNotificationSettingsLoaded()
 }
 
@@ -54,7 +54,7 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
                 self.pushNotificationSettings = request.megaPushNotificationSettings
             }
             
-            self.delegate?.tableView?.reloadData()
+            self.delegate?.reloadDataIfNeeded?()
             self.hideProgress()
         }
     }

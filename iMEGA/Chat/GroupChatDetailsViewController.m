@@ -1073,6 +1073,10 @@
 
 #pragma mark - ChatNotificationControlProtocol
 
+- (void)reloadDataIfNeeded {
+    [self.tableView reloadData];
+}
+
 - (void)pushNotificationSettingsLoaded {
     GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:GroupChatDetailsSectionChatNotifications]];
     if (cell.controlSwitch != nil) {

@@ -311,14 +311,6 @@
     return [HomeScreenFactory.new createHomeScreenFrom:self];
 }
 
-- (UIViewController *)chatViewController {
-    MEGANavigationController *chatNavigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateInitialViewController];
-    if ([[chatNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
-        [[chatNavigationController.viewControllers firstObject] configureMyAvatarManager];
-    }
-    return chatNavigationController;
-}
-
 - (UIViewController *)SharedItemsViewController {
     MEGANavigationController *sharedItemsNavigationController = [[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController];
     if ([[sharedItemsNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {

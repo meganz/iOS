@@ -188,6 +188,10 @@
     [self refreshMyAvatar];
 }
 
+- (void)reloadDataIfNeeded {
+    [self.tableView reloadData];
+}
+
 - (void)pushNotificationSettingsLoaded {
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
         [self refreshContextMenuBarButton];

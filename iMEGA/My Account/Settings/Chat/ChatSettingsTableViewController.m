@@ -101,6 +101,10 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     [self updateAppearance];
 }
 
+- (void)reloadDataIfNeeded {
+    [self.tableView reloadData];
+}
+
 - (void)pushNotificationSettingsLoaded {
     [self.tableView reloadData];
 }
