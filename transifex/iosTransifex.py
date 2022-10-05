@@ -506,19 +506,8 @@ def run_pruning():
                             return False
                     elif localizable in content and 'ok' in content[localizable]:
                         if content[localizable]['ok']:
-                            print("-------------------------------------------------------------------------")
-                            for string in content[localizable]["confirm"]:
-                                print(string)
-                            print("-------------------------------------------------------------------------")
-                            print("Confirm that the strings above are no longer in use.")
-                            print("If confirmed the file without these strings will be uploaded to Transifex (Y)")
-                            print("If not confirmed nothing will be uploaded and a manual update of Localizable can be made removing strings as needed (N)")
-                            confirmed = input("Confirm removal of the specified strings (Y/N):")
-                            if confirmed.lower()[0] == "y":
-                                print("Uploading file.")
-                                run_upload(content[localizable]["file"], "Localizable", False)
-                            else:
-                                print("Nothing removed.")
+                            print("Creating updated file for review")
+                            store_file("Localizable", content[localizable]["file"])
                             return True
                         elif 'error' in content[localizable]:
                             print('Error: ' + content[localizable]['error'])
