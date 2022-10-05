@@ -38,4 +38,8 @@ public struct MockInboxRepository: InboxRepositoryProtocol {
     public func inboxNode() -> NodeEntity? {
         currentInboxNode
     }
+    
+    public func myBackupRootNode() async throws -> NodeEntity {
+        NodeEntity(name: "myBackups", handle: 1)
+    }
 }

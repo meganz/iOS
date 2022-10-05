@@ -47,4 +47,8 @@ public struct MockInboxUseCase: InboxUseCaseProtocol {
     public func isInInbox(_ node: NodeEntity) -> Bool {
         isInInbox
     }
+    
+    public func myBackupRootNode() async throws -> NodeEntity {
+        NodeEntity(name: "myBackups", handle: 1)
+    }
 }

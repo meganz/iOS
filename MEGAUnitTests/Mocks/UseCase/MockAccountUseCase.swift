@@ -1,11 +1,9 @@
 import MEGADomain
-import MEGADomainMock
 
 struct MockAccountUseCase: AccountUseCaseProtocol {
     var totalNodesCountVariable: UInt = 0
     var getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>) = .failure(.nodeNotFound)
     var accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) = .failure(.generic)
-    var existsBackupNode: Bool = true
     
     func totalNodesCount() -> UInt {
         totalNodesCountVariable
@@ -17,13 +15,5 @@ struct MockAccountUseCase: AccountUseCaseProtocol {
     
     func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void) {
         completion(accountDetails)
-    }
-    
-    func inboxNode() -> NodeEntity? {
-        nil
-    }
-    
-    func existsBackupNode() async throws -> Bool {
-        existsBackupNode
     }
 }
