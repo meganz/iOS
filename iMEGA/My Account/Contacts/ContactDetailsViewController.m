@@ -1196,6 +1196,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 #pragma mark - ChatNotificationControlProtocol
 
+- (void)reloadDataIfNeeded {
+    [self.tableView reloadData];
+}
+
 - (void)pushNotificationSettingsLoaded {
     ContactTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     if (cell.controlSwitch != nil) {

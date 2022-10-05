@@ -81,7 +81,7 @@ extension ChatNotificationControl: DNDTurnOnAlertControllerAction {
   
     var cancelAction: ((UIAlertAction) -> Void)? {
         return { _ in
-            self.delegate?.tableView?.reloadData()
+            self.delegate?.reloadDataIfNeeded?()
         }
     }
     
