@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="ล้างข้อมูลในถังขยะ";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="สไลด์โชว์";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="ตัวเลือก";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="ไม่มีไฟล์ที่บันทึกออฟไลน์ไว้";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="เปลี่ยนชื่อ";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="กรอกชื่อใหม่";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="ไม่อนุญาตให้ใช้อักขระต่อไปนี้: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="ไม่อนุญาตให้ใช้อักขระต่อไปนี้: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="เปลี่ยนชื่อไฟล์ %@ หรือไม่";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="เวอร์ชัน MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="เวอร์ชัน MEGAchat SDK";
+"megachatSdkVersion"="เวอร์ชัน MEGA chat SDK";
 /* Link to the public code of the app */
 "View Source Code"="ดูซอร์สโค้ด";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="แสดงตัวอย่าง URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="เพิ่มประสบการณ์ MEGAchat โดยที่เนื้อหา URL จะได้รับการดึงข้อมูลโดยไม่มีการเข้ารหัสลับแบบต้นทางถึงปลายทาง";
+"richPreviewsFooter"="เพิ่มประสบการณ์ MEGA chat โดยที่เนื้อหา URL จะได้รับการดึงข้อมูลโดยไม่มีการเข้ารหัสลับแบบต้นทางถึงปลายทาง";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="การโทรด้วยเสียงและสนทนาทางวิดีโอ";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1645,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="บันทึกวิดีโอในรูปภาพ";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="รูปภาพและ/หรือวิดีโอที่ดาวน์โหลดจะถูกเก็บไว้ในไลบรารีสื่อของอุปกรณ์แทนที่จะเป็นส่วนออฟไลน์";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="กล้อง";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="คุณเป็นผู้จัดการประชุมคนใหม่";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="เรากำลังอัปเกรด MEGAchat การโทรของคุณอาจไม่ได้เชื่อมต่อเนื่องจากว่าเวอร์ชันที่เข้ากันไม่ได้ เว้นแต่ทุกฝ่ายจะอัปเดตแอป MEGA เป็นเวอร์ชันล่าสุดแล้ว";
+"meetings.incompatibility.warningMessage"="เรากำลังอัปเกรด MEGA chat การโทรของคุณอาจไม่ได้เชื่อมต่อเนื่องจากว่าเวอร์ชันที่เข้ากันไม่ได้ เว้นแต่ทุกฝ่ายจะอัปเดตแอป MEGA เป็นเวอร์ชันล่าสุดแล้ว";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="ลำโพง";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="ใช่ ยกเลิกเลย";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="ไม่ ดำเนินการต่อ";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="กำลังสแกน…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="กำลังสร้างโฟลเดอร์…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="กำลังถ่ายโอน…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="กำลังยกเลิกการถ่ายโอน…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="พบ %@ และ %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="กรุณาอย่าปิดแอปพลิเคชัน";
+"transfers.cancellable.donotclose"="อย่าปิดแอป หากคุณปิด คิวการถ่ายโอนที่กำลังดำเนินการอยู่อาจสูญหายได้";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="การถ่ายโอนถูกยกเลิก";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="ไฮบริด";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="เริ่มการประชุม";
+"meetings.startConversation.contextMenu.startMeeting"="เริ่มการประชุมทันที";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="เข้าร่วมการประชุม";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
@@ -3079,7 +3111,7 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="อนุญาตให้ผู้ที่ไม่ใช่ผู้จัดการประชุมเพิ่มผู้เข้าร่วมได้";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+"meetings.startConversation.contextMenu.scheduleMeeting"="จัดกำหนดการประชุม";
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="บัญชีถูกระงับเนื่องจากละเมิดลิขสิทธิ์ เราได้ส่งอีเมลถึงคุณพร้อมข้อมูลเพิ่มเติมเกี่ยวกับเรื่องนี้แล้ว";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */

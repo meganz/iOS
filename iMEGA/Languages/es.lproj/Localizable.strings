@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Únete como invitado";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Correo electrónico o contraseña no válidos. Por favor, inténtalo de nuevo";
+"invalidMailOrPassword"="Correo electrónico o contraseña no válidos. Por favor, inténtalo de nuevo.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Has intentado acceder demasiadas veces. Por favor, espera hasta las %@ e inténtalo de nuevo.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="No tienes archivos en la Papelera";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Presentación";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="Opciones";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No tienes archivos en Sin conexión";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="Renombrar";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introduce otro nombre";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Los siguientes caracteres no están permitidos: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="Los siguientes caracteres no están permitidos: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="¿Renombrar archivo %@?";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versión del SDK de MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Versión del SDK de MEGAchat";
+"megachatSdkVersion"="Versión del SDK de MEGA chat";
 /* Link to the public code of the app */
 "View Source Code"="Ver código fuente";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Mejora tu experiencia con MEGAchat. El contenido del enlace se recuperará sin cifrado punto a punto.";
+"richPreviewsFooter"="Mejora tu experiencia con MEGA chat. El contenido del enlace se recuperará sin cifrado punto a punto.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1201,7 +1223,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Inactividad automática";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"autoAway.footerDescription"="";
+"autoAway.footerDescription"="Establece el estado como Ausente después de [X] de inactividad.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bloquear estado";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Eres el nuevo anfitrión";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Estamos actualizando MEGAchat. Es posible que la llamada no se conecte correctamente por problemas de incompatibilidad de versiones a menos que todos los participantes actualicen la app de MEGA a la última versión.";
+"meetings.incompatibility.warningMessage"="Estamos actualizando MEGA chat. Es posible que la llamada no se conecte correctamente por problemas de incompatibilidad de versiones a menos que todos los participantes actualicen la app de MEGA a la última versión.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Altavoz";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="Sí, cancelar";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="No, continuar";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Examinando…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Creando carpetas…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Transfiriendo…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Cancelando transferencias…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="No cierres la aplicación.";
+"transfers.cancellable.donotclose"="No cierres la aplicación. Si la cierras, las transferencias que aún no estén en cola se perderán.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transferencia cancelada";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3067,7 +3099,7 @@
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.description"="Ya has añadido todos sus contactos a este chat. Si quieres añadir más participantes, primero invítalos a tu lista de contactos.";
 /* Text title showed when users share the contact link */
-"invite.contactLink.share.title"="Send invitation";
+"invite.contactLink.share.title"="Enviar invitación ";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
 "notifications.message.takenDownReinstated.file"="La retirada del archivo “%@” ha sido revocada.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */

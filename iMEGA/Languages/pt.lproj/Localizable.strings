@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Entrar em uma reunião como convidado";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email ou senha inválidos. Por favor, tente novamente";
+"invalidMailOrPassword"="Email ou senha inválidos. Por favor, tente novamente.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="Lixeira vazia";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Slideshow";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="Opções";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="Renomear";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Digite o novo nome";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Os seguintes caracteres não são permitidos: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="Os seguintes caracteres não são permitidos: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Renomear o arquivo %@?";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat - versão do SDK";
+"megachatSdkVersion"="MEGA chat - versão do SDK";
 /* Link to the public code of the app */
 "View Source Code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Visualização de URLs avançadas";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Melhore a sua experiência no MEGAchat. O conteúdo de URLs será recuperado sem criptografia de ponta a ponta.";
+"richPreviewsFooter"="Melhore a sua experiência no MEGA chat. O conteúdo de URLs será recuperado sem criptografia de ponta a ponta.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chamadas de voz e vídeo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Você é o novo anfitrião";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Estamos atualizando o MEGAchat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem os seus aplicativos do MEGA à versão mais recente.";
+"meetings.incompatibility.warningMessage"="Estamos atualizando o MEGA chat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem os seus aplicativos do MEGA à versão mais recente.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Viva-voz";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="Sim, cancelar";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="Não, continuar";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Examinando…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Criando pastas…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Transferências em andamento…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Cancelando transferências…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Não feche o aplicativo.";
+"transfers.cancellable.donotclose"="Não feche o aplicativo. Ao fechar, as transferências que ainda não estiverem na lista serão perdidas.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="transferência cancelada";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Híbrido";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Fazer uma reunião";
+"meetings.startConversation.contextMenu.startMeeting"="Fazer uma reunião agora";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Entrar na reunião";
 /* Title of the Settings section where you can configure calls options of your MEGA account */

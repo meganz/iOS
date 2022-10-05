@@ -589,9 +589,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d Stunde</string>
         <key>other</key>
-        <string></string>
+        <string>%d Stunden</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -605,9 +605,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d Minute</string>
         <key>other</key>
-        <string></string>
+        <string>%d Minuten</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>
@@ -621,9 +621,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>hour</string>
+        <string>Stunde</string>
         <key>other</key>
-        <string>hours</string>
+        <string>Stunden</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
@@ -637,9 +637,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>minute</string>
+        <string>Minute</string>
         <key>other</key>
-        <string>minutes</string>
+        <string>Minuten</string>
       </dict>
     </dict>
   </dict>

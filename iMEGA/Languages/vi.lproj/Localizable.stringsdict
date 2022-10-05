@@ -516,8 +516,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>%d hour</string>
         <key>other</key>
-        <string></string>
+        <string>%d hours</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -530,8 +532,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>%d minute</string>
         <key>other</key>
-        <string></string>
+        <string>%d minutes</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>

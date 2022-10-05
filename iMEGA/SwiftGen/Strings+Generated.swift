@@ -973,7 +973,7 @@ public enum Strings {
     public static let ignore = Strings.tr("Localizable", "ignore")
     /// Image Quality
     public static let imageQuality = Strings.tr("Localizable", "Image Quality")
-    /// Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.
+    /// Images or videos downloaded will be stored in the device’s media library instead of the Offline section.
     public static let imagesAndOrVideosDownloadedWillBeStoredInTheDeviceSMediaLibraryInsteadOfTheOfflineSection = Strings.tr("Localizable", "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.")
     /// Immediately
     public static let immediately = Strings.tr("Localizable", "Immediately")
@@ -1011,7 +1011,7 @@ public enum Strings {
     public static let invalidKeyDecryptionError = Strings.tr("Localizable", "Invalid key/Decryption error")
     /// Invalid code
     public static let invalidCode = Strings.tr("Localizable", "invalidCode")
-    /// Invalid email and/or password. Please try again
+    /// Invalid email or password. Please try again.
     public static let invalidMailOrPassword = Strings.tr("Localizable", "invalidMailOrPassword")
     /// Invalid Recovery Key
     public static let invalidRecoveryKey = Strings.tr("Localizable", "invalidRecoveryKey")
@@ -1169,7 +1169,7 @@ public enum Strings {
     public static let megaCameraUploadsFolder = Strings.tr("Localizable", "MEGA CAMERA UPLOADS FOLDER")
     /// MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.
     public static let megaWillNotUseThisDataForAnyOtherPurposeAndWillNeverInteractWithYourContactsWithoutYourConsent = Strings.tr("Localizable", "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.")
-    /// MEGAchat SDK Version
+    /// MEGA chat SDK Version
     public static let megachatSdkVersion = Strings.tr("Localizable", "megachatSdkVersion")
     /// Message
     public static let message = Strings.tr("Localizable", "Message")
@@ -1763,7 +1763,7 @@ public enum Strings {
     public static let revert = Strings.tr("Localizable", "revert")
     /// You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?
     public static let richPreviewsConfirmation = Strings.tr("Localizable", "richPreviewsConfirmation")
-    /// Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.
+    /// Enhance the MEGA chat experience. URL content will be retrieved without end-to-end encryption.
     public static let richPreviewsFooter = Strings.tr("Localizable", "richPreviewsFooter")
     /// Rich URL Previews
     public static let richUrlPreviews = Strings.tr("Localizable", "richUrlPreviews")
@@ -3909,7 +3909,7 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.enterMeetingLink.title")
       }
       public enum Incompatibility {
-        /// We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.
+        /// We are upgrading MEGA chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.
         public static let warningMessage = Strings.tr("Localizable", "meetings.incompatibility.warningMessage")
       }
       public enum JoinMeeting {
@@ -4313,15 +4313,15 @@ public enum Strings {
       public enum Cancellable {
         /// Cancel transfer
         public static let cancel = Strings.tr("Localizable", "transfers.cancellable.cancel")
-        /// Cancelling transfers...
+        /// Cancelling transfers…
         public static let cancellingTransfers = Strings.tr("Localizable", "transfers.cancellable.cancellingTransfers")
         /// Interrupting the transfer process may render some of the items incomplete.
         public static let confirmCancel = Strings.tr("Localizable", "transfers.cancellable.confirmCancel")
-        /// Creating folders...
+        /// Creating folders…
         public static let creatingFolders = Strings.tr("Localizable", "transfers.cancellable.creatingFolders")
         /// No, continue
         public static let dismiss = Strings.tr("Localizable", "transfers.cancellable.dismiss")
-        /// Don't close the app. If you close, transfers not yet queued will be lost.
+        /// Don’t close the app. If you close, transfers not yet queued will be lost.
         public static let donotclose = Strings.tr("Localizable", "transfers.cancellable.donotclose")
         /// Yes, cancel
         public static let proceed = Strings.tr("Localizable", "transfers.cancellable.proceed")
@@ -4329,12 +4329,12 @@ public enum Strings {
         public static let scanning = Strings.tr("Localizable", "transfers.cancellable.scanning")
         /// Cancel transfers?
         public static let title = Strings.tr("Localizable", "transfers.cancellable.title")
-        /// Transferring...
+        /// Transferring…
         public static let transferring = Strings.tr("Localizable", "transfers.cancellable.transferring")
         /// Transfer cancelled
         public static let trasnferCancelled = Strings.tr("Localizable", "transfers.cancellable.trasnferCancelled")
         public enum CreatingFolders {
-          /// %@ / %@
+          /// %@/%@
           public static func count(_ p1: Any, _ p2: Any) -> String {
             return Strings.tr("Localizable", "transfers.cancellable.creatingFolders.count", String(describing: p1), String(describing: p2))
           }

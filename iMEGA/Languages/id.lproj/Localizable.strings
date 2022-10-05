@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Gabung Rapat sebagai Tamu";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email atau password tidak sah. Harap coba kembali";
+"invalidMailOrPassword"="Email atau kata sandi tidak valid. Silakan coba lagi.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Anda berusaha masuk terlalu banyak. Harap tunggu sampai %@ dan coba kembali.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="Kosongkan Sampah";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Tampilan slide";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="Pilihan";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Tidak ada file tersimpan untuk Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="Ubah nama";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Masukkan nama baru";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Karakter berikut tidak diperbolehkan: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="Karakter berikut tidak diperbolehkan: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Ganti nama file %@?";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versi MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Versi MEGAchat SDK";
+"megachatSdkVersion"="Versi MEGA chat SDK";
 /* Link to the public code of the app */
 "View Source Code"="Lihat Kode Sumber";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rich URL previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tingkatkan pengalaman MEGAchat. Isi URL akan diambil tanpa enkripsi end-to-end.";
+"richPreviewsFooter"="Tingkatkan pengalaman MEGA chat. Isi URL akan diambil tanpa enkripsi end-to-end.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Suara dan Panggilan Suara";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1201,7 +1223,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"autoAway.footerDescription"="";
+"autoAway.footerDescription"="Tetapkan status sebagai Pergi setelah [X]tidak aktif.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Anda adalah tuan rumah baru";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Kami sedang meningkatkan MEGAchat. Panggilan anda mungkin tidak terhubung karena ketidakcocokan versi kecuali semua pihak memperbarui aplikasi MEGA mereka ke versi terbaru.";
+"meetings.incompatibility.warningMessage"="Kami sedang meningkatkan MEGA chat. Panggilan anda mungkin tidak terhubung karena ketidakcocokan versi kecuali semua pihak memperbarui aplikasi MEGA mereka ke versi terbaru.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Suara";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="Ya, batalkan";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="Tidak, lanjutkan";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Memindai…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Membuat folder…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Mentransfer…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Membatalkan transfer…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Tolong jangan tutup aplikasinya.";
+"transfers.cancellable.donotclose"="Jangan tutup aplikasi. Jika anda menutup, transfer yang belum masuk antrian akan hilang.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Pemindahan dibatalkan";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Hybrid";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Mulai pertemuan";
+"meetings.startConversation.contextMenu.startMeeting"="Mulai rapat sekarang";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Gabung rapat";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
@@ -3079,8 +3111,8 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Izinkan non-host untuk menambahkan peserta";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+"meetings.startConversation.contextMenu.scheduleMeeting"="Jadwalkan pertemuan";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
+"account.suspension.message.copyright"="Akun ditangguhkan karena pelanggaran hak cipta. Kami mengirimi anda email dengan informasi lebih lanjut tentang ini.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";
+"account.suspension.message.nonCopyright"="Akun dihentikan karena pelanggaran Persyaratan Layanan MEGA, seperti penyalahgunaan hak orang lain, berbagi dan mengimpor data ilegal, atau penyalahgunaan sistem.";

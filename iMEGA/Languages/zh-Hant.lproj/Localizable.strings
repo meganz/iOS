@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="以訪客身份加入會議";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="無效的電子郵件地址或密碼。請重試";
+"invalidMailOrPassword"="無效的電子郵件地址或密碼。請重試。";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至%@後再重試。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -207,7 +207,29 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="空的垃圾筒";
 /* Slideshow Menu Option */
-"sharedItems.menu.slideshow.title"="投影播放";
+"sharedItems.menu.slideshow.title"="幻燈片";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="選項";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="幻燈片選項";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="在幻燈片的子資料夾中包含媒體";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="幻燈片播放速度";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="慢（8秒）";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="正常（4秒）";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="快（1秒）";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="幻燈片播放順序";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="隨機";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="循環播放";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="包含子資料夾";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="沒有任何可離線存取檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="重新命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="輸入新名稱";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="不允許使用以下字元：” * / : < > ? \ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="不允許使用以下字元：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="重新命名檔案 %@？";
 /* Title for the action that allows you to replace a file. */
@@ -499,7 +521,7 @@
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="收藏";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
-"filter"="過濾";
+"filter"="篩選";
 /* Choose type headline within filter UI */
 "cameraUploads.timeline.filter.chooseType"="選擇類型";
 /* Show items from headline within filter UI */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK軟體開發包版本";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK版本";
+"megachatSdkVersion"="MEGA chat SDK版本";
 /* Link to the public code of the app */
 "View Source Code"="查看原始碼";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="網址連結預覽";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="讓MEGAchat使用更順暢。系統將會對連結內容進行索引，此動作將不會使用點對點加密處理。";
+"richPreviewsFooter"="讓MEGA chat使用更順暢。系統將會對連結內容進行索引，此動作將不會使用點對點加密處理。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="語音與視訊通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1645,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="儲存影片至相簿";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="您下載的圖片和/或影片將儲存在裝置的媒體庫，而不是在離線存取區。";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下載的圖片或影片將儲存在裝置的媒體庫，而不是在離線存取區。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相機";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="您是新的主持人";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="我們正在升級MEGAchat。由於版本不相容，除非所有與會者將他們的MEGA應用程式更新至最新版本，否則您的通話可能無法接通。";
+"meetings.incompatibility.warningMessage"="我們正在升級MEGA chat。由於版本不相容，除非所有與會者將他們的MEGA應用程式更新至最新版本，否則您的通話可能無法接通。";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="喇叭";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="是，取消";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="否，繼續";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="正在掃描⋯";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="正在建立資料夾⋯";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="正在傳輸⋯";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="正在取消傳輸⋯";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="找到%@和%@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="請不要關閉應用程式。";
+"transfers.cancellable.donotclose"="請不要關閉應用程式。如果關閉，未在佇列中的傳輸將遺失。";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="已取消傳輸";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="混合";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="開始會議";
+"meetings.startConversation.contextMenu.startMeeting"="立即開始會議";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="加入會議";
 /* Title of the Settings section where you can configure calls options of your MEGA account */

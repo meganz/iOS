@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="以访客身份加入";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="电子邮件地址或密码无效。请重试";
+"invalidMailOrPassword"="无效的电子邮件或密码。请重试。";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="您尝试登录的次数过多。请等待至%@ 后再重试。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="回收站为空";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="幻灯片";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="选项";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="无离线文件";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="重命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="请输入新名称";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="不允许使用这些字符：” * / : < > ? \ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="不允许使用这些字符：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="是否重命名文件%@？";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK版本";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK版本";
+"megachatSdkVersion"="MEGA chat SDK版本";
 /* Link to the public code of the app */
 "View Source Code"="查看源代码";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="扩展网址预览";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="增强MEGAchat使用体验。系统将在没有端到端加密情况下对链接内容进行检索。";
+"richPreviewsFooter"="增强MEGA chat使用体验。系统将在没有端到端加密情况下对链接内容进行检索。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="语音与视频通话";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1645,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="保存视频到照片";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下载的照片和/或视频将储存在您设备的媒体资料库中，而非离线。";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下载的照片或视频将储存在您设备的媒体资料库中，而非离线。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相机";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1999,7 +2021,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="MEGA上的联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="您有一条MEGAchat消息等待查收。注册MEGA帐户即可获得20 GB永久免费存储空间。";
+"contact.invite.message"="您有一条MEGA chat消息等待查收。注册MEGA帐户即可获得20 GB永久免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="您是新的主持人";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="我们正在升级MEGAchat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";
+"meetings.incompatibility.warningMessage"="我们正在升级MEGA chat。请所有参会者将MEGA App更新至最新版本，否则您的通话可能无法连接。";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="扬声器";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="是，取消";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="否，继续";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="正在扫描…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="正在创建文件夹…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="正在传输…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="正在取消传输…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="请不要关闭应用程序。";
+"transfers.cancellable.donotclose"="请不要关闭应用程序。关闭后，未在队列中的传输将丢失。";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="传输已取消";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="混合图像";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="开始会议";
+"meetings.startConversation.contextMenu.startMeeting"="立即发起会议";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="加入会议";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
@@ -3079,7 +3111,7 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="允许非主持人添加参与者";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+"meetings.startConversation.contextMenu.scheduleMeeting"="安排会议";
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="帐户因侵犯版权而被暂停。我们已向您发送了一封电子邮件，其中包含有关此内容的更多信息。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
