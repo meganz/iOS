@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *chatSelectedView;
 @property (weak, nonatomic) IBOutlet MEGAVerticalButton *meetingSelectorButton;
 @property (weak, nonatomic) IBOutlet UIView *meetingSelectedView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) UISearchController *searchController;
 

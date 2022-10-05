@@ -5,6 +5,7 @@ public protocol ChatUseCaseProtocol {
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
     func monitorSelfChatStatusChange() -> AnyPublisher<ChatStatusEntity, Never>
+    func existsActiveCall() -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -25,5 +26,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func monitorSelfChatStatusChange() -> AnyPublisher<ChatStatusEntity, Never> {
         chatRepo.monitorSelfChatStatusChange()
+    }
+    
+    public func existsActiveCall() -> Bool {
+        chatRepo.existsActiveCall()
     }
 }

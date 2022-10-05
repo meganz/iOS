@@ -4,31 +4,28 @@ import MEGAUIKit
 
 @available(iOS 14.0, *)
 final class ChatRoomsListViewController: UIViewController {
-    var tableView: UITableView?
 
-    var globalDNDNotificationControl: GlobalDNDNotificationControl?
-    var myAvatarManager: MyAvatarManager?
-    var contextMenuManager: ContextMenuManager?
-
-    var addBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: nil, action: nil)
+    lazy var addBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: nil, action: nil)
     
     lazy var moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: nil, action: nil)
     
-    var viewModel: ChatRoomsListViewModel
+    private(set) var viewModel: ChatRoomsListViewModel
+    private let notificationCenter: NotificationCenter
 
     private var subscriptions = Set<AnyCancellable>()
 
     lazy var hostingView = UIHostingController(rootView: ChatRoomsListView(viewModel:  viewModel))
 
-    init(viewModel: ChatRoomsListViewModel) {
+    init(viewModel: ChatRoomsListViewModel,
+         notificationCenter: NotificationCenter = NotificationCenter.default
+    ) {
         self.viewModel = viewModel
+        self.notificationCenter = notificationCenter
         super.init(nibName: nil, bundle: nil)
-        self.globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureContextMenuManager()
         configureListView()
         updateTitleView()
         initSubscriptions()
@@ -38,8 +35,8 @@ final class ChatRoomsListViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
         configureNavigationBarButtons(chatMode: viewModel.chatMode)
-        refreshMyAvatar()
         viewModel.loadData()
+        viewModel.refreshMyAvatar()
     }
     
     required init?(coder: NSCoder) {
@@ -74,35 +71,19 @@ final class ChatRoomsListViewController: UIViewController {
             viewModel.$chatStatus.sink(receiveValue: { [weak self] chatStatus in
                 self?.refreshContextMenuBarButton()
                 self?.updateTitleView()
+            }),
+            notificationCenter
+                .publisher(for: .chatDoNotDisturbUpdate)
+                .sink(receiveValue: { [weak self] _ in
+                    self?.refreshContextMenuBarButton()
+                }),
+            viewModel.$myAvatarBarButton.sink(receiveValue: { [weak self] myAvatarBarButton in
+                self?.navigationItem.leftBarButtonItem = myAvatarBarButton
             })
         ]
     }
     
     @objc func addBarButtonItemTapped() {
         viewModel.addChatButtonTapped()
-    }
-}
-
-@available(iOS 14.0, *)
-extension ChatRoomsListViewController: MyAvatarPresenterProtocol {
-    func setupMyAvatar(barButton: UIBarButtonItem) {
-        navigationItem.leftBarButtonItem = barButton
-    }
-    
-    func configureMyAvatarManager() {
-        guard let navController = navigationController else { return }
-        myAvatarManager = MyAvatarManager(navigationController: navController, delegate: self)
-        myAvatarManager?.setup()
-    }
-    
-    func refreshMyAvatar() {
-        myAvatarManager?.refreshMyAvatar()
-    }
-}
-
-@available(iOS 14.0, *)
-extension ChatRoomsListViewController :PushNotificationControlProtocol {
-    func pushNotificationSettingsLoaded() {
-        refreshContextMenuBarButton()
     }
 }

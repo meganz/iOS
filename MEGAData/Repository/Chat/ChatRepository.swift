@@ -24,6 +24,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
             .eraseToAnyPublisher()
     }
     
+    public func existsActiveCall() -> Bool {
+        sdk.firstActiveCall != nil
+    }
+    
     private func chatStatusUpdateListener(forUserHandle userHandle: HandleEntity) -> ChatStatusUpdateListener {
         guard let chatStatusUpdateListener = chatStatusUpdateListeners.filter({ $0.user == userHandle}).first else {
             let chatStatusUpdateListener = ChatStatusUpdateListener(sdk: sdk, userHandle: userHandle)

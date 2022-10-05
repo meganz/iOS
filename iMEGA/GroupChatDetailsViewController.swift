@@ -160,3 +160,24 @@ extension GroupChatDetailsViewController: GroupChatDetailsViewTableViewCellDeleg
         }
     }
 }
+
+extension GroupChatDetailsViewController: PushNotificationControlProtocol {
+    func presentAlertController(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func reloadDataIfNeeded() {
+        tableView?.reloadData()
+    }
+    
+    func pushNotificationSettingsLoaded() {
+        
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: Int(GroupChatDetailsSection.chatNotifications.rawValue))) as? GroupChatDetailsViewTableViewCell else {
+            return
+        }
+        if cell.controlSwitch != nil {
+            cell.controlSwitch.isEnabled = true
+        }
+    }
+}
+
