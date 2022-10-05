@@ -24,12 +24,17 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        setUpPhotosAndAlbumsControllers()
+    }
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setUpPhotosAndAlbumsControllers()
+
         setUpPagerTabView()
         setUpPageViewController()
     }
