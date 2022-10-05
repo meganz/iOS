@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Dołącz do spotkania jako gość";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mail lub hasło jest nie prawidłowe. Spróbuj ponownie";
+"invalidMailOrPassword"="Nieprawidłowy e-mail lub hasło. Proszę spróbować ponownie.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Za dużo prób logowania. Spróbuj ponownie po %@.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="Opróżnij kosz";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Pokaz slajdów";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="Opcje";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nie masz plików w Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="Zmień nazwę";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Wprowadź nową nazwę";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Następujące znaki są niedozwolone: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="Następujące znaki są niedozwolone: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Zmiana nazwy pliku %@?";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Wersja MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Wersja MEGAchat SDK";
+"megachatSdkVersion"="Wersja MEGA chat SDK";
 /* Link to the public code of the app */
 "View Source Code"="Wyświetl kod źródłowy";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,9 +1213,9 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Zaawansowane podglądy adresów URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Zwiększ możliwości MEGAchat. Linki będą pobierane bez szyfrowania.";
+"richPreviewsFooter"="Zwiększ możliwości MEGA chat. Linki będą pobierane bez szyfrowania.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Rozmowy i Video";
+"voiceAndVideoCalls"="Połączenia głosowe i wideo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Używaj transferu z telefonu";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Jesteś nowym prowadzącym";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Aktualizujemy MEGAchat. Twoje rozmowy mogą nie być połączone z powodu niezgodności wersji, chyba że wszystkie strony zaktualizują swoje aplikacje MEGA do najnowszej wersji.";
+"meetings.incompatibility.warningMessage"="Aktualizujemy MEGA chat. Twoje rozmowy mogą nie być połączone z powodu niezgodności wersji, chyba że wszystkie strony zaktualizują swoje aplikacje MEGA do najnowszej wersji.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Głośnik";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2705,7 +2727,7 @@
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII Text";
 /* File extension: .asf. Commercial names should be stay on English */
-"general.filetype.asf"="Streaming Video";
+"general.filetype.asf"="Streaming wideo";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
 "general.filetype.asx"="Advanced Stream";
 /* File extension: .avi. Name of a multimedia container format */
@@ -2747,7 +2769,7 @@
 /* File extension: .flac. Commercial names should be stay on English */
 "general.filetype.flac"="Lossless Audio";
 /* File extension: .flv. Commercial names should be stay on English */
-"general.filetype.flv"="Flash Video";
+"general.filetype.flv"="Flash wideo";
 /* File extension: .fnt. Commercial names should be stay on English */
 "general.filetype.fnt"="Windows Font";
 /* File extension: .fon. Commercial names should be stay on English */
@@ -2789,13 +2811,13 @@
 /* File extensions: .mid and .midi. Commercial names should be stay on English */
 "general.filetype.mid"="MIDI Audio";
 /* File extension: .mkv. Commercial names should be stay on English */
-"general.filetype.mkv"="MKV Video";
+"general.filetype.mkv"="MKV wideo";
 /* File extension: .mov. Commercial names should be stay on English */
 "general.filetype.mov"="QuickTime Movie";
 /* File extension: .mp3. Commercial names should be stay on English */
 "general.filetype.mp3"="MP3 Audio";
 /* File extension: .mp4. Commercial names should be stay on English */
-"general.filetype.mp4"="MP4 Video";
+"general.filetype.mp4"="MP4 wideo";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
 "general.filetype.mpeg"="MPEG Movie";
 /* File extension: .msi. Commercial names should be stay on English */
@@ -2857,11 +2879,11 @@
 /* File extension: .wav. Commercial names should be stay on English */
 "general.filetype.wav"="Wave Audio";
 /* File extension: .webm. Commercial names should be stay on English */
-"general.filetype.webm"="WebM Video";
+"general.filetype.webm"="WebM wideo";
 /* File extension: .wma. Commercial names should be stay on English */
 "general.filetype.wma"="WM Audio";
 /* File extension: .wmv. Commercial names should be stay on English */
-"general.filetype.wmv"="WM Video";
+"general.filetype.wmv"="WM wideo";
 /* File extension: .xml. Commercial names should be stay on English */
 "general.filetype.xml"="XML Document";
 /* File extension: .zip. Commercial names should be stay on English */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="Tak, anuluj";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="Nie, kontynuuj";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Skanowanie…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Tworzenie folderów…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Przesyłanie…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Anulowanie transferów…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Prosimy nie zamykać aplikacji.";
+"transfers.cancellable.donotclose"="Nie zamykaj aplikacji. Jeśli zamkniesz, przelewy, które jeszcze nie są w kolejce, zostaną utracone.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Przesyłanie anulowane";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Hybrydowy";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Rozpocznij spotkanie";
+"meetings.startConversation.contextMenu.startMeeting"="Rozpocznij spotkanie teraz";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Dołącz do spotkania";
 /* Title of the Settings section where you can configure calls options of your MEGA account */

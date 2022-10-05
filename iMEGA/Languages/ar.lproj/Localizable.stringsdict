@@ -877,17 +877,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string></string>
+        <string>%d ساعة</string>
         <key>one</key>
-        <string></string>
+        <string>%d ساعة</string>
         <key>two</key>
-        <string></string>
+        <string>%d ساعتان</string>
         <key>few</key>
-        <string></string>
+        <string>%d ساعات</string>
         <key>many</key>
-        <string></string>
+        <string>%d ساعة</string>
         <key>other</key>
-        <string></string>
+        <string>%d ساعة</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -901,17 +901,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string></string>
+        <string>%d دقيقة</string>
         <key>one</key>
-        <string></string>
+        <string>%d دقيقة</string>
         <key>two</key>
-        <string></string>
+        <string>%d دقيقتين</string>
         <key>few</key>
-        <string></string>
+        <string>%d دقائق</string>
         <key>many</key>
-        <string></string>
+        <string>%d دقيقة</string>
         <key>other</key>
-        <string></string>
+        <string>%d دقيقة</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>
@@ -924,10 +924,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ساعة</string>
         <key>one</key>
-        <string>hour</string>
+        <string>ساعة</string>
+        <key>two</key>
+        <string>ساعتان</string>
+        <key>few</key>
+        <string>ساعات</string>
+        <key>many</key>
+        <string>ساعة</string>
         <key>other</key>
-        <string>hours</string>
+        <string>ساعة</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
@@ -940,10 +948,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>دقيقة</string>
         <key>one</key>
-        <string>minute</string>
+        <string>دقيقة</string>
+        <key>two</key>
+        <string>دقيقتان</string>
+        <key>few</key>
+        <string>دقائق</string>
+        <key>many</key>
+        <string>دقيقة</string>
         <key>other</key>
-        <string>minutes</string>
+        <string>دقيقة</string>
       </dict>
     </dict>
   </dict>

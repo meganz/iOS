@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="انضم إلى الاجتماع كضيف";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="البريد الإلكتروني و/أو كلمة المرور غير صالح. حاول مرة اخرى";
+"invalidMailOrPassword"="البريد الإلكتروني أو كلمة المرور غير صالحين. حاول مرة أخرى.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة. الرجاء الانتظار حتى %@ ثم المحاولة ثانية.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="سلة المحذوفات فارغة";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="عرض الشرائح";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="الخيارات";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="خيارات عرض الشرائح";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="قم بتضمين الوسائط المتعددة في المجلدات الفرعية في عرض الشرائح";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="سرعة عرض الشرائح";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="بطيئة (8 ثوان)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="عادية (4 ثوان)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="سريعة (1 ثانية)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="ترتيب عرض الشرائح";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="عشوائي";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="تكراري";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="تشمل المجلدات الفرعية";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="لا توجد ملفات محفوظة دون اتصال";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="تغيير الاسم";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="أدخل الاسم الجديد";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="المحارف التالية غير مسموح بها: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="المحارف التالية غير مسموح بها: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="أعد تسمية الملفّ %@؟";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="نسخة MEGA ميغا SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="نسخة حزمة أدوات تطوير البرمجيات لمحادثة ميغا MEGAchat";
+"megachatSdkVersion"="نسخة حزمة أدوات تطوير البرمجيات لمحادثة ميغا MEGA chat";
 /* Link to the public code of the app */
 "View Source Code"="الاطلاع على الرماز المصدري";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="عرض الروابط الإلكترونية المعززة URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="قم بجعل تجربة المحادثة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف.";
+"richPreviewsFooter"="قم بجعل تجربة المحادثة على MEGA chat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="اتصالات فيديو وصوت";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1201,7 +1223,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="بعيد-تلقائياً";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"autoAway.footerDescription"="";
+"autoAway.footerDescription"="ضع حالة بعيد بعد [X] من عدم النشاط.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="استمرار الحالة";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1645,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="حفظ مقاطع الفيديو في تطبيق الصور";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="سيتم تخزين الصور و/ أو مقاطع الفيديو التي تم تنزيلها في مكتبة الوسائط المتعددة بالجهاز بدلاً من قسم غير متصل بالانترنت.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="سيتم تخزين الصور أو مقاطع الفيديو التي تم تنزيلها في مكتبة الوسائط المتعددة بالجهاز بدلاً من قسم غير متصل بالانترنت.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="الكاميرا";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="أنت المُضيف الجديد للمكالمة";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="نحن بصدد ترقية محادثات ميغا MEGAchat. قد لا تكون مكالماتك متصلة بسبب عدم توافق الإصدار ما لم تقم جميع الأطراف بتحديث تطبيقات ميغا MEGA الخاصة بهم إلى أحدث إصدار.";
+"meetings.incompatibility.warningMessage"="نحن بصدد ترقية محادثات ميغا MEGA chat. قد لا تكون مكالماتك متصلة بسبب عدم توافق الإصدار ما لم تقم جميع الأطراف بتحديث تطبيقات ميغا MEGA الخاصة بهم إلى أحدث إصدار.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="مكبر الصوت";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="نعم، إلغاء";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="لا، استمر";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="جاري الفحص…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="جاري انشاء مجلدات…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="قيد التراسل…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="جاري إلغاء عمليات التراسل…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="تم إيجاد %@ و %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="من فضلك لا تغلق التطبيق.";
+"transfers.cancellable.donotclose"="لا تغلق التطبيق. إذا أغلقته فستفقد عمليات تراسل المعطيات التي لم يتم وضعها في قائمة الانتظار.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="تم الغاء التراسل";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="مدمجة";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="ابدأ الاجتماع";
+"meetings.startConversation.contextMenu.startMeeting"="ابدأ الاجتماع الآن";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="أنضم إلى الاجتماع";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
@@ -3079,8 +3111,8 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="السماح لغير المضيفين بإضافة مشاركين";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+"meetings.startConversation.contextMenu.scheduleMeeting"="جدول اجتماع";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
+"account.suspension.message.copyright"="تم تعليق الحساب بسبب انتهاكات حقوق النشر. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على مزيد من المعلومات حول هذا الموضوع.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";
+"account.suspension.message.nonCopyright"="تم إنهاء الحساب بسبب خرق لشروط خدمة ميغا MEGA ، مثل إساءة استخدام حقوق الآخرين أو مشاركة واستيراد البيانات غير القانونية  أو إساءة استخدام النظام.";

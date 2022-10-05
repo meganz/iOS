@@ -661,11 +661,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d ora</string>
         <key>many</key>
-        <string></string>
+        <string>%d di ore</string>
         <key>other</key>
-        <string></string>
+        <string>%d ore</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -679,11 +679,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d minuto</string>
         <key>many</key>
-        <string></string>
+        <string>%d di minuti</string>
         <key>other</key>
-        <string></string>
+        <string>%d minuti</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>

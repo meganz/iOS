@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="ゲストとしてミーティングに参加";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="メールアドレスまたはパスワードが無効です。もう一度お試しください";
+"invalidMailOrPassword"="メールアドレスかパスワードが無効です。もう一度お試しください。";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="あなたは何度もログインしようとしました。%@まで待ってからもう一度お試しください。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="空のごみ箱";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="スライドショー";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="オプション";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="スライドショーのオプション";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="スライドショーのサブフォルダにメディアを含める";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="スライドショーの速度";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="遅い（8 秒）";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="通常（4秒）";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="早い（1 秒）";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="スライドショーの順番";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="シャッフル";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="リピート";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="サブフォルダを含める";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="オフライン用に保存されたファイルはありません";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="名前を変更";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="新しい名前を入力してください";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="次の文字は許可されていません： ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="次の文字は許可されていません：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="ファイル%@の名前を変更しますか？";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDKバージョン";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDKバージョン";
+"megachatSdkVersion"="MEGA chat SDKバージョン";
 /* Link to the public code of the app */
 "View Source Code"="ソースコードを見る";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="リッチURLプレビュー";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="MEGAchat体験を強化します。URLコンテンツがエンドツーエンドの暗号化なしで取得されます。";
+"richPreviewsFooter"="MEGA chat体験を強化します。URLコンテンツがエンドツーエンドの暗号化なしで取得されます。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="あなたは新しい主催者です";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="MEGAchatをバージョンアップしています。すべての参加者がMEGAアプリを最新版にアップデートしないと、バージョンの互換性がないために、通話がつながらない場合がございます。";
+"meetings.incompatibility.warningMessage"="MEGA chatをバージョンアップしています。すべての参加者がMEGAアプリを最新版にアップデートしないと、バージョンの互換性がないために、通話がつながらない場合がございます。";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="スピーカー";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="はい、キャンセル";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="いいえ、続けます";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="スキャン中…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="フォルダを作成中…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="転送中…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="転送をキャンセル中…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="%@と%@を見つけました";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="アプリケーションを終了しないでください。";
+"transfers.cancellable.donotclose"="アプリを閉じないでください。閉じると、まだキューに入れられていない転送は失われます。";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="転送がキャンセルされました";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="ハイブリッド";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="ミーティング開始";
+"meetings.startConversation.contextMenu.startMeeting"="今すぐミーティングを開始";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="ミーティングに参加";
 /* Title of the Settings section where you can configure calls options of your MEGA account */

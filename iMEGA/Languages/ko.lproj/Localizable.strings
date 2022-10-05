@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="손님으로 회의에 참석";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="잘못된 이메일 또는 암호입니다. 다시 시도하세요";
+"invalidMailOrPassword"="잘못된 이메일 또는 암호입니다. 다시 시도하세요.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="로그인 시도를 너무 많이 했습니다. %@까지 기다렸다가 다시 시도하세요.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="휴지통 비우기";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="슬라이드쇼";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="옵션";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="오프라인용으로 저장된 파일 없음";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -269,9 +291,9 @@
 /* Button title to 'Save' the selected option */
 "save"="저장";
 /* Sort by option (1/6). This one orders the files alphabethically */
-"nameAscending"="이름 (오름차순)";
+"nameAscending"="이름(오름차순)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="이름 (내림차순)";
+"nameDescending"="이름(내림차순)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
 "largest"="큰 순";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
@@ -438,8 +460,8 @@
 "rename"="이름 바꾸기";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="새 이름을 입력하세요";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="다음의 글자는 허용되지 않습니다: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="다음의 문자는 허용되지 않습니다: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="%@ 파일의 이름을 바꿀까요?";
 /* Title for the action that allows you to replace a file. */
@@ -569,11 +591,11 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="공유 제거";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="이 공유를 삭제하시겠습니까? (연락처 1명과 공유됨)";
+"removeOneShareOneContactMessage"="이 공유를 삭제하시겠습니까?(연락처 1명과 공유됨)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="이 공유를 삭제하시겠습니까? (연락처 %d명과 공유됨)";
+"removeOneShareMultipleContactsMessage"="이 공유를 삭제하시겠습니까?(연락처 %d명과 공유됨)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="이 공유들을 삭제하시겠습니까? (연락처 %d명과 공유됨)";
+"removeMultipleSharesMultipleContactsMessage"="이 공유들을 삭제하시겠습니까?(연락처 %d명과 공유됨)";
 /* Message shown when a share have been removed */
 "shareRemoved"="공유 제거됨";
 /* Message shown when some shares have been removed */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK 버전";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK 버전";
+"megachatSdkVersion"="MEGA chat SDK 버전";
 /* Link to the public code of the app */
 "View Source Code"="소스 코드 보기";
 /* Title for the section "Acknowledgements" of the app */
@@ -805,21 +827,21 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="삭제 승인";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="파일 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFileToRubbishBinMessage"="파일 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="파일 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFilesToRubbishBinMessage"="파일 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFolderToRubbishBinMessage"="폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 취소할 수 없습니다)";
+"removeFoldersToRubbishBinMessage"="폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 취소할 수 없습니다)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="파일 1개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFileFolderToRubbishBinMessage"="파일 1개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="파일 1개와 폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFileFoldersToRubbishBinMessage"="파일 1개와 폴더 %d개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="파일 %d개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFilesFolderToRubbishBinMessage"="파일 %d개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="파일 [A]개와 폴더 [B]개를 완전히 삭제하려고 합니다. 진행하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
+"removeFilesFoldersToRubbishBinMessage"="파일 [A]개와 폴더 [B]개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="MEGA에서 파일 1개 삭제됨";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -961,7 +983,7 @@
 /*  */
 "howItWorks"="작동 원리";
 /*  */
-"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 애플리케이션 중 하나를 설치[/S]해야합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
+"howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 애플리케이션 중 하나를 설치[/S]해야합니다(데스크톱 앱이나 모바일 앱 중 하나)";
 /*  */
 "howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구가 이메일을 사용하여 가입하기 전에 여기에 입력하면 할당량을 얻을 것입니다.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1097,7 +1119,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="16% 할인";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="잘못된 결제 %@ (%ld)";
+"wrongPurchase"="잘못된 결제 %@(%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="인앱 결제가 해제되었습니다. iOS 설정에서 활성화 해주세요";
 /* Error message shown when the selected product doesn't exist */
@@ -1139,11 +1161,11 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="디버그 모드 활성화";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="오프라인 영역에 기록이 생성됩니다 (MEGAiOS.log). 기록은 당신의 계정과 관련된 정보를 포함하고 있습니다.";
+"enableDebugMode_message"="오프라인 영역에 기록이 생성됩니다(MEGAiOS.log). 기록은 당신의 계정과 관련된 정보를 포함하고 있습니다.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="디버그 모드 비활성화";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="로그 (MEGAiOS.log)가 오프라인 섹션에서 삭제됩니다.";
+"disableDebugMode_message"="로그(MEGAiOS.log)가 오프라인 섹션에서 삭제됩니다.";
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="정말 이 항목을 오프라인에서 삭제하시겠습니까?";
 /* Alert message shown when the user remove various items from the Offline section */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="고급 URL 미리 보기";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="MEGAchat 경험을 향상하세요. URL 컨텐츠가 종단간 암호화 없이 수신됩니다.";
+"richPreviewsFooter"="MEGA chat 경험을 향상하세요. URL 컨텐츠가 종단간 암호화 없이 수신됩니다.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1283,7 +1305,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="불러올 수 없습니다. [RED]탭하여 다시 시도하세요[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간 (이용자가 제어하는) 암호화를 통해 보호합니다:";
+"chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간(이용자가 제어하는)암호화를 통해 보호합니다:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]기밀성.[/S] 오직 작성자와 의도된 수신자만 항목을 복호화하고 읽을 수 있습니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1365,7 +1387,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu개의 읽지 않은 메시지";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 탭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 탭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
+"autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 당신의 MEGA Pro 구독의 자동 결제를 끌 수 있습니다. 구독을 관리하려면, 휴대 전화에서 앱 스토어를 탭하여 페이지 하단에서 애플 ID로 로그인하세요(만약 하지 않았다면)그리고 ID 보기를 탭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA Pro 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1703,7 +1725,7 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 관리를 활성화하거나 비활성화합니다.\n파일 버전 관리를 해제하는 것이 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 관리가 해제되면, 파일이 업데이트되면 현재 버전이 새 버전으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다). 파일 버전 관리를 해제하시겠습니까?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 관리가 해제되면, 파일이 업데이트되면 현재 버전이 새 버전으로 교체됩니다(그리고 파일의 변경점의 기록되지 않습니다). 파일 버전 관리를 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="파일 버전";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -2097,9 +2119,9 @@
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화하면, 위치 정보가 사진에 포함됩니다. 공유할 때 주의하세요.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
-"Send (%d)"="전송 (%d)";
+"Send (%d)"="전송(%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="업로드 (%d)";
+"Upload (%d)"="업로드(%d)";
 /* Used in Photos app browser album listing screen. */
 "Albums"="앨범";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
@@ -2215,7 +2237,7 @@
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
 "Configure default launch section."="기본 실행 섹션 설정.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기).";
+"Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정(리스트 또는 미리 보기).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="폴더마다";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
@@ -2227,7 +2249,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="정렬 순서를 개별 폴더 별로 다르게 하거나, 모든 폴더에 같은 순서를 사용하도록 설정하세요.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="보기 모드 (목록 또는 미리 보기)를 폴더마다 설정할지, 또는 모든 폴더에 같은 보기 모드를 적용할지 선택하세요.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="보기 모드(목록 또는 미리 보기)를 폴더마다 설정할지, 또는 모든 폴더에 같은 보기 모드를 적용할지 선택하세요.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="로그아웃하면, 진행중인 전송은 취소됩니다.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2447,7 +2469,7 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="당신의 사생활";
 /* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="우리는 제3자를 통한 것을 포함하여, 당신에게 서비스를 제공하고, 당신의 경험을 향상시키기 위하여 쿠키 그리고 이와 유사한 기술 (“쿠키”)을 사용합니다. 방문 초기에 우리의 쿠키 사용에 동의하거나 쿠키 설정에서 쿠키를 개인화 할 수 있습니다. 자세한 내용은 우리의 [A]쿠키 정책[/A]에서 읽어보세요.";
+"dialog.cookies.description"="우리는 제3자를 통한 것을 포함하여, 당신에게 서비스를 제공하고, 당신의 경험을 향상시키기 위하여 쿠키 그리고 이와 유사한 기술(“쿠키”)을 사용합니다. 방문 초기에 우리의 쿠키 사용에 동의하거나 쿠키 설정에서 쿠키를 개인화 할 수 있습니다. 자세한 내용은 우리의 [A]쿠키 정책[/A]에서 읽어보세요.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="쿠키 허용";
 /* Cookie settings dialog text. */
@@ -2519,7 +2541,7 @@
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="항목의 인코딩을 알 수 없어서 파일을 편집할 수 없습니다.";
 /* Show the node owner's name. The %@ is the owner's name */
-"cloudDrive.nodeInfo.owner"="%@ (소유자)";
+"cloudDrive.nodeInfo.owner"="%@(소유자)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-복구키";
 /* Hint text to display user's current email */
@@ -2527,7 +2549,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="업그레이드 하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="클라우드 드라이브가 거의 찼습니다. Pro 계정으로 지금 업그레이드 하고 최대 %@TB (%@GB)의 클라우드 저장 공간을 받으세요.";
+"dialog.storage.almostFull.detail"="클라우드 드라이브가 거의 찼습니다. Pro 계정으로 지금 업그레이드 하고 최대 %@TB(%@GB)의 클라우드 저장 공간을 받으세요.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="클라우드 저장소가 가득 찼습니다. MEGA Pro 요금제로 업그레이드 하고 저장 공간을 늘리고 추가적인 혜택을 누리세요. 만약 업그레이드를 하지 않거나 일부 데이터를 삭제하지 않으면 당신의 계정이 잠길 수 있습니다. 자세한 정보는 당신께 보내드린 이메일을 참고하세요.";
 /* Over Disk Quota paywall not final title. */
@@ -2603,7 +2625,7 @@
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="링크 공유";
 /* Meetings: Floating panel participants count header */
-"meetings.panel.ParticipantsCount"="참여자 (%d)";
+"meetings.panel.ParticipantsCount"="참여자(%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="주최자";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="당신은 새로운 주최자입니다";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="MEGAchat을 업그레이드하고 있습니다. 모든 참가자들이 MEGA 앱을 최신 버전으로 업데이트할 때까지 버전 호환성 문제로 통화가 연결되지 않을 수 있습니다.";
+"meetings.incompatibility.warningMessage"="MEGA chat을 업그레이드하고 있습니다. 모든 참가자들이 MEGA 앱을 최신 버전으로 업데이트할 때까지 버전 호환성 문제로 통화가 연결되지 않을 수 있습니다.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="스피커";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="네, 취소합니다";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="아니오, 계속합니다";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="스캔 중…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="폴더 생성 중…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="전송중…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="전송 취소 중…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="%@와/과 %@을/를 찾았습니다";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="애플리케이션을 닫지 마세요.";
+"transfers.cancellable.donotclose"="앱을 닫지 마세요. 만약 닫으면, 아직 대기열에 들어가지 않은 전송이 손실됩니다.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="전송 취소됨";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="혼합";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="회의 시작";
+"meetings.startConversation.contextMenu.startMeeting"="지금 회의 시작";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="회의 참가";
 /* Title of the Settings section where you can configure calls options of your MEGA account */

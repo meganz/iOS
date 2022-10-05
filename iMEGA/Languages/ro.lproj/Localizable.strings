@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Alătură-te întâlnirii ca invitat";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mailul sau parola nevalide. Te rugăm să încerci din nou";
+"invalidMailOrPassword"="E-mail sau parolă nevalide. Te rugăm să încerci din nou.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la %@ și să încerci din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
 /*  */
-"folderLinkUnavailableText2"="The folder link has been removed as it violated our Terms of Service.";
+"folderLinkUnavailableText2"="Linkul folderului a fost eliminat deoarece a încălcat Termenii de utilizare a serviciului.";
 /*  */
 "folderLinkUnavailableText3"="URL nevalid - linkul pe care încerci să-l accesezi nu există";
 /*  */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="Coș de gunoi gol";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Expunere de diapozitive";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="Opțiuni";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Niciun fișier salvat pentru offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="Redenumește";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introdu numele nou";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Următoarele caractere nu sunt permise: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="Următoarele caractere nu sunt permise: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Redenumești fișierul %@?";
 /* Title for the action that allows you to replace a file. */
@@ -493,13 +515,13 @@
 /* Timeline title within CU tab */
 "cameraUploads.timeline.title"="Cronologie";
 /* Timeline empty with all media filter enable */
-"cameraUploads.timeline.allMedia.empty.title"="No media found";
+"cameraUploads.timeline.allMedia.empty.title"="Niciun element media găsit";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albume";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favorite";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
-"filter"="Filtru";
+"filter"="Filtrează";
 /* Choose type headline within filter UI */
 "cameraUploads.timeline.filter.chooseType"="Alege tipul";
 /* Show items from headline within filter UI */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiunea MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Versiunea SDK MEGAchat";
+"megachatSdkVersion"="Versiunea SDK MEGA chat";
 /* Link to the public code of the app */
 "View Source Code"="Vezi codul sursă";
 /* Title for the section "Acknowledgements" of the app */
@@ -841,7 +863,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmă parola";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Parola ta a fost modificată.";
+"passwordChanged"="Parola ți-a fost modificată.";
 /* An option to reset the password. */
 "forgotPassword"="Ai uitat parola?";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -857,7 +879,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci noua parolă.";
 /*  */
-"yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes. Te rugăm să te autentifici în contul tău acum.";
+"yourPasswordHasBeenReset"="Parola ți-a fost resetată cu succes. Te rugăm să te autentifici în cont acum.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Trimite";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -867,9 +889,9 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Începe un cont nou";
 /*  */
-"yourAccounHasBeenParked"="Contul tău vechi a fost parcat cu succes. Poți acum să te autentifici în contul tău nou.";
+"yourAccounHasBeenParked"="Contul tău vechi a fost parcat cu succes. Poți acum să te autentifici în contul nou.";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="New email address";
+"newEmail"="Adresă de e-mail nouă";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirmă e-mailul";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -889,7 +911,7 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Felicitări, noua adresă de e-mail pentru acest cont MEGA este: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="Închide alte sesiuni";
+"closeOtherSessions"="Închide celelalte sesiuni";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesiuni închise";
 /* Section title where you can change the app's passcode */
@@ -913,7 +935,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centru de ajutor";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Intră în beta";
+"Join Beta"="Alătură-te versiunii beta";
 /* Title to rate the app */
 "rateUsLabel"="Evaluează-ne";
 /* Title of the Transfers section */
@@ -953,11 +975,11 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invită-ți prietenii";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each referral. \nValid for 365 days.";
+"account.achievement.referral.subtitle"="%@ spațiu de stocare pentru fiecare recomandare. \nValabili timp de 365 de zile.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selectează din contactele de pe telefon sau introdu mai multe adrese de e-mail";
 /*  */
-"insertYourFriendsEmails"="Introdu e-mailurile prietenilor:";
+"insertYourFriendsEmails"="Inserează e-mailurile prietenilor:";
 /*  */
 "howItWorks"="Cum funcționează";
 /*  */
@@ -1163,7 +1185,7 @@
 /* Empty Conversations section */
 "noConversations"="Nicio conversație";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești în siguranță cu contactele tale folosind criptarea capăt-la-capăt";
+"Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești securizat cu contactele tale folosind criptarea capăt-la-capăt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activează";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Previzualizări îmbogățite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Îmbunătățește experiența MEGAchat. Conținutul URL-urilor va fi preluat fără criptare capăt-la-capăt.";
+"richPreviewsFooter"="Îmbunătățește experiența MEGA chat. Conținutul URL-urilor va fi preluat fără criptare capăt-la-capăt.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1201,7 +1223,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Plecat automat";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"autoAway.footerDescription"="";
+"autoAway.footerDescription"="Set status as Away after [X] of inactivity.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistența statusului";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1385,7 +1407,7 @@
 /* Label to show that a request error occurs during a SDK operation. */
 "Request failed, retrying"="Cerere eșuată, se reîncearcă";
 /* Label to show that the rate limit has been reached during a SDK operation. */
-"Rate limit exceeded"="Limita de rată depășită";
+"Rate limit exceeded"="Limita ratei depășită";
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="Eșec definitiv";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
@@ -1403,7 +1425,7 @@
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */
 "Already exists"="Există deja";
 /* Label to show that an error related with an Incomplete SDK operation. */
-"Incomplete"="Incomplet";
+"Incomplete"="Incompletă";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
 "Invalid key/Decryption error"="Eroare la decriptare";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
@@ -1415,7 +1437,7 @@
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Temporar indisponibil";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
-"Connection overflow"="Conexiune excedentă";
+"Connection overflow"="Depășirea numărului de conexiuni";
 /* Label to show that an error related with an write error occurs during a SDK operation. */
 "Write error"="Eroare la scriere";
 /* Label to show that an error related with an read error occurs during a SDK operation. */
@@ -1425,7 +1447,7 @@
 /* Error shown when terms of service are breached during download. */
 "Terms of Service breached"="Au fost încălcați Termenii de utilizare a serviciului";
 /* SDK error returned when an upload would produce recursivity */
-"Upload produces recursivity"="Transferul a eșuat din cauza unei structuri recursive a directoarelor";
+"Upload produces recursivity"="Transferul a eșuat din cauza unei structuri recursive a directorului";
 /* Error shown when downloading a file that has violated Terms of Service. */
 "transfer.error.termsOfServiceViolation"="A încălcat Termenii de utilizare a serviciului";
 /* Error shown when SSL check has failed */
@@ -1443,7 +1465,7 @@
 /* SDK error returned when the billing failed */
 "Billing failed"="Facturare eșuată";
 /* SDK error returned when an operation is rejected due to fraud protection */
-"Rejected by fraud protection"="Respins(ă) de protecția împotriva fraudelor";
+"Rejected by fraud protection"="Respinsă de protecția împotriva fraudelor";
 /* SDK error returned when there are too many requests */
 "Too many requests"="Prea multe cereri";
 /* SDK error returned when there is a balance error */
@@ -1549,7 +1571,7 @@
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Continuă pentru a te deconecta";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordLogoutText"="Ești pe cale să te deconectezi, te rugăm să îți testezi parola pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale MEGA.";
+"testPasswordLogoutText"="Ești pe cale să te deconectezi, te rugăm să testezi parola pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, îți vei pierde accesul la datele MEGA.";
 /* state previous to import a file */
 "loading"="Se încarcă…";
 /*  */
@@ -1935,7 +1957,7 @@
 /* Title for the recents section. */
 "Recents"="Recente";
 /* Title show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.title"="Recent Activity Hidden";
+"recents.emptyState.activityHidden.title"="Activitatea pentru Recente este ascunsă";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.button"="Show Activity";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
@@ -2377,7 +2399,7 @@
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
 "chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Automatically delete messages older than %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
-"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Delete all messages and files shared in this conversation. This action is irreversible.";
+"Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Șterge toate mesajele și fișierele partajate în această conversație. Această acțiune este ireversibilă.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
 "Clear Messages Older Than"="Clear Messages Older Than";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
@@ -2509,7 +2531,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Change Setting";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Deconectarea șterge conținutul tău offline.";
+"offline.logOut.warning.message"="Deconectarea îți șterge conținutul offline.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Proprietarul partajării depășește cota de stocare.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2519,19 +2541,19 @@
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
 /* Show the node owner's name. The %@ is the owner's name */
-"cloudDrive.nodeInfo.owner"="%@ (Owner)";
+"cloudDrive.nodeInfo.owner"="%@ (Proprietar)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-CHEIEDERECUPERARE";
 /* Hint text to display user's current email */
-"account.changeEmail.currentEmail"="Current email address";
+"account.changeEmail.currentEmail"="Adresa de e-mail actuală";
 /* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Please Upgrade";
+"dialog.storage.odq.title"="Te rugăm să faci upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+"dialog.storage.almostFull.detail"="Unitatea ta cloud este aproape plină. Upgradează acum la un cont Pro și obține până la %@ TB (%@ GB) spațiu de stocare în cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
 /* Over Disk Quota paywall not final title. */
-"dialog.storage.paywall.notFinal.title"="Account Locked";
+"dialog.storage.paywall.notFinal.title"="Cont blocat";
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="Datele tale sunt în pericol!";
 /* Over Disk Quota paywall not final detail message. */
@@ -2545,59 +2567,59 @@
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obține bonusul";
 /* Backup setup warning title */
-"dialog.backup.setup.title"="Set up Backup";
+"dialog.backup.setup.title"="Configurează backupul";
 /* Backup setup warning message */
 "dialog.backup.setup.message"="Use our Desktop App to ensure your backup folder is synchronised with your MEGA Cloud.";
 /* Change the default backup location warning title. %@ is a folder */
-"dialog.backup.folder.location.warning.title"="Move “%@”";
+"dialog.backup.folder.location.warning.title"="Mută „%@”";
 /* Change the default backup location warning message */
 "dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder in the future. Please remember where it is located so that you can find it in the future.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Moving this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="Move “%@” to Rubbish Bin";
+"dialog.delete.backup.folder.warning.title"="Mută „%@” în coșul de gunoi";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="You are deleting your backups folder. This will remove all the backups you have set. Are you sure you want to do this?";
 /* Delete the default backup folder warning message */
 "dialog.delete.backup.folder.warning.message"="Are you sure you want to delete your backup folder and disable backup you set?";
 /* Add new items to a backup folder warning title. %@ is a folder */
-"dialog.add.items.backup.folder.warning.title"="Add Item to “%@”";
+"dialog.add.items.backup.folder.warning.title"="Adaugă elementul în „%@”";
 /* Add new items to a backup folder warning message */
 "dialog.add.items.backup.folder.warning.message"="Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
-"dialog.backup.warning.confirm.message"="Please type “%@” to confirm this action";
+"dialog.backup.warning.confirm.message"="Te rugăm să tastezi „%@” pentru a confirma această acțiune";
 /* Change the location of a backup folder placeholder for a textfield */
-"dialog.move.backup.placeholder"="move backup";
+"dialog.move.backup.placeholder"="mută backupul";
 /* Delete a backup folder placeholder for a textfield */
-"dialog.delete.backup.placeholder"="delete backup";
+"dialog.delete.backup.placeholder"="șterge backupul";
 /* Add items to a backup folder placeholder for a textfield */
-"dialog.disable.backup.placeholder"="disable backup";
+"dialog.disable.backup.placeholder"="dezactivează backupul";
 /* Delete a backup folder action title */
 "dialog.delete.backup.action.title"="Mută în coșul de gunoi";
 /* Add items to a backup folder action title */
 "dialog.add.items.backup.action.title"="Adaugă";
 /* Backup action confirmation error message */
-"dialog.confirmation.error.message"="Text entered does not match";
+"dialog.confirmation.error.message"="Textul introdus nu coincide";
 /* Alert the user when trying to share several backup and non-backup folders */
-"dialog.share.backup.non.backup.folders.warning.message"="Some folders shared are backup folders and read-only. Do you wish to continue?";
+"dialog.share.backup.non.backup.folders.warning.message"="Unele foldere partajate sunt foldere de backup și au permisiunea numai citire. Dorești să continui?";
 /* Message to inform the local user that someone has joined the current group call */
-"meetings.message.joinedCall"="%@ joined the call";
+"meetings.message.joinedCall"="%@ s-a alăturat apelului";
 /* Message to inform the local user that someone has left the current group call */
-"meetings.message.leftCall"="%@ left the call";
+"meetings.message.leftCall"="%@ a părăsit apelul";
 /* Title for Enter Meeting Link. */
-"meetings.enterMeetingLink.title"="Enter Meeting Link";
+"meetings.enterMeetingLink.title"="Introdu linkul întâlnirii";
 /* Text button for init a Meeting. */
-"meetings.create.newMeeting"="New Meeting";
+"meetings.create.newMeeting"="Întâlnire nouă";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@ Meeting";
+"meetings.createMeeting.defaultMeetingName"="Întâlnirea lui %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Începe o întâlnire";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end"="Meeting Ended";
+"meetings.alert.end"="Întâlnire încheiată";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View Meeting Chat";
+"meetings.alert.meetingchat"="Vezi chatul întâlnirii";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="The meeting you’re trying to join has already ended. You can still view the meeting chat history.";
+"meetings.alert.end.description"="Întâlnirea la care încerci să participi s-a încheiat deja. Poți vedea în continuare istoricul chatului din cadrul întâlnirii.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Invită participanți";
 /* Meetings: Floating panel share link option */
@@ -2607,29 +2629,29 @@
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Gazdă";
 /* Meetings: Action on a meeting that change participant's role to moderator */
-"meetings.participant.makeModerator"="Make host";
+"meetings.participant.makeModerator"="Desemnează ca gazdă";
 /* Meetings: Action on a meeting that remove participant's moderator role */
 "meetings.participant.removeModerator"="Elimină ca gazdă";
 /* Action of a call/meeting to rename it */
 "meetings.action.rename"="Redenumește întâlnirea";
 /* Action of a call/meeting to share its link */
-"meetings.action.shareLink"="Share Meeting Link";
+"meetings.action.shareLink"="Partajează linkul întâlnirii";
 /* Message shown when a meeting starts and user is waiting other users to join */
-"meetings.message.waitingOthers"="Se așteaptă ca alții să se alăture…";
+"meetings.message.waitingOthers"="Se așteaptă ca ceilalți să se alăture…";
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="Ești singura persoană aici…";
 /* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="Invalid Meeting URL";
+"meetings.joinMeeting.header"="URL nevalid al întâlnirii";
 /* Message description when the user enters a invalid meeting URL */
-"meetings.joinMeeting.description"="Unable to join the meeting. Please check the link is valid.";
+"meetings.joinMeeting.description"="Nu se poate alătura întâlnirii. Te rugăm să verifici dacă linkul este valid.";
 /* Message shown when the meeting link cannot be generated */
-"meetings.sharelink.Error"="Meeting link could not be generated. Please try again.";
+"meetings.sharelink.Error"="Nu a putut fi generat un link al întâlnirii. Te rugăm să încerci din nou.";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.loggedInUser.joinButtonText"="Alătură-te întâlnirii";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Alătură-te ca invitat";
 /* Encourage Guest User to Join Mega Screen Navigation Bar Title */
-"meetings.joinMega.title"="Join MEGA";
+"meetings.joinMega.title"="Alătură-te MEGA";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Intimitatea ta contează";
 /* Guest user join Mega: paragraph 1 description */
@@ -2639,19 +2661,19 @@
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Înscrie-te acum și bucură-te gratuit de funcțiile avansate de colaborare.";
 /* Message shown when the user privilege is changed to moderator */
-"meetings.notifications.moderatorPrivilege"="You are the new host";
+"meetings.notifications.moderatorPrivilege"="Ești noua gazdă";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.";
+"meetings.incompatibility.warningMessage"="We are upgrading MEGA chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Difuzor";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
-"meetings.quickAction.flip"="Switch";
+"meetings.quickAction.flip"="Comută";
 /* Title shown when the user lost the connection in a call/meeting, and the app will try to reconnect the user again. */
 "meetings.reconnecting.title"="Se reconectează";
 /* Title shown when the user lost the connection in a call/meeting, and the app is unable to reconnect after 30 seconds. */
-"meetings.reconnecting.failed"="Unable to reconnect";
+"meetings.reconnecting.failed"="Nu se poate reconecta";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"meetings.poorConnection"="Bad connection";
+"meetings.poorConnection"="Conexiune proastă";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Preview high resolution images";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
@@ -2663,11 +2685,11 @@
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
 /* Dialog title shown before deleting an account with active subscription */
-"account.delete.subscription.title"="Active Subscription";
+"account.delete.subscription.title"="Abonament activ";
 /* Dialog message shown before deleting an account with active iTunes subscription */
 "account.delete.subscription.itunes"="You have an active MEGA subscription with Apple. You must cancel it separately at Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
-"account.delete.subscription.itunes.manage"="Manage Subscriptions";
+"account.delete.subscription.itunes.manage"="Gestionează abonamentele";
 /* Dialog message shown before deleting an account with active Google play subscription */
 "account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit Google play */
@@ -2675,7 +2697,7 @@
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
 "account.delete.subscription.huaweiAppGallery"="You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
-"account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
+"account.delete.subscription.huaweiAppGallery.visit"="Vizitează AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2683,9 +2705,9 @@
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError.endAndJoin"="End and join";
 /* File extensions: .3dm and .3gp. Commercial names should be stay on English */
-"general.filetype.3DModel"="3D Model";
+"general.filetype.3DModel"="Model 3D";
 /* File extension: .3ds. Commercial names should be stay on English */
-"general.filetype.3ds"="3D Scene";
+"general.filetype.3ds"="Scenă 3D";
 /* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
 "general.filetype.rawImage"="Imagine RAW";
 /* File extension: .3g2. Commercial names should be stay on English */
@@ -2699,7 +2721,7 @@
 /* File extension: .ans. Commercial names should be stay on English */
 "general.filetype.ans"="ANSI Text File";
 /* File extension: .apk. Commercial names should be stay on English */
-"general.filetype.apk"="Aplicație pentru Android";
+"general.filetype.apk"="Aplicație Android";
 /* File extension: .app. Commercial names should be stay on English */
 "general.filetype.app"="Mac OS X App";
 /* File extension: .ascii. Commercial names should be stay on English */
@@ -2715,21 +2737,21 @@
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Imagine RAW Casio";
 /* File extension: .bmp. Commercial names should be stay on English */
-"general.filetype.bmp"="Bitmap Image";
+"general.filetype.bmp"="Imagine bitmap";
 /* File extension: .bz2. Commercial names should be stay on English */
-"general.filetype.bz2"="UNIX Compressed";
+"general.filetype.bz2"="Fișier comprimat UNIX";
 /* File extension: .c. Commercial names should be stay on English */
 "general.filetype.c"="Cod sursă C/C++";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="Cod sursă C++";
 /* File extension. Commercial names should be stay on English */
-"general.filetype.cdr"="CorelDRAW Image";
+"general.filetype.cdr"="Imagine CorelDRAW";
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
-"general.filetype.cgi"="CGI Script";
+"general.filetype.cgi"="Script CGI";
 /* File extension: .class. Commercial names should be stay on English */
 "general.filetype.class"="Clasă Java";
 /* File extension: .com. Commercial names should be stay on English */
-"general.filetype.com"="DOS Command";
+"general.filetype.com"="Comandă DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="CSS Style Sheet";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
@@ -2737,23 +2759,23 @@
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
 "general.filetype.dll"="Bibliotecă cu legături dinamice";
 /* File extension: .dotx. Commercial names should be stay on English */
-"general.filetype.wordTemplate"="MS Word Template";
+"general.filetype.wordTemplate"="Șablon MS Word";
 /* File extension: .dxf. Commercial names should be stay on English */
-"general.filetype.dxf"="DXF Image";
+"general.filetype.dxf"="Imagine DXF";
 /* File extension: .eps. Commercial names should be stay on English */
-"general.filetype.eps"="EPS Image";
+"general.filetype.eps"="Imagine EPS";
 /* File extension: .exe. Commercial names should be stay on English */
 "general.filetype.exe"="Executabil";
 /* File extension: .flac. Commercial names should be stay on English */
-"general.filetype.flac"="Lossless Audio";
+"general.filetype.flac"="Fișier audio fără pierderi";
 /* File extension: .flv. Commercial names should be stay on English */
-"general.filetype.flv"="Flash Video";
+"general.filetype.flv"="Videoclip Flash";
 /* File extension: .fnt. Commercial names should be stay on English */
-"general.filetype.fnt"="Windows Font";
+"general.filetype.fnt"="Font Windows";
 /* File extension: .fon. Commercial names should be stay on English */
 "general.filetype.fon"="Font";
 /* File extension: .gadget. Commercial names should be stay on English */
-"general.filetype.gadget"="Windows Gadget";
+"general.filetype.gadget"="Gadget Windows";
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="Imagine GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
@@ -2761,9 +2783,9 @@
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="Spreadsheet";
 /* File extension: .gz. Commercial names should be stay on English */
-"general.filetype.gz"="GNU Compressed";
+"general.filetype.gz"="Fișier comprimat GNU";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
-"general.filetype.header"="Header";
+"general.filetype.header"="Antet";
 /* File extensions: .htm and .html. Commercial names should be stay on English */
 "general.filetype.htmlDocument"="Document HTML";
 /* File extension: .iff. Commercial names should be stay on English */
@@ -2777,31 +2799,31 @@
 /* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
 "general.filetype.jpeg"="Imagine JPEG";
 /* File extension: .log. Commercial names should be stay on English */
-"general.filetype.log"="Log";
+"general.filetype.log"="Jurnal";
 /* File extension: .3mu. Commercial names should be stay on English */
-"general.filetype.m3u"="Media Playlist";
+"general.filetype.m3u"="Playlist media";
 /* File extension: .m4a. Commercial names should be stay on English */
-"general.filetype.m4a"="Audio MPEG-4";
+"general.filetype.m4a"="Fișier audio MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
-"general.filetype.max"="3ds Max Scene";
+"general.filetype.max"="Scenă 3ds Max";
 /* File extension: .mdb. Commercial names should be stay on English */
 "general.filetype.mdb"="MS Access";
 /* File extensions: .mid and .midi. Commercial names should be stay on English */
 "general.filetype.mid"="Fișier audio MIDI";
 /* File extension: .mkv. Commercial names should be stay on English */
-"general.filetype.mkv"="MKV Video";
+"general.filetype.mkv"="Videoclip MKV";
 /* File extension: .mov. Commercial names should be stay on English */
-"general.filetype.mov"="QuickTime Movie";
+"general.filetype.mov"="Film QuickTime";
 /* File extension: .mp3. Commercial names should be stay on English */
 "general.filetype.mp3"="Fișier audio MP3";
 /* File extension: .mp4. Commercial names should be stay on English */
-"general.filetype.mp4"="MP4 Video";
+"general.filetype.mp4"="Videoclip MP4";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
 "general.filetype.mpeg"="MPEG Movie";
 /* File extension: .msi. Commercial names should be stay on English */
 "general.filetype.msi"="MS Installer";
 /* File extensions: .txt and .odt. Commercial names should be stay on English */
-"general.filetype.textDocument"="Text Document";
+"general.filetype.textDocument"="Document text";
 /* File extension: .otf. Commercial names should be stay on English */
 "general.filetype.otf"="Font OpenType";
 /* File extension: .pages. Commercial names should be stay on English */
@@ -2823,35 +2845,35 @@
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Fișier comprimat RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
-"general.filetype.rtf"="Rich Text";
+"general.filetype.rtf"="Text îmbogățit";
 /* File extension: .rw2. Commercial names should be stay on English */
-"general.filetype.rw2"="Panasonic RAW Image";
+"general.filetype.rw2"="Imagine RAW Panasonic";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
 "general.filetype.sh"="Bash Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Server HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
-"general.filetype.sitx"="X Compressed";
+"general.filetype.sitx"="Fișier comprimat X";
 /* File extension: .sql. Commercial names should be stay on English */
 "general.filetype.sql"="Bază de date SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Imagine RAW Sony";
 /* File extension: .srt. Commercial names should be stay on English */
-"general.filetype.subtitle"="Subtitle";
+"general.filetype.subtitle"="Subtitrare";
 /* File extension: .svg and .svgz. Commercial names should be stay on English */
-"general.filetype.vectorImage"="Vector Image";
+"general.filetype.vectorImage"="Imagine vectorială";
 /* File extension: .swf. Commercial names should be stay on English */
-"general.filetype.swf"="Flash Movie";
+"general.filetype.swf"="Film Flash";
 /* File extension: .tar. Commercial names should be stay on English */
-"general.filetype.tar"="Arhivează";
+"general.filetype.tar"="Arhivă";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
-"general.filetype.compressed"="Compressed";
+"general.filetype.compressed"="Fișier comprimat";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
 "general.filetype.tga"="Targa Graphic";
 /* File extension: .tif. Commercial names should be stay on English */
-"general.filetype.tif"="TIF Image";
+"general.filetype.tif"="Imagine TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
-"general.filetype.tiff"="TIFF Image";
+"general.filetype.tiff"="Imagine TIFF";
 /* File extension: .ttf. Commercial names should be stay on English */
 "general.filetype.ttf"="Font TrueType";
 /* File extension: .wav. Commercial names should be stay on English */
@@ -2859,15 +2881,15 @@
 /* File extension: .webm. Commercial names should be stay on English */
 "general.filetype.webm"="Videoclip WebM";
 /* File extension: .wma. Commercial names should be stay on English */
-"general.filetype.wma"="WM Audio";
+"general.filetype.wma"="Fișier audio WM";
 /* File extension: .wmv. Commercial names should be stay on English */
-"general.filetype.wmv"="WM Video";
+"general.filetype.wmv"="Videoclip WM";
 /* File extension: .xml. Commercial names should be stay on English */
 "general.filetype.xml"="Document XML";
 /* File extension: .zip. Commercial names should be stay on English */
-"general.filetype.zip"="ZIP Archive";
+"general.filetype.zip"="Arhivă ZIP";
 /* Text show to highlight that you can choose a different option */
-"general.choose"="Alege";
+"general.choose"="Selectează";
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
 "chat.joinCall"="Join Call";
 /* Description shown in chat screen if the user didn't allow access to photos */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="Da, anulează";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="Nu, continuă";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Se scanează…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Creating folders…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Transfer în curs…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Cancelling transfers…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Please don’t close the application.";
+"transfers.cancellable.donotclose"="Don’t close the app. If you close, transfers not yet queued will be lost.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer anulat";
 /* Title of the dialog used to send bug reports to support team. */
@@ -2943,7 +2975,7 @@
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Mută în coșul de gunoi";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
-"general.menuAction.deletePermanently"="Delete permanently";
+"general.menuAction.deletePermanently"="Șterge definitiv";
 /* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
 "media.quality.original"="Original";
 /* Automatic quality option used on Chat Image uploads. Indicating that the image quality will be determine by MEGA. */
@@ -2987,7 +3019,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="The file will be updated with a new version.";
 /* Meetings end call dialog title */
-"meetings.endCallDialog.title"="You’re the only one here";
+"meetings.endCallDialog.title"="Ești singura persoană de aici";
 /* Meetings end call dialog description */
 "meetings.endCallDialog.description"="Apelul se va încheia automat în 2 minute dacă nu vrei să rămâi în acesta.";
 /* Meetings end call dialog Stay on call button title */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Hibrid";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Începe o întâlnire";
+"meetings.startConversation.contextMenu.startMeeting"="Începe întâlnirea acum";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Alătură-te întâlnirii";
 /* Title of the Settings section where you can configure calls options of your MEGA account */

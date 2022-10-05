@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Join Meeting as Guest";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Invalid email and/or password. Please try again";
+"invalidMailOrPassword"="Invalid email or password. Please try again.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,27 +208,27 @@
 "cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Slideshow";
-/*Option button Title shown on Slideshow Preference Setting*/
+/* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Options";
-/*NavigationBar Title shown on Slideshow Preference Setting*/
+/* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
-/*Footer note for media in sub folders*/
+/* Footer note for media in sub folders */
 "slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
-/*NavigationBar Title shown on Slideshow Speed preference*/
+/* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Slideshow Speed";
-/*Slideshow Speed preference slow*/
+/* Slideshow Speed preference slow */
 "slideshow.preferenceSetting.speed.slow"="Slow (8s)";
-/*Slideshow Speed preference normal*/
+/* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Normal (4s)";
-/*Slideshow Speed preference fast*/
+/* Slideshow Speed preference fast */
 "slideshow.preferenceSetting.speed.fast"="Fast (1s)";
-/*NavigationBar Title shown on Slideshow Order preference*/
+/* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Slideshow Order";
-/*Slideshow Speed Order shuffle*/
+/* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="Shuffle";
-/*Slideshow Preference Setting repeat*/
+/* Slideshow Preference Setting repeat */
 "slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
-/*Slideshow Preference Setting include subFolders*/
+/* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
@@ -769,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK Version";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGAchat SDK Version";
+"megachatSdkVersion"="MEGA chat SDK Version";
 /* Link to the public code of the app */
 "View Source Code"="View Source Code";
 /* Title for the section "Acknowledgements" of the app */
@@ -1213,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rich URL Previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
+"richPreviewsFooter"="Enhance the MEGA chat experience. URL content will be retrieved without end-to-end encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1667,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Save Videos in Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2663,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="You are the new host";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGAchat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.";
+"meetings.incompatibility.warningMessage"="We are upgrading MEGA chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Speaker";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2917,17 +2917,17 @@
 /* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Scanning…";
 /* Second step title message for cancellable transfer */
-"transfers.cancellable.creatingFolders"="Creating folders...";
+"transfers.cancellable.creatingFolders"="Creating folders…";
 /* Third step title message for cancellable transfer */
-"transfers.cancellable.transferring"="Transferring...";
+"transfers.cancellable.transferring"="Transferring…";
 /* Cancelling transfers step title message for cancellable transfer */
-"transfers.cancellable.cancellingTransfers"="Cancelling transfers...";
+"transfers.cancellable.cancellingTransfers"="Cancelling transfers…";
 /* Count of folders and files in the scanning stage */
 "transfers.cancellable.scanning.count"="Found %@ and %@";
 /* Count of folders created in the create folders stage */
-"transfers.cancellable.creatingFolders.count"="%@ / %@";
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Don't close the app. If you close, transfers not yet queued will be lost.";
+"transfers.cancellable.donotclose"="Don’t close the app. If you close, transfers not yet queued will be lost.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer cancelled";
 /* Title of the dialog used to send bug reports to support team. */

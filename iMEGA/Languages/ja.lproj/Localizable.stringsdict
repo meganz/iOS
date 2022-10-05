@@ -517,7 +517,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>%d時間</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -531,7 +531,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>%d分</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>

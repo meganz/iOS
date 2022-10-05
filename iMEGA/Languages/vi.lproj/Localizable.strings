@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Tham gia họp mặt với tư cách khách";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email hoặc mật khẩu nhập không đúng. Xin thử lại";
+"invalidMailOrPassword"="Email hoặc mật khẩu không hợp lệ. Xin thử lại.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Bạn đã nhập thông tin đăng nhập sai quá nhiều lần. Xin vui lòng chờ tới %@ rồi thử lại.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -208,6 +208,28 @@
 "cloudDriveEmptyState_titleRubbishBin"="Thùng Rác Trống";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Chạy trình chiếu";
+/* Option button Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.options"="Tùy chọn";
+/* NavigationBar Title shown on Slideshow Preference Setting */
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+/* Footer note for media in sub folders */
+"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+/* NavigationBar Title shown on Slideshow Speed preference */
+"slideshow.preferenceSetting.speed"="Slideshow Speed";
+/* Slideshow Speed preference slow */
+"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+/* Slideshow Speed preference normal */
+"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+/* Slideshow Speed preference fast */
+"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+/* NavigationBar Title shown on Slideshow Order preference */
+"slideshow.preferenceSetting.order"="Slideshow Order";
+/* Slideshow Speed Order shuffle */
+"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+/* Slideshow Preference Setting repeat */
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+/* Slideshow Preference Setting include subFolders */
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Không có tệp tin nào trong Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -438,8 +460,8 @@
 "rename"="Đổi tên";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Nhập tên mới";
-/* Error message shown when trying to rename or create a folder with characters that are not allowed. We need the \ before quotation mark, so it can be shown on code */
-"general.error.charactersNotAllowed"="Các ký tự không được phép sử dụng: ” * / : < > ? \\ |";
+/* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
+"general.error.charactersNotAllowed"="Các ký tự này không được phép sử dụng: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Đổi tên %@?";
 /* Title for the action that allows you to replace a file. */
@@ -747,7 +769,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Phiên bản MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Phiên bản SDK MEGAchat";
+"megachatSdkVersion"="Phiên bản SDK MEGA chat";
 /* Link to the public code of the app */
 "View Source Code"="Xem Mã Nguồn";
 /* Title for the section "Acknowledgements" of the app */
@@ -1191,7 +1213,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Xem Trước Nội Dung URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tăng cường trải nghiệm MEGAchat. Nội dung được gửi dưới dạng URL sẽ được hiện thị không thông qua mã hóa.";
+"richPreviewsFooter"="Tăng cường trải nghiệm MEGA chat. Nội dung được gửi dưới dạng URL sẽ được hiện thị không thông qua mã hóa.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Gọi Thoại và Video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -2247,7 +2269,7 @@
 /* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="Hết Không Gian Lưu Trữ";
 /* Over Disk Quota title message that tell customer your data at risk. */
-"Your Data is at Risk!"="Dữ liệu của bạn đang gặp rủi ro!";
+"Your Data is at Risk!"="Dữ liệu của bạn có nguy cơ bị xóa!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Chúng tôi đã gửi thông báo vào địa chỉ email <b>%@</b> của quý khách vào ngày <b>%@</b> nhưng quý khách vẫn còn %@ tệp tin chiếm tới <b>%@</b> trong tài khoản MEGA, quý khách cần phải nâng câp lên <b>%@</b> để đáp ứng dung lượng.</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
@@ -2533,7 +2555,7 @@
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Tài Khoản Bị Khóa";
 /* Over Disk Quota paywall final title. */
-"dialog.storage.paywall.final.title"="Dữ liệu của bạn đang gặp rủi ro!";
+"dialog.storage.paywall.final.title"="Dữ liệu của bạn có nguy cơ bị xóa!";
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Quý khách đã không giải quyết tình trạng tài khoản của mình trong <b>%@</b> từ khi chúng tôi gửi email thông báo tới địa chỉ <b>%@</b> của quý khách, vào ngày <b>%@</b>. Quý khách hiện vẫn đang dùng <b>%@</b> trong không gian lưu trữ, vượt quá mức hạn của tài khoản miễn phí. Xin kiểm tra hộp thư email để xem thư chúng tôi đã gửi để biết thêm chi tiết và các cách xử lý.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
@@ -2641,7 +2663,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Bạn đã được chọn là người chủ trì mới";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGAchat. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";
+"meetings.incompatibility.warningMessage"="Chúng tôi đang nâng cấp dịch vụ MEGA chat. Cuộc gọi của bạn có thể sẽ không kết nối được do bất đồng tương thích phiên bản cho đến khi mỗi người cập nhật lên phiên bản mới nhất.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Loa ngoài";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2892,10 +2914,20 @@
 "transfers.cancellable.proceed"="Đúng, hủy";
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="Không, tiếp tục";
-/* First step message for cancellable transfer (letting known the user not to close the app) */
+/* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Đang quét…";
+/* Second step title message for cancellable transfer */
+"transfers.cancellable.creatingFolders"="Đang tạo các thư mục…";
+/* Third step title message for cancellable transfer */
+"transfers.cancellable.transferring"="Đang truyền…";
+/* Cancelling transfers step title message for cancellable transfer */
+"transfers.cancellable.cancellingTransfers"="Đang hủy các phiên truyền tải…";
+/* Count of folders and files in the scanning stage */
+"transfers.cancellable.scanning.count"="Found %@ and %@";
+/* Count of folders created in the create folders stage */
+"transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Xin đừng đóng ứng dụng.";
+"transfers.cancellable.donotclose"="Xin đừng đóng ứng dụng. Nếu bạn đóng, các phiên truyền tải chưa được xếp hàng sẽ bị mất.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Phiên truyền tải đã hủy";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3043,7 +3075,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Kết hợp";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Bắt đầu cuộc họp";
+"meetings.startConversation.contextMenu.startMeeting"="Bắt đầu cuộc họp ngay";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Tham gia cuộc họp";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
