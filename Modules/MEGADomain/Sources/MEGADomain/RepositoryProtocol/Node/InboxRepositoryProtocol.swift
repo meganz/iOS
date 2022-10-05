@@ -7,4 +7,5 @@ public protocol InboxRepositoryProtocol {
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool
     func isBackupRootNodeEmpty() async -> Bool
     func inboxNode() -> NodeEntity?
+    func myBackupRootNode() async throws -> NodeEntity
 }

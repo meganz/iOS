@@ -25,14 +25,14 @@ struct InboxRepository: InboxRepositoryProtocol {
     }
     
     func backupRootNodeSize() async throws -> UInt64 {
-        let node = try await backupRootNode()
+        guard let node = try await myBackupRootNode().toMEGANode(in: sdk) else { return 0 }
         let nodeInfo = try await folderInfo(node: node)
         return UInt64(nodeInfo.currentSize)
     }
     
     func isBackupRootNodeEmpty() async -> Bool {
         do {
-            let node = try await backupRootNode()
+            guard let node = try await myBackupRootNode().toMEGANode(in: sdk) else { return false }
             return MEGASdkManager.sharedMEGASdk().children(forParent: node).size == 0
         } catch {
             return true
@@ -56,7 +56,7 @@ struct InboxRepository: InboxRepositoryProtocol {
         }
     }
     
-    private func backupRootNode() async throws -> MEGANode {
+    func myBackupRootNode() async throws -> NodeEntity {
         try await withCheckedThrowingContinuation { continuation in
             BackupRootNodeAccess.shared.loadNode { node, error in
                 guard let node = node else {
@@ -64,7 +64,7 @@ struct InboxRepository: InboxRepositoryProtocol {
                     return
                 }
                 
-                continuation.resume(with: Result.success(node))
+                continuation.resume(with: Result.success(node.toNodeEntity()))
             }
         }
     }
