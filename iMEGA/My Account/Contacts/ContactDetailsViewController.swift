@@ -23,3 +23,24 @@ extension ContactDetailsViewController {
         tableView.sizeHeaderToFit()
     }
 }
+
+extension ContactDetailsViewController: PushNotificationControlProtocol {
+    func presentAlertController(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func reloadDataIfNeeded() {
+        tableView?.reloadData()
+    }
+    
+    func pushNotificationSettingsLoaded() {
+        
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ContactTableViewCell else {
+            return
+        }
+        if cell.controlSwitch != nil {
+            cell.controlSwitch.isEnabled = true
+        }
+    }
+}
+

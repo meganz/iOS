@@ -872,6 +872,7 @@
 		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
 		8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
 		8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338E0F22666552900D1458B /* CallManagerUseCase.swift */; };
+		833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B0B7E28EEBEB20074EB6B /* ChatSettingsTableViewController.swift */; };
 		833CAF2F284638C400B52B64 /* FileCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0B33B283C5B1A0020C64D /* FileCacheRepository.swift */; };
 		833DF2762804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833DF2752804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift */; };
 		8340CAEF284E222D007C3B39 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8340CAEE284E222D007C3B39 /* HeaderView.swift */; };
@@ -993,6 +994,7 @@
 		836AEDE22018AD0C00868FC7 /* PasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AEDE12018AD0C00868FC7 /* PasswordView.xib */; };
 		836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDE42018AD1F00868FC7 /* PasswordView.m */; };
 		836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B956E2063EADE003E279B /* SearchInPdfViewController.m */; };
+		836BCF1828ED93C400515E18 /* NotificationName+DoNotDisturb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */; };
 		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
 		8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
@@ -3442,6 +3444,7 @@
 		83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveCollectionViewController.m; sourceTree = "<group>"; };
 		8337BC60256283F400F3A81A /* ShortcutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutDetail.swift; sourceTree = "<group>"; };
 		8338E0F22666552900D1458B /* CallManagerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManagerUseCase.swift; sourceTree = "<group>"; };
+		833B0B7E28EEBEB20074EB6B /* ChatSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsTableViewController.swift; sourceTree = "<group>"; };
 		833DF2752804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveNodeUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		8340CAEE284E222D007C3B39 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		8340CAF1284E28F5007C3B39 /* HeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewModel.swift; sourceTree = "<group>"; };
@@ -3514,6 +3517,7 @@
 		836AEDE42018AD1F00868FC7 /* PasswordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PasswordView.m; sourceTree = "<group>"; };
 		836B956D2063EADE003E279B /* SearchInPdfViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchInPdfViewController.h; sourceTree = "<group>"; };
 		836B956E2063EADE003E279B /* SearchInPdfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInPdfViewController.m; sourceTree = "<group>"; };
+		836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+DoNotDisturb.swift"; sourceTree = "<group>"; };
 		836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatChangeGroupNameRequestDelegate.h; sourceTree = "<group>"; };
 		836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatChangeGroupNameRequestDelegate.m; sourceTree = "<group>"; };
 		8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPresentationItemSource.swift; sourceTree = "<group>"; };
@@ -8216,6 +8220,14 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		836BCF1628ED937D00515E18 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
 		8371D2A52899331300D0972F /* ShareActivityUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -8484,6 +8496,7 @@
 		83B8857E28E46909002690A2 /* ChatRoomsListScene */ = {
 			isa = PBXGroup;
 			children = (
+				836BCF1628ED937D00515E18 /* Data Model */,
 				8342CB0928EB3DE00078D35F /* Views */,
 				8342CAFE28EB3B820078D35F /* ChatRoomsListViewController.swift */,
 				8342CAFF28EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift */,
@@ -11121,6 +11134,7 @@
 				BF943EA32355441F001C18E0 /* DND */,
 				E8534D491E15231C00911C40 /* ChatSettingsTableViewController.h */,
 				E8534D4A1E15231C00911C40 /* ChatSettingsTableViewController.m */,
+				833B0B7E28EEBEB20074EB6B /* ChatSettingsTableViewController.swift */,
 				E83E10281E1582E8002F3E2E /* ChatStatusTableViewController.h */,
 				E83E10291E1582E8002F3E2E /* ChatStatusTableViewController.m */,
 				83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */,
@@ -12840,6 +12854,7 @@
 				B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */,
 				BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */,
 				83CCBC5127959CF800B90EF2 /* TransferStageEntity+Mapper.swift in Sources */,
+				836BCF1828ED93C400515E18 /* NotificationName+DoNotDisturb.swift in Sources */,
 				BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */,
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				BF66DFE22613E7BE00066F35 /* MeetingParticipantTableViewCell.swift in Sources */,
@@ -13117,6 +13132,7 @@
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */,
+				833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */,
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,

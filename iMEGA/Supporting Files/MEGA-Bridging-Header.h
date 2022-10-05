@@ -73,6 +73,7 @@
 #import "MEGAAVViewController.h"
 #import "BrowserViewController.h"
 #import "ChangePasswordViewController.h"
+#import "ChatSettingsTableViewController.h"
 #import "ChatStatusTableViewController.h"
 #import "ContactLinkQRViewController.h"
 #import "ContactsViewController.h"

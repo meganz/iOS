@@ -1,18 +1,9 @@
 import MEGADomain
 
-protocol ChatRoomsListRouting: Routing {
-    func presentStartConversation()
-    func showInviteContactScreen()
-    func showContactsOnMegaScreen()
-    func showStartMeetingScreen()
-    func showJoinMeetingScreen()
-    func showScheduleMeetingScreen()
-}
-
 @available(iOS 14.0, *)
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     
-    private weak var navigationController: UINavigationController?
+    private(set) weak var navigationController: UINavigationController?
     
     func build() -> UIViewController {
         let viewModel = ChatRoomsListViewModel(
@@ -22,10 +13,10 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)
-        viewController.configureMyAvatarManager()
-
         navigation.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.chatIcon.image, tag: 2)
         navigationController = navigation
+        viewModel.configureMyAvatarManager()
+
         return navigation
     }
     
@@ -44,10 +35,14 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let controller = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "ContactsOnMegaViewControllerID")
         navigationController?.pushViewController(controller, animated: true)
     }
-    
-    func showStartMeetingScreen() {
+            
+    func presentMeetingAlreayExists() {
         guard let navigationController else { return }
-        
+        MeetingAlreadyExistsAlert.show(presenter: navigationController)
+    }
+    
+    func presentCreateMeeting() {
+        guard let navigationController else { return }
         MeetingCreatingViewRouter(
             viewControllerToPresent: navigationController,
             type: .start,
@@ -56,16 +51,15 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         ).start()
     }
     
-    func showJoinMeetingScreen() {
+    func presentEnterMeeting() {
         guard let navigationController else { return }
-
         EnterMeetingLinkRouter(
             viewControllerToPresent: navigationController,
             isGuest: false
         ).start()
     }
     
-    func showScheduleMeetingScreen() {
+    func presentScheduleMeetingScreen() {
         
     }
 }

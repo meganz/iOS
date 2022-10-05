@@ -54,3 +54,19 @@ extension ChatRoomsViewController {
         normalView?.backgroundColor = Colors.Chat.Tabs.chatTabNormalBackground.color
     }
 }
+
+extension ChatRoomsViewController: PushNotificationControlProtocol {
+    func presentAlertController(_ alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func reloadDataIfNeeded() {
+        tableView?.reloadData()
+    }
+    
+    func pushNotificationSettingsLoaded() {
+        if chatRoomsType == .default {
+            refreshContextMenuBarButton()
+        }
+    }
+}

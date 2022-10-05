@@ -1,8 +1,15 @@
 import UIKit
 import MEGADomain
 
-@objc protocol PushNotificationControlProtocol where Self: UIViewController {
+/// A protocol to manage PushNotifications based on user preferences
+@objc protocol PushNotificationControlProtocol {
+    /// Func to show an alert controler to choose the mute notifications time. Used from UISwitchs in UIViewControllers, not needed for UIMenu in context menus.
+    @objc optional func presentAlertController(_ alert: UIAlertController)
+    
+    /// Func to reload data in the view if it is needed, as adding footer info in UITableViewCells. Not needed for UIMenu in context menus.
     @objc optional func reloadDataIfNeeded()
+    
+    /// Func to notify that notification setings has been loaded, and views can perform actions as show enabled/disabled or reload the view to add remaining mute time.
     @objc optional func pushNotificationSettingsLoaded()
 }
 
@@ -84,8 +91,7 @@ extension PushNotificationControl {
                 popover.sourceRect = viewSender.bounds
             }
         }
-        
-        delegate?.present(alertController, animated: true, completion: nil)
+        delegate?.presentAlertController?(alertController)
     }
     
     func updatePushNotificationSettings(block: () -> Void) {

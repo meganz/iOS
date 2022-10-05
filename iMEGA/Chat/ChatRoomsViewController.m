@@ -30,7 +30,6 @@
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateTitle;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateCount;
@@ -186,16 +185,6 @@
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     
     [self refreshMyAvatar];
-}
-
-- (void)reloadDataIfNeeded {
-    [self.tableView reloadData];
-}
-
-- (void)pushNotificationSettingsLoaded {
-    if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        [self refreshContextMenuBarButton];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
