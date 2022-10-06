@@ -39,6 +39,7 @@ final class ChatRoomsListViewController: UIViewController {
         navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
         configureNavigationBarButtons(chatMode: viewModel.chatMode)
         refreshMyAvatar()
+        viewModel.loadData()
     }
     
     required init?(coder: NSCoder) {

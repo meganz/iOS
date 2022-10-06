@@ -2260,6 +2260,9 @@
 		BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */; };
 		BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */; };
 		BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */; };
+		BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */; };
+		BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */; };
+		BFD213BF28EE600E0057150E /* ContactsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213BE28EE600E0057150E /* ContactsRepository.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD28425283213A3001AACC2 /* TimeoutTask.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
@@ -4610,6 +4613,9 @@
 		BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerFileNameTableCell.swift; sourceTree = "<group>"; };
 		BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerDetailTableCell.swift; sourceTree = "<group>"; };
 		BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerActionTableViewCell.swift; sourceTree = "<group>"; };
+		BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyView.swift; sourceTree = "<group>"; };
+		BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewState.swift; sourceTree = "<group>"; };
+		BFD213BE28EE600E0057150E /* ContactsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRepository.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFD28425283213A3001AACC2 /* TimeoutTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTask.swift; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -8073,6 +8079,7 @@
 			isa = PBXGroup;
 			children = (
 				8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */,
+				BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -8483,6 +8490,7 @@
 				836A783128E34C2900B6849F /* ChatRoomsListViewModel.swift */,
 				836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */,
 				83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */,
+				BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */,
 			);
 			path = ChatRoomsListScene;
 			sourceTree = "<group>";
@@ -9551,6 +9559,7 @@
 		B662B84C24EC6F790089376A /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				BFD213BD28EE5FA30057150E /* Contact */,
 				B57AD23928C1DBEB00FB173A /* MEGASdk */,
 				12B1E5702874E2D800D23A58 /* Statistics */,
 				9428B98D2819226200DB7250 /* ContextMenu */,
@@ -10720,6 +10729,14 @@
 				BFC060F528A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		BFD213BD28EE5FA30057150E /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				BFD213BE28EE600E0057150E /* ContactsRepository.swift */,
+			);
+			path = Contact;
 			sourceTree = "<group>";
 		};
 		BFE556F427E183B40028EF1F /* SDK */ = {
@@ -12097,6 +12114,7 @@
 				BF782D69269BA4BB0001D169 /* RegionEntity.swift in Sources */,
 				B6AADEAF25188F8D009A874C /* SMSRepositoryProtocol.swift in Sources */,
 				124306D727E16048003286C8 /* MediaDiscoveryRouter.swift in Sources */,
+				BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */,
 				32860721288509DD0056A3A5 /* PhotoLibraryFilterView.swift in Sources */,
 				8340CAFE284E52F5007C3B39 /* ItemView.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
@@ -12687,6 +12705,7 @@
 				5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */,
 				BFAB114E23CEA5C300BCE72D /* AlbumsTableViewController.swift in Sources */,
 				BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */,
+				BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */,
 				B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */,
 				BF5BC7682611681000716CD6 /* UserInviteUseCase.swift in Sources */,
 				83B906BC249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
@@ -12770,6 +12789,7 @@
 				12696B1027A8B122008628EA /* PhotoLibraryZoomState.swift in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
+				BFD213BF28EE600E0057150E /* ContactsRepository.swift in Sources */,
 				837B179C2881848400A4D01B /* DownloadLinkRouter.swift in Sources */,
 				9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */,
 				5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */,
