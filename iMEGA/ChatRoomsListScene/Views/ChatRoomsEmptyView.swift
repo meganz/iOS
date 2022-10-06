@@ -1,0 +1,147 @@
+import SwiftUI
+
+@available(iOS 14.0, *)
+struct ChatRoomsEmptyView: View {
+    let emptyViewState: ChatRoomsEmptyViewState
+    
+    var body: some View {
+        VStack {
+            if let topRowDescription = emptyViewState.topRowDescription {
+                Button {
+                    emptyViewState.topRowAction?()
+                } label: {
+                    ChatRoomsEmptyTopRowView(
+                        imageAsset: emptyViewState.topRowImageAsset,
+                        description: topRowDescription
+                    )
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 12)
+            }
+            
+            VStack {
+                Spacer()
+                
+                ChatRoomsEmptyCenterView(imageAsset: emptyViewState.centerImageAsset,
+                                         title: emptyViewState.centerTitle,
+                                         description: emptyViewState.centerDescription)
+                
+                Spacer()
+                
+                if let buttonTitle = emptyViewState.bottomButtonTitle {
+                    ChatRoomsEmptyBottomButtonView(
+                        name: buttonTitle,
+                        menus: emptyViewState.bottomButtonMenus,
+                        action: emptyViewState.bottomButtonAction
+                    )
+                    .padding(.horizontal, 70)
+                    .padding(.bottom, 35)
+                }
+            }
+        }
+    }
+}
+
+fileprivate struct ChatRoomsEmptyTopRowView: View {
+    let imageAsset: ImageAsset?
+    let description: String
+    private let discolureIndicator = "chevron.right"
+    
+    var body: some View {
+        HStack {
+            if let imageAsset, let image = Image(uiImage: UIImage(asset: imageAsset)) {
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+            }
+            
+            Text(description)
+                .font(.subheadline.weight(.medium))
+            
+            Spacer()
+            Image(systemName: discolureIndicator)
+                .foregroundColor(.gray.opacity(0.6))
+        }
+    }
+}
+
+fileprivate struct ChatRoomsEmptyCenterView: View {
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
+    let imageAsset: ImageAsset?
+    let title: String
+    let description: String
+    
+    var body: some View {
+        VStack {
+            if verticalSizeClass != .compact,
+                let imageAsset,
+                let image = Image(uiImage: UIImage(asset: imageAsset)) {
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 120, height: 120)
+            }
+            
+            Text(title)
+                .font(.body)
+                .padding(.bottom, 5)
+            
+            Text(description)
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 30)
+        }
+    }
+}
+
+@available(iOS 14.0, *)
+fileprivate struct ChatRoomsEmptyBottomButtonView: View {
+    let name: String
+    var height: CGFloat? = 50
+    var backgroundColor = Color(red: 0, green: 0.66, blue: 0.52)
+    var textColor = Color.white
+    var maxWidth: CGFloat? = 288
+    var cornerRadius: CGFloat = 10
+    var font: Font = .headline
+    var menus: [ChatRoomsEmptyBottomButtonMenu]? = nil
+    var action: (() -> Void)? = nil
+
+    var body: some View {
+        if let menus {
+            Menu {
+                ForEach(menus) { menu in
+                    Button {
+                        menu.action()
+                    } label: {
+                        Label {
+                            Text(menu.name)
+                        } icon: {
+                            Image(uiImage: UIImage(asset: menu.image))
+                        }
+                    }
+                }
+            } label: {
+                Text(name)
+                    .frame(maxWidth: maxWidth)
+                    .frame(height: height)
+                    .background(backgroundColor)
+                    .foregroundColor(textColor)
+                    .cornerRadius(cornerRadius)
+                    .font(font)
+            }
+        } else {
+            Button(name) {
+                action?()
+            }
+            .frame(maxWidth: maxWidth)
+            .frame(height: height)
+            .background(backgroundColor)
+            .foregroundColor(textColor)
+            .cornerRadius(cornerRadius)
+            .font(font)
+        }
+    }
+}
+
