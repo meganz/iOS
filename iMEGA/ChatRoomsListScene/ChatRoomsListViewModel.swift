@@ -28,6 +28,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let router: ChatRoomsListRouting
     private let chatUseCase: ChatUseCaseProtocol
     private let contactsUseCase: ContactsUseCaseProtocol
+    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let chatType: ChatType
     
@@ -40,29 +41,29 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var chatMode: ChatMode = .chats
     @Published var chatStatus: ChatStatusEntity?
     @Published var title: String = Strings.Localizable.Chat.title
-    @Published var emptyViewState: ChatRoomsEmptyViewState?
     @Published var myAvatarBarButton: UIBarButtonItem?
+    @Published var isConnectedToNetwork: Bool
 
     private var subscriptions = Set<AnyCancellable>()
 
     init(router: ChatRoomsListRouting,
          chatUseCase: ChatUseCaseProtocol,
          contactsUseCase: ContactsUseCaseProtocol,
+         networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatType = .regular
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
         self.contactsUseCase = contactsUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.notificationCenter = notificationCenter
         self.chatType = chatType
+        self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         
         configureTitle()
         listeningForChatStatusUpdate()
-    }
-    
-    func loadData() {
-        emptyViewState = createEmptyViewState()
+        monitorNetworkChanges()
     }
     
     func contextMenuConfiguration() -> CMConfigEntity {
@@ -75,7 +76,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     func selectChatMode(_ mode: ChatMode) {
         guard mode != chatMode else { return }
         chatMode = mode
-        loadData()
     }
     
     func addChatButtonTapped() {
@@ -89,17 +89,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatUseCase.changeChatStatus(to: status)
     }
     
-    //MARK: - Private
-    private func configureTitle() {
-        switch chatType {
-        case .regular:
-            title = Strings.Localizable.Chat.title
-        case .archived:
-            title = Strings.Localizable.archivedChats
-        }
-    }
-    
-    private func createEmptyViewState() -> ChatRoomsEmptyViewState {
+    func emptyViewState() -> ChatRoomsEmptyViewState {
         ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
         let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
 
@@ -126,18 +116,28 @@ final class ChatRoomsListViewModel: ObservableObject {
                     self.router.showContactsOnMegaScreen()
                 }
             },
-            centerImageAsset: chatMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState,
+            centerImageAsset: isConnectedToNetwork ? (chatMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState) : Asset.Images.EmptyStates.noInternetEmptyState,
             centerTitle: chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
-            bottomButtonTitle: chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title,
+            bottomButtonTitle: isConnectedToNetwork ? (chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title) : nil,
             bottomButtonAction: { [weak self] in
                 guard let self else { return }
                 if self.chatMode == .chats {
                     self.addChatButtonTapped()
                 }
             },
-            bottomButtonMenus: chatMode == .meetings ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
+            bottomButtonMenus: chatMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
         )
+    }
+    
+    //MARK: - Private
+    private func configureTitle() {
+        switch chatType {
+        case .regular:
+            title = Strings.Localizable.Chat.title
+        case .archived:
+            title = Strings.Localizable.archivedChats
+        }
     }
     
     private func startMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
@@ -180,6 +180,13 @@ final class ChatRoomsListViewModel: ObservableObject {
                 self?.chatStatus = status
             })
             .store(in: &subscriptions)
+    }
+    
+    private func monitorNetworkChanges() {
+        networkMonitorUseCase.networkPathChanged { [weak self] isConnectedToNetwork in
+            guard let self else { return }
+            self.isConnectedToNetwork = isConnectedToNetwork
+        }
     }
 }
 

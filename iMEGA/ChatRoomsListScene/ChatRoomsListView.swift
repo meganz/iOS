@@ -10,8 +10,10 @@ struct ChatRoomsListView: View {
                 viewModel.selectChatMode(mode)
             }
             
-            if let emptyViewState = viewModel.emptyViewState {
-                ChatRoomsEmptyView(emptyViewState: emptyViewState)
+            if viewModel.isConnectedToNetwork == false {
+                ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
+            } else {
+                ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
             }
         }
         .ignoresSafeArea()
