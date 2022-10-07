@@ -35,7 +35,6 @@ final class ChatRoomsListViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
         configureNavigationBarButtons(chatMode: viewModel.chatMode)
-        viewModel.loadData()
         viewModel.refreshMyAvatar()
     }
     
@@ -79,6 +78,10 @@ final class ChatRoomsListViewController: UIViewController {
                 }),
             viewModel.$myAvatarBarButton.sink(receiveValue: { [weak self] myAvatarBarButton in
                 self?.navigationItem.leftBarButtonItem = myAvatarBarButton
+            }),
+            viewModel.$isConnectedToNetwork.sink(receiveValue: { [weak self] isConnectedToNetwork in
+                self?.addBarButtonItem.isEnabled = isConnectedToNetwork
+                self?.updateTitleView()
             })
         ]
     }

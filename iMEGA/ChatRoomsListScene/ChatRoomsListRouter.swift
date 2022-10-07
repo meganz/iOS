@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 @available(iOS 14.0, *)
 final class ChatRoomsListRouter: ChatRoomsListRouting {
@@ -9,7 +10,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let viewModel = ChatRoomsListViewModel(
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
-            contactsUseCase: ContactsUseCase(repository: ContactsRepository())
+            contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository())
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)
