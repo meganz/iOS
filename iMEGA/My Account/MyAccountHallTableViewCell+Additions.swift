@@ -14,6 +14,8 @@ extension MyAccountHallTableViewCell {
             pendingLabel.text = pendingText
             pendingView.clipsToBounds = true
             pendingView.isHidden = false
+        } else {
+            pendingView?.isHidden = true
         }
         
         if let detailText = data.detailText, detailLabel != nil {
