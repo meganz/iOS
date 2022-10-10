@@ -1,8 +1,6 @@
 
 struct ChatRoomsEmptyViewState {
-    let topRowImageAsset: ImageAsset?
-    let topRowDescription: String?
-    let topRowAction: (() -> Void)?
+    let chatRoomsTopRowViewState: ChatRoomsTopRowViewState?
     
     let centerImageAsset: ImageAsset
     let centerTitle: String

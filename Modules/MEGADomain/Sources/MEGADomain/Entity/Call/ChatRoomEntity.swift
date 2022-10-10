@@ -26,26 +26,18 @@ public struct ChatRoomEntity {
         case waitingRoom
     }
     
-    public enum Privilege {
-        case unknown
-        case removed
-        case readOnly
-        case standard
-        case moderator
-    }
-    
     public struct Peer {
         public let handle: HandleEntity
-        public let privilege: Privilege
+        public let privilege: ChatRoomPrivilegeEntity
         
-        public init(handle: HandleEntity, privilege: Privilege) {
+        public init(handle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
             self.handle = handle
             self.privilege = privilege
         }
     }
     
     public let chatId: HandleEntity
-    public let ownPrivilege: Privilege
+    public let ownPrivilege: ChatRoomPrivilegeEntity
     public let changeType: ChangeType?
 
     public let peerCount: UInt
@@ -66,7 +58,7 @@ public struct ChatRoomEntity {
     public let userHandle: HandleEntity
     public let isOpenInviteEnabled: Bool
     
-    public init(chatId: HandleEntity, ownPrivilege: Privilege, changeType: ChangeType?, peerCount: UInt, authorizationToken: String, title: String?, unreadCount: Int, userTypingHandle: HandleEntity, retentionTime: UInt, creationTimeStamp: UInt64, hasCustomTitle: Bool, isPublicChat: Bool, isPreview: Bool, isactive: Bool, isArchived: Bool, chatType: ChatType, peers: [Peer], userHandle: HandleEntity, isOpenInviteEnabled: Bool) {
+    public init(chatId: HandleEntity, ownPrivilege: ChatRoomPrivilegeEntity, changeType: ChangeType?, peerCount: UInt, authorizationToken: String, title: String?, unreadCount: Int, userTypingHandle: HandleEntity, retentionTime: UInt, creationTimeStamp: UInt64, hasCustomTitle: Bool, isPublicChat: Bool, isPreview: Bool, isactive: Bool, isArchived: Bool, chatType: ChatType, peers: [Peer], userHandle: HandleEntity, isOpenInviteEnabled: Bool) {
         self.chatId = chatId
         self.ownPrivilege = ownPrivilege
         self.changeType = changeType
@@ -89,13 +81,3 @@ public struct ChatRoomEntity {
     }
 }
 
-extension ChatRoomEntity.Privilege {
-    public func isPeerVisibleByPrivilege() -> Bool {
-        switch self {
-        case .unknown, .removed:
-            return false
-        case .readOnly, .standard, .moderator:
-            return true
-        }
-    }
-}

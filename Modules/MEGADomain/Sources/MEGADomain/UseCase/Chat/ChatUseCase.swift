@@ -6,6 +6,7 @@ public protocol ChatUseCaseProtocol {
     func changeChatStatus(to status: ChatStatusEntity)
     func monitorSelfChatStatusChange() -> AnyPublisher<ChatStatusEntity, Never>
     func existsActiveCall() -> Bool
+    func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
 }
 
 // MARK: - Use case implementation -
@@ -30,5 +31,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func existsActiveCall() -> Bool {
         chatRepo.existsActiveCall()
+    }
+    
+    public func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]? {
+        chatRepo.chatsList(ofType: type)?.sorted(by: { $0.lastMessageDate.compare($1.lastMessageDate) == .orderedDescending })
     }
 }

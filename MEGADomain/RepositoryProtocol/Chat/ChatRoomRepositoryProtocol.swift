@@ -5,7 +5,7 @@ protocol ChatRoomRepositoryProtocol {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
     func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity]
-    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege?
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomPrivilegeEntity?
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func createPublicLink(forChatId chatId: HandleEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func queryChatLink(forChatId chatId: HandleEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)

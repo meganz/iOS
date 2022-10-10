@@ -32,7 +32,7 @@ fileprivate extension ChatRoomEntity {
 }
 
 extension MEGAChatRoomPrivilege {
-    func toOwnPrivilegeEntity() -> ChatRoomEntity.Privilege {
+    func toOwnPrivilegeEntity() -> ChatRoomPrivilegeEntity {
         switch self {
         case .unknown:
             return .unknown
