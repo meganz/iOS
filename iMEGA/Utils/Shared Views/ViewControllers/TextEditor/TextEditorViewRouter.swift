@@ -79,6 +79,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             nodeEntity: nodeEntity
         )
         let vc = TextEditorViewController(viewModel: vm)
+        vc.title = textFile.fileName
         baseViewController = vc
         
         let nav = MEGANavigationController(rootViewController: vc)
