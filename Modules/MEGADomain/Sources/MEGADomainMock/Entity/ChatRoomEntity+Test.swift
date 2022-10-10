@@ -4,7 +4,7 @@ import MEGADomain
 public extension ChatRoomEntity {
     ///Init method with default values (0, false, nil, [], ...)
     init(chatId: HandleEntity = .invalid,
-         ownPrivilege: Privilege = .unknown,
+         ownPrivilege: ChatRoomPrivilegeEntity = .unknown,
          changeType: ChangeType = .status,
          peerCount: UInt = 0,
          title: String? = "Unit tests",

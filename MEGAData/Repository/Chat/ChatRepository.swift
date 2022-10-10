@@ -28,6 +28,16 @@ public final class ChatRepository: ChatRepositoryProtocol {
         sdk.firstActiveCall != nil
     }
     
+    public func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]? {
+        guard let chatList = sdk.chatListItems(by: type.toMEGAChatType()) else { return nil }
+        var chatListItems = [ChatListItemEntity]()
+        for i in 0 ..< chatList.size {
+            chatListItems.append(chatList.chatListItem(at: i).toChatListItemEntity())
+        }
+        return chatListItems
+    }
+    
+    // - MARK: Private
     private func chatStatusUpdateListener(forUserHandle userHandle: HandleEntity) -> ChatStatusUpdateListener {
         guard let chatStatusUpdateListener = chatStatusUpdateListeners.filter({ $0.user == userHandle}).first else {
             let chatStatusUpdateListener = ChatStatusUpdateListener(sdk: sdk, userHandle: userHandle)

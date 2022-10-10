@@ -34,7 +34,7 @@ final class ChatRoomsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
-        configureNavigationBarButtons(chatMode: viewModel.chatMode)
+        configureNavigationBarButtons(chatViewMode: viewModel.chatViewMode)
         viewModel.refreshMyAvatar()
     }
     
@@ -64,8 +64,8 @@ final class ChatRoomsListViewController: UIViewController {
     
     private func initSubscriptions() {
         subscriptions = [
-            viewModel.$chatMode.sink(receiveValue: { [weak self] chatMode in
-                self?.configureNavigationBarButtons(chatMode: chatMode)
+            viewModel.$chatViewMode.sink(receiveValue: { [weak self] chatViewMode in
+                self?.configureNavigationBarButtons(chatViewMode: chatViewMode)
             }),
             viewModel.$chatStatus.sink(receiveValue: { [weak self] chatStatus in
                 self?.refreshContextMenuBarButton()

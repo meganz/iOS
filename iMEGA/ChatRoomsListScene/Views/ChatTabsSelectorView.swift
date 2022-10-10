@@ -3,8 +3,8 @@ import SwiftUI
 
 struct ChatTabsSelectorView: View  {
     @Environment(\.colorScheme) private var colorScheme
-    var chatMode: ChatMode
-    var action: (ChatMode) -> Void
+    var chatViewMode: ChatViewMode
+    var action: (ChatViewMode) -> Void
     
     var body: some View {
         HStack (spacing: 0) {
@@ -15,11 +15,11 @@ struct ChatTabsSelectorView: View  {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(.subheadline)
-                        .foregroundColor(Color(chatMode == .chats ? Colors.Chat.Tabs.chatTabSelectedText.color : Colors.Chat.Tabs.chatTabNormalText.color))
+                        .foregroundColor(Color(chatViewMode == .chats ? Colors.Chat.Tabs.chatTabSelectedText.color : Colors.Chat.Tabs.chatTabNormalText.color))
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(Color(chatMode == .chats ? Colors.Chat.Tabs.chatTabSelectedBackground.color : Colors.Chat.Tabs.chatTabNormalBackground.color))
+                    .background(Color(chatViewMode == .chats ? Colors.Chat.Tabs.chatTabSelectedBackground.color : Colors.Chat.Tabs.chatTabNormalBackground.color))
             }
             
             VStack {
@@ -29,11 +29,11 @@ struct ChatTabsSelectorView: View  {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(.subheadline)
-                        .foregroundColor(Color(chatMode == .meetings ? Colors.Chat.Tabs.chatTabSelectedText.color : Colors.Chat.Tabs.chatTabNormalText.color))
+                        .foregroundColor(Color(chatViewMode == .meetings ? Colors.Chat.Tabs.chatTabSelectedText.color : Colors.Chat.Tabs.chatTabNormalText.color))
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(Color(chatMode == .meetings ? Colors.Chat.Tabs.chatTabSelectedBackground.color : Colors.Chat.Tabs.chatTabNormalBackground.color))
+                    .background(Color(chatViewMode == .meetings ? Colors.Chat.Tabs.chatTabSelectedBackground.color : Colors.Chat.Tabs.chatTabNormalBackground.color))
             }
         }
         .frame(maxHeight: 44)

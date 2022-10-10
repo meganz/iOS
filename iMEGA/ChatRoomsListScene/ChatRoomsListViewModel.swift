@@ -2,16 +2,15 @@ import Foundation
 import MEGADomain
 import Combine
 
-enum ChatMode {
+enum ChatViewMode {
     case chats
     case meetings
 }
 
-enum ChatType {
+enum ChatViewType {
     case regular
     case archived
 }
-
 
 protocol ChatRoomsListRouting: Routing {
     var navigationController: UINavigationController? { get }
@@ -22,6 +21,7 @@ protocol ChatRoomsListRouting: Routing {
     func presentScheduleMeetingScreen()
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
+    func openChatRoom(_ chatId: HandleEntity)
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
@@ -30,7 +30,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let contactsUseCase: ContactsUseCaseProtocol
     private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     private let notificationCenter: NotificationCenter
-    private let chatType: ChatType
+    private let chatViewType: ChatViewType
     
     lazy var contextMenuManager = ContextMenuManager(chatMenuDelegate: self,
                                                      meetingContextMenuDelegate: self,
@@ -38,11 +38,12 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var myAvatarManager: MyAvatarManager?
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
 
-    @Published var chatMode: ChatMode = .chats
+    @Published var chatViewMode: ChatViewMode = .chats
     @Published var chatStatus: ChatStatusEntity?
     @Published var title: String = Strings.Localizable.Chat.title
     @Published var myAvatarBarButton: UIBarButtonItem?
     @Published var isConnectedToNetwork: Bool
+    @Published var chatListItems: [ChatListItemEntity]?
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -51,19 +52,24 @@ final class ChatRoomsListViewModel: ObservableObject {
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
-         chatType: ChatType = .regular
+         chatType: ChatViewType = .regular
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
         self.contactsUseCase = contactsUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.notificationCenter = notificationCenter
-        self.chatType = chatType
+        self.chatViewType = chatType
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         
         configureTitle()
         listeningForChatStatusUpdate()
         monitorNetworkChanges()
+        fetchChats()
+    }
+    
+    func fetchChats() {
+        chatListItems = chatUseCase.chatsList(ofType: chatViewMode == .chats ? .nonMeeting : .meeting)
     }
     
     func contextMenuConfiguration() -> CMConfigEntity {
@@ -73,9 +79,10 @@ final class ChatRoomsListViewModel: ObservableObject {
                        chatStatus: chatUseCase.chatStatus())
     }
     
-    func selectChatMode(_ mode: ChatMode) {
-        guard mode != chatMode else { return }
-        chatMode = mode
+    func selectChatMode(_ mode: ChatViewMode) {
+        guard mode != chatViewMode else { return }
+        chatViewMode = mode
+        fetchChats()
     }
     
     func addChatButtonTapped() {
@@ -89,7 +96,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatUseCase.changeChatStatus(to: status)
     }
     
-    func emptyViewState() -> ChatRoomsEmptyViewState {
+    func topRowViewState() -> ChatRoomsTopRowViewState {
         ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
         let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
 
@@ -105,34 +112,37 @@ final class ChatRoomsListViewModel: ObservableObject {
             topRowDescription = Strings.Localizable.seeWhoSAlreadyOnMEGA
         }
         
-        return ChatRoomsEmptyViewState(
-            topRowImageAsset: Asset.Images.Chat.inviteToChat,
-            topRowDescription: topRowDescription,
-            topRowAction: { [weak self] in
-                guard let self else { return }
-                if self.contactsUseCase.isAuthorizedToAccessPhoneContacts, contactsOnMegaCount == 0 {
-                    self.router.showInviteContactScreen()
-                } else {
-                    self.router.showContactsOnMegaScreen()
-                }
-            },
-            centerImageAsset: isConnectedToNetwork ? (chatMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState) : Asset.Images.EmptyStates.noInternetEmptyState,
-            centerTitle: chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
-            centerDescription: chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
-            bottomButtonTitle: isConnectedToNetwork ? (chatMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title) : nil,
+        return ChatRoomsTopRowViewState(
+            imageAsset: Asset.Images.Chat.inviteToChat,
+            description: topRowDescription) { [weak self] in
+                self?.topRowViewTapped()
+            }
+    }
+    
+    func emptyViewState() -> ChatRoomsEmptyViewState {
+        ChatRoomsEmptyViewState(
+            chatRoomsTopRowViewState: topRowViewState(),
+            centerImageAsset: isConnectedToNetwork ? (chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState) : Asset.Images.EmptyStates.noInternetEmptyState,
+            centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
+            centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
+            bottomButtonTitle: isConnectedToNetwork ? (chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title) : nil,
             bottomButtonAction: { [weak self] in
                 guard let self else { return }
-                if self.chatMode == .chats {
+                if self.chatViewMode == .chats {
                     self.addChatButtonTapped()
                 }
             },
-            bottomButtonMenus: chatMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
+            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
         )
+    }
+    
+    func tapped(chatListItem: ChatListItemEntity) {
+        router.openChatRoom(chatListItem.chatId)
     }
     
     //MARK: - Private
     private func configureTitle() {
-        switch chatType {
+        switch chatViewType {
         case .regular:
             title = Strings.Localizable.Chat.title
         case .archived:
@@ -186,6 +196,16 @@ final class ChatRoomsListViewModel: ObservableObject {
         networkMonitorUseCase.networkPathChanged { [weak self] isConnectedToNetwork in
             guard let self else { return }
             self.isConnectedToNetwork = isConnectedToNetwork
+        }
+    }
+    
+    private func topRowViewTapped() {
+        let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
+
+        if contactsUseCase.isAuthorizedToAccessPhoneContacts, contactsOnMegaCount == 0 {
+            router.showInviteContactScreen()
+        } else {
+            router.showContactsOnMegaScreen()
         }
     }
 }

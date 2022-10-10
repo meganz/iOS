@@ -31,8 +31,8 @@ extension ChatRoomsListViewController {
         moreBarButtonItem.menu = viewModel.contextMenuManager.contextMenu(with: viewModel.contextMenuConfiguration())
     }
     
-    func configureNavigationBarButtons(chatMode: ChatMode) {
-        switch chatMode {
+    func configureNavigationBarButtons(chatViewMode: ChatViewMode) {
+        switch chatViewMode {
         case .chats:
             setAddBarButtonWithChatOptions()
         case .meetings:

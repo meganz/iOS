@@ -28,6 +28,9 @@ internal enum Colors {
     internal static let avatarBackgroundGradient = ColorAsset(name: "avatarBackgroundGradient")
   }
   internal enum Chat {
+    internal enum Listing {
+      internal static let subtitleText = ColorAsset(name: "subtitleText")
+    }
     internal enum ReactionBubble {
       internal static let border = ColorAsset(name: "border")
       internal static let selectedDark = ColorAsset(name: "selectedDark")

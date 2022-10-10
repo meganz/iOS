@@ -64,4 +64,10 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     func presentScheduleMeetingScreen() {
         
     }
+        
+    func openChatRoom(_ chatId: HandleEntity) {
+        guard let navigationController else { return }
+        let chatRoomViewController = ChatViewController(chatId: chatId)
+        navigationController.pushViewController(chatRoomViewController, animated: true)
+    }
 }

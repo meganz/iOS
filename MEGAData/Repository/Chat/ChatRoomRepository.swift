@@ -34,7 +34,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         return chatRoom.peers.map(\.handle)
     }
     
-    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomEntity.Privilege? {
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomPrivilegeEntity? {
         guard let chatRoom = sdk.chatRoom(forChatId: chatId), let privilege = MEGAChatRoomPrivilege(rawValue: chatRoom.peerPrivilege(byHandle: userHandle))?.toOwnPrivilegeEntity() else {
             return nil
         }

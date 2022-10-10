@@ -922,7 +922,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         invokeCommand?(.updateHasLocalAudio(audio))
     }
     
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
         if self.chatRoom.ownPrivilege != chatRoom.ownPrivilege && privilege == .moderator {
             invokeCommand?(.ownPrivilegeChangedToModerator)
         }

@@ -6,17 +6,17 @@ struct ChatRoomsEmptyView: View {
     
     var body: some View {
         VStack {
-            if let topRowDescription = emptyViewState.topRowDescription {
+            if let topRowDescription = emptyViewState.chatRoomsTopRowViewState?.description {
                 Button {
-                    emptyViewState.topRowAction?()
+                    emptyViewState.chatRoomsTopRowViewState?.action()
                 } label: {
-                    ChatRoomsEmptyTopRowView(
-                        imageAsset: emptyViewState.topRowImageAsset,
+                    ChatRoomsTopRowView(
+                        imageAsset: emptyViewState.chatRoomsTopRowViewState?.imageAsset,
                         description: topRowDescription
                     )
                 }
                 .buttonStyle(.plain)
-                .padding(.horizontal, 12)
+                .padding(8)
             }
             
             VStack {
@@ -38,30 +38,6 @@ struct ChatRoomsEmptyView: View {
                     .padding(.bottom, 35)
                 }
             }
-        }
-    }
-}
-
-fileprivate struct ChatRoomsEmptyTopRowView: View {
-    let imageAsset: ImageAsset?
-    let description: String
-    private let discolureIndicator = "chevron.right"
-    
-    var body: some View {
-        HStack {
-            if let imageAsset, let image = Image(uiImage: UIImage(asset: imageAsset)) {
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-            }
-            
-            Text(description)
-                .font(.subheadline.weight(.medium))
-            
-            Spacer()
-            Image(systemName: discolureIndicator)
-                .foregroundColor(.gray.opacity(0.6))
         }
     }
 }

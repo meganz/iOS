@@ -494,7 +494,7 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         }
     }
         
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
         guard let participant = callParticipants.first else { return }
         participant.isModerator = privilege == .moderator

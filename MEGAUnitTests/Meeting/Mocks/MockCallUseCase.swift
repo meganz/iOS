@@ -117,7 +117,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.callTerminated(self.call)
     }
     
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
         guard let chatRoom = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return

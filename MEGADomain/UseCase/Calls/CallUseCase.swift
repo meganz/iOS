@@ -25,7 +25,7 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
     func lowResolutionChanged(for participant: CallParticipantEntity)
     func audioLevel(for participant: CallParticipantEntity)
     func callTerminated(_ call: CallEntity)
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
+    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity)
     func participantAdded(with handle: HandleEntity)
     func participantRemoved(with handle: HandleEntity)
     func connecting()
@@ -139,7 +139,7 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.callTerminated(call)
     }
     
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity) {
+    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
         callbacksDelegate?.ownPrivilegeChanged(to: privilege, in: chatRoom)
     }
     

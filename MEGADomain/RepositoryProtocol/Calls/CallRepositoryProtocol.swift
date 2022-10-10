@@ -22,7 +22,7 @@ protocol CallCallbacksRepositoryProtocol {
     func avFlagsUpdated(for session: ChatSessionEntity, in chatId: HandleEntity)
     func audioLevel(for session: ChatSessionEntity, in chatId: HandleEntity)
     func callTerminated(_ call: CallEntity)
-    func ownPrivilegeChanged(to privilege: ChatRoomEntity.Privilege, in chatRoom: ChatRoomEntity)
+    func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity)
     func participantAdded(with handle: HandleEntity)
     func participantRemoved(with handle: HandleEntity)
     func connecting()
