@@ -10,12 +10,10 @@ extension MyAccountHallTableViewCell {
             iconImageView.image = icon
         }
         
-        if data.isPendingViewVisible, let pendingText = data.pendingText, pendingLabel != nil {
+        if data.isPendingViewVisible, let pendingText = data.pendingText, pendingLabel != nil, pendingView != nil {
             pendingLabel.text = pendingText
             pendingView.clipsToBounds = true
             pendingView.isHidden = false
-        } else {
-            pendingView.isHidden = true
         }
         
         if let detailText = data.detailText, detailLabel != nil {
