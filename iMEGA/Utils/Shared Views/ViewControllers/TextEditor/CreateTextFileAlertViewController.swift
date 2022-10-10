@@ -30,6 +30,7 @@ final class CreateTextFileAlertViewController: UIAlertController {
             let rightButtonAction = newFileAC.actions.last
             let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
             textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
+            newFileAC.title = newFileNameAlertTitle(invalidChars: containsInvalidChars)
             let empty = textField.text?.mnz_isEmpty() ?? true
             rightButtonAction?.isEnabled = (!empty && !containsInvalidChars)
         }
@@ -37,5 +38,12 @@ final class CreateTextFileAlertViewController: UIAlertController {
     
     @objc private func createTextFileAlertTextFieldBeginEdit(textField: UITextField) {
         textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.beginningOfDocument)
+    }
+    
+    @objc private func newFileNameAlertTitle(invalidChars containsInvalidChars: Bool) -> String {
+        guard containsInvalidChars else {
+            return Strings.Localizable.newTextFile
+        }
+        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
     }
 }
