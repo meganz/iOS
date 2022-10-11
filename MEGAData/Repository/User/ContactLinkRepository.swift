@@ -15,8 +15,9 @@ struct ContactLinkRepository: ContactLinkRepositoryProtocol {
     func contactLinkQuery(handle: HandleEntity) async throws -> ContactLinkEntity? {
         try await withCheckedThrowingContinuation({ continuation in
             sdk.contactLinkQuery(withHandle: handle, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
-                if error.type != .apiOk {
+                guard error.type == .apiOk else {
                     continuation.resume(throwing: ContactLinkErrorEntity.generic)
+                    return
                 }
                 continuation.resume(with: .success(ContactLinkEntity(email: request.email, name: request.name)))
             }))
