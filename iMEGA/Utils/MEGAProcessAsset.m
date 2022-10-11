@@ -275,12 +275,9 @@ static const float BPS_MEDIUM = 3000000.0f;
 
 - (void)requestVideoAsset:(PHAsset *)asset {
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-    if (self.shareThroughChat) {
-        options.version = PHVideoRequestOptionsVersionCurrent;
-    } else {
-        options.version = PHVideoRequestOptionsVersionOriginal;
-    }
+    options.version = PHVideoRequestOptionsVersionCurrent;
     options.networkAccessAllowed = YES;
+    
     [[PHImageManager defaultManager]
      requestAVAssetForVideo:asset
      options:options resultHandler:^(AVAsset *avAsset, AVAudioMix *audioMix, NSDictionary *info) {
