@@ -130,7 +130,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func play() {
         guard let viewModel = viewModel else { return }
-
+        let cell = collectionView.visibleCells.first(where: { $0 is SlideShowCollectionViewCell }) as? SlideShowCollectionViewCell
         setVisibility(false)
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = UIColor.black
@@ -139,6 +139,7 @@ final class SlideShowViewController: UIViewController, ViewType {
             self.bottomBarBackgroundViewHeightConstraint.constant = .zero
             self.navigationBar.isHidden = true
             self.bottomToolbar.isHidden = true
+            cell?.setZoomScale()
             if viewModel.currentSlideNumber >= viewModel.photos.count {
                 viewModel.currentSlideNumber = -1
                 self.changeImage()

@@ -12,16 +12,25 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         
     func update(withImage image: UIImage, andInteraction slideshowInteraction: SlideShowInteraction) {
         imageView.image = image
-        
-        scrollView.delegate = self
-        scrollView.maximumZoomScale = 5.0
-        scrollView.minimumZoomScale = 1.0
-        
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
         
+        scrollView.delegate = self
+        setZoomScale()
+        scrollView.contentInsetAdjustmentBehavior = .never
+        
         self.slideshowInteraction = slideshowInteraction
         
+        addGestures()
+    }
+    
+    func setZoomScale() {
+        scrollView.maximumZoomScale = 5.0
+        scrollView.minimumZoomScale = 1.0
+        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
+    }
+    
+    func addGestures() {
         let doubleTap = UITapGestureRecognizer(target:self, action:#selector(doubleTap(gesture:)))
         doubleTap.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTap)
@@ -31,38 +40,23 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         self.addGestureRecognizer(singleTap)
     }
     
-    private func correctOrigin(forView view: UIView, scaledAt scale: CGFloat) {
-        var frame = view.frame
-        frame.origin.x = max(frame.origin.x + (scrollView.frame.size.width - (view.frame.size.width * scale)) / CGFloat(2), CGFloat(0))
-        frame.origin.y = max(frame.origin.y + (scrollView.frame.size.height - (view.frame.size.height * scale)) / CGFloat(2), CGFloat(0))
-        view.frame = frame
+    @objc func doubleTap(gesture: UITapGestureRecognizer) {
+        if scrollView.zoomScale > scrollView.minimumZoomScale {
+            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+        } else {
+            let zoomRect = zoomRectForScale(scale: 1.5, center: gesture.location(in: gesture.view))
+            scrollView.zoom(to: zoomRect, animated: true)
+        }
     }
     
-    @objc func doubleTap(gesture: UITapGestureRecognizer) {
-        var newScale: CGFloat = 0
-        if imageView.frame.size.width < scrollView.frame.size.width {
-            newScale = scrollView.zoomScale > 1.0 ? 1.0 : scrollView.frame.size.width / imageView.frame.size.width
-        } else {
-            newScale = scrollView.zoomScale > 1.0 ? 1.0 : 5.0
-        }
-
-        UIView.animate(withDuration: 0.3) {
-            if newScale > 1.0 {
-                var tapPoint =  gesture.location(in: self.imageView)
-                tapPoint = self.imageView.convert(tapPoint, from: gesture.view)
-
-                var zoomRect = CGRect.zero
-                zoomRect.size.width = self.imageView.frame.size.width / newScale
-                zoomRect.size.height = self.imageView.frame.size.height / newScale
-                zoomRect.origin.x = tapPoint.x - zoomRect.size.width / 2
-                zoomRect.origin.y = tapPoint.y - zoomRect.size.height / 2
-
-                self.scrollView.zoom(to: zoomRect, animated: false)
-            } else {
-                self.scrollView.zoomScale = newScale
-            }
-            self.correctOrigin(forView: self.imageView, scaledAt: newScale)
-        }
+    private func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {
+        var zoomRect = CGRect.zero
+        zoomRect.size.height = imageView.bounds.size.height / scale
+        zoomRect.size.width  = imageView.bounds.size.width  / scale
+        let newCenter = scrollView.convert(center, from: self)
+        zoomRect.origin.x = newCenter.x - (zoomRect.size.width / 2.0)
+        zoomRect.origin.y = newCenter.y - (zoomRect.size.height / 2.0)
+        return zoomRect
     }
     
     @objc func singleTap(gesture: UITapGestureRecognizer) {
