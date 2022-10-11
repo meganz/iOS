@@ -15,15 +15,26 @@ else:
     from urllib.request import Request, urlopen, install_opener, build_opener, HTTPRedirectHandler
     from urllib.error import HTTPError
 
-transifex_token = None
 transifex_token = os.getenv("TRANSIFEX_TOKEN")
+gitlab_token = os.getenv("GITLAB_TOKEN")
+transifex_bot_token = None
+transifex_bot_url = None
+
+config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'transifexConfig.json')
+if os.path.exists(config_file):
+    transifex_config_file = open(config_file, "r")
+    content = transifex_config_file.read()
+    transifex_config_file.close()
+    transifex_config = json.loads(content)
+
+    transifex_token = transifex_config.get('apiToken') or transifex_token
+    gitlab_token = transifex_config.get('gitLabToken') or gitlab_token
+    transifex_bot_token = transifex_config.get('botToken') or transifex_bot_token
+    transifex_bot_url = transifex_config.get('botUrl') or transifex_bot_url
 
 if not transifex_token:
     print("Error: Missing transifex token.")
     sys.exit(1)
-
-gitlab_token = None
-gitlab_token = os.getenv("GITLAB_TOKEN")
 
 if not gitlab_token:
     print("Error: Missing gitlab token.")
@@ -471,13 +482,16 @@ def run_comment(resource):
 
 # Call this function to initiate pruning for the Localizable resource by the Transifex bot.
 def run_pruning():
-    url = os.getenv('TRANSIFEX_BOT_URL')
-    token = os.getenv('TRANSIFEX_BOT_TOKEN')
+    global transifex_bot_token
+    global transifex_bot_url
     localizable = PROJECT_ID + ':r:localizable'
-    if url and token:
+    if transifex_bot_token and transifex_bot_url:
+        header = {
+            "Authorization": "Bearer " + transifex_bot_token
+        }
         i = 30
         while i > 0:
-            request = Request(url + '?o=prune&pid=193&token=' + token)
+            request = Request(transifex_bot_url + '?o=prune&pid=193', headers=header)
             try:
                 response = urlopen(request)
             except HTTPError as ex:
