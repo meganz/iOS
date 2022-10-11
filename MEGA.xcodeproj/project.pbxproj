@@ -14369,6 +14369,7 @@
 					ENABLE_CHAT,
 					MAIN_APP_TARGET,
 					"FLEXLAYOUT_SWIFT_PACKAGE=1",
+					"QA_CONFIG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -14395,7 +14396,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
