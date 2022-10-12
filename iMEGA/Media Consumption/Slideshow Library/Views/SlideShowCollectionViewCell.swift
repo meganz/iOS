@@ -27,7 +27,7 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
     func setZoomScale() {
         scrollView.maximumZoomScale = 5.0
         scrollView.minimumZoomScale = 1.0
-        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
+        scrollView.zoomScale = 1.0
     }
     
     func addGestures() {
