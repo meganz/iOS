@@ -231,7 +231,7 @@ extension SlideShowViewController: UICollectionViewDelegate {
         }
         
         guard let cell = cell as? SlideShowCollectionViewCell else { return }
-        cell.imageView.setToIntrinsicContentSize()
+        cell.setZoomScale()
     }
 }
 
