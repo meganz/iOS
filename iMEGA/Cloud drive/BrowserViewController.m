@@ -542,9 +542,12 @@
 
 #ifndef MNZ_PICKER_EXTENSION
 - (CancellableTransfer *)transferToUpload {
-    NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
-
-    return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:self.localpath] name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
+    if (self.localpath) {
+        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
+        return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:self.localpath] name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
+    } else {
+        return nil;
+    }
 }
 #endif
 
@@ -641,7 +644,10 @@
     if (self.browserAction == BrowserActionOpenIn) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [self dismissAndSelectNodesIfNeeded:NO completion:^{
-                [NameCollisionRouterOCWrapper.alloc.init uploadFiles:@[[self transferToUpload]] presenter: UIApplication.mnz_visibleViewController type: CancellableTransferTypeUpload];
+                CancellableTransfer *cancellableTransfer = [self transferToUpload];
+                if (cancellableTransfer) {
+                    [NameCollisionRouterOCWrapper.alloc.init uploadFiles:@[cancellableTransfer] presenter: UIApplication.mnz_visibleViewController type: CancellableTransferTypeUpload];
+                }
             }];
         }
     } else if (self.browserAction == BrowserActionShareExtension
