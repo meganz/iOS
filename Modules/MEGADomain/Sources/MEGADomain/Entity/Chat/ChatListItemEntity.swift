@@ -7,7 +7,7 @@ public struct ChatListItemEntity: Identifiable, Hashable {
     public let title: String?
     public let changeType: ChangeType?
     public let ownPrivilege: ChatRoomPrivilegeEntity
-    public let unreadCount: UInt
+    public let unreadCount: Int
     public let previewersCount: UInt
     
     public let group: Bool
@@ -20,10 +20,10 @@ public struct ChatListItemEntity: Identifiable, Hashable {
     
     public let lastMessage: String?
     public let lastMessageId: HandleEntity
-    public let lastMessageType: ChatMessageType
+    public let lastMessageType: ChatMessageTypeEntity
     public let lastMessageSender: HandleEntity
     public let lastMessageDate: Date
-    public let lastMessagePriv: ChatMessageType
+    public let lastMessagePriv: ChatMessageTypeEntity
     public let lastMessageHandle: HandleEntity
 
     public enum ChangeType {
@@ -44,28 +44,7 @@ public struct ChatListItemEntity: Identifiable, Hashable {
         case delete
     }
     
-    public enum ChatMessageType {
-        case unknown
-        case invalid
-        case normal
-        case alterParticipants
-        case truncate
-        case privilegeChange
-        case chatTitle
-        case callEnded
-        case callStarted
-        case publicHandleCreate
-        case publicHandleDelete
-        case setPrivateMode
-        case setRetentionTime
-        case highestManagement
-        case attachment
-        case contact
-        case containsMeta
-        case voiceClip
-    }
-    
-    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: UInt, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageType, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageType, lastMessageHandle: HandleEntity) {
+    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity) {
         self.id = chatId
         self.chatId = chatId
         self.title = title

@@ -29,6 +29,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let chatUseCase: ChatUseCaseProtocol
     private let contactsUseCase: ContactsUseCaseProtocol
     private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
+    private let userUseCase: UserUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
@@ -43,7 +44,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var title: String = Strings.Localizable.Chat.title
     @Published var myAvatarBarButton: UIBarButtonItem?
     @Published var isConnectedToNetwork: Bool
-    @Published var chatListItems: [ChatListItemEntity]?
+    @Published var chatRooms: [ChatRoomViewModel]?
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -51,6 +52,7 @@ final class ChatRoomsListViewModel: ObservableObject {
          chatUseCase: ChatUseCaseProtocol,
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
+         userUseCase: UserUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular
     ) {
@@ -58,6 +60,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.contactsUseCase = contactsUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
+        self.userUseCase = userUseCase
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
@@ -69,7 +72,29 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     func fetchChats() {
-        chatListItems = chatUseCase.chatsList(ofType: chatViewMode == .chats ? .nonMeeting : .meeting)
+        guard let chatListItems = chatUseCase.chatsList(ofType: chatViewMode == .chats ? .nonMeeting : .meeting) else {
+            MEGALogDebug("Unable to fetch chat list items")
+            return 
+        }
+        
+        self.chatRooms = chatListItems.map { chatListItem in
+            let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
+                                                  userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+            let userImageUseCase = UserImageUseCase(
+                userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+                thumbnailRepo: ThumbnailRepository.newRepo,
+                fileSystemRepo: FileSystemRepository.newRepo
+            )
+            
+            return ChatRoomViewModel(
+                chatListItem: chatListItem,
+                chatRoomUseCase: chatRoomUseCase,
+                userImageUseCase: userImageUseCase,
+                chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
+                userUseCase: UserUseCase(repo: .live)
+            )
+        }
     }
     
     func contextMenuConfiguration() -> CMConfigEntity {
@@ -136,8 +161,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    func tapped(chatListItem: ChatListItemEntity) {
-        router.openChatRoom(chatListItem.chatId)
+    func openChatRoom(_ chatRoomViewModel: ChatRoomViewModel) {
+        router.openChatRoom(chatRoomViewModel.chatListItem.chatId)
     }
     
     //MARK: - Private
@@ -181,8 +206,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func listeningForChatStatusUpdate () {
+        guard let myHandle = userUseCase.myHandle else { return }
+        
         chatUseCase
-            .monitorSelfChatStatusChange()
+            .monitorChatStatusChange(forUserHandle: myHandle)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed status \(error)")

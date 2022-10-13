@@ -6,6 +6,7 @@ protocol ChatRoomRepositoryProtocol {
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
     func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity]
     func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomPrivilegeEntity?
+    func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func createPublicLink(forChatId chatId: HandleEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func queryChatLink(forChatId chatId: HandleEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
@@ -16,6 +17,7 @@ protocol ChatRoomRepositoryProtocol {
     func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     func userPrivilegeChanged(forChatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
     func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
+    func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity?
     func isChatRoomOpen(chatId: HandleEntity) -> Bool
     func openChatRoom(chatId: HandleEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void) throws
     func closeChatRoom(chatId: HandleEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void)

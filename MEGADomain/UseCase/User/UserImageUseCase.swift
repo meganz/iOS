@@ -11,8 +11,9 @@ protocol UserImageUseCaseProtocol {
     func clearAvatarCache(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity)
     func downloadAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) async throws -> UIImage
     func createAvatar(withUserHandle handle: HandleEntity,
-                      base64Handle: Base64HandleEntity,
+                      base64Handle: Base64HandleEntity?,
                       avatarBackgroundHexColor: String,
+                      backgroundGradientHexColor: String?,
                       name: String) async throws -> UIImage
 
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never>
@@ -80,48 +81,67 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
     }
     
     func createAvatar(withUserHandle handle: HandleEntity,
-                      base64Handle: Base64HandleEntity,
+                      base64Handle: Base64HandleEntity?,
                       avatarBackgroundHexColor: String,
+                      backgroundGradientHexColor: String? = nil,
                       name: String) async throws -> UIImage {
         let displayName = await userStoreRepo.displayName(forUserHandle: handle)
-        return try createAvatarImage(usingName: displayName ?? name,
-                                     base64Handle: base64Handle,
-                                     avatarBackgroundHexColor: avatarBackgroundHexColor)
+        return try await createAvatarImage(usingName: displayName ?? name,
+                                           base64Handle: base64Handle,
+                                           avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                           backgroundGradientHexColor: backgroundGradientHexColor)
     }
     
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         userImageRepo.requestAvatarChangeNotification(forUserHandles: handles)
     }
     
+    @MainActor
     private func createAvatarImage(usingName name: String,
-                                   base64Handle: Base64HandleEntity,
-                                   avatarBackgroundHexColor: String) throws -> UIImage {
+                                   base64Handle: Base64HandleEntity?,
+                                   avatarBackgroundHexColor: String,
+                                   backgroundGradientHexColor: String? = nil) async throws -> UIImage {
         try createAvatar(usingName: name,
                          base64Handle: base64Handle,
-                         avatarBackgroundHexColor: avatarBackgroundHexColor)
+                         avatarBackgroundHexColor: avatarBackgroundHexColor,
+                         backgroundGradientHexColor: backgroundGradientHexColor)
     }
     
     private func createAvatar(
         usingName name: String,
-        base64Handle: Base64HandleEntity,
+        base64Handle: Base64HandleEntity?,
         avatarBackgroundHexColor: String,
+        backgroundGradientHexColor: String? = nil,
         size: CGSize = CGSize(width: 100.0, height: 100.0)
     ) throws -> UIImage {
-        let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
-        if let image = fetchImage(fromPath: destinationURL.path) {
-            return image
+        if let base64Handle {
+            let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+            if let image = fetchImage(fromPath: destinationURL.path) {
+                return image
+            }
         }
         
         let initials = (name as NSString).mnz_initialForAvatar()
         
+        let backgroundGradientColor: UIColor?
+        if let backgroundGradientHexColor {
+            backgroundGradientColor = UIColor.mnz_(fromHexString: backgroundGradientHexColor)
+        } else {
+            backgroundGradientColor = nil
+        }
+        
         let image = UIImage(forName: initials,
                             size: size,
                             backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor),
+                            backgroundGradientColor: backgroundGradientColor,
                             textColor: .white,
                             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0))
         
-        if let imageData = image?.jpegData(compressionQuality: 1.0) {
-            try imageData.write(to: destinationURL, options: .atomic)
+        if let base64Handle {
+            let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+            if let imageData = image?.jpegData(compressionQuality: 1.0) {
+                try imageData.write(to: destinationURL, options: .atomic)
+            }
         }
         
         if let image = image {

@@ -18,8 +18,8 @@ public final class ChatRepository: ChatRepositoryProtocol {
         sdk.setOnlineStatus(status.toMEGASChatStatus())
     }
     
-    public func monitorSelfChatStatusChange() -> AnyPublisher<ChatStatusEntity, Never> {
-        chatStatusUpdateListener(forUserHandle: sdk.myUserHandle)
+    public func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never> {
+        chatStatusUpdateListener(forUserHandle: userHandle)
             .monitor
             .eraseToAnyPublisher()
     }
@@ -35,6 +35,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
             chatListItems.append(chatList.chatListItem(at: i).toChatListItemEntity())
         }
         return chatListItems
+    }
+    
+    public func myFullName() -> String? {
+        sdk.myFullname
     }
     
     // - MARK: Private

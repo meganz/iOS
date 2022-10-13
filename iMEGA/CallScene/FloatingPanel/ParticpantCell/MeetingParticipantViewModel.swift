@@ -180,6 +180,7 @@ final class MeetingParticipantViewModel: ViewModelType {
         let image = try await userImageUseCase.createAvatar(withUserHandle: participant.participantId,
                                                             base64Handle: base64Handle,
                                                             avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                                            backgroundGradientHexColor: nil,
                                                             name: name)
         return image
     }

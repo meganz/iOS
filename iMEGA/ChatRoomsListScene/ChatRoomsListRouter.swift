@@ -11,7 +11,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository())
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
+            userUseCase: UserUseCase(repo: .live)
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)

@@ -41,6 +41,10 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         return privilege
     }
     
+    func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity {
+        sdk.userOnlineStatus(userHandle).toChatStatusEntity()
+    }
+    
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void) {
         if let chatRoom = chatRoom(forUserHandle: userHandle) {
             completion(.success(chatRoom))
@@ -150,6 +154,10 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             
             completion(.success(text))
         })
+    }
+    
+    func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity? {
+        sdk.message(forChat: chatId, messageId: messageId)?.toChatMessageEntity()
     }
     
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {

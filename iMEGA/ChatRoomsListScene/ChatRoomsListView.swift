@@ -12,7 +12,7 @@ struct ChatRoomsListView: View {
             
             if viewModel.isConnectedToNetwork == false {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
-            } else if let chatListItems = viewModel.chatListItems {
+            } else if let chatRooms = viewModel.chatRooms {
                 List {
                     let topRowViewState = viewModel.topRowViewState()
                     Button {
@@ -27,11 +27,12 @@ struct ChatRoomsListView: View {
                     .buttonStyle(.plain)
                     .padding(10)
                     
-                    ForEach(chatListItems, id: \.self) { chatListItem in
-                        ChatListItemView(chatListItem: chatListItem)
+                    ForEach(chatRooms, id: \.self) { chatRoom in
+                        ChatRoomView(viewModel: chatRoom)
                         .listRowInsets(EdgeInsets())
+                        .contentShape(Rectangle())
                         .onTapGesture {
-                            viewModel.tapped(chatListItem: chatListItem)
+                            viewModel.openChatRoom(chatRoom)
                         }
                     }
                 }
