@@ -6,12 +6,14 @@ protocol ChatRoomUseCaseProtocol {
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
     func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity]
     func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomPrivilegeEntity?
+    func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String]
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool
+    func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity?
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
@@ -44,6 +46,10 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
     
     func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomPrivilegeEntity? {
         chatRoomRepo.peerPrivilege(forUserHandle: userHandle, inChatId: chatId)
+    }
+    
+    func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity {
+        chatRoomRepo.userStatus(forUserHandle: userHandle)
     }
 
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
@@ -100,6 +106,10 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
     
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {
         try await chatRoomRepo.allowNonHostToAddParticipants(enabled: enabled, chatId: chatId)
+    }
+    
+    func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity? {
+        chatRoomRepo.message(forChatId: chatId, messageId: messageId)
     }
     
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {

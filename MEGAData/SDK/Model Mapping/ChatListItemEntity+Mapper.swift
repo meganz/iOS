@@ -14,7 +14,7 @@ fileprivate extension ChatListItemEntity {
             title: chatListItem.title,
             changeType: chatListItem.changes.toChatListItemChangeEntity(),
             ownPrivilege: chatListItem.ownPrivilege.toOwnPrivilegeEntity(),
-            unreadCount: UInt(chatListItem.unreadCount),
+            unreadCount: chatListItem.unreadCount,
             previewersCount: chatListItem.previewersCount,
             group: chatListItem.isGroup,
             publicChat: chatListItem.isPublicChat,
@@ -24,10 +24,10 @@ fileprivate extension ChatListItemEntity {
             peerHandle: chatListItem.peerHandle,
             lastMessage: chatListItem.lastMessage,
             lastMessageId: chatListItem.lastMessageId,
-            lastMessageType: chatListItem.lastMessageType.toChatMessageType(),
+            lastMessageType: chatListItem.lastMessageType.toChatMessageTypeEntity(),
             lastMessageSender: chatListItem.lastMessageSender,
             lastMessageDate: chatListItem.lastMessageDate,
-            lastMessagePriv: chatListItem.lastMessagePriv.toChatMessageType(),
+            lastMessagePriv: chatListItem.lastMessagePriv.toChatMessageTypeEntity(),
             lastMessageHandle: chatListItem.lastMessageHandle
         )
     }
@@ -70,47 +70,3 @@ extension MEGAChatListItemChangeType {
     }
 }
 
-extension MEGAChatMessageType {
-    func toChatMessageType() -> ChatListItemEntity.ChatMessageType {
-        switch self {
-        case .unknown:
-            return .unknown
-        case .invalid:
-            return .invalid
-        case .normal:
-            return .normal
-        case .alterParticipants:
-            return .alterParticipants
-        case .truncate:
-            return .truncate
-        case .privilegeChange:
-            return .privilegeChange
-        case .chatTitle:
-            return .chatTitle
-        case .callEnded:
-            return .callEnded
-        case .callStarted:
-            return .callStarted
-        case .publicHandleCreate:
-            return .publicHandleCreate
-        case .publicHandleDelete:
-            return .publicHandleDelete
-        case .setPrivateMode:
-            return .setPrivateMode
-        case .setRetentionTime:
-            return .setRetentionTime
-        case .attachment:
-            return .attachment
-        case .revokeAttachment:
-            return .unknown
-        case .contact:
-            return .contact
-        case .containsMeta:
-            return .containsMeta
-        case .voiceClip:
-            return .voiceClip
-        @unknown default:
-            return .unknown
-        }
-    }
-}

@@ -1085,7 +1085,7 @@
 		83B42F6A25D2E9F900AAA88F /* CallParticipantEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B42F6925D2E9F900AAA88F /* CallParticipantEntity.swift */; };
 		83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E87827F6F8F50073C870 /* CancellableTransferViewModelTests.swift */; };
 		83B5E88A27F71BC70073C870 /* MockPhotosLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */; };
-		83B71A6028F0356600E006C6 /* ChatListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B71A5F28F0356600E006C6 /* ChatListItemView.swift */; };
+		83B71A6028F0356600E006C6 /* ChatRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B71A5F28F0356600E006C6 /* ChatRoomView.swift */; };
 		83B71A6228F03A2D00E006C6 /* ChatRoomsTopRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B71A6128F03A2D00E006C6 /* ChatRoomsTopRowView.swift */; };
 		83B71A6428F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
@@ -2271,6 +2271,17 @@
 		BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */; };
 		BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */; };
 		BFD213BF28EE600E0057150E /* ContactsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213BE28EE600E0057150E /* ContactsRepository.swift */; };
+		BFD2141128F4D5810057150E /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */; };
+		BFD2141328F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141228F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift */; };
+		BFD2141528F6B3EF0057150E /* ChatMessageStatusEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141428F6B3EF0057150E /* ChatMessageStatusEntity+Mapper.swift */; };
+		BFD2141728F6B96A0057150E /* ChatMessageTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141628F6B96A0057150E /* ChatMessageTypeEntity+Mapper.swift */; };
+		BFD2141928F6C1A70057150E /* ChatMessageEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141828F6C1A70057150E /* ChatMessageEntity+Mapper.swift */; };
+		BFD2141B28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */; };
+		BFD2141D28F7A2080057150E /* MEGAHandleList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141C28F7A2070057150E /* MEGAHandleList+Mapper.swift */; };
+		BFD2141F28F7A2430057150E /* ChatContainsMetaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141E28F7A2430057150E /* ChatContainsMetaEntity.swift */; };
+		BFD2142128F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142028F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift */; };
+		BFD2142328F7A2B90057150E /* ChatGeolocationEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142228F7A2B80057150E /* ChatGeolocationEntity+Mapper.swift */; };
+		BFD2142528F7A2C70057150E /* ChatGiphyEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD28425283213A3001AACC2 /* TimeoutTask.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
@@ -3613,7 +3624,7 @@
 		83B42F6925D2E9F900AAA88F /* CallParticipantEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantEntity.swift; sourceTree = "<group>"; };
 		83B5E87827F6F8F50073C870 /* CancellableTransferViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferViewModelTests.swift; sourceTree = "<group>"; };
 		83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotosLibraryRepository.swift; sourceTree = "<group>"; };
-		83B71A5F28F0356600E006C6 /* ChatListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListItemView.swift; sourceTree = "<group>"; };
+		83B71A5F28F0356600E006C6 /* ChatRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomView.swift; sourceTree = "<group>"; };
 		83B71A6128F03A2D00E006C6 /* ChatRoomsTopRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsTopRowView.swift; sourceTree = "<group>"; };
 		83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsTopRowViewState.swift; sourceTree = "<group>"; };
 		83B906B9249A29CA0088F15C /* UIButton+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Additions.swift"; sourceTree = "<group>"; };
@@ -4632,6 +4643,17 @@
 		BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyView.swift; sourceTree = "<group>"; };
 		BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewState.swift; sourceTree = "<group>"; };
 		BFD213BE28EE600E0057150E /* ContactsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRepository.swift; sourceTree = "<group>"; };
+		BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
+		BFD2141228F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageEndCallReason+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2141428F6B3EF0057150E /* ChatMessageStatusEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageStatusEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2141628F6B96A0057150E /* ChatMessageTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2141828F6C1A70057150E /* ChatMessageEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomHybridDescriptionViewState.swift; sourceTree = "<group>"; };
+		BFD2141C28F7A2070057150E /* MEGAHandleList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAHandleList+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2141E28F7A2430057150E /* ChatContainsMetaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContainsMetaEntity.swift; sourceTree = "<group>"; };
+		BFD2142028F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRichPreviewEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2142228F7A2B80057150E /* ChatGeolocationEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGeolocationEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGiphyEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFD28425283213A3001AACC2 /* TimeoutTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTask.swift; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -8097,7 +8119,6 @@
 			children = (
 				8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */,
 				BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */,
-				83B71A5F28F0356600E006C6 /* ChatListItemView.swift */,
 				83B71A6128F03A2D00E006C6 /* ChatRoomsTopRowView.swift */,
 			);
 			path = Views;
@@ -8241,6 +8262,7 @@
 				836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */,
 				BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */,
 				83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */,
+				BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -8520,6 +8542,8 @@
 				836A783128E34C2900B6849F /* ChatRoomsListViewModel.swift */,
 				836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */,
 				83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */,
+				83B71A5F28F0356600E006C6 /* ChatRoomView.swift */,
+				BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */,
 			);
 			path = ChatRoomsListScene;
 			sourceTree = "<group>";
@@ -9641,6 +9665,7 @@
 				0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */,
 				0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */,
 				A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */,
+				BFD2141C28F7A2070057150E /* MEGAHandleList+Mapper.swift */,
 				B662B87024F332250089376A /* MEGAStringList+Mapper.swift */,
 				B662B88024F8CB490089376A /* MEGAError+Mapper.swift */,
 				943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */,
@@ -9662,6 +9687,14 @@
 				9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */,
 				836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */,
 				836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */,
+				BFD2141228F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift */,
+				BFD2141428F6B3EF0057150E /* ChatMessageStatusEntity+Mapper.swift */,
+				BFD2141628F6B96A0057150E /* ChatMessageTypeEntity+Mapper.swift */,
+				BFD2141828F6C1A70057150E /* ChatMessageEntity+Mapper.swift */,
+				BFD2141E28F7A2430057150E /* ChatContainsMetaEntity.swift */,
+				BFD2142028F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift */,
+				BFD2142228F7A2B80057150E /* ChatGeolocationEntity+Mapper.swift */,
+				BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */,
 			);
 			path = "Model Mapping";
 			sourceTree = "<group>";
@@ -12141,6 +12174,7 @@
 				5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */,
 				32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */,
 				9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */,
+				BFD2141328F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift in Sources */,
 				B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */,
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
 				BF782D69269BA4BB0001D169 /* RegionEntity.swift in Sources */,
@@ -12209,6 +12243,7 @@
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */,
 				946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */,
+				BFD2142528F7A2C70057150E /* ChatGiphyEntity+Mapper.swift in Sources */,
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
 				5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
@@ -12416,6 +12451,7 @@
 				943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */,
 				B654BF3924FF123700A3CBC8 /* MVVM-R.swift in Sources */,
 				12BC3E7127B3043D009F7987 /* PhotoExplorerViewController+PhotoLibrary.swift in Sources */,
+				BFD2141128F4D5810057150E /* ChatRoomViewModel.swift in Sources */,
 				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
@@ -12501,6 +12537,7 @@
 				BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */,
 				5D87C1F424E922D600BB5AB0 /* SDKUserClient.swift in Sources */,
 				BF6E8DBB25B927F2003A125A /* MEGARequest+Mapper.swift in Sources */,
+				BFD2142128F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift in Sources */,
 				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
@@ -12669,6 +12706,7 @@
 				5DD91D2F24D7EE62001C72DB /* HandlerView.swift in Sources */,
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
+				BFD2141D28F7A2080057150E /* MEGAHandleList+Mapper.swift in Sources */,
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
 				B6D0B344283C7AAB0020C64D /* AppGroupContainerRepositoryProtocol.swift in Sources */,
 				5B8DE74C27A00F3700B265EB /* MockExportNodeUseCase.swift in Sources */,
@@ -13028,6 +13066,7 @@
 				5DD4D71525076802004C0CFE /* NodeShareRouter.swift in Sources */,
 				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */,
+				BFD2141928F6C1A70057150E /* ChatMessageEntity+Mapper.swift in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
@@ -13037,6 +13076,7 @@
 				B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */,
 				32B0723028A4E17C002BAE34 /* SlideShowRouter.swift in Sources */,
 				8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */,
+				BFD2141F28F7A2430057150E /* ChatContainsMetaEntity.swift in Sources */,
 				12BC3E7D27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
 				C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */,
@@ -13056,7 +13096,7 @@
 				B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */,
 				5D6D0F5425270357002A777D /* DevicePermissionUseCase.swift in Sources */,
 				B582965A27C5DF50004DD7A5 /* TransfersUseCaseHelper.swift in Sources */,
-				83B71A6028F0356600E006C6 /* ChatListItemView.swift in Sources */,
+				83B71A6028F0356600E006C6 /* ChatRoomView.swift in Sources */,
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
 				12397E292820C72E00A30CCC /* PhotoAlbumContainerViewController.swift in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
@@ -13100,7 +13140,9 @@
 				A861B57F27BE7D32009C29C2 /* SupportRepository.swift in Sources */,
 				837DC7AC256D196400CA289E /* GetLinkPasswordTableViewCell.swift in Sources */,
 				123E301D275B31A400EEDAAA /* PhotoCardNumber.swift in Sources */,
+				BFD2141528F6B3EF0057150E /* ChatMessageStatusEntity+Mapper.swift in Sources */,
 				12F041CC27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift in Sources */,
+				BFD2141B28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift in Sources */,
 				5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
 				C45F97FD264A9FA60004DCA5 /* MyAvatarManager.swift in Sources */,
@@ -13170,6 +13212,7 @@
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				5B33F0FD2660202F00E5F0F4 /* FavouritesViewController.swift in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
+				BFD2141728F6B96A0057150E /* ChatMessageTypeEntity+Mapper.swift in Sources */,
 				BF782D75269BA4BB0001D169 /* CookieSettingsErrorEntity.swift in Sources */,
 				5DD6B17024D6D51D00F14515 /* Reader.swift in Sources */,
 				B6AADEC9251896A8009A874C /* AuthRepositoryProtocol.swift in Sources */,
@@ -13270,6 +13313,7 @@
 				32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */,
 				12397E172820C3B100A30CCC /* PageTabView.swift in Sources */,
 				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
+				BFD2142328F7A2B90057150E /* ChatGeolocationEntity+Mapper.swift in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				B6B278DC24E1E89C00BB3E9A /* SMSUseCase.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,

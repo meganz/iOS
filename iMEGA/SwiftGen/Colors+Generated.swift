@@ -28,6 +28,9 @@ internal enum Colors {
     internal static let avatarBackgroundGradient = ColorAsset(name: "avatarBackgroundGradient")
   }
   internal enum Chat {
+    internal enum Avatar {
+      internal static let background = ColorAsset(name: "background")
+    }
     internal enum Listing {
       internal static let subtitleText = ColorAsset(name: "subtitleText")
     }
@@ -36,6 +39,12 @@ internal enum Colors {
       internal static let selectedDark = ColorAsset(name: "selectedDark")
       internal static let selectedLight = ColorAsset(name: "selectedLight")
       internal static let unselectedDefault = ColorAsset(name: "unselectedDefault")
+    }
+    internal enum Status {
+      internal static let away = ColorAsset(name: "away")
+      internal static let busy = ColorAsset(name: "busy")
+      internal static let offline = ColorAsset(name: "offline")
+      internal static let online = ColorAsset(name: "online")
     }
     internal enum Tabs {
       internal static let chatTabNormalBackground = ColorAsset(name: "chatTabNormalBackground")

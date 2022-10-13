@@ -705,6 +705,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     let image = try await self.userImageUseCase.createAvatar(withUserHandle: handle,
                                                                              base64Handle: base64Handle,
                                                                              avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                                                             backgroundGradientHexColor: nil,
                                                                              name: name)
                     await self.updateAvatar(handle: handle, image: image)
                 }

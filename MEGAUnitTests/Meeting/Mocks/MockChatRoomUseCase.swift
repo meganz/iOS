@@ -2,7 +2,7 @@
 import Combine
 import MEGADomain
 
-struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {    
+struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var userDisplayNamesCompletion: Result<[(handle: HandleEntity, name: String)], ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
@@ -15,6 +15,8 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var peerPrivilege: ChatRoomPrivilegeEntity = .unknown
     var allowNonHostToAddParticipantsEnabled = false
     var allowNonHostToAddParticipantsValueChangedSubject = PassthroughSubject<Bool, Never>()
+    var userStatusEntity = ChatStatusEntity.invalid
+    var message: ChatMessageEntity? = nil
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -63,6 +65,14 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
         participantsUpdatedSubject.eraseToAnyPublisher()
+    }
+    
+    func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity {
+        userStatusEntity
+    }
+    
+    func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity? {
+        message
     }
     
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
