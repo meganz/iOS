@@ -222,12 +222,16 @@ static NSString* const B = @"[B]";
 }
 
 + (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray {
-    NSString *unitString;
-    if (componentsSeparatedByStringArray.count == 1) {
-        unitString = @"B";
-    } else {
+    NSString *unitString = @"B";
+    
+    if (componentsSeparatedByStringArray.count > 1) {
+        NSString *unitCount = [componentsSeparatedByStringArray objectAtIndex:0];
         unitString = [componentsSeparatedByStringArray objectAtIndex:1];
-        if ([unitString isEqualToString:@"KB"] || [unitString isEqualToString:@"bytes"] || ([unitString length] == 0)) {
+
+        if ([unitCount isEqualToString:@"Zero"] ||
+            [unitCount isEqualToString:@"0"] ||
+            [unitString isEqualToString:@"bytes"] ||
+            [unitString length] == 0) {
             unitString = @"B";
         }
     }

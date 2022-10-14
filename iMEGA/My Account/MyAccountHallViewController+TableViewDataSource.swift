@@ -114,7 +114,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     private func rubbishBinSetupData() -> MyAccountHallCellData {
         var rubbishBinSize = ""
         if let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode {
-            rubbishBinSize = Helper.size(for: rubbishBinNode, api: MEGASdkManager.sharedMEGASdk())
+            rubbishBinSize = NSString.mnz_formatString(fromByteCountFormatter: Helper.size(for: rubbishBinNode, api: MEGASdkManager.sharedMEGASdk()))
         }
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.rubbishBinLabel,
