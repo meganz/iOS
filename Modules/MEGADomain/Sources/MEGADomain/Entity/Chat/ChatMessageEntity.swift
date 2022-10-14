@@ -41,8 +41,21 @@ public struct ChatMessageEntity {
     public let termCode: ChatMessageEndCallReasonEntity?
     public let rowId: HandleEntity
     public let containsMeta: ChatContainsMetaEntity?
+    public let peers: [Peer]
     
-    public init(status: ChatMessageStatusEntity?, messageId: ChatIdEntity, temporalId: HandleEntity, messageIndex: Int, userHandle: HandleEntity, type: ChatMessageTypeEntity, hasConfirmedReactions: Bool, timestamp: Date?, content: String?, edited: Bool, deleted: Bool, editable: Bool, deletable: Bool, managementMessage: Bool, userHandleOfAction: HandleEntity, privilege: Int, changes: ChangeType?, code: Reason?, usersCount: UInt, nodes: [NodeEntity]?, handles: [HandleEntity]?, duration: Int, retentionTime: UInt, termCode: ChatMessageEndCallReasonEntity?, rowId: HandleEntity, containsMeta: ChatContainsMetaEntity?) {
+    public struct Peer {
+        public let handle: HandleEntity
+        public let name: String?
+        public let email: String?
+        
+        public init(handle: HandleEntity, name: String?, email: String?) {
+            self.handle = handle
+            self.name = name
+            self.email = email
+        }
+    }
+    
+    public init(status: ChatMessageStatusEntity?, messageId: ChatIdEntity, temporalId: HandleEntity, messageIndex: Int, userHandle: HandleEntity, type: ChatMessageTypeEntity, hasConfirmedReactions: Bool, timestamp: Date?, content: String?, edited: Bool, deleted: Bool, editable: Bool, deletable: Bool, managementMessage: Bool, userHandleOfAction: HandleEntity, privilege: Int, changes: ChangeType?, code: Reason?, usersCount: UInt, nodes: [NodeEntity]?, handles: [HandleEntity]?, duration: Int, retentionTime: UInt, termCode: ChatMessageEndCallReasonEntity?, rowId: HandleEntity, containsMeta: ChatContainsMetaEntity?, peers: [Peer]) {
         self.status = status
         self.messageId = messageId
         self.temporalId = temporalId
@@ -69,5 +82,6 @@ public struct ChatMessageEntity {
         self.termCode = termCode
         self.rowId = rowId
         self.containsMeta = containsMeta
+        self.peers = peers
     }
 }
