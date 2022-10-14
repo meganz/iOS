@@ -159,12 +159,6 @@ final class HomeRouter: HomeRouterProtocol {
         CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download).start()
     }
 
-    // MARK: - Show Photos Explorer View Controller
-    
-    func photosExplorerSelected() {
-        PhotosExplorerRouter(navigationController: navigationController, explorerType: .photo).start()
-    }
-    
     // MARK: - Show Favourites Explorer View Controller
     
     func favouriteExplorerSelected() {
