@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 enum ToolbarType {
     case text
@@ -169,10 +170,7 @@ extension ChatViewController {
     
     
     @objc func exportSelectedMessages(sender: UIBarButtonItem) {
-        var megaMessages = [MEGAChatMessage]()
-        for chatMessage in selectedMessages {
-            megaMessages.append(chatMessage.message)
-        }
+        var megaMessages = selectedMessages.map { $0.message.toChatMessageEntity() }
         megaMessages = megaMessages.sorted(by: { (obj1, obj2) -> Bool in
             obj1.messageIndex < obj2.messageIndex
         })

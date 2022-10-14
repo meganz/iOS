@@ -20,7 +20,7 @@ final class ExportFileRouter: ExportFileViewRouting {
         viewModel.dispatch(.exportFilesFromNodes(nodes))
     }
     
-    func export(messages: [MEGAChatMessage], chatId: HandleEntity) {
+    func export(messages: [ChatMessageEntity], chatId: HandleEntity) {
         viewModel.dispatch(.exportFilesFromMessages(messages, chatId))
     }
     
@@ -37,7 +37,8 @@ final class ExportFileRouter: ExportFileViewRouting {
             thumbnailRepository: ThumbnailRepository.newRepo,
             fileSystemRepository: FileSystemRepository.newRepo,
             exportChatMessagesRepository: ExportChatMessagesRepository.newRepo,
-            importNodeRepository: ImportNodeRepository.newRepo)
+            importNodeRepository: ImportNodeRepository.newRepo,
+            megaHandleRepository: MEGAHandleRepository.newRepo)
         
         return ExportFileViewModel(router: self, exportFileUseCase: uc)
     }()

@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
     static var newRepo: ExportChatMessagesRepository {
@@ -16,7 +17,7 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
         self.store = store
     }
     
-    func exportText(message: MEGAChatMessage) -> URL? {
+    func exportText(message: ChatMessageEntity) -> URL? {
         let userName = chatSdk.userFullnameFromCache(byUserHandle: message.userHandle) ?? ""
         let messageTimestamp = message.timestamp?.string(withDateFormat: "dd/MM/yyyy HH:mm")
         let messageContent = message.content ?? ""
@@ -30,10 +31,13 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
         }
     }
     
-    func exportContact(message: MEGAChatMessage, contactAvatarImage: String?) -> URL? {
+    func exportContact(message: ChatMessageEntity, contactAvatarImage: String?) -> URL? {
         let cnMutableContact = CNMutableContact()
         
-        let userHandle = message.userHandle(at: 0)
+        guard let peer = message.peers.first else {
+            return nil
+        }
+        let userHandle = peer.handle
         
         if let moUser = store.fetchUser(withUserHandle: userHandle),
            let firstname = moUser.firstname,
@@ -41,10 +45,10 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
             cnMutableContact.givenName = firstname
             cnMutableContact.familyName = lastname
         } else {
-            cnMutableContact.givenName = message.userName(at: 0) ?? ""
+            cnMutableContact.givenName = peer.name ?? ""
         }
         
-        let userEmail1 = (message.userEmail(at: 0) ?? "")as NSString
+        let userEmail1 = (peer.email ?? "")as NSString
         cnMutableContact.emailAddresses = [CNLabeledValue.init(label: CNLabelHome, value: userEmail1)]
         
         if let avatarFilePath = contactAvatarImage, let avatarImage = UIImage(contentsOfFile: avatarFilePath) {
@@ -63,7 +67,7 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
             vCardData = vCardString?.data(using: .utf8) ?? vCardData
             
             do {
-                if let fullName = message.userName(at: 0) {
+                if let fullName = peer.name {
                     let vCardFilename = fullName + ".vcf"
                     let vCardPath = NSTemporaryDirectory() + vCardFilename
                     let vCardURL = URL(fileURLWithPath: vCardPath)

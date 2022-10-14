@@ -1,28 +1,28 @@
 import Foundation
-import MEGADomain
 
 // MARK: - Use case protocol -
-protocol ExportFileNodeUseCaseProtocol {
+public protocol ExportFileNodeUseCaseProtocol {
     func export(node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
     func export(nodes: [NodeEntity], completion: @escaping ([URL]) -> Void)
 }
 
-protocol ExportFileChatMessageUseCaseProtocol {
-    func export(message: MEGAChatMessage, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
-    func export(messages: [MEGAChatMessage], chatId: HandleEntity, completion:  @escaping ([URL]) -> Void)
+public protocol ExportFileChatMessageUseCaseProtocol {
+    func export(messages: [ChatMessageEntity], chatId: HandleEntity, completion:  @escaping ([URL]) -> Void)
     func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
 }
 
-typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
+public typealias ExportFileUseCaseProtocol = ExportFileNodeUseCaseProtocol & ExportFileChatMessageUseCaseProtocol
 
 // MARK: - Use case implementation -
-struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
-                         U: OfflineFilesRepositoryProtocol,
-                         V: FileCacheRepositoryProtocol,
-                         R: ThumbnailRepositoryProtocol,
-                         F: FileSystemRepositoryProtocol,
-                         W: ExportChatMessagesRepositoryProtocol,
-                         X: ImportNodeRepositoryProtocol> {
+public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
+                                U: OfflineFilesRepositoryProtocol,
+                                V: FileCacheRepositoryProtocol,
+                                R: ThumbnailRepositoryProtocol,
+                                F: FileSystemRepositoryProtocol,
+                                W: ExportChatMessagesRepositoryProtocol,
+                                X: ImportNodeRepositoryProtocol,
+                                Z: MEGAHandleRepositoryProtocol,
+                                M: MediaUseCaseProtocol> {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileCacheRepository: V
@@ -30,14 +30,18 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     private let importNodeRepository: X
     private let thumbnailRepository: R
     private let fileSystemRepository: F
-        
-    init(downloadFileRepository: T,
-         offlineFilesRepository: U,
-         fileCacheRepository: V,
-         thumbnailRepository: R,
-         fileSystemRepository: F,
-         exportChatMessagesRepository: W,
-         importNodeRepository: X) {
+    private let mediaUseCase: M
+    private let megaHandleRepository: Z
+    
+    public init(downloadFileRepository: T,
+                offlineFilesRepository: U,
+                fileCacheRepository: V,
+                thumbnailRepository: R,
+                fileSystemRepository: F,
+                exportChatMessagesRepository: W,
+                importNodeRepository: X,
+                megaHandleRepository: Z,
+                mediaUseCase: M = MediaUseCase()) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileCacheRepository = fileCacheRepository
@@ -45,13 +49,15 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         self.fileSystemRepository = fileSystemRepository
         self.exportChatMessagesRepository = exportChatMessagesRepository
         self.importNodeRepository = importNodeRepository
+        self.megaHandleRepository = megaHandleRepository
+        self.mediaUseCase = mediaUseCase
     }
     
     // MARK: - Private
     private func nodeUrl(_ node: NodeEntity) -> URL? {
         if let offlineUrl = offlineUrl(for: node.base64Handle) {
             return offlineUrl
-        } else if node.name.mnz_isImagePathExtension, let imageUrl = fileCacheRepository.existingOriginalImageURL(for: node) {
+        } else if mediaUseCase.isImage(node.name), let imageUrl = fileCacheRepository.existingOriginalImageURL(for: node) {
             return imageUrl
         } else if let fileUrl = fileCacheRepository.existingTempFileURL(for: node) {
             return fileUrl
@@ -93,8 +99,8 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
             completion(.failure(.notEnoughSpace))
             return
         }
-        let appDataToExportFile = NSString().mnz_appDataToExportFile()
-        let url = node.name.mnz_isImagePathExtension ? fileCacheRepository.cachedOriginalImageURL(for: node) : fileCacheRepository.tempFileURL(for: node)
+        let appDataToExportFile = AppDataEntity.exportFile.rawValue
+        let url = mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalImageURL(for: node) : fileCacheRepository.tempFileURL(for: node)
         downloadFileRepository.download(nodeHandle: node.handle, to: url, appData: appDataToExportFile) { result in
             processDownloadThenShareResult(result: result, completion: completion)
         }
@@ -103,7 +109,7 @@ struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
 
 // MARK: - ExportFileNodeUseCaseProtocol implementation -
 extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
-    func export(node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    public func export(node: NodeEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         if let nodeUrl = nodeUrl(node) {
             completion(.success(nodeUrl))
         } else {
@@ -111,7 +117,7 @@ extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
         }
     }
     
-    func export(nodes: [NodeEntity], completion: @escaping ([URL]) -> Void) {
+    public func export(nodes: [NodeEntity], completion: @escaping ([URL]) -> Void) {
         var urlsArray = [URL]()
         let myGroup = DispatchGroup()
         
@@ -123,7 +129,7 @@ extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
                 case .success(let url):
                     urlsArray.append(url)
                 case .failure(let error):
-                    MEGALogError("Failed to export node with error: \(error)")
+                    print("Failed to export node with error: \(error)")
                 }
                 myGroup.leave()
             }
@@ -137,7 +143,7 @@ extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
 
 // MARK: - ExportFileChatMessageUseCaseProtocol implementation -
 extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
-    func export(message: MEGAChatMessage, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    private func export(message: ChatMessageEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         switch message.type {
         case .normal, .containsMeta:
             if let url = exportChatMessagesRepository.exportText(message: message) {
@@ -147,7 +153,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
             }
             
         case .contact:
-            guard let base64Handle = MEGASdk.base64Handle(forUserHandle: message.userHandle(at: 0)) else {
+            guard let handle = message.peers.first?.handle, let base64Handle = megaHandleRepository.base64Handle(forUserHandle: handle) else {
                 completion(.failure(.failedToCreateContact))
                 return
             }
@@ -159,19 +165,19 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
             }
             
         case .attachment, .voiceClip:
-            guard let node = message.nodeList?.mnz_nodesArrayFromNodeList().first else {
+            guard let node = message.nodes?.first else {
                 completion(.failure(.nonExportableMessage))
                 return
             }
-            exportNode(node.toNodeEntity(), messageId:message.messageId, chatId: chatId, completion: completion)
+            exportNode(node, messageId:message.messageId, chatId: chatId, completion: completion)
             
         default:
-            MEGALogError("Failed to export a non compatible message type \(message.type)")
+            print("Failed to export a non compatible message type \(message.type)")
             completion(.failure(.nonExportableMessage))
         }
     }
     
-    func export(messages: [MEGAChatMessage], chatId: HandleEntity, completion: @escaping ([URL]) -> Void) {
+    public func export(messages: [ChatMessageEntity], chatId: HandleEntity, completion: @escaping ([URL]) -> Void) {
         var urlsArray = [URL]()
         let myGroup = DispatchGroup()
         
@@ -183,7 +189,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 case .success(let url):
                     urlsArray.append(url)
                 case .failure(let error):
-                    MEGALogError("Failed to export a non compatible message type \(message.type) with error: \(error)")
+                    print("Failed to export a non compatible message type \(message.type) with error: \(error)")
                 }
                 myGroup.leave()
             }
@@ -194,7 +200,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
         }
     }
     
-    func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
+    public func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
         if let nodeUrl = nodeUrl(node) {
             completion(.success(nodeUrl))
         } else {

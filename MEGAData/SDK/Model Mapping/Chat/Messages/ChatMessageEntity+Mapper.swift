@@ -1,5 +1,14 @@
 import MEGADomain
 
+extension ChatMessageEntity.Peer {
+    init(chatMessage: MEGAChatMessage, index: UInt) {
+        let handle = chatMessage.userHandle(at: index)
+        let name = chatMessage.userName(at: index)
+        let email = chatMessage.userEmail(at: index)
+        self.init(handle: handle, name: name, email: email)
+    }
+}
+
 extension MEGAChatMessage {
     func toChatMessageEntity() -> ChatMessageEntity {
         ChatMessageEntity(
@@ -28,7 +37,8 @@ extension MEGAChatMessage {
             retentionTime: retentionTime,
             termCode: termCode.toEndCallReason(),
             rowId: rowId,
-            containsMeta: containsMeta?.toChatContainsMetaEntity()
+            containsMeta: containsMeta?.toChatContainsMetaEntity(),
+            peers: (0..<usersCount).map { ChatMessageEntity.Peer(chatMessage: self, index: $0) }
         )
     }
 }

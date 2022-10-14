@@ -4,7 +4,7 @@ import MEGADomain
 enum ExportFileAction: ActionType {
     case exportFileFromNode(NodeEntity)
     case exportFilesFromNodes([NodeEntity])
-    case exportFilesFromMessages([MEGAChatMessage], HandleEntity)
+    case exportFilesFromMessages([ChatMessageEntity], HandleEntity)
     case exportFileFromMessageNode(MEGANode, HandleEntity, HandleEntity)
 }
 

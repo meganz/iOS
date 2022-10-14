@@ -1,4 +1,3 @@
-
 import MEGADomain
 
 extension MEGAHandleList {
