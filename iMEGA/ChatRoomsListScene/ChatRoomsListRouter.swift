@@ -3,7 +3,6 @@ import MEGAData
 
 @available(iOS 14.0, *)
 final class ChatRoomsListRouter: ChatRoomsListRouting {
-    
     private(set) weak var navigationController: UINavigationController?
     
     func build() -> UIViewController {
@@ -66,9 +65,94 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         
     }
         
-    func openChatRoom(_ chatId: HandleEntity) {
+    func showDetails(forChatId chatId: HandleEntity) {
         guard let navigationController else { return }
         let chatRoomViewController = ChatViewController(chatId: chatId)
         navigationController.pushViewController(chatRoomViewController, animated: true)
+    }
+    
+    func present(alert: UIAlertController, animated: Bool) {
+        navigationController?.present(alert, animated: animated)
+    }
+    
+    func presentMoreOptionsForChat(
+        withDNDEnabled dndEnabled: Bool,
+        dndAction: @escaping () -> Void,
+        markAsReadAction: (() -> Void)?,
+        infoAction: @escaping () -> Void,
+        archiveAction: @escaping () -> Void
+    ) {
+        var markAsReadSheetAction: ActionSheetAction?
+        if let markAsReadAction {
+            markAsReadSheetAction = ActionSheetAction(
+                title: Strings.Localizable.markAsRead,
+                detail: nil,
+                accessoryView: nil,
+                image: Asset.Images.Chat.ContextualMenu.markUnreadMenu.image,
+                style: .default) {
+                    markAsReadAction()
+                }
+        }
+        
+        let dndSheetAction = ActionSheetAction(
+            title: dndEnabled ?  Strings.Localizable.unmute : Strings.Localizable.mute,
+            detail: nil,
+            accessoryView: nil,
+            image: Asset.Images.Chat.ContextualMenu.mutedChatMenu.image,
+            style: .default) {
+                dndAction()
+            }
+        
+        let infoSheetAction = ActionSheetAction(
+            title: Strings.Localizable.info,
+            detail: nil,
+            accessoryView: nil,
+            image: Asset.Images.Generic.info.image,
+            style: .default) {
+                infoAction()
+            }
+        
+        let archiveChatSheetAction = ActionSheetAction(
+            title: Strings.Localizable.archiveChat,
+            detail: nil,
+            accessoryView: nil,
+            image: Asset.Images.Chat.archiveChat.image,
+            style: .default) {
+                archiveAction()
+            }
+        
+        let actions = [markAsReadSheetAction,
+                       dndSheetAction,
+                       infoSheetAction,
+                       archiveChatSheetAction].compactMap({ $0 })
+        
+        let actionSheetController = ActionSheetViewController(
+            actions: actions,
+            headerTitle: nil,
+            dismissCompletion: nil,
+            sender: nil
+        )
+        
+        navigationController?.present(actionSheetController, animated: true)
+    }
+    
+    func showGroupChatInfo(forChatId chatId: HandleEntity) {
+        guard let groupChatDetailsController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController else {
+            return
+        }
+        
+        groupChatDetailsController.chatId = chatId
+        navigationController?.pushViewController(groupChatDetailsController, animated: true)
+    }
+    
+    func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String) {
+        guard let contactDetailsViewController = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
+            return
+        }
+        
+        contactDetailsViewController.contactDetailsMode = .fromChat
+        contactDetailsViewController.userHandle = userHandle
+        contactDetailsViewController.userEmail = userEmail
+        navigationController?.pushViewController(contactDetailsViewController, animated: true)
     }
 }

@@ -10,25 +10,35 @@ final class ChatRoomViewModel: ObservableObject {
     private let userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
-
+    private let router: ChatRoomsListRouting
+    private let notificationCenter: NotificationCenter
+    
     @Published private(set) var primaryAvatar: UIImage?
     @Published private(set) var secondaryAvatar: UIImage?
     @Published private(set) var chatStatusColor: UIColor?
     @Published private(set) var description: String?
     @Published private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
-    
+    @Published var showDNDTurnOnOptions = false
+
     private var subscriptions = Set<AnyCancellable>()
+    private var loadingChatRoomInfoTask: Task<Void, Never>?
+
+    lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
 
     init(chatListItem: ChatListItemEntity,
+         router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         userUseCase: UserUseCaseProtocol,
+         notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
+        self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.userUseCase = userUseCase
+        self.notificationCenter = notificationCenter
         
         if chatListItem.group == false {
             updateChatStatusColor(forChatStatus: chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle))
@@ -37,7 +47,111 @@ final class ChatRoomViewModel: ObservableObject {
     }
     
     //MARK: - Interface methods
-    func fetchAvatar() async throws {
+    func loadChatRoomInfo() {
+        loadingChatRoomInfoTask = Task {
+            let chatId = chatListItem.chatId
+            await withThrowingTaskGroup(of: Void.self) { group in
+                group.addTask { [weak self] in
+                    do {
+                        try await self?.fetchAvatar()
+                    } catch {
+                        MEGALogDebug("Unable to fetch avatar for \(chatId) - \(error.localizedDescription)")
+                    }
+                }
+                
+                group.addTask { [weak self] in
+                    do {
+                        try await self?.updateDescription()
+                    } catch {
+                        MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+    
+    func cancelLoading() {
+        loadingChatRoomInfoTask?.cancel()
+        loadingChatRoomInfoTask = nil
+    }
+    
+    func formattedLastMessageSentDate() -> String? {
+        guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
+        
+        if Calendar.autoupdatingCurrent.isDateInToday(chatListItem.lastMessageDate) {
+            return chatListItem.lastMessageDate.string(withDateFormat: "HH:mm")
+        } else if chatListItem.lastMessageDate.compare(seventhDayPriorDate) == .orderedDescending {
+            return chatListItem.lastMessageDate.string(withDateFormat: "EEE")
+        } else {
+            return chatListItem.lastMessageDate.string(withDateFormat: "dd/MM/yy")
+        }
+    }
+    
+    func showDetails() {
+        router.showDetails(forChatId: chatListItem.chatId)
+    }
+    
+    func presentMoreOptionsForChat(){
+        router.presentMoreOptionsForChat(
+            withDNDEnabled: chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+        ) { [weak self] in
+            self?.toggleDND()
+        } markAsReadAction: { [weak self] in
+            guard let self else { return }
+            self.chatRoomUseCase.setMessageSeenForChat(forChatId: self.chatListItem.chatId, messageId: self.chatListItem.lastMessageId)
+        } infoAction: { [weak self] in
+            self?.showChatRoomInfo()
+        } archiveAction: { [weak self] in
+            guard let self else { return }
+            self.chatRoomUseCase.archive(true, chatId: self.chatListItem.chatId)
+        }
+    }
+    
+    func dndTurnOnOptions() -> [DNDTurnOnOption] {
+        ChatNotificationControl.dndTurnOnOptions()
+    }
+    
+    func turnOnDNDOption(_ option: DNDTurnOnOption) {
+        chatNotificationControl.turnOnDND(chatId: chatListItem.chatId, option: option)
+    }
+    
+    func archiveChat() {
+        chatRoomUseCase.archive(true, chatId: chatListItem.chatId)
+    }
+    
+    //MARK: - Private methods
+    private func showChatRoomInfo() {
+        if chatListItem.group {
+            guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
+                  MEGALinkManager.joiningOrLeavingChatBase64Handles.notContains(where: { element in
+                      if let elementId = element as? String, elementId == chatIdString {
+                          return true
+                      }
+                      return false
+                  }) else {
+                      return
+                  }
+            
+            router.showGroupChatInfo(forChatId: chatListItem.chatId)
+        } else {
+            guard let userHandle = chatRoomUseCase.peerHandles(forChatId: chatListItem.chatId).first,
+                    let userEmail = chatRoomUseCase.contactEmail(forUserHandle: userHandle) else {
+                return
+            }
+            
+            router.showContactDetailsInfo(forUseHandle: userHandle, userEmail: userEmail)
+        }
+    }
+    
+    private func toggleDND() {
+        if chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId) {
+            chatNotificationControl.turnOffDND(chatId: chatListItem.chatId)
+        } else {
+            showDNDTurnOnOptions = true
+        }
+    }
+    
+    private func fetchAvatar() async throws {
         if chatListItem.group {
             if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
                 if chatRoom.peerCount == 0 {
@@ -51,6 +165,8 @@ final class ChatRoomViewModel: ObservableObject {
                         await updatePrimaryAvatar(avatar)
                     }
                     
+                    try Task.checkCancellation()
+
                     if chatRoom.peers.count > 1,
                         let avatar = try await createAvatar(withHandle: chatRoom.peers[1].handle) {
                         await updateSecondaryAvatar(avatar)
@@ -62,12 +178,14 @@ final class ChatRoomViewModel: ObservableObject {
                 await updatePrimaryAvatar(avatar)
             }
             
+            try Task.checkCancellation()
+
             let downloadedAvatar = try await downloadAvatar()
             await updatePrimaryAvatar(downloadedAvatar)
         }
     }
     
-    func updateDescription() async throws {
+    private func updateDescription() async throws {
         switch chatListItem.lastMessageType {
         case .loading:
             await updateDescription(withMessage: Strings.Localizable.loading)
@@ -104,19 +222,6 @@ final class ChatRoomViewModel: ObservableObject {
         }
     }
     
-    func formattedLastMessageSentDate() -> String? {
-        guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
-        
-        if Calendar.autoupdatingCurrent.isDateInToday(chatListItem.lastMessageDate) {
-            return chatListItem.lastMessageDate.string(withDateFormat: "HH:mm")
-        } else if chatListItem.lastMessageDate.compare(seventhDayPriorDate) == .orderedDescending {
-            return chatListItem.lastMessageDate.string(withDateFormat: "EEE")
-        } else {
-            return chatListItem.lastMessageDate.string(withDateFormat: "dd/MM/yy")
-        }
-    }
-    
-    //MARK: - Private methods
     private func updateChatStatusColor(forChatStatus chatStatus: ChatStatusEntity) {
         switch chatStatus {
         case .online:
@@ -517,5 +622,18 @@ extension ChatRoomViewModel: Identifiable, Hashable {
     
     static func == (lhs: ChatRoomViewModel, rhs: ChatRoomViewModel) -> Bool {
         lhs.chatListItem == rhs.chatListItem
+    }
+}
+
+//MARK: - PushNotificationControlProtocol
+extension ChatRoomViewModel: PushNotificationControlProtocol {
+    func presentAlertController(_ alert: UIAlertController) {
+        router.present(alert: alert, animated: true)
+    }
+    
+    func reloadDataIfNeeded() {}
+    
+    func pushNotificationSettingsLoaded() {
+        notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
     }
 }

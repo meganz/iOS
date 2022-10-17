@@ -71,6 +71,10 @@ enum DNDTurnOnOption: String, CaseIterable {
         }
     }
     
+    static func options(forGlobalSetting globalSetting: Bool) -> [DNDTurnOnOption] {
+        [.thirtyMinutes, .oneHour, .sixHours, .twentyFourHours, globalSetting ? .morningEightAM : .forever]
+    }
+    
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
                                 isGlobalSetting: Bool,
                                 identifier: ChatIdEntity?) -> UIAlertController {

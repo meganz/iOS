@@ -17,6 +17,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var allowNonHostToAddParticipantsValueChangedSubject = PassthroughSubject<Bool, Never>()
     var userStatusEntity = ChatStatusEntity.invalid
     var message: ChatMessageEntity? = nil
+    var contactEmail: String? = nil
+    var base64Handle: String? = nil
+    var messageSeenChatId: ((ChatIdEntity) -> Void)? = nil
+    var archivedChatId: ((ChatIdEntity, Bool) -> Void)? = nil
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -73,6 +77,22 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity? {
         message
+    }
+    
+    func archive(_ archive: Bool, chatId: ChatIdEntity) {
+        archivedChatId?(chatId, archive)
+    }
+    
+    func setMessageSeenForChat(forChatId chatId: ChatIdEntity, messageId: HandleEntity) {
+        messageSeenChatId?(chatId)
+    }
+    
+    func base64Handle(forChatId chatId: ChatIdEntity) -> String? {
+        base64Handle
+    }
+    
+    func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
+        contactEmail
     }
     
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {

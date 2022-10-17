@@ -3,8 +3,8 @@ import Combine
 
 public final class ChatRepository: ChatRepositoryProtocol {
     private let sdk: MEGAChatSdk
-
     private var chatStatusUpdateListeners = [ChatStatusUpdateListener]()
+    private lazy var chatListItemUpdateListener = ChatListItemUpdateListener(sdk: sdk)
 
     public init(sdk: MEGAChatSdk) {
         self.sdk = sdk
@@ -20,6 +20,12 @@ public final class ChatRepository: ChatRepositoryProtocol {
     
     public func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never> {
         chatStatusUpdateListener(forUserHandle: userHandle)
+            .monitor
+            .eraseToAnyPublisher()
+    }
+    
+    public func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never> {
+        chatListItemUpdateListener
             .monitor
             .eraseToAnyPublisher()
     }
@@ -82,3 +88,27 @@ fileprivate final class ChatStatusUpdateListener: NSObject, MEGAChatDelegate {
         source.send(onlineStatus.toChatStatusEntity())
     }
 }
+
+fileprivate final class ChatListItemUpdateListener: NSObject, MEGAChatDelegate {
+    private let sdk: MEGAChatSdk
+    private let source = PassthroughSubject<ChatListItemEntity, Never>()
+
+    var monitor: AnyPublisher<ChatListItemEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk) {
+        self.sdk = sdk
+        super.init()
+        sdk.add(self)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatListItemUpdate(_ api: MEGAChatSdk!, item: MEGAChatListItem!) {
+        source.send(item.toChatListItemEntity())
+    }
+}
+

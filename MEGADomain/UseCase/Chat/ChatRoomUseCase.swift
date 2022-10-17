@@ -14,6 +14,10 @@ protocol ChatRoomUseCaseProtocol {
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool
     func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity?
+    func archive(_ archive: Bool, chatId: ChatIdEntity)
+    func setMessageSeenForChat(forChatId chatId: ChatIdEntity,  messageId: HandleEntity)
+    func base64Handle(forChatId chatId: ChatIdEntity) -> String?
+    func contactEmail(forUserHandle userHandle: HandleEntity) -> String?
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
@@ -110,6 +114,22 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
     
     func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity? {
         chatRoomRepo.message(forChatId: chatId, messageId: messageId)
+    }
+    
+    func archive(_ archive: Bool, chatId: ChatIdEntity) {
+        chatRoomRepo.archive(archive, chatId: chatId)
+    }
+    
+    func setMessageSeenForChat(forChatId chatId: ChatIdEntity,  messageId: HandleEntity) {
+        chatRoomRepo.setMessageSeenForChat(forChatId: chatId, messageId: messageId)
+    }
+    
+    func base64Handle(forChatId chatId: ChatIdEntity) -> String? {
+        chatRoomRepo.base64Handle(forChatId: chatId)
+    }
+    
+    func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
+        chatRoomRepo.contactEmail(forUserHandle: userHandle)
     }
     
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {

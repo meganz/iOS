@@ -21,7 +21,17 @@ protocol ChatRoomsListRouting: Routing {
     func presentScheduleMeetingScreen()
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
-    func openChatRoom(_ chatId: HandleEntity)
+    func showDetails(forChatId chatId: HandleEntity)
+    func present(alert: UIAlertController, animated: Bool)
+    func presentMoreOptionsForChat(
+        withDNDEnabled dndEnabled: Bool,
+        dndAction: @escaping () -> Void,
+        markAsReadAction: (() -> Void)?,
+        infoAction: @escaping () -> Void,
+        archiveAction: @escaping () -> Void
+    )
+    func showGroupChatInfo(forChatId chatId: HandleEntity)
+    func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
@@ -66,7 +76,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         
         configureTitle()
-        listeningForChatStatusUpdate()
+        listenorToChatStatusUpdate()
+        listenToChatListUpdate()
         monitorNetworkChanges()
         fetchChats()
     }
@@ -89,6 +100,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             
             return ChatRoomViewModel(
                 chatListItem: chatListItem,
+                router: router,
                 chatRoomUseCase: chatRoomUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
@@ -161,10 +173,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    func openChatRoom(_ chatRoomViewModel: ChatRoomViewModel) {
-        router.openChatRoom(chatRoomViewModel.chatListItem.chatId)
-    }
-    
     //MARK: - Private
     private func configureTitle() {
         switch chatViewType {
@@ -205,7 +213,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func listeningForChatStatusUpdate () {
+    private func listenorToChatStatusUpdate() {
         guard let myHandle = userUseCase.myHandle else { return }
         
         chatUseCase
@@ -216,6 +224,15 @@ final class ChatRoomsListViewModel: ObservableObject {
             }, receiveValue: { [weak self] status in
                 self?.chatStatus = status
             })
+            .store(in: &subscriptions)
+    }
+    
+    private func listenToChatListUpdate() {
+        chatUseCase
+            .monitorChatListItemUpdate()
+            .sink { [weak self] chatListItem in
+                self?.onChatListItemUpdate(chatListItem)
+            }
             .store(in: &subscriptions)
     }
     
@@ -233,6 +250,12 @@ final class ChatRoomsListViewModel: ObservableObject {
             router.showInviteContactScreen()
         } else {
             router.showContactsOnMegaScreen()
+        }
+    }
+    
+    private func onChatListItemUpdate(_ chatListItem: ChatListItemEntity) {
+        if chatListItem.changeType == .archived {
+            fetchChats()
         }
     }
 }
@@ -304,6 +327,14 @@ extension ChatRoomsListViewModel: MyAvatarPresenterProtocol {
 
 //MARK: - PushNotificationControlProtocol
 extension ChatRoomsListViewModel :PushNotificationControlProtocol {
+    func presentAlertController(_ alert: UIAlertController) {
+        router.present(alert: alert, animated: true)
+    }
+    
+    func reloadDataIfNeeded() {
+        fetchChats()
+    }
+    
     func pushNotificationSettingsLoaded() {
         notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
     }

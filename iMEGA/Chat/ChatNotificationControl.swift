@@ -46,6 +46,24 @@ import MEGADomain
         let chatDNDTime = chatDND(chatId: chatId)
         return string(from: chatDNDTime)
     }
+    
+    static func dndTurnOnOptions() -> [DNDTurnOnOption] {
+        DNDTurnOnOption.options(forGlobalSetting: false)
+    }
+    
+    func turnOnDND(chatId: ChatIdEntity, option: DNDTurnOnOption) {
+        updatePushNotificationSettings {
+            if let timeStamp = dndTimeInterval(dndTurnOnOption: option) {
+                if option == .forever {
+                    self.pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
+                }  else {
+                    self.pushNotificationSettings?.setChatDndForChatId(chatId, untilTimestamp: timeStamp)
+                }
+            } else {
+                MEGALogDebug("[ChatNotificationControl] timestamp is nil")
+            }
+        }
+    }
 }
 
 // MARK:- Private methods extension.
@@ -58,20 +76,6 @@ extension ChatNotificationControl {
         }
         
         return pushNotificationSettings.timestamp(forChatId: chatId)
-    }
-    
-    private func turnOnDND(chatId: ChatIdEntity, option: DNDTurnOnOption) {
-        updatePushNotificationSettings {
-            if let timeStamp = dndTimeInterval(dndTurnOnOption: option) {
-                if option == .forever {
-                    self.pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
-                }  else {
-                    self.pushNotificationSettings?.setChatDndForChatId(chatId, untilTimestamp: timeStamp)
-                }
-            } else {
-                MEGALogDebug("[ChatNotificationControl] timestamp is nil")
-            }
-        }
     }
 }
 

@@ -160,6 +160,22 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.message(forChat: chatId, messageId: messageId)?.toChatMessageEntity()
     }
     
+    func archive(_ archive: Bool, chatId: ChatIdEntity) {
+        sdk.archiveChat(chatId, archive: archive)
+    }
+    
+    func setMessageSeenForChat(forChatId chatId: ChatIdEntity,  messageId: HandleEntity) {
+        sdk.setMessageSeenForChat(chatId, messageId: messageId)
+    }
+    
+    func base64Handle(forChatId chatId: ChatIdEntity) -> String? {
+        MEGASdk.base64Handle(forUserHandle: chatId)
+    }
+    
+    func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
+        sdk.contactEmail(byHandle: userHandle)
+    }
+    
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
             let requestDelegate = ChatRequestListener { (request, error) in

@@ -4,11 +4,78 @@ import MEGADomain
 @available(iOS 14.0, *)
 struct ChatRoomView: View {
     @StateObject var viewModel: ChatRoomViewModel
+    
+    var body: some View {
+        if #available(iOS 15.0, *) {
+            ChatRoomContentView(viewModel: viewModel)
+                .swipeActions {
+                    ForEach(swipeActionLabels()) { label in
+                        if let image = UIImage(named: label.imageName)?
+                            .withRenderingMode(.alwaysTemplate)
+                            .withTintColor(.white) {
+                            Button {
+                                label.action()
+                            } label: {
+                                Image(uiImage: image)
+                            }
+                            .tint(label.backgroundColor)
+                        }
+                    }
+                }
+                .confirmationDialog("", isPresented: $viewModel.showDNDTurnOnOptions) {
+                    ForEach(viewModel.dndTurnOnOptions(), id: \.self) { dndOption in
+                        Button(dndOption.localizedTitle) {
+                            viewModel.turnOnDNDOption(dndOption)
+                        }
+                    }
+                }
+        } else {
+            ChatRoomContentView(viewModel: viewModel)
+                .swipeLeftActions(labels: swipeActionLabels().reversed(), buttonWidth: 65)
+                .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
+                    ActionSheet(title: Text(""), buttons: actionSheetButtons())
+                }
+        }
+    }
+    
+    private func actionSheetButtons() -> [ActionSheet.Button] {
+        var buttons = viewModel.dndTurnOnOptions().map { dndOption in
+            ActionSheet.Button.default(Text(dndOption.localizedTitle)) {
+                viewModel.turnOnDNDOption(dndOption)
+            }
+        }
+        buttons.append(ActionSheet.Button.cancel())
+        return buttons
+    }
+    
+    private func swipeActionLabels() -> [SwipeActionLabel] {
+        [
+            SwipeActionLabel(
+                imageName: "archiveChatSwipeActionButton",
+                backgroundColor: Color(Colors.Chat.Listing.archiveSwipeActionBackground.color),
+                action: {
+                    viewModel.archiveChat()
+                }
+            ),
+            SwipeActionLabel(
+                imageName: "moreListChatSwipeActionButton",
+                backgroundColor: Color(Colors.Chat.Listing.moreSwipeActionBackground.color),
+                action: {
+                    viewModel.presentMoreOptionsForChat()
+                }
+            )
+        ]
+    }
+}
 
+@available(iOS 14.0, *)
+struct ChatRoomContentView: View {
+    @ObservedObject var viewModel: ChatRoomViewModel
+    
     var body: some View {
         HStack(spacing: 0) {
             ChatRoomAvatarView(primaryAvatar: viewModel.primaryAvatar, secondaryAvatar: viewModel.secondaryAvatar)
-                
+            
             VStack (alignment: .leading, spacing: 4) {
                 HStack(spacing: 3) {
                     Text(viewModel.chatListItem.title ?? "")
@@ -42,7 +109,7 @@ struct ChatRoomView: View {
                                     .font(.caption)
                                     .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
                             }
-
+                            
                             Image(uiImage: hybridDescription.image)
                                 .resizable()
                                 .scaledToFit()
@@ -74,27 +141,15 @@ struct ChatRoomView: View {
         }
         .padding(.trailing, 10)
         .frame(height: 65)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.showDetails()
+        }
         .onAppear {
-            Task {
-                let chatId = viewModel.chatListItem.chatId
-                await withThrowingTaskGroup(of: Void.self) { group in
-                    group.addTask {
-                        do {
-                            try await viewModel.fetchAvatar()
-                        } catch {
-                            MEGALogDebug("Unable to fetch avatar for \(chatId) - \(error.localizedDescription)")
-                        }
-                    }
-                    
-                    group.addTask {
-                        do {
-                            try await viewModel.updateDescription()
-                        } catch {
-                            MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
-                        }
-                    }
-                }
-            }
+            viewModel.loadChatRoomInfo()
+        }
+        .onDisappear {
+            viewModel.cancelLoading()
         }
     }
 }
@@ -104,7 +159,7 @@ struct ChatRoomAvatarView: View {
     var primaryAvatar: UIImage?
     var secondaryAvatar: UIImage?
     @Environment(\.colorScheme) var colorScheme
-
+    
     var body: some View {
         ZStack {
             if let secondaryAvatar, let primaryAvatar {
@@ -143,5 +198,4 @@ struct ChatRoomAvatarView: View {
         .frame(width: 60, height: 60)
     }
 }
-
 

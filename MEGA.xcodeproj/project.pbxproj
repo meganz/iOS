@@ -2278,6 +2278,8 @@
 		BFD2142128F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142028F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift */; };
 		BFD2142328F7A2B90057150E /* ChatGeolocationEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142228F7A2B80057150E /* ChatGeolocationEntity+Mapper.swift */; };
 		BFD2142528F7A2C70057150E /* ChatGiphyEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */; };
+		BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */; };
+		BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD28425283213A3001AACC2 /* TimeoutTask.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
@@ -4643,6 +4645,8 @@
 		BFD2142028F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRichPreviewEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BFD2142228F7A2B80057150E /* ChatGeolocationEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGeolocationEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGiphyEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeLeftActionModifier.swift; sourceTree = "<group>"; };
+		BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionLabel.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFD28425283213A3001AACC2 /* TimeoutTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTask.swift; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -8092,6 +8096,7 @@
 				8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */,
 				BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */,
 				83B71A6128F03A2D00E006C6 /* ChatRoomsTopRowView.swift */,
+				BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -8235,6 +8240,7 @@
 				BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */,
 				83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */,
 				BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */,
+				BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -12948,6 +12954,7 @@
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */,
 				12397E2E2820C79100A30CCC /* PhotoAlbumViewController+PageViewController.swift in Sources */,
+				BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */,
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
 				C453AB77256E6985005E4E1B /* NodeInfoRepository.swift in Sources */,
 				8340CAF2284E28F5007C3B39 /* HeaderViewModel.swift in Sources */,
@@ -13025,6 +13032,7 @@
 				9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */,
 				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
+				BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */,
 				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,

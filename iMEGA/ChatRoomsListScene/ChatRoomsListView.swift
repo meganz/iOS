@@ -29,11 +29,7 @@ struct ChatRoomsListView: View {
                     
                     ForEach(chatRooms, id: \.self) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
-                        .listRowInsets(EdgeInsets())
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            viewModel.openChatRoom(chatRoom)
-                        }
+                            .listRowInsets(EdgeInsets())
                     }
                 }
                 .listStyle(PlainListStyle())
