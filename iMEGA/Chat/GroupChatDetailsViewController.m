@@ -46,6 +46,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (self.chatId > 0) {
+        self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatId];
+    }
+    
     self.navigationItem.title = NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     self.requestedParticipantsMutableSet = NSMutableSet.new;
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];

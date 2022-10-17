@@ -13,6 +13,10 @@ protocol ChatRoomRepositoryProtocol {
     func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func userFullName(forPeerId peerId: HandleEntity, chatId: HandleEntity) async throws -> String
     func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func archive(_ archive: Bool, chatId: ChatIdEntity)
+    func setMessageSeenForChat(forChatId chatId: ChatIdEntity,  messageId: HandleEntity)
+    func base64Handle(forChatId chatId: ChatIdEntity) -> String?
+    func contactEmail(forUserHandle userHandle: HandleEntity) -> String?
     func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool
     func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     func userPrivilegeChanged(forChatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
