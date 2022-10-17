@@ -15,7 +15,7 @@ enum SlideShowTimeIntervalOption {
         switch self {
         case .slow: return 8
         case .normal: return 4
-        case .fast: return 1
+        case .fast: return 2
         }
     }
 }
