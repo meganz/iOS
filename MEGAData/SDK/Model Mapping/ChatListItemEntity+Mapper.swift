@@ -28,7 +28,8 @@ fileprivate extension ChatListItemEntity {
             lastMessageSender: chatListItem.lastMessageSender,
             lastMessageDate: chatListItem.lastMessageDate,
             lastMessagePriv: chatListItem.lastMessagePriv.toChatMessageTypeEntity(),
-            lastMessageHandle: chatListItem.lastMessageHandle
+            lastMessageHandle: chatListItem.lastMessageHandle,
+            searchString: chatListItem.searchString
         )
     }
 }

@@ -54,8 +54,15 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var title: String = Strings.Localizable.Chat.title
     @Published var myAvatarBarButton: UIBarButtonItem?
     @Published var isConnectedToNetwork: Bool
-    @Published var chatRooms: [ChatRoomViewModel]?
-
+    @Published var displayChatRooms: [ChatRoomViewModel]?
+    @Published var searchText: String {
+        didSet {
+            filterChats()
+        }
+    }
+    
+    private var chatRooms: [ChatRoomViewModel]?
+    private var filteredChatRooms: [ChatRoomViewModel]?
     private var subscriptions = Set<AnyCancellable>()
 
     init(router: ChatRoomsListRouting,
@@ -74,6 +81,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
+        self.searchText = ""
         
         configureTitle()
         listenorToChatStatusUpdate()
@@ -88,7 +96,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             return 
         }
         
-        self.chatRooms = chatListItems.map { chatListItem in
+        chatRooms = chatListItems.map { chatListItem in
             let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
                                                   userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
             let userImageUseCase = UserImageUseCase(
@@ -106,6 +114,16 @@ final class ChatRoomsListViewModel: ObservableObject {
                 chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
                 userUseCase: UserUseCase(repo: .live)
             )
+        }
+        displayChatRooms = chatRooms
+    }
+    
+    func filterChats() {
+        if searchText.isNotEmpty {
+            filteredChatRooms = chatRooms?.filter { $0.chatListItem.searchString.localizedCaseInsensitiveContains(searchText)}
+            displayChatRooms = filteredChatRooms
+        } else {
+            displayChatRooms = chatRooms
         }
     }
     
