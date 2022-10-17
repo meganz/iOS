@@ -12,7 +12,6 @@
 
 #pragma mark - onNodesUpdate filtering
 
-- (BOOL)mnz_shouldProcessOnNodesUpdateForParentNode:(MEGANode *)parentNode childNodesArray:(NSArray<MEGANode *> *)childNodesArray;
 - (BOOL)mnz_shouldProcessOnNodesUpdateInSharedForNodes:(NSArray<MEGANode *> *)nodesArray itemSelected:(NSInteger)itemSelected;
 
 @end

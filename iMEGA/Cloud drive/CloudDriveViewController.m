@@ -1046,8 +1046,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    BOOL shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
-    
+    BOOL shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
+
     [self updateParentNodeIfNeeded:nodeList];
 
     if (shouldProcessOnNodesUpdate) {

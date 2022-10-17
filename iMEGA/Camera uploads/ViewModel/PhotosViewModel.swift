@@ -31,7 +31,7 @@ final class PhotosViewModel: NSObject {
     var isFilterActive: Bool {
         filterType != .allMedia || filterLocation != .allLocations
     }
-
+    
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
@@ -49,7 +49,7 @@ final class PhotosViewModel: NSObject {
             do {
                 guard let container = await self?.photoLibraryUseCase.photoLibraryContainer() else { return }
                 guard self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
-
+                
                 await self?.loadPhotos()
             }
         }
@@ -105,16 +105,12 @@ final class PhotosViewModel: NSObject {
         nodeList: MEGANodeList,
         container: PhotoLibraryContainerEntity
     ) -> Bool {
-        let cameraUploadNodesModified = nodeList.mnz_shouldProcessOnNodesUpdate(
-            forParentNode: container.cameraUploadNode,
-            childNodesArray: mediaNodesArray
-        )
-        
-        let mediaUploadNodesModified = nodeList.mnz_shouldProcessOnNodesUpdate(
-            forParentNode: container.mediaUploadNode,
-            childNodesArray: mediaNodesArray
-        )
-        
+        let cameraUploadNodesModified = shouldProcessOnNodesUpdate(with: nodeList,
+                                                                   childNodes: mediaNodesArray,
+                                                                   parentNode: container.cameraUploadNode)
+        let mediaUploadNodesModified = shouldProcessOnNodesUpdate(with: nodeList,
+                                                                  childNodes: mediaNodesArray,
+                                                                  parentNode:  container.mediaUploadNode)
         return cameraUploadNodesModified || mediaUploadNodesModified
     }
     
@@ -128,10 +124,11 @@ final class PhotosViewModel: NSObject {
     }
 }
 
-//MARK: - FeatureFlag
 extension PhotosViewModel {
     func resetFilters() {
         self.filterType = .allMedia
         self.filterLocation = .allLocations
     }
 }
+
+extension PhotosViewModel: NodesUpdateProtocol {}

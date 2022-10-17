@@ -10,7 +10,7 @@ enum MediaDiscoveryAction: ActionType {
 }
 
 @available(iOS 14.0, *)
-final class MediaDiscoveryViewModel: NSObject, ViewModelType {
+final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtocol {
     enum Command: Equatable, CommandType {
         case loadMedia(nodes: [MEGANode])
     }
@@ -79,7 +79,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType {
     }
     
     private func shouldReload(with nodeList: MEGANodeList) -> Bool {
-        guard nodeList.mnz_shouldProcessOnNodesUpdate(forParentNode: parentNode, childNodesArray: nodes) == true else { return false }
+        guard shouldProcessOnNodesUpdate(with: nodeList, childNodes: nodes, parentNode: parentNode) else { return false }
         
         let updatedNodes = nodeList.toNodeArray()
         

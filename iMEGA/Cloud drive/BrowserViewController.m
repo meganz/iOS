@@ -23,6 +23,7 @@
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
+
 @import DZNEmptyDataSet;
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
@@ -1077,12 +1078,12 @@
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     BOOL shouldProcessOnNodesUpdate = NO;
     if (self.cloudDriveButton.selected) {
-        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
+        shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
     } else if (self.incomingButton.selected) {
         if (self.isParentBrowser) {
             shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.nodes.mnz_nodesArrayFromNodeList itemSelected:0];
         } else {
-            shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
+            shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
         }
     }
     
