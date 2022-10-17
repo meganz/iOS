@@ -636,9 +636,18 @@
 		5DF9910925789B5400DDDA83 /* PageControlStyleFactoory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */; };
 		5DFC8DC224ECEC9B00DDA006 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */; };
 		5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */; };
+		6D60254D28F7B9BF00FF9767 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
+		6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
+		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
+		6D60255C28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
+		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
+		6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */; };
+		6D60256428F8946E00FF9767 /* NodesUpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */; };
+		6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */; };
 		6D80C2632880AA6A0065EAD4 /* MockFilesSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80C2622880AA6A0065EAD4 /* MockFilesSearchRepository.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
+		6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
 		7271895827FF030600B2DB08 /* FeedbackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895727FF030600B2DB08 /* FeedbackRepository.swift */; };
 		7271895C27FF0F0F00B2DB08 /* GetFeedbackInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895B27FF0F0F00B2DB08 /* GetFeedbackInfoUseCase.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
@@ -3254,9 +3263,14 @@
 		5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlStyleFactoory.swift; sourceTree = "<group>"; };
 		5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
 		5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarGeneratingUseCaseTests.swift; sourceTree = "<group>"; };
+		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
+		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
+		6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesUpdateProtocol.swift; sourceTree = "<group>"; };
+		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D80C2622880AA6A0065EAD4 /* MockFilesSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFilesSearchRepository.swift; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+FilterAndSort.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
+		6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+NodesUpdate.swift"; sourceTree = "<group>"; };
 		7271895727FF030600B2DB08 /* FeedbackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRepository.swift; sourceTree = "<group>"; };
 		7271895B27FF0F0F00B2DB08 /* GetFeedbackInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedbackInfoUseCase.swift; sourceTree = "<group>"; };
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
@@ -5183,6 +5197,7 @@
 		0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */ = {
 			isa = PBXGroup;
 			children = (
+				6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */,
 				B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */,
 				0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */,
 				0D213EA9263A638B00B43723 /* NodeAccessEntity+Mapper.swift */,
@@ -5863,6 +5878,7 @@
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
 				837A88BD20B42290007B55D1 /* CloudDriveViewController.h */,
 				837A88BE20B42290007B55D1 /* CloudDriveViewController.m */,
+				6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */,
 				729FD75627FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift */,
 				12F041CB27E25454007F60CF /* CloudDriveViewController+MedisDiscovery.swift */,
 				B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */,
@@ -5874,6 +5890,7 @@
 				BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */,
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
+				6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */,
 				946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */,
 				946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */,
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
@@ -7669,6 +7686,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		6D60256228F8945D00FF9767 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		6DB163EE2880F91F004EFBC7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -9271,6 +9296,7 @@
 		B616D82B2550C11F00712012 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				6D60256228F8945D00FF9767 /* Protocols */,
 				5DD4B350257DFE9300A01306 /* RequestDelegate */,
 				B662B86F24F331D50089376A /* Model Mapping */,
 				B616D82C2550C12E00712012 /* Extensions */,
@@ -11125,6 +11151,7 @@
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
+				6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */,
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
 				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
@@ -12768,6 +12795,7 @@
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,
 				B6ADE4D927320C3300C19F36 /* PhotoYearCard.swift in Sources */,
+				6D60256428F8946E00FF9767 /* NodesUpdateProtocol.swift in Sources */,
 				BF5E33FC2559E29B0055395E /* FilesExplorerContainerViewState.swift in Sources */,
 				5D6092A6255D609F005FA3E4 /* NodeLabelActionUseCase.swift in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
@@ -12914,6 +12942,7 @@
 				BF782D6F269BA4BB0001D169 /* ManageChatHistoryErrorEntity.swift in Sources */,
 				0D213EAA263A638C00B43723 /* NodeAccessEntity+Mapper.swift in Sources */,
 				83C7C85227EDE81F00CFB5E6 /* PhotosLibraryRepository.swift in Sources */,
+				6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
 				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
@@ -13035,6 +13064,7 @@
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
 				BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */,
 				12B2773227ED16270008BDEE /* PhotoLibraryMapper.swift in Sources */,
+				6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */,
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				B6FCBFD527121AB600B3599F /* PhotoLibraryContentView.swift in Sources */,
 				B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */,
@@ -13102,6 +13132,7 @@
 				83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */,
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
+				6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
@@ -13219,6 +13250,7 @@
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */,
 				C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */,
+				6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */,
 				5D6092AE255D6ABD005FA3E4 /* ActionSheetFactory.swift in Sources */,
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
 				BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */,
@@ -13592,6 +13624,7 @@
 				BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
 				B620C0672845BC3A003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
+				6D60254D28F7B9BF00FF9767 /* NodeEntity+NodesUpdate.swift in Sources */,
 				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
 				83DA209324852345004C24B8 /* MEGAPresentationManager.swift in Sources */,
 				B620C0652845BC36003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
@@ -13653,6 +13686,7 @@
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				B53BDBE72761916E001D73F8 /* XCAssets+Generated.swift in Sources */,
+				6D60255C28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				BF08AA0025CA28AD009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				B5300AF02754A097001E516B /* Strings+Generated.swift in Sources */,
 				A8F0A1DA2178B41900575C57 /* MOMessage+CoreDataClass.m in Sources */,
@@ -13832,6 +13866,7 @@
 				C460506F27282F9500D67A44 /* MEGAOperation.m in Sources */,
 				8335C645282E7B2100509479 /* ThumbnailRepository.swift in Sources */,
 				C4E78E9D272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
+				6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */,
 				83CCBC4F279599F700B90EF2 /* TransferStateEntity+Mapper.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
 				B6D0B348283CD9210020C64D /* AppFirstLaunchUseCase.swift in Sources */,
@@ -13856,6 +13891,7 @@
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				C4C6A49A27A4632600873165 /* MegaNode+Additions.swift in Sources */,
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
+				6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				B620C05E2845BB9A003CEEE7 /* PHAsset+CU.swift in Sources */,
 				8340CB02284E534E007C3B39 /* NameCollisionAction.swift in Sources */,

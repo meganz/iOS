@@ -860,7 +860,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodesArray]) {
+    if ([self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodesArray parentNode:self.parentNode]) {
         [self reloadUI];
     }
 }

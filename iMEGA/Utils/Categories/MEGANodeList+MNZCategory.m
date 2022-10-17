@@ -88,49 +88,6 @@
 
 #pragma mark - onNodesUpdate filtering
 
-- (BOOL)mnz_shouldProcessOnNodesUpdateForParentNode:(MEGANode *)parentNode childNodesArray:(NSArray<MEGANode *> *)childNodesArray {
-    BOOL shouldProcessOnNodesUpdate = NO;
-    
-    NSArray *nodesUpdatedArray = self.mnz_nodesArrayFromNodeList;
-    for (MEGANode *nodeUpdated in nodesUpdatedArray) {
-        if (parentNode.handle == nodeUpdated.parentHandle) { //It is a child node
-            shouldProcessOnNodesUpdate = YES;
-            break;
-        }
-    }
-    
-    if (!shouldProcessOnNodesUpdate) {
-        NSMutableDictionary *childNodesMutableDictionary = NSMutableDictionary.new;
-        for (MEGANode *childNode in childNodesArray) {
-            [childNodesMutableDictionary setObject:childNode forKey:childNode.base64Handle];
-        }
-        
-        for (MEGANode *nodeUpdated in nodesUpdatedArray) {
-            if ([childNodesMutableDictionary objectForKey:nodeUpdated.base64Handle]) { //Node was a child node. So it was moved (To another place or Rubbish Bin).
-                shouldProcessOnNodesUpdate = YES;
-                break;
-            } else {
-                NSString *parentOfNodeUpdatedBase64Handle = [MEGASdk base64HandleForHandle:nodeUpdated.parentHandle]; //Its parent is one of the folder child nodes
-                if ([childNodesMutableDictionary objectForKey:parentOfNodeUpdatedBase64Handle]) {
-                    shouldProcessOnNodesUpdate = YES;
-                    break;
-                } else {
-                    NSString *previousParentOfNodeUpdatedBase64Handle = [MEGASdk base64HandleForHandle:nodeUpdated.restoreHandle];
-                    if ([childNodesMutableDictionary objectForKey:previousParentOfNodeUpdatedBase64Handle]) { //Its parent WAS one of the folder child nodes. Restored from the Rubbish Bin.
-                        shouldProcessOnNodesUpdate = YES;
-                        break;
-                    }
-                }
-                
-                //Missing case if something is moved inside a child folder node. We would need to know or process the node tree on that cases.
-            }
-        }
-        
-    }
-    
-    return shouldProcessOnNodesUpdate;
-}
-
 - (BOOL)mnz_shouldProcessOnNodesUpdateInSharedForNodes:(NSArray<MEGANode *> *)nodesArray itemSelected:(NSInteger)itemSelected {
     BOOL shouldProcessOnNodesUpdate = NO;
     
