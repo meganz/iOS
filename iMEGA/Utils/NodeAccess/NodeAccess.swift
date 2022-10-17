@@ -98,8 +98,10 @@ class NodeAccess: NSObject {
     private func updateHandle(_ node: MEGANode?, error: Error?, completion: NodeLoadCompletion?) {
         self.handle = node?.handle
         completion?(node, error)
-
-        self.nodeAccessSemaphore.signal()
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.nodeAccessSemaphore.signal()
+        }
     }
     
     private func loadNodeToMemory() {
