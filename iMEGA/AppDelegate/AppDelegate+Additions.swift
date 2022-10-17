@@ -160,23 +160,22 @@ extension AppDelegate {
     }
     
     @objc func updateContactsNickname() {
-        let requestDelegate = MEGAGenericRequestDelegate { request, error in
-            guard error.type == .apiOk else { return }
-            guard let stringDictionary = request.megaStringDictionary else { return }
-            
-            let names = stringDictionary.compactMap { (key, value) -> (HandleEntity, String)? in
-                guard let nickname = value.base64URLDecoded else { return nil }
-                return (MEGASdk.handle(forBase64UserHandle: key), nickname)
+        MEGASdkManager.sharedMEGASdk().getUserAttributeType(.alias, delegate: RequestDelegate { (result) in
+            if case let .success(request) = result {
+                guard let stringDictionary = request.megaStringDictionary else { return }
+                
+                let names = stringDictionary.compactMap { (key, value) -> (HandleEntity, String)? in
+                    guard let nickname = value.base64URLDecoded else { return nil }
+                    return (MEGASdk.handle(forBase64UserHandle: key), nickname)
+                }
+                
+                MEGAStore.shareInstance().updateUserNicknames(by: names)
+                
+                OperationQueue.main.addOperation {
+                    NotificationCenter.default.post(name: Notification.Name(MEGAAllUsersNicknameLoaded), object: nil)
+                }
             }
-            
-            MEGAStore.shareInstance().updateUserNicknames(by: names)
-            
-            OperationQueue.main.addOperation {
-                NotificationCenter.default.post(name: Notification.Name(MEGAAllUsersNicknameLoaded), object: nil)
-            }
-        }
-        
-        MEGASdkManager.sharedMEGASdk().getUserAttributeType(.alias, delegate: requestDelegate)
+        })
     }
 
     @objc func handleAccountBlockedEvent(_ event: MEGAEvent) {
