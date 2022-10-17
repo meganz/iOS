@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGASwiftUI
 
 @available(iOS 14.0, *)
 struct ChatRoomsListView: View {
@@ -12,8 +13,13 @@ struct ChatRoomsListView: View {
             
             if viewModel.isConnectedToNetwork == false {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
-            } else if let chatRooms = viewModel.chatRooms {
+            } else if let chatRooms = viewModel.displayChatRooms {
                 List {
+                    SearchBarView(
+                        text: $viewModel.searchText,
+                        searchString: Strings.Localizable.search,
+                        cancelString: Strings.Localizable.cancel)
+                    
                     let topRowViewState = viewModel.topRowViewState()
                     Button {
                         topRowViewState.action()
@@ -33,6 +39,9 @@ struct ChatRoomsListView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
+                .gesture(DragGesture().onChanged({ _ in
+                    UIApplication.shared.windows.forEach { $0.endEditing(false) }
+                }))
             } else {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
             }

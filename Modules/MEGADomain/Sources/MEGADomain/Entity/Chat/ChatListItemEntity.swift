@@ -26,6 +26,8 @@ public struct ChatListItemEntity: Identifiable, Hashable {
     public let lastMessagePriv: ChatMessageTypeEntity
     public let lastMessageHandle: HandleEntity
 
+    public let searchString: String
+    
     public enum ChangeType {
         case noChanges
         case status
@@ -44,7 +46,7 @@ public struct ChatListItemEntity: Identifiable, Hashable {
         case delete
     }
     
-    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity) {
+    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity, searchString: String) {
         self.id = chatId
         self.chatId = chatId
         self.title = title
@@ -65,5 +67,6 @@ public struct ChatListItemEntity: Identifiable, Hashable {
         self.lastMessageDate = lastMessageDate
         self.lastMessagePriv = lastMessagePriv
         self.lastMessageHandle = lastMessageHandle
+        self.searchString = searchString
     }
 }
