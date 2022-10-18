@@ -155,4 +155,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         contactDetailsViewController.userEmail = userEmail
         navigationController?.pushViewController(contactDetailsViewController, animated: true)
     }
+    
+    func showArchivedChatRooms() {
+        guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatRoomsViewControllerID") as? ChatRoomsViewController else {
+            return
+        }
+        archivedChatRoomsViewController.chatRoomsType = .archived
+        navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
+    }
 }

@@ -8,6 +8,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never>
     public var chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never>
     public var items: [ChatListItemEntity]?
+    public var archivedChatsCount: UInt = 0
     
     public init(
         fullName: String? = nil,
@@ -51,5 +52,9 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func myFullName() -> String? {
         fullName
+    }
+    
+    public func archivedChatListCount() -> UInt {
+        archivedChatsCount
     }
 }

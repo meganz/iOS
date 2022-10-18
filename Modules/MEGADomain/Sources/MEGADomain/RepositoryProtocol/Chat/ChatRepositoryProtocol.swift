@@ -8,4 +8,5 @@ public protocol ChatRepositoryProtocol {
     func existsActiveCall() -> Bool
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
     func myFullName() -> String?
+    func archivedChatListCount() -> UInt
 }

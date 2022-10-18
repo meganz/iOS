@@ -18,6 +18,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
         sdk.setOnlineStatus(status.toMEGASChatStatus())
     }
     
+    public func archivedChatListCount() -> UInt {
+        sdk.archivedChatListItems?.size ?? 0
+    }
+    
     public func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never> {
         chatStatusUpdateListener(forUserHandle: userHandle)
             .monitor

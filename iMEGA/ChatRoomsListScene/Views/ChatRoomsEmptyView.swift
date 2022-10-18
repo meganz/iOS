@@ -6,17 +6,12 @@ struct ChatRoomsEmptyView: View {
     
     var body: some View {
         VStack {
-            if let topRowDescription = emptyViewState.chatRoomsTopRowViewState?.description {
-                Button {
-                    emptyViewState.chatRoomsTopRowViewState?.action()
-                } label: {
-                    ChatRoomsTopRowView(
-                        imageAsset: emptyViewState.chatRoomsTopRowViewState?.imageAsset,
-                        description: topRowDescription
-                    )
-                }
-                .buttonStyle(.plain)
-                .padding(8)
+            if let contactsOnMega = emptyViewState.contactsOnMega {
+                ChatRoomsTopRowView(state: contactsOnMega)
+                    .onTapGesture {
+                        contactsOnMega.action()
+                    }
+                    .padding(8)
             }
             
             VStack {

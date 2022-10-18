@@ -9,6 +9,7 @@ public protocol ChatUseCaseProtocol {
     func existsActiveCall() -> Bool
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
     func myFullName() -> String?
+    func archivedChatListCount() -> UInt
 }
 
 // MARK: - Use case implementation -
@@ -45,5 +46,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func myFullName() -> String? {
         chatRepo.myFullName()
+    }
+    
+    public func archivedChatListCount() -> UInt {
+        chatRepo.archivedChatListCount()
     }
 }
