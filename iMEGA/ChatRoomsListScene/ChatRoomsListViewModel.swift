@@ -32,6 +32,7 @@ protocol ChatRoomsListRouting: Routing {
     )
     func showGroupChatInfo(forChatId chatId: HandleEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
+    func showArchivedChatRooms()
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
@@ -151,7 +152,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatUseCase.changeChatStatus(to: status)
     }
     
-    func topRowViewState() -> ChatRoomsTopRowViewState {
+    func contactsOnMegaViewState() -> ChatRoomsTopRowViewState {
         ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
         let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
 
@@ -168,15 +169,26 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
         
         return ChatRoomsTopRowViewState(
-            imageAsset: Asset.Images.Chat.inviteToChat,
+            image: Asset.Images.Chat.inviteToChat.image,
             description: topRowDescription) { [weak self] in
                 self?.topRowViewTapped()
             }
     }
     
+    func archiveChatsViewState() -> ChatRoomsTopRowViewState? {
+        guard chatUseCase.archivedChatListCount() > 0 else { return nil }
+        
+        return ChatRoomsTopRowViewState(
+            image: Asset.Images.Chat.archiveChat.image,
+            description: Strings.Localizable.archivedChats,
+            rightDetail: "\(chatUseCase.archivedChatListCount())") { [weak self] in
+                self?.router.showArchivedChatRooms()
+            }
+    }
+    
     func emptyViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
-            chatRoomsTopRowViewState: topRowViewState(),
+            contactsOnMega: contactsOnMegaViewState(),
             centerImageAsset: isConnectedToNetwork ? (chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState) : Asset.Images.EmptyStates.noInternetEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,

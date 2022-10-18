@@ -20,19 +20,23 @@ struct ChatRoomsListView: View {
                         searchString: Strings.Localizable.search,
                         cancelString: Strings.Localizable.cancel)
                     
-                    let topRowViewState = viewModel.topRowViewState()
-                    Button {
-                        topRowViewState.action()
-                    } label: {
-                        ChatRoomsTopRowView(
-                            imageAsset: topRowViewState.imageAsset,
-                            description: topRowViewState.description
-                        )
+                    if let archivedChatsViewState = viewModel.archiveChatsViewState() {
+                        ChatRoomsTopRowView(state: archivedChatsViewState)
+                            .onTapGesture {
+                                archivedChatsViewState.action()
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .padding(10)
+                    }
+                    
+                    let contactsOnMega = viewModel.contactsOnMegaViewState()
+                    ChatRoomsTopRowView(state: contactsOnMega)
+                    .onTapGesture {
+                        contactsOnMega.action()
                     }
                     .listRowInsets(EdgeInsets())
-                    .buttonStyle(.plain)
                     .padding(10)
-                    
+                                        
                     ForEach(chatRooms, id: \.self) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
                             .listRowInsets(EdgeInsets())
