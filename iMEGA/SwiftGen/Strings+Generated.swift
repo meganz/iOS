@@ -4284,7 +4284,7 @@ public enum Strings {
           public static let subFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions.subFolders")
         }
         public enum Speed {
-          /// Fast (1s)
+          /// Fast (2s)
           public static let fast = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.fast")
           /// Normal (4s)
           public static let normal = Strings.tr("Localizable", "slideshow.preferenceSetting.speed.normal")
