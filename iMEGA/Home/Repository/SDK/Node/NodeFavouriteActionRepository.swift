@@ -29,14 +29,13 @@ final class NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol
             return
         }
 
-        let requestDelegate = MEGAGenericRequestDelegate { (request, error) in
-            if let errorType = error.sdkError {
+        sdk.setNodeFavourite(node, favourite: true, delegate: RequestDelegate { result in
+            if case let .failure(error) = result, let errorType = error.sdkError {
                 completion(.failure(.sdkError(errorType)))
                 return
             }
             completion(.success(()))
-        }
-        sdk.setNodeFavourite(node, favourite: true, delegate: requestDelegate)
+        })
     }
 
     func unmarkFavourite(of nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
@@ -44,14 +43,13 @@ final class NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol
             completion(.failure(.nodeNotFound))
             return
         }
-
-        let requestDelegate = MEGAGenericRequestDelegate { (request, error) in
-            if let sdkError = error.sdkError {
+        
+        sdk.setNodeFavourite(node, favourite: false, delegate: RequestDelegate { result in
+            if case let .failure(error) = result, let sdkError = error.sdkError {
                 completion(.failure(.sdkError(sdkError)))
                 return
             }
             completion(.success(()))
-        }
-        sdk.setNodeFavourite(node, favourite: false, delegate: requestDelegate)
+        })
     }
 }

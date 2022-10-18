@@ -19,7 +19,7 @@ final class NodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol {
     }
 
     func addNodeToFavourite(nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
-        return nodeFavouriteRepository.markFavourite(of: nodeHandle, completion: completion)
+        nodeFavouriteRepository.markFavourite(of: nodeHandle, completion: completion)
     }
 
     func removeNodeFromFavourite(nodeHandle: HandleEntity, completion: @escaping (Result<Void, NodeFavouriteDomainError>) -> Void) {
@@ -27,7 +27,7 @@ final class NodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol {
     }
 
     func isNodeFavourite(nodeHandle: HandleEntity) -> Result<Bool, NodeFavouriteDomainError> {
-        return nodeFavouriteRepository.isMarkedFavourte(of: nodeHandle)
+        nodeFavouriteRepository.isMarkedFavourte(of: nodeHandle)
     }
 }
 
