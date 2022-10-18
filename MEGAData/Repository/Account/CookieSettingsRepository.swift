@@ -15,10 +15,11 @@ struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
     }
     
     func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
-        sdk.cookieSettings(with: MEGAGenericRequestDelegate { (request, error) in
-            if error.type == .apiOk {
+        sdk.cookieSettings(with: RequestDelegate { (result) in
+            switch result {
+            case .success(let request):
                 completion(.success(request.numDetails))
-            } else {
+            case .failure(let error):
                 let cookieSettingsError: CookieSettingsErrorEntity
                 switch error.type {
                 case .apiEInternal:
@@ -37,10 +38,11 @@ struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
     }
     
     func setCookieSettings(with settings: NSInteger, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
-        sdk.setCookieSettings(settings, delegate: MEGAGenericRequestDelegate { (request, error) in
-            if error.type == .apiOk {
+        sdk.setCookieSettings(settings, delegate: RequestDelegate { (result) in
+            switch result {
+            case .success(let request):
                 completion(.success(request.numDetails))
-            } else {
+            case .failure(let error):
                 let cookieSettingsError: CookieSettingsErrorEntity
                 switch error.type {
                 default:
