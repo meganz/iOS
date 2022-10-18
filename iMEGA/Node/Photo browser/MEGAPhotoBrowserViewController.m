@@ -540,10 +540,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGANode *node = self.dataProvider[i];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
+            
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
-                UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
-                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:temporaryImagePath]
-                             placeholderImage:placeHolderImage
+                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:previewPath]
                                     completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     [self startLiveTextAnalysisFor:imageView in:index];
                 }];
