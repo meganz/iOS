@@ -1045,7 +1045,7 @@ class ChatViewController: MessagesViewController {
     private func startMeetingUI(isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         
-        let callEntity = CallEntity(with: call)
+        let callEntity = call.toCallEntity()
         let chatRoomEntity = chatRoom.toChatRoomEntity()
         
         MeetingContainerRouter(presenter: self,

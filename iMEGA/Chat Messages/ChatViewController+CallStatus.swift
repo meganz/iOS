@@ -73,7 +73,7 @@ extension ChatViewController {
     
     private func endActiveCallAndJoinCurrentChatroomCall() {
         if let activeCall = MEGASdkManager.sharedMEGAChatSdk().firstActiveCall {
-            endCall(CallEntity(with: activeCall))
+            endCall(activeCall.toCallEntity())
         }
         
         joinCall()
@@ -102,7 +102,7 @@ extension ChatViewController {
                     return
                 }
                 
-                self.showCallEndDialog(withCall: CallEntity(with: call))
+                self.showCallEndDialog(withCall: call.toCallEntity())
             }
         
         self.meetingNoUserJoinedUseCase = usecase
@@ -187,7 +187,7 @@ extension ChatViewController {
             showJoinCall(withTitle: joinCallString)
         case .inProgress:
             initTimerForCall(call)
-            showCallEndTimerIfNeeded(call: CallEntity(with: call))
+            showCallEndTimerIfNeeded(call: call.toCallEntity())
         case .connecting:
             showJoinCall(withTitle: Strings.Localizable.reconnecting)
         case .destroyed, .terminatingUserParticipation, .undefined:

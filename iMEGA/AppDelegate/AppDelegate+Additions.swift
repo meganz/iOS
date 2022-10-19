@@ -113,7 +113,7 @@ extension AppDelegate {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
         MeetingContainerRouter(presenter: presenter,
                                chatRoom: chatRoom.toChatRoomEntity(),
-                               call: CallEntity(with: call),
+                               call: call.toCallEntity(),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
         

@@ -6,7 +6,7 @@ extension ContactDetailsViewController {
         let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
         MeetingContainerRouter(presenter: self,
                                chatRoom: chatRoom.toChatRoomEntity(),
-                               call: CallEntity(with: call),
+                               call: call.toCallEntity(),
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     

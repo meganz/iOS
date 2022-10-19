@@ -5,7 +5,7 @@ extension MEGAProviderDelegate {
         MeetingContainerRouter(
             presenter: presenter,
             chatRoom: chatRoom.toChatRoomEntity(),
-            call: CallEntity(with: call),
+            call: call.toCallEntity(),
             isSpeakerEnabled: chatRoom.isMeeting
         ).start()
     }

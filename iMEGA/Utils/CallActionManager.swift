@@ -117,7 +117,7 @@ import MEGADomain
     }
     
     private func notifyStartCallToCallKit(chatId: UInt64) {
-        guard let call = chatSdk.chatCall(forChatId: chatId), !isCallAlreadyAdded(CallEntity(with: call)) else { return }
+        guard let call = chatSdk.chatCall(forChatId: chatId), !isCallAlreadyAdded(call.toCallEntity()) else { return }
         
         MEGALogDebug("CallActionManager: Notifiying call to callkit")
         megaCallManager?.start(call)
