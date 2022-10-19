@@ -448,7 +448,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 }
 
 - (IBAction)termsAndPoliciesTouchUpInside:(id)sender {
-    [[TermsAndPoliciesRouter.alloc initWithPresentController:self] start];
+    [[TermsAndPoliciesRouter.alloc initWithNavigationController:self.navigationController] start];
 }
 
 - (void)restoreTouchUpInside {

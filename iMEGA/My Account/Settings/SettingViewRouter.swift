@@ -96,7 +96,7 @@ extension SettingViewRouter {
             
             SettingCellViewModel(image: Asset.Images.Settings.termsAndPoliciesSettings,
                                  title: Strings.Localizable.Settings.Section.termsAndPolicies,
-                                 router: TermsAndPoliciesRouter(presentController: presenter))
+                                 router: TermsAndPoliciesRouter(navigationController: presenter))
             
             SettingCellViewModel(image: Asset.Images.Settings.cookieSettings,
                                  title: Strings.Localizable.General.cookieSettings,
