@@ -505,7 +505,7 @@ extension ProfileViewController: UITableViewDataSource {
         case .plan:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             cell.nameLabel.text = Strings.Localizable.upgradeAccount
-
+            cell.selectionStyle = .default
             cell.accessoryType = MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0 ? .disclosureIndicator : .none
 
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
@@ -539,6 +539,10 @@ extension ProfileViewController: UITableViewDataSource {
                     }
                     cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                     cell.nameLabel.text = Strings.Localizable.business
+                    cell.accessoryType = .none
+                case .proFlexi:
+                    cell.nameLabel.text = MEGAAccountDetails.string(for: accountType)
+                    cell.selectionStyle = .none
                     cell.accessoryType = .none
                 default:
                     cell.detailLabel.text = "..."
@@ -605,7 +609,8 @@ extension ProfileViewController: UITableViewDelegate {
         case .plan:
             switch rowsForPlanSection()[indexPath.row] {
             default:
-                if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
+                if !MEGASdkManager.sharedMEGASdk().isBusinessAccount &&
+                    !MEGASdkManager.sharedMEGASdk().isProFlexiAccount {
                     guard let navigationController = navigationController else {
                         return
                     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -289,8 +289,8 @@
                                                     <outlet property="sectionLabel" destination="bdM-YA-sg4" id="wDM-4f-r4A"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallBusinessUsageTableViewCellID" id="WCw-CE-5hM" customClass="MyAccountHallTableViewCell">
-                                                <rect key="frame" x="0.0" y="128" width="414" height="94.5"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallStorageUsageTableViewCellID" id="WCw-CE-5hM" customClass="MyAccountHallTableViewCell">
+                                                <rect key="frame" x="0.0" y="161.5" width="414" height="100"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-CE-5hM" id="hdy-k6-MSx">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="94.5"/>
@@ -390,13 +390,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="accountTypeLabel" destination="10p-Ba-INI" id="6Nl-3L-5Bw"/>
                         <outlet property="addPhoneNumberActivityIndicator" destination="XDd-E8-UW9" id="ccR-06-CmU"/>
                         <outlet property="addPhoneNumberDescription" destination="785-X9-Zj0" id="AjS-pM-Cta"/>
                         <outlet property="addPhoneNumberImageView" destination="Q92-mV-tio" id="l5k-KN-Hb0"/>
                         <outlet property="addPhoneNumberTitle" destination="oi5-pG-ers" id="c2i-5n-d1u"/>
                         <outlet property="addPhoneNumberView" destination="QRm-6M-zp1" id="Q7z-lg-1wU"/>
                         <outlet property="avatarImageView" destination="wKG-M1-Umc" id="Rkf-F1-Mgw"/>
-                        <outlet property="businessLabel" destination="10p-Ba-INI" id="wP1-gZ-K82"/>
                         <outlet property="buyPROBarButtonItem" destination="yAq-Z4-Blx" id="LGG-fY-4Dv"/>
                         <outlet property="nameLabel" destination="YqG-fz-6ti" id="ONK-2v-2hU"/>
                         <outlet property="profileBottomSeparatorView" destination="uOe-An-q3u" id="746-sx-sOu"/>

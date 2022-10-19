@@ -23,7 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UILabel *businessLabel;
+@property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
@@ -158,8 +158,8 @@
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
-    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-        self.businessLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount || [[MEGASdkManager sharedMEGASdk] isProFlexiAccount]) {
+        self.accountTypeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         
         self.tableFooterContainerView.backgroundColor = [UIColor mnz_tertiaryBackgroundGrouped:self.traitCollection];
         self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
@@ -243,10 +243,13 @@
 - (void)configNavigationItem {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.navigationItem.rightBarButtonItem = nil;
-        self.businessLabel.text = NSLocalizedString(@"Business", nil);
+        self.accountTypeLabel.text = NSLocalizedString(@"Business", nil);
+    } else if ([MEGASdkManager.sharedMEGASdk isProFlexiAccount]) {
+        self.navigationItem.rightBarButtonItem = nil;
+        self.accountTypeLabel.text = [MEGAAccountDetails stringForAccountType:MEGAAccountTypeProFlexi];
     } else {
         self.buyPROBarButtonItem.title = NSLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-        self.businessLabel.text = @"";
+        self.accountTypeLabel.text = @"";
     }
 }
 
