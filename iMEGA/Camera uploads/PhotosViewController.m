@@ -168,7 +168,7 @@
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [self updateAppearance];
-        [self setEditing:false animated:false];
+        [self setupNavigationBarButtons];
     }
     
     [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
