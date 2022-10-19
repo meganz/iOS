@@ -1,6 +1,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 protocol TermsAndPoliciesRouterProtocol: Routing {
     func didTap(on source: TermsAndPoliciesSource)
@@ -14,9 +15,8 @@ enum TermsAndPoliciesSource {
 
 final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     
-    private weak var baseTableViewController: UITableViewController?
+    private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
-    private weak var presentController: UIViewController?
 
     @objc init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -24,34 +24,34 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
         super.init()
     }
     
-    @objc init(presentController: UIViewController?) {
-        self.presentController = presentController
-        
-        super.init()
-    }
-    
     func build() -> UIViewController {
-        guard let termsAndPoliciesTVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "TermsAndPoliciesTableViewControllerID") as? TermsAndPoliciesTableViewController else {
-            fatalError("Could not instantiate TermsAndPoliciesTableViewController")
-        }
-        
         let viewModel = TermsAndPoliciesViewModel(router: self)
-        termsAndPoliciesTVC.viewModel = viewModel
-        termsAndPoliciesTVC.router = self
-        
-        baseTableViewController = termsAndPoliciesTVC
-        
-        return termsAndPoliciesTVC
+        if #available(iOS 14.0, *) {
+            let termsAndPoliciesView = TermsAndPoliciesView(viewModel: viewModel)
+            let hostingController = UIHostingController(rootView: termsAndPoliciesView)
+            baseViewController = hostingController
+            baseViewController?.title = Strings.Localizable.Settings.Section.termsAndPolicies
+            
+            
+            return hostingController
+        } else {
+            guard let termsAndPoliciesTVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "TermsAndPoliciesTableViewControllerID") as? TermsAndPoliciesTableViewController else {
+                fatalError("Could not instantiate TermsAndPoliciesTableViewController")
+            }
+            
+            termsAndPoliciesTVC.viewModel = viewModel
+            termsAndPoliciesTVC.router = self
+            
+            baseViewController = termsAndPoliciesTVC
+            
+            return termsAndPoliciesTVC
+        }
     }
     
     @objc func start() {
         let viewContoller = build()
         if let navigationController = navigationController {
             navigationController.pushViewController(viewContoller, animated: true)
-        } else if let presentController = presentController {
-            let nav = MEGANavigationController(rootViewController:viewContoller)
-            nav.addLeftDismissButton(withText: Strings.Localizable.close)
-            presentController.present(nav, animated: true, completion: nil)
         }
     }
     
@@ -59,7 +59,7 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
         let url: URL
         switch source {
         case .showPrivacyPolicy:
-            guard let privacyURL = URL(string: "https://mega.nz/privacy") else { return }
+            guard let privacyURL = URL(string: "https://mega.io/privacy") else { return }
             url = privacyURL
             
         case .showCookiePolicy:
@@ -67,7 +67,7 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
             url = cookieURL
             
         case .showTermsOfService:
-            guard let termsURL = URL(string: "https://mega.nz/terms") else { return }
+            guard let termsURL = URL(string: "https://mega.io/terms") else { return }
             url = termsURL
         }
         

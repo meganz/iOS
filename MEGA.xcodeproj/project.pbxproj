@@ -1453,6 +1453,7 @@
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
+		A88A0C8528F96A6D0058F031 /* TermsAndPoliciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88A0C8428F96A6D0058F031 /* TermsAndPoliciesView.swift */; };
 		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
 		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
@@ -3879,6 +3880,7 @@
 		A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+Message.swift"; sourceTree = "<group>"; };
 		A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileCompressor.swift; sourceTree = "<group>"; };
 		A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogFileView.swift; sourceTree = "<group>"; };
+		A88A0C8428F96A6D0058F031 /* TermsAndPoliciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPoliciesView.swift; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
 		A88BFFCB1F0A52E90081BCE3 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcurl.a; sourceTree = "<group>"; };
@@ -6874,6 +6876,7 @@
 				5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */,
 				5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */,
 				5BF59EA8263C551C00A7CF9D /* TermsAndPoliciesViewModel.swift */,
+				A88A0C8428F96A6D0058F031 /* TermsAndPoliciesView.swift */,
 			);
 			path = TermsAndPoliciesScene;
 			sourceTree = "<group>";
@@ -13005,6 +13008,7 @@
 				8342CB0B28EB3DEC0078D35F /* ChatTabsSelectorView.swift in Sources */,
 				5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */,
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
+				A88A0C8528F96A6D0058F031 /* TermsAndPoliciesView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
 				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
