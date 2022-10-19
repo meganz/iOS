@@ -19,7 +19,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
                               isPendingViewVisible: true)
     }
     
-    //MARK: - Storage row setup data for Business accounts
+    //MARK: - Storage row setup data for Business and Pro Flexi accounts
     private func storageBusinessAccountSetupData() -> MyAccountHallCellData {
         let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
@@ -133,12 +133,10 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let isBussinessAccount = MEGASdkManager.sharedMEGASdk().isBusinessAccount
-        let identifier =
-                    isBussinessAccount && indexPath.row == MyAccountMegaSection.storage.rawValue &&
-                    indexPath.section == MyAccountSection.mega.rawValue ?
-                                                        "MyAccountHallBusinessUsageTableViewCellID" :
-                                                        "MyAccountHallTableViewCellID"
+        let isShowStorageUsageCell = (MEGASdkManager.sharedMEGASdk().isBusinessAccount || MEGASdkManager.sharedMEGASdk().isProFlexiAccount) &&
+                                    indexPath.row == MyAccountMegaSection.storage.rawValue &&
+                                    indexPath.section == MyAccountSection.mega.rawValue
+        let identifier = isShowStorageUsageCell ? "MyAccountHallStorageUsageTableViewCellID" : "MyAccountHallTableViewCellID"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? MyAccountHallTableViewCell ?? MyAccountHallTableViewCell(style: .default, reuseIdentifier: identifier)
         
@@ -148,7 +146,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         }
         
         switch MyAccountMegaSection(rawValue: indexPath.row) {
-        case .storage: cell.setup(data: isBussinessAccount ? storageBusinessAccountSetupData() : storageSetupData())
+        case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
         case .contacts: cell.setup(data: contactsSetupData(isPendingViewHidden: cell.pendingView?.isHidden ?? true))
         case .backups: cell.setup(data: backupsSetupData())
         case .notifications: cell.setup(data: notificationsSetupData(isPendingViewHidden: cell.pendingView?.isHidden ?? true))

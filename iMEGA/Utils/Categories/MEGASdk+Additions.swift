@@ -31,4 +31,13 @@ extension MEGASdk {
         }
         return accountDetails.storageUsed.int64Value > accountDetails.storageMax.int64Value
     }
+    
+    
+    //MARK: Pro Flexi
+    @objc var isProFlexiAccount: Bool {
+        guard let accountDetails = mnz_accountDetails else {
+            return false
+        }
+        return accountDetails.type == .proFlexi
+    }
 }
