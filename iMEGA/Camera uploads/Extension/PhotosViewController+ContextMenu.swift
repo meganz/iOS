@@ -31,8 +31,7 @@ extension PhotosViewController {
     }
     
     @objc func makeFilterActiveBarButton() -> UIBarButtonItem {
-        let image = UIImage(named: Asset.Images.ActionSheetIcons.filterActive.name)?.withRenderingMode(.alwaysOriginal)
-        let filterBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onFilter))
+        let filterBarButtonItem = UIBarButtonItem(image: Asset.Images.ActionSheetIcons.filterActive.image, style: .plain, target: self, action: #selector(onFilter))
         filterBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
         )
         return filterBarButtonItem
