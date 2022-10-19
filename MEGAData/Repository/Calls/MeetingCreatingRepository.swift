@@ -27,7 +27,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     
     func getCall(forChatId chatId: UInt64) -> CallEntity? {
         guard let call = chatSdk.chatCall(forChatId: chatId) else { return nil }
-        return CallEntity(with: call)
+        return call.toCallEntity()
     }
     
     func createChatLink(forChatId chatId: UInt64) {

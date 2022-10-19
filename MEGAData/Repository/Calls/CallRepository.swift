@@ -16,7 +16,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     
     func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: CallCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
-            self.call = CallEntity(with: call)
+            self.call = call.toCallEntity()
             self.callId = call.callId
         }
 
@@ -35,7 +35,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     
     func call(for chatId: HandleEntity) -> CallEntity? {
         guard let chatCall = chatSdk.chatCall(forChatId: chatId) else { return nil }
-        return CallEntity(with: chatCall)
+        return chatCall.toCallEntity()
     }
     
     func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
@@ -45,7 +45,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
                     completion(.failure(.generic))
                     return
                 }
-                let callEntity = CallEntity(with: call)
+                let callEntity = call.toCallEntity()
                 self?.call = callEntity
                 self?.callId = callEntity.callId
                 completion(.success(callEntity))
@@ -69,9 +69,9 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
                     completion(.failure(.generic))
                     return
                 }
-                self?.call = CallEntity(with: call)
+                self?.call = call.toCallEntity()
                 self?.callId = call.callId
-                completion(.success(CallEntity(with: call)))
+                completion(.success(call.toCallEntity()))
             } else {
                 switch error.type {
                 case .MEGAChatErrorTooMany:
@@ -93,9 +93,9 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         if activeCall.status == .userNoPresent {
             startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
         } else {
-            call = CallEntity(with: activeCall)
+            call = activeCall.toCallEntity()
             callId = activeCall.callId
-            completion(.success(CallEntity(with: activeCall)))
+            completion(.success(activeCall.toCallEntity()))
         }
     }
     
@@ -175,7 +175,7 @@ extension CallRepository: MEGAChatCallDelegate {
             return
         }
         
-        self.call = CallEntity(with: call)
+        self.call = call.toCallEntity()
         
         if call.hasChanged(for: .localAVFlags) {
             callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
@@ -224,7 +224,7 @@ extension CallRepository: MEGAChatCallDelegate {
                 }
             }
         case .terminatingUserParticipation, .destroyed:
-            callbacksDelegate?.callTerminated(CallEntity(with: call))
+            callbacksDelegate?.callTerminated(call.toCallEntity())
         case .userNoPresent:
             break
         @unknown default:

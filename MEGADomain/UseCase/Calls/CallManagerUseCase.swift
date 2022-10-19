@@ -1,3 +1,5 @@
+import MEGADomain
+
 // MARK: - Use case protocol -
 protocol CallCoordinatorUseCaseProtocol {
     func endCall(_ call: CallEntity)

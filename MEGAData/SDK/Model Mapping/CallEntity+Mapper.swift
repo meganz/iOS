@@ -1,29 +1,121 @@
 import MEGADomain
 
-extension CallEntity {
-    init(with call: MEGAChatCall) {
-        self.status = CallStatusType(rawValue: call.status.rawValue)
-        self.chatId = call.chatId
-        self.callId = call.callId
-        self.changeTye = ChangeType(rawValue: call.changes.rawValue)
-        self.duration = call.duration
-        self.initialTimestamp = call.initialTimeStamp
-        self.finalTimestamp = call.finalTimeStamp
-        self.hasLocalAudio = call.hasLocalAudio
-        self.hasLocalVideo = call.hasLocalVideo
-        self.termCodeType = TermCodeType(rawValue: call.termCode.rawValue)
-        self.isRinging = call.isRinging
-        self.callCompositionChange = CompositionChangeType(rawValue: call.callCompositionChange.rawValue)
+extension MEGAChatCall {
+    func toCallEntity() -> CallEntity {
+        CallEntity(with: self)
+    }
+}
 
-        self.numberOfParticipants = call.numParticipants
-        self.isOnHold = call.isOnHold
-        self.sessionClientIds = (0..<call.sessionsClientId.size).map { call.sessionsClientId.megaHandle(at: $0) }
-        self.clientSessions = self.sessionClientIds.compactMap({ sessionClientId in
-            guard let session = call.session(forClientId: sessionClientId) else { return nil }
-            return session.toChatSessionEntity()
-        })
-            
-        self.participants = (0..<call.participants.size).map { call.participants.megaHandle(at: $0) }
-        self.uuid = call.uuid
+fileprivate extension CallEntity {
+    init(with call: MEGAChatCall) {
+        let sessionClientIds = (0..<call.sessionsClientId.size).map { call.sessionsClientId.megaHandle(at: $0) }
+        self.init(status: call.status.toCallStatusType(),
+                  chatId: call.chatId,
+                  callId: call.callId,
+                  changeTye: call.changes.toChangeTypeEntity(),
+                  duration: call.duration,
+                  initialTimestamp: call.initialTimeStamp,
+                  finalTimestamp: call.finalTimeStamp,
+                  hasLocalAudio: call.hasLocalAudio,
+                  hasLocalVideo: call.hasLocalVideo,
+                  termCodeType: call.termCode.toTermCodeTypeEntity(),
+                  isRinging: call.isRinging,
+                  callCompositionChange: call.callCompositionChange.toCompositionChangeTypeEntity(),
+                  numberOfParticipants: call.numParticipants,
+                  isOnHold: call.isOnHold,
+                  sessionClientIds: sessionClientIds,
+                  clientSessions: sessionClientIds.compactMap { call.session(forClientId: UInt64($0))?.toChatSessionEntity() },
+                  participants: (0..<call.participants.size).map { call.participants.megaHandle(at: $0) },
+                  uuid: call.uuid)
+    }
+}
+
+extension MEGAChatCallStatus {
+    func toCallStatusType() -> CallEntity.CallStatusType {
+        switch self {
+        case .undefined:
+            return .undefined
+        case .initial:
+            return .initial
+        case .userNoPresent:
+            return .userNoPresent
+        case .connecting:
+            return .connecting
+        case .joining:
+            return .joining
+        case .inProgress:
+            return .inProgress
+        case .terminatingUserParticipation:
+            return .terminatingUserParticipation
+        case .destroyed:
+            return .destroyed
+        @unknown default:
+            return .undefined
+        }
+    }
+}
+
+extension MEGAChatCallTermCode {
+    func toTermCodeTypeEntity() -> CallEntity.TermCodeType {
+        switch self {
+        case .invalid:
+            return .invalid
+        case .userHangup:
+            return .userHangup
+        case .tooManyParticipants:
+            return .tooManyParticipants
+        case .callReject:
+            return .reject
+        case .error:
+            return .error
+        case .noParticipate:
+            return .noParticipate
+        @unknown default:
+            return .invalid
+        }
+    }
+}
+
+extension MEGAChatCallChangeType {
+    func toChangeTypeEntity() -> CallEntity.ChangeType {
+        switch self {
+        case .noChages:
+            return .noChanges
+        case .status:
+            return .status
+        case .localAVFlags:
+            return .localAVFlags
+        case .ringingStatus:
+            return .ringingStatus
+        case .callComposition:
+            return .callComposition
+        case .callOnHold:
+            return .onHold
+        case .callSpeak:
+            return .callSpeak
+        case .audioLevel:
+            return .audioLevel
+        case .networkQuality:
+            return .networkQuality
+        case .outgoingRingingStop:
+            return .outgoingRingingStop
+        @unknown default:
+            return .noChanges
+        }
+    }
+}
+
+extension MEGAChatCallCompositionChange {
+    func toCompositionChangeTypeEntity() -> CallEntity.CompositionChangeType {
+        switch self {
+        case .peerRemoved:
+            return .peerRemoved
+        case .noChange:
+            return .noChange
+        case .peerAdded:
+            return .peerAdded
+        @unknown default:
+            return .noChange
+        }
     }
 }
