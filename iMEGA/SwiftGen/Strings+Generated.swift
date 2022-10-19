@@ -4267,11 +4267,11 @@ public enum Strings {
         public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
         /// Options
         public static let options = Strings.tr("Localizable", "slideshow.preferenceSetting.options")
-        /// Slideshow Order
+        /// Slideshow order
         public static let order = Strings.tr("Localizable", "slideshow.preferenceSetting.order")
-        /// Slideshow Options
+        /// Slideshow options
         public static let slideshowOptions = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions")
-        /// Slideshow Speed
+        /// Slideshow speed
         public static let speed = Strings.tr("Localizable", "slideshow.preferenceSetting.speed")
         public enum Order {
           /// Shuffle

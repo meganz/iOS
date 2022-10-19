@@ -211,25 +211,25 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="ตัวเลือก";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+"slideshow.preferenceSetting.slideshowOptions"="ตัวเลือกการนำเสนอภาพนิ่ง";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="รวมทั้งสื่อในโฟลเดอร์ย่อยของการนำเสนอภาพนิ่งด้วย";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow Speed";
+"slideshow.preferenceSetting.speed"="ความเร็วการนำเสนอภาพนิ่ง";
 /* Slideshow Speed preference slow */
-"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+"slideshow.preferenceSetting.speed.slow"="ช้า (8 วิ)";
 /* Slideshow Speed preference normal */
-"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+"slideshow.preferenceSetting.speed.normal"="ปกติ (4 วิ)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+"slideshow.preferenceSetting.speed.fast"="เร็ว (2 วิ)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow Order";
+"slideshow.preferenceSetting.order"="ลำดับการนำเสนอภาพนิ่ง";
 /* Slideshow Speed Order shuffle */
-"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+"slideshow.preferenceSetting.order.shuffle"="สลับ";
 /* Slideshow Preference Setting repeat */
-"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+"slideshow.preferenceSetting.slideshowOptions.repeat"="เล่นซํ้า";
 /* Slideshow Preference Setting include subFolders */
-"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="รวมทั้งโฟลเดอร์ย่อย";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="ไม่มีไฟล์ที่บันทึกออฟไลน์ไว้";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1667,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="บันทึกวิดีโอในรูปภาพ";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="รูปภาพและวิดีโอที่ดาวน์โหลดจะถูกเก็บไว้ในไลบรารีสื่อของอุปกรณ์ ไม่ใช่ส่วนออฟไลน์";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="กล้อง";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */

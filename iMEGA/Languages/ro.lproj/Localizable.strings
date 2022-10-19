@@ -211,19 +211,19 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Opțiuni";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow options";
 /* Footer note for media in sub folders */
 "slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow Speed";
+"slideshow.preferenceSetting.speed"="Slideshow speed";
 /* Slideshow Speed preference slow */
 "slideshow.preferenceSetting.speed.slow"="Slow (8s)";
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Normal (4s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow Order";
+"slideshow.preferenceSetting.order"="Slideshow order";
 /* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="Shuffle";
 /* Slideshow Preference Setting repeat */
@@ -281,7 +281,7 @@
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pus pe pauză";
 /* Possible state of a transfer. When the transfer was cancelled */
-"Cancelled"="Anulat(ă)";
+"Cancelled"="Anulat";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Se finalizează…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
@@ -1043,7 +1043,7 @@
 /* Add your phone number title */
 "Add Your Phone Number"="Adaugă-ți numărul de telefon";
 /* Choose Your Country title */
-"Choose Your Country"="Alege-ți țara";
+"Choose Your Country"="Alege țara";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="luni";
 /*  */
@@ -1135,13 +1135,13 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="This In-App Purchase item is not available in the App Store at this time. Please verify payment settings for your Apple ID.";
+"inAppPurchase.error.alert.title.notAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să verifici setările de plată pentru ID-ul Apple.";
 /* Button that redirect you to the main page of your Account in the App Store */
-"inAppPurchase.error.alert.primaryButtonTitle"="App Store Settings";
+"inAppPurchase.error.alert.primaryButtonTitle"="Setări pentru App Store";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Îți mulțumim";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Achiziția ta a fost restaurată";
+"purchaseRestore_message"="Achiziția ți-a fost restaurată";
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Achiziție oprită";
 /* Alert message shown when a purchase has stopped because some error between the process */
@@ -1223,7 +1223,7 @@
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Plecat automat";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"autoAway.footerDescription"="Set status as Away after [X] of inactivity.";
+"autoAway.footerDescription"="Setează statusul ca Plecat după [X] de inactivitate.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistența statusului";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -3051,13 +3051,13 @@
 /* Ttile for empty meetings tab */
 "chat.meetings.emptyState.title"="Începe o întâlnire";
 /* Description for empty meetings tab */
-"chat.meetings.emptyState.description"="Talk securely and privately on audio or video calls with friends and colleagues around the world.";
+"chat.meetings.emptyState.description"="Discută securizat și privat în apeluri audio sau video cu prieteni și colegi din întreaga lume.";
 /* Text button for empty meetings tab */
 "chat.meetings.emptyState.button.title"="Întâlnire nouă";
 /* Ttile for empty chats tab */
 "chat.chats.emptyState.title"="Începe să chatuiești acum";
 /* Description for empty chats tab */
-"chat.chats.emptyState.description"="Chat securely and privately, with anyone and on any device, knowing that no one can read your chats, not even MEGA.";
+"chat.chats.emptyState.description"="Chatuiește securizat și privat, cu oricine și de pe orice dispozitiv, știind că nimeni nu îți poate citi chaturile, nici măcar MEGA.";
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Chat nou";
 /* Title for chats section */
@@ -3081,11 +3081,11 @@
 /* Title of the Settings section where you can configure calls options of your MEGA account */
 "settings.section.calls.title"="Apeluri";
 /* Title of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.title"="Sound notifications";
+"settings.section.calls.soundNotifications.title"="Notificări sonore";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
 /* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
-"meetings.addContacts.allContactsAdded.title"="All contacts added";
+"meetings.addContacts.allContactsAdded.title"="Toate contactele au fost adăugate";
 /* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.description"="You’ve already added all your contacts to this chat.\nIf you want to add more participants, first invite them to your contact list.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */

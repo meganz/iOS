@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Нормальное (4 с.)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Быстрое (1 с.)";
+"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Порядок слайд-шоу";
 /* Slideshow Speed Order shuffle */
@@ -883,13 +883,13 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Отправить";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Сбросить аккаунт";
+"parkAccount"="Заморозка аккаунта";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Я понимаю, что создаю новую чистую учётную запись, и что я потеряю все данные в существующей, если не вспомню пароль или не найду ключ восстановления.";
+"startingFreshAccount"="Я понимаю, что создаю новый пустой аккаунт, и что я потеряю все данные в существующем, если не вспомню пароль или не найду ключ восстановления.";
 /* Caption of the button to proceed */
-"startNewAccount"="Создать новую учётную запись";
+"startNewAccount"="Создать новый аккаунт";
 /*  */
-"yourAccounHasBeenParked"="Ваша старая учётная запись успешно прекратила своё существование. Вы можете войти в новую учётную запись.";
+"yourAccounHasBeenParked"="Ваш старый аккаунт успешно прекратил своё существование. Вы можете войти в новый аккаунт.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Новый адрес электронной почты";
 /* Button text for the user to confirm their change of email address. */
@@ -909,13 +909,13 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Пожалуйста, введите пароль, чтобы подтвердить свой адрес электронной почты";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Поздравляем, ваш новый адрес эл. почты для этой учётной записи: [X]";
+"congratulationsNewEmailAddress"="Поздравляем, ваш новый адрес эл. почты для этого аккаунта: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="Прекратить другие сеансы";
+"closeOtherSessions"="Закрыть другие сеансы";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="Сессии закрыты";
+"sessionsClosed"="Сеансы закрыты";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Изменить пароль";
+"changePasscodeLabel"="Изменить код доступа";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Простой код доступа";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -937,7 +937,7 @@
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Присоединиться к бете";
 /* Title to rate the app */
-"rateUsLabel"="Оценить нас";
+"rateUsLabel"="Оцените нас";
 /* Title of the Transfers section */
 "transfers"="Передачи";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -949,7 +949,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Скачивания";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Загрузки в облако";
+"uploads"="Загрузки";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Передача отменена";
 /* Success message shown when all the transfers have been cancelled */
@@ -1003,7 +1003,7 @@
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
 "account.transferQuota.freePlan"="[B]Ограниченная[/B] передача";
 /* Cell title shown on the achievements view for registration achievement */
-"account.achievement.registration.title"="Бонус регистрации";
+"account.achievement.registration.title"="Бонус за регистрацию";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Вы получили %@ на диске за регистрацию.";
 /* Cell title shown on the achievements view for referral achievement */

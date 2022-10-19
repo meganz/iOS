@@ -207,29 +207,29 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Lixeira vazia";
 /* Slideshow Menu Option */
-"sharedItems.menu.slideshow.title"="Slideshow";
+"sharedItems.menu.slideshow.title"="Apresentação de slides";
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Opções";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+"slideshow.preferenceSetting.slideshowOptions"="Opções da apresentação de slides";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Incluir arquivos de mídia em subpastas na apresentação de slides";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow Speed";
+"slideshow.preferenceSetting.speed"="Velocidade da apresentação de slides";
 /* Slideshow Speed preference slow */
-"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+"slideshow.preferenceSetting.speed.slow"="Lenta (8s)";
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Normal (4s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+"slideshow.preferenceSetting.speed.fast"="Rápida (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow Order";
+"slideshow.preferenceSetting.order"="Ordem da apresentação de slides";
 /* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="Shuffle";
 /* Slideshow Preference Setting repeat */
-"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Repetir";
 /* Slideshow Preference Setting include subFolders */
-"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Incluir subpastas";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -2923,7 +2923,7 @@
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Cancelando transferências…";
 /* Count of folders and files in the scanning stage */
-"transfers.cancellable.scanning.count"="Found %@ and %@";
+"transfers.cancellable.scanning.count"="Foram encontrados %@ e %@";
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */

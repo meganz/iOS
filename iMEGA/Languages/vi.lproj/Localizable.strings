@@ -211,25 +211,25 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Tùy chọn";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+"slideshow.preferenceSetting.slideshowOptions"="Tùy chọn trình chiếu";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Bao gồm phương tiện số có trong các thư mục con trong trình chiếu";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow Speed";
+"slideshow.preferenceSetting.speed"="Tốc độ trình chiếu";
 /* Slideshow Speed preference slow */
-"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+"slideshow.preferenceSetting.speed.slow"="Chậm (8giây)";
 /* Slideshow Speed preference normal */
-"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+"slideshow.preferenceSetting.speed.normal"="Thường (4giây)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (1s)";
+"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow Order";
+"slideshow.preferenceSetting.order"="Thứ tự trình chiếu";
 /* Slideshow Speed Order shuffle */
-"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+"slideshow.preferenceSetting.order.shuffle"="Xáo trộn";
 /* Slideshow Preference Setting repeat */
-"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Lặp Lại";
 /* Slideshow Preference Setting include subFolders */
-"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Bao gồm các thư mục con";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Không có tệp tin nào trong Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1667,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Lưu videos vào Ảnh";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì được đưa vào mục Ngoại Tuyến.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì vào mục Ngoại Tuyến.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camêra";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2923,7 +2923,7 @@
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Đang hủy các phiên truyền tải…";
 /* Count of folders and files in the scanning stage */
-"transfers.cancellable.scanning.count"="Found %@ and %@";
+"transfers.cancellable.scanning.count"="Tìm thấy %@ và %@";
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
@@ -3111,7 +3111,7 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Cho phép các thành viên không chủ trì mời thêm người";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+"meetings.startConversation.contextMenu.scheduleMeeting"="Đặt hẹn cuộc họp";
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Tài khoản bị đình chỉ do vi phạm bản quyền. Chúng tôi đã gửi cho bạn một email với nhiều thông tin hơn về việc này.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */

@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Options du diaporama";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Afficher les médias des sous-dossiers dans le diaporama";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Vitesse du diaporama";
 /* Slideshow Speed preference slow */
@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Normale (4 s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Rapide (1 s)";
+"slideshow.preferenceSetting.speed.fast"="Rapide (2 s)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Ordre du diaporama";
 /* Slideshow Speed Order shuffle */
@@ -299,9 +299,9 @@
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
 "smallest"="Du plus petit";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="Du plus récent";
+"newest"="Date la plus récente";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="Du plus ancien";
+"oldest"="Date la plus ancienne";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Choisir dans Photos";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -2435,7 +2435,7 @@
 /* Title for document explorer view */
 "Documents"="Documents";
 /* Title for audio explorer view */
-"Audio"="Sons";
+"Audio"="Audio";
 /* Title for video explorer view */
 "Videos"="Vidéos";
 /* Photo Explorer Screen: No documents in the account */
@@ -2803,19 +2803,19 @@
 /* File extension: .3mu. Commercial names should be stay on English */
 "general.filetype.m3u"="Liste de lecture de médias";
 /* File extension: .m4a. Commercial names should be stay on English */
-"general.filetype.m4a"="Son MPEG-4";
+"general.filetype.m4a"="Audio MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
 "general.filetype.max"="Scène 3ds Max";
 /* File extension: .mdb. Commercial names should be stay on English */
 "general.filetype.mdb"="Access de Microsoft";
 /* File extensions: .mid and .midi. Commercial names should be stay on English */
-"general.filetype.mid"="Son MIDI";
+"general.filetype.mid"="Audio MIDI";
 /* File extension: .mkv. Commercial names should be stay on English */
 "general.filetype.mkv"="Vidéo MKV";
 /* File extension: .mov. Commercial names should be stay on English */
 "general.filetype.mov"="Film QuickTime";
 /* File extension: .mp3. Commercial names should be stay on English */
-"general.filetype.mp3"="Son MP3";
+"general.filetype.mp3"="Audio MP3";
 /* File extension: .mp4. Commercial names should be stay on English */
 "general.filetype.mp4"="Vidéo MP4";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
@@ -2877,11 +2877,11 @@
 /* File extension: .ttf. Commercial names should be stay on English */
 "general.filetype.ttf"="Police TrueType";
 /* File extension: .wav. Commercial names should be stay on English */
-"general.filetype.wav"="Son Wave";
+"general.filetype.wav"="Audio Wave";
 /* File extension: .webm. Commercial names should be stay on English */
 "general.filetype.webm"="Vidéo WebM";
 /* File extension: .wma. Commercial names should be stay on English */
-"general.filetype.wma"="Son WM";
+"general.filetype.wma"="Audio WM";
 /* File extension: .wmv. Commercial names should be stay on English */
 "general.filetype.wmv"="Vidéo WM";
 /* File extension: .xml. Commercial names should be stay on English */
