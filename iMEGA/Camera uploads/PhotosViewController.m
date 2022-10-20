@@ -79,6 +79,7 @@
     [self configPhotoContainerView];
     [self updateAppearance];
     [self setupBarButtons];
+    [self updateNavigationTitleBar];
 }
 
 - (void)setupBarButtons {
@@ -426,13 +427,10 @@
 }
 
 - (void)updateNavigationTitleBar {
-    if (@available(iOS 14.0, *)) {
+    if ([self.photosCollectionView allowsMultipleSelection]) {
+        self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
     } else {
-        if ([self.photosCollectionView allowsMultipleSelection]) {
-            self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
-        } else {
-            self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-        }
+        self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
 }
 
