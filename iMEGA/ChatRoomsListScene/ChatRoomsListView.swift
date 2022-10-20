@@ -3,8 +3,10 @@ import MEGASwiftUI
 
 @available(iOS 14.0, *)
 struct ChatRoomsListView: View {
-    @ObservedObject var viewModel: ChatRoomsListViewModel
+    @Environment(\.editMode) private var editMode
     
+    @ObservedObject var viewModel: ChatRoomsListViewModel
+
     var body: some View {
         VStack (spacing: 0) {
             ChatTabsSelectorView(chatViewMode: viewModel.chatViewMode) { mode in
@@ -20,7 +22,7 @@ struct ChatRoomsListView: View {
                         placeholder: Strings.Localizable.search,
                         cancelTitle: Strings.Localizable.cancel)
                     
-                    if let archivedChatsViewState = viewModel.archiveChatsViewState() {
+                    if let archivedChatsViewState = viewModel.archiveChatsViewState(), editMode?.wrappedValue == .inactive {
                         ChatRoomsTopRowView(state: archivedChatsViewState)
                             .onTapGesture {
                                 archivedChatsViewState.action()
@@ -29,17 +31,20 @@ struct ChatRoomsListView: View {
                             .padding(10)
                     }
                     
-                    let contactsOnMega = viewModel.contactsOnMegaViewState()
-                    ChatRoomsTopRowView(state: contactsOnMega)
-                    .onTapGesture {
-                        contactsOnMega.action()
+                    if editMode?.wrappedValue == .inactive {
+                        let contactsOnMega = viewModel.contactsOnMegaViewState()
+                        ChatRoomsTopRowView(state: contactsOnMega)
+                            .onTapGesture {
+                                contactsOnMega.action()
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .padding(10)
                     }
-                    .listRowInsets(EdgeInsets())
-                    .padding(10)
                                         
                     ForEach(chatRooms, id: \.self) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
                             .listRowInsets(EdgeInsets())
+                            .padding(.leading, editMode?.wrappedValue == .active ? -40 : 0)
                     }
                 }
                 .listStyle(PlainListStyle())
