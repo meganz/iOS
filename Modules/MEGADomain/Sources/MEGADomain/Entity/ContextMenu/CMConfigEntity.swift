@@ -41,6 +41,7 @@ public struct CMConfigEntity {
     public var sortType: SortOrderEntity?
     public var isAFolder: Bool
     public var isRubbishBinFolder: Bool
+    public var isViewInFolder: Bool
     public var isRestorable: Bool
     public var isInVersionsView: Bool
     public var isOfflineFolder: Bool
@@ -69,7 +70,7 @@ public struct CMConfigEntity {
     public var shouldJoiningMeeting: Bool
     public var shouldScheduleMeeting: Bool
     
-    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isInboxNode: Bool = false, isInboxChild: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
+    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isInboxNode: Bool = false, isInboxChild: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
         self.menuType = menuType
         self.viewMode = viewMode
         self.accessLevel = accessLevel
@@ -103,5 +104,6 @@ public struct CMConfigEntity {
         self.shouldStartMeeting = shouldStartMeeting
         self.shouldJoiningMeeting = shouldJoiningMeeting
         self.shouldScheduleMeeting = shouldScheduleMeeting
+        self.isViewInFolder = isViewInFolder
     }
 }

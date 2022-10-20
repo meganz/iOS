@@ -779,6 +779,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveVC.parentNode = node;
     cloudDriveVC.isFromSharedItem = self.isFromSharedItem;
+    cloudDriveVC.isFromViewInFolder = self.isFromViewInFolder;
     
     if (self.displayMode == DisplayModeRubbishBin) {
         cloudDriveVC.displayMode = self.displayMode;
