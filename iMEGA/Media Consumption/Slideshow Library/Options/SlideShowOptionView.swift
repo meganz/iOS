@@ -2,65 +2,77 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct SlideShowOptionView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: SlideShowOptionViewModel
     let preference: SlideShowViewModelPreferenceProtocol
     let router: SlideShowOptionContentRouting
+    var dismissal: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            navigationBar
-            Divider()
+        ZStack {
+            Color(backGroundColor)
+            VStack(spacing: 0) {
+                navigationBar
+                listView()
+            }
+            detailView()
+        }
+    }
+    
+    var navBarButton: some View {
+        Button {
+            dismissal()
+            preference.restart(withConfig: viewModel.configuration())
+        } label: {
+            Text(viewModel.doneButtonTitle)
+                .font(.body.bold())
+                .foregroundColor(Color(colorScheme == .dark ? UIColor.mnz_grayD1D1D1() : UIColor.mnz_gray515151()))
+                .padding()
+                .contentShape(Rectangle())
+        }
+    }
+    
+    var navigationBar: some View {
+        Text(viewModel.navigationTitle)
+            .font(.body.bold())
+            .frame(maxWidth: .infinity)
+            .overlay(
+                HStack {
+                    Spacer()
+                    navBarButton
+                }
+            )
+            .padding(.top, 28)
+    }
+    
+    @ViewBuilder func listView() -> some View {
+        ScrollView {
             LazyVStack(alignment: .leading, spacing: 0) {
+                Divider()
                 ForEach(viewModel.cellViewModels, id: \.self.id) { cellViewModel in
                     router.slideShowOptionCell(for: cellViewModel)
                         .onTapGesture {
                             viewModel.didSelectCell(cellViewModel)
                         }
                 }
+                Divider()
             }
-            
-            if viewModel.currentConfiguration.includeSubfolders {
-                Text(viewModel.footerNote)
-                    .foregroundColor(.secondary)
-                    .font(.caption2)
-                    .padding(.top, 6)
-                    .padding(.leading)
-            }
-            
-            Spacer().layoutPriority(1)
         }
-        .sheet(isPresented: $viewModel.shouldShowDetail, content: {
+        .padding(.top, 36)
+    }
+    
+    @ViewBuilder func detailView() -> some View {
+        if viewModel.shouldShowDetail {
             router.slideShowOptionDetailView(for: viewModel.selectedCell, isShowing: $viewModel.shouldShowDetail)
-        })
-        .listStyle(.plain)
-        .navigationViewStyle(.stack)
+                .animation(.easeInOut(duration: 0.3))
+                .transition(.move(edge: .trailing))
+        }
     }
     
-    var navBarButton: some View {
-        Button {
-            preference.restart(withConfig: viewModel.configuration())
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text(viewModel.doneButtonTitle)
-                .font(.body)
-                .foregroundColor(.primary.opacity(0.8))
+    private var backGroundColor: UIColor {
+        switch colorScheme {
+        case .dark: return UIColor.mnz_black1C1C1E()
+        default: return UIColor.mnz_grayF7F7F7()
         }
-        .contentShape(Rectangle())
-    }
-    
-    var navigationBar: some View {
-        ZStack {
-            Color.secondary.opacity(0.1)
-            Text(viewModel.navigationTitle)
-                .font(.headline)
-                .padding(.vertical, 26)
-        }
-        .overlay(
-            HStack {
-                Spacer()
-                navBarButton
-            }.padding()
-        )
     }
 }

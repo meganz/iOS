@@ -20,13 +20,17 @@ final class SlideShowOptionRouter: Routing {
     
     func build() -> UIViewController {
         let viewModel = SlideShowOptionViewModel(cellViewModels: makeCells(withConfiguration: currentConfiguration), currentConfiguration: currentConfiguration)
-        return UIHostingController(rootView: SlideShowOptionView(viewModel: viewModel, preference: preference, router: SlideShowOptionContentRouter()))
+        return UIHostingController(rootView: SlideShowOptionView(viewModel: viewModel, preference: preference, router: SlideShowOptionContentRouter(), dismissal: dismiss))
     }
     
     func start() {
         let vc = build()
         presenter?.modalPresentationStyle = .formSheet
         presenter?.present(vc, animated: true)
+    }
+    
+    func dismiss() {
+        presenter?.dismiss(animated: true)
     }
 }
 
