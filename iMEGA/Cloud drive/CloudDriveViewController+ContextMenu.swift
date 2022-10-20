@@ -26,6 +26,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
+                                      isViewInFolder: isFromViewInFolder,
                                       isIncomingShareChild: isIncomingSharedRootChild,
                                       isInboxNode: inboxUseCase.isInboxRootNode(parentNodeEntity),
                                       isInboxChild: inboxUseCase.isInboxNode(parentNodeEntity),
@@ -39,6 +40,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                       isAFolder: parentNode.type != .root,
                                       isRubbishBinFolder: displayMode == .rubbishBin,
+                                      isViewInFolder: isFromViewInFolder,
                                       isIncomingShareChild: isIncomingSharedRootChild,
                                       isInboxNode: inboxUseCase.isInboxRootNode(parentNodeEntity),
                                       isInboxChild: inboxUseCase.isInboxNode(parentNodeEntity),
@@ -71,7 +73,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         
         if displayMode != .rubbishBin,
            displayMode != .backup,
-            let parentNode = parentNode,
+           !isFromViewInFolder,
+           let parentNode = parentNode,
            !InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo).isInboxNode(parentNode.toNodeEntity()),
             MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
             if #available(iOS 14.0, *) {

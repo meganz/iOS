@@ -955,7 +955,7 @@ static TransfersWidgetViewController* instance = nil;
             if (transfer.type == MEGATransferTypeUpload) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
                 if (parentNode.isFolder) {
-                    [self openFolderNode:parentNode];
+                    [self openFolderNode:parentNode isFromViewInFolder:YES];
                 }
             }
             
@@ -1017,9 +1017,14 @@ static TransfersWidgetViewController* instance = nil;
     [self reloadView];
 }
 
-- (void)openFolderNode:(MEGANode *)node {
+- (void)openFolderNode:(MEGANode *)node isFromViewInFolder:(BOOL)isFromViewInFolder {
     CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveVC.parentNode = node;
+    cloudDriveVC.isFromViewInFolder = isFromViewInFolder;
+    
+    if (node.mnz_isInRubbishBin && isFromViewInFolder) {
+        cloudDriveVC.displayMode = DisplayModeRubbishBin;
+    }
     
     [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }

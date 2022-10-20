@@ -6,6 +6,7 @@ public final class ContextMenuBuilder {
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
     private var isOfflineFolder: Bool = false
+    private var isViewInFolder = false
     private var isRestorable: Bool = false
     private var isInVersionsView: Bool = false
     private var isSharedItems: Bool = false
@@ -67,6 +68,11 @@ public final class ContextMenuBuilder {
     
     public func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
         self.isOfflineFolder = isOfflineFolder
+        return self
+    }
+    
+    public func setIsViewInFolder(_ isViewInFolder: Bool) -> ContextMenuBuilder {
+        self.isViewInFolder = isViewInFolder
         return self
     }
     
@@ -339,10 +345,11 @@ public final class ContextMenuBuilder {
                 displayActionsMenuChildren.append(filterMenu())
             }
         } else {
-            displayActionsMenuChildren.append(contentsOf: [selectMenu(), viewTypeMenu(), sortMenu()])
+            let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
+            displayActionsMenuChildren.append(contentsOf: menu)
         }
         
-        if isRubbishBinFolder {
+        if isRubbishBinFolder && !isViewInFolder {
             displayActionsMenuChildren.append(rubbishBinMenu())
         }
         
