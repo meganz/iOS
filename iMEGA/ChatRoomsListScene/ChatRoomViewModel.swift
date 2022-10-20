@@ -11,6 +11,7 @@ final class ChatRoomViewModel: ObservableObject {
     private let chatUseCase: ChatUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let router: ChatRoomsListRouting
+    private var chatNotificationControl: ChatNotificationControl
     private let notificationCenter: NotificationCenter
     
     @Published private(set) var primaryAvatar: UIImage?
@@ -19,11 +20,10 @@ final class ChatRoomViewModel: ObservableObject {
     @Published private(set) var description: String?
     @Published private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
     @Published var showDNDTurnOnOptions = false
+    @Published var contextMenuOptions: [ChatRoomContextMenuOption]?
 
     private var subscriptions = Set<AnyCancellable>()
     private var loadingChatRoomInfoTask: Task<Void, Never>?
-
-    lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
 
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -31,6 +31,7 @@ final class ChatRoomViewModel: ObservableObject {
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
+         chatNotificationControl: ChatNotificationControl,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
         self.router = router
@@ -38,12 +39,16 @@ final class ChatRoomViewModel: ObservableObject {
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.userUseCase = userUseCase
+        self.chatNotificationControl = chatNotificationControl
         self.notificationCenter = notificationCenter
         
         if chatListItem.group == false {
-            updateChatStatusColor(forChatStatus: chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle))
+            let chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
+            self.chatStatusColor = chatStatusColor(forChatStatus: chatStatus)
             listeningForChatStatusUpdate()
         }
+        
+        self.contextMenuOptions = constructContextMenuOptions()
     }
     
     //MARK: - Interface methods
@@ -119,7 +124,58 @@ final class ChatRoomViewModel: ObservableObject {
         chatRoomUseCase.archive(true, chatId: chatListItem.chatId)
     }
     
+    func updateContextMenuOptions() {
+        contextMenuOptions = constructContextMenuOptions()
+    }
+    
     //MARK: - Private methods
+    private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
+        var options: [ChatRoomContextMenuOption] = []
+        
+        if chatListItem.unreadCount > 0 {
+            options.append(
+                ChatRoomContextMenuOption(
+                    title: Strings.Localizable.markAsRead,
+                    imageName: Asset.Images.Chat.ContextualMenu.markUnreadMenu.name,
+                    action: { [weak self] in
+                        guard let self else { return }
+                        self.chatRoomUseCase.setMessageSeenForChat(
+                            forChatId: self.chatListItem.chatId,
+                            messageId: self.chatListItem.lastMessageId
+                        )
+                    })
+            )
+        }
+        
+        let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+        
+        options += [
+            ChatRoomContextMenuOption(
+                title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
+                imageName: Asset.Images.Chat.mutedChat.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.toggleDND()
+                }),
+            ChatRoomContextMenuOption(
+                title: Strings.Localizable.info,
+                imageName: Asset.Images.Generic.info.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.showChatRoomInfo()
+                }),
+            ChatRoomContextMenuOption(
+                title: Strings.Localizable.archiveChat,
+                imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.archiveChat()
+                })
+        ]
+        
+        return options
+    }
+        
     private func showChatRoomInfo() {
         if chatListItem.group {
             guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
@@ -222,18 +278,18 @@ final class ChatRoomViewModel: ObservableObject {
         }
     }
     
-    private func updateChatStatusColor(forChatStatus chatStatus: ChatStatusEntity) {
+    private func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
         switch chatStatus {
         case .online:
-            chatStatusColor = Colors.Chat.Status.online.color
+            return Colors.Chat.Status.online.color
         case .offline:
-            chatStatusColor = Colors.Chat.Status.offline.color
+            return Colors.Chat.Status.offline.color
         case .away:
-            chatStatusColor = Colors.Chat.Status.away.color
+            return Colors.Chat.Status.away.color
         case .busy:
-            chatStatusColor = Colors.Chat.Status.busy.color
+            return Colors.Chat.Status.busy.color
         default:
-            chatStatusColor = nil
+            return nil
         }
     }
     
@@ -244,7 +300,8 @@ final class ChatRoomViewModel: ObservableObject {
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] status in
-                self?.updateChatStatusColor(forChatStatus: status)
+                guard let self = self else { return }
+                self.chatStatusColor = self.chatStatusColor(forChatStatus: status)
             })
             .store(in: &subscriptions)
     }
@@ -264,12 +321,11 @@ final class ChatRoomViewModel: ObservableObject {
     }
     
     private func createAvatar(usinName name: String) async throws -> UIImage?  {
-        print("hex color is \(Colors.Chat.Avatar.background.color.hexString)")
-        return try await userImageUseCase.createAvatar(withUserHandle: .invalid,
-                                                       base64Handle: UUID().uuidString,
-                                                       avatarBackgroundHexColor: Colors.Chat.Avatar.background.color.hexString,
-                                                       backgroundGradientHexColor: UIColor.mnz_grayDBDBDB().hexString,
-                                                       name: name)
+        try await userImageUseCase.createAvatar(withUserHandle: .invalid,
+                                                base64Handle: UUID().uuidString,
+                                                avatarBackgroundHexColor: Colors.Chat.Avatar.background.color.hexString,
+                                                backgroundGradientHexColor: UIColor.mnz_grayDBDBDB().hexString,
+                                                name: name)
     }
     
     private func downloadAvatar() async throws -> UIImage {
@@ -622,18 +678,5 @@ extension ChatRoomViewModel: Identifiable, Hashable {
     
     static func == (lhs: ChatRoomViewModel, rhs: ChatRoomViewModel) -> Bool {
         lhs.chatListItem == rhs.chatListItem
-    }
-}
-
-//MARK: - PushNotificationControlProtocol
-extension ChatRoomViewModel: PushNotificationControlProtocol {
-    func presentAlertController(_ alert: UIAlertController) {
-        router.present(alert: alert, animated: true)
-    }
-    
-    func reloadDataIfNeeded() {}
-    
-    func pushNotificationSettingsLoaded() {
-        notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
     }
 }

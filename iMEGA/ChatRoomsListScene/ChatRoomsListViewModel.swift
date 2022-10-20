@@ -48,7 +48,9 @@ final class ChatRoomsListViewModel: ObservableObject {
                                                      meetingContextMenuDelegate: self,
                                                      createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     private var myAvatarManager: MyAvatarManager?
+    
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
+    lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
 
     @Published var chatViewMode: ChatViewMode = .chats
     @Published var chatStatus: ChatStatusEntity?
@@ -113,7 +115,8 @@ final class ChatRoomsListViewModel: ObservableObject {
                 chatRoomUseCase: chatRoomUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
-                userUseCase: UserUseCase(repo: .live)
+                userUseCase: UserUseCase(repo: .live),
+                chatNotificationControl: chatNotificationControl
             )
         }
         displayChatRooms = chatRooms
@@ -362,7 +365,7 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     }
     
     func reloadDataIfNeeded() {
-        fetchChats()
+        chatRooms?.forEach { $0.updateContextMenuOptions() }
     }
     
     func pushNotificationSettingsLoaded() {
