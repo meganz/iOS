@@ -17,8 +17,8 @@ struct ChatRoomsListView: View {
                 List {
                     SearchBarView(
                         text: $viewModel.searchText,
-                        searchString: Strings.Localizable.search,
-                        cancelString: Strings.Localizable.cancel)
+                        placeholder: Strings.Localizable.search,
+                        cancelTitle: Strings.Localizable.cancel)
                     
                     if let archivedChatsViewState = viewModel.archiveChatsViewState() {
                         ChatRoomsTopRowView(state: archivedChatsViewState)
