@@ -2279,6 +2279,7 @@
 		BFD2142528F7A2C70057150E /* ChatGiphyEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */; };
 		BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */; };
 		BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */; };
+		BFD2146328FF8BD50057150E /* ChatRoomContextMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD28425283213A3001AACC2 /* TimeoutTask.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
@@ -4645,6 +4646,7 @@
 		BFD2142428F7A2C70057150E /* ChatGiphyEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatGiphyEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeLeftActionModifier.swift; sourceTree = "<group>"; };
 		BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionLabel.swift; sourceTree = "<group>"; };
+		BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomContextMenuOption.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFD28425283213A3001AACC2 /* TimeoutTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTask.swift; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -8240,6 +8242,7 @@
 				83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */,
 				BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */,
 				BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */,
+				BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -13287,6 +13290,7 @@
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				BF782D6E269BA4BB0001D169 /* PSAErrorEntity.swift in Sources */,
 				837ABEF825DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
+				BFD2146328FF8BD50057150E /* ChatRoomContextMenuOption.swift in Sources */,
 				83B71A6228F03A2D00E006C6 /* ChatRoomsTopRowView.swift in Sources */,
 				5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,

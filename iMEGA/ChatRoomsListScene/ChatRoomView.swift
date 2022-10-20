@@ -142,6 +142,17 @@ struct ChatRoomContentView: View {
         .padding(.trailing, 10)
         .frame(height: 65)
         .contentShape(Rectangle())
+        .contextMenu {
+            if let contextMenuOptions = viewModel.contextMenuOptions {
+                ForEach(contextMenuOptions) { contextMenuOption in
+                    Button {
+                        contextMenuOption.action()
+                    } label: {
+                        Label(contextMenuOption.title, image: contextMenuOption.imageName)
+                    }
+                }
+            }
+        }
         .onTapGesture {
             viewModel.showDetails()
         }
