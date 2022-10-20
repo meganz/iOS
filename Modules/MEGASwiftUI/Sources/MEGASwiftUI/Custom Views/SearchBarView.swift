@@ -2,8 +2,7 @@ import SwiftUI
 
 public struct SearchBarView: View {
     @Binding var text: String
- 
-    @State private var isEditing = false
+    @Environment(\.editMode) private var editMode
 
     var placeholder: String
     var cancelTitle: String
@@ -29,14 +28,14 @@ public struct SearchBarView: View {
                     }
                 )
                 .onTapGesture {
-                    isEditing = true
+                    editMode?.wrappedValue = .active
                 }
-            
-            if isEditing {
+ 
+            if self.editMode?.wrappedValue == .active {
                 SearchBarCancelButton(cancelTitle: cancelTitle) {
-                    isEditing = false
+                    editMode?.wrappedValue = .inactive
                     text = ""
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    hideKeyboard()
                 }
             }
         }
