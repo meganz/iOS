@@ -31,10 +31,7 @@ extension PhotosViewController {
     }
     
     @objc func makeFilterActiveBarButton() -> UIBarButtonItem {
-        let filterBarButtonItem = UIBarButtonItem(image: Asset.Images.ActionSheetIcons.filterActive.image, style: .plain, target: self, action: #selector(onFilter))
-        filterBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.Photos.rightBarButtonForeground.color], for: .normal
-        )
-        return filterBarButtonItem
+        UIBarButtonItem(image: Asset.Images.ActionSheetIcons.filterActive.image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onFilter))
     }
     
     @objc func makeContextMenuBarButton() -> UIBarButtonItem {
