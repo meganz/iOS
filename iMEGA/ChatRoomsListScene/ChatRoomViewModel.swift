@@ -21,6 +21,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
     @Published var showDNDTurnOnOptions = false
+    @Published var existsInProgressCallInChatRoom = false
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     
     private(set) var displayDateString: String?
@@ -58,7 +59,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         
         self.contextMenuOptions = constructContextMenuOptions()
         self.displayDateString = formattedLastMessageSentDate()
-        loadingChatRoomInfoTask = createLoadingChatRoomInfoTask(isRightToLeftLanguage: isRightToLeftLanguage)
+        self.loadingChatRoomInfoTask = createLoadingChatRoomInfoTask(isRightToLeftLanguage: isRightToLeftLanguage)
+        self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
+        monitorActiveCallChanges()
     }
     
     //MARK: - Interface methods
@@ -328,6 +331,15 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 guard let self = self else { return }
                 self.chatStatusColor = self.chatStatusColor(forChatStatus: status)
             })
+            .store(in: &subscriptions)
+    }
+    
+    private func monitorActiveCallChanges() {
+        chatUseCase.monitorChatCallStatusUpdate()
+            .sink { [weak self] call in
+                guard let self, call.chatId == self.chatListItem.chatId else { return }
+                self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
+            }
             .store(in: &subscriptions)
     }
     

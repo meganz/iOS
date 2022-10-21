@@ -13,6 +13,10 @@ struct ChatRoomsListView: View {
                 viewModel.selectChatMode(mode)
             }
             
+            if let activeCallViewModel = viewModel.activeCallViewModel {
+                ChatRoomActiveCallView(viewModel: activeCallViewModel)
+            }
+            
             if viewModel.isConnectedToNetwork == false {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
             } else if let chatRooms = viewModel.displayChatRooms {

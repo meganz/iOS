@@ -7,9 +7,12 @@ public protocol ChatUseCaseProtocol {
     func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>
     func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never>
     func existsActiveCall() -> Bool
+    func activeCall() -> CallEntity?
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
+    func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
+    func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
 }
 
 // MARK: - Use case implementation -
@@ -40,8 +43,16 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
         chatRepo.existsActiveCall()
     }
     
+    public func activeCall() -> CallEntity? {
+        chatRepo.activeCall()
+    }
+    
     public func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]? {
         chatRepo.chatsList(ofType: type)?.sorted(by: { $0.lastMessageDate.compare($1.lastMessageDate) == .orderedDescending })
+    }
+    
+    public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
+        chatRepo.isCallInProgress(for: chatRoomId)
     }
     
     public func myFullName() -> String? {
@@ -50,5 +61,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func archivedChatListCount() -> UInt {
         chatRepo.archivedChatListCount()
+    }
+    
+    public func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never> {
+        chatRepo.monitorChatCallStatusUpdate()
     }
 }
