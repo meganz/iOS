@@ -116,6 +116,7 @@ final class SlideShowViewController: UIViewController, ViewType {
          case .pause: pause()
          case .initialPhotoLoaded: playSlideShow()
          case .resetTimer: resetTimer()
+         case .restart: restart()
          }
     }
     
@@ -173,6 +174,14 @@ final class SlideShowViewController: UIViewController, ViewType {
         slideShowTimer.invalidate()
         slideShowTimer = Timer.scheduledTimer(timeInterval: viewModel.timeIntervalForSlideInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
+    private func restart() {
+        guard let viewModel = viewModel else { return }
+        
+        collectionView.reloadData()
+        collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideNumber, section: 0), at: .left, animated: false)
+        play()
     }
     
     @objc private func changeImage() {
