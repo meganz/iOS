@@ -542,6 +542,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
             
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
+                UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
                 [imageView sd_setImageWithURL:[NSURL fileURLWithPath: temporaryImagePath]
                                     completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     [self startLiveTextAnalysisFor:imageView in:index];
