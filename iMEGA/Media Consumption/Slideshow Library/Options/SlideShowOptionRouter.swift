@@ -25,7 +25,7 @@ final class SlideShowOptionRouter: Routing {
     
     func start() {
         let vc = build()
-        presenter?.modalPresentationStyle = .formSheet
+        presenter?.modalPresentationStyle = .overCurrentContext
         presenter?.present(vc, animated: true)
     }
     

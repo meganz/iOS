@@ -21,7 +21,7 @@ struct SlideShowOptionDetailView: View {
             isShowing.toggle()
         } label: {
             Text(Strings.Localizable.cancel)
-                .font(.body.bold())
+                .font(.body)
                 .foregroundColor(Color(colorScheme == .dark ? UIColor.mnz_grayD1D1D1() : UIColor.mnz_gray515151()))
                 .padding()
                 .contentShape(Rectangle())
