@@ -15,6 +15,8 @@ struct SlideShowOptionView: View {
                 navigationBar
                 listView()
             }
+        }
+        .sheet(isPresented: $viewModel.shouldShowDetail) {
             detailView()
         }
     }
@@ -64,8 +66,6 @@ struct SlideShowOptionView: View {
     @ViewBuilder func detailView() -> some View {
         if viewModel.shouldShowDetail {
             router.slideShowOptionDetailView(for: viewModel.selectedCell, isShowing: $viewModel.shouldShowDetail)
-                .animation(.easeInOut(duration: 0.3))
-                .transition(.move(edge: .trailing))
         }
     }
     
