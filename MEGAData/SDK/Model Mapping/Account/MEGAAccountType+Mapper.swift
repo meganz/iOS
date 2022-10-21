@@ -16,6 +16,8 @@ extension MEGAAccountType {
             return .lite
         case .business:
             return .business
+        case .proFlexi:
+            return .proFlexi
         @unknown default:
             return .free
         }
