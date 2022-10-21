@@ -1,4 +1,5 @@
 import MEGADomain
+import Combine
 
 final class CallRepository: NSObject, CallRepositoryProtocol {
 
@@ -9,6 +10,8 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     private var callId: HandleEntity?
     private var call: CallEntity?
     
+    private var callUpdateListeners = [CallUpdateListener]()
+
     init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
         self.chatSdk = chatSdk
         self.callActionManager = callActionManager
@@ -130,6 +133,59 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
         chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+    }
+    
+    func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
+        callUpdateListener(forCallId: callId, change: .localAVFlags)
+            .monitor
+            .eraseToAnyPublisher()
+    }
+    
+    func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never> {
+        callUpdateListener(forCallId: callId, change: .status)
+            .monitor
+            .eraseToAnyPublisher()
+    }
+
+    private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
+        guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
+            let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)
+            callUpdateListeners.append(callUpdateListener)
+            return callUpdateListener
+        }
+
+        return callUpdateListener
+    }
+}
+
+fileprivate final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    let changeType: CallEntity.ChangeType
+    let callId: HandleEntity
+    
+    private let source = PassthroughSubject<CallEntity, Never>()
+    
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk, callId: HandleEntity, changeType: CallEntity.ChangeType) {
+        self.sdk = sdk
+        self.changeType = changeType
+        self.callId = callId
+        super.init()
+        sdk.add(self)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+        guard call.callId == callId, call.changes.toChangeTypeEntity() == changeType else {
+            return
+        }
+        source.send(call.toCallEntity())
     }
 }
 

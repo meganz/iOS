@@ -109,7 +109,7 @@ struct ChatRoomContentDetailsView: View {
     let viewModel: ChatRoomViewModel
     
     var body: some View {
-        if viewModel.chatListItem.unreadCount > 0 {
+        if viewModel.chatListItem.unreadCount > 0 || viewModel.existsInProgressCallInChatRoom {
             HStack(spacing: 3) {
                 VStack(alignment: .leading, spacing: 4) {
                     ChatRoomContentTitleView(viewModel: viewModel)
@@ -124,12 +124,22 @@ struct ChatRoomContentDetailsView: View {
                             .font(.caption2.bold())
                     }
                     
-                    Text(String(viewModel.chatListItem.unreadCount))
-                        .font(.caption2)
-                        .foregroundColor(.white)
-                        .padding(7)
-                        .background(Color.red)
-                        .clipShape(Circle())
+                    HStack(spacing: 4) {
+                        if viewModel.existsInProgressCallInChatRoom {
+                            Image(uiImage: Asset.Images.Chat.onACall.image)
+                                .resizable()
+                                .frame(width: 21, height: 21)
+                        }
+                        
+                        if viewModel.chatListItem.unreadCount > 0  {
+                            Text(String(viewModel.chatListItem.unreadCount))
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                                .padding(7)
+                                .background(Color.red)
+                                .clipShape(Circle())
+                        }
+                    }
                 }
             }
         } else {

@@ -33,6 +33,7 @@ protocol ChatRoomsListRouting {
     func showGroupChatInfo(forChatId chatId: HandleEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
     func showArchivedChatRooms()
+    func joinActiveCall(_ call: CallEntity)
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
@@ -59,6 +60,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var isConnectedToNetwork: Bool
     @Published var bottomViewHeight: CGFloat = 0
     @Published var displayChatRooms: [ChatRoomViewModel]?
+    @Published var activeCallViewModel: ActiveCallViewModel?
     @Published var searchText: String {
         didSet {
             filterChats()
@@ -94,6 +96,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         listenorToChatStatusUpdate()
         listenToChatListUpdate()
         monitorNetworkChanges()
+        monitorActiveCallChanges()
         fetchChats()
     }
     
@@ -280,6 +283,26 @@ final class ChatRoomsListViewModel: ObservableObject {
         networkMonitorUseCase.networkPathChanged { [weak self] isConnectedToNetwork in
             guard let self else { return }
             self.isConnectedToNetwork = isConnectedToNetwork
+        }
+    }
+    
+    private func monitorActiveCallChanges() {
+        chatUseCase.monitorChatCallStatusUpdate()
+            .sink { [weak self] call in
+                self?.updateActiveCall(call)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func updateActiveCall(_ call: CallEntity) {
+        if call.status == .inProgress {
+            activeCallViewModel = ActiveCallViewModel(
+                call: call,
+                router: router,
+                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
+            )
+        } else {
+            activeCallViewModel = nil
         }
     }
     

@@ -1,6 +1,6 @@
-import MEGADomain
+import Combine
 
-protocol CallRepositoryProtocol {
+public protocol CallRepositoryProtocol {
     func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: CallCallbacksRepositoryProtocol)
     func stopListeningForCall()
     func call(for chatId: HandleEntity) -> CallEntity?
@@ -14,9 +14,11 @@ protocol CallRepositoryProtocol {
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64)
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64)
     func createActiveSessions()
+    func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
+    func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
 }
 
-protocol CallCallbacksRepositoryProtocol {
+public protocol CallCallbacksRepositoryProtocol {
     func createdSession(_ session: ChatSessionEntity, in chatId: HandleEntity)
     func destroyedSession(_ session: ChatSessionEntity, in chatId: HandleEntity)
     func avFlagsUpdated(for session: ChatSessionEntity, in chatId: HandleEntity)

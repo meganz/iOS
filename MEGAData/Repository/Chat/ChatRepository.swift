@@ -5,6 +5,7 @@ public final class ChatRepository: ChatRepositoryProtocol {
     private let sdk: MEGAChatSdk
     private var chatStatusUpdateListeners = [ChatStatusUpdateListener]()
     private lazy var chatListItemUpdateListener = ChatListItemUpdateListener(sdk: sdk)
+    private lazy var chatCallUpdateListener = ChatCallUpdateListener(sdk: sdk)
 
     public init(sdk: MEGAChatSdk) {
         self.sdk = sdk
@@ -38,6 +39,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
         sdk.firstActiveCall != nil
     }
     
+    public func activeCall() -> CallEntity? {
+        sdk.firstActiveCall?.toCallEntity()
+    }
+    
     public func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]? {
         guard let chatList = sdk.chatListItems(by: type.toMEGAChatType()) else { return nil }
         var chatListItems = [ChatListItemEntity]()
@@ -47,8 +52,21 @@ public final class ChatRepository: ChatRepositoryProtocol {
         return chatListItems
     }
     
+    public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
+        guard let call = sdk.chatCall(forChatId: chatRoomId) else {
+            return false
+        }
+        return call.isCallInProgress
+    }
+    
     public func myFullName() -> String? {
         sdk.myFullname
+    }
+    
+    public func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never> {
+        chatCallUpdateListener
+            .monitor
+            .eraseToAnyPublisher()
     }
     
     // - MARK: Private
@@ -113,6 +131,31 @@ fileprivate final class ChatListItemUpdateListener: NSObject, MEGAChatDelegate {
     
     func onChatListItemUpdate(_ api: MEGAChatSdk!, item: MEGAChatListItem!) {
         source.send(item.toChatListItemEntity())
+    }
+}
+
+fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    private let source = PassthroughSubject<CallEntity, Never>()
+
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk) {
+        self.sdk = sdk
+        super.init()
+        sdk.add(self)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+        if call.hasChanged(for: .status) {
+            source.send(call.toCallEntity())
+        }
     }
 }
 
