@@ -156,7 +156,7 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func showAddShareContactView() {
-        BackupNodesValidator(presenter: self, inboxUseCase: InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+        BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
             guard let `self` = self, let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else {
                 fatalError("Could not instantiate ContactsViewController")
             }
