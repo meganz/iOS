@@ -69,8 +69,8 @@ final class MyBackupsUseCaseTests: XCTestCase {
         let nodeRepo = MockNodeRepository(isNodeDescendant: true)
         let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: nodeRepo)
         
-        let isBackupsNode = await sut.isBackupNode(NodeEntity())
-        XCTAssertTrue(isBackupsNode)
+        let isBackupNode = await sut.isBackupNode(NodeEntity())
+        XCTAssertTrue(isBackupNode)
     }
 }
 
