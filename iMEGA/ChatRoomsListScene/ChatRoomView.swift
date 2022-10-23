@@ -71,7 +71,8 @@ struct ChatRoomView: View {
 @available(iOS 14.0, *)
 struct ChatRoomContentView: View {
     @ObservedObject var viewModel: ChatRoomViewModel
-    
+    @Environment(\.layoutDirection) var direction
+
     var body: some View {
         HStack(spacing: 0) {
             ChatRoomAvatarView(primaryAvatar: viewModel.primaryAvatar, secondaryAvatar: viewModel.secondaryAvatar)
@@ -95,8 +96,8 @@ struct ChatRoomContentView: View {
                     
                     Spacer()
                     
-                    if let time = viewModel.formattedLastMessageSentDate() {
-                        Text(time)
+                    if let displayDateString = viewModel.displayDateString {
+                        Text(displayDateString)
                             .font(.caption2)
                     }
                 }
@@ -124,6 +125,10 @@ struct ChatRoomContentView: View {
                             .font(.caption)
                             .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
                             .lineLimit(1)
+                    } else {
+                        Text("Placeholder")
+                            .font(.caption)
+                            .redacted(reason: .placeholder)
                     }
                     
                     Spacer()
@@ -157,7 +162,7 @@ struct ChatRoomContentView: View {
             viewModel.showDetails()
         }
         .onAppear {
-            viewModel.loadChatRoomInfo()
+            viewModel.loadChatRoomInfo(isRightToLeftLanguage: direction == .rightToLeft)
         }
         .onDisappear {
             viewModel.cancelLoading()
