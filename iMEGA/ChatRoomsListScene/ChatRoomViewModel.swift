@@ -3,6 +3,7 @@ import Combine
 import MEGASwift
 import Foundation
 import MEGAUI
+import Combine
 
 final class ChatRoomViewModel: ObservableObject {
     let chatListItem: ChatListItemEntity
@@ -13,14 +14,17 @@ final class ChatRoomViewModel: ObservableObject {
     private let router: ChatRoomsListRouting
     private var chatNotificationControl: ChatNotificationControl
     private let notificationCenter: NotificationCenter
-    
-    @Published private(set) var primaryAvatar: UIImage?
-    @Published private(set) var secondaryAvatar: UIImage?
-    @Published private(set) var chatStatusColor: UIColor?
-    @Published private(set) var description: String?
-    @Published private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
+    private var loadingChatRoomInfoSubscription: AnyCancellable?
+
+    private(set) var primaryAvatar: UIImage?
+    private(set) var secondaryAvatar: UIImage?
+    private(set) var chatStatusColor: UIColor?
+    private(set) var description: String?
+    private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
     @Published var showDNDTurnOnOptions = false
-    @Published var contextMenuOptions: [ChatRoomContextMenuOption]?
+    private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
+    
+    private(set) var displayDateString: String?
 
     private var subscriptions = Set<AnyCancellable>()
     private var loadingChatRoomInfoTask: Task<Void, Never>?
@@ -49,47 +53,28 @@ final class ChatRoomViewModel: ObservableObject {
         }
         
         self.contextMenuOptions = constructContextMenuOptions()
+        self.displayDateString = formattedLastMessageSentDate()
     }
     
     //MARK: - Interface methods
-    func loadChatRoomInfo() {
-        loadingChatRoomInfoTask = Task {
-            let chatId = chatListItem.chatId
-            await withThrowingTaskGroup(of: Void.self) { group in
-                group.addTask { [weak self] in
-                    do {
-                        try await self?.fetchAvatar()
-                    } catch {
-                        MEGALogDebug("Unable to fetch avatar for \(chatId) - \(error.localizedDescription)")
-                    }
-                }
-                
-                group.addTask { [weak self] in
-                    do {
-                        try await self?.updateDescription()
-                    } catch {
-                        MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
-                    }
-                }
+    func loadChatRoomInfo(isRightToLeftLanguage: Bool) {
+        let subject = PassthroughSubject<Void, Never>()
+        
+        loadingChatRoomInfoSubscription = subject
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.global())
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.loadingChatRoomInfoTask = self.createLoadingChatRoomInfoTask(isRightToLeftLanguage: isRightToLeftLanguage)
             }
-        }
+        
+        subject.send(())
     }
     
     func cancelLoading() {
+        loadingChatRoomInfoSubscription?.cancel()
+        loadingChatRoomInfoSubscription = nil
         loadingChatRoomInfoTask?.cancel()
         loadingChatRoomInfoTask = nil
-    }
-    
-    func formattedLastMessageSentDate() -> String? {
-        guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
-        
-        if Calendar.autoupdatingCurrent.isDateInToday(chatListItem.lastMessageDate) {
-            return chatListItem.lastMessageDate.string(withDateFormat: "HH:mm")
-        } else if chatListItem.lastMessageDate.compare(seventhDayPriorDate) == .orderedDescending {
-            return chatListItem.lastMessageDate.string(withDateFormat: "EEE")
-        } else {
-            return chatListItem.lastMessageDate.string(withDateFormat: "dd/MM/yy")
-        }
     }
     
     func showDetails() {
@@ -129,6 +114,18 @@ final class ChatRoomViewModel: ObservableObject {
     }
     
     //MARK: - Private methods
+    private func formattedLastMessageSentDate() -> String? {
+        guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
+        
+        if Calendar.autoupdatingCurrent.isDateInToday(chatListItem.lastMessageDate) {
+            return chatListItem.lastMessageDate.string(withDateFormat: "HH:mm")
+        } else if chatListItem.lastMessageDate.compare(seventhDayPriorDate) == .orderedDescending {
+            return chatListItem.lastMessageDate.string(withDateFormat: "EEE")
+        } else {
+            return chatListItem.lastMessageDate.string(withDateFormat: "dd/MM/yy")
+        }
+    }
+    
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
         
@@ -176,6 +173,41 @@ final class ChatRoomViewModel: ObservableObject {
         return options
     }
         
+    private func createLoadingChatRoomInfoTask(isRightToLeftLanguage: Bool) -> Task<Void, Never> {
+        Task {
+            let chatId = chatListItem.chatId
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { [weak self] in
+                    do {
+                        try await self?.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
+                    } catch {
+                        MEGALogDebug("Unable to fetch avatar for \(chatId) - \(error.localizedDescription)")
+                    }
+                }
+                
+                group.addTask { [weak self] in
+                    do {
+                        try await self?.updateDescription()
+                    } catch {
+                        MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
+                    }
+                }
+            }
+            
+            do {
+                try Task.checkCancellation()
+                await sendObjectChangeNotification()
+            } catch {
+                MEGALogDebug("Task cancelled for \(chatId)")
+            }
+        }
+    }
+    
+    @MainActor
+    private func sendObjectChangeNotification() {
+        objectWillChange.send()
+    }
+    
     private func showChatRoomInfo() {
         if chatListItem.group {
             guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
@@ -207,30 +239,30 @@ final class ChatRoomViewModel: ObservableObject {
         }
     }
     
-    private func fetchAvatar() async throws {
+    private func fetchAvatar(isRightToLeftLanguage: Bool) async throws {
         if chatListItem.group {
             if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
                 if chatRoom.peerCount == 0 {
                     if let chatTitle = chatListItem.title,
-                        let avatar = try await createAvatar(usinName: chatTitle) {
+                       let avatar = try await createAvatar(usinName: chatTitle, isRightToLeftLanguage: isRightToLeftLanguage) {
                         await updatePrimaryAvatar(avatar)
                     }
                 } else {
                     if let handle = chatRoom.peers.first?.handle,
-                        let avatar = try await createAvatar(withHandle: handle) {
+                        let avatar = try await createAvatar(withHandle: handle, isRightToLeftLanguage: isRightToLeftLanguage) {
                         await updatePrimaryAvatar(avatar)
                     }
                     
                     try Task.checkCancellation()
 
                     if chatRoom.peers.count > 1,
-                        let avatar = try await createAvatar(withHandle: chatRoom.peers[1].handle) {
+                        let avatar = try await createAvatar(withHandle: chatRoom.peers[1].handle, isRightToLeftLanguage: isRightToLeftLanguage) {
                         await updateSecondaryAvatar(avatar)
                     }
                 }
             }
         } else {
-            if let avatar = try await createAvatar(withHandle: chatListItem.peerHandle) {
+            if let avatar = try await createAvatar(withHandle: chatListItem.peerHandle, isRightToLeftLanguage: isRightToLeftLanguage) {
                 await updatePrimaryAvatar(avatar)
             }
             
@@ -306,7 +338,7 @@ final class ChatRoomViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func createAvatar(withHandle handle: HandleEntity) async throws -> UIImage?   {
+    private func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool) async throws -> UIImage?   {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle),
               let chatTitle = chatListItem.title  else {
@@ -317,15 +349,17 @@ final class ChatRoomViewModel: ObservableObject {
                                                        base64Handle: base64Handle,
                                                        avatarBackgroundHexColor: avatarBackgroundHexColor,
                                                        backgroundGradientHexColor: nil,
-                                                       name: chatTitle)
+                                                       name: chatTitle,
+                                                       isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    private func createAvatar(usinName name: String) async throws -> UIImage?  {
+    private func createAvatar(usinName name: String, isRightToLeftLanguage: Bool) async throws -> UIImage?  {
         try await userImageUseCase.createAvatar(withUserHandle: .invalid,
                                                 base64Handle: UUID().uuidString,
                                                 avatarBackgroundHexColor: Colors.Chat.Avatar.background.color.hexString,
                                                 backgroundGradientHexColor: UIColor.mnz_grayDBDBDB().hexString,
-                                                name: name)
+                                                name: name,
+                                                isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
     private func downloadAvatar() async throws -> UIImage {
@@ -664,19 +698,5 @@ final class ChatRoomViewModel: ObservableObject {
     @MainActor
     private func updateSecondaryAvatar(_ avatar: UIImage) {
         secondaryAvatar = avatar
-    }
-}
-
-extension ChatRoomViewModel: Identifiable, Hashable {
-    var id: ChatListItemEntity {
-        chatListItem
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(chatListItem)
-    }
-    
-    static func == (lhs: ChatRoomViewModel, rhs: ChatRoomViewModel) -> Bool {
-        lhs.chatListItem == rhs.chatListItem
     }
 }

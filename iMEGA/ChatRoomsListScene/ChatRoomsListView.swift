@@ -41,16 +41,13 @@ struct ChatRoomsListView: View {
                             .padding(10)
                     }
                                         
-                    ForEach(chatRooms, id: \.self) { chatRoom in
+                    ForEach(chatRooms, id: \.chatListItem.chatId) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
                             .listRowInsets(EdgeInsets())
                             .padding(.leading, editMode?.wrappedValue == .active ? -40 : 0)
                     }
                 }
                 .listStyle(PlainListStyle())
-                .gesture(DragGesture().onChanged({ _ in
-                    UIApplication.shared.windows.forEach { $0.endEditing(false) }
-                }))
             } else {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
             }

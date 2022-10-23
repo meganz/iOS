@@ -1,6 +1,7 @@
 import Combine
 import UIKit
 import MEGADomain
+import MEGAUI
 
 protocol UserImageUseCaseProtocol {
     func fetchUserAvatar(withUserHandle handle: HandleEntity,
@@ -15,7 +16,12 @@ protocol UserImageUseCaseProtocol {
                       avatarBackgroundHexColor: String,
                       backgroundGradientHexColor: String?,
                       name: String) async throws -> UIImage
-
+    func createAvatar(withUserHandle handle: HandleEntity,
+                      base64Handle: Base64HandleEntity?,
+                      avatarBackgroundHexColor: String,
+                      backgroundGradientHexColor: String?,
+                      name: String,
+                      isRightToLeftLanguage: Bool) async throws -> UIImage
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never>
 }
 
@@ -96,6 +102,22 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         userImageRepo.requestAvatarChangeNotification(forUserHandles: handles)
     }
     
+    func createAvatar(withUserHandle handle: HandleEntity,
+                      base64Handle: Base64HandleEntity?,
+                      avatarBackgroundHexColor: String,
+                      backgroundGradientHexColor: String?,
+                      name: String,
+                      isRightToLeftLanguage: Bool) async throws -> UIImage {
+        let displayName = await userStoreRepo.displayName(forUserHandle: handle)
+        return try createAvatar(usingName: displayName ?? name,
+                                           base64Handle: base64Handle,
+                                           avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                           backgroundGradientHexColor: backgroundGradientHexColor,
+                                           isRightToLeftLanguage: isRightToLeftLanguage)
+    }
+    
+    // MARK: - Private methods
+    
     @MainActor
     private func createAvatarImage(usingName name: String,
                                    base64Handle: Base64HandleEntity?,
@@ -112,6 +134,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         base64Handle: Base64HandleEntity?,
         avatarBackgroundHexColor: String,
         backgroundGradientHexColor: String? = nil,
+        isRightToLeftLanguage: Bool? = nil,
         size: CGSize = CGSize(width: 100.0, height: 100.0)
     ) throws -> UIImage {
         if let base64Handle {
@@ -130,12 +153,26 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             backgroundGradientColor = nil
         }
         
-        let image = UIImage(forName: initials,
-                            size: size,
-                            backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor),
-                            backgroundGradientColor: backgroundGradientColor,
-                            textColor: .white,
-                            font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0))
+        let image: UIImage?
+        if let isRightToLeftLanguage {
+            image = UIImage.drawImage(
+                forInitials: initials,
+                size: size,
+                backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor) ?? .black,
+                backgroundGradientColor: backgroundGradientColor,
+                textColor: .white,
+                font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
+                isRightToLeftLanguage: isRightToLeftLanguage)
+        } else {
+            image = UIImage(
+                forName: initials,
+                size: size,
+                backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor),
+                backgroundGradientColor: backgroundGradientColor,
+                textColor: .white,
+                font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0)
+            )
+        }
         
         if let base64Handle {
             let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
