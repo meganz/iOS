@@ -110,6 +110,10 @@
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                 name:NSExtensionHostDidBecomeActiveNotification
+                                               object:nil];
+    
     self.lastProgressChange = [NSDate new];
     
     [self updateAppearance];
@@ -127,6 +131,11 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
+    }
+}
+- (void)didBecomeActive {
+    if (!self.pickerPresented) {
+        [self configureUI];
     }
 }
 
