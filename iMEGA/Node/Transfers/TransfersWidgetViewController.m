@@ -973,23 +973,26 @@ static TransfersWidgetViewController* instance = nil;
             [self.tableView reloadData];
             break;
         }
-        case MegaNodeActionTypeClear: {
-            __block MEGATransfer *selectedTransfer;
-            [self.completedTransfers enumerateObjectsUsingBlock:^(MEGATransfer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (obj.nodeHandle == node.handle) {
-                    selectedTransfer = obj;
-                    *stop = YES;
-                };
-            }];
-            [self removeFromCompletedTransfers:selectedTransfer];
-            [self.tableView reloadData];
+        case MegaNodeActionTypeClear:
+            [self clearNode:node];
             break;
-
-        }
+            
         default:
             break;
     }
+}
 
+- (void)clearNode:(MEGANode *)node {
+    __block MEGATransfer *selectedTransfer;
+    [self.completedTransfers enumerateObjectsUsingBlock:^(MEGATransfer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.nodeHandle == node.handle) {
+            selectedTransfer = obj;
+            *stop = YES;
+        };
+    }];
+    [self removeFromCompletedTransfers:selectedTransfer];
+    [self updateViewState];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Private
