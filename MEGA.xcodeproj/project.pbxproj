@@ -430,7 +430,6 @@
 		5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */; };
 		5BC494D826AF10350075F941 /* AccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC494D526AF10350075F941 /* AccountUseCase.swift */; };
 		5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC609E126B9475D002F12A4 /* NodeOpener.swift */; };
-		5BCF7E43263170E900BE769B /* TermsAndPoliciesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */; };
 		5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */; };
 		5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
@@ -3072,7 +3071,6 @@
 		5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthentication.h; sourceTree = "<group>"; };
 		5BC494D526AF10350075F941 /* AccountUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUseCase.swift; sourceTree = "<group>"; };
 		5BC609E126B9475D002F12A4 /* NodeOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeOpener.swift; sourceTree = "<group>"; };
-		5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPoliciesTableViewController.swift; sourceTree = "<group>"; };
 		5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndPoliciesRouter.swift; sourceTree = "<group>"; };
 		5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewHeader.swift; sourceTree = "<group>"; };
 		5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameViewController.h; sourceTree = "<group>"; };
@@ -6885,7 +6883,6 @@
 			isa = PBXGroup;
 			children = (
 				5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */,
-				5BCF7E42263170E900BE769B /* TermsAndPoliciesTableViewController.swift */,
 				5BF59EA8263C551C00A7CF9D /* TermsAndPoliciesViewModel.swift */,
 				A88A0C8428F96A6D0058F031 /* TermsAndPoliciesView.swift */,
 			);
@@ -13293,7 +13290,6 @@
 				B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
-				5BCF7E43263170E900BE769B /* TermsAndPoliciesTableViewController.swift in Sources */,
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				5D166B7725219650004F4F4A /* HomeSearchResultViewModel.swift in Sources */,
 				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
