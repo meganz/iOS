@@ -5,7 +5,7 @@ import Foundation
 import MEGAUI
 import Combine
 
-final class ChatRoomViewModel: ObservableObject {
+final class ChatRoomViewModel: ObservableObject, Identifiable {
     let chatListItem: ChatListItemEntity
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
@@ -14,7 +14,6 @@ final class ChatRoomViewModel: ObservableObject {
     private let router: ChatRoomsListRouting
     private var chatNotificationControl: ChatNotificationControl
     private let notificationCenter: NotificationCenter
-    private var loadingChatRoomInfoSubscription: AnyCancellable?
 
     private(set) var primaryAvatar: UIImage?
     private(set) var secondaryAvatar: UIImage?
@@ -28,7 +27,10 @@ final class ChatRoomViewModel: ObservableObject {
 
     private var subscriptions = Set<AnyCancellable>()
     private var loadingChatRoomInfoTask: Task<Void, Never>?
-
+    private let isRightToLeftLanguage: Bool
+    
+    var isViewOnScreen = false
+    
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
@@ -36,6 +38,7 @@ final class ChatRoomViewModel: ObservableObject {
          chatUseCase: ChatUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl,
+         isRightToLeftLanguage: Bool,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
         self.router = router
@@ -44,6 +47,7 @@ final class ChatRoomViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.userUseCase = userUseCase
         self.chatNotificationControl = chatNotificationControl
+        self.isRightToLeftLanguage = isRightToLeftLanguage
         self.notificationCenter = notificationCenter
         
         if chatListItem.group == false {
@@ -54,25 +58,12 @@ final class ChatRoomViewModel: ObservableObject {
         
         self.contextMenuOptions = constructContextMenuOptions()
         self.displayDateString = formattedLastMessageSentDate()
+        loadingChatRoomInfoTask = createLoadingChatRoomInfoTask(isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
     //MARK: - Interface methods
-    func loadChatRoomInfo(isRightToLeftLanguage: Bool) {
-        let subject = PassthroughSubject<Void, Never>()
-        
-        loadingChatRoomInfoSubscription = subject
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.global())
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.loadingChatRoomInfoTask = self.createLoadingChatRoomInfoTask(isRightToLeftLanguage: isRightToLeftLanguage)
-            }
-        
-        subject.send(())
-    }
     
     func cancelLoading() {
-        loadingChatRoomInfoSubscription?.cancel()
-        loadingChatRoomInfoSubscription = nil
         loadingChatRoomInfoTask?.cancel()
         loadingChatRoomInfoTask = nil
     }
@@ -174,7 +165,7 @@ final class ChatRoomViewModel: ObservableObject {
     }
         
     private func createLoadingChatRoomInfoTask(isRightToLeftLanguage: Bool) -> Task<Void, Never> {
-        Task {
+        Task { [weak self] in
             let chatId = chatListItem.chatId
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { [weak self] in
@@ -194,9 +185,11 @@ final class ChatRoomViewModel: ObservableObject {
                 }
             }
             
+            guard let self, self.isViewOnScreen else { return }
+            
             do {
                 try Task.checkCancellation()
-                await sendObjectChangeNotification()
+                await self.sendObjectChangeNotification()
             } catch {
                 MEGALogDebug("Task cancelled for \(chatId)")
             }
@@ -245,40 +238,40 @@ final class ChatRoomViewModel: ObservableObject {
                 if chatRoom.peerCount == 0 {
                     if let chatTitle = chatListItem.title,
                        let avatar = try await createAvatar(usinName: chatTitle, isRightToLeftLanguage: isRightToLeftLanguage) {
-                        await updatePrimaryAvatar(avatar)
+                        updatePrimaryAvatar(avatar)
                     }
                 } else {
                     if let handle = chatRoom.peers.first?.handle,
                         let avatar = try await createAvatar(withHandle: handle, isRightToLeftLanguage: isRightToLeftLanguage) {
-                        await updatePrimaryAvatar(avatar)
+                        updatePrimaryAvatar(avatar)
                     }
                     
                     try Task.checkCancellation()
 
                     if chatRoom.peers.count > 1,
                         let avatar = try await createAvatar(withHandle: chatRoom.peers[1].handle, isRightToLeftLanguage: isRightToLeftLanguage) {
-                        await updateSecondaryAvatar(avatar)
+                        updateSecondaryAvatar(avatar)
                     }
                 }
             }
         } else {
             if let avatar = try await createAvatar(withHandle: chatListItem.peerHandle, isRightToLeftLanguage: isRightToLeftLanguage) {
-                await updatePrimaryAvatar(avatar)
+                updatePrimaryAvatar(avatar)
             }
             
             try Task.checkCancellation()
 
             let downloadedAvatar = try await downloadAvatar()
-            await updatePrimaryAvatar(downloadedAvatar)
+            updatePrimaryAvatar(downloadedAvatar)
         }
     }
     
     private func updateDescription() async throws {
         switch chatListItem.lastMessageType {
         case .loading:
-            await updateDescription(withMessage: Strings.Localizable.loading)
+            updateDescription(withMessage: Strings.Localizable.loading)
         case .invalid:
-            await updateDescription(withMessage: Strings.Localizable.noConversationHistory)
+            updateDescription(withMessage: Strings.Localizable.noConversationHistory)
         case .attachment:
             try await updateDescriptionForAttachment()
         case .voiceClip:
@@ -298,7 +291,7 @@ final class ChatRoomViewModel: ObservableObject {
         case .callEnded:
             await updateDescriptionForCallEnded()
         case .callStarted:
-            await updateDescription(withMessage: Strings.Localizable.callStarted)
+            updateDescription(withMessage: Strings.Localizable.callStarted)
         case .publicHandleCreate:
             try await updateDescriptionWithSender(usingMessage: Strings.Localizable.createdAPublicLinkForTheChat)
         case .publicHandleDelete:
@@ -390,9 +383,9 @@ final class ChatRoomViewModel: ObservableObject {
             message = Strings.Localizable.attachedXFiles(String(format: "%tu", components.count))
         }
         if let senderString {
-            await updateDescription(withMessage: "\(senderString): \(message)")
+            updateDescription(withMessage: "\(senderString): \(message)")
         } else {
-            await updateDescription(withMessage: message)
+            updateDescription(withMessage: message)
         }
     }
     
@@ -414,7 +407,7 @@ final class ChatRoomViewModel: ObservableObject {
                               userHandle: chatListItem.lastMessageSender,
                               duration: duration)
         
-        await updateDescription(withMessage: message)
+        updateDescription(withMessage: message)
     }
     
     private func updateDescriptionForRententionTime() async throws {
@@ -425,13 +418,13 @@ final class ChatRoomViewModel: ObservableObject {
         
         if chatRoom.retentionTime <= 0 {
             let message = removeFormatters(fromString: Strings.Localizable.A1SABDisabledMessageClearing.b(sender))
-            await updateDescription(withMessage: message)
+            updateDescription(withMessage: message)
         } else {
             guard let retention = retentionDuration(fromSeconds: Int(chatRoom.retentionTime)) else {
                 return
             }
             let message = removeFormatters(fromString: Strings.Localizable.A1SABChangedTheMessageClearingTimeToBA2SAB.b(sender, retention))
-            await updateDescription(withMessage: message)
+            updateDescription(withMessage: message)
         }
     }
     
@@ -448,21 +441,21 @@ final class ChatRoomViewModel: ObservableObject {
                 var message = Strings.Localizable.wasRemovedFromTheGroupChatBy
                 message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
                 message = message.replacingOccurrences(of: "[B]", with: sender)
-                await updateDescription(withMessage: message)
+                updateDescription(withMessage: message)
             } else {
                 var message = Strings.Localizable.leftTheGroupChat
                 message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
-                await updateDescription(withMessage: message)
+                updateDescription(withMessage: message)
             }
         case .joinedGroupChat:
             if let sender, sender != lastMessageUsername {
                 var message = Strings.Localizable.joinedTheGroupChatByInvitationFrom
                 message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
                 message = message.replacingOccurrences(of: "[B]", with: sender)
-                await updateDescription(withMessage: message)
+                updateDescription(withMessage: message)
             } else {
                 let message = Strings.Localizable.joinedTheGroupChat(lastMessageUsername)
-                await updateDescription(withMessage: message)
+                updateDescription(withMessage: message)
             }
         default:
             break
@@ -496,7 +489,7 @@ final class ChatRoomViewModel: ObservableObject {
         
         message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
         message = message.replacingOccurrences(of: "[B]", with: sender)
-        await updateDescription(withMessage: message)
+        updateDescription(withMessage: message)
     }
     
     private func updateDescriptionForTruncate() async throws  {
@@ -504,7 +497,7 @@ final class ChatRoomViewModel: ObservableObject {
             return
         }
         let message = Strings.Localizable.clearedTheChatHistory.replacingOccurrences(of: "[A]", with: sender)
-        await updateDescription(withMessage: message)
+        updateDescription(withMessage: message)
     }
     
     private func message(forEndCallReason endCallReason: ChatMessageEndCallReasonEntity,
@@ -561,7 +554,7 @@ final class ChatRoomViewModel: ObservableObject {
     
     private func updateDescriptionWithSender(usingMessage message: (Any) -> String) async throws {
         guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: false) else { return }
-        await updateDescription(withMessage: message(sender))
+        updateDescription(withMessage: message(sender))
     }
     
     private func updateDesctiptionWithChatTitleChange() async throws {
@@ -571,7 +564,7 @@ final class ChatRoomViewModel: ObservableObject {
         var changedGroupChatNameTo = Strings.Localizable.changedGroupChatNameTo
         changedGroupChatNameTo = changedGroupChatNameTo.replacingOccurrences(of: "[A]", with: sender)
         changedGroupChatNameTo = changedGroupChatNameTo.replacingOccurrences(of: "[B]", with: chatListItem.lastMessage ?? "")
-        await updateDescription(withMessage: changedGroupChatNameTo)
+        updateDescription(withMessage: changedGroupChatNameTo)
     }
     
     private func updateDescriptionForContact() async throws {
@@ -589,9 +582,9 @@ final class ChatRoomViewModel: ObservableObject {
         }
         
         if let sender, chatListItem.group {
-            await updateDescription(withMessage: "\(sender): \(message)")
+            updateDescription(withMessage: "\(sender): \(message)")
         } else {
-            await updateDescription(withMessage: message)
+            updateDescription(withMessage: message)
         }
     }
     
@@ -605,9 +598,9 @@ final class ChatRoomViewModel: ObservableObject {
         }
 
         if let sender {
-            await updateHybridDescription(with: "\(sender):", image: image, duration: duration)
+            updateHybridDescription(with: "\(sender):", image: image, duration: duration)
         } else {
-            await updateHybridDescription(with: nil, image: image, duration: duration)
+            updateHybridDescription(with: nil, image: image, duration: duration)
         }
     }
     
@@ -619,19 +612,19 @@ final class ChatRoomViewModel: ObservableObject {
             if message?.containsMeta?.type == .geolocation,
                 let image = UIImage(named: chatListItem.unreadCount > 0 ? "locationMessage" : "locationMessageGrey") {
                 if let sender {
-                    await updateHybridDescription(with: "\(sender):", image: image, duration: Strings.Localizable.pinnedLocation)
+                    updateHybridDescription(with: "\(sender):", image: image, duration: Strings.Localizable.pinnedLocation)
                 } else {
-                    await updateHybridDescription(with: nil, image: image, duration: Strings.Localizable.pinnedLocation)
+                    updateHybridDescription(with: nil, image: image, duration: Strings.Localizable.pinnedLocation)
                 }
             }
         }
         
         if let message = chatListItem.lastMessage {
             if let sender {
-                await updateDescription(withMessage: sender + ": " + message)
+                updateDescription(withMessage: sender + ": " + message)
 
             } else {
-                await updateDescription(withMessage: message)
+                updateDescription(withMessage: message)
             }
         }
     }
@@ -680,23 +673,25 @@ final class ChatRoomViewModel: ObservableObject {
         return nil
     }
     
-    @MainActor
     private func updateHybridDescription(with sender: String?, image: UIImage, duration: String) {
         hybridDescription = ChatRoomHybridDescriptionViewState(sender: sender, image: image, duration: duration)
     }
     
-    @MainActor
     private func updateDescription(withMessage message: String) {
         description = message
     }
     
-    @MainActor
     private func updatePrimaryAvatar(_ avatar: UIImage) {
         primaryAvatar = avatar
     }
     
-    @MainActor
     private func updateSecondaryAvatar(_ avatar: UIImage) {
         secondaryAvatar = avatar
+    }
+}
+
+extension ChatRoomViewModel: Equatable {
+    static func == (lhs: ChatRoomViewModel, rhs: ChatRoomViewModel) -> Bool {
+        lhs.chatListItem == rhs.chatListItem
     }
 }
