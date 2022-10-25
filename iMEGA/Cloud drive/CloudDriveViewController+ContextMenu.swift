@@ -89,6 +89,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         } else {
             navigationItem.rightBarButtonItems = [contextBarButtonItem]
         }
+
+        if presentingViewController != nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
+                                                               style: .plain,
+                                                               target: self,
+                                                               action: #selector(dismissController))
+        }
+    }
+    
+    @objc private func dismissController() {
+        dismiss(animated: true)
     }
     
     @objc private func presentActionSheet(sender: Any) {

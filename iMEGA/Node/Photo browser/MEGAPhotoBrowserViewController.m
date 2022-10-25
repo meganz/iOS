@@ -1300,6 +1300,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self didPressForwardbarButton:self.customActionsButton];
             break;
             
+        case MegaNodeActionTypeViewInFolder:
+            [self viewNodeInFolder:node];
+            break;
+            
+        case MegaNodeActionTypeClear:
+            [self clearNodeOnTransfers:node];
+            [self dismissViewControllerAnimated:true completion:nil];
+            break;
+
         default:
             break;
     }

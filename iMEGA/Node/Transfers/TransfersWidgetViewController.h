@@ -13,5 +13,6 @@
 @property (nonatomic, nonnull) NSLayoutConstraint *progressViewTraillingConstraint;
 
 + (instancetype _Nonnull)sharedTransferViewController;
+- (void)clearNode:(MEGANode *_Nonnull)node;
 
 @end
