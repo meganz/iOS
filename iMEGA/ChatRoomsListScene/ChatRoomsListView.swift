@@ -41,12 +41,13 @@ struct ChatRoomsListView: View {
                             .padding(10)
                     }
                                         
-                    ForEach(chatRooms, id: \.chatListItem.chatId) { chatRoom in
+                    ForEach(chatRooms) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
                             .listRowInsets(EdgeInsets())
                             .padding(.leading, editMode?.wrappedValue == .active ? -40 : 0)
                     }
                 }
+                .animation(.default, value: chatRooms)
                 .listStyle(PlainListStyle())
             } else {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())

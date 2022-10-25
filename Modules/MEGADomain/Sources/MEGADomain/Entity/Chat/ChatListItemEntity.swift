@@ -67,3 +67,9 @@ public struct ChatListItemEntity {
         self.searchString = searchString
     }
 }
+
+extension ChatListItemEntity: Equatable {
+    public static func == (lhs: ChatListItemEntity, rhs: ChatListItemEntity) -> Bool {
+        lhs.chatId == rhs.chatId
+    }
+}

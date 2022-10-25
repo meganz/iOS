@@ -12,7 +12,7 @@ enum ChatViewType {
     case archived
 }
 
-protocol ChatRoomsListRouting: Routing {
+protocol ChatRoomsListRouting {
     var navigationController: UINavigationController? { get }
     func presentStartConversation()
     func presentMeetingAlreayExists()
@@ -67,12 +67,14 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var chatRooms: [ChatRoomViewModel]?
     private var filteredChatRooms: [ChatRoomViewModel]?
     private var subscriptions = Set<AnyCancellable>()
-
+    private let isRightToLeftLanguage: Bool
+    
     init(router: ChatRoomsListRouting,
          chatUseCase: ChatUseCaseProtocol,
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
+         isRightToLeftLanguage: Bool,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular
     ) {
@@ -81,6 +83,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.contactsUseCase = contactsUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.userUseCase = userUseCase
+        self.isRightToLeftLanguage = isRightToLeftLanguage
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
@@ -99,26 +102,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             return 
         }
         
-        chatRooms = chatListItems.map { chatListItem in
-            let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                                  userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
-            let userImageUseCase = UserImageUseCase(
-                userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
-                userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
-                thumbnailRepo: ThumbnailRepository.newRepo,
-                fileSystemRepo: FileSystemRepository.newRepo
-            )
-            
-            return ChatRoomViewModel(
-                chatListItem: chatListItem,
-                router: router,
-                chatRoomUseCase: chatRoomUseCase,
-                userImageUseCase: userImageUseCase,
-                chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
-                userUseCase: UserUseCase(repo: .live),
-                chatNotificationControl: chatNotificationControl
-            )
-        }
+        chatRooms = chatListItems.map(constructChatRoomViewModel)
         displayChatRooms = chatRooms
     }
     
@@ -207,6 +191,28 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     //MARK: - Private
+    private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
+                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let userImageUseCase = UserImageUseCase(
+            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            fileSystemRepo: FileSystemRepository.newRepo
+        )
+        
+        return ChatRoomViewModel(
+            chatListItem: chatListItem,
+            router: router,
+            chatRoomUseCase: chatRoomUseCase,
+            userImageUseCase: userImageUseCase,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
+            userUseCase: UserUseCase(repo: .live),
+            chatNotificationControl: chatNotificationControl,
+            isRightToLeftLanguage: isRightToLeftLanguage
+        )
+    }
+    
     private func configureTitle() {
         switch chatViewType {
         case .regular:
@@ -289,6 +295,16 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func onChatListItemUpdate(_ chatListItem: ChatListItemEntity) {
         if chatListItem.changeType == .archived {
             fetchChats()
+        } else {
+            guard let chatRooms,
+                  let index = chatRooms.firstIndex(where: { $0.chatListItem == chatListItem }) else {
+                return
+            }
+            
+            self.chatRooms?[index] = constructChatRoomViewModel(forChatListItem: chatListItem)
+            self.chatRooms?.sort { $0.chatListItem.lastMessageDate > $1.chatListItem.lastMessageDate }
+            displayChatRooms = self.chatRooms
+            objectWillChange.send()
         }
     }
 }

@@ -4,7 +4,8 @@ extension MainTabBarController {
     @objc func chatViewController() -> UIViewController {
         let featureFlagProvider = FeatureFlagProvider(useCase: FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo))
         if #available(iOS 14.0, *), featureFlagProvider.isFeatureFlagEnabled(for: .chatRoomsListingRevamp) {
-            return ChatRoomsListRouter().build()
+            let isRightToLeftLanguage = UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft
+            return ChatRoomsListRouter().build(isRightToLeftLanguage: isRightToLeftLanguage)
         } else {
             guard let chatNavigationController = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? MEGANavigationController else {
                 return MEGANavigationController()
