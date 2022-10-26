@@ -4,5 +4,7 @@ public protocol TransfersRepositoryProtocol {
     func downloadTransfers() -> [TransferEntity]
     func uploadTransfers() -> [TransferEntity]
     func completedTransfers() -> [TransferEntity]
+    func isExportFileTransfer(_ transfer: TransferEntity) -> Bool
+    func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool
 }
 

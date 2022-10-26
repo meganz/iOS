@@ -17,7 +17,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    func download(nodeHandle: HandleEntity, to url: URL, appData: String?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         var megaNode: MEGANode
         
         if let sharedFolderSdk = sharedFolderSdk {
@@ -34,16 +34,16 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             megaNode = node
         }
         
-        sdk.startDownloadNode(megaNode, localPath: url.path, fileName: nil, appData: appData, startFirst: true, cancelToken: self.cancelToken, delegate: TransferDelegate(completion: completion))
+        sdk.startDownloadNode(megaNode, localPath: url.path, fileName: nil, appData: metaData?.rawValue, startFirst: true, cancelToken: self.cancelToken, delegate: TransferDelegate(completion: completion))
     }
     
-    func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, appData: String?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         guard let node = chatSdk.chatNode(handle: nodeHandle, messageId: messageId, chatId: chatId) else {
             completion(.failure(.couldNotFindNodeByHandle))
             return
         }
         
-        sdk.startDownloadNode(node, localPath: url.path, fileName: nil, appData: appData, startFirst: true, cancelToken: self.cancelToken, delegate: TransferDelegate(completion: completion))
+        sdk.startDownloadNode(node, localPath: url.path, fileName: nil, appData: metaData?.rawValue, startFirst: true, cancelToken: self.cancelToken, delegate: TransferDelegate(completion: completion))
     }
 
     func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?, progress: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -110,14 +110,14 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         downloadFile(for: node, name: name, to: url, completion: completion, start: start, update: update, filename: filename, appdata: appdata, startFirst: startFirst, cancelToken: self.cancelToken)
     }
 
-    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
             guard let error = error, error.type == .apiOk, let node = request?.publicNode else {
                 completion?(.failure(.couldNotFindNodeByLink))
                 return
             }
             
-            downloadFile(for: node, name: name, to: url, completion: completion, start: start, update: update, filename: nil, appdata: transferMetaData?.metaData, startFirst: startFirst, cancelToken: self.cancelToken)
+            downloadFile(for: node, name: name, to: url, completion: completion, start: start, update: update, filename: nil, appdata: metaData?.rawValue, startFirst: startFirst, cancelToken: self.cancelToken)
         }))
     }
     
