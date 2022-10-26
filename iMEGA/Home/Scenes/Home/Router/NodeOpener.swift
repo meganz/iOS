@@ -27,13 +27,18 @@ final class NodeOpener {
         guard let navigationController = navigationController else { return }
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return }
         
-        let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
-        let nodeActionVC = NodeActionViewController(node: node,
-                                                    delegate: delegate,
-                                                    displayMode: .cloudDrive,
-                                                    isIncoming: false,
-                                                    sender: sender)
-        navigationController.present(nodeActionVC, animated: true, completion: nil)
+        Task {
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
+            let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
+            let nodeActionVC = await NodeActionViewController(node: node,
+                                                        delegate: delegate,
+                                                        displayMode: .cloudDrive,
+                                                        isIncoming: false,
+                                                        isBackupNode: isBackupNode,
+                                                        sender: sender)
+            await navigationController.present(nodeActionVC, animated: true, completion: nil)
+        }
     }
     
     //MARK: - Private

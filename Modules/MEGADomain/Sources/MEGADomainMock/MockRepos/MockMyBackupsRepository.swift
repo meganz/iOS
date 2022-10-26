@@ -2,11 +2,11 @@ import MEGADomain
 import Foundation
 
 public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
-    public static let newRepo = MockInboxRepository()
+    public static let newRepo = MockMyBackupsRepository()
     private let currentBackupNode: NodeEntity
     private let isBackupRootNodeEmpty: Bool
     
-    public init(currentBackupNode: NodeEntity, isBackupRootNodeEmpty: Bool = false) {
+    public init(currentBackupNode: NodeEntity = NodeEntity(name: "backup"), isBackupRootNodeEmpty: Bool = false) {
         self.currentBackupNode = currentBackupNode
         self.isBackupRootNodeEmpty = isBackupRootNodeEmpty
     }

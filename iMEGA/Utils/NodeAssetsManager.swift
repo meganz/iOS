@@ -14,7 +14,7 @@ import MEGADomain
 #if MAIN_APP_TARGET
             if CameraUploadNodeAccess.shared.isTargetNode(for: node) {
                 return Asset.Images.Filetypes.folderImage.image
-            } else if InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupDeviceFolder(node.toNodeEntity()) {
+            } else if MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupDeviceFolder(node.toNodeEntity()) {
                 return backupDeviceIcon(for: node)
             }
 #endif

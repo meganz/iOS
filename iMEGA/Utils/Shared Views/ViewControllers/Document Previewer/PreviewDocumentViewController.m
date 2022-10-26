@@ -321,16 +321,21 @@
     }
     
     DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModePreviewDocument;
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc
-                                             initWithNode:self.node
-                                             delegate:self
-                                             isLink:self.isLink
-                                             isPageView:self.collectionView.hidden
-                                             displayMode:displayMode
-                                             isInVersionsView:[self isPreviewingVersion]
-                                             isInboxNode:[InboxUseCaseOCWrapper.alloc.init isInboxNode:self.node]
-                                             sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    
+    [MyBackupsOCWrapper.alloc.init isBackupNode:self.node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc
+                                                     initWithNode:self.node
+                                                     delegate:self
+                                                     isLink:self.isLink
+                                                     isPageView:self.collectionView.hidden
+                                                     displayMode:displayMode
+                                                     isInVersionsView:[self isPreviewingVersion]
+                                                     isBackupNode:isBackupNode
+                                                     sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (IBAction)importAction:(id)sender {

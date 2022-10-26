@@ -230,28 +230,30 @@ class NodeInfoViewController: UIViewController {
         guard let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: activeOutShares()[indexPath.row - 1].user) else {
             return
         }
-        var actions = [ActionSheetAction]()
-        let isInboxNode = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo).isInboxNode(node.toNodeEntity())
-        
-        if !isInboxNode {
-            actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: Asset.Images.SharedItems.fullAccessPermissions.image, style: .default) { [weak self] in
-                self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
-            })
-            actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readWritePermissions.image, style: .default) { [weak self] in
-                self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
-            })
-            actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readPermissions.image, style: .default) { [weak self] in
-                self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
-            })
-        }
+        Task {
+            var actions = [ActionSheetAction]()
+            let isBackupNode = await MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(node.toNodeEntity())
+            
+            if !isBackupNode {
+                actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: Asset.Images.SharedItems.fullAccessPermissions.image, style: .default) { [weak self] in
+                    self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
+                })
+                actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readWritePermissions.image, style: .default) { [weak self] in
+                    self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
+                })
+                actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readPermissions.image, style: .default) { [weak self] in
+                    self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
+                })
+            }
 
-        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) { [weak self] in
-            self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
-        })
-        
-        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: isInboxNode ? nil : Strings.Localizable.permissions, dismissCompletion: nil, sender: cell.permissionsImageView)
-        
-        present(permissionsActionSheet, animated: true, completion: nil)
+            actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) { [weak self] in
+                self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
+            })
+            
+            let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: isBackupNode ? nil : Strings.Localizable.permissions, dismissCompletion: nil, sender: cell.permissionsImageView)
+            
+            present(permissionsActionSheet, animated: true, completion: nil)
+        }
     }
     
     private func shareNode(withLevel level: MEGAShareType, forUser user: MEGAUser, atIndexPath indexPath: IndexPath) {

@@ -124,8 +124,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self setNavigationBarButtonItems];
     
-    MEGAShareType shareType = [InboxUseCaseOCWrapper.alloc.init isInboxNode:self.parentNode] ? MEGAShareTypeAccessRead : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-    [self toolbarActionsForShareType:shareType];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:self.parentNode completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MEGAShareType shareType = isBackupNode ? MEGAShareTypeAccessRead : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+            [self toolbarActionsForShareType:shareType isBackupNode:isBackupNode];
+        });
+    }];
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     NSError *error;
@@ -480,14 +484,14 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-- (void)toolbarActionsForShareType:(MEGAShareType )shareType {
+- (void)toolbarActionsForShareType:(MEGAShareType )shareType isBackupNode:(BOOL)isBackupNode {
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.shareType = shareType;
     
     switch (shareType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
-            if ([InboxUseCaseOCWrapper.alloc.init isInboxNode:self.parentNode]) {
+            if (isBackupNode) {
                 self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.shareLinkBarButtonItem, flexibleItem, self.actionsBarButtonItem];
             } else {
                 self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem];
@@ -990,8 +994,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(id)sender {
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
@@ -1117,8 +1125,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - RecentNodeActionDelegate
 
 - (void)showCustomActionsForNode:(MEGANode *)node fromSender:(id)sender {
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {

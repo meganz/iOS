@@ -44,7 +44,7 @@ protocol TextEditorViewRouting: Routing {
 
 final class TextEditorViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isAnInboxNode: Bool)
+        case configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isBackupNode: Bool)
         case setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel)
         case setupLoadViews
         case showDuplicateNameAlert(_ textEditorDuplicateNameAlertModel: TextEditorDuplicateNameAlertModel)
@@ -66,7 +66,7 @@ final class TextEditorViewModel: ViewModelType {
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
     private var nodeActionUseCase: NodeActionUseCaseProtocol
-    private var inboxUseCase: InboxUseCaseProtocol
+    private var myBackupsUseCase: MyBackupsUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     
@@ -77,7 +77,7 @@ final class TextEditorViewModel: ViewModelType {
         uploadFileUseCase: UploadFileUseCaseProtocol,
         downloadNodeUseCase: DownloadNodeUseCaseProtocol,
         nodeActionUseCase: NodeActionUseCaseProtocol,
-        inboxUseCase : InboxUseCaseProtocol,
+        myBackupsUseCase: MyBackupsUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil
     ) {
@@ -87,7 +87,7 @@ final class TextEditorViewModel: ViewModelType {
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadNodeUseCase = downloadNodeUseCase
         self.nodeActionUseCase = nodeActionUseCase
-        self.inboxUseCase = inboxUseCase
+        self.myBackupsUseCase = myBackupsUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
     }
@@ -128,25 +128,31 @@ final class TextEditorViewModel: ViewModelType {
     
     //MARK: - Private functions
     private func setupView(shallUpdateContent:Bool) {
-        var isNodeInRubbishBin = false
-        if let nodeHandle = nodeEntity?.handle {
-            isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
-        }
-        
-        let isAnInboxNode = nodeEntity.flatMap{inboxUseCase.isInboxNode($0)} ?? false
-        if textEditorMode == .load {
-            invokeCommand?(.setupLoadViews)
-            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin, isAnInboxNode: isAnInboxNode))
-            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
-            downloadToTempFolder()
-        } else {
-            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin, isAnInboxNode: isAnInboxNode))
-            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
-        }
-        
-        if let command = showErrorWhenToSetupView {
-            invokeCommand?(command)
-            showErrorWhenToSetupView = nil
+        Task {
+            var isNodeInRubbishBin = false
+            if let nodeHandle = nodeEntity?.handle {
+                isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
+            }
+            
+            var isBackupNode = false
+            if let nodeEntity {
+                isBackupNode = await myBackupsUseCase.isBackupNode(nodeEntity)
+            }
+            
+            if textEditorMode == .load {
+                invokeCommand?(.setupLoadViews)
+                invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin, isBackupNode: isBackupNode))
+                invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+                downloadToTempFolder(isBackupNode: isBackupNode)
+            } else {
+                invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin, isBackupNode: isBackupNode))
+                invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+            }
+            
+            if let command = showErrorWhenToSetupView {
+                invokeCommand?(command)
+                showErrorWhenToSetupView = nil
+            }
         }
     }
     
@@ -258,7 +264,7 @@ final class TextEditorViewModel: ViewModelType {
         router.showDownloadTransfer(node: nodeEntity)
     }
     
-    private func downloadToTempFolder() {
+    private func downloadToTempFolder(isBackupNode: Bool = false) {
         guard let nodeHandle = nodeEntity?.handle else { return }
         downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil) { (transferEntity) in
             let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
@@ -278,7 +284,7 @@ final class TextEditorViewModel: ViewModelType {
                         self.shouldEditAfterOpen = false
                     } else {
                         self.textEditorMode = .view
-                        self.setupView(shallUpdateContent: !(self.nodeEntity.flatMap({self.inboxUseCase.isInboxNode($0)}) ?? false))
+                        self.setupView(shallUpdateContent: !isBackupNode)
                     }
                 } catch {
                     self.router.showPreviewDocVC(fromFilePath: path, showUneditableError: self.shouldEditAfterOpen)
@@ -287,13 +293,13 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func makeTextEditorModel() -> TextEditorModel {
+    private func makeTextEditorModel(isBackupNode: Bool = false) -> TextEditorModel {
         switch textEditorMode {
         case .view:
             return TextEditorModel(
                 textFile: textFile,
                 textEditorMode: textEditorMode,
-                accessLevel: nodeAccessLevel()
+                accessLevel: nodeAccessLevel(isBackupNode: isBackupNode)
             )
         case .load,
              .edit,
@@ -330,11 +336,8 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func nodeAccessLevel() -> NodeAccessTypeEntity {
-        if nodeEntity.flatMap({inboxUseCase.isInboxNode($0)}) ?? false {
-            return .read
-        }
-        return nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
+    private func nodeAccessLevel(isBackupNode: Bool = false) -> NodeAccessTypeEntity {
+        isBackupNode ? .read : nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     
     private func uploadTo(_ parentHandle: HandleEntity) {
