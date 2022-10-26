@@ -49,6 +49,8 @@ struct ChatRoomsListView: View {
                 }
                 .animation(.default, value: chatRooms)
                 .listStyle(PlainListStyle())
+                Rectangle()
+                    .frame(maxWidth: .infinity, maxHeight: viewModel.bottomViewHeight)
             } else {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
             }

@@ -38,6 +38,16 @@ final class ChatRoomsListViewController: UIViewController {
         viewModel.refreshMyAvatar()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AudioPlayerManager.shared.addDelegate(self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        AudioPlayerManager.shared.removeDelegate(self)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -88,5 +98,12 @@ final class ChatRoomsListViewController: UIViewController {
     
     @objc func addBarButtonItemTapped() {
         viewModel.addChatButtonTapped()
+    }
+}
+
+@available(iOS 14.0, *)
+extension ChatRoomsListViewController: AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        viewModel.bottomViewHeight = height
     }
 }
