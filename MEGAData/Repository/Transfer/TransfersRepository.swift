@@ -26,4 +26,12 @@ struct TransfersRepository: TransfersRepositoryProtocol {
         }
         return completedTransfers.map { $0.toTransferEntity() }
     }
+    
+    func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.appData?.contains(TransferMetaDataEntity.exportFile.rawValue) ?? false
+    }
+    
+    func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false
+    }
 }

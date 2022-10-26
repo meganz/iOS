@@ -21,7 +21,7 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
     public func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
        
-        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, appData: AppDataEntity.saveInPhotos.rawValue) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, metaData: .saveInPhotos) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -39,7 +39,7 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
 
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
 
-        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, appData: AppDataEntity.saveInPhotos.rawValue) { result in
+        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, metaData: .saveInPhotos) { result in
             switch result {
             case .success:
                 completion(.success)
@@ -50,11 +50,10 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
     }
     
     public func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        let transferMetaData = TransferMetaDataEntity(metaData: AppDataEntity.saveInPhotos.rawValue)
         nodeRepository.nodeFor(fileLink: fileLink) { result in
             switch result {
             case .success(let node):
-                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), transferMetaData: transferMetaData, startFirst: true, start: nil, update: nil) { result in
+                downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), metaData: .saveInPhotos, startFirst: true, start: nil, update: nil) { result in
                     switch result {
                     case .success(_):
                         completion(.success)

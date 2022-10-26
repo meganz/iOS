@@ -17,11 +17,11 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         self.transferEntity = transferEntity
     }
     
-    public func download(nodeHandle: HandleEntity, to url: URL, appData: String?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)
     }
 
-    public func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, appData: String?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
+    public func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)
     }
     
@@ -37,7 +37,7 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
         completion?(completionResult)
     }
     
-    public func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, transferMetaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
+    public func downloadFileLink(_ fileLink: FileLinkEntity, named name: String, to url: URL, metaData: TransferMetaDataEntity?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         completion?(completionResult)
     }
     
