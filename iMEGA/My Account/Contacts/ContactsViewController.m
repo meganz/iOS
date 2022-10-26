@@ -1713,10 +1713,12 @@
                         return;
                     }
                     
-                    if (![InboxUseCaseOCWrapper.alloc.init isInboxNode:self.node]) {
-                        self.userTapped = user;
-                        [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
-                    }
+                    [MyBackupsOCWrapper.alloc.init isBackupNode:self.node completionHandler:^(BOOL isBackupNode) {
+                        if (!isBackupNode) {
+                            self.userTapped = user;
+                            [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
+                        }
+                    }];
                 }
             } else {
                 if (!tableView.isEditing) {

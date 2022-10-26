@@ -701,9 +701,14 @@
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeAtIndexPath:indexPath] delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
@@ -1234,9 +1239,14 @@
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeAtIndexPath:indexPath] delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 #pragma mark - NodeInfoViewControllerDelegate

@@ -420,9 +420,14 @@
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    MEGANode *node = [self nodeForIndexPath:indexPath];
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeForIndexPath:indexPath] delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (IBAction)closeAction:(id)sender {

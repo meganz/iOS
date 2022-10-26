@@ -49,13 +49,10 @@ extension UsageViewController {
         
         backupsActivityIndicator?.isHidden = false
         backupsActivityIndicator?.startAnimating()
+        
         Task {
-            do {
-                let backupSize = try await InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo).backupRootNodeSize()
-                backupsSizeLabel?.text = self.text(forSizeLabels: NSNumber(value: backupSize))
-            } catch {
-                backupsSizeLabel?.text = self.text(forSizeLabels: NSNumber(value: 0))
-            }
+            let backupSize = await MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).myBackupsRootNodeSize()
+            backupsSizeLabel?.text = self.text(forSizeLabels: NSNumber(value: backupSize))
             backupsActivityIndicator?.stopAnimating()
             backupsActivityIndicator?.isHidden = true
         }

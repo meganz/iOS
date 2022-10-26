@@ -362,8 +362,12 @@
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     if (self.node.name) {
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO sender:sender];
-        [self presentViewController:nodeActions animated:YES completion:nil];
+        [MyBackupsOCWrapper.alloc.init isBackupNode:self.node completionHandler:^(BOOL isBackupNode) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
+                [self presentViewController:nodeActions animated:YES completion:nil];
+            });
+        }];
     }
 }
 

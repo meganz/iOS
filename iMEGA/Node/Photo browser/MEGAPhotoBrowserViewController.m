@@ -792,8 +792,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return;
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView: [self isPreviewingVersion] sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView:[self isPreviewingVersion] isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender {

@@ -308,17 +308,6 @@
         downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
         downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
         
-        if (self.cloudDrive.displayMode != DisplayModeBackup && ![InboxUseCaseOCWrapper.alloc.init isInboxNode:node]) {
-            UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                [self.cloudDrive moveToRubbishBinFor:node];
-                [self setTableViewEditing:NO animated:YES];
-            }];
-            
-            rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
-            rubbishBinAction.backgroundColor = UIColor.mnz_redError;
-            
-            return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareLinkAction, downloadAction]];
-        }
         return [UISwipeActionsConfiguration configurationWithActions:@[shareLinkAction, downloadAction]];
     }
     return [UISwipeActionsConfiguration configurationWithActions:@[]];

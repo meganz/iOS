@@ -52,8 +52,8 @@ final class TextEditorViewController: UIViewController {
 extension TextEditorViewController: ViewType {
     func executeCommand(_ command: TextEditorViewModel.Command) {
         switch command {
-        case .configView(let textEditorModel, let shallUpdateContent, let isInRubbishBin, let isAnInboxNode):
-            configView(textEditorModel, shallUpdateContent: shallUpdateContent, isInRubbishBin: isInRubbishBin, isAnInboxNode: isAnInboxNode)
+        case .configView(let textEditorModel, let shallUpdateContent, let isInRubbishBin, let isBackupNode):
+            configView(textEditorModel, shallUpdateContent: shallUpdateContent, isInRubbishBin: isInRubbishBin, isBackupNode: isBackupNode)
         case .setupNavbarItems(let navbarItemsModel):
             setupNavbarItems(navbarItemsModel)
         case .setupLoadViews:
@@ -81,7 +81,7 @@ extension TextEditorViewController: ViewType {
         viewModel.dispatch(.editAfterOpen)
     }
     
-    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isAnInboxNode: Bool) {
+    private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isBackupNode: Bool) {
         navigationItem.title = textEditorModel.textFile.fileName
         
         let contentOffset = textView.contentOffset
@@ -108,7 +108,7 @@ extension TextEditorViewController: ViewType {
         }
         
         if textEditorModel.textEditorMode == .view && !isInRubbishBin {
-            configToolbar(accessLevel: textEditorModel.accessLevel ?? .unknown)
+            configToolbar(accessLevel: isBackupNode ? .read : textEditorModel.accessLevel ?? .unknown)
             navigationController?.setToolbarHidden(false, animated: true)
         } else {
             toolbarItems = nil

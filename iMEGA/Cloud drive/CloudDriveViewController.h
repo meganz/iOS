@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showNodeInfo:(MEGANode *)node;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes;
-- (void)toolbarActionsForShareType:(MEGAShareType)shareType;
+- (void)toolbarActionsForShareType:(MEGAShareType)shareType isBackupNode:(BOOL)isBackupNode;
 
 - (BOOL)isListViewModeSelected;
 - (void)changeViewModePreference;

@@ -66,7 +66,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             mediaUseCase: MediaUseCase(),
             preferenceRepository: PreferenceRepository.newRepo)
         let nodeActionUC = NodeActionUseCase(repo: NodeRepository.newRepo)
-        let inboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
@@ -74,7 +74,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             uploadFileUseCase: uploadUC,
             downloadNodeUseCase: downloadUC,
             nodeActionUseCase: nodeActionUC,
-            inboxUseCase: inboxUC,
+            myBackupsUseCase: myBackupsUC,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity
         )
@@ -129,9 +129,13 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             return
         }
         
-        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
-        let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, sender: button)
-        baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
+        Task{
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
+            let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
+            let nodeActionViewController = await NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, sender: button)
+            await baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
+        }
     }
     
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
