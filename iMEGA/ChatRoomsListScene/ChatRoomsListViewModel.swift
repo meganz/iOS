@@ -57,6 +57,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var title: String = Strings.Localizable.Chat.title
     @Published var myAvatarBarButton: UIBarButtonItem?
     @Published var isConnectedToNetwork: Bool
+    @Published var bottomViewHeight: CGFloat = 0
     @Published var displayChatRooms: [ChatRoomViewModel]?
     @Published var searchText: String {
         didSet {
