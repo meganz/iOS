@@ -15,9 +15,14 @@ struct SlideShowRouter: Routing {
     
     func build() -> UIViewController {
         let slideShowViewModel = SlideShowViewModel(
-            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            dataProvider: dataProvider,
-            mediaUseCase: MediaUseCase(),
+            dataSource: SlideShowDataSource(
+                currentPhoto: dataProvider.currentPhoto?.toNodeEntity(),
+                nodeEntities: dataProvider.allPhotoEntities,
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+                mediaUseCase: MediaUseCase(),
+                advanceNumberOfPhotosToLoad: 20,
+                numberOfUnusedPhotosBuffer: 20
+            ),
             configuration: .init(
                 playingOrder: .shuffled,
                 timeIntervalForSlideInSeconds: .normal,

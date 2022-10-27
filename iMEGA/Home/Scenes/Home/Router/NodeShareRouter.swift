@@ -20,11 +20,9 @@ final class NodeShareRouter: NSObject {
 
     func showSharingFolder(for node: MEGANode) {
         guard let viewController = viewController else { return }
-        
-        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() {
+        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded {
             guard let navigation = UIStoryboard(name: "Contacts", bundle: nil)
-                .instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController
-                else { return }
+                .instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? UINavigationController else { return }
             let contactViewController = navigation.viewControllers.first as? ContactsViewController
             contactViewController?.nodesArray = [node]
             contactViewController?.contactsMode = .shareFoldersWith
@@ -35,11 +33,9 @@ final class NodeShareRouter: NSObject {
 
     func showManageSharing(for node: MEGANode) {
         guard let viewController = viewController else { return }
-        
-        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() {
+        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded {
             guard let contactViewController = UIStoryboard(name: "Contacts", bundle: nil)
-                .instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController
-                else { return }
+                .instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
             contactViewController.node = node
             contactViewController.contactsMode = .folderSharedWith
             
@@ -47,3 +43,4 @@ final class NodeShareRouter: NSObject {
         }
     }
 }
+

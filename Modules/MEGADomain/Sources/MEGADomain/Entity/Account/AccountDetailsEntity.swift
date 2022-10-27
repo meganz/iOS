@@ -5,6 +5,7 @@ public enum AccountTypeEntity {
     case proIII
     case lite
     case business
+    case proFlexi
 }
 
 public enum SubscriptionStatusEntity {

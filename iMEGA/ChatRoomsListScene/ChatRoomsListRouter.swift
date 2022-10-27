@@ -5,13 +5,14 @@ import MEGAData
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     private(set) weak var navigationController: UINavigationController?
     
-    func build() -> UIViewController {
+    func build(isRightToLeftLanguage: Bool) -> UIViewController {
         let viewModel = ChatRoomsListViewModel(
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
-            userUseCase: UserUseCase(repo: .live)
+            userUseCase: UserUseCase(repo: .live),
+            isRightToLeftLanguage: isRightToLeftLanguage
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)
@@ -21,8 +22,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
 
         return navigation
     }
-    
-    func start() { }
     
     func presentStartConversation() {
         NewChatRouter(navigationController: navigationController, tabBarController: nil).presentNewChat(from: navigationController)
@@ -162,5 +161,17 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         }
         archivedChatRoomsViewController.chatRoomsType = .archived
         navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
+    }
+    
+    func joinActiveCall(_ call: CallEntity) {
+        guard let navigationController, let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: call.chatId) else {
+            return
+        }
+        
+        let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
+        MeetingContainerRouter(presenter: navigationController,
+                               chatRoom: chatRoom.toChatRoomEntity(),
+                               call: call,
+                               isSpeakerEnabled: isSpeakerEnabled).start()
     }
 }

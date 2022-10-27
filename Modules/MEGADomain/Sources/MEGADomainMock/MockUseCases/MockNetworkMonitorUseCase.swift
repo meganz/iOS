@@ -4,7 +4,7 @@ public struct MockNetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
     
     private let connected: Bool
     
-    public init(connected: Bool = false) {
+    public init(connected: Bool = true) {
         self.connected = connected
     }
     

@@ -3,7 +3,7 @@ import MEGADomain
 
 @available(iOS 14.0, *)
 struct ChatRoomView: View {
-    @StateObject var viewModel: ChatRoomViewModel
+    @ObservedObject var viewModel: ChatRoomViewModel
     
     var body: some View {
         if #available(iOS 15.0, *) {
@@ -70,92 +70,160 @@ struct ChatRoomView: View {
 
 @available(iOS 14.0, *)
 struct ChatRoomContentView: View {
-    @ObservedObject var viewModel: ChatRoomViewModel
-    
+    let viewModel: ChatRoomViewModel
+
     var body: some View {
         HStack(spacing: 0) {
-            ChatRoomAvatarView(primaryAvatar: viewModel.primaryAvatar, secondaryAvatar: viewModel.secondaryAvatar)
-            
-            VStack (alignment: .leading, spacing: 4) {
-                HStack(spacing: 3) {
-                    Text(viewModel.chatListItem.title ?? "")
-                        .font(.subheadline)
-                        .lineLimit(1)
-                    
-                    if let statusColor = viewModel.chatStatusColor {
-                        Color(statusColor)
-                            .frame(width: 6, height: 6)
-                            .clipShape(Circle())
-                    }
-                    
-                    if viewModel.chatListItem.publicChat == false {
-                        Image(uiImage: Asset.Images.Chat.privateChat.image)
-                            .frame(width: 24, height: 24)
-                    }
-                    
-                    Spacer()
-                    
-                    if let time = viewModel.formattedLastMessageSentDate() {
-                        Text(time)
-                            .font(.caption2)
-                    }
-                }
-                
-                HStack(spacing: 3) {
-                    if let hybridDescription = viewModel.hybridDescription {
-                        HStack(spacing: 0) {
-                            if let sender = hybridDescription.sender {
-                                Text(sender)
-                                    .font(.caption)
-                                    .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
-                            }
-                            
-                            Image(uiImage: hybridDescription.image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 16, height: 16)
-                            
-                            Text(hybridDescription.duration)
-                                .font(.caption)
-                                .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
-                        }
-                    } else if let description = viewModel.description {
-                        Text(description)
-                            .font(.caption)
-                            .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
-                            .lineLimit(1)
-                    }
-                    
-                    Spacer()
-                    
-                    if viewModel.chatListItem.unreadCount > 0 {
-                        Text(String(viewModel.chatListItem.unreadCount))
-                            .font(.caption2)
-                            .foregroundColor(.white)
-                            .padding(7)
-                            .background(Color.red)
-                            .clipShape(Circle())
-                    }
-                }
-            }
+            ChatRoomContentAvatarView(primaryAvatar: viewModel.primaryAvatar,
+                                      secondaryAvatar: viewModel.secondaryAvatar)
+            ChatRoomContentDetailsView(viewModel: viewModel)
         }
         .padding(.trailing, 10)
         .frame(height: 65)
         .contentShape(Rectangle())
+        .contextMenu {
+            if let contextMenuOptions = viewModel.contextMenuOptions {
+                ForEach(contextMenuOptions) { contextMenuOption in
+                    Button {
+                        contextMenuOption.action()
+                    } label: {
+                        Label(contextMenuOption.title, image: contextMenuOption.imageName)
+                    }
+                }
+            }
+        }
         .onTapGesture {
             viewModel.showDetails()
         }
         .onAppear {
-            viewModel.loadChatRoomInfo()
+            viewModel.isViewOnScreen = true
         }
         .onDisappear {
-            viewModel.cancelLoading()
+            viewModel.isViewOnScreen = false
         }
     }
 }
 
 @available(iOS 14.0, *)
-struct ChatRoomAvatarView: View {
+struct ChatRoomContentDetailsView: View {
+    let viewModel: ChatRoomViewModel
+    
+    var body: some View {
+        if viewModel.chatListItem.unreadCount > 0 || viewModel.existsInProgressCallInChatRoom {
+            HStack(spacing: 3) {
+                VStack(alignment: .leading, spacing: 4) {
+                    ChatRoomContentTitleView(viewModel: viewModel)
+                    ChatRoomContentDescriptionView(viewModel: viewModel)
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 0) {
+                    if let displayDateString = viewModel.displayDateString {
+                        Text(displayDateString)
+                            .font(.caption2.bold())
+                    }
+                    
+                    HStack(spacing: 4) {
+                        if viewModel.existsInProgressCallInChatRoom {
+                            Image(uiImage: Asset.Images.Chat.onACall.image)
+                                .resizable()
+                                .frame(width: 21, height: 21)
+                        }
+                        
+                        if viewModel.chatListItem.unreadCount > 0  {
+                            Text(String(viewModel.chatListItem.unreadCount))
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                                .padding(7)
+                                .background(Color.red)
+                                .clipShape(Circle())
+                        }
+                    }
+                }
+            }
+        } else {
+            VStack(spacing: 4) {
+                HStack(alignment: .bottom, spacing: 3) {
+                    ChatRoomContentTitleView(viewModel: viewModel)
+                    Spacer()
+                    
+                    if let displayDateString = viewModel.displayDateString {
+                        Text(displayDateString)
+                            .font(.caption2)
+                    }
+                }
+                
+                HStack(alignment: .top, spacing: 3) {
+                    ChatRoomContentDescriptionView(viewModel: viewModel)
+                    Spacer()
+                }
+            }
+        }
+    }
+}
+
+@available(iOS 14.0, *)
+struct ChatRoomContentTitleView: View {
+    let viewModel: ChatRoomViewModel
+
+    var body: some View {
+        HStack(spacing: 3) {
+            Text(viewModel.chatListItem.title ?? "")
+                .font(viewModel.chatListItem.unreadCount > 0 ? .subheadline.bold() : .subheadline)
+                .lineLimit(1)
+            
+            if let statusColor = viewModel.chatStatusColor {
+                Color(statusColor)
+                    .frame(width: 6, height: 6)
+                    .clipShape(Circle())
+            }
+            
+            if viewModel.chatListItem.publicChat == false {
+                Image(uiImage: Asset.Images.Chat.privateChat.image)
+                    .frame(width: 24, height: 24)
+            }
+        }
+    }
+}
+
+@available(iOS 14.0, *)
+struct ChatRoomContentDescriptionView: View {
+    let viewModel: ChatRoomViewModel
+    
+    var body: some View {
+        if let hybridDescription = viewModel.hybridDescription {
+            HStack(spacing: 0) {
+                if let sender = hybridDescription.sender {
+                    Text(sender)
+                        .font(viewModel.chatListItem.unreadCount > 0 ? .caption.bold(): .caption)
+                        .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+                }
+                
+                Image(uiImage: hybridDescription.image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16, height: 16)
+                
+                Text(hybridDescription.duration)
+                    .font(viewModel.chatListItem.unreadCount > 0 ? .caption.bold(): .caption)
+                    .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+            }
+        } else if let description = viewModel.description {
+            Text(description)
+                .font(viewModel.chatListItem.unreadCount > 0 ? .caption.bold(): .caption)
+                .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+                .lineLimit(1)
+        } else {
+            Text("Placeholder")
+                .font(.caption)
+                .redacted(reason: .placeholder)
+        }
+    }
+}
+
+@available(iOS 14.0, *)
+struct ChatRoomContentAvatarView: View {
     var primaryAvatar: UIImage?
     var secondaryAvatar: UIImage?
     @Environment(\.colorScheme) var colorScheme

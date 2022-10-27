@@ -54,7 +54,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
                 MEGASdkManager.sharedMEGASdk().setNodeFavourite(node, favourite: !node.isFavourite, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
                     if error.type == .apiOk {
                         request.numDetails == 1 ? QuickAccessWidgetManager().insertFavouriteItem(for: node) :
-                                                  QuickAccessWidgetManager().deleteFavouriteItem(for: node)
+                        QuickAccessWidgetManager().deleteFavouriteItem(for: node)
                     }
                 }))
             } else {

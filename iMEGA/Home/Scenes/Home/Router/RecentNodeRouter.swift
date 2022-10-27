@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class RecentNodeRouter {
 
@@ -17,15 +18,18 @@ final class RecentNodeRouter {
         case node
     }
 
-    private func presentAction(for node: MEGANode, in navigationController: UINavigationController?) {
-        let nodeActionViewController = NodeActionViewController(
+    private func presentAction(for node: MEGANode, in navigationController: UINavigationController?) async {
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
+        let nodeActionViewController = await NodeActionViewController(
             node: node,
             delegate: self,
             displayMode: .recents,
             isIncoming: false,
+            isBackupNode: isBackupNode,
             sender: self
         )
-        navigationController?.present(nodeActionViewController, animated: true, completion: nil)
+        await navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 
     // MARK: - Routing
@@ -33,8 +37,10 @@ final class RecentNodeRouter {
     func didTap(_ source: RecentNodeSource, object: Any?) {
         switch source {
         case .nodeActions(let node):
-            completionAction = (object as! (MEGANode, MegaNodeActionType) -> Void)
-            presentAction(for: node, in: navigationController)
+            Task {
+                completionAction = (object as! (MEGANode, MegaNodeActionType) -> Void)
+                await presentAction(for: node, in: navigationController)
+            }
         case .node:
             break
         }

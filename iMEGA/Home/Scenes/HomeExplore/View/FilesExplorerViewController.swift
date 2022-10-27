@@ -43,15 +43,21 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     }
     
     func showMoreOptions(forNode node: MEGANode, sender: UIView) {
-        guard let navigationController = navigationController else { return }
-        
-        let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
-        let vc = NodeActionViewController(node: node,
-                                          delegate: delegate,
-                                          displayMode: .cloudDrive,
-                                          isIncoming: false,
-                                          sender: sender)
-        navigationController.present(vc, animated: true, completion: nil)
+        Task {
+            guard let navigationController = navigationController else { return }
+            
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
+            
+            let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
+            let vc = NodeActionViewController(node: node,
+                                              delegate: delegate,
+                                              displayMode: .cloudDrive,
+                                              isIncoming: false,
+                                              isBackupNode: isBackupNode,
+                                              sender: sender)
+            navigationController.present(vc, animated: true, completion: nil)
+        }
     }
     
     func configureView(withSearchText searchText: String?, nodes: [MEGANode]?) {

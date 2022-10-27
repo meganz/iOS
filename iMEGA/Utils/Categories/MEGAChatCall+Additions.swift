@@ -8,4 +8,13 @@ extension MEGAChatCall {
             return false
         }
     }
+    
+    var isCallInProgress: Bool {
+        switch status {
+        case .userNoPresent, .inProgress:
+            return true
+        default:
+            return false
+        }
+    }
 }

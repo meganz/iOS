@@ -170,9 +170,12 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        let inboxUseCase = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsAnyInboxNode: inboxUseCase.containsAnyInboxNode(selectedNodes.toNodeEntities()), sender: button)
-        present(nodeActionsViewController, animated: true, completion: nil)
+        Task {
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let containsABackupNode = await myBackupsUC.containsABackupNode(selectedNodes.toNodeEntities())
+            let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsABackupNode: containsABackupNode, sender: button)
+            present(nodeActionsViewController, animated: true, completion: nil)
+        }
     }
     
     fileprivate func didPressedExportFile(_ button: UIBarButtonItem) {

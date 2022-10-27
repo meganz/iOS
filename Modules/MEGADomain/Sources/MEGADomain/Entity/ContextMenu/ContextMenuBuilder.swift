@@ -6,6 +6,7 @@ public final class ContextMenuBuilder {
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
     private var isOfflineFolder: Bool = false
+    private var isViewInFolder = false
     private var isRestorable: Bool = false
     private var isInVersionsView: Bool = false
     private var isSharedItems: Bool = false
@@ -19,8 +20,8 @@ public final class ContextMenuBuilder {
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
-    private var isInboxNode: Bool = false
-    private var isInboxChild: Bool = false
+    private var isMyBackupsNode: Bool = false
+    private var isMyBackupsChild: Bool = false
     private var isSharedItemsChild: Bool = false
     private var isOutShare: Bool = false
     private var isExported: Bool = false
@@ -67,6 +68,11 @@ public final class ContextMenuBuilder {
     
     public func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
         self.isOfflineFolder = isOfflineFolder
+        return self
+    }
+    
+    public func setIsViewInFolder(_ isViewInFolder: Bool) -> ContextMenuBuilder {
+        self.isViewInFolder = isViewInFolder
         return self
     }
     
@@ -135,13 +141,13 @@ public final class ContextMenuBuilder {
         return self
     }
     
-    public func setIsInboxNode(_ isInboxNode: Bool) -> ContextMenuBuilder {
-        self.isInboxNode = isInboxNode
+    public func setIsMyBackupsNode(_ isMyBackupsNode: Bool) -> ContextMenuBuilder {
+        self.isMyBackupsNode = isMyBackupsNode
         return self
     }
     
-    public func setIsInboxChild(_ isInboxChild: Bool) -> ContextMenuBuilder {
-        self.isInboxChild = isInboxChild
+    public func setIsMyBackupsChild(_ isMyBackupsChild: Bool) -> ContextMenuBuilder {
+        self.isMyBackupsChild = isMyBackupsChild
         return self
     }
     
@@ -271,7 +277,7 @@ public final class ContextMenuBuilder {
     private func viewTypeMenu() -> CMEntity {
         var viewTypeMenuActions: [CMElement] = []
         
-        if showMediaDiscovery && !isRubbishBinFolder && !isInboxChild {
+        if showMediaDiscovery && !isRubbishBinFolder && !isMyBackupsChild {
             viewTypeMenuActions.append(mediaDiscovery)
         }
         
@@ -325,7 +331,7 @@ public final class ContextMenuBuilder {
     private func displayMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         
-        if isAFolder && !isRubbishBinFolder && !isInboxNode {
+        if isAFolder && !isRubbishBinFolder && !isMyBackupsNode {
             displayActionsMenuChildren.append(makeQuickActions())
         }
         
@@ -339,10 +345,11 @@ public final class ContextMenuBuilder {
                 displayActionsMenuChildren.append(filterMenu())
             }
         } else {
-            displayActionsMenuChildren.append(contentsOf: [selectMenu(), viewTypeMenu(), sortMenu()])
+            let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
+            displayActionsMenuChildren.append(contentsOf: menu)
         }
         
-        if isRubbishBinFolder {
+        if isRubbishBinFolder && !isViewInFolder {
             displayActionsMenuChildren.append(rubbishBinMenu())
         }
         
@@ -356,7 +363,7 @@ public final class ContextMenuBuilder {
         if accessLevel == .owner {
             quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
             quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder])
-            if !isInboxChild {
+            if !isMyBackupsChild {
                 quickActions.append(rename)
             }
         }

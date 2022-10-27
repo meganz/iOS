@@ -208,37 +208,43 @@ static TransfersWidgetViewController* instance = nil;
     switch (transfer.state) {
         case MEGATransferStateComplete:
         {
-            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isIncoming:NO sender:sender];
-            actionController.transfer = transfer;
-            if ([[UIDevice currentDevice] iPadDevice]) {
-                actionController.modalPresentationStyle = UIModalPresentationPopover;
-                actionController.popoverPresentationController.delegate = actionController;
-                actionController.popoverPresentationController.sourceView = sender;
-                actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-            } else {
-                actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-            }
-            [self presentViewController:actionController animated:YES completion:nil];
+            [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isIncoming:NO isBackupNode:isBackupNode sender:sender];
+                    actionController.transfer = transfer;
+                    if ([[UIDevice currentDevice] iPadDevice]) {
+                        actionController.modalPresentationStyle = UIModalPresentationPopover;
+                        actionController.popoverPresentationController.delegate = actionController;
+                        actionController.popoverPresentationController.sourceView = sender;
+                        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+                    } else {
+                        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+                    }
+                    [self presentViewController:actionController animated:YES completion:nil];
+                });
+            }];
         }
             break;
             
         default:
         {
-            
-            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isIncoming:NO sender:sender];
-            actionController.transfer = transfer;
-
-            if ([[UIDevice currentDevice] iPadDevice]) {
-                actionController.modalPresentationStyle = UIModalPresentationPopover;
-                actionController.popoverPresentationController.delegate = actionController;
-                actionController.popoverPresentationController.sourceView = sender;
-                actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-            } else {
-                actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-            }
-            
-            [self presentViewController:actionController animated:YES completion:nil];
-            
+            [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isIncoming:NO isBackupNode:isBackupNode sender:sender];
+                    actionController.transfer = transfer;
+                    
+                    if ([[UIDevice currentDevice] iPadDevice]) {
+                        actionController.modalPresentationStyle = UIModalPresentationPopover;
+                        actionController.popoverPresentationController.delegate = actionController;
+                        actionController.popoverPresentationController.sourceView = sender;
+                        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+                    } else {
+                        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+                    }
+                    
+                    [self presentViewController:actionController animated:YES completion:nil];
+                });
+            }];
         }
             
             break;
@@ -955,7 +961,7 @@ static TransfersWidgetViewController* instance = nil;
             if (transfer.type == MEGATransferTypeUpload) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
                 if (parentNode.isFolder) {
-                    [self openFolderNode:parentNode];
+                    [self openFolderNode:parentNode isFromViewInFolder:YES];
                 }
             }
             
@@ -973,23 +979,26 @@ static TransfersWidgetViewController* instance = nil;
             [self.tableView reloadData];
             break;
         }
-        case MegaNodeActionTypeClear: {
-            __block MEGATransfer *selectedTransfer;
-            [self.completedTransfers enumerateObjectsUsingBlock:^(MEGATransfer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (obj.nodeHandle == node.handle) {
-                    selectedTransfer = obj;
-                    *stop = YES;
-                };
-            }];
-            [self removeFromCompletedTransfers:selectedTransfer];
-            [self.tableView reloadData];
+        case MegaNodeActionTypeClear:
+            [self clearNode:node];
             break;
-
-        }
+            
         default:
             break;
     }
+}
 
+- (void)clearNode:(MEGANode *)node {
+    __block MEGATransfer *selectedTransfer;
+    [self.completedTransfers enumerateObjectsUsingBlock:^(MEGATransfer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.nodeHandle == node.handle) {
+            selectedTransfer = obj;
+            *stop = YES;
+        };
+    }];
+    [self removeFromCompletedTransfers:selectedTransfer];
+    [self updateViewState];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Private
@@ -1017,9 +1026,14 @@ static TransfersWidgetViewController* instance = nil;
     [self reloadView];
 }
 
-- (void)openFolderNode:(MEGANode *)node {
+- (void)openFolderNode:(MEGANode *)node isFromViewInFolder:(BOOL)isFromViewInFolder {
     CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
     cloudDriveVC.parentNode = node;
+    cloudDriveVC.isFromViewInFolder = isFromViewInFolder;
+    
+    if (node.mnz_isInRubbishBin && isFromViewInFolder) {
+        cloudDriveVC.displayMode = DisplayModeRubbishBin;
+    }
     
     [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }

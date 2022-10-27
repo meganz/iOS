@@ -99,6 +99,35 @@ extension MEGAPhotoBrowserViewController {
         centerToolbarItem?.image = nil
         centerToolbarItem?.isEnabled = false
     }
+    
+    @objc func viewNodeInFolder(_ node: MEGANode) {
+        guard let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle),
+              parentNode.isFolder() else {
+            return
+        }
+        openFolderNode(parentNode, isFromViewInFolder: true)
+    }
+    
+    func openFolderNode(_ node: MEGANode, isFromViewInFolder: Bool) {
+        let cloudStoryboard = UIStoryboard(name: "Cloud", bundle: nil)
+        guard let cloudDriveViewController = cloudStoryboard.instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController else { return }
+        cloudDriveViewController.parentNode = node
+        cloudDriveViewController.isFromViewInFolder = isFromViewInFolder
+        
+        if node.mnz_isInRubbishBin() && isFromViewInFolder {
+            cloudDriveViewController.displayMode = .rubbishBin
+        }
+        
+        let navigationContorller = MEGANavigationController(rootViewController: cloudDriveViewController)
+        present(navigationContorller, animated: true)
+    }
+    
+    @objc func clearNodeOnTransfers(_ node: MEGANode) {
+        if let navController = presentingViewController as? MEGANavigationController,
+           let transfersController = navController.viewControllers.last as? TransfersWidgetViewController {
+            transfersController.clear(node)
+        }
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {

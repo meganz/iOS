@@ -1,25 +1,21 @@
+import Combine
 import MEGADomain
 
 final class BackupNodesValidator {
-    private let inboxUseCase: InboxUseCaseProtocol
+    private let myBackupsUseCase: MyBackupsUseCaseProtocol
     private let nodes: [NodeEntity]
     private let presenter: UIViewController
+    private var inProgress = false
+    private var inProgressSubscription: AnyCancellable?
     
-    init(presenter: UIViewController, inboxUseCase: InboxUseCaseProtocol = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
+    init(presenter: UIViewController, myBackupsUseCase: MyBackupsUseCaseProtocol = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
         self.presenter = presenter
-        self.inboxUseCase = inboxUseCase
+        self.myBackupsUseCase = myBackupsUseCase
         self.nodes = nodes
     }
     
-    func isAnyShareNodesBackupNodes() -> Bool {
-        nodes.contains(where: inboxUseCase.isInboxNode)
-    }
-    
-    func areAllShareNodesBackupNodes() -> Bool {
-        nodes.allSatisfy({ inboxUseCase.isInboxNode($0) })
-    }
-    
-    private func presentWarningAlert(title: String, message: String, completion: @escaping () -> Void) {
+    @MainActor
+    private func presentWarningAlert(title: String, message: String, completion: @MainActor @escaping () -> Void) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -33,19 +29,57 @@ final class BackupNodesValidator {
         presenter.present(alert, animated: true, completion: nil)
     }
     
-    func showWarningAlertIfNeeded(completion: @escaping () -> Void) {
-        if areAllShareNodesBackupNodes() {
-            presentWarningAlert(title: Strings.Localizable.permissions,
-                                message: Strings.Localizable.Mybackups.Share.Folder.Warning.message(nodes.count)) {
-                completion()
+    private func sharedBackupNodes() async -> [NodeEntity] {
+        await withTaskGroup(of: NodeEntity?.self) { group -> [NodeEntity] in
+            nodes.forEach { node in
+                group.addTask {
+                    await self.myBackupsUseCase.isBackupNode(node) ? node : nil
+                }
             }
-        } else if isAnyShareNodesBackupNodes() {
-            presentWarningAlert(title: Strings.Localizable.permissions,
-                                message: Strings.Localizable.Dialog.Share.Backup.Non.Backup.Folders.Warning.message) {
-                completion()
+            
+            return await group.reduce(into: [NodeEntity](), {
+                if let node = $1 { $0.append(node) }
+            })
+        }
+    }
+
+    private func showProgressHUDIfNeeded() {
+        inProgress = true
+        inProgressSubscription = Just(Void.self)
+            .delay(for: .seconds(0.3), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                if self.inProgress == true {
+                    SVProgressHUD.show()
+                }
+                self.inProgress = false
             }
-        } else {
-            completion()
+    }
+
+    private func hideProgressHUDIfNeeded() {
+        inProgress = false
+        SVProgressHUD.dismiss()
+    }
+    
+    func showWarningAlertIfNeeded(completion: @MainActor @escaping () -> Void) {
+        Task {
+            showProgressHUDIfNeeded()
+            let backupNodes = await sharedBackupNodes()
+            hideProgressHUDIfNeeded()
+            
+            if backupNodes == nodes {
+                await presentWarningAlert(title: Strings.Localizable.permissions,
+                                          message: Strings.Localizable.Mybackups.Share.Folder.Warning.message(nodes.count)) {
+                    completion()
+                }
+            } else if backupNodes.isNotEmpty {
+                await presentWarningAlert(title: Strings.Localizable.permissions,
+                                          message: Strings.Localizable.Dialog.Share.Backup.Non.Backup.Folders.Warning.message) {
+                    completion()
+                }
+            } else {
+                await completion()
+            }
         }
     }
 }
