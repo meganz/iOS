@@ -4,7 +4,7 @@ struct ChatRoomsEmptyViewState {
     
     let centerImageAsset: ImageAsset
     let centerTitle: String
-    let centerDescription: String
+    let centerDescription: String?
 
     let bottomButtonTitle: String?
     let bottomButtonAction: (() -> Void)?
