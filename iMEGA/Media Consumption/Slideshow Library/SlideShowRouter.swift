@@ -14,12 +14,13 @@ struct SlideShowRouter: Routing {
     }
     
     func build() -> UIViewController {
+        let mediaUseCase = MediaUseCase()
         let slideShowViewModel = SlideShowViewModel(
             dataSource: SlideShowDataSource(
                 currentPhoto: dataProvider.currentPhoto?.toNodeEntity(),
-                nodeEntities: dataProvider.allPhotoEntities,
+                nodeEntities: dataProvider.allPhotoEntities.filter { mediaUseCase.isImage($0.name) },
                 thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-                mediaUseCase: MediaUseCase(),
+                mediaUseCase: mediaUseCase,
                 advanceNumberOfPhotosToLoad: 20,
                 numberOfUnusedPhotosBuffer: 20
             ),
