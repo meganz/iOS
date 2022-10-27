@@ -179,10 +179,12 @@ class ChatViewController: MessagesViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(chatId: UInt64) {
+    convenience init?(chatId: UInt64) {
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
-            fatalError("No chatroom found with chat id \(chatId)")
+            MEGALogDebug("No chatroom found with chat id \(chatId)")
+            return nil
         }
+        
         self.init(chatRoom: chatRoom)
     }
     

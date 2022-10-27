@@ -87,7 +87,8 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     }
     
     func openChatRoom(withChatId chatId: UInt64) {
-        presenter?.present(MEGANavigationController(rootViewController: ChatViewController(chatId: chatId)),
+        guard let chatViewController = ChatViewController(chatId: chatId) else { return }
+        presenter?.present(MEGANavigationController(rootViewController: chatViewController),
                            animated: true)
     }
     

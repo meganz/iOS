@@ -7,7 +7,6 @@
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
-#import "ChatRoomsViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "CustomModalAlertViewController.h"

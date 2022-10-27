@@ -6,36 +6,39 @@ struct ChatRoomView: View {
     @ObservedObject var viewModel: ChatRoomViewModel
     
     var body: some View {
-        if #available(iOS 15.0, *) {
-            ChatRoomContentView(viewModel: viewModel)
-                .swipeActions {
-                    ForEach(swipeActionLabels()) { label in
-                        if let image = UIImage(named: label.imageName)?
-                            .withRenderingMode(.alwaysTemplate)
-                            .withTintColor(.white) {
-                            Button {
-                                label.action()
-                            } label: {
-                                Image(uiImage: image)
+        Group {
+            if #available(iOS 15.0, *) {
+                ChatRoomContentView()
+                    .swipeActions {
+                        ForEach(swipeActionLabels()) { label in
+                            if let image = UIImage(named: label.imageName)?
+                                .withRenderingMode(.alwaysTemplate)
+                                .withTintColor(.white) {
+                                Button {
+                                    label.action()
+                                } label: {
+                                    Image(uiImage: image)
+                                }
+                                .tint(label.backgroundColor)
                             }
-                            .tint(label.backgroundColor)
                         }
                     }
-                }
-                .confirmationDialog("", isPresented: $viewModel.showDNDTurnOnOptions) {
-                    ForEach(viewModel.dndTurnOnOptions(), id: \.self) { dndOption in
-                        Button(dndOption.localizedTitle) {
-                            viewModel.turnOnDNDOption(dndOption)
+                    .confirmationDialog("", isPresented: $viewModel.showDNDTurnOnOptions) {
+                        ForEach(viewModel.dndTurnOnOptions(), id: \.self) { dndOption in
+                            Button(dndOption.localizedTitle) {
+                                viewModel.turnOnDNDOption(dndOption)
+                            }
                         }
                     }
-                }
-        } else {
-            ChatRoomContentView(viewModel: viewModel)
-                .swipeLeftActions(labels: swipeActionLabels().reversed(), buttonWidth: 65)
-                .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
-                    ActionSheet(title: Text(""), buttons: actionSheetButtons())
-                }
+            } else {
+                ChatRoomContentView()
+                    .swipeLeftActions(labels: swipeActionLabels().reversed(), buttonWidth: 65)
+                    .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
+                        ActionSheet(title: Text(""), buttons: actionSheetButtons())
+                    }
+            }
         }
+        .environmentObject(viewModel)
     }
     
     private func actionSheetButtons() -> [ActionSheet.Button] {
@@ -69,14 +72,13 @@ struct ChatRoomView: View {
 }
 
 @available(iOS 14.0, *)
-struct ChatRoomContentView: View {
-    let viewModel: ChatRoomViewModel
-
+fileprivate struct ChatRoomContentView: View {
+    @EnvironmentObject private var viewModel: ChatRoomViewModel
+    
     var body: some View {
         HStack(spacing: 0) {
-            ChatRoomContentAvatarView(primaryAvatar: viewModel.primaryAvatar,
-                                      secondaryAvatar: viewModel.secondaryAvatar)
-            ChatRoomContentDetailsView(viewModel: viewModel)
+            ChatRoomContentAvatarView()
+            ChatRoomContentDetailsView()
         }
         .padding(.trailing, 10)
         .frame(height: 65)
@@ -105,15 +107,15 @@ struct ChatRoomContentView: View {
 }
 
 @available(iOS 14.0, *)
-struct ChatRoomContentDetailsView: View {
-    let viewModel: ChatRoomViewModel
+fileprivate struct ChatRoomContentDetailsView: View {
+    @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
         if viewModel.chatListItem.unreadCount > 0 || viewModel.existsInProgressCallInChatRoom {
             HStack(spacing: 3) {
                 VStack(alignment: .leading, spacing: 4) {
-                    ChatRoomContentTitleView(viewModel: viewModel)
-                    ChatRoomContentDescriptionView(viewModel: viewModel)
+                    ChatRoomContentTitleView()
+                    ChatRoomContentDescriptionView()
                 }
                 
                 Spacer()
@@ -145,7 +147,7 @@ struct ChatRoomContentDetailsView: View {
         } else {
             VStack(spacing: 4) {
                 HStack(alignment: .bottom, spacing: 3) {
-                    ChatRoomContentTitleView(viewModel: viewModel)
+                    ChatRoomContentTitleView()
                     Spacer()
                     
                     if let displayDateString = viewModel.displayDateString {
@@ -155,7 +157,7 @@ struct ChatRoomContentDetailsView: View {
                 }
                 
                 HStack(alignment: .top, spacing: 3) {
-                    ChatRoomContentDescriptionView(viewModel: viewModel)
+                    ChatRoomContentDescriptionView()
                     Spacer()
                 }
             }
@@ -164,9 +166,9 @@ struct ChatRoomContentDetailsView: View {
 }
 
 @available(iOS 14.0, *)
-struct ChatRoomContentTitleView: View {
-    let viewModel: ChatRoomViewModel
-
+fileprivate struct ChatRoomContentTitleView: View {
+    @EnvironmentObject private var viewModel: ChatRoomViewModel
+    
     var body: some View {
         HStack(spacing: 3) {
             Text(viewModel.chatListItem.title ?? "")
@@ -188,8 +190,8 @@ struct ChatRoomContentTitleView: View {
 }
 
 @available(iOS 14.0, *)
-struct ChatRoomContentDescriptionView: View {
-    let viewModel: ChatRoomViewModel
+fileprivate struct ChatRoomContentDescriptionView: View {
+    @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
         if let hybridDescription = viewModel.hybridDescription {
@@ -223,14 +225,14 @@ struct ChatRoomContentDescriptionView: View {
 }
 
 @available(iOS 14.0, *)
-struct ChatRoomContentAvatarView: View {
-    var primaryAvatar: UIImage?
-    var secondaryAvatar: UIImage?
-    @Environment(\.colorScheme) var colorScheme
+fileprivate struct ChatRoomContentAvatarView: View {
+    @EnvironmentObject private var viewModel: ChatRoomViewModel
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         ZStack {
-            if let secondaryAvatar, let primaryAvatar {
+            if let secondaryAvatar = viewModel.secondaryAvatar,
+               let primaryAvatar = viewModel.primaryAvatar {
                 Image(uiImage: secondaryAvatar)
                     .resizable()
                     .scaledToFill()
@@ -248,7 +250,7 @@ struct ChatRoomContentAvatarView: View {
                             .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
                     )
                     .offset(x: 6, y: 6)
-            } else if let primaryAvatar {
+            } else if let primaryAvatar = viewModel.primaryAvatar {
                 Image(uiImage: primaryAvatar)
                     .resizable()
                     .scaledToFill()

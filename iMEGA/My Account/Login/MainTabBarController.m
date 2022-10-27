@@ -125,33 +125,7 @@
 
 - (void)openChatRoomNumber:(NSNumber *)chatNumber {
     if (chatNumber) {
-        self.selectedIndex = TabTypeChat;
-        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
-        ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
-        
-        UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
-        if (rootViewController.presentedViewController) {
-            [rootViewController dismissViewControllerAnimated:YES completion:^{
-                [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-            }];
-        } else {
-            [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-        }
-    }
-}
-
-- (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatID {
-    self.selectedIndex = TabTypeChat;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
-    ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
-    
-    UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
-    if (rootViewController.presentedViewController) {
-        [rootViewController dismissViewControllerAnimated:YES completion:^{
-            [chatRoomsVC openChatRoomWithPublicLink:publicLink chatID:chatID];
-        }];
-    } else {
-        [chatRoomsVC openChatRoomWithPublicLink:publicLink chatID:chatID];
+        [self openChatRoomWithChatId:chatNumber.unsignedLongLongValue];
     }
 }
 
@@ -207,13 +181,6 @@
     MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeCloudDrive];
     CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
     [cloudDriveVC presentScanDocument];
-}
-
-- (void)showStartConversation {
-    self.selectedIndex = TabTypeChat;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeChat];
-    ChatRoomsViewController *chatRoomsViewController = navigationController.viewControllers.firstObject;
-    [chatRoomsViewController showStartConversation];
 }
 
 - (void)showAddContact {

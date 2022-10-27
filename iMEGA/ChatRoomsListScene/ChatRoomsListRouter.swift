@@ -4,6 +4,7 @@ import MEGAData
 @available(iOS 14.0, *)
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     private(set) weak var navigationController: UINavigationController?
+    private weak var chatRoomsListViewController: ChatRoomsListViewController?
     
     func build(isRightToLeftLanguage: Bool) -> UIViewController {
         let viewModel = ChatRoomsListViewModel(
@@ -19,7 +20,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigation.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.chatIcon.image, tag: 2)
         navigationController = navigation
         viewModel.configureMyAvatarManager()
-
+        chatRoomsListViewController = viewController
         return navigation
     }
     
@@ -65,9 +66,43 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     }
         
     func showDetails(forChatId chatId: HandleEntity) {
+        guard let navigationController, let chatViewController = ChatViewController(chatId: chatId) else { return }
+        navigationController.pushViewController(chatViewController, animated: true)
+    }
+    
+    func openChatRoom(withChatId chatId: ChatId, publicLink: String?, unreadMessageCount: Int) {
         guard let navigationController else { return }
-        let chatRoomViewController = ChatViewController(chatId: chatId)
-        navigationController.pushViewController(chatRoomViewController, animated: true)
+        
+        if let chatViewController = navigationController.viewControllers[safe: 1] as? ChatViewController {
+            let chatRoomAlreadyOpen: Bool
+            if let publicLink {
+                chatRoomAlreadyOpen = chatViewController.publicChatWithLinkCreated && chatViewController.publicChatLink?.absoluteString == publicLink
+            } else {
+                chatRoomAlreadyOpen = chatViewController.chatRoom.chatId == chatId
+            }
+            
+            if chatRoomAlreadyOpen {
+                if navigationController.viewControllers.count != 2 {
+                    navigationController.popToViewController(chatViewController, animated: true)
+                }
+                NotificationCenter.default.post(name: .MEGAOpenChatRoomFromPush, object: nil)
+                return
+            } else {
+                chatViewController.closeChatRoom()
+                navigationController.popViewController(animated: false)
+            }
+        }
+        
+        if let chatViewController = ChatViewController(chatId: chatId) {
+            chatRoomsListViewController?.updateBackBarButtonItem(withUnreadMessages: unreadMessageCount)
+            
+            if let publicLink {
+                chatViewController.publicChatWithLinkCreated = true
+                chatViewController.publicChatLink = URL(string: publicLink)
+            }
+            
+            navigationController.pushViewController(chatViewController, animated: true)
+        }
     }
     
     func present(alert: UIAlertController, animated: Bool) {

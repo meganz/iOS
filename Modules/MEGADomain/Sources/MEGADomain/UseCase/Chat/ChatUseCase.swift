@@ -12,6 +12,7 @@ public protocol ChatUseCaseProtocol {
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
+    func unreadChatMessagesCount() -> Int
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
 }
 
@@ -61,6 +62,10 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func archivedChatListCount() -> UInt {
         chatRepo.archivedChatListCount()
+    }
+    
+    public func unreadChatMessagesCount() -> Int {
+        chatRepo.unreadChatMessagesCount()
     }
     
     public func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never> {
