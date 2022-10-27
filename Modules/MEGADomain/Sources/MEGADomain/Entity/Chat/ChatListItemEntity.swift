@@ -1,8 +1,6 @@
 import Foundation
 
-public struct ChatListItemEntity: Identifiable, Hashable {
-    public var id: HandleEntity
-    
+public struct ChatListItemEntity {
     public let chatId: HandleEntity
     public let title: String?
     public let changeType: ChangeType?
@@ -47,7 +45,6 @@ public struct ChatListItemEntity: Identifiable, Hashable {
     }
     
     public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity, searchString: String) {
-        self.id = chatId
         self.chatId = chatId
         self.title = title
         self.changeType = changeType
@@ -68,5 +65,11 @@ public struct ChatListItemEntity: Identifiable, Hashable {
         self.lastMessagePriv = lastMessagePriv
         self.lastMessageHandle = lastMessageHandle
         self.searchString = searchString
+    }
+}
+
+extension ChatListItemEntity: Equatable {
+    public static func == (lhs: ChatListItemEntity, rhs: ChatListItemEntity) -> Bool {
+        lhs.chatId == rhs.chatId
     }
 }

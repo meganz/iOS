@@ -6,7 +6,7 @@ final class MyBackupsUseCaseTests: XCTestCase {
     let backupNodeEntity = NodeEntity(name: "backup", handle: 1, size: UInt64(1.3))
     
     private lazy var mockNodes: [NodeEntity] = {
-        [NodeEntity(name: "other2", handle: 2),
+        [NodeEntity(name: "other2", handle: 2), 
          NodeEntity(name: "other3", handle: 3),
          NodeEntity(name: "other4", handle: 4)]
     }()
@@ -22,7 +22,7 @@ final class MyBackupsUseCaseTests: XCTestCase {
         XCTAssertFalse(isNotMyBackupsRootNode)
     }
     
-    func testMyBackups_ContainsInboxRootNode() async {
+    func testMyBackups_ContainsMyBackupsRootNode() async {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
         let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         var nodes = mockNodes
@@ -64,13 +64,13 @@ final class MyBackupsUseCaseTests: XCTestCase {
         XCTAssertFalse(isBackupRootNodeNotEmpty)
     }
     
-    func testMyBackups_IsInInbox() async {
+    func testMyBackups_IsInBackups() async {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
         let nodeRepo = MockNodeRepository(isNodeDescendant: true)
         let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: nodeRepo)
         
-        let isBackupsNode = await sut.isBackupNode(NodeEntity())
-        XCTAssertTrue(isBackupsNode)
+        let isBackupNode = await sut.isBackupNode(NodeEntity())
+        XCTAssertTrue(isBackupNode)
     }
 }
 

@@ -90,6 +90,6 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     }
     
     public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
-        nil
+        cachedPreviewURL.absoluteString
     }
 }

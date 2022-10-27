@@ -32,16 +32,17 @@ class NodeActionViewController: ActionSheetViewController {
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isIncoming: Bool = false,
+        isBackupNode: Bool,
         sender: Any) {
             guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
-            self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, sender: sender)
+            self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, isBackupNode: isBackupNode, sender: sender)
         }
     
     init?(
         nodeHandle: HandleEntity,
         delegate: NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
-        isInboxNode: Bool = false,
+        isBackupNode: Bool = false,
         sender: Any) {
         
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
@@ -57,11 +58,11 @@ class NodeActionViewController: ActionSheetViewController {
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .setIsInboxNode(isInboxNode)
+            .setIsBackupNode(isBackupNode)
             .build()
     }
 
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -73,10 +74,11 @@ class NodeActionViewController: ActionSheetViewController {
         
         self.setupActions(node: node,
                           displayMode: displayMode,
-                          isIncoming: isIncoming)
+                          isIncoming: isIncoming,
+                          isBackupNode: isBackupNode)
     }
     
-    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsAnyInboxNode: Bool = false, sender: Any) {
+    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
         self.nodes = nodes
         self.displayMode = displayMode
         self.delegate = delegate
@@ -99,7 +101,7 @@ class NodeActionViewController: ActionSheetViewController {
             actions = NodeActionBuilder()
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsFavourite(true)
-                .setIsInboxNode(containsAnyInboxNode)
+                .setIsBackupNode(containsABackupNode)
                 .multiselectAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
@@ -107,12 +109,12 @@ class NodeActionViewController: ActionSheetViewController {
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setLinkedNodeCount(linkedNodeCount)
                 .setIsAllLinkedNode(linkedNodeCount == nodesCount)
-                .setIsInboxNode(containsAnyInboxNode)
+                .setIsBackupNode(containsABackupNode)
                 .multiselectBuild()
         }
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -124,10 +126,11 @@ class NodeActionViewController: ActionSheetViewController {
         
         self.setupActions(node: node,
                           displayMode: displayMode,
-                          isInVersionsView: isInVersionsView)
+                          isInVersionsView: isInVersionsView,
+                          isBackupNode: isBackupNode)
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, isInboxNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -141,11 +144,11 @@ class NodeActionViewController: ActionSheetViewController {
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
             .setViewMode(viewMode)
-            .setIsInboxNode(isInboxNode)
+            .setIsBackupNode(isBackupNode)
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, isInboxNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -161,11 +164,11 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsLink(isLink)
             .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
-            .setIsRestorable(isInboxNode ? false : node.mnz_isRestorable())
+            .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
             .setVersionCount(node.mnz_numberOfVersions())
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
-            .setIsInboxNode(isInboxNode)
+            .setIsBackupNode(isBackupNode)
             .build()
     }
     
@@ -276,13 +279,11 @@ class NodeActionViewController: ActionSheetViewController {
         separatorLineView.backgroundColor = tableView.separatorColor
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false) {
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool) {
         let isImageOrVideoFile = node.name?.mnz_isVisualMediaPathExtension == true
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         let isTakedown = node.isTakenDown()
-        let nodeInboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isInboxNode = nodeInboxUC.isInboxNode(node.toNodeEntity())
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
@@ -293,8 +294,8 @@ class NodeActionViewController: ActionSheetViewController {
             .setVersionCount(node.mnz_numberOfVersions())
             .setIsFavourite(node.isFavourite)
             .setLabel(node.label)
-            .setIsInboxNode(isInboxNode)
-            .setIsRestorable(isInboxNode ? false : node.mnz_isRestorable())
+            .setIsBackupNode(isBackupNode)
+            .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
             .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
             .setisIncomingShareChildView(isIncoming)
             .setIsExported(node.isExported())

@@ -3,12 +3,18 @@ import MEGASwiftUI
 
 @available(iOS 14.0, *)
 struct ChatRoomsListView: View {
-    @ObservedObject var viewModel: ChatRoomsListViewModel
+    @Environment(\.editMode) private var editMode
     
+    @ObservedObject var viewModel: ChatRoomsListViewModel
+
     var body: some View {
         VStack (spacing: 0) {
             ChatTabsSelectorView(chatViewMode: viewModel.chatViewMode) { mode in
                 viewModel.selectChatMode(mode)
+            }
+            
+            if let activeCallViewModel = viewModel.activeCallViewModel {
+                ChatRoomActiveCallView(viewModel: activeCallViewModel)
             }
             
             if viewModel.isConnectedToNetwork == false {
@@ -17,10 +23,10 @@ struct ChatRoomsListView: View {
                 List {
                     SearchBarView(
                         text: $viewModel.searchText,
-                        searchString: Strings.Localizable.search,
-                        cancelString: Strings.Localizable.cancel)
+                        placeholder: Strings.Localizable.search,
+                        cancelTitle: Strings.Localizable.cancel)
                     
-                    if let archivedChatsViewState = viewModel.archiveChatsViewState() {
+                    if let archivedChatsViewState = viewModel.archiveChatsViewState(), editMode?.wrappedValue == .inactive {
                         ChatRoomsTopRowView(state: archivedChatsViewState)
                             .onTapGesture {
                                 archivedChatsViewState.action()
@@ -29,23 +35,26 @@ struct ChatRoomsListView: View {
                             .padding(10)
                     }
                     
-                    let contactsOnMega = viewModel.contactsOnMegaViewState()
-                    ChatRoomsTopRowView(state: contactsOnMega)
-                    .onTapGesture {
-                        contactsOnMega.action()
+                    if editMode?.wrappedValue == .inactive {
+                        let contactsOnMega = viewModel.contactsOnMegaViewState()
+                        ChatRoomsTopRowView(state: contactsOnMega)
+                            .onTapGesture {
+                                contactsOnMega.action()
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .padding(10)
                     }
-                    .listRowInsets(EdgeInsets())
-                    .padding(10)
                                         
-                    ForEach(chatRooms, id: \.self) { chatRoom in
+                    ForEach(chatRooms) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
                             .listRowInsets(EdgeInsets())
+                            .padding(.leading, editMode?.wrappedValue == .active ? -40 : 0)
                     }
                 }
+                .animation(.default, value: chatRooms)
                 .listStyle(PlainListStyle())
-                .gesture(DragGesture().onChanged({ _ in
-                    UIApplication.shared.windows.forEach { $0.endEditing(false) }
-                }))
+                Rectangle()
+                    .frame(maxWidth: .infinity, maxHeight: viewModel.bottomViewHeight)
             } else {
                 ChatRoomsEmptyView(emptyViewState: viewModel.emptyViewState())
             }

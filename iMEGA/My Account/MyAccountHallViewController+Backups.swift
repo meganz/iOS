@@ -4,11 +4,11 @@ extension MyAccountHallViewController {
     @objc func checkIfBackupRootNodeExistsAndIsNotEmpty() {
         Task { [weak self] in
             guard let self else { return }
-            let inboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             
-            self.myBackupsNode = try await inboxUC.myBackupRootNode().toMEGANode(in: MEGASdkManager.sharedMEGASdk())
+            self.myBackupsNode = try await myBackupsUseCase.myBackupsRootNode().toMEGANode(in: MEGASdkManager.sharedMEGASdk())
             
-            if self.myBackupsNode != nil, await !inboxUC.isBackupRootNodeEmpty() {
+            if self.myBackupsNode != nil, await !myBackupsUseCase.isMyBackupsRootNodeEmpty() {
                 self.isBackupSectionVisible = true
                 self.tableView?.reloadData()
             }

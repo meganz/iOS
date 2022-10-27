@@ -289,7 +289,7 @@ final class CancellableTransferViewModel: ViewModelType {
 
         downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
                                                       filename: transferViewEntity.name,
-                                                      transferMetaData: nil,
+                                                      metaData: nil,
                                                       startFirst: transferViewEntity.priority)
         { transferEntity in
             transferViewEntity.state = transferEntity.state

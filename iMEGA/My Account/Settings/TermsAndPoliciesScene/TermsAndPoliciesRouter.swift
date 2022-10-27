@@ -26,33 +26,16 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     
     func build() -> UIViewController {
         let viewModel = TermsAndPoliciesViewModel(router: self)
-        if #available(iOS 14.0, *) {
-            let termsAndPoliciesView = TermsAndPoliciesView(viewModel: viewModel)
-            let hostingController = UIHostingController(rootView: termsAndPoliciesView)
-            baseViewController = hostingController
-            baseViewController?.title = Strings.Localizable.Settings.Section.termsAndPolicies
-            
-            
-            return hostingController
-        } else {
-            guard let termsAndPoliciesTVC = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "TermsAndPoliciesTableViewControllerID") as? TermsAndPoliciesTableViewController else {
-                fatalError("Could not instantiate TermsAndPoliciesTableViewController")
-            }
-            
-            termsAndPoliciesTVC.viewModel = viewModel
-            termsAndPoliciesTVC.router = self
-            
-            baseViewController = termsAndPoliciesTVC
-            
-            return termsAndPoliciesTVC
-        }
+        let termsAndPoliciesView = TermsAndPoliciesView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: termsAndPoliciesView)
+        baseViewController = hostingController
+        baseViewController?.title = Strings.Localizable.Settings.Section.termsAndPolicies
+        
+        return hostingController
     }
     
     @objc func start() {
-        let viewContoller = build()
-        if let navigationController = navigationController {
-            navigationController.pushViewController(viewContoller, animated: true)
-        }
+        navigationController?.pushViewController(build(), animated: true)
     }
     
     func didTap(on source: TermsAndPoliciesSource) {

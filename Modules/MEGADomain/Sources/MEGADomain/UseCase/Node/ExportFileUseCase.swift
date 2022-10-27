@@ -99,9 +99,8 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
             completion(.failure(.notEnoughSpace))
             return
         }
-        let appDataToExportFile = AppDataEntity.exportFile.rawValue
         let url = mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalImageURL(for: node) : fileCacheRepository.tempFileURL(for: node)
-        downloadFileRepository.download(nodeHandle: node.handle, to: url, appData: appDataToExportFile) { result in
+        downloadFileRepository.download(nodeHandle: node.handle, to: url, metaData: .exportFile) { result in
             processDownloadThenShareResult(result: result, completion: completion)
         }
     }

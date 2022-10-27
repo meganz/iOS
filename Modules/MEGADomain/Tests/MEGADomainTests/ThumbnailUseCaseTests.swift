@@ -4,8 +4,8 @@ import MEGADomainMock
 
 final class ThumbnailUseCaseTests: XCTestCase {
 
-    func testCachedPreviewOrOriginalPath_onSlideShow_shouldReturnNil() throws {
+    func testCachedPreviewOrOriginalPath_onSlideShow_shouldReturnNotNil() throws {
         let sut = MockThumbnailUseCase().cachedPreviewOrOriginalPath(for: NodeEntity(handle: 1))
-        XCTAssertNil(sut)
+        XCTAssertNotNil(sut)
     }
 }

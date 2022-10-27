@@ -67,11 +67,11 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(AppDataEntity.exportFile.rawValue) ?? false
+        transfersRepository.isExportFileTransfer(transfer)
     }
     
     private func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
-        transfer.appData?.contains(AppDataEntity.saveInPhotos.rawValue) ?? false
+        transfersRepository.isSaveToPhotosAppTransfer(transfer)
     }
     
     public func documentsDirectory() -> URL {

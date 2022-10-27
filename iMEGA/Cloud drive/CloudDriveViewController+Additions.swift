@@ -16,9 +16,11 @@ extension CloudDriveViewController {
             return
         }
         
-        let inboxUseCase = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let nodeActionsViewController = NodeActionViewController(nodes: nodes, delegate: self, displayMode: displayMode, isIncoming: isIncomingShareChildView, containsAnyInboxNode: inboxUseCase.containsAnyInboxNode(nodes.toNodeEntities()), sender: sender)
-        present(nodeActionsViewController, animated: true, completion: nil)
+        Task {
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let nodeActionsViewController = NodeActionViewController(nodes: nodes, delegate: self, displayMode: displayMode, isIncoming: isIncomingShareChildView, containsABackupNode: await myBackupsUseCase.containsABackupNode(nodes.toNodeEntities()), sender: sender)
+            present(nodeActionsViewController, animated: true, completion: nil)
+        }
     }
     
     @objc func showBrowserNavigation(for nodes: [MEGANode], action: BrowserAction) {
@@ -62,36 +64,50 @@ extension CloudDriveViewController {
         showBrowserNavigation(for: nodes, action: .move)
     }
     
+    private func shareType(for nodes: [MEGANode]) -> MEGAShareType {
+        var currentNodeShareType: MEGAShareType = .accessUnknown
+    
+        nodes.forEach { node in
+            currentNodeShareType = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            
+            if currentNodeShareType == .accessRead && currentNodeShareType.rawValue < shareType.rawValue {
+                return
+            }
+            
+            if (currentNodeShareType == .accessReadWrite && currentNodeShareType.rawValue < shareType.rawValue) ||
+                (currentNodeShareType == .accessFull && currentNodeShareType.rawValue < shareType.rawValue) {
+                shareType = currentNodeShareType
+            }
+        }
+        
+        return shareType
+    }
+    
     @objc func toolbarActions(nodeArray: [MEGANode]?) {
         guard let nodeArray = nodeArray, !nodeArray.isEmpty else {
             return
         }
         
-        shareType = .accessOwner
-        
-        let nodeInboxUC = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-
-        if let parentNode = parentNode, nodeInboxUC.isInboxNode(parentNode.toNodeEntity()) {
-            shareType = .accessRead
-        } else {
-            var currentNodeShareType: MEGAShareType = .accessUnknown
+        Task {
+            shareType = .accessOwner
             
-            nodeArray.forEach { node in
-                currentNodeShareType = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            var isBackupNode = false
+            
+            if let parentNode {
+                let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                isBackupNode = await myBackupsUC.isBackupNode(parentNode.toNodeEntity())
                 
-                if currentNodeShareType == .accessRead && currentNodeShareType.rawValue < shareType.rawValue {
-                    shareType = currentNodeShareType
-                    return
+                if isBackupNode {
+                    shareType = .accessRead
+                } else {
+                    shareType = shareType(for: nodeArray)
                 }
-                
-                if (currentNodeShareType == .accessReadWrite && currentNodeShareType.rawValue < shareType.rawValue) ||
-                    (currentNodeShareType == .accessFull && currentNodeShareType.rawValue < shareType.rawValue) {
-                    shareType = currentNodeShareType
-                }
+            } else {
+                shareType = shareType(for: nodeArray)
             }
+            
+            toolbarActions(for: shareType, isBackupNode: isBackupNode)
         }
-        
-        toolbarActions(for: shareType)
     }
     
     @objc func removeLinksForNodes(_ nodes: [MEGANode]) {

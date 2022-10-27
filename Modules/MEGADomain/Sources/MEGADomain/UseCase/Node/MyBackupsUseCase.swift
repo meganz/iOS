@@ -1,6 +1,7 @@
 public protocol MyBackupsUseCaseProtocol {
     func containsABackupNode(_ nodes: [NodeEntity]) async -> Bool
     func isBackupNode(_ node: NodeEntity) async -> Bool
+    func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool
     func isMyBackupsNodeChild(_ node: NodeEntity) async -> Bool
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool
     func isMyBackupsRootNodeEmpty() async -> Bool
@@ -42,6 +43,11 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
             
             return await group.contains(true)
         }
+    }
+    
+    public func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool {
+        guard let node = nodeRepository.nodeForHandle(nodeHandle) else { return false }
+        return await isBackupNode(node)
     }
     
     public func isMyBackupsNodeChild(_ node: NodeEntity) async -> Bool {

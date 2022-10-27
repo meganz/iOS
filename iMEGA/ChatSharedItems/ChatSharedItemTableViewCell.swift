@@ -39,11 +39,11 @@ class ChatSharedItemTableViewCell: UITableViewCell {
             if FileManager.default.fileExists(atPath: thumbnailFilePath) {
                 thumbnailImage.image = UIImage(contentsOfFile: thumbnailFilePath)
             } else {
-                MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGenericRequestDelegate.init(completion: { [weak self] request, error in
-                    if request.nodeHandle == node.handle {
+                MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: RequestDelegate { [weak self] result in
+                    if case .success(let request) = result, request.nodeHandle == node.handle {
                         self?.thumbnailImage.image = UIImage(contentsOfFile: request.file)
                     }
-                }))
+                })
             }
         } else {
             thumbnailImage.image = NodeAssetsManager.shared.icon(for: node)

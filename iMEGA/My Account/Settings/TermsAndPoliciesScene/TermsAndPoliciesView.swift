@@ -1,7 +1,6 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct TermsAndPoliciesView: View {
     let viewModel: TermsAndPoliciesViewModel
     var body: some View {

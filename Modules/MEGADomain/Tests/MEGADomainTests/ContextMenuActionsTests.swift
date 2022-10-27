@@ -131,6 +131,44 @@ final class ContextMenuActionsTests: XCTestCase {
             
     }
     
+    func testDisplayMenu_isViewInFolder() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .display))
+                                                .setViewMode(.list)
+                                                .setSortType(.defaultAsc)
+                                                .setIsViewInFolder(true)
+                                                .build())
+        
+        let excludedActions: [DisplayActionEntity] = [.select, .clearRubbishBin, .mediaDiscovery, .filter, .sort]
+        
+        XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
+                                                                                                                .allCases
+                                                                                                                .filter { !excludedActions.contains($0) })
+        
+        XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
+                                                                                                        .allValid)
+            
+    }
+
+    func testDisplayMenuRubbishBin_isViewInFolder() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .display))
+                                                .setViewMode(.list)
+                                                .setSortType(.defaultAsc)
+                                                .setIsRubbishBinFolder(true)
+                                                .setIsViewInFolder(true)
+                                                .build())
+        
+        let excludedActions: [DisplayActionEntity] = [.select, .mediaDiscovery, .filter, .sort, .clearRubbishBin]
+    
+        XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
+                                                                                                                .allCases
+                                                                                                                .filter { !excludedActions.contains($0) })
+                                                            
+        XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
+                                                                                                        .allValid)
+    }
+    
     func testDisplayMenuRubbishBin() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .display))
@@ -169,12 +207,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                                                         .filter { !excludedSortOptions.contains($0) })
     }
     
-    func testDisplayMenuInboxNode() throws {
+    func testDisplayMenuMyBackupsNode() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .display))
                                                 .setAccessLevel(.owner)
                                                 .setIsAFolder(true)
-                                                .setIsInboxNode(true)
+                                                .setIsMyBackupsNode(true)
                                                 .build())
 
         let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort]
@@ -187,12 +225,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                                                         .allValid)
     }
     
-    func testDisplayMenuInboxChild() throws {
+    func testDisplayMenuMyBackupsChild() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .display))
                                                 .setAccessLevel(.owner)
                                                 .setIsAFolder(true)
-                                                .setIsInboxChild(true)
+                                                .setIsMyBackupsChild(true)
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing]

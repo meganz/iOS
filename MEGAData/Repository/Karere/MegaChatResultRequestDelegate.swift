@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class MEGAChatResultRequestDelegate: NSObject, MEGAChatRequestDelegate {
     
     private let completion: (Result<MEGAChatRequest, CallErrorEntity>) -> Void

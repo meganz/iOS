@@ -46,6 +46,16 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         }
     }
     
+    func createAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity?, avatarBackgroundHexColor: String, backgroundGradientHexColor: String?, name: String, isRightToLeftLanguage: Bool) async throws -> UIImage {
+        createAvatarCompletion?(handle)
+        switch result {
+        case .success(let image):
+            return image
+        case .failure(let error):
+            throw error
+        }
+    }
+    
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         avatarChangePublisher.eraseToAnyPublisher()
     }

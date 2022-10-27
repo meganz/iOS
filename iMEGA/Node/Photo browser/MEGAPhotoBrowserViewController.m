@@ -70,7 +70,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node {
     PhotoBrowserDataProvider *provider = [[PhotoBrowserDataProvider alloc] initWithCurrentPhoto:node allPhotos:mediaNodesArray sdk:api];
-
+    
     MEGAPhotoBrowserViewController *photoBrowser = [self photoBrowserWithProvider:provider api:api displayMode:displayMode];
     [photoBrowser updateProviderNodeEntitiesWithNodes: mediaNodesArray];
     return photoBrowser;
@@ -131,7 +131,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeSharedItem:
             [self activateSlideShowButton];
             break;
-
+            
         case DisplayModeRubbishBin:
         case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
@@ -283,7 +283,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.dataProvider.count, self.scrollView.frame.size.height);
-
+    
     [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
     self.scrollView.contentOffset = CGPointMake(self.dataProvider.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
     [self reloadTitle];
@@ -518,7 +518,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         [self resizeImageView:(UIImageView *)view];
         
         [self configLiveTextLayout];
-
+        
         [self startLiveTextAnalysisFrom:self.imageViewsCache];
     }
 }
@@ -543,9 +543,18 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
+                
                 [imageView sd_setImageWithURL:[NSURL fileURLWithPath: temporaryImagePath]
-                             placeholderImage: placeHolderImage
+                             placeholderImage:placeHolderImage
                                     completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    CGSize placeHolderImageSize = placeHolderImage.size;
+                    CGSize imageSize = image.size;
+                    
+                    // To avoid blurry image
+                    if (placeHolderImageSize.width * placeHolderImageSize.height > imageSize.width * imageSize.height) {
+                        [imageView setImage:placeHolderImage];
+                    }
+                    
                     [self startLiveTextAnalysisFor:imageView in:index];
                 }];
             } else {
@@ -783,8 +792,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return;
     }
     
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView: [self isPreviewingVersion] sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView:[self isPreviewingVersion] isBackupNode:isBackupNode sender:sender];
+            [self presentViewController:nodeActions animated:YES completion:nil];
+        });
+    }];
 }
 
 - (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender {
@@ -851,7 +864,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if (node == nil) {
         return;
     }
-        
+    
     if (self.displayMode == DisplayModeChatAttachment) {
         [self exportMessageFileFrom:node messageId:self.messageId chatId:self.chatId sender:sender];
     } else {
@@ -1020,7 +1033,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
         
         [self configLiveTextLayout];
-
+        
         [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
@@ -1291,6 +1304,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self didPressForwardbarButton:self.customActionsButton];
             break;
             
+        case MegaNodeActionTypeViewInFolder:
+            [self viewNodeInFolder:node];
+            break;
+            
+        case MegaNodeActionTypeClear:
+            [self clearNodeOnTransfers:node];
+            [self dismissViewControllerAnimated:true completion:nil];
+            break;
+
         default:
             break;
     }

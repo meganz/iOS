@@ -9,16 +9,19 @@ extension ContactsViewController {
             searchController.isActive = false
         }
         
-        let inboxUseCase = InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        if inboxUseCase.containsAnyInboxNode(nodes.toNodeEntities()) {
-            shareNodes(withLevel: .accessRead)
-        } else {
-            selectPermissions(fromButton: shareFolderWithBarButtonItem)
+        Task {
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            
+            if await myBackupsUseCase.containsABackupNode(nodes.toNodeEntities()) {
+                shareNodes(withLevel: .accessRead)
+            } else {
+                selectPermissions(fromButton: shareFolderWithBarButtonItem)
+            }
         }
     }
     
     @objc func showBackupNodesWarningIfNeeded(completion: @escaping () -> Void) {
-        BackupNodesValidator(presenter: self, inboxUseCase: InboxUseCase(inboxRepository: InboxRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() {
+        BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() {
             completion()
         }
     }

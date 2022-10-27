@@ -1,4 +1,4 @@
-enum CallErrorEntity: Error {
+public enum CallErrorEntity: Error {
     case generic
     case tooManyParticipants
     case chatLocalVideoNotEnabled
