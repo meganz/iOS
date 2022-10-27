@@ -178,13 +178,37 @@ final class ChatRoomsListViewModel: ObservableObject {
             }
     }
     
-    func emptyViewState() -> ChatRoomsEmptyViewState {
+    func searchEmptyViewState() -> ChatRoomsEmptyViewState {
+        ChatRoomsEmptyViewState(
+            contactsOnMega: nil,
+            centerImageAsset: Asset.Images.EmptyStates.searchEmptyState,
+            centerTitle: Strings.Localizable.noResults,
+            centerDescription: nil,
+            bottomButtonTitle: nil,
+            bottomButtonAction: nil,
+            bottomButtonMenus: nil
+        )
+    }
+    
+    func noNetworkEmptyViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
             contactsOnMega: contactsOnMegaViewState(),
-            centerImageAsset: isConnectedToNetwork ? (chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState) : Asset.Images.EmptyStates.noInternetEmptyState,
+            centerImageAsset: Asset.Images.EmptyStates.noInternetEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
-            bottomButtonTitle: isConnectedToNetwork ? (chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title) : nil,
+            bottomButtonTitle: nil,
+            bottomButtonAction: nil,
+            bottomButtonMenus: nil
+        )
+    }
+    
+    func emptyChatRoomsViewState() -> ChatRoomsEmptyViewState {
+        ChatRoomsEmptyViewState(
+            contactsOnMega: contactsOnMegaViewState(),
+            centerImageAsset: chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState,
+            centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
+            centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
+            bottomButtonTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title,
             bottomButtonAction: { [weak self] in
                 guard let self else { return }
                 if self.chatViewMode == .chats {

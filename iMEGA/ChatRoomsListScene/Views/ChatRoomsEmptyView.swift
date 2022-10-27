@@ -42,7 +42,7 @@ fileprivate struct ChatRoomsEmptyCenterView: View {
     
     let imageAsset: ImageAsset?
     let title: String
-    let description: String
+    let description: String?
     
     var body: some View {
         VStack {
@@ -59,10 +59,12 @@ fileprivate struct ChatRoomsEmptyCenterView: View {
                 .font(.body)
                 .padding(.bottom, 5)
             
-            Text(description)
-                .font(.footnote)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 30)
+            if let description {
+                Text(description)
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 30)
+            }
         }
     }
 }
