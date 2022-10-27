@@ -99,7 +99,7 @@ final class SlideShowViewModel: ViewModelType {
         dataSource.photos.removeAll()
         dataSource.startInitialDownload(false)
         playbackStatus = .playing
-        currentSlideNumber = -1
+        currentSlideNumber = 0
         invokeCommand?(.restart)
     }
     
