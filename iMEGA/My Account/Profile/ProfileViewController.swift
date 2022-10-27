@@ -270,7 +270,7 @@ enum SessionSectionRow: Int {
     }
     
     func rowsForProfileSection() -> [ProfileSectionRow] {
-        let isBusiness = MEGASdkManager.sharedMEGASdk().isBusinessAccount
+        let isBusiness = MEGASdkManager.sharedMEGASdk().isAccountType(.business)
         let isMasterBusiness = MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount
         let isSmsAllowed = MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock
         var profileRows = [ProfileSectionRow]()
@@ -294,7 +294,7 @@ enum SessionSectionRow: Int {
     }
     
     func rowsForPlanSection() -> [PlanSectionRow] {
-        if MEGASdkManager.sharedMEGASdk().isBusinessAccount {
+        if MEGASdkManager.sharedMEGASdk().isAccountType(.business) {
             return [.upgrade, .role]
         } else {
             return [.upgrade]
@@ -609,8 +609,8 @@ extension ProfileViewController: UITableViewDelegate {
         case .plan:
             switch rowsForPlanSection()[indexPath.row] {
             default:
-                if !MEGASdkManager.sharedMEGASdk().isBusinessAccount &&
-                    !MEGASdkManager.sharedMEGASdk().isProFlexiAccount {
+                if !MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
+                    !MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi) {
                     guard let navigationController = navigationController else {
                         return
                     }
