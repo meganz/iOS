@@ -18,7 +18,8 @@ extension AppDelegate {
             visibleViewController is LoginViewController ||
             visibleViewController is SFSafariViewController { return }
 
-        if MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active {
+        if MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
+            MEGASdkManager.sharedMEGASdk().businessStatus != .active {
             return
         }
         
@@ -57,7 +58,11 @@ extension AppDelegate {
                 return //Two Factor Authentication Enabled
             }
 
-            if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController || UIApplication.mnz_visibleViewController() is CustomModalAlertViewController || UIApplication.mnz_visibleViewController() is BusinessExpiredViewController || (MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
+            if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
+                UIApplication.mnz_visibleViewController() is CustomModalAlertViewController ||
+                UIApplication.mnz_visibleViewController() is BusinessExpiredViewController ||
+                (MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
+                 MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
                 return
             }
             
