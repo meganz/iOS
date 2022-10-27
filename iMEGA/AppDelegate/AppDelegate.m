@@ -30,7 +30,6 @@
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "AchievementsViewController.h"
-#import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"

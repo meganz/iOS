@@ -22,6 +22,7 @@ protocol ChatRoomsListRouting {
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
     func showDetails(forChatId chatId: HandleEntity)
+    func openChatRoom(withChatId chatId: ChatId, publicLink: String?, unreadMessageCount: Int)
     func present(alert: UIAlertController, animated: Bool)
     func presentMoreOptionsForChat(
         withDNDEnabled dndEnabled: Bool,
@@ -37,7 +38,7 @@ protocol ChatRoomsListRouting {
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
-    private let router: ChatRoomsListRouting
+    let router: ChatRoomsListRouting
     private let chatUseCase: ChatUseCaseProtocol
     private let contactsUseCase: ContactsUseCaseProtocol
     private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol

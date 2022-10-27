@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
 
 - (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;
-- (void)openChatRoomWithPublicLink:(NSString *)publicLink chatID:(uint64_t)chatNumber;
 
 - (void)showAchievements;
 - (void)showFavouritesNodeWithHandle:(nullable NSString *)base64handle;
@@ -29,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showRecents;
 - (void)showUploadFile;
 - (void)showScanDocument;
-- (void)showStartConversation;
 - (void)showAddContact;
 
 - (void)setBadgeValueForChats;

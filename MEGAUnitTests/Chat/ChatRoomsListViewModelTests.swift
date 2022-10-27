@@ -108,6 +108,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showGroupChatInfo_calledTimes = 0
     var showContactDetailsInfo_calledTimes = 0
     var showArchivedChatRooms_calledTimes = 0
+    var openChatRoom_calledTimes = 0
     
     var navigationController: UINavigationController?
     
@@ -165,5 +166,9 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
     func joinActiveCall(_ call: MEGADomain.CallEntity) {
         joinActiveCall_calledTimes += 1
+    }
+    
+    func openChatRoom(withChatId chatId: MEGA.ChatId, publicLink: String?, unreadMessageCount: Int) {
+        openChatRoom_calledTimes += 1
     }
 }

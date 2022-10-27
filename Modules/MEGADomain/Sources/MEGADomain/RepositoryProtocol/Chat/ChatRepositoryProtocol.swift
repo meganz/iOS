@@ -11,5 +11,6 @@ public protocol ChatRepositoryProtocol {
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
+    func unreadChatMessagesCount() -> Int
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
 }

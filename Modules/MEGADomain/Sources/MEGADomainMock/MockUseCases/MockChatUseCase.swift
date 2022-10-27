@@ -12,6 +12,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never>
     public var items: [ChatListItemEntity]?
     public var archivedChatsCount: UInt = 0
+    public var totalUnreadChats = 0
     
     public init(
         fullName: String? = nil,
@@ -71,6 +72,10 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func archivedChatListCount() -> UInt {
         archivedChatsCount
+    }
+    
+    public func unreadChatMessagesCount() -> Int {
+        totalUnreadChats
     }
     
     public func monitorChatCallStatusUpdate() -> AnyPublisher<MEGADomain.CallEntity, Never> {

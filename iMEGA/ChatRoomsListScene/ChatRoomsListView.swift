@@ -48,7 +48,6 @@ struct ChatRoomsListView: View {
                     ForEach(chatRooms) { chatRoom in
                         ChatRoomView(viewModel: chatRoom)
                             .listRowInsets(EdgeInsets())
-                            .padding(.leading, editMode?.wrappedValue == .active ? -40 : 0)
                     }
                 }
                 .animation(.default, value: chatRooms)

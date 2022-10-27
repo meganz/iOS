@@ -65,8 +65,11 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     }
     
     func openChatRoom(withChatId chatId: UInt64) {
-        viewControllerToPresent?.present(MEGANavigationController(rootViewController: ChatViewController(chatId: chatId)),
-                           animated: true)
+        guard let chatViewController = ChatViewController(chatId: chatId) else { return }
+        viewControllerToPresent?.present(
+            MEGANavigationController(rootViewController: chatViewController),
+            animated: true
+        )
     }
 
     func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool) {

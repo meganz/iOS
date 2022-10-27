@@ -23,6 +23,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
         sdk.archivedChatListItems?.size ?? 0
     }
     
+    public func unreadChatMessagesCount() -> Int {
+        sdk.unreadChats
+    }
+    
     public func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never> {
         chatStatusUpdateListener(forUserHandle: userHandle)
             .monitor

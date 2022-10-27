@@ -99,6 +99,12 @@ final class ChatRoomsListViewController: UIViewController {
     @objc func addBarButtonItemTapped() {
         viewModel.addChatButtonTapped()
     }
+    
+    func updateBackBarButtonItem(withUnreadMessages count: Int) {
+        let title = String(format: "(%td)", count)
+        let backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButtonItem
+    }
 }
 
 @available(iOS 14.0, *)

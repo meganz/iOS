@@ -17,9 +17,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
 
     private(set) var primaryAvatar: UIImage?
     private(set) var secondaryAvatar: UIImage?
-    private(set) var chatStatusColor: UIColor?
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
+    @Published var chatStatusColor: UIColor?
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
