@@ -263,7 +263,8 @@
         } else {
             [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
                 if (granted) {
-                    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+                    if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] &&
+                        !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:NSLocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

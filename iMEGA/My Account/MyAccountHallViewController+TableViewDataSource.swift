@@ -133,7 +133,8 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let isShowStorageUsageCell = (MEGASdkManager.sharedMEGASdk().isBusinessAccount || MEGASdkManager.sharedMEGASdk().isProFlexiAccount) &&
+        let isShowStorageUsageCell = (MEGASdkManager.sharedMEGASdk().isAccountType(.business) ||
+                                      MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi)) &&
                                     indexPath.row == MyAccountMegaSection.storage.rawValue &&
                                     indexPath.section == MyAccountSection.mega.rawValue
         let identifier = isShowStorageUsageCell ? "MyAccountHallStorageUsageTableViewCellID" : "MyAccountHallTableViewCellID"

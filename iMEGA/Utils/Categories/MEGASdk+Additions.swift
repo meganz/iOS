@@ -33,11 +33,11 @@ extension MEGASdk {
     }
     
     
-    //MARK: Pro Flexi
-    @objc var isProFlexiAccount: Bool {
+    //MARK: Account types
+    @objc func isAccountType(_ accountType: MEGAAccountType) -> Bool {
         guard let accountDetails = mnz_accountDetails else {
             return false
         }
-        return accountDetails.type == .proFlexi
+        return accountDetails.type == accountType
     }
 }

@@ -103,6 +103,7 @@ final class BackupRegister {
                                   folderPath: MEGACameraUploadsFolderPath,
                                   backupName: Strings.Localizable.cameraUploadsLabel,
                                   state: .active,
+                                  subState: .noSyncError,
                                   delegate: HeartbeatRequestDelegate { [sdkType = type(of: self.sdk), weak self] result in
                 
                 self?.hasUpdatedBackup = true
