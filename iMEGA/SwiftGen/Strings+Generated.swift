@@ -2947,7 +2947,7 @@ public enum Strings {
     public enum Chat {
       /// Join Call
       public static let joinCall = Strings.tr("Localizable", "chat.joinCall")
-      /// Chats
+      /// Chat
       public static let title = Strings.tr("Localizable", "chat.title")
       public enum AddToChatMenu {
         /// Files
