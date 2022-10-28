@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="New chat";
 /* Title for chats section */
-"chat.title"="Chats";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A] was changed to [S]read-only[/S] by [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
