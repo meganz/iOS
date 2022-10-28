@@ -22,11 +22,7 @@
     
     [self initializeStorageInfo];
     [self configView];
-    
-    self.pieChartView.delegate = self;
-    self.pieChartView.datasource = self;
-    
-    [self reloadPieChart:self.usagePageControl.currentPage];
+    [self configStorageContentView];
     
     self.rubbishBinSizeLabel.text = [self textForSizeLabels:self.rubbishBinSize];
     self.incomingSharesSizeLabel.text = [self textForSizeLabels:self.incomingSharesSize];
@@ -50,6 +46,12 @@
 
 - (BOOL)isStorageFull {
     return [self.usedStorage compare: self.maxStorage] != NSOrderedAscending;
+}
+
+- (void)setUpPieChartView {
+    self.pieChartView.delegate = self;
+    self.pieChartView.datasource = self;
+    [self reloadPieChart:self.usagePageControl.currentPage];
 }
 
 #pragma mark - Private
@@ -157,8 +159,9 @@
         return;
     }
     
-    [self reloadPieChart:(page + 1)];
-    [_usagePageControl setCurrentPage:(page+1)];
+    NSInteger newPage = page + 1;
+    [self reloadStorageContentViewForPage:newPage];
+    [_usagePageControl setCurrentPage:newPage];
 }
 
 - (IBAction)rightSwipeGestureRecognizer:(UISwipeGestureRecognizer *)sender {
@@ -167,8 +170,9 @@
         return;
     }
     
-    [self reloadPieChart:(page - 1)];
-    [_usagePageControl setCurrentPage:(page-1)];
+    NSInteger newPage = page - 1;
+    [self reloadStorageContentViewForPage:newPage];
+    [_usagePageControl setCurrentPage:newPage];
 }
 
 - (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender {
@@ -179,7 +183,7 @@
         ++page;
     }
     
-    [self reloadPieChart:page];
+    [self reloadStorageContentViewForPage:page];
     [_usagePageControl setCurrentPage:page];
 }
 
