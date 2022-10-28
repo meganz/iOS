@@ -59,8 +59,9 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         } catch {
             throw LiveFeedError.captureDeviceInputInstantiationFailed
         }
-        
-        captureSession.startRunning()
+        DispatchQueue.global(qos: .userInitiated).async {
+            captureSession.startRunning()
+        }
         isCurrentShowingLiveFeed = true
         updateCameraIconImageView()
     }
