@@ -649,7 +649,9 @@ static const float BPS_MEDIUM = 3000000.0f;
     [self.filePathsArray removeAllObjects];
     [self.errorsArray removeAllObjects];
     [self.assets removeAllObjects];
-    dispatch_semaphore_signal(self.semaphore);
+    if (self.semaphore) {
+        dispatch_semaphore_signal(self.semaphore);
+    }
 }
 
 - (SDAVAssetExportSession *)configureEncoderWithAVAsset:(AVAsset *)avAsset videoQuality:(ChatVideoUploadQuality)videoQuality filePath:(NSString *)filePath {
