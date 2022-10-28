@@ -2809,6 +2809,14 @@ public enum Strings {
       public enum Storage {
         /// [B]20 GB+[/B] Storage
         public static let freePlan = Strings.tr("Localizable", "account.storage.freePlan")
+        public enum StorageUsed {
+          /// Storage used
+          public static let title = Strings.tr("Localizable", "account.storage.storageUsed.title")
+        }
+        public enum TransferUsed {
+          /// Transfer used
+          public static let title = Strings.tr("Localizable", "account.storage.transferUsed.title")
+        }
       }
       public enum Suspension {
         public enum Message {

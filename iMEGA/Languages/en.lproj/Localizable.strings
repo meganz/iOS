@@ -3116,3 +3116,7 @@
 "account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";

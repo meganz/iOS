@@ -36,6 +36,10 @@ extension UsageViewController {
         backupsBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         rubbishBinBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         incomingSharesBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        
+        usageStorageView?.backgroundColor = UIColor.mnz_background()
+        usageTitleLabel?.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        usageSizeLabel?.textColor = UIColor.mnz_turquoise(for: traitCollection)
     }
     
     @objc func initializeStorageInfo() {
@@ -90,5 +94,54 @@ extension UsageViewController {
         backupsLabel?.text = Strings.Localizable.Backups.title
         rubbishBinLabel?.text = Strings.Localizable.rubbishBinLabel
         incomingSharesLabel?.text = Strings.Localizable.incomingShares
+    }
+    
+    var isShowPieChartView: Bool {
+        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+            return true
+        }
+        return !(accountDetails.type == .business || accountDetails.type == .proFlexi)
+    }
+    
+    @objc func configStorageContentView() {
+        let isShowPieChartView = isShowPieChartView
+        pieChartView?.isHidden = !isShowPieChartView
+        usageStorageView?.isHidden = isShowPieChartView
+
+        if isShowPieChartView {
+            setUpPieChartView()
+        } else {
+            setUsageViewContent()
+        }
+    }
+    
+    @objc func reloadStorageContentView(forPage page: Int) {
+        if isShowPieChartView {
+            reloadPieChart(page)
+        } else {
+            setUsageViewContent(forPage: page)
+        }
+    }
+    
+    @objc func setUsageViewContent(forPage page: Int = 0) {
+        switch page {
+        case 0:
+            usageTitleLabel?.text = Strings.Localizable.Account.Storage.StorageUsed.title
+            guard let usedStorage, usedStorage != 0 else {
+                usageSizeLabel?.text = "-"
+                return
+            }
+            usageSizeLabel?.text = Helper.memoryStyleString(fromByteCount: usedStorage.int64Value)
+            
+        case 1:
+            usageTitleLabel?.text = Strings.Localizable.Account.Storage.TransferUsed.title
+            guard let transferOwnUsed, transferOwnUsed != 0 else {
+                usageSizeLabel?.text = "-"
+                return
+            }
+            usageSizeLabel?.text = Helper.memoryStyleString(fromByteCount: transferOwnUsed.int64Value)
+            
+        default: return
+        }
     }
 }

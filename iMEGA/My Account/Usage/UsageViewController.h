@@ -29,6 +29,10 @@
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable pieChartSecondaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel * _Nullable pieChartTertiaryLabel;
 
+@property (weak, nonatomic) IBOutlet UIView * _Nullable usageStorageView;
+@property (weak, nonatomic) IBOutlet UILabel * _Nullable usageTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel * _Nullable usageSizeLabel;
+
 @property (weak, nonatomic) IBOutlet UIPageControl * _Nullable usagePageControl;
 @property (weak, nonatomic) IBOutlet UIView * _Nullable usageBottomSeparatorView;
 
@@ -46,4 +50,7 @@
 
 - (BOOL)isStorageFull;
 - (NSString * _Nonnull)textForSizeLabels:(NSNumber * _Nonnull)number;
+- (void)setUpPieChartView;
+- (void)reloadPieChart:(NSInteger)currentPage;
+
 @end
