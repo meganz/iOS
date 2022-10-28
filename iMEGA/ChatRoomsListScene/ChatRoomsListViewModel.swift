@@ -68,6 +68,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             filterChats()
         }
     }
+    @Published var isSearchActive: Bool
     
     private var chatRooms: [ChatRoomViewModel]?
     private var filteredChatRooms: [ChatRoomViewModel]?
@@ -95,6 +96,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatViewType = chatType
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         self.searchText = ""
+        self.isSearchActive = false
         
         configureTitle()
         listenorToChatStatusUpdate()

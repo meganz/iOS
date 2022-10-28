@@ -1,14 +1,15 @@
 import SwiftUI
 
 public struct SearchBarView: View {
-    @Binding var text: String
-    @Environment(\.editMode) private var editMode
+    @Binding private var text: String
+    @Binding private var isEditing: Bool
 
     var placeholder: String
     var cancelTitle: String
     
-    public init(text: Binding<String>, placeholder: String, cancelTitle: String) {
+    public init(text: Binding<String>, isEditing: Binding<Bool>, placeholder: String, cancelTitle: String) {
         self._text = text
+        self._isEditing = isEditing
         self.placeholder = placeholder
         self.cancelTitle = cancelTitle
     }
@@ -28,12 +29,12 @@ public struct SearchBarView: View {
                     }
                 )
                 .onTapGesture {
-                    editMode?.wrappedValue = .active
+                    isEditing = true
                 }
  
-            if self.editMode?.wrappedValue == .active {
+            if isEditing {
                 SearchBarCancelButton(cancelTitle: cancelTitle) {
-                    editMode?.wrappedValue = .inactive
+                    isEditing = false
                     text = ""
                     hideKeyboard()
                 }
