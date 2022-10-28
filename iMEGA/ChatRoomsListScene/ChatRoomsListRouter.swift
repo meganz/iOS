@@ -7,9 +7,15 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     private weak var chatRoomsListViewController: ChatRoomsListViewController?
     
     func build(isRightToLeftLanguage: Bool) -> UIViewController {
+        let chatRoomUseCase = ChatRoomUseCase(
+            chatRoomRepo: ChatRoomRepository.sharedRepo,
+            userStoreRepo: UserStoreRepository(store: .shareInstance())
+        )
+        
         let viewModel = ChatRoomsListViewModel(
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
+            chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
             userUseCase: UserUseCase(repo: .live),

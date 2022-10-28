@@ -40,6 +40,7 @@ protocol ChatRoomsListRouting {
 final class ChatRoomsListViewModel: ObservableObject {
     let router: ChatRoomsListRouting
     private let chatUseCase: ChatUseCaseProtocol
+    private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let contactsUseCase: ContactsUseCaseProtocol
     private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
@@ -75,6 +76,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     init(router: ChatRoomsListRouting,
          chatUseCase: ChatUseCaseProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol,
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
@@ -85,6 +87,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.router = router
         self.chatUseCase = chatUseCase
         self.contactsUseCase = contactsUseCase
+        self.chatRoomUseCase = chatRoomUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.userUseCase = userUseCase
         self.isRightToLeftLanguage = isRightToLeftLanguage
@@ -347,6 +350,9 @@ final class ChatRoomsListViewModel: ObservableObject {
         } else {
             guard let chatRooms,
                   let index = chatRooms.firstIndex(where: { $0.chatListItem == chatListItem }) else {
+                if chatListItem.changeType == .noChanges, doesBelongToCurrentTab(chatListItem) {
+                    fetchChats()
+                }
                 return
             }
             
@@ -355,6 +361,15 @@ final class ChatRoomsListViewModel: ObservableObject {
             displayChatRooms = self.chatRooms
             objectWillChange.send()
         }
+    }
+    
+    private func doesBelongToCurrentTab(_ chatListItem: ChatListItemEntity) -> Bool {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
+                chatRoom.isArchived == false else {
+            return false
+        }
+        
+        return (chatRoom.chatType == .meeting && chatViewMode == .meetings) || (!(chatRoom.chatType == .meeting) && chatViewMode == .chats)
     }
 }
 
@@ -430,10 +445,11 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     }
     
     func reloadDataIfNeeded() {
-        chatRooms?.forEach { $0.updateContextMenuOptions() }
+        chatRooms?.forEach { $0.pushNotificationSettingsChanged() }
     }
     
     func pushNotificationSettingsLoaded() {
         notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
     }
 }
+                       

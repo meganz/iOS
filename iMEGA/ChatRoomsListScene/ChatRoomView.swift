@@ -183,7 +183,10 @@ fileprivate struct ChatRoomContentTitleView: View {
             
             if viewModel.chatListItem.publicChat == false {
                 Image(uiImage: Asset.Images.Chat.privateChat.image)
-                    .frame(width: 24, height: 24)
+            }
+            
+            if viewModel.isMuted {
+                Image(uiImage: Asset.Images.Chat.mutedChat.image)
             }
         }
     }
