@@ -22,8 +22,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     @Published var chatStatusColor: UIColor?
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
-    private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     
+    private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
+    private(set) var isMuted: Bool
+
     private(set) var displayDateString: String?
 
     private var subscriptions = Set<AnyCancellable>()
@@ -50,6 +52,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.chatNotificationControl = chatNotificationControl
         self.isRightToLeftLanguage = isRightToLeftLanguage
         self.notificationCenter = notificationCenter
+        self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         
         if chatListItem.group == false {
             let chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
@@ -103,8 +106,13 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         chatRoomUseCase.archive(true, chatId: chatListItem.chatId)
     }
     
-    func updateContextMenuOptions() {
+    func pushNotificationSettingsChanged() {
+        let newValue = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+        guard isMuted != newValue else { return }
+        
         contextMenuOptions = constructContextMenuOptions()
+        isMuted = newValue
+        objectWillChange.send()
     }
     
     //MARK: - Private methods
