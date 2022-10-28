@@ -3,7 +3,6 @@ import MEGASwiftUI
 
 @available(iOS 14.0, *)
 struct ChatRoomsListView: View {
-    @Environment(\.editMode) private var editMode
     
     @ObservedObject var viewModel: ChatRoomsListViewModel
 
@@ -23,11 +22,12 @@ struct ChatRoomsListView: View {
                 List {
                     SearchBarView(
                         text: $viewModel.searchText,
+                        isEditing: $viewModel.isSearchActive,
                         placeholder: Strings.Localizable.search,
                         cancelTitle: Strings.Localizable.cancel)
                     
                     if chatRooms.count > 0 {
-                        if let archivedChatsViewState = viewModel.archiveChatsViewState(), editMode?.wrappedValue == .inactive {
+                        if let archivedChatsViewState = viewModel.archiveChatsViewState(), !viewModel.isSearchActive {
                             ChatRoomsTopRowView(state: archivedChatsViewState)
                                 .onTapGesture {
                                     archivedChatsViewState.action()
@@ -36,7 +36,7 @@ struct ChatRoomsListView: View {
                                 .padding(10)
                         }
                         
-                        if editMode?.wrappedValue == .inactive {
+                        if !viewModel.isSearchActive {
                             let contactsOnMega = viewModel.contactsOnMegaViewState()
                             ChatRoomsTopRowView(state: contactsOnMega)
                                 .onTapGesture {
