@@ -60,7 +60,7 @@ extension AppDelegate {
 
             if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
                 UIApplication.mnz_visibleViewController() is CustomModalAlertViewController ||
-                UIApplication.mnz_visibleViewController() is BusinessExpiredViewController ||
+                UIApplication.mnz_visibleViewController() is AccountExpiredViewController ||
                 (MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
                  MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
                 return
@@ -85,7 +85,7 @@ extension AppDelegate {
                 asyncOnMain {
                     let visibleViewController = UIApplication.mnz_visibleViewController()
                     if visibleViewController is CustomModalAlertViewController ||
-                        visibleViewController is BusinessExpiredViewController
+                        visibleViewController is AccountExpiredViewController
                     { return }
                     
                     TurnOnNotificationsViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
@@ -125,7 +125,7 @@ extension AppDelegate {
     private func showCookieDialog() {
         let visibleViewController = UIApplication.mnz_visibleViewController()
         if visibleViewController is CustomModalAlertViewController ||
-           visibleViewController is BusinessExpiredViewController {
+           visibleViewController is AccountExpiredViewController {
             return
         }
         
@@ -152,7 +152,7 @@ extension AppDelegate {
     private func showLaunchTabDialog() {
         let visibleViewController = UIApplication.mnz_visibleViewController()
         if visibleViewController is CustomModalAlertViewController ||
-           visibleViewController is BusinessExpiredViewController {
+           visibleViewController is AccountExpiredViewController {
             return
         }
         

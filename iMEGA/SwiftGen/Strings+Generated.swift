@@ -2802,6 +2802,14 @@ public enum Strings {
           }
         }
       }
+      public enum Expired {
+        public enum ProFlexi {
+          /// Your Pro Flexi account has been deactivated due to payment failure or you've cancelled your subscription. You won't be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser on the web.
+          public static let message = Strings.tr("Localizable", "account.expired.proFlexi.message")
+          /// Account deactivated
+          public static let title = Strings.tr("Localizable", "account.expired.proFlexi.title")
+        }
+      }
       public enum Login {
         /// New to MEGA?
         public static let newToMega = Strings.tr("Localizable", "account.login.newToMega")
