@@ -3120,3 +3120,7 @@
 "account.storage.storageUsed.title"="Storage used";
 /* Account Storage title label of used transfer size */
 "account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Account deactivated";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you've cancelled your subscription. You won't be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser on the web.";

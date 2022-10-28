@@ -1520,8 +1520,8 @@
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
-		A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */; };
-		A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */; };
+		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
+		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
 		A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D8EA277F316E009093C5 /* Logger.swift */; };
 		A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */; };
@@ -1602,12 +1602,14 @@
 		B5A9963C282CF625008B8ADD /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = B5A99634282CF625008B8ADD /* Localizable.stringsdict */; };
 		B5A9963D282CF625008B8ADD /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = B5A99634282CF625008B8ADD /* Localizable.stringsdict */; };
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
+		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
 		B5E411A928AB65A600D05719 /* FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */; };
 		B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */; };
+		B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */; };
 		B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */; };
 		B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */; };
@@ -3935,8 +3937,8 @@
 		A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1322D71C470030CE1B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterGroupNameTextFieldDelegate.swift; sourceTree = "<group>"; };
-		A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessExpiredViewController.swift; sourceTree = "<group>"; };
-		A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessExpiredViewController.xib; sourceTree = "<group>"; };
+		A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountExpiredViewController.swift; sourceTree = "<group>"; };
+		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
 		A8E1D8EA277F316E009093C5 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -4006,12 +4008,14 @@
 		B5A9964E282CF64D008B8ADD /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = th; path = ../Languages/th.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		B5A9964F282CF64F008B8ADD /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = vi; path = ../Languages/vi.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
+		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
 		B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeatureFlagProvider.swift; sourceTree = "<group>"; };
+		B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Account.swift"; sourceTree = "<group>"; };
 		B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagView.swift; sourceTree = "<group>"; };
 		B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModel.swift; sourceTree = "<group>"; };
 		B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModelTests.swift; sourceTree = "<group>"; };
@@ -6487,6 +6491,7 @@
 				B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */,
 				B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */,
 				9D3563C928B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift */,
+				B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */,
 			);
 			path = "Camera Uploads";
 			sourceTree = "<group>";
@@ -8908,7 +8913,7 @@
 				5DAB28EF24875217004B5D5A /* OverDiskQuota */,
 				5BF4EEDC2432039C00D39415 /* CustomModalAlert */,
 				5B59B4CD2367266900A57229 /* Document Previewer */,
-				A8DE32C422FC1488006BAC7A /* BusinessExpiredViewController */,
+				A8DE32C422FC1488006BAC7A /* AccountExpiredViewController */,
 				837C4F86235DFF3E00FFE177 /* VerifyEmailViewcontroller */,
 				832E1020202B097900BDD30F /* CustomActionViewController */,
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
@@ -9210,13 +9215,13 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		A8DE32C422FC1488006BAC7A /* BusinessExpiredViewController */ = {
+		A8DE32C422FC1488006BAC7A /* AccountExpiredViewController */ = {
 			isa = PBXGroup;
 			children = (
-				A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */,
-				A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */,
+				A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */,
+				A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */,
 			);
-			path = BusinessExpiredViewController;
+			path = AccountExpiredViewController;
 			sourceTree = "<group>";
 		};
 		A8EE47AB27DFAEF600D37685 /* Report Issue */ = {
@@ -9323,6 +9328,7 @@
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				B611E174286165ED00F360CF /* AppDelegate+SDK.swift */,
+				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				41840EE81E811CD600D8308D /* MEGAApplication.h */,
 				41840EE91E811CD600D8308D /* MEGAApplication.m */,
@@ -11869,7 +11875,7 @@
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */,
-				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
+				A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */,
 				C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */,
 				5B45D2AF260A0AB600DDD076 /* ItemListViewController.storyboard in Resources */,
 				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
@@ -12350,6 +12356,7 @@
 				123AEFF627BEE20400E6A0A7 /* PhotoDateSection.swift in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
+				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF5E34062559E2C10055395E /* FilesExplorerContainerListViewState.swift in Sources */,
 				5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */,
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
@@ -12755,7 +12762,7 @@
 				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,
 				BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */,
 				83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */,
-				A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */,
+				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				2F879C6D2629291C00D2FA78 /* EncourageGuestUserToJoinMegaRouter.swift in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
@@ -13187,6 +13194,7 @@
 				B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */,
 				12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */,
 				A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */,
+				B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */,
 				B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */,
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,

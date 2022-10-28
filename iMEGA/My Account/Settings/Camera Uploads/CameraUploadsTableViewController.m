@@ -249,16 +249,7 @@
     MEGALogInfo(@"%@ camera uploads", sender.isOn ? @"Enable" : @"Disable");
     if (sender.isOn) {
         if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
-            NSString *alertTitle = NSLocalizedString(@"Your business account is expired", @"A dialog title shown to users when their business account is expired.");
-            NSString *alertMessage;
-            if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-                alertMessage = NSLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", @"Details shown when a Business account is expired. Details for the administrator of the Business account");
-            } else {
-                alertMessage = [[[[NSLocalizedString(@"Your account is currently [B]suspended[/B]. You can only browse your data.", @"A dialog message which is shown to sub-users of expired business accounts.") stringByReplacingOccurrencesOfString:@"[B]" withString:@""] stringByReplacingOccurrencesOfString:@"[/B]" withString:@""] stringByAppendingString:@"\n\n"] stringByAppendingString:NSLocalizedString(@"Contact your business account administrator to resolve the issue and activate your account.", @"A dialog message which is shown to sub-users of expired business accounts.")];
-            }
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alertController animated:YES completion:nil];
+            [self showAccountExpiredAlert];
             [sender setOn:NO];
         } else {
             [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {

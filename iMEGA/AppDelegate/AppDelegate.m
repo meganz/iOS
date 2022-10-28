@@ -1049,14 +1049,10 @@
 }
 
 - (void)presentAccountExpiredAlertIfNeeded {
-    if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:BusinessExpiredViewController.class]) {
-        NSString *alertTitle = NSLocalizedString(@"Your business account is expired", @"A dialog title shown to users when their business account is expired.");
-        NSString *alertMessage;
-        if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-            alertMessage = NSLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", @"Details shown when a Business account is expired. Details for the administrator of the Business account");
-        } else {
-            alertMessage = [[[[NSLocalizedString(@"Your account is currently [B]suspended[/B]. You can only browse your data.", @"A dialog message which is shown to sub-users of expired business accounts.") stringByReplacingOccurrencesOfString:@"[B]" withString:@""] stringByReplacingOccurrencesOfString:@"[/B]" withString:@""] stringByAppendingString:@"\n\n"] stringByAppendingString:NSLocalizedString(@"Contact your business account administrator to resolve the issue and activate your account.", @"A dialog message which is shown to sub-users of expired business accounts.")];
-        }
+    if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:AccountExpiredViewController.class]) {
+        NSString *alertTitle = [self expiredAccountTitle];
+        NSString *alertMessage = [self expiredAccountMessage];
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             self.accountExpiredPresented = NO;
@@ -1067,7 +1063,7 @@
     }
 }
 
-- (void)presentBusinessExpiredViewIfNeeded {
+- (void)presentAccountExpiredViewIfNeeded {
     if ([UIApplication.mnz_visibleViewController isKindOfClass:InitialLaunchViewController.class] || [UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
         return;
     }
@@ -1079,9 +1075,9 @@
     }
     
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
-        BusinessExpiredViewController *businessStatusVC = BusinessExpiredViewController.alloc.init;
-        businessStatusVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        [UIApplication.mnz_presentingViewController presentViewController:businessStatusVC animated:YES completion:nil];
+        AccountExpiredViewController *accountStatusVC = AccountExpiredViewController.alloc.init;
+        accountStatusVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        [UIApplication.mnz_presentingViewController presentViewController:accountStatusVC animated:YES completion:nil];
     }
 }
 
@@ -1212,7 +1208,7 @@
 }
 
 - (void)readyToShowRecommendations {
-    [self presentBusinessExpiredViewIfNeeded];
+    [self presentAccountExpiredViewIfNeeded];
     [self showCookieDialogIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
@@ -1362,7 +1358,7 @@
         }
             
         case EventBusinessStatus:
-            [self presentBusinessExpiredViewIfNeeded];
+            [self presentAccountExpiredViewIfNeeded];
             break;
             
         case EventMiscFlagsReady:
@@ -1588,7 +1584,7 @@
                 [self.quickAccessWidgetManager createWidgetItemData];
             }
             
-            [self presentBusinessExpiredViewIfNeeded];
+            [self presentAccountExpiredViewIfNeeded];
             
             [self configAppWithNewCookieSettings];
             break;

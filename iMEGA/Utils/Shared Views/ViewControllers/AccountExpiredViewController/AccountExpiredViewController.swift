@@ -1,7 +1,7 @@
 
 import UIKit
 
-class BusinessExpiredViewController: UIViewController {
+class AccountExpiredViewController: UIViewController {
     
     var isFetchNodesDone = false
     
@@ -15,16 +15,7 @@ class BusinessExpiredViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
-        dismissButton.titleLabel?.text = Strings.Localizable.dismiss
-        if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-            imageView.image = Asset.Images.Business.accountExpiredAdmin.image
-            detailLabel.text = Strings.Localizable.ThereHasBeenAProblemProcessingYourPayment.megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser
-        } else {
-            imageView.image = Asset.Images.Business.accountExpiredUser.image
-            detailLabel.text = Strings.Localizable.YourAccountIsCurrentlyBSuspendedB.youCanOnlyBrowseYourData.replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + Strings.Localizable.contactYourBusinessAccountAdministratorToResolveTheIssueAndActivateYourAccount
-        }
-        
+        MEGASdkManager.sharedMEGASdk().getAccountDetails()
         updateAppearance()
     }
     
@@ -45,6 +36,39 @@ class BusinessExpiredViewController: UIViewController {
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
+        }
+    }
+    
+    //MARK: - Set contents
+    
+    func configContent() {
+        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else { return }
+        switch accountDetails.type {
+        case .proFlexi:
+            configProFlexiAccount()
+        case .business:
+            configBusinessAccount()
+        default:
+            return
+        }
+    }
+    
+    func configProFlexiAccount() {
+        titleLabel.text = Strings.Localizable.Account.Expired.ProFlexi.title
+        imageView.image = Asset.Images.Business.accountExpiredAdmin.image
+        detailLabel.text = Strings.Localizable.Account.Expired.ProFlexi.message
+        dismissButton.setTitle(Strings.Localizable.ok, for: .normal)
+    }
+    
+    func configBusinessAccount() {
+        titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
+        dismissButton.setTitle(Strings.Localizable.dismiss, for: .normal)
+        if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+            imageView.image = Asset.Images.Business.accountExpiredAdmin.image
+            detailLabel.text = Strings.Localizable.ThereHasBeenAProblemProcessingYourPayment.megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser
+        } else {
+            imageView.image = Asset.Images.Business.accountExpiredUser.image
+            detailLabel.text = Strings.Localizable.YourAccountIsCurrentlyBSuspendedB.youCanOnlyBrowseYourData.replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + Strings.Localizable.contactYourBusinessAccountAdministratorToResolveTheIssueAndActivateYourAccount
         }
     }
     
@@ -80,10 +104,17 @@ class BusinessExpiredViewController: UIViewController {
     }
 }
 
-extension BusinessExpiredViewController: MEGARequestDelegate {
+extension AccountExpiredViewController: MEGARequestDelegate {
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        if error.type == .apiOk && request.type == .MEGARequestTypeFetchNodes {
+        guard error.type == .apiOk else { return }
+        
+        switch request.type {
+        case .MEGARequestTypeFetchNodes:
             isFetchNodesDone = true
+        case .MEGARequestTypeAccountDetails:
+            configContent()
+        default:
+            return
         }
     }
 }
