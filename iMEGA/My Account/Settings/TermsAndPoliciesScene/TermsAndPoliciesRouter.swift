@@ -2,18 +2,9 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Settings
 
-protocol TermsAndPoliciesRouterProtocol: Routing {
-    func didTap(on source: TermsAndPoliciesSource)
-}
-
-enum TermsAndPoliciesSource {
-    case showPrivacyPolicy
-    case showCookiePolicy
-    case showTermsOfService
-}
-
-final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
+final class TermsAndPoliciesRouter: NSObject, Routing {
     
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
@@ -25,8 +16,9 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     }
     
     func build() -> UIViewController {
-        let viewModel = TermsAndPoliciesViewModel(router: self)
-        let termsAndPoliciesView = TermsAndPoliciesView(viewModel: viewModel)
+        let termsAndPoliciesView = TermsAndPoliciesView(privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
+                                                        cookiePolicyText: Strings.Localizable.General.cookiePolicy,
+                                                        termsOfServicesText: Strings.Localizable.termsOfServicesLabel)
         let hostingController = UIHostingController(rootView: termsAndPoliciesView)
         baseViewController = hostingController
         baseViewController?.title = Strings.Localizable.Settings.Section.termsAndPolicies
@@ -36,25 +28,5 @@ final class TermsAndPoliciesRouter: NSObject, TermsAndPoliciesRouterProtocol {
     
     @objc func start() {
         navigationController?.pushViewController(build(), animated: true)
-    }
-    
-    func didTap(on source: TermsAndPoliciesSource) {
-        let url: URL
-        switch source {
-        case .showPrivacyPolicy:
-            guard let privacyURL = URL(string: "https://mega.io/privacy") else { return }
-            url = privacyURL
-            
-        case .showCookiePolicy:
-            guard let cookieURL = URL(string: "https://mega.nz/cookie") else { return }
-            url = cookieURL
-            
-        case .showTermsOfService:
-            guard let termsURL = URL(string: "https://mega.io/terms") else { return }
-            url = termsURL
-        }
-        
-        MEGALinkManager.linkURL = url
-        MEGALinkManager.processLinkURL(url)
     }
 }
