@@ -30,5 +30,3 @@ public struct MediaUseCase: MediaUseCaseProtocol {
         return isImage(for: url)
     }
 }
-
-
