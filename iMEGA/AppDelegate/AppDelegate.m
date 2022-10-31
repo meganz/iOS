@@ -1358,6 +1358,12 @@
         }
             
         case EventBusinessStatus:
+            if (event.number == BusinessStatusActive) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGABusinessAccountActivatedNotification object:self];
+            } else if (event.number == BusinessStatusExpired) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGABusinessAccountExpiredNotification object:self];
+            }
+            
             [self presentAccountExpiredViewIfNeeded];
             break;
             

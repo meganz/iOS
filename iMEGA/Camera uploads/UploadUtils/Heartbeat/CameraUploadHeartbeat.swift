@@ -70,7 +70,7 @@ final class CameraUploadHeartbeat: NSObject {
             }
         })
     }
-
+    
     // MARK: - Manage Timers
     private func setupHeartbeatTimers() {
         setupActiveTimerIfNeeded()

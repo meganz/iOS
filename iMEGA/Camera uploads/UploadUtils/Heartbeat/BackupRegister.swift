@@ -15,6 +15,8 @@ final class BackupRegister {
     init(sdk: MEGASdk) {
         self.sdk = sdk
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTargetFolderUpdatedNotification), name: Notification.Name.MEGACameraUploadTargetFolderUpdatedInMemory, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveBusinessAccountExpiredNotification), name: Notification.Name.MEGABusinessAccountExpired, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveBusinessAccountActivatedNotification), name: Notification.Name.MEGABusinessAccountActivated, object: nil)
     }
     
     // MARK: - Notification
@@ -22,6 +24,16 @@ final class BackupRegister {
         if CameraUploadManager.isCameraUploadEnabled {
             updateBackup()
         }
+    }
+    
+    @objc private func didReceiveBusinessAccountExpiredNotification() {
+        MEGALogDebug("[Camera Upload] heartbeat - business account expired notification")
+        updateBackup(state: .temporaryDisabled, subState: .accountExpired)
+    }
+    
+    @objc private func didReceiveBusinessAccountActivatedNotification() {
+        MEGALogDebug("[Camera Upload] heartbeat - business account activated notification")
+        updateBackup(state: .active, subState: .noSyncError)
     }
     
     // MAKR: - Register backup
@@ -80,8 +92,8 @@ final class BackupRegister {
         })
     }
     
-    // MAKR: - Update backup registration
-    private func updateBackup() {
+    // MARK: - Update backup status
+    private func updateBackup(state: BackUpState = .active, subState: BackUpSubState = .noSyncError) {
         MEGALogDebug("[Camera Upload] heartbeat - start updating backup")
         guard let backupId = cachedBackupId else {
             MEGALogDebug("[Camera Upload] heartbeat - skip updating backup as no local cached backup id")
@@ -102,8 +114,8 @@ final class BackupRegister {
                                   targetNode: node,
                                   folderPath: MEGACameraUploadsFolderPath,
                                   backupName: Strings.Localizable.cameraUploadsLabel,
-                                  state: .active,
-                                  subState: .noSyncError,
+                                  state: state,
+                                  subState: subState,
                                   delegate: HeartbeatRequestDelegate { [sdkType = type(of: self.sdk), weak self] result in
                 
                 self?.hasUpdatedBackup = true
@@ -113,10 +125,9 @@ final class BackupRegister {
                     Crashlytics.crashlytics().record(error: error)
                     MEGALogError("[Camera Upload] heartbeat - error when to update backup \(sdkType.base64Handle(forHandle: backupId) ?? "") \(error)")
                 case .success:
-                    MEGALogDebug("[Camera Upload] heartbeat - update backup \(sdkType.base64Handle(forHandle: backupId) ?? "") success")
+                    MEGALogDebug("[Camera Upload] heartbeat - update backup \(sdkType.base64Handle(forHandle: backupId) ?? "") success. state:\(state.rawValue), substate: \(subState.rawValue)")
                 }
             })
-            
         }
     }
     

@@ -135,6 +135,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoConcurrentCountChangedNotification:) name:MEGACameraUploadVideoConcurrentCountChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveBusinessAccountExpiredNotification:) name:MEGABusinessAccountExpiredNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveBusinessAccountActivatedNotification:) name:MEGABusinessAccountActivatedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveUploadingTaskCountChangedNotification:) name:MEGACameraUploadUploadingTasksCountChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveQueueUpNextAssetNotification:) name:MEGACameraUploadQueueUpNextAssetNotification object:nil];
@@ -807,6 +809,16 @@ static const NSUInteger VideoUploadBatchCount = 1;
         default:
             break;
     }
+}
+
+- (void)didReceiveBusinessAccountExpiredNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] business account expired notification");
+    [self pauseCameraUploadIfNeeded];
+}
+
+- (void)didReceiveBusinessAccountActivatedNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] business account activated notification");
+    [self resumeCameraUpload];
 }
 
 - (void)didReceiveNodesCurrentNotification:(NSNotification *)notification {
