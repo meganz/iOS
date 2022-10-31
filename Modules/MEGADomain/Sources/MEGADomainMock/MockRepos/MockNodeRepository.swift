@@ -177,7 +177,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         rubbisNode
     }
     
-    public func isNode(_ node: NodeEntity, descendantOf parentNode: NodeEntity) -> Bool {
+    public func isNode(_ node: NodeEntity, descendantOf ancestor: NodeEntity) async -> Bool {
         isNodeDescendant
     }
 }

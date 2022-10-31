@@ -53,7 +53,7 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
     public func isMyBackupsNodeChild(_ node: NodeEntity) async -> Bool {
         do {
             let myBackupsNode = try await myBackupsRootNode()
-            return nodeRepository.isNode(node, descendantOf: myBackupsNode)
+            return await nodeRepository.isNode(node, descendantOf: myBackupsNode)
         } catch {
             return false
         }
