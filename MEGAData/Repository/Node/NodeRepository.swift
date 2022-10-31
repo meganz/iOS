@@ -289,18 +289,23 @@ struct NodeRepository: NodeRepositoryProtocol {
     func rubbishNode() -> NodeEntity? {
         MEGASdkManager.sharedMEGASdk().rubbishNode?.toNodeEntity()
     }
-    
-    func isNode(_ node: NodeEntity, descendantOf ancestor: NodeEntity) -> Bool {
-        guard let parent = ancestor.toMEGANode(in: sdk) else { return false }
-    
-        var megaNode = node.toMEGANode(in: sdk)
-        while let node = megaNode {
-            if node == parent {
-                return true
+
+    func isNode(_ node: NodeEntity, descendantOf ancestor: NodeEntity) async -> Bool {
+        let isDescendantNodeTask = Task.detached { () -> Bool in
+            guard let parent = ancestor.toMEGANode(in: sdk) else {
+                return false
             }
-            megaNode = sdk.parentNode(for: node)
+            
+            var megaNode = node.toMEGANode(in: sdk)
+            while let node = megaNode {
+                if node == parent {
+                    return true
+                }
+                megaNode = sdk.parentNode(for: node)
+            }
+            return false
         }
-        return false
+        return await isDescendantNodeTask.value
     }
     
     // MARK: - Private
