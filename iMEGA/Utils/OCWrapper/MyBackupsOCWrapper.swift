@@ -6,4 +6,8 @@ import MEGADomain
     @objc func isBackupNode(_ node: MEGANode) async -> Bool {
         await myBackupsUseCase.isBackupNode(node.toNodeEntity())
     }
+    
+    @objc func isMyBackupsRootNode(_ node: MEGANode) async -> Bool {
+        await myBackupsUseCase.isMyBackupsRootNode(node.toNodeEntity())
+    }
 }

@@ -957,12 +957,16 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.isFromSharedItem = YES;
-            [cloudDriveVC setParentNode:node];
-            [cloudDriveVC setDisplayMode:DisplayModeCloudDrive];            
-            
-            [self.navigationController pushViewController:cloudDriveVC animated:YES];
+            [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                    cloudDriveVC.isFromSharedItem = YES;
+                    [cloudDriveVC setParentNode:node];
+                    [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
+                    
+                    [self.navigationController pushViewController:cloudDriveVC animated:YES];
+                });
+            }];
             break;
         }
         
