@@ -11,6 +11,8 @@ final class MockSdk: MEGASdk {
     private var statsEventType: Int?
     private var statsEventMessage: String?
     
+    var hasGlobalDelegate = false
+    
     init(nodes: [MEGANode] = [],
          rubbishNodes: [MEGANode] = [],
          myContacts: MEGAUserList = MEGAUserList(),
@@ -47,6 +49,11 @@ final class MockSdk: MEGASdk {
         return MockNodeList(nodes: children)
     }
     
+    override func children(forParent parent: MEGANode, order: Int) -> MEGANodeList {
+        let children = nodes.filter { $0.parentHandle == parent.handle }
+        return MockNodeList(nodes: children)
+    }
+    
     override func contacts() -> MEGAUserList { myContacts }
     
     override func sendEvent(_ eventType: Int, message: String) {
@@ -56,5 +63,13 @@ final class MockSdk: MEGASdk {
     
     func isLastSentEvent(eventType type: Int, message: String) -> Bool {
         statsEventType == type && statsEventMessage == message
+    }
+    
+    override func add(_ delegate: MEGAGlobalDelegate) {
+        hasGlobalDelegate = true
+    }
+    
+    override func remove(_ delegate: MEGAGlobalDelegate) {
+        hasGlobalDelegate = false
     }
 }
