@@ -18,16 +18,17 @@ final class NewChatRouter {
 
     // MARK: - Display Start A New Chat Selection
 
-    func presentNewChat(from navigationController: UINavigationController?) {
-        let contactsNavigationController = contactsViewController()
+    func presentNewChat(from navigationController: UINavigationController?, chatOptionType: ChatOptionType = .none) {
+        let contactsNavigationController = contactsViewController(chatOptionType: chatOptionType)
         navigationController?.present(contactsNavigationController, animated: true, completion: nil)
     }
 
-    private func contactsViewController() -> UINavigationController {
+    private func contactsViewController(chatOptionType: ChatOptionType) -> UINavigationController {
         let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
         let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as! UINavigationController
         let contactController = contactsNavigationController.viewControllers.first as! ContactsViewController
         contactController.contactsMode = .chatStartConversation
+        contactController.chatOptionType = chatOptionType
         setupContactsSelection(for: contactController)
         return contactsNavigationController
     }

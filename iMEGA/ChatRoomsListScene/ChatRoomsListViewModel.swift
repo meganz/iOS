@@ -21,7 +21,7 @@ protocol ChatRoomsListRouting {
     func presentScheduleMeetingScreen()
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
-    func showDetails(forChatId chatId: HandleEntity)
+    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
     func openChatRoom(withChatId chatId: ChatId, publicLink: String?, unreadMessageCount: Int)
     func present(alert: UIAlertController, animated: Bool)
     func presentMoreOptionsForChat(

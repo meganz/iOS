@@ -140,7 +140,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showContactsOnMegaScreen_calledTimes += 1
     }
     
-    func showDetails(forChatId chatId: MEGADomain.HandleEntity) {
+    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
         showDetails_calledTimes += 1
     }
     
