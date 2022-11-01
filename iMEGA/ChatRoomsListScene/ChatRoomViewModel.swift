@@ -249,7 +249,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
                 if chatRoom.peerCount == 0 {
                     if let chatTitle = chatListItem.title,
-                       let avatar = try await createAvatar(usinName: chatTitle, isRightToLeftLanguage: isRightToLeftLanguage) {
+                       let avatar = createAvatar(usingName: chatTitle, isRightToLeftLanguage: isRightToLeftLanguage) {
                         updatePrimaryAvatar(avatar)
                     }
                 } else {
@@ -367,13 +367,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                                                        isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    private func createAvatar(usinName name: String, isRightToLeftLanguage: Bool) async throws -> UIImage?  {
-        try await userImageUseCase.createAvatar(withUserHandle: .invalid,
-                                                base64Handle: UUID().uuidString,
-                                                avatarBackgroundHexColor: Colors.Chat.Avatar.background.color.hexString,
-                                                backgroundGradientHexColor: UIColor.mnz_grayDBDBDB().hexString,
-                                                name: name,
-                                                isRightToLeftLanguage: isRightToLeftLanguage)
+    private func createAvatar(usingName name: String, isRightToLeftLanguage: Bool, size: CGSize = CGSizeMake(100, 100)) -> UIImage?  {
+        let initials = name
+            .components(separatedBy: " ")
+            .prefix(2)
+            .compactMap({ $0.count > 1 ? String($0.prefix(1)).uppercased() : nil })
+            .joined(separator: "")
+                
+        return UIImage.drawImage(
+            forInitials: initials,
+            size: size,
+            backgroundColor: Colors.Chat.Avatar.background.color,
+            backgroundGradientColor: UIColor.mnz_grayDBDBDB(),
+            textColor: .white,
+            font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
+            isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
     private func downloadAvatar() async throws -> UIImage {
