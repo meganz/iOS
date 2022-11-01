@@ -5,6 +5,12 @@ import MEGAData
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     private(set) weak var navigationController: UINavigationController?
     private weak var chatRoomsListViewController: ChatRoomsListViewController?
+    private weak var tabBarController: MainTabBarController?
+    private lazy var newChatRouter = NewChatRouter(navigationController: navigationController, tabBarController: tabBarController)
+    
+    init(tabBarController: MainTabBarController?) {
+        self.tabBarController = tabBarController
+    }
     
     func build(isRightToLeftLanguage: Bool) -> UIViewController {
         let chatRoomUseCase = ChatRoomUseCase(
@@ -31,7 +37,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     }
     
     func presentStartConversation() {
-        NewChatRouter(navigationController: navigationController, tabBarController: nil).presentNewChat(from: navigationController)
+        newChatRouter.presentNewChat(from: navigationController, chatOptionType: .nonMeeting)
     }
     
     func showInviteContactScreen() {
@@ -71,8 +77,10 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         
     }
         
-    func showDetails(forChatId chatId: HandleEntity) {
+    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
         guard let navigationController, let chatViewController = ChatViewController(chatId: chatId) else { return }
+        
+        chatRoomsListViewController?.updateBackBarButtonItem(withUnreadMessages: unreadMessagesCount)
         navigationController.pushViewController(chatViewController, animated: true)
     }
     
@@ -100,7 +108,9 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         }
         
         if let chatViewController = ChatViewController(chatId: chatId) {
-            chatRoomsListViewController?.updateBackBarButtonItem(withUnreadMessages: unreadMessageCount)
+            if unreadMessageCount > 0 {
+                chatRoomsListViewController?.updateBackBarButtonItem(withUnreadMessages: unreadMessageCount)
+            }
             
             if let publicLink {
                 chatViewController.publicChatWithLinkCreated = true

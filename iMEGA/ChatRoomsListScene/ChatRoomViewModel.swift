@@ -75,7 +75,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     func showDetails() {
-        router.showDetails(forChatId: chatListItem.chatId)
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
+        router.showDetails(forChatId: chatListItem.chatId, unreadMessagesCount: chatRoom.unreadCount)
     }
     
     func presentMoreOptionsForChat(){

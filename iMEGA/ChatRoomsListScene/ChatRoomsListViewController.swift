@@ -101,9 +101,18 @@ final class ChatRoomsListViewController: UIViewController {
     }
     
     func updateBackBarButtonItem(withUnreadMessages count: Int) {
+        guard count > 0 else {
+            clearBackBarButtonItem()
+            return
+        }
+        
         let title = String(format: "(%td)", count)
         let backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    private func clearBackBarButtonItem() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 
