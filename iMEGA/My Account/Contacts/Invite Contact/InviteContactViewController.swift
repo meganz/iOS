@@ -50,6 +50,9 @@ class InviteContactViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.presentationController?.delegate = self
+        
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
