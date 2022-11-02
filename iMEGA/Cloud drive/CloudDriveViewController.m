@@ -124,12 +124,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self setNavigationBarButtonItems];
     
-    [MyBackupsOCWrapper.alloc.init isBackupNode:self.parentNode completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MEGAShareType shareType = isBackupNode ? MEGAShareTypeAccessRead : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-            [self toolbarActionsForShareType:shareType isBackupNode:isBackupNode];
-        });
-    }];
+    if (self.displayMode == DisplayModeBackup) {
+        [self toolbarActionsForNode:self.parentNode];
+    } else {
+        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+        [self toolbarActionsForShareType:shareType isBackupNode:false];
+    }
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     NSError *error;
@@ -409,7 +409,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.hasMediaFiles = [[self.nodes mnz_mediaNodesMutableArrayFromNodeList] count] > 0;
-            [self setNavigationBarButtons];
             
             break;
         }
@@ -545,9 +544,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)setNavigationBarButtonItems {
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeBackup: {
+        case DisplayModeRubbishBin: {
             [self setNavigationBarButtons];
+            break;
+        }
+            
+        case DisplayModeBackup: {
+            [self setBackupNavigationBarButtons];
             break;
         }
             
@@ -734,7 +737,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     if (!self.cdTableView.tableView.isEditing && !self.cdCollectionView.collectionView.allowsMultipleSelection) {
-        [self setNavigationBarButtons];
+        if (self.displayMode == DisplayModeBackup) {
+            [self setBackupNavigationBarButtons];
+        } else {
+            [self setNavigationBarButtons];
+        }
     }
 }
 
@@ -790,7 +797,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     cloudDriveVC.isFromSharedItem = self.isFromSharedItem;
     cloudDriveVC.isFromViewInFolder = self.isFromViewInFolder;
     
-    if (self.displayMode == DisplayModeRubbishBin) {
+    if (self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeBackup) {
         cloudDriveVC.displayMode = self.displayMode;
     }
     
@@ -999,12 +1006,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(id)sender {
-    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView isBackupNode:isBackupNode sender:sender];
-            [self presentViewController:nodeActions animated:YES completion:nil];
-        });
-    }];
+    if (self.displayMode == DisplayModeBackup) {
+        [self showCustomActionsForBackupNode:node sender:sender];
+    } else {
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView isBackupNode:false sender:sender];
+        [self presentViewController:nodeActions animated:YES completion:nil];
+    }
 }
 
 - (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
@@ -1130,12 +1137,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - RecentNodeActionDelegate
 
 - (void)showCustomActionsForNode:(MEGANode *)node fromSender:(id)sender {
-    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView isBackupNode:isBackupNode sender:sender];
-            [self presentViewController:nodeActions animated:YES completion:nil];
-        });
-    }];
+    [self showCustomActionsForNode:node sender:sender];
 }
 
 - (void)showSelectedNodeInViewController:(UIViewController *)viewController {
