@@ -37,6 +37,7 @@
     
     self.navigationItem.title = NSLocalizedString(@"notifications", nil);
     self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
+    [self logUserAlertsStatus:self.userAlertsArray];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterLongStyle;

@@ -43,4 +43,12 @@ extension NotificationsTableViewController {
         }
         return contentAttributedText
     }
+    
+    @objc func logUserAlertsStatus(_ userAlerts: [MEGAUserAlert]) {
+        let alertsString = userAlerts.map { alert in
+            "\(alert.type.rawValue) - \(alert.typeString ?? "None") - \(alert.string(at: 0) ?? "None")"
+        }.joined(separator: "\n")
+        
+        MEGALogDebug("[Notifications] \(userAlerts.count)\n\(alertsString)")
+    }
 }
