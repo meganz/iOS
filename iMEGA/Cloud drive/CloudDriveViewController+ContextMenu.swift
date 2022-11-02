@@ -4,7 +4,7 @@ import MEGADomain
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     //MARK: - Context Menus configuration
-    func contextMenuConfiguration() async -> CMConfigEntity? {
+    func contextMenuConfiguration() -> CMConfigEntity? {
         guard let parentNode = parentNode else { return nil }
         
         if parentNode.isFolder(),
@@ -16,14 +16,6 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         } else {
             let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
             let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
-            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            let parentNodeEntity = parentNode.toNodeEntity()
-            let isMyBackupsNode = await myBackupsUseCase.isMyBackupsRootNode(parentNodeEntity)
-            var isMyBackupsChild = !isMyBackupsNode
-            
-            if !isMyBackupsNode {
-                isMyBackupsChild = await myBackupsUseCase.isMyBackupsNodeChild(parentNodeEntity)
-            }
            
             if #available(iOS 14.0, *) {
                 return CMConfigEntity(menuType: .menu(type: .display),
@@ -34,8 +26,6 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isViewInFolder: isFromViewInFolder,
                                       isIncomingShareChild: isIncomingSharedRootChild,
-                                      isMyBackupsNode: isMyBackupsNode,
-                                      isMyBackupsChild: isMyBackupsChild,
                                       isOutShare: parentNode.isOutShare(),
                                       isExported: parentNode.isExported(),
                                       showMediaDiscovery: shouldShowMediaDiscovery())
@@ -48,8 +38,6 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                       isRubbishBinFolder: displayMode == .rubbishBin,
                                       isViewInFolder: isFromViewInFolder,
                                       isIncomingShareChild: isIncomingSharedRootChild,
-                                      isMyBackupsNode: isMyBackupsNode,
-                                      isMyBackupsChild: isMyBackupsChild,
                                       isOutShare: parentNode.isOutShare(),
                                       isExported: parentNode.isExported())
             }
@@ -69,40 +57,31 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     @objc func setNavigationBarButtons() {
-        Task {
-            if #available(iOS 14.0, *) {
-                guard let menuConfig = await contextMenuConfiguration() else { return }
-                contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                       menu: contextMenuManager?.contextMenu(with: menuConfig))
-            } else {
-                contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
-            }
-            
-            if displayMode != .rubbishBin,
-               displayMode != .backup,
-               !isFromViewInFolder,
-               let parentNode = parentNode,
-               MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
-                let isBackupsNode = await MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(parentNode.toNodeEntity())
-                
-                if isBackupsNode {
-                    navigationItem.rightBarButtonItems = [contextBarButtonItem]
-                } else {
-                    if #available(iOS 14.0, *) {
-                        guard let menuConfig = uploadAddMenuConfiguration() else { return }
-                        uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                                                 menu: contextMenuManager?.contextMenu(with: menuConfig))
-                    } else {
-                        uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
-                    }
-                    
-                    navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
-                }
-            } else {
-                navigationItem.rightBarButtonItems = [contextBarButtonItem]
-            }
+        if #available(iOS 14.0, *) {
+            guard let menuConfig = contextMenuConfiguration() else { return }
+            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+                                                   menu: contextMenuManager?.contextMenu(with: menuConfig))
+        } else {
+            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
         }
-
+        
+        if displayMode != .rubbishBin,
+           displayMode != .backup,
+           !isFromViewInFolder,
+           let parentNode = parentNode,
+           MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
+            if #available(iOS 14.0, *) {
+                guard let menuConfig = uploadAddMenuConfiguration() else { return }
+                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+                                                         menu: contextMenuManager?.contextMenu(with: menuConfig))
+            } else {
+                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
+            }
+            navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
+        } else {
+            navigationItem.rightBarButtonItems = [contextBarButtonItem]
+        }
+        
         if presentingViewController != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
                                                                style: .plain,
@@ -111,17 +90,15 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
-    @objc private func dismissController() {
+    @objc func dismissController() {
         dismiss(animated: true)
     }
     
     @objc private func presentActionSheet(sender: Any) {
-        Task { @MainActor in
-            guard let barButtonItem = sender as? UIBarButtonItem,
-                  let menuConfig = barButtonItem == contextBarButtonItem ? await contextMenuConfiguration() : uploadAddMenuConfiguration(),
-                  let actions = contextMenuManager?.actionSheetActions(with: menuConfig) else { return }
-            presentActionSheet(actions: actions)
-        }
+        guard let barButtonItem = sender as? UIBarButtonItem,
+              let menuConfig = barButtonItem == contextBarButtonItem ? contextMenuConfiguration() : uploadAddMenuConfiguration(),
+              let actions = contextMenuManager?.actionSheetActions(with: menuConfig) else { return }
+        presentActionSheet(actions: actions)
     }
     
     @objc func presentActionSheet(actions: [ContextActionSheetAction]) {
@@ -162,7 +139,11 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
         
         if #available(iOS 14, *), needToRefreshMenu {
-            setNavigationBarButtons()
+            if displayMode == .backup {
+                setBackupNavigationBarButtons()
+            } else {
+                setNavigationBarButtons()
+            }
         }
     }
     
@@ -205,7 +186,11 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
         
         if #available(iOS 14, *), needToRefreshMenu {
-            setNavigationBarButtons()
+            if displayMode == .backup {
+                setBackupNavigationBarButtons()
+            } else {
+                setNavigationBarButtons()
+            }
         }
     }
     
@@ -258,7 +243,11 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         Helper.save(sortType.megaSortOrderType, for: parentNode)
         nodesSortTypeHasChanged()
         if #available(iOS 14, *) {
-            setNavigationBarButtons()
+            if displayMode == .backup {
+                setBackupNavigationBarButtons()
+            } else {
+                setNavigationBarButtons()
+            }
         }
     }
     
