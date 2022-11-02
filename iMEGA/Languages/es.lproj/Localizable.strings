@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Normal (4s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="Rápido (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Orden de la presentación";
 /* Slideshow Speed Order shuffle */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Acceso denegado para usuarios que no son administradores";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="La cuenta Business ha caducado";
+"Business account has expired"="Cuenta desactivada";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Tarjeta de crédito rechazada";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ha habido un problema con tu último pago. Accede a MEGA utilizando el navegador del ordenador para obtener más información.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Tu cuenta Business ha caducado";
+"Your business account is expired"="Cuenta desactivada";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="No se ha podido procesar el pago. Hasta que no soluciones el problema desde el navegador de tu ordenador solo tendrás permiso de lectura en MEGA.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Tu cuenta Business ha sido desactivada porque el pago ha fallado. No podrás acceder a los datos almacenados en tu cuenta. Para realizar el pago y reactivar tu suscripción, inicia sesión en MEGA a través de un navegador.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tu cuenta está [B]suspendida[/B]. Solo puedes ver tus datos.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Nuevo chat";
 /* Title for chats section */
-"chat.title"="Chats";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[B]ha cambiado el permiso de [A] a [S]solo lectura[/S]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Cuenta suspendida por violar los derechos de autor. Te hemos enviado un correo electrónico con más información al respecto.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Cuenta cerrada por incumplir los Términos de servicio de MEGA, como el abuso de los derechos de otros, el intercambio e importación de datos ilegales o el abuso del sistema.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Almacenamiento utilizado";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transferencia utilizada";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Cuenta desactivada";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Tu cuenta Pro Flexi ha sido desactivada porque has cancelado la suscripción o porque el pago ha fallado. No podrás acceder a los datos almacenados en tu cuenta. Para realizar el pago y reactivar tu suscripción, inicia sesión en MEGA a través de un navegador.";

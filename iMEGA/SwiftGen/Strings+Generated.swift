@@ -315,7 +315,7 @@ public enum Strings {
     public static let blue = Strings.tr("Localizable", "Blue")
     /// Business
     public static let business = Strings.tr("Localizable", "Business")
-    /// Business account has expired
+    /// Account deactivated
     public static let businessAccountHasExpired = Strings.tr("Localizable", "Business account has expired")
     /// Busy
     public static let busy = Strings.tr("Localizable", "busy")
@@ -2399,7 +2399,7 @@ public enum Strings {
     public static let yourAccountHasBeenTemporarilySuspendedForYourSafety = Strings.tr("Localizable", "Your account has been temporarily suspended for your safety.")
     /// Your account is already verified
     public static let yourAccountIsAlreadyVerified = Strings.tr("Localizable", "Your account is already verified")
-    /// Your Business account has expired
+    /// Account deactivated
     public static let yourBusinessAccountIsExpired = Strings.tr("Localizable", "Your business account is expired")
     /// Your Data is at Risk!
     public static let yourDataIsAtRisk = Strings.tr("Localizable", "Your Data is at Risk!")
@@ -2547,7 +2547,7 @@ public enum Strings {
       public static let theMinimumPeriodIs7DaysAndYourMaximumPeriodIs30Days = Strings.tr("Localizable", "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.")
     }
     public enum ThereHasBeenAProblemProcessingYourPayment {
-      /// There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.
+      /// Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.
       public static let megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser = Strings.tr("Localizable", "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.")
     }
     public enum ThereHasBeenAProblemWithYourLastPayment {
@@ -2804,7 +2804,7 @@ public enum Strings {
       }
       public enum Expired {
         public enum ProFlexi {
-          /// Your Pro Flexi account has been deactivated due to payment failure or you've cancelled your subscription. You won't be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser on the web.
+          /// Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.
           public static let message = Strings.tr("Localizable", "account.expired.proFlexi.message")
           /// Account deactivated
           public static let title = Strings.tr("Localizable", "account.expired.proFlexi.title")
@@ -4283,11 +4283,11 @@ public enum Strings {
         public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
         /// Options
         public static let options = Strings.tr("Localizable", "slideshow.preferenceSetting.options")
-        /// Slideshow Order
+        /// Slideshow order
         public static let order = Strings.tr("Localizable", "slideshow.preferenceSetting.order")
-        /// Slideshow Options
+        /// Slideshow options
         public static let slideshowOptions = Strings.tr("Localizable", "slideshow.preferenceSetting.slideshowOptions")
-        /// Slideshow Speed
+        /// Slideshow speed
         public static let speed = Strings.tr("Localizable", "slideshow.preferenceSetting.speed")
         public enum Order {
           /// Shuffle

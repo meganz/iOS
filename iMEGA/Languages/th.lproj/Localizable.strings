@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="ปฏิเสธการเข้าถึงสำหรับผู้ใช้ที่ไม่ใช่ผู้ดูแลระบบ";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="บัญชีธุรกิจหมดอายุแล้ว";
+"Business account has expired"="บัญชีถูกปิดใช้งาน";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="บัตรเครดิตถูกปฏิเสธ";
 /* SDK error returned when the billing failed */
@@ -1843,7 +1843,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="ความสัมพันธ์ของผู้ติดต่อที่สร้างขึ้น";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="บัญชีได้ถูกลบ/ปิดใช้งานแล้ว";
+"Account has been deleted/deactivated"="บัญชีได้ถูกลบหรือถูกปิดใช้งานแล้ว";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="บล็อกคุณจากผู้ติดต่อ";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="เกิดปัญหากับการชำระเงินครั้งล่าสุดของคุณ กรุณาเข้าถึง MEGA โดยใช้เบราว์เซอร์เดสก์ท็อปเพื่อดูข้อมูลเพิ่มเติม";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="บัญชีธุรกิจของคุณหมดอายุแล้ว";
+"Your business account is expired"="บัญชีถูกปิดใช้งาน";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="พบปัญหาในการดำเนินการชำระเงินของคุณ MEGA ถูกจำกัดให้ดูได้เฉพาะเมื่อปัญหานี้ที่ได้รับการแก้ไขในเว็บเบราว์เซอร์เดสก์ท็อปเท่านั้น";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="บัญชีธุรกิจของคุณถูกปิดใช้งานเนื่องจากการชำระเงินไม่สำเร็จ คุณจะไม่สามารถเข้าถึงข้อมูลของคุณได้ กรุณาเข้าสู่ระบบ MEGA ผ่านเบราว์เซอร์เพื่อดำเนินการชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกระงับ[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="บัญชีถูกระงับเนื่องจากละเมิดลิขสิทธิ์ เราได้ส่งอีเมลถึงคุณพร้อมข้อมูลเพิ่มเติมเกี่ยวกับเรื่องนี้แล้ว";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="บัญชีถูกยุติการใช้งานเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA เช่น การสวมสิทธิผู้อื่นในทางที่ผิด การแชร์และการนำเข้าข้อมูลอันเป็นเท็จ หรือการละเมิดระบบ";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="ใช้เนื้อที่ไปแล้ว";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="ใช้การถ่ายโอนไปแล้ว";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="บัญชีถูกปิดใช้งาน";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="บัญชี Pro Flexi ของคุณถูกปิดใช้งานเนื่องจากการชำระเงินไม่สำเร็จหรือคุณได้ยกเลิกการสมัครใช้งานของคุณเอง คุณจะไม่สามารถเข้าถึงข้อมูลของคุณได้ กรุณาเข้าสู่ระบบ MEGA ผ่านเบราว์เซอร์เพื่อดำเนินการชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง";

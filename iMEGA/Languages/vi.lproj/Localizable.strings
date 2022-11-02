@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Thường (4giây)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="Nhanh (2giây)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Thứ tự trình chiếu";
 /* Slideshow Speed Order shuffle */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Truy cập bị từ chối cho tất cả thành viên dưới hạng admin";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Tài khoản doanh nghiệp đã hết hạn";
+"Business account has expired"="Tài khoản đã vô hiệu hóa";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Thẻ bị từ chối";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Đã có vấn đề xảy ra với việc thanh toán gần đây. Xin truy cập MEGA bằng trình duyệt web trên máy tính để biết thêm thông tin.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Tài khoản doanh nghiệp đã hết hạn";
+"Your business account is expired"="Tài khoản đã vô hiệu hóa";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Đã có vấn đề xảy ra với việc xử lý thanh toán gần đây. Tài khoản sẽ bị giới hạn chức năng cho đến khi việc thanh toán được thực hiện giải quyết trên phiên bản nền web.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Tài khoản Doanh Nghiệp của bạn đã bị vô hiệu hóa do việc thanh toán đã không thành công. Bạn sẽ không thể truy cập vào dữ liệu đã được lưu trữ trong tài khoản của mình. Để thanh toán và kích hoạt lại gói đăng ký của bạn, hãy đăng nhập vào MEGA bằng trình duyệt web.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tài khoản của bạn hiện đang bị [B]đình chỉ[/B]. Bạn chỉ có khả năng xem duyệt dữ liệu của mình.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Cuộc chát mới";
 /* Title for chats section */
-"chat.title"="Các cuộc chát";
+"chat.title"="Chát";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[B] đã đổi quyền hạn của [A] thành [S]chỉ-được-xem[/S]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Tài khoản bị đình chỉ do vi phạm bản quyền. Chúng tôi đã gửi cho bạn một email với nhiều thông tin hơn về việc này.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Tài khoản đã bị chấm dứt hoạt động do vi phạm Điều Khoản Dịch Vụ của MEGA; chẳng hạn như lạm dụng hệ thống, quyền hạn sử dụng của người khác hoặc chia sẻ nội dung cấm.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Tài khoản đã vô hiệu hóa";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Tài khoản Pro Flexi của bạn đã bị vô hiệu hóa do việc thanh toán đã không thành công hoặc bạn đã hủy gói đăng ký dịch vụ. Bạn sẽ không thể truy cập vào dữ liệu đã được lưu trữ trong tài khoản của mình. Để thanh toán và kích hoạt lại gói đăng ký của bạn, hãy đăng nhập vào MEGA bằng trình duyệt web.";
