@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Toegang geweigerd voor niet-admin-gebruikers";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Zakelijk account is verlopen";
+"Business account has expired"="Account gedeactiveerd";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Credit kaart geweigerd";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Er is een probleem opgetreden met uw laatste betaling. Ga naar MEGA via een desktopbrowser voor meer informatie.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Uw Zakelijke account is verlopen";
+"Your business account is expired"="Account gedeactiveerd";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Er is een probleem opgetreden bij het verwerken van uw betaling. MEGA kan alleen worden bekeken totdat dit probleem is opgelost in een desktop webbrowser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Uw Zakelijke account is gedeactiveerd vanwege een mislukte betaling. U heeft geen toegang tot de gegevens die in uw account zijn opgeslagen. Om een ​​betaling uit te voeren en uw abonnement opnieuw te activeren, logt u in op MEGA via een browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]. U kunt alleen door uw gegevens bladeren.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Nieuw gesprek";
 /* Title for chats section */
-"chat.title"="Gesprekken";
+"chat.title"="Gesprek";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A]was gewijzigd naar [S]alleen-lezen[/S] door [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Account is geschorst vanwege copyright overtredingen. We hebben u een email gestuurd met meer informatie hierover.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Uw account was beëindigd door een schending van MEGA’s Algemene Voorwaarden, zoals misbruik van rechten van anderen; Het delen en/of importen van illegale gegevens; of systeem misbruik.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Gebruikte opslag";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Gebruikte overdracht";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Account gedeactiveerd";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Uw Pro Flexi account is gedeactiveerd vanwege een mislukte betaling of u heeft uw abonnement geannuleerd. U heeft geen toegang tot de gegevens die in uw account zijn opgeslagen. Om een betaling uit te voeren en uw abonnement opnieuw te activeren, logt u in op MEGA via een browser.";

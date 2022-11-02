@@ -211,11 +211,11 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Options";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow Options";
+"slideshow.preferenceSetting.slideshowOptions"="Slideshow options";
 /* Footer note for media in sub folders */
 "slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow Speed";
+"slideshow.preferenceSetting.speed"="Slideshow speed";
 /* Slideshow Speed preference slow */
 "slideshow.preferenceSetting.speed.slow"="Slow (8s)";
 /* Slideshow Speed preference normal */
@@ -223,7 +223,7 @@
 /* Slideshow Speed preference fast */
 "slideshow.preferenceSetting.speed.fast"="Fast (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow Order";
+"slideshow.preferenceSetting.order"="Slideshow order";
 /* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="Shuffle";
 /* Slideshow Preference Setting repeat */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Access denied for non-admin users";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business account has expired";
+"Business account has expired"="Account deactivated";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Credit card rejected";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Your Business account has expired";
+"Your business account is expired"="Account deactivated";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3123,4 +3123,4 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Account deactivated";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you've cancelled your subscription. You won't be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser on the web.";
+"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";

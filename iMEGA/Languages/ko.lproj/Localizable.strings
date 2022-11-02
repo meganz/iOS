@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="보통 (4초)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="빠름 (2초)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="슬라이드쇼 순서";
 /* Slideshow Speed Order shuffle */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="관리자가 아닌 이용자의 접근이 금지됨";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="비즈니스 계정이 만료됨";
+"Business account has expired"="Account deactivated";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="신용 카드 거절됨";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="최근 결제에 문제가 있었습니다. 자세한 정보를 보려면 데스크톱 브라우저로 MEGA에 접속하세요.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="당신의 비즈니스 계정이 만료되었습니다";
+"Your business account is expired"="계정 비활성화됨";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="결제를 처리하는 과정에 문제가 있었습니다. 이 문제가 데스크톱 브라우저에서 해결될 때까지 MEGA가 보기 전용으로 제한됩니다.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="당신의 비즈니스 계정은 결제 실패로 인해 비활성화 되었습니다. 계정 안에 있는 데이터에 접근하지 못할 것입니다. 결제를 하고 구독을 재활성화 하려면, 브라우저에서 MEGA에 로그인 하세요.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="당신의 계정은 현재 [B]정지[/B]되었습니다. 당신의 데이터를 탐색만할 수 있습니다.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="새 대화";
 /* Title for chats section */
-"chat.title"="대화";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A]님이 [B]님에 의해 [S]읽기만 가능[/S]하게 변경되었습니다";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="저작권 침해로 계정이 정지되었습니다. 이것에 대한 자세한 정보를 이메일로 보내드렸습니다.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="타인의 권리 침해, 불법 데이터의 공유 및 내보내기, 시스템 오용 등의 MEGA 이용 약관 위반으로 계정이 제거되었습니다.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="이용한 저장소";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="이용한 전송량";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="계정 비활성화됨";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="당신의 Pro Flexi 계정은 결제 실패 또는 구독 취소로 인해 비활성화 되었습니다. 계정 안에 있는 데이터에 접근하지 못할 것입니다. 결제를 하고 구독을 재활성화 하려면, 브라우저에서 MEGA에 로그인 하세요.";

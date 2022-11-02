@@ -1001,7 +1001,7 @@
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
 "account.transferQuota.perMonth"="%@ transferuri";
 /* Text listed that explain that a free user gets a limited amount of transfer quota. */
-"account.transferQuota.freePlan"="[B]Limited[/B] Transfer";
+"account.transferQuota.freePlan"="Transferuri [B]limitate[/B]";
 /* Cell title shown on the achievements view for registration achievement */
 "account.achievement.registration.title"="Bonus de înregistrare";
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
@@ -1195,7 +1195,7 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Eu";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] a fost eliminat din chatul de grup de către [B].";
+"wasRemovedFromTheGroupChatBy"="[A] a fost eliminat din chatul de grup de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] a părăsit chatul de grup.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Acces interzis pentru utilizatorii non-admin";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Contul business a expirat";
+"Business account has expired"="Cont dezactivat";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Card de credit respins";
 /* SDK error returned when the billing failed */
@@ -1899,7 +1899,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Încărcarea(ările) nu poate(pot) continua deoarece contul tău este plin";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Permite contactelor tale să vadă ultima dată când ai activ pe MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="Permite contactelor tale să vadă ultima dată când ai fost activ(ă) pe MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Afișează";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
@@ -1959,9 +1959,9 @@
 /* Title show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.title"="Activitatea pentru Recente este ascunsă";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
-"recents.emptyState.activityHidden.button"="Show Activity";
+"recents.emptyState.activityHidden.button"="Afișează activitatea";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
-"home.recent.modifiedByLabel"="Modified by %@";
+"home.recent.modifiedByLabel"="Modificat de %@";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 și [A]încă %2[/A]";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
@@ -1985,7 +1985,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Te rugăm să accesezi secțiunea Intimitate din aplicația Configurări a dispozitivului. Activează Servicii de localizare și setează MEGA pe La utilizarea aplicației sau Întotdeauna.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA îți accesează locația atunci când o partajezi cu contactele tale într-un chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Datele mobile sunt oprite";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="A existat o problemă cu ultima plată. Te rugăm să accesezi MEGA folosind un browser desktop pentru mai multe informații.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Contul tău business a expirat";
+"Your business account is expired"="Cont dezactivat";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="A existat o problemă la procesarea plății. MEGA este limitat în modul numai vizualizare până când această problemă a fost rezolvată într-un browser web desktop.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Chat nou";
 /* Title for chats section */
-"chat.title"="Chaturi";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A] was changed to [S]read-only[/S] by [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3083,7 +3083,7 @@
 /* Title of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.title"="Notificări sonore";
 /* Description of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.description"="Hear a sound when someone joins or leaves a call.";
+"settings.section.calls.soundNotifications.description"="Auzi un sunet când cineva se alătură sau părăsește un apel.";
 /* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.title"="Toate contactele au fost adăugate";
 /* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
@@ -3093,7 +3093,7 @@
 /* Menu option from the `Add` section that allows the user to share files from Files app */
 "chat.addToChatMenu.filesApp"="Fișiere";
 /* Menu option from the `Add` section that allows the user to share files from scanning */
-"chat.addToChatMenu.scan"="Scan";
+"chat.addToChatMenu.scan"="Scanează";
 /* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.title"="Niciun contact";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
@@ -3111,8 +3111,16 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
+"meetings.startConversation.contextMenu.scheduleMeeting"="Planiifică o întâlnire";
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Cont dezactivat";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";

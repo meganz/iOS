@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="عادية (4 ثوان)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="سريعة (2 ثانية)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="ترتيب عرض الشرائح";
 /* Slideshow Speed Order shuffle */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="الولوج ممنوع لغيرمستخدمي مدير النظام";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="انتهت صلاحية حساب الأعمال";
+"Business account has expired"="الحساب غير مفعل ";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="تم رفض بطاقة الائتمان";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="حدثت مشكلة في دفعتك الأخيرة. يرجى الوصول إلى ميغا MEGA باستخدام متصفح سطح المكتب لمزيد من المعلومات.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="انتهت صلاحية حساب الأعمال الخاص بك";
+"Your business account is expired"="الحساب غير مفعل ";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="حدثت مشكلة أثناء معالجة دفعتك. يقتصر ميغا MEGA على العرض فقط حتى يتم إصلاح هذه المشكلة في متصفح سطح المكتب.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="تم إلغاء تفعيل حساب الأعمال Business الخاص بك بسبب فشل الدفع. لن تتمكن من الوصول إلى البيانات المخزنة في حسابك. للقيام بالدفع وإعادة تفعيل اشتراكك، قم بتسجيل الدخول إلى ميغا MEGA من المتصفح.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="حسابك [B]معلق[/B] حالياً. يمكنك فقط تصفح بياناتك.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="محادثة جديدة";
 /* Title for chats section */
-"chat.title"="محادثات";
+"chat.title"="المحادثة";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A] قد تم تغييره [S]للقراءة فقط[/S] من قبل [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="تم تعليق الحساب بسبب انتهاكات حقوق النشر. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على مزيد من المعلومات حول هذا الموضوع.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="تم إنهاء الحساب بسبب خرق لشروط خدمة ميغا MEGA ، مثل إساءة استخدام حقوق الآخرين أو مشاركة واستيراد البيانات غير القانونية  أو إساءة استخدام النظام.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="الحساب غير مفعل ";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="تم إلغاء تفعيل حساب برو Pro Flexi الخاص بك بسبب فشل الدفع أو لأنك ألغيت اشتراكك. لن تتمكن من الوصول إلى البيانات المخزنة في حسابك. للقيام بالدفع وإعادة تفعيل اشتراكك، قم بتسجيل الدخول إلى ميغا MEGA من المتصفح.";

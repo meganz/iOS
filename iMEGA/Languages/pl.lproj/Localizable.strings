@@ -211,25 +211,25 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Opcje";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow options";
+"slideshow.preferenceSetting.slideshowOptions"="Opcje pokazu slajdów";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Załącz media w podkatalogach do slajdów";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow speed";
+"slideshow.preferenceSetting.speed"="Szybkość pokazu slajdów";
 /* Slideshow Speed preference slow */
-"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+"slideshow.preferenceSetting.speed.slow"="Powoli (8s)";
 /* Slideshow Speed preference normal */
-"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+"slideshow.preferenceSetting.speed.normal"="Normalnie (4s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="Szybko (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow order";
+"slideshow.preferenceSetting.order"="Kolejność pokazu slajdów";
 /* Slideshow Speed Order shuffle */
-"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+"slideshow.preferenceSetting.order.shuffle"="Losowa";
 /* Slideshow Preference Setting repeat */
-"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Powtarzalna";
 /* Slideshow Preference Setting include subFolders */
-"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Załącz podfoldery";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nie masz plików w Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Odmowa dostępu dla użytkowników niebędących administratorami";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Konto firmowe wygasło";
+"Business account has expired"="Konto dezaktywowane";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Karta kredytowa odrzucona";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Wystąpił problem z ostatnią płatnością. Proszę uzyskać dostęp do MEGA za pomocą przeglądarki na pulpicie, aby uzyskać więcej informacji.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Konto biznesowe wygasło";
+"Your business account is expired"="Konto dezaktywowane";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Wystąpił problem z przetwarzaniem Twojej płatności. Wyświetlanie MEGA jest ograniczone tylko do momentu rozwiązania tego problemu w przeglądarce internetowej na komputerze.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Twoje konto Business zostało dezaktywowane z powodu braku płatności. Nie będziesz miał dostępu do danych przechowywanych na swoim koncie. Aby dokonać płatności i reaktywować subskrypcję, zaloguj się do MEGA przez przeglądarkę.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Twoje konto jest obecnie [B]zawieszone[/B]. Możesz tylko przeglądać swoje dane.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2923,7 +2923,7 @@
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Anulowanie transferów…";
 /* Count of folders and files in the scanning stage */
-"transfers.cancellable.scanning.count"="Found %@ and %@";
+"transfers.cancellable.scanning.count"="Znaleziono %@ i %@";
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Nowy czat";
 /* Title for chats section */
-"chat.title"="Czaty";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A] został zmieniony na [S]tylko do odczytu[/S] przez [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Konto zawieszone z powodu naruszenia praw autorskich. Wysłaliśmy do Ciebie maila z większą ilością informacji na ten temat.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Konto zostało usunięte z powodu naruszenia warunków korzystania z usług firmy MEGA, takich jak nadużywanie praw innych osób, udostępnianie i importowanie nielegalnych danych lub nadużywanie systemu.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Konto dezaktywowane";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Twoje konto Pro Flexi zostało dezaktywowane z powodu braku płatności lub anulowania subskrypcji. Nie będziesz miał dostępu do danych przechowywanych na swoim koncie. Aby dokonać płatności i reaktywować subskrypcję, zaloguj się do MEGA przez przeglądarkę.";

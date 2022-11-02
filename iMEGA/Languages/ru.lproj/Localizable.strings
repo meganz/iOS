@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Нормальное (4 с.)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="Быстрое (2 с.)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Порядок слайд-шоу";
 /* Slideshow Speed Order shuffle */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Доступ закрыт для всех, кроме администраторов";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Срок действия бизнес-аккаунта истёк";
+"Business account has expired"="Аккаунт деактивирован";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Кредитная карта отклонена";
 /* SDK error returned when the billing failed */
@@ -1843,7 +1843,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Отношения с контактом установлены";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Аккаунт был удален или отключен";
+"Account has been deleted/deactivated"="Аккаунт был удален или деактивирован";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Заблокировал ваш контакт";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Возникла проблема с вашим последним платежом. Пожалуйста, откройте MEGA в браузере настольного компьютера для дополнительной информации.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Срок действия вашего бизнес-аккаунта истёк";
+"Your business account is expired"="Аккаунт деактивирован";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="При обработке вашего платежа возникла проблема. MEGA ограничена только просмотром, пока эта проблема не будет решена в настольном веб-браузере.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Ваш бизнес-аккаунт был деактивирован из-за сбоя оплаты. Вы не сможете получить доступ к данным, хранящимся в вашем аккаунте. Для оплаты и возобновления подписки войдите в MEGA через веб-браузер.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Ваш аккаунт [B]приостановлен[/B]. Вы можете только просматривать данные.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2201,7 +2201,7 @@
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Тип файла";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Администратор заблокировал ваш аккаунт. Пожалуйста, обратитесь к администратору вашего бизнес-аккаунта за подробностями.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Администратор деактивировал ваш аккаунт. Пожалуйста, обратитесь к администратору вашего бизнес-аккаунта за подробностями.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Ваш аккаунт был удалён администратором. Пожалуйста, свяжитесь с администратором вашего бизнес-аккаунта для получения более подробной информации.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Новый чат";
 /* Title for chats section */
-"chat.title"="Чаты";
+"chat.title"="Чат";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A] получил права [S]только на чтение[/S] от [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Аккаунт заблокирован из-за нарушения авторских прав. Мы отправили вам электронное письмо с дополнительной информацией об этом.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Аккаунт заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц, обмен и импорт незаконных данных или злоупотребление системой.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Использованный объём";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Использованный трафик";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Аккаунт деактивирован";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Ваш аккаунт Pro Flexi был деактивирован из-за сбоя оплаты или из-за того, что вы отменили подписку. Вы не сможете получить доступ к данным, хранящимся в вашем аккаунте. Для оплаты и возобновления подписки войдите в MEGA через веб-браузер.";

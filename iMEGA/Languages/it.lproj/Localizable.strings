@@ -211,25 +211,25 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="Opzioni";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="Slideshow options";
+"slideshow.preferenceSetting.slideshowOptions"="Opzioni della presentazione";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Includi media in sottocartelle nella presentazione";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="Slideshow speed";
+"slideshow.preferenceSetting.speed"="Velocità di presentazione";
 /* Slideshow Speed preference slow */
-"slideshow.preferenceSetting.speed.slow"="Slow (8s)";
+"slideshow.preferenceSetting.speed.slow"="Lenta (8s)";
 /* Slideshow Speed preference normal */
-"slideshow.preferenceSetting.speed.normal"="Normal (4s)";
+"slideshow.preferenceSetting.speed.normal"="Normale (4s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="Veloce (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Slideshow order";
+"slideshow.preferenceSetting.order"="Ordine di presentazione";
 /* Slideshow Speed Order shuffle */
-"slideshow.preferenceSetting.order.shuffle"="Shuffle";
+"slideshow.preferenceSetting.order.shuffle"="Casuale";
 /* Slideshow Preference Setting repeat */
-"slideshow.preferenceSetting.slideshowOptions.repeat"="Repeat";
+"slideshow.preferenceSetting.slideshowOptions.repeat"="Ripeti";
 /* Slideshow Preference Setting include subFolders */
-"slideshow.preferenceSetting.slideshowOptions.subFolders"="Include sub-folders";
+"slideshow.preferenceSetting.slideshowOptions.subFolders"="Includi sottocartelle";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nessun file salvato in Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -401,7 +401,7 @@
 /*  */
 "uploadToMega"="Upload";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
-"tapFileToRename"="Clicca file per rinominare";
+"tapFileToRename"="Tocca file per rinominare";
 /* Title for a button to send a file to a chat */
 "general.sendToChat"="Invia alla chat";
 /* Column header of my contacts/chats at copy dialog */
@@ -1303,7 +1303,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chattando con";
 /* Explanation when loading voice message error */
-"Couldn't load. [RED]Tap to retry[/RED]"="Non è stato possibile caricare. [RED]Clicca per riprovare[/RED]";
+"Couldn't load. [RED]Tap to retry[/RED]"="Non è stato possibile caricare. [RED]Tocca per riprovare[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA protegge la tua chat con una criptazione end-to-end (controllata dall'utente) provvedendo un'assicurazione di sicurezza essenziale:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1387,7 +1387,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu messaggi non letti";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Gli abbonamenti sono rinnovati automaticamente per periodi successivi della stessa durata e allo stesso prezzo del periodo inizialmente scelto. Puoi disattivare il rinnovo automatico del tuo abbonamento MEGA Pro non oltre 24 ore prima che il tuo prossimo pagamento sia processato tramite la pagina delle impostazioni dell'account iTunes. Per gestire i tuoi abbonamenti, clicca sull'icona dell'App Store sul tuo dispositivo, effettua l'accesso con il tuo Apple ID in fondo alla pagina (se non l'hai già fatto) e poi clicca su Vedi ID. Ti porterà alla pagina del tuo account dove puoi scorrere fino alla Gestione degli abbonamenti. Da lì, puoi selezionare il tuo abbonamento MEGA Pro e vedere la data prevista per il rinnovo, scegliere un diverso abbonamento o disattivare il rinnovo automatico del tuo abbonamento.";
+"autorenewableDescription"="Gli abbonamenti sono rinnovati automaticamente per periodi successivi della stessa durata e allo stesso prezzo del periodo inizialmente scelto. Puoi disattivare il rinnovo automatico del tuo abbonamento MEGA Pro non oltre 24 ore prima che il tuo prossimo pagamento sia processato tramite la pagina delle impostazioni dell'account iTunes. Per gestire i tuoi abbonamenti, tocca sull'icona dell'App Store sul tuo dispositivo, effettua l'accesso con il tuo Apple ID in fondo alla pagina (se non l'hai già fatto) e poi clicca su Vedi ID. Ti porterà alla pagina del tuo account dove puoi scorrere fino alla Gestione degli abbonamenti. Da lì, puoi selezionare il tuo abbonamento MEGA Pro e vedere la data prevista per il rinnovo, scegliere un diverso abbonamento o disattivare il rinnovo automatico del tuo abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1757,13 +1757,13 @@
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ ha abbandonato la chiamata.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="C'è una chiamata di gruppo attiva. Clicca per unirti.";
+"There is an active group call. Tap to join."="C'è una chiamata di gruppo attiva. Tocca per unirti.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="C'è una chiamata attiva. Clicca per unirti.";
+"There is an active call. Tap to join."="C'è una chiamata attiva. Tocca per unirti.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Tocca per tornare alla chiamata %@";
 /* Message shown in a chat room for a one on one call */
-"Tap to return to call"="Clicca per ritornare alla chiamata";
+"Tap to return to call"="Tocca per tornare alla chiamata";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salva nella Galleria";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1929,7 +1929,7 @@
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Scorri per annullare";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Premi e mantieni %@ per registrare, rilascia per inviare";
+"Tap and hold %@ to record, release to send"="Tocca e tieni premuto %@ per registrare, rilascia per inviare";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Non è possibile registrare messaggi vocali mentre c'è una chiamata in corso.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
@@ -1977,7 +1977,7 @@
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="Le persone potranno unirsi al tuo gruppo utilizzando questo link.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Clicca qui per informazioni";
+"Tap here for info"="Tocca qui per informazioni";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Nessun link della chat disponibile.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
@@ -2015,7 +2015,7 @@
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Invita [X] contatti";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Clicca spazio per inserire più indirizzi email";
+"Tap space to enter multiple emails"="Tocca sullo spazio per inserire più indirizzi email";
 /* Text used as a section title or similar */
 "Enter Email"="Inserisci email";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="C'è stato un problema con il tuo ultimo pagamento. Per favore, accedi a MEGA utilizzando un browser desktop per maggiori informazioni.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Il tuo account Business è scaduto";
+"Your business account is expired"="Account deactivated";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="C'è stato un problema nel processo del tuo ultimo pagamento. MEGA è limitato alla visualizzazione finché questo problema non sarà aggiustato su un browser desktop.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Il tuo account è [B]sospeso[/B] al momento. Puoi solo sfogliare tra i tuoi dati.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2357,7 +2357,7 @@
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Il link scade il %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
-"Tap to Copy"="Clicca per copiare";
+"Tap to Copy"="Tocca per copiare";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="Copia tutto";
 /* Description text about options when exporting links for several nodes */
@@ -2519,7 +2519,7 @@
 /* First step to turn on notifications */
 "dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Apri le <b>Impostazioni</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Clicca su <b>Notifiche</b>";
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tocca su <b>Notifiche</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Attiva <b>Permetti notifiche</b>";
 /* Title of the button to open Settings */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Account sospeso a causa di violazioni del copyright. Ti abbiamo inviato un'email con maggiori informazioni al riguardo.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Account chiuso a causa di una violazione dei Termini di Servizio di MEGA, come abuso di diritti altrui, condivisione ed importazione di dati illegali, o abuso del sistema.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Account deactivated";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";

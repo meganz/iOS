@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Acesso negado para usuários sem permissão de administrador";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="A sua conta Business expirou";
+"Business account has expired"="Conta desativada";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Cartão de crédito recusado";
 /* SDK error returned when the billing failed */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Não foi possível processar o seu último pagamento. Por favor, acesse o MEGA usando um navegador em um computador para obter mais informações.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="A sua conta Business expirou";
+"Your business account is expired"="Conta desativada";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Não foi possível processar o seu pagamento. O seu acesso será somente leitura até que o problema seja corrigido usando um navegador em um computador.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="A sua conta Business foi desativada porque o pagamento falhou, e já não será possível acessar os dados armazenados na sua conta. Para fazer o pagamento e assim reativar a sua assinatura, faça login no MEGA por meio de um navegador.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta [B]expirou[/B]. Somente é possível visualizar os seus dados.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Novo chat";
 /* Title for chats section */
-"chat.title"="Chats";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[B] mudou a permissão de [A] a [S]somente leitura[/S]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Conta suspensa devido a infrações de direitos autorais. Enviamos um email com mais informações.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Conta encerrada devido a uma infração dos Termos de serviço do MEGA, como abuso dos direitos de terceiros, compartilhamento e importação de dados ilegais ou abuso do sistema.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Armazenamento usado";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transferência usada";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Conta desativada";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="A sua conta Pro Flexi foi desativada porque o pagamento falhou ou porque você cancelou a sua assinatura. Já não será possível acessar os dados armazenados na sua conta. Para fazer o pagamento e assim reativar a sua assinatura, faça login no MEGA por meio de um navegador em um computador.";

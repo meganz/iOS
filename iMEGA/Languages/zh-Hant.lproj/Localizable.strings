@@ -385,7 +385,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="（Pro會員限定）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="設定有效日期";
+"setExpiryDate"="設定到期日期";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="密碼保護設定";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -815,7 +815,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡 support@mega.nz";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="取消連結已失效。";
+"cancellationLinkHasExpired"="取消連結已過期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
 /* During account cancellation (deletion) */
@@ -867,7 +867,7 @@
 /* An option to reset the password. */
 "forgotPassword"="忘記密碼了？";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="這個復原連結已失效，請再試一次。";
+"recoveryLinkHasExpired"="這個復原連結已過期，請再試一次。";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="密碼重設";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -1075,7 +1075,7 @@
 /* Label to indicate that the current user has a Free account. */
 "Free"="免費";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"="%@到期";
+"expiresOn"="到期日期%@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="更新於";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1157,7 +1157,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="升級至Pro方案";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="享有Pro方案專屬的功能，例如可為公開檔案設定密碼保護與連結的有效日期。";
+"Access Pro only features like setting password protection and expiry dates for public files."="享有Pro方案專屬的功能，例如可為公開檔案設定密碼保護與連結的到期日期。";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="開啟除錯模式";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1415,7 +1415,7 @@
 /* Label to show that an error of Out of range occurs during a SDK operation. */
 "Out of range"="超出範圍";
 /* Label to show that an error related with expiration occurs during a SDK operation. */
-"Expired"="過期";
+"Expired"="已過期";
 /* Label to show that an error related with a resource Not found occurs during a SDK operation. */
 "Not found"="未找到";
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="非管理員所以拒絕存取";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="商業帳戶已過期";
+"Business account has expired"="帳戶已停用";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="信用卡被拒絕";
 /* SDK error returned when the billing failed */
@@ -1667,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="儲存影片至相簿";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下載的圖片或影片將儲存在裝置的媒體庫，而不是在離線存取區。";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下載的圖片或影片將儲存在裝置的媒體庫，而非離線存取區。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相機";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -1889,9 +1889,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="您的Pro會員將在%1天內到期。";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="您的Pro方案已於1天前到期";
+"Your PRO membership plan expired 1 day ago"="您的Pro方案已於1天前過期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="您的Pro方案已於%1天前到期";
+"Your PRO membership plan expired %1 days ago"="您的Pro方案已於%1天前過期";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="語音留言";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="您最近一次付款有問題。請使用電腦版瀏覽器登入MEGA以取得更多資訊。";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="您的商業帳戶已經過期";
+"Your business account is expired"="帳戶已停用";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="處理您的付款時出現問題。在電腦版網頁瀏覽器中修復此問題之前，MEGA僅限於檢視。";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="由於付款失敗，您的商業帳戶已被停用。您將無法存取儲存在您帳戶中的資料。若要付款並重新啟用您的訂閱，請透過網頁瀏覽器登入MEGA進行。";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]暫停使用[/B]。您只能瀏覽您的資料。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2345,7 +2345,7 @@
 /* Text for options in Get Link View to separate the key from the link */
 "Send Decryption Key Separately"="個別發送解密金鑰";
 /* Text for options in Get Link View to activate expiry date */
-"Expiry Date"="有效期日";
+"Expiry Date"="到期日期";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="密碼保護";
 /* Text for options in Get Link View to set password protection */
@@ -2355,13 +2355,13 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="瞭解更多";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="連結到期%@";
+"Link expires %@"="連結到期日期%@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="點擊複製";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="全部複製";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="選項如個別發送解密金鑰、有效日期設定或密碼設定只適用於單個項目。";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="選項如個別發送解密金鑰、到期日期或密碼設定只適用於單個項目。";
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="連結已複製到剪貼簿";
 /* Message shown when some links have been copied to the Clipboard */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="帳戶因侵犯版權而被暫停。我們向您發送了一封電子郵件，其中有包含關於此的更多訊息。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="帳戶因違反MEGA服務條款而被終止，例如侵犯他人權益、共享和匯入非法資料、或濫用系統資源行為。";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="已使用的儲存空間";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="已使用的傳輸流量";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="帳戶已停用";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="由於付款失敗或您已取消訂閱，您的Pro Flexi帳戶已被停用。您將無法存取儲存在您帳戶中的資料。若要付款並重新啟用您的訂閱，請透過網頁瀏覽器登入MEGA進行。";

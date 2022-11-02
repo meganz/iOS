@@ -221,7 +221,7 @@
 /* Slideshow Speed preference normal */
 "slideshow.preferenceSetting.speed.normal"="Normal (4 s)";
 /* Slideshow Speed preference fast */
-"slideshow.preferenceSetting.speed.fast"="Fast (2s)";
+"slideshow.preferenceSetting.speed.fast"="Schnell (2 s)";
 /* NavigationBar Title shown on Slideshow Order preference */
 "slideshow.preferenceSetting.order"="Diashow-Reihenfolge";
 /* Slideshow Speed Order shuffle */
@@ -815,7 +815,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Falls Sie keinen Zugang zu Ihrer Account-E-Mail-Adresse mehr haben, wenden Sie sich bitte an support@mega.nz.";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="Storno-Link abgelaufen.";
+"cancellationLinkHasExpired"="Stornolink abgelaufen.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Dies ist die letzte Stufe der Accountlöschung. Sie werden Ihre online gespeicherten Daten verlieren. Bitte geben Sie Ihr Passwort ein.";
 /* During account cancellation (deletion) */
@@ -867,7 +867,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Passwort vergessen?";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="Dieser Resetlink hat seinen Gültigkeitszeitrahmen überschritten - bitte versuchen Sie es erneut.";
+"recoveryLinkHasExpired"="Dieser Resetlink ist abgelaufen – bitte versuchen Sie es erneut.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Passwort-Reset";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -1459,7 +1459,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Kein Zugriff für Nicht-Administratoren";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Business-Account ist abgelaufen";
+"Business account has expired"="Account deaktiviert";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Kreditkarte abgelehnt";
 /* SDK error returned when the billing failed */
@@ -1825,7 +1825,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informationen zur Zahlung";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Ihr Pro-Status endet bald";
+"PRO membership plan expiring soon"="Ihr Pro-Abonnement läuft bald ab";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Löschung durch Dritte";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1843,7 +1843,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Kontakt hergestellt";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Account wurde gelöscht/deaktiviert";
+"Account has been deleted/deactivated"="Account wurde gelöscht oder deaktiviert";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="hat Sie blockiert";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -1885,13 +1885,13 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Ihre Zahlung für %1 ist fehlgeschlagen.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Ihr Pro-Status endet in weniger als 24 Stunden.";
+"Your PRO membership plan will expire in 1 day."="Ihr Pro-Abonnement läuft in weniger als 24 Stunden ab.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Ihr Pro-Status endet in %1 Tagen.";
+"Your PRO membership plan will expire in %1 days."="Ihr Pro-Abonnement läuft in %1 Tagen ab.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Ihr Pro-Status ist gestern abgelaufen";
+"Your PRO membership plan expired 1 day ago"="Ihr Pro-Abonnement ist gestern abgelaufen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Ihr Pro-Status ist vor %1 Tagen abgelaufen";
+"Your PRO membership plan expired %1 days ago"="Ihr Pro-Abonnement ist vor %1 Tagen abgelaufen";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Sprachnachricht";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Bei Ihrer letzten Zahlung ist ein Problem aufgetreten. Bitte öffnen Sie MEGA in einem Desktop-Browser, um weitere Informationen zu erhalten.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Ihr Business-Account ist abgelaufen";
+"Your business account is expired"="Account deaktiviert";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Bei der Verarbeitung Ihrer Zahlung ist ein Problem aufgetreten. MEGA ist auf den Betrachtungsmodus beschränkt, bis dieses Problem in einem Desktop-Webbrowser behoben wurde.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Ihr Business-Account wurde aufgrund einer fehlenden Zahlung deaktiviert. Sie können auf die Daten in Ihrem Account nicht zugreifen. Um eine Zahlung vorzunehmen und Ihr Abonnement erneut zu aktivieren, melden Sie sich in einem Browser bei MEGA an.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Ihr Account ist [B]gesperrt[/B]. Sie können lediglich lesend auf Ihre Daten zugreifen.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2201,7 +2201,7 @@
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Dateityp";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator gesperrt. Bitte setzen Sie sich für weitere Informationen direkt mit ihm in Verbindung.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator deaktiviert. Bitte setzen Sie sich für weitere Informationen direkt mit ihm in Verbindung.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator entfernt. Bitte setzen Sie sich mit ihm in Verbindung.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
@@ -3061,7 +3061,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Neuer Chat";
 /* Title for chats section */
-"chat.title"="Chats";
+"chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A] wurde von [B] auf [S]Nur lesen[/S] umgestellt";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Der Account wurde aufgrund von Urheberrechtsverletzungen gesperrt. Wir haben Ihnen hierzu eine E-Mail mit weiteren Informationen gesendet.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Der Account wurde wegen Verletzung der MEGA-Nutzungsbedingungen (Verletzung der Rechte Dritter, Import oder Verteilung illegaler Dateien oder Systemmissbrauch) geschlossen.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Account deaktiviert";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Ihr Pro-Flexi-Account wurde aufgrund einer fehlenden Zahlung deaktiviert oder Sie haben Ihr Abonnement gekündigt. Sie können auf die Daten in Ihrem Account nicht zugreifen. Um eine Zahlung vorzunehmen und Ihr Abonnement erneut zu aktivieren, melden Sie sich in einem Browser bei MEGA an.";

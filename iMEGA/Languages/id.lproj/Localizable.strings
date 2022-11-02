@@ -2051,9 +2051,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ada masalah dengan pembayaran terakhir anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Akun Bisnis anda telah kedaluwarsa";
+"Your business account is expired"="Akun dinonaktifkan";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Terjadi masalah saat memproses pembayaran anda. MEGA terbatas hanya untuk melihat sampai masalah ini telah diperbaiki di browser web desktop.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Akun Bisnis anda telah dinonaktifkan karena kegagalan pembayaran. Anda tidak akan dapat mengakses data yang disimpan di akun anda. Untuk melakukan pembayaran dan mengaktifkan kembali langganan anda, masuk ke MEGA melalui browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Akun Anda saat ini [B]ditangguhkan[/B]. Anda hanya dapat menelusuri data Anda.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3116,3 +3116,11 @@
 "account.suspension.message.copyright"="Akun ditangguhkan karena pelanggaran hak cipta. Kami mengirimi anda email dengan informasi lebih lanjut tentang ini.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Akun dihentikan karena pelanggaran Persyaratan Layanan MEGA, seperti penyalahgunaan hak orang lain, berbagi dan mengimpor data ilegal, atau penyalahgunaan sistem.";
+/* Account Storage title label of used storage size */
+"account.storage.storageUsed.title"="Storage used";
+/* Account Storage title label of used transfer size */
+"account.storage.transferUsed.title"="Transfer used";
+/* Content title of expired Pro Flexi account view */
+"account.expired.proFlexi.title"="Akun dinonaktifkan";
+/* Content message of expired Pro Flexi account view */
+"account.expired.proFlexi.message"="Akun Pro Flexi anda telah dinonaktifkan karena kegagalan pembayaran atau anda telah membatalkan langganan anda. Anda tidak akan dapat mengakses data yang disimpan di akun anda. Untuk melakukan pembayaran dan mengaktifkan kembali langganan anda, masuk ke MEGA melalui browser.";
