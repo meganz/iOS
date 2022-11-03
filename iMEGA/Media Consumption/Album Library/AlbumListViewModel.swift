@@ -21,6 +21,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         self.usecase = usecase
     }
     
+    @MainActor
     func loadAlbums() {
         loadFavouriteAlbum()
         
@@ -42,7 +43,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     // MARK: - Private
-    
+    @MainActor
     private func loadFavouriteAlbum() {
         loadingTask = Task {
             do {
@@ -53,6 +54,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
     }
     
+    @MainActor
     private func loadOtherAlbums() {
         albumLoadingTask = Task {
             do {
