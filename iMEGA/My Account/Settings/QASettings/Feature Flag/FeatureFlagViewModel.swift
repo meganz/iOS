@@ -4,12 +4,14 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case scheduleMeeting = "Schedule Meeting"
     case slideShowPreference = "Slide Show Preference"
     case chatRoomsListingRevamp = "chatRooms Listing Revamp"
+    case gifAndRawAlbum = "Gif and Raw Albums"
     
     var isEnabled: Bool {
         switch self {
         case .scheduleMeeting: return false
         case .slideShowPreference: return false
         case .chatRoomsListingRevamp: return false
+        case .gifAndRawAlbum: return false
         }
     }
 }
