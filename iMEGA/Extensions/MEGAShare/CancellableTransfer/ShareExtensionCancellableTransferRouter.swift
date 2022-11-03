@@ -37,32 +37,52 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
         presenter.present(build(), animated: true)
     }
     
-    func transferSuccess(with message: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferSuccess(with message: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.showSuccess(withStatus: message)
+                self.finishShareExtensionIfNeeded()
+            })
+        } else {
             SVProgressHUD.showSuccess(withStatus: message)
             self.finishShareExtensionIfNeeded()
-        })
+        }
     }
     
-    func transferCancelled(with message: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferCancelled(with message: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.showInfo(withStatus: message)
+                self.finishShareExtensionIfNeeded()
+            })
+        } else {
             SVProgressHUD.showInfo(withStatus: message)
             self.finishShareExtensionIfNeeded()
-        })
+        }
     }
     
-    func transferFailed(error: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferFailed(error: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.showError(withStatus: error)
+                self.finishShareExtensionIfNeeded()
+            })
+        } else {
             SVProgressHUD.showError(withStatus: error)
             self.finishShareExtensionIfNeeded()
-        })
+        }
     }
     
-    func transferCompletedWithError(error: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferCompletedWithError(error: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
+                self.finishShareExtensionIfNeeded()
+            })
+        } else {
             SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
             self.finishShareExtensionIfNeeded()
-        })
+        }
     }
     
     private func finishShareExtensionIfNeeded() {
