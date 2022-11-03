@@ -518,6 +518,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         
         message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
         message = message.replacingOccurrences(of: "[B]", with: sender)
+        message = removeFormatters(fromString: message)
         updateDescription(withMessage: message)
     }
     
@@ -573,9 +574,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private func removeFormatters(fromString string: String) -> String {
         var formattedString = string
         if #available(iOS 16.0, *) {
-            formattedString.replace(/\[\/?.\]/, with: "")
+            formattedString.replace(/\[.{1, 2}\]/, with: "")
         } else {
-            formattedString = formattedString.replacingOccurrences(of: "[/?.]", with: "", options: .regularExpression)
+            formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression)
         }
         
         return formattedString
