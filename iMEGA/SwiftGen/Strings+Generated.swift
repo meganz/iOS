@@ -2906,6 +2906,14 @@ public enum Strings {
           /// Favourites
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.favourites.title")
         }
+        public enum Gif {
+          /// GIFs
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.gif.title")
+        }
+        public enum Raw {
+          /// RAW
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.raw.title")
+        }
       }
       public enum Timeline {
         /// Timeline

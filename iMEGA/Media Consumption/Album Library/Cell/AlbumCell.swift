@@ -22,7 +22,6 @@ struct AlbumCell: View {
                     .font(.system(size: 12.0))
             }
         }
-        .padding(.leading, 10)
         .onAppear {
             viewModel.loadAlbumInfo()
         }

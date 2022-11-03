@@ -16,14 +16,20 @@ struct AlbumListView: View {
                         .scaleEffect(1.5)
                 } else {
                     ScrollView {
-                        LazyVGrid(columns: viewModel.columns, spacing: 5) {
-                            router.cell(withCameraUploadNode: viewModel.cameraUploadNode)
+                        LazyVGrid(columns: viewModel.columns, spacing: 0) {
+                            router.cell(withCameraUploadNode: viewModel.cameraUploadNode, album: nil)
                                 .onTapGesture(count: 1)  {
                                     isPresenting.toggle()
                                 }
                                 .clipped()
+                            
+                            ForEach(viewModel.albums, id: \.self) { album in
+                                router.cell(withCameraUploadNode: nil, album: album)
+                                    .clipped()
+                            }
                         }
                     }
+                    .padding(.horizontal, 6)
                 }
             }
         }
@@ -33,7 +39,7 @@ struct AlbumListView: View {
         }
         .padding([.top, .bottom], 10)
         .onAppear {
-            viewModel.loadCameraUploadNode()
+            viewModel.loadAlbums()
         }
         .onDisappear {
             viewModel.cancelLoading()

@@ -4,14 +4,14 @@ import MEGADomain
 
 @available(iOS 14.0, *)
 protocol AlbumListViewRouting {
-    func cell(withCameraUploadNode node: NodeEntity?) -> AlbumCell
+    func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell
     func albumContent(for photo: NodeEntity?) -> AlbumContainerWrapper
 }
 
 @available(iOS 14.0, *)
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
-    func cell(withCameraUploadNode node: NodeEntity?) -> AlbumCell {
+    func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let favouriteRepo = FavouriteNodesRepository.newRepo
         let thumbnailRepo = ThumbnailRepository.newRepo
@@ -37,7 +37,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let vm = AlbumCellViewModel(
             cameraUploadNode: node,
             thumbnailUseCase: thumbnailUsecase,
-            albumContentsUseCase: albumContentsUseCase
+            albumContentsUseCase: albumContentsUseCase,
+            album: album
         )
         
         return AlbumCell(viewModel: vm)
@@ -48,7 +49,13 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     }
     
     func build() -> UIViewController {
-        let vm = AlbumListViewModel(usecase: AlbumListUseCase(repository: AlbumRepository.newRepo))
+        let vm = AlbumListViewModel(
+            usecase: AlbumListUseCase(
+                albumRepository: AlbumRepository.newRepo,
+                fileSearchRepository: FileSearchRepository.newRepo,
+                mediaUseCase: MediaUseCase()
+            )
+        )
         let content = AlbumListView(viewModel: vm, router: self)
         
         return UIHostingController(rootView: content)
