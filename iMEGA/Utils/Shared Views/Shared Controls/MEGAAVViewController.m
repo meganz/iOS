@@ -21,6 +21,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
 @property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
 @property (nonatomic, strong) MEGASdk *apiForStreaming;
+@property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
 
 @end
 
@@ -84,6 +85,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared audioInterruptionDidStart];
     }
+    
+    self.viewDidAppearFirstTime = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -91,30 +94,34 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     
     NSString *fingerprint = [self fileFingerprint];
 
-    if (fingerprint && ![fingerprint isEqualToString:@""]) {
-        MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
-        if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
-            if ([self fileName].mnz_isVideoPathExtension) {
-                NSString *infoVideoDestination = NSLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video");
-                infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
-                infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];
-                UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"resumePlayback", @"Title to alert user the possibility of resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
-                [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"resume", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self seekToDestination:mediaDestination play:YES];
-                }]];
-                [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self seekToDestination:nil play:YES];
-                }]];
-                [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
+    if (self.isViewDidAppearFirstTime) {
+        if (fingerprint && ![fingerprint isEqualToString:@""]) {
+            MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
+            if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
+                if ([self fileName].mnz_isVideoPathExtension) {
+                    NSString *infoVideoDestination = NSLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video");
+                    infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
+                    infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];
+                    UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"resumePlayback", @"Title to alert user the possibility of resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
+                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"resume", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [self seekToDestination:mediaDestination play:YES];
+                    }]];
+                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"restart", @"A label for the Restart button to relaunch MEGAsync.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [self seekToDestination:nil play:YES];
+                    }]];
+                    [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
+                } else {
+                    [self seekToDestination:mediaDestination play:NO];
+                }
             } else {
-                [self seekToDestination:mediaDestination play:NO];
+                [self seekToDestination:nil play:YES];
             }
         } else {
             [self seekToDestination:nil play:YES];
         }
-    } else {
-        [self seekToDestination:nil play:YES];
     }
+    
+    self.viewDidAppearFirstTime = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
