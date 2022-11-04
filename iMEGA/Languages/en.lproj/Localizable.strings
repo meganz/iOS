@@ -3022,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="The file will be updated with a new version.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="Apply to all %@ duplicates";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="You’re the only one here";
 /* Meetings end call dialog description */
