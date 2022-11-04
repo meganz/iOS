@@ -4086,6 +4086,10 @@ public enum Strings {
       }
     }
     public enum NameCollision {
+      /// Apply to all %@ duplicates
+      public static func applyToAll(_ p1: Any) -> String {
+        return Strings.tr("Localizable", "nameCollision.applyToAll", String(describing: p1))
+      }
       public enum Files {
         /// A file named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {

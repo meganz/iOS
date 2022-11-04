@@ -915,6 +915,8 @@
 		834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */; };
 		834AFD232498E925005DF37C /* ContactsPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834AFD222498E925005DF37C /* ContactsPicker.storyboard */; };
 		834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */; };
+		834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
+		834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
 		834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */; };
 		834EFDC224D9B373004BFECA /* Node.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834EFDC124D9B373004BFECA /* Node.storyboard */; };
 		8350800028CF85EF000A89FC /* ChatStatusTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */; };
@@ -3495,6 +3497,7 @@
 		834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPickerViewController.swift; sourceTree = "<group>"; };
 		834AFD222498E925005DF37C /* ContactsPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsPicker.storyboard; sourceTree = "<group>"; };
 		834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceContactTableViewCell.swift; sourceTree = "<group>"; };
+		834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyToAllView.swift; sourceTree = "<group>"; };
 		834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewController.swift; sourceTree = "<group>"; };
 		834EFDC124D9B373004BFECA /* Node.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Node.storyboard; sourceTree = "<group>"; };
 		83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatStatusTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -7973,6 +7976,7 @@
 				8340CAFD284E52F5007C3B39 /* ItemView.swift */,
 				838F63CC28367763009B41D6 /* ViewEntity */,
 				8363281F28102BE6004F6121 /* NameCollisionRouter.swift */,
+				834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */,
 			);
 			path = NameCollisionScene;
 			sourceTree = "<group>";
@@ -13042,6 +13046,7 @@
 				A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */,
 				32CB4911284EF42400697BA9 /* PhotoLibraryUseCase.swift in Sources */,
 				9405E70E28A3AC43005A16D1 /* BackupNodesValidator.swift in Sources */,
+				834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
@@ -13988,6 +13993,7 @@
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				83E53D2A282A96E70049DFBE /* URL+FileAttribute.swift in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
+				834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
 				B6D0B34C283CD9DC0020C64D /* AppGroupContainerRepositoryProtocol.swift in Sources */,
 				B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
