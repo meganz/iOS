@@ -126,6 +126,10 @@ extension MEGAPhotoBrowserViewController {
         if let navController = presentingViewController as? MEGANavigationController,
            let transfersController = navController.viewControllers.last as? TransfersWidgetViewController {
             transfersController.clear(node)
+        } else if let tabBarController = presentingViewController as? MainTabBarController,
+                  let navController = tabBarController.selectedViewController as? MEGANavigationController,
+                  let transfersController = navController.viewControllers.last as? TransfersWidgetViewController {
+            transfersController.clear(node)
         }
     }
 }
