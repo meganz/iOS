@@ -42,10 +42,10 @@ class AppearanceManager: NSObject {
         
         self.setupToolbar(traitCollection)
         
-        self.setupThirdPartyAppereance(traitCollection)
+        self.configureSVProgressHUD(traitCollection)
     }
     
-    @objc class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
+    @objc class func configureSVProgressHUD(_ traitCollection: UITraitCollection) {
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
         SVProgressHUD.setMinimumSize(CGSize(width: 180, height: 100))
         SVProgressHUD.setRingThickness(2)
@@ -65,6 +65,7 @@ class AppearanceManager: NSObject {
         
         SVProgressHUD.setSuccessImage(Asset.Images.Hud.hudSuccess.image)
         SVProgressHUD.setErrorImage(Asset.Images.Hud.hudError.image)
+        SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
