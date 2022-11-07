@@ -490,7 +490,6 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
             
             saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
                 if case let .failure(error) = result, error != .cancelled {

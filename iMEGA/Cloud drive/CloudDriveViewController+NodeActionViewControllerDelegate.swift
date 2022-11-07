@@ -92,7 +92,6 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             }
         case .saveToPhotos:
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             

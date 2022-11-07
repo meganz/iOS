@@ -35,7 +35,6 @@ final class HomeRecentActionViewModel:
             case .authorized:
                 guard let self = self else { return }
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
                 self.saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
                     if case let .failure(error) = result, error != .cancelled {
                         SVProgressHUD.dismiss()

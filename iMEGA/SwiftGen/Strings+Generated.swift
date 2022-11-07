@@ -1801,8 +1801,6 @@ public enum Strings {
     public static let savedToPhotos = Strings.tr("Localizable", "Saved to Photos")
     /// Save Image
     public static let saveImage = Strings.tr("Localizable", "saveImage")
-    /// Saving to Photos…
-    public static let savingToPhotos = Strings.tr("Localizable", "Saving to Photos…")
     /// Scan Document
     public static let scanDocument = Strings.tr("Localizable", "Scan Document")
     /// Scan Code

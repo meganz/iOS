@@ -176,7 +176,6 @@ extension ChatViewController {
                 TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
                 TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
                 
                 saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId, completion: { result in
                     if case let .failure(error) = result, error != .cancelled {
