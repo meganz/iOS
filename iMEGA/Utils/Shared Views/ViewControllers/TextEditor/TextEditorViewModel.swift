@@ -69,6 +69,7 @@ final class TextEditorViewModel: ViewModelType {
     private var myBackupsUseCase: MyBackupsUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
+    private var isBackupNode: Bool = false
     
     init(
         router: TextEditorViewRouting,
@@ -95,7 +96,12 @@ final class TextEditorViewModel: ViewModelType {
     func dispatch(_ action: TextEditorViewAction) {
         switch action {
         case .setUpView:
-            setupView(shallUpdateContent: true)
+            Task { @MainActor in
+                if let nodeEntity {
+                    isBackupNode = await myBackupsUseCase.isBackupNode(nodeEntity)
+                }
+                setupView(shallUpdateContent: true)
+            }
         case .saveText(let content):
             saveText(content: content)
         case .renameFile:
@@ -128,31 +134,24 @@ final class TextEditorViewModel: ViewModelType {
     
     //MARK: - Private functions
     private func setupView(shallUpdateContent:Bool) {
-        Task {
-            var isNodeInRubbishBin = false
-            if let nodeHandle = nodeEntity?.handle {
-                isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
-            }
-            
-            var isBackupNode = false
-            if let nodeEntity {
-                isBackupNode = await myBackupsUseCase.isBackupNode(nodeEntity)
-            }
-            
-            if textEditorMode == .load {
-                invokeCommand?(.setupLoadViews)
-                invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin, isBackupNode: isBackupNode))
-                invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
-                downloadToTempFolder(isBackupNode: isBackupNode)
-            } else {
-                invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin, isBackupNode: isBackupNode))
-                invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
-            }
-            
-            if let command = showErrorWhenToSetupView {
-                invokeCommand?(command)
-                showErrorWhenToSetupView = nil
-            }
+        var isNodeInRubbishBin = false
+        if let nodeHandle = nodeEntity?.handle {
+            isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
+        }
+        
+        if textEditorMode == .load {
+            invokeCommand?(.setupLoadViews)
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: false, isInRubbishBin: isNodeInRubbishBin, isBackupNode: isBackupNode))
+            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+            downloadToTempFolder()
+        } else {
+            invokeCommand?(.configView(makeTextEditorModel(), shallUpdateContent: shallUpdateContent, isInRubbishBin: isNodeInRubbishBin, isBackupNode: isBackupNode))
+            invokeCommand?(.setupNavbarItems(makeNavbarItemsModel()))
+        }
+        
+        if let command = showErrorWhenToSetupView {
+            invokeCommand?(command)
+            showErrorWhenToSetupView = nil
         }
     }
     
@@ -264,7 +263,7 @@ final class TextEditorViewModel: ViewModelType {
         router.showDownloadTransfer(node: nodeEntity)
     }
     
-    private func downloadToTempFolder(isBackupNode: Bool = false) {
+    private func downloadToTempFolder() {
         guard let nodeHandle = nodeEntity?.handle else { return }
         downloadNodeUseCase.downloadFileToTempFolder(nodeHandle: nodeHandle, appData: nil) { (transferEntity) in
             let percentage = Float(transferEntity.transferredBytes) / Float(transferEntity.totalBytes)
@@ -284,7 +283,7 @@ final class TextEditorViewModel: ViewModelType {
                         self.shouldEditAfterOpen = false
                     } else {
                         self.textEditorMode = .view
-                        self.setupView(shallUpdateContent: !isBackupNode)
+                        self.setupView(shallUpdateContent: true)
                     }
                 } catch {
                     self.router.showPreviewDocVC(fromFilePath: path, showUneditableError: self.shouldEditAfterOpen)
@@ -293,13 +292,13 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func makeTextEditorModel(isBackupNode: Bool = false) -> TextEditorModel {
+    private func makeTextEditorModel() -> TextEditorModel {
         switch textEditorMode {
         case .view:
             return TextEditorModel(
                 textFile: textFile,
                 textEditorMode: textEditorMode,
-                accessLevel: nodeAccessLevel(isBackupNode: isBackupNode)
+                accessLevel: nodeAccessLevel()
             )
         case .load,
              .edit,
@@ -336,7 +335,7 @@ final class TextEditorViewModel: ViewModelType {
         }
     }
     
-    private func nodeAccessLevel(isBackupNode: Bool = false) -> NodeAccessTypeEntity {
+    private func nodeAccessLevel() -> NodeAccessTypeEntity {
         isBackupNode ? .read : nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     
