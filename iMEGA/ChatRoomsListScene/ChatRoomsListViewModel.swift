@@ -55,7 +55,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
 
-    @Published var chatViewMode: ChatViewMode = .chats
+    @Published var chatViewMode: ChatViewMode
     @Published var chatStatus: ChatStatusEntity?
     @Published var title: String = Strings.Localizable.Chat.title
     @Published var myAvatarBarButton: UIBarButtonItem?
@@ -74,6 +74,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var filteredChatRooms: [ChatRoomViewModel]?
     private var subscriptions = Set<AnyCancellable>()
     private let isRightToLeftLanguage: Bool
+    private var isViewOnScreen = false
     
     init(router: ChatRoomsListRouting,
          chatUseCase: ChatUseCaseProtocol,
@@ -83,7 +84,8 @@ final class ChatRoomsListViewModel: ObservableObject {
          userUseCase: UserUseCaseProtocol,
          isRightToLeftLanguage: Bool,
          notificationCenter: NotificationCenter = NotificationCenter.default,
-         chatType: ChatViewType = .regular
+         chatType: ChatViewType = .regular,
+         chatViewMode: ChatViewMode = .chats
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -94,6 +96,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isRightToLeftLanguage = isRightToLeftLanguage
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
+        self.chatViewMode = chatViewMode
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         self.searchText = ""
         self.isSearchActive = false
@@ -103,17 +106,35 @@ final class ChatRoomsListViewModel: ObservableObject {
         listenToChatListUpdate()
         monitorNetworkChanges()
         monitorActiveCallChanges()
-        fetchChats()
+        monitorChatConnectionStatusUpdate()
+    }
+    
+    func loadChatRooms() {
+        isViewOnScreen = true
+        chatUseCase.retryPendingConnections()
+        
+        if chatUseCase.chatConnectionStatus() == .online {
+            fetchChats()
+        }
+        
+        let isConnectedToNetwork = networkMonitorUseCase.isConnected()
+        if self.isConnectedToNetwork != isConnectedToNetwork {
+            self.isConnectedToNetwork = isConnectedToNetwork
+        }
+    }
+    
+    func cancelLoading() {
+        isViewOnScreen = false
     }
     
     func fetchChats() {
-        guard let chatListItems = chatUseCase.chatsList(ofType: chatViewMode == .chats ? .nonMeeting : .meeting) else {
+        guard let chatListItems = chatUseCase.chatsList(ofType: chatViewMode == .chats ? .nonMeeting : .meeting), isViewOnScreen else {
             MEGALogDebug("Unable to fetch chat list items")
             return 
         }
         
         chatRooms = chatListItems.map(constructChatRoomViewModel)
-        displayChatRooms = chatRooms
+        filterChats()
     }
     
     func filterChats() {
@@ -240,7 +261,11 @@ final class ChatRoomsListViewModel: ObservableObject {
             router: router,
             chatRoomUseCase: chatRoomUseCase,
             userImageUseCase: userImageUseCase,
-            chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
+            chatUseCase: ChatUseCase(
+                chatRepo: ChatRepository(
+                    sdk: MEGASdkManager.sharedMEGASdk(),
+                    chatSDK: MEGASdkManager.sharedMEGAChatSdk())
+            ),
             userUseCase: UserUseCase(repo: .live),
             chatNotificationControl: chatNotificationControl,
             isRightToLeftLanguage: isRightToLeftLanguage
@@ -324,6 +349,17 @@ final class ChatRoomsListViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    private func monitorChatConnectionStatusUpdate() {
+        chatUseCase
+            .monitorChatConnectionStatusUpdate(forChatId: .invalid)
+            .sink { [weak self] connectionStatus in
+                if connectionStatus == .online {
+                    self?.fetchChats()
+                }
+            }
+            .store(in: &subscriptions)
+    }
+    
     private func updateActiveCall(_ call: CallEntity) {
         if call.status == .inProgress {
             activeCallViewModel = ActiveCallViewModel(
@@ -360,8 +396,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             
             self.chatRooms?[index] = constructChatRoomViewModel(forChatListItem: chatListItem)
             self.chatRooms?.sort { $0.chatListItem.lastMessageDate > $1.chatListItem.lastMessageDate }
-            displayChatRooms = self.chatRooms
-            objectWillChange.send()
+            filterChats()
         }
     }
     

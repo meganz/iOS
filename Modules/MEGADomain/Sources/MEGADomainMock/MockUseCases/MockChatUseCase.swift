@@ -10,9 +10,12 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never>
     public var chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never>
     public var chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never>
+    public var chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus , Never>
     public var items: [ChatListItemEntity]?
     public var archivedChatsCount: UInt = 0
     public var totalUnreadChats = 0
+    public var currentChatConnectionStatus = ChatConnectionStatus.invalid
+    public var retryPendingConnections_calledTimes = 0
     
     public init(
         fullName: String? = nil,
@@ -22,6 +25,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never> = PassthroughSubject<ChatStatusEntity, Never>(),
         chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never> =  PassthroughSubject<ChatListItemEntity, Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
+        chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
         items: [ChatListItemEntity]? = []
     ) {
         self.fullName = fullName
@@ -31,6 +35,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.statusChangePublisher = statusChangePublisher
         self.chatListItemUpdatePublisher = chatListItemUpdatePublisher
         self.chatCallStatusUpdatePublisher = chatCallStatusUpdatePublisher
+        self.chatConnectionStatusUpdatePublisher = chatConnectionStatusUpdatePublisher
         self.items = items
     }
     
@@ -80,5 +85,17 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func monitorChatCallStatusUpdate() -> AnyPublisher<MEGADomain.CallEntity, Never> {
         chatCallStatusUpdatePublisher.eraseToAnyPublisher()
+    }
+    
+    public func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never> {
+        chatConnectionStatusUpdatePublisher.eraseToAnyPublisher()
+    }
+    
+    public func chatConnectionStatus() -> ChatConnectionStatus {
+        currentChatConnectionStatus
+    }
+    
+    public func retryPendingConnections() {
+        retryPendingConnections_calledTimes += 1
     }
 }

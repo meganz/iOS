@@ -20,7 +20,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         
         let viewModel = ChatRoomsListViewModel(
             router: self,
-            chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
+            chatUseCase: ChatUseCase(
+                chatRepo: ChatRepository(
+                    sdk: MEGASdkManager.sharedMEGASdk(),
+                    chatSDK: MEGASdkManager.sharedMEGAChatSdk()
+                )
+            ),
             chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),

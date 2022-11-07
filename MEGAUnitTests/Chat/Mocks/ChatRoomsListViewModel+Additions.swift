@@ -14,6 +14,7 @@ extension ChatRoomsListViewModel {
         isRightToLeftLanguage: Bool = false,
         notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
+        chatViewMode: ChatViewMode = .chats,
         isTesting: Bool = true
     )  {
         self.init(
@@ -25,7 +26,8 @@ extension ChatRoomsListViewModel {
             userUseCase: userUseCase,
             isRightToLeftLanguage: isRightToLeftLanguage,
             notificationCenter: notificationCenter,
-            chatType: chatType
+            chatType: chatType,
+            chatViewMode: chatViewMode
         )
     }
 }
