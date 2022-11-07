@@ -12,5 +12,8 @@ public protocol ChatRepositoryProtocol {
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
     func unreadChatMessagesCount() -> Int
+    func chatConnectionStatus() -> ChatConnectionStatus
+    func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
+    func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never> 
 }

@@ -85,7 +85,8 @@ fileprivate final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate
     }
     
     func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
-        let users = (0..<userList.size.intValue)
+        guard let userListSize = userList.size else { return }
+        let users = (0..<userListSize.intValue)
             .compactMap(userList.user)
             .filter {
                 $0.isOwnChange == 0 &&
