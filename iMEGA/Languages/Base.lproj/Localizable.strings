@@ -1770,8 +1770,6 @@
 "Tap to return to call"="Tap to return to call";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Save to Photos";
-/* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Saving to Photos…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="All Media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */

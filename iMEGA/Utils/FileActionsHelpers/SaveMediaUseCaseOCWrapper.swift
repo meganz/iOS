@@ -14,7 +14,6 @@ import MEGADomain
         DevicePermissionsHelper.photosPermission { granted in
             if granted {
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
                 saveMediaUseCase.saveToPhotos(node: node.toNodeEntity(), completion: completionBlock)
             } else {
                 DevicePermissionsHelper.alertPhotosPermission()
