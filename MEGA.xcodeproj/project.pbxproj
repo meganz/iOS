@@ -1298,6 +1298,8 @@
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
 		9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */; };
 		94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */; };
+		94614C7329104F6900503174 /* TransferTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C7229104F6900503174 /* TransferTableViewCell.xib */; };
+		94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C742910554200503174 /* TransferNodeTableViewCell.xib */; };
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
@@ -3782,6 +3784,8 @@
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
 		9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+EmptyState.swift"; sourceTree = "<group>"; };
 		94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Backup.swift"; sourceTree = "<group>"; };
+		94614C7229104F6900503174 /* TransferTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferTableViewCell.xib; sourceTree = "<group>"; };
+		94614C742910554200503174 /* TransferNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferNodeTableViewCell.xib; sourceTree = "<group>"; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAExportRequestDelegate.h; path = API/Requests/MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAExportRequestDelegate.m; path = API/Requests/MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
 		9464C2EC28C5EF3200F8B082 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
@@ -11378,6 +11382,8 @@
 				5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */,
 				2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */,
 				2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */,
+				94614C7229104F6900503174 /* TransferTableViewCell.xib */,
+				94614C742910554200503174 /* TransferNodeTableViewCell.xib */,
 			);
 			path = Transfers;
 			sourceTree = "<group>";
@@ -11935,6 +11941,7 @@
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				BFAB114923CEA5C300BCE72D /* PhotoCarouselCell.xib in Resources */,
 				5B3B0D292684B91B00479A68 /* defaultIcon@3x~ipad.png in Resources */,
+				94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */,
 				BF99A3F324AC43F70035A183 /* emojis_v3.json in Resources */,
 				BF7EBD35244FA92B0015255F /* AddToChatCameraCollectionCell.xib in Resources */,
 				C4652805265294C700371270 /* BannerContainer.storyboard in Resources */,
@@ -11963,6 +11970,7 @@
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				5D038F092511D5AF00DAA2E6 /* HomeSearchResultViewController.xib in Resources */,
+				94614C7329104F6900503174 /* TransferTableViewCell.xib in Resources */,
 				2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */,
 				5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
