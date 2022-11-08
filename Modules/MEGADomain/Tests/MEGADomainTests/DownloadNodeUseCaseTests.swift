@@ -9,7 +9,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let offlineFilesRepo = MockOfflineFilesRepository(offlineFileEntity: offlineNode)
         
         let mockError: TransferErrorEntity = .alreadyDownloaded
-        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: offlineFilesRepo, fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
+        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: offlineFilesRepo, fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
             case .success(_):
@@ -21,11 +21,11 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_copiedFromTempFolderError() {
-        let nodeRepo = MockNodeRepository(node: NodeEntity(name: "nodeName", base64Handle: "base64Handle", isFile: true, size: 10), copiedNodeIfExists: false)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(name: "nodeName", base64Handle: "base64Handle", isFile: true, size: 10))
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100, fileExists: true, copiedNode: true)
         
         let mockError: TransferErrorEntity = .copiedFromTempFolder
-        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
+        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
             case .success(_):
@@ -40,7 +40,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let nodeRepo = MockNodeRepository(node: NodeEntity(name: "Inbox", isFile: false))
         
         let mockError: TransferErrorEntity = .inboxFolderNameNotAllowed
-        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
+        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
             case .success(_):
@@ -56,7 +56,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
 
         let mockError: TransferErrorEntity = .notEnoughSpace
-        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
+        let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
             case .success(_):
@@ -68,11 +68,12 @@ class DownloadNodeUseCaseTests: XCTestCase {
     }
     
     func testDownloadNode_downloadSuccess() {
-        let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle"), size: 10, isFile: true)
+        let nodeRepo = MockNodeRepository(node: NodeEntity(base64Handle: "base64Handle"))
+        let nodeDataRepo = MockNodeDataRepository(size: 10)
         let fileSytemRepo = MockFileSystemRepository(sizeAvailability: 100)
         let mockTransferEntity = TransferEntity(type: .download, path: "Documents/")
         let downloadRepo = MockDownloadFileRepository(completionResult: .success(mockTransferEntity))
-        let sut = DownloadNodeUseCase(downloadFileRepository: downloadRepo, offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
+        let sut = DownloadNodeUseCase(downloadFileRepository: downloadRepo, offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, nodeDataRepository: nodeDataRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo)
 
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {

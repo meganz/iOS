@@ -2,7 +2,7 @@ import XCTest
 @testable import MEGA
 import MEGADomain
 
-final class NodeRepositoryTests: XCTestCase {
+final class NodeValidationRepositoryTests: XCTestCase {
 
     func test_isNode_desdendantOf_ancestor() async {
         let grandParentNode = await MockNode(handle: 1)
@@ -10,7 +10,7 @@ final class NodeRepositoryTests: XCTestCase {
         let childNode = await MockNode(handle: 3, parentHandle: 2)
         
         let sdk = MockSdk(nodes: [grandParentNode, parentNode, childNode])
-        let repo = NodeRepository(sdk: sdk, sharedFolderSdk: MockFolderSdk(), chatSdk: MockChatSDK())
+        let repo = NodeValidationRepository(sdk: sdk)
         
         let isChildDescendantOfGrandParent = await repo.isNode(childNode.toNodeEntity(), descendantOf: grandParentNode.toNodeEntity())
         XCTAssertTrue(isChildDescendantOfGrandParent)

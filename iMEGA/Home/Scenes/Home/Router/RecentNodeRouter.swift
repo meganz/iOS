@@ -19,7 +19,7 @@ final class RecentNodeRouter {
     }
 
     private func presentAction(for node: MEGANode, in navigationController: UINavigationController?) async {
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
         let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
         let nodeActionViewController = await NodeActionViewController(
             node: node,
