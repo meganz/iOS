@@ -17,7 +17,7 @@ extension CloudDriveViewController {
         }
         
         Task {
-            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
             let nodeActionsViewController = NodeActionViewController(nodes: nodes, delegate: self, displayMode: displayMode, isIncoming: isIncomingShareChildView, containsABackupNode: await myBackupsUseCase.containsABackupNode(nodes.toNodeEntities()), sender: sender)
             present(nodeActionsViewController, animated: true, completion: nil)
         }
@@ -94,7 +94,7 @@ extension CloudDriveViewController {
             var isBackupNode = false
             
             if let parentNode {
-                let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
                 isBackupNode = await myBackupsUC.isBackupNode(parentNode.toNodeEntity())
                 
                 if isBackupNode {

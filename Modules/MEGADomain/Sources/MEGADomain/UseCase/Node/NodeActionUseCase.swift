@@ -9,35 +9,37 @@ public protocol NodeActionUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-public struct NodeActionUseCase<T: NodeRepositoryProtocol>: NodeActionUseCaseProtocol {
+public struct NodeActionUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationRepositoryProtocol>: NodeActionUseCaseProtocol {
     
-    private let nodeRepository: T
+    private let nodeDataRepository: T
+    private let nodeValidationRepository: U
     
-    public init(repo: T) {
-        self.nodeRepository = repo
+    public init(nodeDataRepository: T, nodeValidationRepository: U) {
+        self.nodeDataRepository = nodeDataRepository
+        self.nodeValidationRepository = nodeValidationRepository
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
-        nodeRepository.nodeAccessLevel(nodeHandle: nodeHandle)
+        nodeDataRepository.nodeAccessLevel(nodeHandle: nodeHandle)
     }
     
     public func labelString(label: NodeLabelTypeEntity) -> String {
-        return nodeRepository.labelString(label: label)
+        return nodeDataRepository.labelString(label: label)
     }
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
-        nodeRepository.getFilesAndFolders(nodeHandle: nodeHandle)
+        nodeDataRepository.getFilesAndFolders(nodeHandle: nodeHandle)
     }
     
     public func hasVersions(nodeHandle: HandleEntity) -> Bool {
-        nodeRepository.hasVersions(nodeHandle: nodeHandle)
+        nodeValidationRepository.hasVersions(nodeHandle: nodeHandle)
     }
     
     public func isDownloaded(nodeHandle: HandleEntity) -> Bool {
-        nodeRepository.isDownloaded(nodeHandle: nodeHandle)
+        nodeValidationRepository.isDownloaded(nodeHandle: nodeHandle)
     }
     
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
-        nodeRepository.isInRubbishBin(nodeHandle: nodeHandle)
+        nodeValidationRepository.isInRubbishBin(nodeHandle: nodeHandle)
     }
 }

@@ -19,7 +19,7 @@ final class HomeSearchResultRouter {
 
     func didTapMoreAction(on node: HandleEntity, button: UIButton) {
         Task {
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
             let isBackupNode = await myBackupsUC.isBackupNodeHandle(node)
             guard let nodeActionViewController = await NodeActionViewController(
                 node: node,

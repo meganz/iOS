@@ -171,7 +171,7 @@ class ExplorerBaseViewController: UIViewController {
         }
         
         Task {
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
             let containsABackupNode = await myBackupsUC.containsABackupNode(selectedNodes.toNodeEntities())
             let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsABackupNode: containsABackupNode, sender: button)
             present(nodeActionsViewController, animated: true, completion: nil)

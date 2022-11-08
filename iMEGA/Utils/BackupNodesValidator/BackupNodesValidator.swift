@@ -8,7 +8,7 @@ final class BackupNodesValidator {
     private var inProgress = false
     private var inProgressSubscription: AnyCancellable?
     
-    init(presenter: UIViewController, myBackupsUseCase: MyBackupsUseCaseProtocol = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
+    init(presenter: UIViewController, myBackupsUseCase: MyBackupsUseCaseProtocol = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo), nodes: [NodeEntity]) {
         self.presenter = presenter
         self.myBackupsUseCase = myBackupsUseCase
         self.nodes = nodes
