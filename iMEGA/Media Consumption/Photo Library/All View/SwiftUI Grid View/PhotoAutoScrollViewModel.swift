@@ -4,7 +4,7 @@ import Combine
 @available(iOS 14.0, *)
 final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
     private var subscriptions = Set<AnyCancellable>()
-    private let viewModel: PhotoLibraryAllViewModel
+    private let viewModel: PhotoLibraryModeAllGridViewModel
     
     @Published var autoScrollWithAnimation = 0
     @Published var autoScrollWithoutAnimation = 0
@@ -13,7 +13,7 @@ final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
         viewModel.position
     }
     
-    init(viewModel: PhotoLibraryAllViewModel) {
+    init(viewModel: PhotoLibraryModeAllGridViewModel) {
         self.viewModel = viewModel
         
         subscribeToCardScrollFinishNotification()

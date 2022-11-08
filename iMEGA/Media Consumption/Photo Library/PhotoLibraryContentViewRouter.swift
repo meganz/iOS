@@ -8,7 +8,7 @@ protocol PhotoLibraryContentViewRouting {
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard
     func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard
     func card(for photoByDay: PhotoByDay) -> PhotoDayCard
-    func card(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoCell
+    func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity])
 }
 
@@ -41,7 +41,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         )
     }
     
-    func card(for photo: NodeEntity, viewModel: PhotoLibraryAllViewModel) -> PhotoCell {
+    func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell {
         return PhotoCell(
             viewModel: PhotoCellViewModel(
                 photo: photo,
