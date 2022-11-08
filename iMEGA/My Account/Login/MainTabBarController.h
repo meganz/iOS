@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainTabBarController : UITabBarController <MEGAChatDelegate>
+@interface MainTabBarController : UITabBarController <MEGAChatDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
 @property (nonatomic, strong, nullable) NSLayoutConstraint *bottomViewBottomConstraint;
