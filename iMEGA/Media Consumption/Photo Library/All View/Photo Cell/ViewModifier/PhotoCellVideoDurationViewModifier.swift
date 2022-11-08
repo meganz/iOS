@@ -4,7 +4,7 @@ import SwiftUI
 struct PhotoCellVideoDurationViewModifier: ViewModifier {
     let isVideo: Bool
     let duration: String
-    let scaleFactor: Int
+    let scaleFactor: PhotoLibraryZoomState.ScaleFactor
     let videModel = PhotoCellVideoDurationViewModel()
     
     func body(content: Content) -> some View {
@@ -28,7 +28,9 @@ struct PhotoCellVideoDurationViewModifier: ViewModifier {
 
 @available(iOS 14.0, *)
 extension View {
-    func videoDuration(_ isVideo: Bool, duration: String, with scaleFactor: Int = 3) -> some View {
+    func videoDuration(_ isVideo: Bool,
+                       duration: String,
+                       with scaleFactor: PhotoLibraryZoomState.ScaleFactor = PhotoLibraryZoomState.defaultScaleFactor) -> some View {
         modifier(PhotoCellVideoDurationViewModifier(isVideo: isVideo, duration: duration, scaleFactor: scaleFactor))
     }
 }

@@ -3,8 +3,8 @@ import MEGASwiftUI
 import MEGADomain
 
 @available(iOS 14.0, *)
-struct PhotoLibraryAllView: View {
-    @StateObject var viewModel: PhotoLibraryAllViewModel
+struct PhotoLibraryModeAllGridView: View {
+    @StateObject var viewModel: PhotoLibraryModeAllGridViewModel
     let router: PhotoLibraryContentViewRouting
     
     var body: some View {

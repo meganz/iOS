@@ -18,10 +18,9 @@ final class PhotoCellViewModel: ObservableObject {
     var duration: String
     var isVideo: Bool
     
-    @Published var currentZoomScaleFactor: Int {
+    @Published var currentZoomScaleFactor: PhotoLibraryZoomState.ScaleFactor {
         didSet {
-            // 1 -> 3 or 3 -> 1 needs reload
-            if currentZoomScaleFactor == 1 || oldValue == 1 {
+            if currentZoomScaleFactor == .one || oldValue == .one {
                 thumbnailLoadingTask = Task {
                     await loadThumbnail()
                 }
@@ -41,7 +40,7 @@ final class PhotoCellViewModel: ObservableObject {
     @Published var isFavorite: Bool = false
     
     init(photo: NodeEntity,
-         viewModel: PhotoLibraryAllViewModel,
+         viewModel: PhotoLibraryModeAllViewModel,
          thumbnailUseCase: ThumbnailUseCaseProtocol,
          mediaUseCase: MediaUseCaseProtocol = MediaUseCase()) {
         self.photo = photo
@@ -82,7 +81,7 @@ final class PhotoCellViewModel: ObservableObject {
     
     // MARK: Private
     private func loadThumbnail() async {
-        let type: ThumbnailTypeEntity = currentZoomScaleFactor == 1 ? .preview : .thumbnail
+        let type: ThumbnailTypeEntity = currentZoomScaleFactor == .one ? .preview : .thumbnail
         
         switch type {
         case .thumbnail:
@@ -117,6 +116,7 @@ final class PhotoCellViewModel: ObservableObject {
             .assign(to: &$thumbnailContainer)
     }
     
+    
     private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {
         thumbnailContainer.isEqual(container)
     }
@@ -135,7 +135,7 @@ final class PhotoCellViewModel: ObservableObject {
         }
     }
     
-    private func configZoomState(with viewModel: PhotoLibraryAllViewModel) {
+    private func configZoomState(with viewModel: PhotoLibraryModeAllViewModel) {
         viewModel
             .$zoomState
             .dropFirst()

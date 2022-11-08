@@ -13,6 +13,7 @@ struct PhotoCellImage: View {
                 .overlay(
                     container.image
                 )
+                .clipped()
         } else {
             thumbnail()
         }

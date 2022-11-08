@@ -88,12 +88,9 @@ struct PhotoLibraryContentView: View {
                 EmptyView()
             }
             
-            PhotoLibraryAllView(
-                viewModel: PhotoLibraryAllViewModel(libraryViewModel: viewModel),
-                router: router
-            )
-            .opacity(viewModel.selectedMode == .all ? 1.0 : 0.0)
-            .zIndex(viewModel.selectedMode == .all ? 1.0 : -1.0)
+            PhotoLibraryModeAllView(viewModel: viewModel, router: router)
+                .opacity(viewModel.selectedMode == .all ? 1.0 : 0.0)
+                .zIndex(viewModel.selectedMode == .all ? 1.0 : -1.0)
         }
     }
 }
