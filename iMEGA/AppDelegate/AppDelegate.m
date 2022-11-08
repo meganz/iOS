@@ -779,6 +779,10 @@
         
         if (completion) completion();
     }];
+    
+    [MEGASdkManager.sharedMEGAChatSdk removeChatCallDelegate:self.mainTBC];
+    [MEGASdkManager.sharedMEGAChatSdk removeChatDelegate:self.mainTBC];
+    self.mainTBC = nil;
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -1556,13 +1560,10 @@
             isFetchNodesDone = YES;
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
             
             [self requestUserName];
             [self requestContactsFullname];
             [self updateContactsNickname];
-            
-            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
             
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
             [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
