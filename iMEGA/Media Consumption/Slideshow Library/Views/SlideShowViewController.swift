@@ -40,12 +40,8 @@ final class SlideShowViewController: UIViewController, ViewType {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
-        statusBarBackground.backgroundColor = backgroundColor
-        navigationBar.backgroundColor = backgroundColor
         slideShowOptionButton.title = Strings.Localizable.Slideshow.PreferenceSetting.options
-        updatePlayButtonTintColor()
         collectionView.updateLayout()
-        
         viewModel?.invokeCommand = { [weak self] command in
             DispatchQueue.main.async { self?.executeCommand(command) }
         }
@@ -57,6 +53,8 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
         
         adjustHeightOfTopAndBottomView()
+        setVisibility(false)
+        setNavigationAndToolbarColor()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,27 +62,31 @@ final class SlideShowViewController: UIViewController, ViewType {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        resizeCollectionViewCellPosition()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) { [weak self] in
+            self?.updateSlideInView()
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
-            AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
-            statusBarBackground.backgroundColor = backgroundColor
-            navigationBar.backgroundColor = backgroundColor
-            bottomBarBackground.backgroundColor = backgroundColor
-            updatePlayButtonTintColor()
+            setNavigationAndToolbarColor()
+        }
+        
+        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            adjustHeightOfTopAndBottomView()
         }
     }
     
-    private func resizeCollectionViewCellPosition() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) { [self] in
-            adjustHeightOfTopAndBottomView()
-            updateSlideInView()
-        }
+    private func setNavigationAndToolbarColor() {
+        AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+        AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
+        bottomBarBackground.backgroundColor = bottomToolbar.backgroundColor
+        statusBarBackground.backgroundColor = bottomToolbar.backgroundColor
+        updatePlayButtonTintColor()
     }
     
     private func adjustHeightOfTopAndBottomView() {
@@ -112,8 +114,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         bottomToolbar.alpha = visible ? 1 : 0
         bottomBarBackground.alpha = visible ? 1 : 0
         statusBarBackground.alpha = visible ? 1 : 0
-        statusBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        bottomBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
     
     private func play() {
@@ -123,11 +123,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = UIColor.black
             self.view.backgroundColor = .black
-            self.statusBarBackgroundViewHeightConstraint.constant = .zero
-            self.bottomBarBackgroundViewHeightConstraint.constant = .zero
-            self.navigationBar.isHidden = true
-            self.bottomToolbar.isHidden = true
-            cell?.setZoomScale()
+            cell?.resetZoomScale()
             if viewModel.currentSlideNumber >= viewModel.photos.count {
                 viewModel.currentSlideNumber = -1
                 self.changeImage()
@@ -141,9 +137,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = UIColor.mnz_background()
             self.view.backgroundColor = self.backgroundColor
-            self.adjustHeightOfTopAndBottomView()
-            self.navigationBar.isHidden = false
-            self.bottomToolbar.isHidden = false
         }
         slideShowTimer.invalidate()
         UIApplication.shared.isIdleTimerDisabled = false
@@ -227,7 +220,7 @@ extension SlideShowViewController: UICollectionViewDelegate {
         }
         
         guard let cell = cell as? SlideShowCollectionViewCell else { return }
-        cell.setZoomScale()
+        cell.resetZoomScale()
     }
 }
 

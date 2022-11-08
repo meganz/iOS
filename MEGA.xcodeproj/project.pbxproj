@@ -1350,6 +1350,7 @@
 		9D7E603D28DD73C500055875 /* SlideShowOptionContentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E603C28DD73C500055875 /* SlideShowOptionContentRouter.swift */; };
 		9D7E603F28DD79F200055875 /* SlideShowOptionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E603E28DD79F200055875 /* SlideShowOptionBuilder.swift */; };
 		9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E604028DD7E0100055875 /* SlideShowOptionViewModelTests.swift */; };
+		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
 		9DD1BB2A28A91A8D00EEF24D /* FeedbackEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1BB2928A91A8D00EEF24D /* FeedbackEntity.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
@@ -3811,6 +3812,7 @@
 		9D7E603C28DD73C500055875 /* SlideShowOptionContentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionContentRouter.swift; sourceTree = "<group>"; };
 		9D7E603E28DD79F200055875 /* SlideShowOptionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilder.swift; sourceTree = "<group>"; };
 		9D7E604028DD7E0100055875 /* SlideShowOptionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionViewModelTests.swift; sourceTree = "<group>"; };
+		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		9DD1BB2928A91A8D00EEF24D /* FeedbackEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackEntity.swift; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
@@ -5771,6 +5773,7 @@
 				328A913A28A9DB890058C645 /* SlideShowCollectionViewCell.swift */,
 				328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */,
 				325EFA7028AB9405005D4851 /* Slideshow.storyboard */,
+				9DB88B62290D98BB008CB09E /* ImageScrollView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -12420,6 +12423,7 @@
 				83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */,
 				837B9BFB246D38E900D409B4 /* ActionSheetActions.swift in Sources */,
 				B5925B89279119E400170CD6 /* Colors+Generated.swift in Sources */,
+				9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */,
 				836A783228E34C2900B6849F /* ChatRoomsListViewModel.swift in Sources */,
 				B69AF66228A1E5190022B094 /* ManageChatHistoryViewRouter.swift in Sources */,
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
