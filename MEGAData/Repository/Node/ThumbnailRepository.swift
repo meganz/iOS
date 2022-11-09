@@ -73,7 +73,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         
         let originalFileURL = cachedThumbnailURL(for: node.base64Handle, type: .original)
         if fileExists(at: originalFileURL) {
-            return originalFileURL.path
+            return originalFileURL.path.append(pathComponent: node.name)
         }
         
         return nil
