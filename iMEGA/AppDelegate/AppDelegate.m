@@ -223,10 +223,7 @@
         [MEGASdkManager.sharedMEGASdk fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
-            LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-            [UIView transitionWithView:self.window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-                [self.window setRootViewController:launchVC];
-            } completion:nil];
+            [self showLaunchViewController];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -1378,6 +1375,12 @@
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
             break;
+            
+        case EventReloading: {
+            [self showLaunchViewController];
+            break;
+        }
+            
             
         default:
             break;
