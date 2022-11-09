@@ -74,14 +74,26 @@ struct ChatRoomView: View {
 @available(iOS 14.0, *)
 fileprivate struct ChatRoomContentView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
+    @Environment(\.layoutDirection) private var layoutDirection
+
+    private enum Constants {
+        static let viewPadding: CGFloat = 10
+        static let viewHeight: CGFloat = 65
+        static let avatarViewSize = CGSize(width: 28, height: 28)
+    }
     
     var body: some View {
         HStack(spacing: 0) {
-            ChatRoomContentAvatarView()
+            ChatRoomAvatarView(
+                viewModel: viewModel.chatRoomAvatarViewModel(
+                    isRightToLeftLanguage: layoutDirection == .rightToLeft
+                ),
+                size: Constants.avatarViewSize
+            )
             ChatRoomContentDetailsView()
         }
-        .padding(.trailing, 10)
-        .frame(height: 65)
+        .padding(.trailing, Constants.viewPadding)
+        .frame(height: Constants.viewHeight)
         .contentShape(Rectangle())
         .contextMenu {
             if let contextMenuOptions = viewModel.contextMenuOptions {
@@ -226,49 +238,3 @@ fileprivate struct ChatRoomContentDescriptionView: View {
         }
     }
 }
-
-@available(iOS 14.0, *)
-fileprivate struct ChatRoomContentAvatarView: View {
-    @EnvironmentObject private var viewModel: ChatRoomViewModel
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        ZStack {
-            if let secondaryAvatar = viewModel.secondaryAvatar,
-               let primaryAvatar = viewModel.primaryAvatar {
-                Image(uiImage: secondaryAvatar)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 28, height: 28)
-                    .cornerRadius(14)
-                    .offset(x: -6, y: -6)
-                
-                Image(uiImage: primaryAvatar)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 28, height: 28)
-                    .cornerRadius(14)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 14)
-                            .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
-                    )
-                    .offset(x: 6, y: 6)
-            } else if let primaryAvatar = viewModel.primaryAvatar {
-                Image(uiImage: primaryAvatar)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .cornerRadius(20)
-            } else {
-                Image(systemName: "circle.fill")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .cornerRadius(20)
-                    .redacted(reason: .placeholder)
-            }
-        }
-        .frame(width: 60, height: 60)
-    }
-}
-

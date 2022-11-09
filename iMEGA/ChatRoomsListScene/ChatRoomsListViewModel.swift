@@ -73,7 +73,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var chatRooms: [ChatRoomViewModel]?
     private var filteredChatRooms: [ChatRoomViewModel]?
     private var subscriptions = Set<AnyCancellable>()
-    private let isRightToLeftLanguage: Bool
     private var isViewOnScreen = false
     
     init(router: ChatRoomsListRouting,
@@ -82,7 +81,6 @@ final class ChatRoomsListViewModel: ObservableObject {
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
-         isRightToLeftLanguage: Bool,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats
@@ -93,7 +91,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.userUseCase = userUseCase
-        self.isRightToLeftLanguage = isRightToLeftLanguage
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.chatViewMode = chatViewMode
@@ -267,8 +264,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
             userUseCase: UserUseCase(repo: .live),
-            chatNotificationControl: chatNotificationControl,
-            isRightToLeftLanguage: isRightToLeftLanguage
+            chatNotificationControl: chatNotificationControl
         )
     }
     
