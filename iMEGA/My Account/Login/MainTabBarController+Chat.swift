@@ -10,9 +10,8 @@ extension MainTabBarController {
     
     @objc func chatViewController() -> UIViewController {
         if #available(iOS 14.0, *), shouldShowNewChatRoomListingScreen {
-            let isRightToLeftLanguage = UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft
             let router = ChatRoomsListRouter(tabBarController: self)
-            return router.build(isRightToLeftLanguage: isRightToLeftLanguage)
+            return router.build()
         } else {
             guard let chatNavigationController = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? MEGANavigationController else {
                 return MEGANavigationController()
