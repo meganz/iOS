@@ -152,30 +152,25 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             }
         }
         
-        let initials = (name as NSString).mnz_initialForAvatar()
-        
-        let backgroundGradientColor: UIColor?
-        if let backgroundGradientHexColor {
-            backgroundGradientColor = UIColor.mnz_(fromHexString: backgroundGradientHexColor)
-        } else {
-            backgroundGradientColor = nil
-        }
+        let avatarInitial = name.initialForAvatar()
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black
+        let backgroundGradientColor = UIColor.colorFromHexString(backgroundGradientHexColor)
         
         let image: UIImage?
         if let isRightToLeftLanguage {
             image = UIImage.drawImage(
-                forInitials: initials,
+                forInitials: avatarInitial,
                 size: size,
-                backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor) ?? .black,
+                backgroundColor: avatarBackgroundColor,
                 backgroundGradientColor: backgroundGradientColor,
                 textColor: .white,
                 font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
                 isRightToLeftLanguage: isRightToLeftLanguage)
         } else {
             image = UIImage(
-                forName: initials,
+                forName: avatarInitial,
                 size: size,
-                backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor),
+                backgroundColor: avatarBackgroundColor,
                 backgroundGradientColor: backgroundGradientColor,
                 textColor: .white,
                 font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0)
