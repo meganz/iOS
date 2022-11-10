@@ -5,6 +5,7 @@ protocol SlideShowDataSourceProtocol {
     var photos: [SlideShowMediaEntity] { get set }
     var nodeEntities: [NodeEntity] { get set }
     var slideshowComplete: Bool { get set }
+    var initialPhotoDownloadCallback: (() -> ())? { get set }
     
     func loadSelectedPhotoPreview() -> Bool
     func startInitialDownload(_ initialPhotoDownloaded: Bool)
@@ -16,9 +17,17 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     var nodeEntities: [NodeEntity]
     var currentPhoto: NodeEntity?
     
-    var photos = [SlideShowMediaEntity]()
+    var photos = [SlideShowMediaEntity]() {
+        didSet {
+            if photos.count == 1 {
+                initialPhotoDownloadCallback?()
+            }
+        }
+    }
     var thumbnailLoadingTask: Task<Void, Never>?
     var slideshowComplete: Bool = false
+    
+    var initialPhotoDownloadCallback: (() -> ())?
     
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private let mediaUseCase: MediaUseCaseProtocol
