@@ -1,26 +1,22 @@
 import Combine
 import MEGADomain
 
-protocol AlbumContentsUseCaseProtocol {
-    var updatePublisher: AnyPublisher<Void, Never> { get }
-    
-    func favouriteAlbumNodes() async throws -> [NodeEntity]
-}
-
-final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: FavouriteNodesRepositoryProtocol, V: PhotoLibraryUseCaseProtocol, W: MediaUseCaseProtocol>: AlbumContentsUseCaseProtocol {
+final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: FavouriteNodesRepositoryProtocol, V: PhotoLibraryUseCaseProtocol, W: MediaUseCaseProtocol, X: FileSearchRepositoryProtocol>: AlbumContentsUseCaseProtocol {
     private var albumContentsRepo: T
     private var favouriteRepo: U
     private var photoUseCase: V
     private var mediaUseCase: W
+    private let fileSearchRepo: X
     
     let updatePublisher: AnyPublisher<Void, Never>
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    init(albumContentsRepo: T, favouriteRepo: U, photoUseCase: V, mediaUseCase: W) {
+    init(albumContentsRepo: T, favouriteRepo: U, photoUseCase: V, mediaUseCase: W, fileSearchRepo: X) {
         self.albumContentsRepo = albumContentsRepo
         self.favouriteRepo = favouriteRepo
         self.photoUseCase = photoUseCase
         self.mediaUseCase = mediaUseCase
+        self.fileSearchRepo = fileSearchRepo
         
         updatePublisher = AnyPublisher(updateSubject)
         
@@ -44,11 +40,26 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
         return filteredNodes
     }
     
+    func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
+        let allPhotos = try await fileSearchRepo.allPhotos()
+        return await filter(photos: allPhotos, forAlbum: album)
+    }
+    
     // MARK: Private
     private func isNodeInContainer(_ node: NodeEntity, container: PhotoLibraryContainerEntity) -> Bool {
         let nameUrl = URL(fileURLWithPath: node.name)
         let isImage = mediaUseCase.isImage(for: nameUrl)
         let isVideo = mediaUseCase.isVideo(for: nameUrl)
         return isImage || (isVideo && node.parentHandle == container.cameraUploadNode?.handle || node.parentHandle == container.mediaUploadNode?.handle)
+    }
+    
+    private func filter(photos: [NodeEntity], forAlbum album: AlbumEntity) async -> [NodeEntity] {
+        var nodes = [NodeEntity]()
+        if album.type == .raw {
+            nodes = photos.filter { mediaUseCase.isRawImage($0.name) }
+        } else if album.type == .gif {
+            nodes = photos.filter { mediaUseCase.isGifImage($0.name) }
+        }
+        return nodes
     }
 }

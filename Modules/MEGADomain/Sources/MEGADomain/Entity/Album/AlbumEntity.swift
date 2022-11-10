@@ -12,6 +12,14 @@ public struct AlbumEntity: Identifiable, Hashable {
     public let coverNode: NodeEntity
     public let count: Int
     public let type: AlbumEntityType
+    
+    public init(id: HandleEntity, name: String, coverNode: NodeEntity, count: Int, type: AlbumEntityType) {
+        self.id = id
+        self.name = name
+        self.coverNode = coverNode
+        self.count = count
+        self.type = type
+    }
 }
 
 extension AlbumEntity {
