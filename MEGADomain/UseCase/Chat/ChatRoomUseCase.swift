@@ -18,6 +18,9 @@ protocol ChatRoomUseCaseProtocol {
     func setMessageSeenForChat(forChatId chatId: ChatIdEntity,  messageId: HandleEntity)
     func base64Handle(forChatId chatId: ChatIdEntity) -> String?
     func contactEmail(forUserHandle userHandle: HandleEntity) -> String?
+    func userFullNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String]
+    func userNickNames(forChatId chatId: ChatId) async throws -> [HandleEntity: String]
+    func userEmails(forChatId chatId: ChatId) async throws -> [HandleEntity: String]
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
@@ -131,6 +134,77 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
     func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
         chatRoomRepo.contactEmail(forUserHandle: userHandle)
     }
+    
+    func userFullNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String] {
+        try await withThrowingTaskGroup(of: String.self, returning: [String].self) { group in
+            for peerId in peerIds {
+                group.addTask { try await chatRoomRepo.userFullName(forPeerId: peerId, chatId: chatId) }
+            }
+                        
+            return try await group.reduce(into: [String]()) { result, name in
+                result.append(name)
+            }
+        }
+    }
+    
+    func userNickNames(forChatId chatId: ChatId) async throws -> [HandleEntity: String] {
+        guard let chatRoom = chatRoom(forChatId: chatId) else {
+            throw ChatRoomErrorEntity.noChatRoomFound
+        }
+        
+        return await withTaskGroup(
+            of: [HandleEntity: String]?.self,
+            returning: [HandleEntity: String].self
+        ) { group in
+            for peerId in chatRoom.peers.map(\.handle) {
+                group.addTask {
+                    if let displayName = await userStoreRepo.displayName(forUserHandle: peerId) {
+                        return [peerId: displayName]
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            
+            return await group.reduce(into: [HandleEntity: String]()){ result, handleEntityNamePair in
+                if let handleEntityNamePair {
+                    for (key, value) in handleEntityNamePair {
+                        result[key] = value
+                    }
+                }
+            }
+        }
+    }
+    
+    func userEmails(forChatId chatId: ChatId) async throws -> [HandleEntity: String] {
+        guard let chatRoom = chatRoom(forChatId: chatId) else {
+            throw ChatRoomErrorEntity.noChatRoomFound
+        }
+        
+        return await withTaskGroup(
+            of: [HandleEntity: String]?.self,
+            returning: [HandleEntity: String].self
+        ) { group in
+            for peerId in chatRoom.peers.map(\.handle) {
+                group.addTask {
+                    if let displayName = chatRoomRepo.contactEmail(forUserHandle: peerId) {
+                        return [peerId: displayName]
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            
+            return await group.reduce(into: [HandleEntity: String]()){ result, handleEntityEmailPair in
+                if let handleEntityEmailPair {
+                    for (key, value) in handleEntityEmailPair {
+                        result[key] = value
+                    }
+                }
+            }
+        }
+    }
+
     
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
         chatRoomRepo.participantsUpdated(forChatId: chatId)

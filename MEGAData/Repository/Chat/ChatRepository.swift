@@ -112,7 +112,7 @@ fileprivate class ChatListener: NSObject, MEGAChatDelegate {
     init(sdk: MEGAChatSdk) {
         self.sdk = sdk
         super.init()
-        sdk.add(self)
+        sdk.add(self, queueType: .globalBackground)
     }
     
     deinit {

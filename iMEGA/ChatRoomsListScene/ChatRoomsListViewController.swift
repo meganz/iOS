@@ -14,8 +14,6 @@ final class ChatRoomsListViewController: UIViewController {
 
     private var subscriptions = Set<AnyCancellable>()
 
-    lazy var hostingView = UIHostingController(rootView: ChatRoomsListView(viewModel:  viewModel))
-
     init(viewModel: ChatRoomsListViewModel,
          notificationCenter: NotificationCenter = NotificationCenter.default
     ) {
@@ -53,6 +51,7 @@ final class ChatRoomsListViewController: UIViewController {
     }
     
     private func configureListView() {
+        let hostingView = UIHostingController(rootView: ChatRoomsListView(viewModel: viewModel))
         addChild(hostingView)
         view.addSubview(hostingView.view)
         hostingView.view.translatesAutoresizingMaskIntoConstraints = false

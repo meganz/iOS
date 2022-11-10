@@ -12,6 +12,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func test_remoteChatStatusChange() {
         let chatUseCase = MockChatUseCase()
         let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase)
+        viewModel.loadChatRooms()
         
         let expectation = expectation(description: "Awaiting publisher")
         

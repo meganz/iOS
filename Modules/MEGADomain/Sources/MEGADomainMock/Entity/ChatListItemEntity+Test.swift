@@ -23,7 +23,6 @@ extension ChatListItemEntity {
         lastMessageDate: Date = Date(),
         lastMessagePriv: ChatMessageTypeEntity = .unknown,
         lastMessageHandle: HandleEntity = 5,
-        searchString: String = "",
         isTesting: Bool = true
     ) {
         self.init(
@@ -45,8 +44,7 @@ extension ChatListItemEntity {
             lastMessageSender: lastMessageSender,
             lastMessageDate: lastMessageDate,
             lastMessagePriv: lastMessagePriv,
-            lastMessageHandle: lastMessageHandle,
-            searchString: searchString
+            lastMessageHandle: lastMessageHandle
         )
     }
     

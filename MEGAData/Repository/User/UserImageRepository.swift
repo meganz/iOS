@@ -39,7 +39,8 @@ struct UserImageRepository: UserImageRepositoryProtocol {
             
             sdk.getAvatarUser(withEmailOrHandle: handle,
                               destinationFilePath: destinationPath,
-                              delegate: thumbnailRequestDelegate)
+                              delegate: thumbnailRequestDelegate,
+                              queueType: .globalBackground)
         }
     }
     

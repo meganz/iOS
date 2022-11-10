@@ -13,7 +13,7 @@
 
 @objc final class MyAvatarManager: NSObject, MyAvatarManagerProtocol {
     var myAvatarViewModel: MyAvatarViewModelType?
-    let navigationController: UINavigationController
+    weak var navigationController: UINavigationController?
     var badgeButton: BadgeButton?
     var myAvatarBarButton: UIBarButtonItem? {
         guard let badgeButton = badgeButton else { return nil}
@@ -51,7 +51,7 @@
     @objc private func navigateToMyAccount() {
         let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
             .instantiateViewController(withIdentifier: "MyAccountHall")
-        navigationController.pushViewController(myAccountViewController, animated: true)
+        navigationController?.pushViewController(myAccountViewController, animated: true)
     }
     
     func setupBarButtonItems() {
