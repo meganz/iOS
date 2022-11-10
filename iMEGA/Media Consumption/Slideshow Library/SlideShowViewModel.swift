@@ -32,7 +32,7 @@ final class SlideShowViewModel: ViewModelType {
     
     var playbackStatus: SlideshowPlaybackStatus = .initialized {
         didSet {
-            if playbackStatus == .complete {
+            if playbackStatus == .complete || playbackStatus == .pause {
                 dataSource.slideshowComplete = true
             }
         }
