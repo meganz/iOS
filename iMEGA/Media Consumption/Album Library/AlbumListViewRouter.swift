@@ -5,7 +5,7 @@ import MEGADomain
 @available(iOS 14.0, *)
 protocol AlbumListViewRouting {
     func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell
-    func albumContent(for photo: NodeEntity?) -> AlbumContainerWrapper
+    func albumContent(for photo: NodeEntity?, album: AlbumEntity?) -> AlbumContainerWrapper
 }
 
 @available(iOS 14.0, *)
@@ -31,7 +31,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             albumContentsRepo: albumContentsRepo,
             favouriteRepo: favouriteRepo,
             photoUseCase: photoUseCase,
-            mediaUseCase: mediaUseCase
+            mediaUseCase: mediaUseCase,
+            fileSearchRepo: FileSearchRepository.newRepo
         )
         
         let vm = AlbumCellViewModel(
@@ -44,8 +45,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return AlbumCell(viewModel: vm)
     }
     
-    func albumContent(for album: NodeEntity?) -> AlbumContainerWrapper {
-        return AlbumContainerWrapper(albumNode: album)
+    func albumContent(for albumNode: NodeEntity?, album: AlbumEntity?) -> AlbumContainerWrapper {
+        return AlbumContainerWrapper(albumNode: albumNode, album: album)
     }
     
     func build() -> UIViewController {

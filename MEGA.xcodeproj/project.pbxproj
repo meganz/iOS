@@ -223,6 +223,11 @@
 		329110FC288E39FC001324EA /* PhotoLibraryFilterTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329110FB288E39FC001324EA /* PhotoLibraryFilterTypeView.swift */; };
 		3293D8092845B4380013EA72 /* PhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3293D8082845B4380013EA72 /* PhotosViewModel.swift */; };
 		3296053E288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */; };
+		3299F0522919E5230071FB77 /* AlbumContentUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F0512919E5230071FB77 /* AlbumContentUseCaseTests.swift */; };
+		3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */; };
+		3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */; };
+		3299F070291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F06F291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift */; };
+		3299F072291B88610071FB77 /* MockAlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F071291B88610071FB77 /* MockAlbumContentsUpdateNotifierRepository.swift */; };
 		32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A9DECD28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift */; };
 		32B0722928A4E0B5002BAE34 /* SlideShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */; };
 		32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */; };
@@ -2824,6 +2829,11 @@
 		329110FB288E39FC001324EA /* PhotoLibraryFilterTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterTypeView.swift; sourceTree = "<group>"; };
 		3293D8082845B4380013EA72 /* PhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModel.swift; sourceTree = "<group>"; };
 		3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterViewModelTest.swift; sourceTree = "<group>"; };
+		3299F0512919E5230071FB77 /* AlbumContentUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentUseCaseTests.swift; sourceTree = "<group>"; };
+		3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewModelTests.swift; sourceTree = "<group>"; };
+		3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellViewModelTests.swift; sourceTree = "<group>"; };
+		3299F06F291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
+		3299F071291B88610071FB77 /* MockAlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
 		32A9DECD28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoBrowserDataProvider.swift; sourceTree = "<group>"; };
 		32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowViewModel.swift; sourceTree = "<group>"; };
 		32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowPlaybackStatus.swift; sourceTree = "<group>"; };
@@ -5823,6 +5833,8 @@
 			isa = PBXGroup;
 			children = (
 				328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */,
+				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
+				3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -9603,6 +9615,7 @@
 				B6A6E1A0287BCF7C00179806 /* MockRecentActionBucket.swift */,
 				B6A6E1A4287BD8DB00179806 /* MockRequest.swift */,
 				9449939228BD41CC001AE14B /* MockFolderSdk.swift */,
+				3299F06F291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift */,
 			);
 			path = Sdk;
 			sourceTree = "<group>";
@@ -10055,6 +10068,7 @@
 				A81BD5D127EB6CEB00234902 /* HistoryRetentionUseCaseTests.swift */,
 				72718980280054F900B2DB08 /* GetFeedbackInfoUseCaseTests.swift */,
 				12BCECD9287FAC2D00F98E33 /* PhotoLibraryUseCaseTests.swift */,
+				3299F0512919E5230071FB77 /* AlbumContentUseCaseTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -10386,6 +10400,7 @@
 				727189822800556800B2DB08 /* MockFeedbackInfoRepository.swift */,
 				83B5E88927F71BC70073C870 /* MockPhotosLibraryRepository.swift */,
 				6D80C2622880AA6A0065EAD4 /* MockFilesSearchRepository.swift */,
+				3299F071291B88610071FB77 /* MockAlbumContentsUpdateNotifierRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -14139,6 +14154,7 @@
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+Addition.swift in Sources */,
 				B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */,
+				3299F0522919E5230071FB77 /* AlbumContentUseCaseTests.swift in Sources */,
 				B6A6E1A5287BD8DB00179806 /* MockRequest.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
@@ -14164,6 +14180,8 @@
 				B6C1681028B8719800BEA824 /* PhotoLibraryYearViewModelTests.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */,
+				3299F070291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift in Sources */,
+				3299F072291B88610071FB77 /* MockAlbumContentsUpdateNotifierRepository.swift in Sources */,
 				6D854F7C290E5A78006CEC20 /* MediaDiscoveryRepositoryTests.swift in Sources */,
 				B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
@@ -14212,6 +14230,7 @@
 				B6D54834283E2D5F00D7302F /* MockAccountCleanerUseCase.swift in Sources */,
 				B6AADF0B2518BB0E009A874C /* AchievementUseCaseTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
+				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				A8AAE6B926C2AA38002243C0 /* AppFirstLaunchUseCaseTests.swift in Sources */,
@@ -14277,6 +14296,7 @@
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* StatsRepositoryTests.swift in Sources */,
+				3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
