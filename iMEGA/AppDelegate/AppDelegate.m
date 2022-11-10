@@ -1377,6 +1377,7 @@
             break;
             
         case EventReloading: {
+            isFetchNodesDone = NO;
             [self showLaunchViewController];
             break;
         }
