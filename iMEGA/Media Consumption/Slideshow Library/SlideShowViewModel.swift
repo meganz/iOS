@@ -100,7 +100,10 @@ final class SlideShowViewModel: ViewModelType {
         dataSource.startInitialDownload(false)
         playbackStatus = .playing
         currentSlideNumber = 0
-        invokeCommand?(.restart)
+        
+        dataSource.initialPhotoDownloadCallback = { [weak self] in
+            self?.invokeCommand?(.restart)
+        }
     }
     
     func dispatch(_ action: SlideShowAction) {
