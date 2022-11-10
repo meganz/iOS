@@ -85,9 +85,7 @@ fileprivate struct ChatRoomContentView: View {
     var body: some View {
         HStack(spacing: 0) {
             ChatRoomAvatarView(
-                viewModel: viewModel.chatRoomAvatarViewModel(
-                    isRightToLeftLanguage: layoutDirection == .rightToLeft
-                ),
+                viewModel: viewModel.chatRoomAvatarViewModel,
                 size: Constants.avatarViewSize
             )
             ChatRoomContentDetailsView()
@@ -110,10 +108,10 @@ fileprivate struct ChatRoomContentView: View {
             viewModel.showDetails()
         }
         .onAppear {
-            viewModel.isViewOnScreen = true
+            viewModel.loadChatRoomInfo()
         }
         .onDisappear {
-            viewModel.isViewOnScreen = false
+            viewModel.cancelLoading()
         }
     }
 }
@@ -187,8 +185,9 @@ fileprivate struct ChatRoomContentTitleView: View {
                 .font(viewModel.chatListItem.unreadCount > 0 ? .subheadline.bold() : .subheadline)
                 .lineLimit(1)
             
-            if let statusColor = viewModel.chatStatusColor {
-                Color(statusColor)
+            if let chatStatus = viewModel.chatStatus,
+               let color = viewModel.chatStatusColor(forChatStatus: chatStatus) {
+                Color(color)
                     .frame(width: 6, height: 6)
                     .clipShape(Circle())
             }

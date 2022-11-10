@@ -4,13 +4,12 @@ import SwiftUI
 struct ChatRoomAvatarView: View {
     @ObservedObject var viewModel: ChatRoomAvatarViewModel
     @Environment(\.colorScheme) private var colorScheme
-    
+    @Environment(\.layoutDirection) private var layoutDirection
+
     let size: CGSize
     
     private let offsetValue: CGFloat = 6
-    private var totalOffset: CGFloat {
-        viewModel.secondaryAvatar != nil ? (offsetValue * 2) : 0
-    }
+    private var totalOffset: CGFloat { offsetValue * 2 }
     
     var body: some View {
         ZStack {
@@ -37,13 +36,13 @@ struct ChatRoomAvatarView: View {
                 Image(uiImage: primaryAvatar)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: size.width, height: size.height)
+                    .frame(width: size.width + offsetValue, height: size.height + offsetValue)
                     .clipShape(Circle())
             } else {
                 Image(systemName: "circle.fill")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: size.width, height: size.height)
+                    .frame(width: size.width + offsetValue, height: size.height + offsetValue)
                     .clipShape(Circle())
                     .redacted(reason: .placeholder)
             }
@@ -51,10 +50,7 @@ struct ChatRoomAvatarView: View {
         .frame(width: size.width + totalOffset, height: size.height + totalOffset)
         .padding(8)
         .onAppear {
-            viewModel.isViewOnScreen = true
-        }
-        .onDisappear {
-            viewModel.isViewOnScreen = false
+            viewModel.loadData(isRightToLeftLanguage: layoutDirection == .rightToLeft)
         }
     }
 }

@@ -99,11 +99,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isSearchActive = false
         
         configureTitle()
-        listenorToChatStatusUpdate()
-        listenToChatListUpdate()
-        monitorNetworkChanges()
-        monitorActiveCallChanges()
-        monitorChatConnectionStatusUpdate()
     }
     
     func loadChatRooms() {
@@ -118,10 +113,22 @@ final class ChatRoomsListViewModel: ObservableObject {
         if self.isConnectedToNetwork != isConnectedToNetwork {
             self.isConnectedToNetwork = isConnectedToNetwork
         }
+        
+        if let activeCall = chatUseCase.activeCall() {
+            updateActiveCall(activeCall)
+        }
+        
+        listenToChatListUpdate()
+        monitorChatConnectionStatusUpdate()
+        listenToChatStatusUpdate()
+        monitorNetworkChanges()
+        monitorActiveCallChanges()
     }
     
     func cancelLoading() {
         isViewOnScreen = false
+        subscriptions.forEach { $0.cancel() }
+        subscriptions = []
     }
     
     func fetchChats() {
@@ -136,7 +143,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     func filterChats() {
         if searchText.isNotEmpty {
-            filteredChatRooms = chatRooms?.filter { $0.chatListItem.searchString.localizedCaseInsensitiveContains(searchText)}
+            filteredChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
             displayChatRooms = filteredChatRooms
         } else {
             displayChatRooms = chatRooms
@@ -307,7 +314,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func listenorToChatStatusUpdate() {
+    private func listenToChatStatusUpdate() {
         guard let myHandle = userUseCase.myHandle else { return }
         
         chatUseCase
@@ -324,6 +331,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func listenToChatListUpdate() {
         chatUseCase
             .monitorChatListItemUpdate()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] chatListItem in
                 self?.onChatListItemUpdate(chatListItem)
             }
@@ -338,7 +346,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func monitorActiveCallChanges() {
-        chatUseCase.monitorChatCallStatusUpdate()
+        chatUseCase
+            .monitorChatCallStatusUpdate()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] call in
                 self?.updateActiveCall(call)
             }
@@ -348,6 +358,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func monitorChatConnectionStatusUpdate() {
         chatUseCase
             .monitorChatConnectionStatusUpdate(forChatId: .invalid)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] connectionStatus in
                 if connectionStatus == .online {
                     self?.fetchChats()
@@ -379,22 +390,47 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func onChatListItemUpdate(_ chatListItem: ChatListItemEntity) {
-        if chatListItem.changeType == .archived {
-            fetchChats()
-        } else {
-            guard let chatRooms,
-                  let index = chatRooms.firstIndex(where: { $0.chatListItem == chatListItem }) else {
-                if chatListItem.changeType == .noChanges, doesBelongToCurrentTab(chatListItem) {
-                    fetchChats()
+        guard doesBelongToCurrentTab(chatListItem), let changes = chatListItem.changeType else { return }
+        
+        switch changes {
+        case .unreadCount, .title, .lastMessage, .lastTimestamp, .participants, .noChanges:
+            updateList(withChatListItem: chatListItem)
+        case .closed, .previewClosed, .archived:
+            if let chatRooms, let chatRoomIndex = index(forChatListItem: chatListItem, in: chatRooms) {
+                self.chatRooms?.remove(at: chatRoomIndex)
+                
+                if let displayChatRooms, let filteredIndex = index(forChatListItem: chatListItem, in: displayChatRooms) {
+                    self.displayChatRooms?.remove(at: filteredIndex)
                 }
-                return
             }
-            
-            self.chatRooms?[index] = constructChatRoomViewModel(forChatListItem: chatListItem)
-            self.chatRooms?.sort { $0.chatListItem.lastMessageDate > $1.chatListItem.lastMessageDate }
-            filterChats()
+        default:
+            break
         }
     }
+    
+    private func updateList(withChatListItem chatListItem: ChatListItemEntity) {
+        if let chatRooms {
+            let chatRoomViewModel = constructChatRoomViewModel(forChatListItem: chatListItem)
+            update(&self.chatRooms, with: chatRoomViewModel, at: index(forChatListItem: chatListItem, in: chatRooms))
+            update(&self.displayChatRooms, with: chatRoomViewModel, at: index(forChatListItem: chatListItem, in: chatRooms))
+        } else {
+            fetchChats()
+        }
+    }
+    
+    private func update(_ list: inout [ChatRoomViewModel]?, with chatRoomViewModel: ChatRoomViewModel, at index: Int? = nil) {
+        if let index {
+            list?[index] = chatRoomViewModel
+        } else {
+            list?.append(chatRoomViewModel)
+            
+        }
+    }
+    
+    private func index(forChatListItem chatListItem: ChatListItemEntity, in list: [ChatRoomViewModel]) -> Int? {
+        list.firstIndex { $0.chatListItem == chatListItem }
+    }
+    
     
     private func doesBelongToCurrentTab(_ chatListItem: ChatListItemEntity) -> Bool {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),

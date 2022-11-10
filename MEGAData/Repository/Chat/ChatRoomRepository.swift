@@ -133,7 +133,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             
 
             MEGALogDebug("Load user name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-            sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
+            sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate, queueType: .globalBackground)
         }
     }
 

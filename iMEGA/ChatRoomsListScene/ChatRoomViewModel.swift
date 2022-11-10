@@ -8,7 +8,6 @@ import Combine
 final class ChatRoomViewModel: ObservableObject, Identifiable {
     let chatListItem: ChatListItemEntity
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private let router: ChatRoomsListRouting
@@ -17,7 +16,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
 
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
-    @Published var chatStatusColor: UIColor?
+    @Published var chatStatus: ChatStatusEntity = .invalid
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     
@@ -29,8 +28,15 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private var subscriptions = Set<AnyCancellable>()
     private var loadingChatRoomInfoTask: Task<Void, Never>?
     
-    var isViewOnScreen = false
+    private var isViewOnScreen = false
+    private var loadingChatRoomInfoSubscription: AnyCancellable?
     
+    private var loadingChatRoomSearchStringTask: Task<Void, Never>?
+    private var searchString = ""
+
+    private var isInfoLoaded = false
+    let chatRoomAvatarViewModel: ChatRoomAvatarViewModel
+
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
@@ -42,31 +48,59 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.chatListItem = chatListItem
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
-        self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.userUseCase = userUseCase
         self.chatNotificationControl = chatNotificationControl
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
-        
-        if chatListItem.group == false {
-            let chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
-            self.chatStatusColor = chatStatusColor(forChatStatus: chatStatus)
-            listeningForChatStatusUpdate()
-        }
-        
+        self.chatRoomAvatarViewModel =  ChatRoomAvatarViewModel(
+            chatListItem: chatListItem,
+            chatRoomUseCase: chatRoomUseCase,
+            userImageUseCase: userImageUseCase,
+            chatUseCase: chatUseCase,
+            userUseCase: userUseCase
+        )
+
         self.contextMenuOptions = constructContextMenuOptions()
         self.displayDateString = formattedLastMessageSentDate()
-        self.loadingChatRoomInfoTask = createLoadingChatRoomInfoTask()
+        
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
         monitorActiveCallChanges()
+        
+        self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
+        self.listeningForChatStatusUpdate()
+
+        self.loadingChatRoomInfoTask = createLoadingChatRoomInfoTask()
+        self.loadingChatRoomSearchStringTask = createLoadingChatRoomSearchStringTask()
     }
     
     //MARK: - Interface methods
     
+    func loadChatRoomInfo() {
+        isViewOnScreen = true
+    }
+    
     func cancelLoading() {
-        loadingChatRoomInfoTask?.cancel()
-        loadingChatRoomInfoTask = nil
+        isViewOnScreen = false
+    }
+    
+    func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
+        switch chatStatus {
+        case .online:
+            return Colors.Chat.Status.online.color
+        case .offline:
+            return Colors.Chat.Status.offline.color
+        case .away:
+            return Colors.Chat.Status.away.color
+        case .busy:
+            return Colors.Chat.Status.busy.color
+        default:
+            return nil
+        }
+    }
+
+    func contains(searchText: String) -> Bool {
+        searchString.localizedCaseInsensitiveContains(searchText)
     }
     
     func showDetails() {
@@ -111,18 +145,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         objectWillChange.send()
     }
     
-    func chatRoomAvatarViewModel(isRightToLeftLanguage: Bool) -> ChatRoomAvatarViewModel {
-        ChatRoomAvatarViewModel(
-            chatListItem: chatListItem,
-            chatRoomUseCase: chatRoomUseCase,
-            userImageUseCase: userImageUseCase,
-            chatUseCase: chatUseCase,
-            userUseCase: userUseCase,
-            isRightToLeftLanguage: isRightToLeftLanguage
-        )
-    }
-    
     //MARK: - Private methods
+
     private func formattedLastMessageSentDate() -> String? {
         guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
         
@@ -185,15 +209,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private func createLoadingChatRoomInfoTask() -> Task<Void, Never> {
         Task { [weak self] in
             let chatId = chatListItem.chatId
-            await withTaskGroup(of: Void.self) { group in
-                
-                group.addTask { [weak self] in
-                    do {
-                        try await self?.updateDescription()
-                    } catch {
-                        MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
-                    }
-                }
+            do {
+                try await self?.updateDescription()
+            } catch {
+                MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
             }
             
             guard let self, self.isViewOnScreen else { return }
@@ -207,6 +226,33 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         }
     }
     
+    private func createLoadingChatRoomSearchStringTask() -> Task<Void, Never> {
+        Task { [weak self] in
+            guard let self,
+                    let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else {
+                return
+            }
+            
+            async let fullNamesTask = self.chatRoomUseCase.userFullNames(forPeerIds: chatRoom.peers.map(\.handle), chatId: self.chatListItem.chatId).joined(separator: " ")
+            
+            async let userNickNamesTask = self.chatRoomUseCase.userNickNames(forChatId: chatRoom.chatId).values.joined(separator: " ")
+            
+            async let userEmailsTask = self.chatRoomUseCase.userEmails(forChatId: chatRoom.chatId).values.joined(separator: " ")
+            
+            do {
+                let (fullNames, userNickNames, userEmails) = try await (fullNamesTask, userNickNamesTask, userEmailsTask)
+                
+                if let title = chatRoom.title {
+                    self.searchString = title + " " + fullNames + " " + userNickNames + " " + userEmails
+                } else {
+                    self.searchString = fullNames + " " + userNickNames + " " + userEmails
+                }
+            } catch {
+                MEGALogDebug("Unable to populate search string for \(chatListItem.chatId) with error \(error.localizedDescription)")
+            }
+        }
+    }
+
     @MainActor
     private func sendObjectChangeNotification() {
         objectWillChange.send()
@@ -280,21 +326,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
-        switch chatStatus {
-        case .online:
-            return Colors.Chat.Status.online.color
-        case .offline:
-            return Colors.Chat.Status.offline.color
-        case .away:
-            return Colors.Chat.Status.away.color
-        case .busy:
-            return Colors.Chat.Status.busy.color
-        default:
-            return nil
-        }
-    }
-    
     private func listeningForChatStatusUpdate() {
         chatUseCase
             .monitorChatStatusChange(forUserHandle: chatListItem.peerHandle)
@@ -303,7 +334,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] status in
                 guard let self = self else { return }
-                self.chatStatusColor = self.chatStatusColor(forChatStatus: status)
+                self.chatStatus = status
             })
             .store(in: &subscriptions)
     }

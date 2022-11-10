@@ -7,7 +7,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
-    private let isRightToLeftLanguage: Bool
+    private var isRightToLeftLanguage: Bool?
 
     @Published private(set) var primaryAvatar: UIImage?
     @Published private(set) var secondaryAvatar: UIImage?
@@ -15,28 +15,47 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var updateAvatarTask: Task<Void, Never>?
     private var loadingChatRoomAvatarTask: Task<Void, Never>?
-    var isViewOnScreen = false
+    private var loadingAvatarSubscription: AnyCancellable?
+    
+    private var hasInitiatedFetchingAvatar = false
 
     init(chatListItem: ChatListItemEntity,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
-         isRightToLeftLanguage: Bool) {
+         userUseCase: UserUseCaseProtocol) {
         self.chatListItem = chatListItem
         self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.userUseCase = userUseCase
+    }
+
+    //MARK: - Interface methods
+    
+    func loadData(isRightToLeftLanguage: Bool) {
         self.isRightToLeftLanguage = isRightToLeftLanguage
         
-        self.loadingChatRoomAvatarTask = createLoadingChatRoomAvatarTask(isRightToLeftLanguage: isRightToLeftLanguage)
+        guard hasInitiatedFetchingAvatar == false else { return }
+        
+        hasInitiatedFetchingAvatar = true
+        let subject = PassthroughSubject<Void, Never>()
+
+        loadingAvatarSubscription = subject
+            .debounce(for: .seconds(1.0), scheduler: DispatchQueue.global())
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.loadingChatRoomAvatarTask = self.createLoadingChatRoomAvatarTask(isRightToLeftLanguage: isRightToLeftLanguage)
+            }
+        
+        subject.send()
     }
+    
+    //MARK: - Private methods
     
     private func createLoadingChatRoomAvatarTask(isRightToLeftLanguage: Bool) -> Task<Void, Never> {
         Task { [weak self] in
             let chatId = chatListItem.chatId
-            
             do {
                 try await self?.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
             } catch {
@@ -49,11 +68,11 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: handles)
             .sink { [weak self] _ in
-                guard let self else { return }
+                guard let self, let isRightToLeftLanguage = self.isRightToLeftLanguage else { return }
                 
                 self.updateAvatarTask = Task {
                     do {
-                        try await self.fetchAvatar(isRightToLeftLanguage: self.isRightToLeftLanguage)
+                        try await self.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
                     } catch {
                         MEGALogDebug("Updating Avatar task failed for handles \(handles)")
                     }

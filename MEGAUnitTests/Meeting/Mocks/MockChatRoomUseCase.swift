@@ -21,6 +21,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var base64Handle: String? = nil
     var messageSeenChatId: ((ChatIdEntity) -> Void)? = nil
     var archivedChatId: ((ChatIdEntity, Bool) -> Void)? = nil
+    var userFullNames: [String] = []
+    var userNickNames: [HandleEntity : String] = [:]
+    var userEmails:  [HandleEntity : String] = [:]
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -93,6 +96,18 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
         contactEmail
+    }
+    
+    func userFullNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String] {
+        userFullNames
+    }
+    
+    func userNickNames(forChatId chatId: MEGA.ChatId) async throws -> [HandleEntity : String] {
+        userNickNames
+    }
+    
+    func userEmails(forChatId chatId: ChatId) async throws -> [HandleEntity : String] {
+        userEmails
     }
     
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
