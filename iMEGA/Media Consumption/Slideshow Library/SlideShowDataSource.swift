@@ -146,7 +146,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
                 nextSetOfPhotos.shuffle()
             }
             
-            for node in nextSetOfPhotos.lazy {
+            for node in nextSetOfPhotos {
                 if slideshowComplete { break }
                 
                 if let mediaEntity = await loadMediaEntity(forNode: node) {
