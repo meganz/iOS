@@ -3,19 +3,15 @@ import MEGADomain
 enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case scheduleMeeting = "Schedule Meeting"
     case chatRoomsListingRevamp = "chatRooms Listing Revamp"
-    
-    var isEnabled: Bool {
-        switch self {
-        case .scheduleMeeting: return false
-        case .chatRoomsListingRevamp: return false
-        }
-    }
+    case slideShowPreference = "Slide Show Preference"
+    case gifAndRawAlbum = "Gif and Raw Albums"
+    case photoLibraryCollectionView = "Photo Library with Collection View"
 }
 
 final class FeatureFlagViewModel: ObservableObject {
     private var useCase: FeatureFlagUseCaseProtocol
     
-    var featureFlagList: [FeatureFlagEntity] = FeatureFlagKey.allCases.map { FeatureFlagEntity(name: $0.rawValue, isEnabled: $0.isEnabled) }
+    var featureFlagList: [FeatureFlagEntity] = FeatureFlagKey.allCases.map { FeatureFlagEntity(name: $0.rawValue, isEnabled: false) }
     
     init(useCase: FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)) {
         self.useCase = useCase
