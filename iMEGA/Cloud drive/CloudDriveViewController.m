@@ -599,7 +599,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
-    UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
+    UIAlertController *newFolderAlertController = (UIAlertController *)self.navigationController.presentedViewController;
     if ([newFolderAlertController isKindOfClass:UIAlertController.class]) {
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
