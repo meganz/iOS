@@ -30,6 +30,10 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         scrollView.zoomScale = 1.0
     }
     
+    func resetZoomScale() {
+        scrollView.setZoomScale(1.0, animated: false)
+    }
+    
     func addGestures() {
         let doubleTap = UITapGestureRecognizer(target:self, action:#selector(doubleTap(gesture:)))
         doubleTap.numberOfTapsRequired = 2
