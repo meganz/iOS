@@ -9,13 +9,13 @@ class AccountExpiredViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        MEGASdkManager.sharedMEGASdk().getAccountDetails()
+        getAccountDetails()
         updateAppearance()
     }
     
@@ -40,6 +40,10 @@ class AccountExpiredViewController: UIViewController {
     }
     
     //MARK: - Set contents
+    func getAccountDetails() {
+        activityIndicator.startAnimating()
+        MEGASdkManager.sharedMEGASdk().getAccountDetails()
+    }
     
     func configContent() {
         guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else { return }
@@ -106,12 +110,17 @@ class AccountExpiredViewController: UIViewController {
 
 extension AccountExpiredViewController: MEGARequestDelegate {
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        guard error.type == .apiOk else { return }
-        
         switch request.type {
         case .MEGARequestTypeFetchNodes:
+            guard error.type == .apiOk else { return }
             isFetchNodesDone = true
         case .MEGARequestTypeAccountDetails:
+            activityIndicator.stopAnimating()
+            guard error.type == .apiOk else {
+                MEGALogError("[Account Expired] Error fetching account details with error \(error.localizedDescription).")
+                self.dismiss(animated: true)
+                return
+            }
             configContent()
         default:
             return
