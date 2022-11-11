@@ -155,27 +155,15 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         let avatarInitial = name.initialForAvatar()
         let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black
         let backgroundGradientColor = UIColor.colorFromHexString(backgroundGradientHexColor)
-        
-        let image: UIImage?
-        if let isRightToLeftLanguage {
-            image = UIImage.drawImage(
-                forInitials: avatarInitial,
-                size: size,
-                backgroundColor: avatarBackgroundColor,
-                backgroundGradientColor: backgroundGradientColor,
-                textColor: .white,
-                font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
-                isRightToLeftLanguage: isRightToLeftLanguage)
-        } else {
-            image = UIImage(
-                forName: avatarInitial,
-                size: size,
-                backgroundColor: avatarBackgroundColor,
-                backgroundGradientColor: backgroundGradientColor,
-                textColor: .white,
-                font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0)
-            )
-        }
+        let isRightToLeftLanguage = isRightToLeftLanguage ?? false
+        let image = UIImage.drawImage(
+            forInitials: avatarInitial,
+            size: size,
+            backgroundColor: avatarBackgroundColor,
+            backgroundGradientColor: backgroundGradientColor,
+            textColor: .white,
+            font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
+            isRightToLeftLanguage: isRightToLeftLanguage)
         
         if let base64Handle, shouldCache {
             let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
