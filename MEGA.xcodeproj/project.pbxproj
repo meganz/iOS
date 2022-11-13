@@ -1911,7 +1911,7 @@
 		B6C959702689C3D400CF73A8 /* ShareRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9596F2689C3D400CF73A8 /* ShareRepository.swift */; };
 		B6C9CB0927FBBB9D0073BA1A /* RawPhotoUploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0827FBBB9D0073BA1A /* RawPhotoUploadOperation.swift */; };
 		B6C9CB0D27FBC2220073BA1A /* PHAsset+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */; };
-		B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionView.swift */; };
+		B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift */; };
 		B6CA26DE28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CA26DD28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift */; };
 		B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
 		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
@@ -4343,7 +4343,7 @@
 		B6C9596F2689C3D400CF73A8 /* ShareRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRepository.swift; sourceTree = "<group>"; };
 		B6C9CB0827FBBB9D0073BA1A /* RawPhotoUploadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPhotoUploadOperation.swift; sourceTree = "<group>"; };
 		B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+CU.swift"; sourceTree = "<group>"; };
-		B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionView.swift; sourceTree = "<group>"; };
+		B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionViewRepresenter.swift; sourceTree = "<group>"; };
 		B6CA26DD28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionLayoutBuilder.swift; sourceTree = "<group>"; };
 		B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsTableViewController.h; sourceTree = "<group>"; };
@@ -10240,7 +10240,7 @@
 		B6CA26DA28F7F0B9007D5B57 /* UIKit Collection View */ = {
 			isa = PBXGroup;
 			children = (
-				B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionView.swift */,
+				B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift */,
 				B6F6E8EB290FB7E400B319CB /* PhotoLibraryCollectionViewCoordinator.swift */,
 				B6CA26DD28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift */,
 				B675B1FC28FCCE980075A344 /* PhotoLibraryModeAllCollectionView.swift */,
@@ -12857,7 +12857,7 @@
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				5D6D0F4F252702C2002A777D /* UserSDKEntity.swift in Sources */,
 				321AF2EF2852F13A004FCC1E /* PhotoSourceEntity.swift in Sources */,
-				B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionView.swift in Sources */,
+				B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift in Sources */,
 				B6A01BA8289A5E9200B503FD /* FolderContentStat.swift in Sources */,
 				5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */,
 				5DD91D2F24D7EE62001C72DB /* HandlerView.swift in Sources */,
