@@ -6,7 +6,7 @@ struct PhotoLibraryModeAllCollectionView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            PhotoLibraryCollectionView(viewModel: viewModel)
+            PhotoLibraryCollectionViewRepresenter(viewModel: viewModel)
             PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
         }
     }
