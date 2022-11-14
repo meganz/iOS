@@ -1075,7 +1075,8 @@
         }
     }
     
-    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired &&
+        ![UIApplication.mnz_visibleViewController isKindOfClass:AccountExpiredViewController.class]) {
         AccountExpiredViewController *accountStatusVC = AccountExpiredViewController.alloc.init;
         accountStatusVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [UIApplication.mnz_presentingViewController presentViewController:accountStatusVC animated:YES completion:nil];
