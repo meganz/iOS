@@ -79,7 +79,7 @@ class ChatSharedItemsViewController: UIViewController {
         }
         
         Task {
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
             let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
             let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: .chatSharedFiles, isBackupNode: isBackupNode, sender: sender)
             present(nodeActions, animated: true, completion: nil)
@@ -490,7 +490,6 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
             
             saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
                 if case let .failure(error) = result, error != .cancelled {

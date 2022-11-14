@@ -1,7 +1,6 @@
 
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 
-#import "Helper.h"
 #import "MEGANavigationController.h"
 #import "UIApplication+MNZCategory.h"
 

@@ -13,9 +13,12 @@ protocol FilesSearchRepositoryProtocol: RepositoryProtocol {
                 formatType: MEGANodeFormatType) async throws -> [MEGANode]
     
     func cancelSearch()
+    
+    func megaNodeFormatType(from explorerType: ExplorerTypeEntity) -> MEGANodeFormatType
 }
 
 final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
+    
     static var newRepo: SDKFilesSearchRepository {
         SDKFilesSearchRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }
@@ -64,6 +67,15 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
         if searchOperationQueue.operationCount > 0 {
             cancelToken?.cancel()
             searchOperationQueue.cancelAllOperations()
+        }
+    }
+    
+    func megaNodeFormatType(from explorerType: ExplorerTypeEntity) -> MEGANodeFormatType {
+        switch explorerType {
+        case .audio: return .audio
+        case .video: return .video
+        case .document: return .document
+        default: return .unknown
         }
     }
     

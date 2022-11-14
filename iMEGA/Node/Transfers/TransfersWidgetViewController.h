@@ -5,6 +5,7 @@
 @interface TransfersWidgetViewController : UIViewController
 
 @property (weak, nonatomic, nullable) ProgressIndicatorView *progressView;
+@property (weak, nonatomic, nullable) IBOutlet UITableView *tableView;
 
 @property (nonatomic, nonnull) NSLayoutConstraint *progressViewWidthConstraint;
 @property (nonatomic, nonnull) NSLayoutConstraint *progressViewHeightConstraint;

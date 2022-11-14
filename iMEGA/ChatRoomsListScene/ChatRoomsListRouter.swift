@@ -12,7 +12,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         self.tabBarController = tabBarController
     }
     
-    func build(isRightToLeftLanguage: Bool) -> UIViewController {
+    func build() -> UIViewController {
         let chatRoomUseCase = ChatRoomUseCase(
             chatRoomRepo: ChatRoomRepository.sharedRepo,
             userStoreRepo: UserStoreRepository(store: .shareInstance())
@@ -20,12 +20,16 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         
         let viewModel = ChatRoomsListViewModel(
             router: self,
-            chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())),
+            chatUseCase: ChatUseCase(
+                chatRepo: ChatRepository(
+                    sdk: MEGASdkManager.sharedMEGASdk(),
+                    chatSDK: MEGASdkManager.sharedMEGAChatSdk()
+                )
+            ),
             chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
-            userUseCase: UserUseCase(repo: .live),
-            isRightToLeftLanguage: isRightToLeftLanguage
+            userUseCase: UserUseCase(repo: .live)
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)

@@ -35,19 +35,19 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, TransferW
         showTransfersAlert_calledTimes += 1
     }
     
-    func transferSuccess(with message: String) {
+    func transferSuccess(with message: String, dismiss: Bool) {
         transferSuccess_calledTimes += 1
     }
     
-    func transferCancelled(with message: String) {
+    func transferCancelled(with message: String, dismiss: Bool) {
         transferCancelled_calledTimes += 1
     }
     
-    func transferFailed(error: String) {
+    func transferFailed(error: String, dismiss: Bool) {
         transferFailed_calledTimes += 1
     }
     
-    func transferCompletedWithError(error: String) {
+    func transferCompletedWithError(error: String, dismiss: Bool) {
         transferCompletedWithError_calledTimes += 1
     }
     

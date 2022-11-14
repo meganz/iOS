@@ -137,4 +137,10 @@ extension TransfersWidgetViewController {
             barButton.setTitleTextAttributes(attribute, for: .normal)
         }
     }
+    
+    //MARK: - Register TableViewCell Nibs
+    @objc func registerNib(name: String, identifier: String) {
+        let nib = UINib(nibName: name, bundle: nil)
+        self.tableView?.register(nib, forCellReuseIdentifier: identifier)
+    }
 }

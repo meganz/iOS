@@ -5,11 +5,12 @@ import MEGADomain
 
 @available(iOS 14.0, *)
 final class AlbumCellViewModel: NSObject, ObservableObject {
+    let album: AlbumEntity?
     @Published var numberOfNodes = 0
     @Published var thumbnailContainer: any ImageContaining
     @Published var isLoading: Bool
     
-    var title = Strings.Localizable.CameraUploads.Albums.Favourites.title
+    @Published var title: String = ""
     
     private var cameraUploadNode: NodeEntity?
     private var thumbnailUseCase: ThumbnailUseCaseProtocol
@@ -19,14 +20,27 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     private var updateSubscription: AnyCancellable?
     
+    var isFavouriteAlbum: Bool {
+        self.album == nil
+    }
+    
     init(
         cameraUploadNode: NodeEntity?,
         thumbnailUseCase: ThumbnailUseCaseProtocol,
-        albumContentsUseCase: AlbumContentsUseCaseProtocol
+        albumContentsUseCase: AlbumContentsUseCaseProtocol,
+        album: AlbumEntity?
     ) {
         self.cameraUploadNode = cameraUploadNode
         self.thumbnailUseCase = thumbnailUseCase
         self.albumContentsUseCase = albumContentsUseCase
+        self.album = album
+        
+        if let album = self.album {
+            title = album.name
+            numberOfNodes = album.count
+        } else {
+            title = Strings.Localizable.CameraUploads.Albums.Favourites.title
+        }
         
         isLoading = false
         
@@ -45,19 +59,10 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
         }
         
         loadingTask = Task {
-            guard let nodes = try? await albumContentsUseCase.favouriteAlbumNodes() else {
-                isLoading = false
-                return
-            }
-            
-            let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
-            numberOfNodes = albumEntity.numberOfNodes
-            
-            if let node = albumEntity.coverNode {
-                await loadThumbnail(for: node)
+            if isFavouriteAlbum {
+                await loadFavouriteAlbum()
             } else {
-                isLoading = false
-                thumbnailContainer = placeholderThumbnail
+                await loadOtherAlbumThumbnail()
             }
         }
     }
@@ -69,6 +74,34 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     }
     
     // MARK: Private
+    
+    @MainActor
+    private func loadFavouriteAlbum() async {
+        guard let nodes = try? await albumContentsUseCase.favouriteAlbumNodes() else {
+            isLoading = false
+            return
+        }
+        
+        let albumEntity = PhotoAlbum(handle: nil, coverNode: nodes.first, numberOfNodes: nodes.count)
+        numberOfNodes = albumEntity.numberOfNodes
+        
+        if let node = albumEntity.coverNode {
+            await loadThumbnail(for: node)
+        } else {
+            isLoading = false
+            thumbnailContainer = placeholderThumbnail
+        }
+    }
+    
+    @MainActor
+    private func loadOtherAlbumThumbnail() async {
+        if let node = album?.coverNode {
+            await loadThumbnail(for: node)
+        } else {
+            isLoading = false
+            thumbnailContainer = placeholderThumbnail
+        }
+    }
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {

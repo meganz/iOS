@@ -34,6 +34,12 @@ struct NameCollisionView: View {
                     ActionsView(duplicatedItem: viewModel.duplicatedItem, imageUrl: viewModel.thumbnailUrl, collisionImageUrl: viewModel.thumbnailCollisionUrl, actions: viewModel.actionsForCurrentDuplicatedItem()) { action in
                         viewModel.selectedAction(action)
                     }
+                    
+                    if viewModel.remainingCollisionsCount > 1 {
+                        ApplyToAllView(
+                            text: Strings.Localizable.NameCollision.applyToAll(viewModel.remainingCollisionsCount),
+                            applyToAllSelected: $viewModel.applyToAllEnabled)
+                    }
                 }
             }
         }

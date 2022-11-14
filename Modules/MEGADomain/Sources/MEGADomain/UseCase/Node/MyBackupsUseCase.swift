@@ -10,13 +10,15 @@ public protocol MyBackupsUseCaseProtocol {
     func myBackupsRootNode() async throws -> NodeEntity
 }
 
-public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepositoryProtocol>: MyBackupsUseCaseProtocol {
+public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepositoryProtocol, V: NodeValidationRepositoryProtocol>: MyBackupsUseCaseProtocol {
     private let myBackupsRepository: T
     private let nodeRepository: U
+    private let nodeValidationRepository: V
     
-    public init(myBackupsRepository: T, nodeRepository: U) {
+    public init(myBackupsRepository: T, nodeRepository: U, nodeValidationRepository: V) {
         self.myBackupsRepository = myBackupsRepository
         self.nodeRepository = nodeRepository
+        self.nodeValidationRepository = nodeValidationRepository
     }
     
     public func containsABackupNode(_ nodes: [NodeEntity]) async -> Bool {
@@ -53,7 +55,7 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
     public func isMyBackupsNodeChild(_ node: NodeEntity) async -> Bool {
         do {
             let myBackupsNode = try await myBackupsRootNode()
-            return await nodeRepository.isNode(node, descendantOf: myBackupsNode)
+            return await nodeValidationRepository.isNode(node, descendantOf: myBackupsNode)
         } catch {
             return false
         }

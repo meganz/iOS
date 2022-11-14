@@ -41,7 +41,6 @@
 @property (weak, nonatomic) IBOutlet UIView *allLineView;
 @property (weak, nonatomic) IBOutlet UIButton *completedButton;
 @property (weak, nonatomic) IBOutlet UIView *completedLineView;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *clearAllButton;
@@ -81,6 +80,9 @@ static TransfersWidgetViewController* instance = nil;
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    
+    [self registerNibWithName:@"TransferTableViewCell" identifier:@"transferCell"];
+    [self registerNibWithName:@"TransferNodeTableViewCell" identifier:@"transferNodeCell"];
     
     self.editBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") style:UIBarButtonItemStylePlain target:self action:@selector(switchEdit)];
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
@@ -139,6 +141,8 @@ static TransfersWidgetViewController* instance = nil;
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self reloadView];
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+    } else if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
+        [self reloadView];
     }
 }
 
@@ -283,7 +287,7 @@ static TransfersWidgetViewController* instance = nil;
         MEGANode *node = transfer.node;
         
         if (transfer.state == MEGATransferStateComplete) {
-            NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+            NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferNodeCell" forIndexPath:indexPath];
             [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
             return cell;
 

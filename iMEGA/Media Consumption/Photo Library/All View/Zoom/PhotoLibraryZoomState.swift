@@ -6,18 +6,26 @@ enum ZoomType {
 }
 
 struct PhotoLibraryZoomState: Equatable {
-    private static let supportedScaleFactors = [1, 3, 5]
+    enum ScaleFactor: Int, CaseIterable, Equatable {
+        case one = 1
+        case three = 3
+        case five = 5
+        case thirteen = 13
+    }
     
-    static let defaultScaleFactor = 3
+    private let supportedScaleFactors = ScaleFactor.allCases
+    
+    static let defaultScaleFactor: ScaleFactor = .three
 
-    var scaleFactor: Int = Self.defaultScaleFactor
+    var scaleFactor: ScaleFactor = .three
+    var maximumScaleFactor: ScaleFactor = .five
     
     func canZoom(_ type: ZoomType) -> Bool {
         switch type {
         case .in:
-            return scaleFactor != Self.supportedScaleFactors.first
+            return scaleFactor != supportedScaleFactors.first
         case .out:
-            return scaleFactor != Self.supportedScaleFactors.last
+            return scaleFactor != maximumScaleFactor
         }
     }
     
@@ -26,18 +34,18 @@ struct PhotoLibraryZoomState: Equatable {
             return
         }
         
-        guard let scaleIndex = Self.supportedScaleFactors.firstIndex(of: scaleFactor) else {
+        guard let scaleIndex = supportedScaleFactors.firstIndex(of: scaleFactor) else {
             scaleFactor = Self.defaultScaleFactor // Uses default scale if the current scale doesn't match our supported scales
             return
         }
         
         switch type {
         case .in:
-            let index = Self.supportedScaleFactors.index(before: scaleIndex)
-            scaleFactor = Self.supportedScaleFactors[index]
+            let index = supportedScaleFactors.index(before: scaleIndex)
+            scaleFactor = supportedScaleFactors[index]
         case .out:
-            let index = Self.supportedScaleFactors.index(after: scaleIndex)
-            scaleFactor = Self.supportedScaleFactors[index]
+            let index = supportedScaleFactors.index(after: scaleIndex)
+            scaleFactor = supportedScaleFactors[index]
         }
     }
 }

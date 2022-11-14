@@ -1,10 +1,10 @@
 
 protocol CancellableTransferRouting: Routing {
     func showTransfersAlert()
-    func transferSuccess(with message: String)
-    func transferCancelled(with message: String)
-    func transferFailed(error: String)
-    func transferCompletedWithError(error: String)
+    func transferSuccess(with message: String, dismiss: Bool)
+    func transferCancelled(with message: String, dismiss: Bool)
+    func transferFailed(error: String, dismiss: Bool)
+    func transferCompletedWithError(error: String, dismiss: Bool)
 }
 
 enum CancellableTransferViewAction: ActionType {

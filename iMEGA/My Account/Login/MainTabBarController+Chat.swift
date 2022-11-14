@@ -10,9 +10,8 @@ extension MainTabBarController {
     
     @objc func chatViewController() -> UIViewController {
         if #available(iOS 14.0, *), shouldShowNewChatRoomListingScreen {
-            let isRightToLeftLanguage = UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft
             let router = ChatRoomsListRouter(tabBarController: self)
-            return router.build(isRightToLeftLanguage: isRightToLeftLanguage)
+            return router.build()
         } else {
             guard let chatNavigationController = UIStoryboard(name: "Chat", bundle: nil).instantiateInitialViewController() as? MEGANavigationController else {
                 return MEGANavigationController()
@@ -51,7 +50,13 @@ extension MainTabBarController {
         if #available(iOS 14.0, *), shouldShowNewChatRoomListingScreen {
             let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
                                                   userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
-            let chatUseCase = ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGAChatSdk()))
+            let chatUseCase = ChatUseCase(
+                chatRepo: ChatRepository(
+                    sdk: MEGASdkManager.sharedMEGASdk(),
+                    chatSDK: MEGASdkManager.sharedMEGAChatSdk()
+                )
+            )
+            
             var totalUnreadChats = chatUseCase.unreadChatMessagesCount()
             if let totalChatRoomUnreadChats = chatRoomUseCase.chatRoom(forChatId: chatID)?.unreadCount, totalChatRoomUnreadChats > 0 {
                 totalUnreadChats -= 1

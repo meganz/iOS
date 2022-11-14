@@ -13,7 +13,10 @@ public protocol ChatUseCaseProtocol {
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
     func unreadChatMessagesCount() -> Int
+    func chatConnectionStatus() -> ChatConnectionStatus
+    func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
+    func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never>
 }
 
 // MARK: - Use case implementation -
@@ -68,7 +71,19 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
         chatRepo.unreadChatMessagesCount()
     }
     
+    public func chatConnectionStatus() -> ChatConnectionStatus {
+        chatRepo.chatConnectionStatus()
+    }
+    
+    public func retryPendingConnections() {
+        chatRepo.retryPendingConnections()
+    }
+    
     public func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never> {
         chatRepo.monitorChatCallStatusUpdate()
+    }
+    
+    public func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never> {
+        chatRepo.monitorChatConnectionStatusUpdate(forChatId: chatId)
     }
 }

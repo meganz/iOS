@@ -23,6 +23,8 @@ final class CancellableTransferViewModel: ViewModelType {
     private var transferErrors = [TransferErrorEntity]()
     
     private var alertSubscription: AnyCancellable?
+    
+    private var alertPresented = false
 
     // MARK: - Private properties
     private let router: routingProtocols
@@ -93,6 +95,7 @@ final class CancellableTransferViewModel: ViewModelType {
                     return
                 }
                 self.router.showTransfersAlert()
+                self.alertPresented = true
                 self.blockAlertView()
             }
     }
@@ -153,18 +156,18 @@ final class CancellableTransferViewModel: ViewModelType {
         alertSubscription = nil
         
         if transfersCancelled {
-            router.transferCancelled(with: Strings.Localizable.transferCancelled)
+            router.transferCancelled(with: Strings.Localizable.transferCancelled, dismiss: alertPresented)
         } else if transferErrors.isEmpty {
             switch transferType {
             case .download, .downloadChat, .downloadFileLink:
-                router.transferSuccess(with: Strings.Localizable.downloadStarted)
+                router.transferSuccess(with: Strings.Localizable.downloadStarted, dismiss: alertPresented)
             case .upload:
-                router.transferSuccess(with: Strings.Localizable.uploadStartedMessage)
+                router.transferSuccess(with: Strings.Localizable.uploadStartedMessage, dismiss: alertPresented)
             }
         } else if transferErrors.count < transfers.count {
-            router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong)
+            router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong, dismiss: alertPresented)
         } else {
-            router.transferFailed(error: String(format: "%@ %@", Strings.Localizable.transferFailed, Strings.Localizable.somethingWentWrong))
+            router.transferFailed(error: String(format: "%@ %@", Strings.Localizable.transferFailed, Strings.Localizable.somethingWentWrong), dismiss: alertPresented)
         }
     }
     

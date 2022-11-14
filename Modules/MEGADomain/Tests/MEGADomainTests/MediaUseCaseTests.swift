@@ -35,4 +35,26 @@ final class MediaUseCaseTests: XCTestCase {
         let url = URL(fileURLWithPath: name)
         XCTAssertFalse(sut.isVideo(for: url))
     }
+    
+    func testIsRawImage_whenFilteringPhotos_shouldReturnTrue() {
+        for fileExtension in RawImageFileExtensionEntity().imagesSupportedExtensions {
+            let name = "image.\(fileExtension)"
+            XCTAssertTrue(sut.isRawImage(name))
+        }
+    }
+    
+    func testIsNotRawImage_whenFilteringPhotos_shouldReturnFalse() {
+        let name = "image.jpg"
+        XCTAssertFalse(sut.isRawImage(name))
+    }
+    
+    func testIsGifImage_whenFilteringPhotos_shouldReturnTrue() {
+        let name = "image.gif"
+        XCTAssertTrue(sut.isGifImage(name))
+    }
+    
+    func testIsGifImage_whenFilteringPhotos_shouldReturnFalse() {
+        let name = "image.jpg"
+        XCTAssertFalse(sut.isGifImage(name))
+    }
 }

@@ -31,6 +31,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
                 offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
                 fileSystemRepository: fileSystemRepository,
                 nodeRepository: nodeRepository,
+                nodeDataRepository: NodeDataRepository.newRepo,
                 fileCacheRepository: FileCacheRepository.newRepo,
                 mediaUseCase: MediaUseCase(),
                 preferenceRepository: PreferenceRepository.newRepo),
@@ -52,28 +53,44 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
         presenter.present(wrapper, animated: true)
     }
     
-    func transferSuccess(with message: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferSuccess(with message: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.showSuccess(withStatus: message)
+            })
+        } else {
             SVProgressHUD.showSuccess(withStatus: message)
-        })
+        }
     }
     
-    func transferCancelled(with message: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferCancelled(with message: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.showInfo(withStatus: message)
+            })
+        } else {
             SVProgressHUD.showInfo(withStatus: message)
-        })
+        }
     }
     
-    func transferFailed(error: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferFailed(error: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.showError(withStatus: error)
+            })
+        } else {
             SVProgressHUD.showError(withStatus: error)
-        })
+        }
     }
     
-    func transferCompletedWithError(error: String) {
-        presenter?.dismiss(animated: true, completion: {
+    func transferCompletedWithError(error: String, dismiss: Bool) {
+        if dismiss {
+            presenter?.dismiss(animated: true, completion: {
+                SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
+            })
+        }else {
             SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
-        })
+        }
     }
     
     func prepareTransfersWidget() {

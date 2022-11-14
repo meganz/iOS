@@ -410,7 +410,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
             }
             localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
-            addMeetingParticipantStatusPipelineSubscription()
+            if chatRoom.chatType != .oneToOne {
+                addMeetingParticipantStatusPipelineSubscription()
+            }
         case .onViewReady:
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
                 fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in

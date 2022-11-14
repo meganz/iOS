@@ -21,7 +21,9 @@ protocol UserImageUseCaseProtocol {
                       avatarBackgroundHexColor: String,
                       backgroundGradientHexColor: String?,
                       name: String,
-                      isRightToLeftLanguage: Bool) async throws -> UIImage
+                      isRightToLeftLanguage: Bool,
+                      shouldCache: Bool,
+                      useCache: Bool) async throws -> UIImage
     mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never>
 }
 
@@ -107,13 +109,17 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                       avatarBackgroundHexColor: String,
                       backgroundGradientHexColor: String?,
                       name: String,
-                      isRightToLeftLanguage: Bool) async throws -> UIImage {
+                      isRightToLeftLanguage: Bool,
+                      shouldCache: Bool,
+                      useCache: Bool) async throws -> UIImage {
         let displayName = await userStoreRepo.displayName(forUserHandle: handle)
         return try createAvatar(usingName: displayName ?? name,
-                                           base64Handle: base64Handle,
-                                           avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                           backgroundGradientHexColor: backgroundGradientHexColor,
-                                           isRightToLeftLanguage: isRightToLeftLanguage)
+                                base64Handle: base64Handle,
+                                avatarBackgroundHexColor: avatarBackgroundHexColor,
+                                backgroundGradientHexColor: backgroundGradientHexColor,
+                                isRightToLeftLanguage: isRightToLeftLanguage,
+                                shouldCache: shouldCache,
+                                useCache: useCache)
     }
     
     // MARK: - Private methods
@@ -135,6 +141,8 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         avatarBackgroundHexColor: String,
         backgroundGradientHexColor: String? = nil,
         isRightToLeftLanguage: Bool? = nil,
+        shouldCache: Bool = true,
+        useCache: Bool = true,
         size: CGSize = CGSize(width: 100.0, height: 100.0)
     ) throws -> UIImage {
         if let base64Handle {
@@ -144,37 +152,20 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             }
         }
         
-        let initials = (name as NSString).mnz_initialForAvatar()
+        let avatarInitial = name.initialForAvatar()
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black
+        let backgroundGradientColor = UIColor.colorFromHexString(backgroundGradientHexColor)
+        let isRightToLeftLanguage = isRightToLeftLanguage ?? false
+        let image = UIImage.drawImage(
+            forInitials: avatarInitial,
+            size: size,
+            backgroundColor: avatarBackgroundColor,
+            backgroundGradientColor: backgroundGradientColor,
+            textColor: .white,
+            font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
+            isRightToLeftLanguage: isRightToLeftLanguage)
         
-        let backgroundGradientColor: UIColor?
-        if let backgroundGradientHexColor {
-            backgroundGradientColor = UIColor.mnz_(fromHexString: backgroundGradientHexColor)
-        } else {
-            backgroundGradientColor = nil
-        }
-        
-        let image: UIImage?
-        if let isRightToLeftLanguage {
-            image = UIImage.drawImage(
-                forInitials: initials,
-                size: size,
-                backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor) ?? .black,
-                backgroundGradientColor: backgroundGradientColor,
-                textColor: .white,
-                font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
-                isRightToLeftLanguage: isRightToLeftLanguage)
-        } else {
-            image = UIImage(
-                forName: initials,
-                size: size,
-                backgroundColor: UIColor.mnz_(fromHexString: avatarBackgroundHexColor),
-                backgroundGradientColor: backgroundGradientColor,
-                textColor: .white,
-                font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0)
-            )
-        }
-        
-        if let base64Handle {
+        if let base64Handle, shouldCache {
             let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
             if let imageData = image?.jpegData(compressionQuality: 1.0) {
                 try imageData.write(to: destinationURL, options: .atomic)

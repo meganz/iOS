@@ -20,6 +20,7 @@ final class NameCollisionViewModel: ObservableObject {
     private var collision: NameCollisionEntity?
     private var loadingTask: Task<Void, Never>?
     private let isFolderLink: Bool
+    private var applyToAllAction: NameCollisionActionType = .cancel
 
     var collisionType: NameCollisionType
     
@@ -27,7 +28,9 @@ final class NameCollisionViewModel: ObservableObject {
     @Published var isVersioningEnabled: Bool = false
     @Published var thumbnailUrl: URL?
     @Published var thumbnailCollisionUrl: URL?
-
+    @Published var applyToAllEnabled: Bool = false
+    @Published var remainingCollisionsCount: Int = 0
+    
     init(router: NameCollisionViewRouting,
          thumbnailUseCase: ThumbnailUseCaseProtocol,
          nameCollisionUseCase: NameCollisionUseCaseProtocol,
@@ -70,6 +73,7 @@ final class NameCollisionViewModel: ObservableObject {
     func checkNameCollisions() {
         collisions = nameCollisionUseCase.resolveNameCollisions(for: collisions)
         if collisions.contains(where: { $0.collisionNodeHandle != nil }) {
+            calculateRemainingCollisions()
             router.showNameCollisionsView()
         } else {
             processCollisions()
@@ -77,6 +81,8 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     func selectedAction(_ action: NameCollisionActionType) {
+        applyToAllAction = action
+        
         guard var collision = collision, let index = collisions.firstIndex(of: collision) else {
             return
         }
@@ -115,6 +121,7 @@ final class NameCollisionViewModel: ObservableObject {
         }
         
         loadNextCollision()
+        calculateRemainingCollisions()
     } 
     
     func actionsForCurrentDuplicatedItem() -> [NameCollisionAction] {
@@ -132,6 +139,10 @@ final class NameCollisionViewModel: ObservableObject {
             actions.append(NameCollisionAction(actionType: .cancel, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
         }
         return actions
+    }
+    
+    func calculateRemainingCollisions() {
+        remainingCollisionsCount = collisions.filter { $0.collisionAction == nil && $0.collisionNodeHandle != nil }.count
     }
     
     //MARK: - Private
@@ -152,7 +163,12 @@ final class NameCollisionViewModel: ObservableObject {
         }
         
         self.duplicatedItem = duplicatedItem
-        loadThumbnails()
+        
+        if applyToAllEnabled {
+            selectedAction(applyToAllAction)
+        } else {
+            loadThumbnails()
+        }
     }
     
     private func processCollisions() {

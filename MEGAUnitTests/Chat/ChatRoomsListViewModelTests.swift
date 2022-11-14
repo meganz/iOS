@@ -53,9 +53,11 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func testAction_selectChatsMode() {
         let viewModel = ChatRoomsListViewModel(
-            chatUseCase:  MockChatUseCase(items: chatsListMock)
+            chatUseCase:  MockChatUseCase(items: chatsListMock),
+            chatViewMode: .meetings
         )
         
+        viewModel.loadChatRooms()
         viewModel.selectChatMode(.chats)
         
         guard let chatRoomsCount  = viewModel.displayChatRooms?.count else {
@@ -71,9 +73,11 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func testAction_selectMeetingsMode() {
         let viewModel = ChatRoomsListViewModel(
-            chatUseCase:  MockChatUseCase(items: meetingsListMock)
+            chatUseCase:  MockChatUseCase(items: meetingsListMock),
+            chatViewMode: .meetings
         )
         
+        viewModel.loadChatRooms()
         viewModel.selectChatMode(.chats)
         
         guard let chatRoomsCount  = viewModel.displayChatRooms?.count else {
@@ -88,7 +92,13 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func test_EmptyChatsList() {
         let viewModel = ChatRoomsListViewModel()
-        XCTAssert(viewModel.displayChatRooms?.count == 0)
+        XCTAssert(viewModel.displayChatRooms == nil)
+    }
+    
+    func test_ChatListWithoutViewOnScreen() {
+        let viewModel = ChatRoomsListViewModel()
+        XCTAssert(viewModel.displayChatRooms == nil)
+
     }
 }
 

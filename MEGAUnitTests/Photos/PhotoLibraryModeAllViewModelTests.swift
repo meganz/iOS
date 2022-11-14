@@ -5,8 +5,8 @@ import MEGADomainMock
 import SwiftUI
 import MEGASwift
 
-final class PhotoLibraryAllViewModelTests: XCTestCase {
-    private var sut: PhotoLibraryAllViewModel!
+final class PhotoLibraryModeAllViewModelTests: XCTestCase {
+    private var sut: PhotoLibraryModeAllGridViewModel!
 
     override func setUpWithError() throws {
         let nodes =  [
@@ -20,7 +20,7 @@ final class PhotoLibraryAllViewModelTests: XCTestCase {
         let library = nodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        sut = PhotoLibraryAllViewModel(libraryViewModel: libraryViewModel)
+        sut = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
     }
     
     func testInit_defaultValue() throws {
@@ -40,7 +40,7 @@ final class PhotoLibraryAllViewModelTests: XCTestCase {
                         NodeEntity(name: "c.mov", handle: 4, modificationTime: try "2020-04-18T12:01:04Z".date),
                         NodeEntity(name: "d.mp4", handle: 5, modificationTime: try "2020-04-18T01:01:04Z".date)])
         
-        XCTAssertEqual(sut.zoomState, PhotoLibraryZoomState(scaleFactor: 3))
+        XCTAssertEqual(sut.zoomState, PhotoLibraryZoomState(scaleFactor: .three))
         XCTAssertNil(sut.selectedNode)
         XCTAssertEqual(sut.columns.count, 3)
         for column in sut.columns {
@@ -78,7 +78,7 @@ final class PhotoLibraryAllViewModelTests: XCTestCase {
                         NodeEntity(name: "c.mov", handle: 4, modificationTime: try "2020-04-18T12:01:04Z".date),
                         NodeEntity(name: "d.mp4", handle: 5, modificationTime: try "2020-04-18T01:01:04Z".date)])
         
-        XCTAssertEqual(sut.zoomState, PhotoLibraryZoomState(scaleFactor: 1))
+        XCTAssertEqual(sut.zoomState, PhotoLibraryZoomState(scaleFactor: .one))
         XCTAssertNil(sut.selectedNode)
         XCTAssertEqual(sut.columns.count, 1)
         for column in sut.columns {
@@ -119,7 +119,7 @@ final class PhotoLibraryAllViewModelTests: XCTestCase {
                         NodeEntity(name: "c.mov", handle: 4, modificationTime: try "2020-04-18T12:01:04Z".date),
                         NodeEntity(name: "d.mp4", handle: 5, modificationTime: try "2020-04-18T01:01:04Z".date)])
         
-        XCTAssertEqual(sut.zoomState, PhotoLibraryZoomState(scaleFactor: 5))
+        XCTAssertEqual(sut.zoomState, PhotoLibraryZoomState(scaleFactor: .five))
         XCTAssertNil(sut.selectedNode)
         XCTAssertEqual(sut.columns.count, 5)
         for column in sut.columns {
