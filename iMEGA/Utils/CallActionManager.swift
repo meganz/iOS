@@ -83,9 +83,10 @@ import MEGADomain
                providerDelegate.isAudioSessionActive {
                 self.configureAudioSessionForStartCall(chatId: chatId)
             } else {
-                self.disableRTCAudio()
-                self.enableRTCAudioExternally = true
-                self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
+                if self.disableRTCAudio() {
+                    self.enableRTCAudioExternally = true
+                    self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
+                }
             }
             let requestDelegate = MEGAChatAnswerCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
@@ -112,8 +113,9 @@ import MEGADomain
     
     @objc func disableRTCAudioSession() {
         MEGALogDebug("CallActionManager: Disable webrtc audio session")
-        disableRTCAudio()
-        RTCAudioSession.sharedInstance().audioSessionDidDeactivate(AVAudioSession.sharedInstance())
+        if disableRTCAudio() {
+            RTCAudioSession.sharedInstance().audioSessionDidDeactivate(AVAudioSession.sharedInstance())
+        }
     }
     
     private func notifyStartCallToCallKit(chatId: UInt64) {
@@ -125,7 +127,8 @@ import MEGADomain
     }
         
     private func configureAudioSessionForStartCall(chatId: UInt64) {
-        disableRTCAudio()
+        guard disableRTCAudio() else { return }
+        
         guard !isOneToOneChatRoom(forChatId: chatId) else {
             enableRTCAudioExternally = true
             return
@@ -134,10 +137,16 @@ import MEGADomain
         enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
     }
     
-    private func disableRTCAudio() {
+    @discardableResult
+    private func disableRTCAudio() -> Bool {
+        guard let providerDelegate, providerDelegate.isAudioSessionActive == false else {
+            return false
+        }
+        
         MEGALogDebug("CallActionManager: Disable webrtc audio")
         RTCAudioSession.sharedInstance().useManualAudio = true
         RTCAudioSession.sharedInstance().isAudioEnabled = false
+        return true
     }
     
     private func enableRTCAudio() {

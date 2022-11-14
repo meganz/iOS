@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Medium.otf">
+            <string>SFUIText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="transferCell" rowHeight="70" id="A6z-n0-wW3" customClass="TransferTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A6z-n0-wW3" id="HqL-kb-8bW">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eAU-UG-yZS" userLabel="Icon Image View">
+                        <rect key="frame" x="10" y="15" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="mN6-NX-5vG"/>
+                            <constraint firstAttribute="width" constant="40" id="mcq-gF-JNZ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="JHQ-gu-QfZ">
+                        <rect key="frame" x="60" y="12" width="58.333333333333343" height="46"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9m5-43-hqy" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="28.333333333333332" height="17.666666666666668"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="subheadline"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="b7q-kv-Yf7">
+                                <rect key="frame" x="0.0" y="21.666666666666664" width="58.333333333333336" height="24.333333333333336"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wD8-hH-YvP">
+                                        <rect key="frame" x="0.0" y="0.0" width="12" height="24.333333333333332"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tkW-Py-Cmv" userLabel="Arrow Image View">
+                                                <rect key="frame" x="0.0" y="6.3333333333333357" width="12" height="12"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="12" id="XKu-at-S2e"/>
+                                                    <constraint firstAttribute="width" secondItem="tkW-Py-Cmv" secondAttribute="height" multiplier="1:1" id="eqz-om-Haj"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="tkW-Py-Cmv" firstAttribute="centerX" secondItem="wD8-hH-YvP" secondAttribute="centerX" id="CPZ-RK-P1B"/>
+                                            <constraint firstItem="tkW-Py-Cmv" firstAttribute="centerY" secondItem="wD8-hH-YvP" secondAttribute="centerY" id="qx5-UI-mLT"/>
+                                            <constraint firstAttribute="width" secondItem="tkW-Py-Cmv" secondAttribute="width" multiplier="1:1" id="zru-da-Gi0"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFX-i7-ecO" userLabel="Info">
+                                        <rect key="frame" x="16.000000000000004" y="0.0" width="42.333333333333343" height="24.333333333333332"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IWt-4B-W9X">
+                        <rect key="frame" x="295" y="13" width="46" height="44"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEd-SM-wgK" userLabel="Pause Button">
+                                <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="5eG-TH-sPo"/>
+                                    <constraint firstAttribute="height" constant="44" id="YrR-59-vTb"/>
+                                </constraints>
+                                <state key="normal" image="pauseTransfers">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pauseTransfer:" destination="A6z-n0-wW3" eventType="touchUpInside" id="54A-Qt-OJS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZY-uM-KQD" userLabel="Separator View">
+                        <rect key="frame" x="60" y="69.666666666666671" width="315" height="0.3333333333333286"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="y7L-bw-qdr"/>
+                        </constraints>
+                    </view>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IYc-jr-7zg">
+                        <rect key="frame" x="0.0" y="68" width="375" height="4"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.0" green="0.6588235294" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="progressTintColor" red="0.0" green="0.6588235294" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </progressView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="eAU-UG-yZS" firstAttribute="leading" secondItem="HqL-kb-8bW" secondAttribute="leading" constant="10" id="1hI-iA-grR"/>
+                    <constraint firstAttribute="trailing" secondItem="YZY-uM-KQD" secondAttribute="trailing" id="4Lp-ge-g6U"/>
+                    <constraint firstItem="IWt-4B-W9X" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JHQ-gu-QfZ" secondAttribute="trailing" constant="10" id="5FZ-uM-5UN"/>
+                    <constraint firstAttribute="bottom" secondItem="IYc-jr-7zg" secondAttribute="bottom" constant="-2" id="EXA-Xx-vXg"/>
+                    <constraint firstItem="IWt-4B-W9X" firstAttribute="centerY" secondItem="HqL-kb-8bW" secondAttribute="centerY" id="IvO-RN-h0C"/>
+                    <constraint firstItem="IYc-jr-7zg" firstAttribute="leading" secondItem="HqL-kb-8bW" secondAttribute="leading" id="JHj-s3-hMJ"/>
+                    <constraint firstAttribute="bottom" secondItem="YZY-uM-KQD" secondAttribute="bottom" id="WKR-Qh-PZY"/>
+                    <constraint firstItem="YZY-uM-KQD" firstAttribute="leading" secondItem="HqL-kb-8bW" secondAttribute="leading" constant="60" id="X86-wq-AqR"/>
+                    <constraint firstAttribute="centerY" secondItem="eAU-UG-yZS" secondAttribute="centerY" id="bSr-x9-eFJ"/>
+                    <constraint firstItem="JHQ-gu-QfZ" firstAttribute="leading" secondItem="eAU-UG-yZS" secondAttribute="trailing" constant="10" id="dT1-4w-bXK"/>
+                    <constraint firstItem="JHQ-gu-QfZ" firstAttribute="top" secondItem="HqL-kb-8bW" secondAttribute="top" constant="12" id="qb1-mH-rpM"/>
+                    <constraint firstAttribute="trailing" secondItem="IWt-4B-W9X" secondAttribute="trailing" constant="34" id="sui-Wb-7nt"/>
+                    <constraint firstAttribute="trailing" secondItem="IYc-jr-7zg" secondAttribute="trailing" id="tCv-Cp-lwl"/>
+                    <constraint firstAttribute="bottom" secondItem="JHQ-gu-QfZ" secondAttribute="bottom" constant="12" id="uAp-9S-FMz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="arrowImageView" destination="tkW-Py-Cmv" id="qqj-bK-Gnn"/>
+                <outlet property="iconImageView" destination="eAU-UG-yZS" id="BML-EM-DDe"/>
+                <outlet property="infoLabel" destination="EFX-i7-ecO" id="0a3-Gl-MwO"/>
+                <outlet property="nameLabel" destination="9m5-43-hqy" id="lIj-0x-lph"/>
+                <outlet property="pauseButton" destination="dEd-SM-wgK" id="sAX-6B-rA9"/>
+                <outlet property="progressView" destination="IYc-jr-7zg" id="91t-e1-Fag"/>
+                <outlet property="separatorView" destination="YZY-uM-KQD" id="txz-wO-HNM"/>
+            </connections>
+            <point key="canvasLocation" x="593" y="0.0"/>
+        </tableViewCell>
+    </objects>
+    <designables>
+        <designable name="9m5-43-hqy">
+            <size key="intrinsicContentSize" width="28.333333333333332" height="17.666666666666668"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="pauseTransfers" width="28" height="28"/>
+    </resources>
+</document>

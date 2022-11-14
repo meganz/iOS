@@ -38,6 +38,13 @@ public extension String {
     func append(pathComponent: String) -> String {
         return URL(fileURLWithPath: self).appendingPathComponent(pathComponent).path
     }
+  
+    func initialForAvatar() -> String {
+        guard let trimmedString = trim,
+                trimmedString.isNotEmpty,
+                let initialString = trimmedString.first else { return "" }
+        return initialString.uppercased()
+    }
 }
 
 public extension String {

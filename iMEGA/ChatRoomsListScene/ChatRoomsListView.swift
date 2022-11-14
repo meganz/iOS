@@ -68,5 +68,11 @@ struct ChatRoomsListView: View {
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            viewModel.loadChatRooms()
+        }
+        .onDisappear {
+            viewModel.cancelLoading()
+        }
     }
 }

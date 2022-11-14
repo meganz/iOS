@@ -12,7 +12,7 @@
         if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAErrorTypeApiENoent) {
             return;
         }
-        if (request.type == MEGAChatRequestTypeGetPeerAttributes && error.type == MEGAErrorTypeApiENoent) {
+        if (request.type == MEGAChatRequestTypeGetPeerAttributes) {
             return;
         }
         if (request.type == MEGAChatRequestTypeLoadPreview && (error.type == MEGAErrorTypeApiEExist || request.userHandle == MEGAInvalidHandle)) {

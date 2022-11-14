@@ -223,10 +223,7 @@
         [MEGASdkManager.sharedMEGASdk fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
-            LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-            [UIView transitionWithView:self.window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-                [self.window setRootViewController:launchVC];
-            } completion:nil];
+            [self showLaunchViewController];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -779,6 +776,10 @@
         
         if (completion) completion();
     }];
+    
+    [MEGASdkManager.sharedMEGAChatSdk removeChatCallDelegate:self.mainTBC];
+    [MEGASdkManager.sharedMEGAChatSdk removeChatDelegate:self.mainTBC];
+    self.mainTBC = nil;
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -1375,6 +1376,13 @@
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
             break;
             
+        case EventReloading: {
+            isFetchNodesDone = NO;
+            [self showLaunchViewController];
+            break;
+        }
+            
+            
         default:
             break;
     }
@@ -1556,13 +1564,10 @@
             isFetchNodesDone = YES;
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
             
             [self requestUserName];
             [self requestContactsFullname];
             [self updateContactsNickname];
-            
-            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
             
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
             [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];

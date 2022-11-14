@@ -9,7 +9,7 @@ import Combine
 
 final class PhotoCellViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
-    private var allViewModel: PhotoLibraryAllViewModel!
+    private var allViewModel: PhotoLibraryModeAllGridViewModel!
     
     private var testNodes: [NodeEntity] {
         get throws {
@@ -32,7 +32,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        allViewModel = PhotoLibraryAllViewModel(libraryViewModel: libraryViewModel)
+        allViewModel = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
     }
     
     func testInit_defaultValue() throws {
@@ -43,7 +43,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), isPlaceholder: true)))
         XCTAssertEqual(sut.duration, "00:00")
         XCTAssertEqual(sut.isVideo, false)
-        XCTAssertEqual(sut.currentZoomScaleFactor, 3)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         XCTAssertEqual(sut.isSelected, false)
         XCTAssertEqual(sut.isFavorite, false)
         XCTAssertNil(sut.thumbnailLoadingTask)
@@ -78,7 +78,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         allViewModel.zoomState.zoom(.in)
-        XCTAssertEqual(sut.currentZoomScaleFactor, 1)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 3.0)
         XCTAssertTrue(thumbnails.isEmpty)
@@ -110,7 +110,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         allViewModel.zoomState.zoom(.out)
-        XCTAssertEqual(sut.currentZoomScaleFactor, 5)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .five)
         XCTAssertNil(sut.thumbnailLoadingTask)
         let result = XCTWaiter.wait(for: [exp], timeout: 3.0)
         guard case XCTWaiter.Result.timedOut = result else {

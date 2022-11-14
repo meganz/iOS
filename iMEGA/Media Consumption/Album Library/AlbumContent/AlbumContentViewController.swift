@@ -112,6 +112,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
             else {
                 removeEmptyView()
             }
+        case .dismissAlbum:
+            dismiss(animated: true)
         }
     }
     

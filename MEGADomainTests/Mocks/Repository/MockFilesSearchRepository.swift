@@ -3,6 +3,7 @@
 final class MockFilesSearchRepository: FilesSearchRepositoryProtocol {
     var imageNodes: [MEGANode] = []
     var videoNodes: [MEGANode] = []
+    var megaNodeFormatType: MEGANodeFormatType = .audio
     
     static var newRepo: MockFilesSearchRepository {
         MockFilesSearchRepository()
@@ -20,6 +21,10 @@ final class MockFilesSearchRepository: FilesSearchRepositoryProtocol {
                 sortOrderType: MEGASortOrderType,
                 formatType: MEGANodeFormatType) async throws -> [MEGANode] {
         formatType == .photo ? imageNodes : videoNodes
+    }
+    
+    func megaNodeFormatType(from explorerType: ExplorerTypeEntity) -> MEGANodeFormatType {
+        megaNodeFormatType
     }
     
     func cancelSearch() {}

@@ -29,10 +29,7 @@ final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
                 sortOrderType: MEGASortOrderType,
                 cancelPreviousSearchIfNeeded: Bool,
                 completionBlock: @escaping ([MEGANode]?, Bool) -> Void) {
-        guard let formatType = MEGANodeFormatType(rawValue: explorerType.rawValue) else {
-            completionBlock(nil, false)
-            return
-        }
+        let formatType = repo.megaNodeFormatType(from: explorerType)
         
         if cancelPreviousSearchIfNeeded {
             repo.cancelSearch()

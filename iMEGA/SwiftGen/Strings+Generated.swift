@@ -1801,8 +1801,6 @@ public enum Strings {
     public static let savedToPhotos = Strings.tr("Localizable", "Saved to Photos")
     /// Save Image
     public static let saveImage = Strings.tr("Localizable", "saveImage")
-    /// Saving to Photos…
-    public static let savingToPhotos = Strings.tr("Localizable", "Saving to Photos…")
     /// Scan Document
     public static let scanDocument = Strings.tr("Localizable", "Scan Document")
     /// Scan Code
@@ -2905,6 +2903,14 @@ public enum Strings {
         public enum Favourites {
           /// Favourites
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.favourites.title")
+        }
+        public enum Gif {
+          /// GIFs
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.gif.title")
+        }
+        public enum Raw {
+          /// RAW
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.raw.title")
         }
       }
       public enum Timeline {
@@ -4078,6 +4084,10 @@ public enum Strings {
       }
     }
     public enum NameCollision {
+      /// Plural format key: "%#@count@"
+      public static func applyToAll(_ p1: Int) -> String {
+        return Strings.tr("Localizable", "nameCollision.applyToAll", p1)
+      }
       public enum Files {
         /// A file named %@ already exists at this destination.
         public static func alreadyExists(_ p1: Any) -> String {

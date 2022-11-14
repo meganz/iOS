@@ -51,8 +51,6 @@ final class FilesExplorerViewModel {
             return VideoExplorerViewConfiguration()
         case .favourites:
             return FavouritesExplorerViewConfiguration()
-        default:
-            fatalError("invalid configuration object")
         }
     }
     

@@ -46,7 +46,6 @@ extension MEGAPhotoBrowserViewController {
                 }
 
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
 
                 switch self.displayMode {
                 case .chatAttachment, .chatSharedFiles:

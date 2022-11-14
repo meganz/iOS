@@ -18,13 +18,16 @@ struct ItemView: View {
                 .clipped()
             VStack(alignment: .leading, spacing: 0) {
                 Text(name)
+                    .foregroundColor(.primary)
                     .font(.subheadline.bold())
                 if let date = date {
                     Text(date)
+                        .foregroundColor(.primary)
                         .font(.caption)
                 }
                 if let size = size {
                     Text(size)
+                        .foregroundColor(.primary)
                         .font(.caption)
                 }
             }

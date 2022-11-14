@@ -15,7 +15,7 @@ extension PhotoSection {
 }
 
 class PhotoDateSection: PhotoSection {
-    let id = UUID()
+    var id: String { title }
     let contentList: [NodeEntity]
     let photoByDayList: [PhotoByDay]
     let categoryDate: Date
@@ -31,5 +31,11 @@ class PhotoDateSection: PhotoSection {
     @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
         AttributedString()
+    }
+}
+
+extension PhotoDateSection: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

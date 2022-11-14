@@ -13,6 +13,8 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
 
     private var transferErrors = [TransferErrorEntity]()
     
+    private var alertPresented = false
+    
     // MARK: - Private properties
     private let router: CancellableTransferRouting
     // MARK: - Internel properties
@@ -38,6 +40,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
             } else {
                 startShareExtensionFolderUploads()
             }
+            self.alertPresented = true
         case .didTapCancelButton:
             if processingComplete {
                 return
@@ -80,11 +83,11 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     private func manageTransfersCompletion() {
         processingComplete = true
         if transferErrors.isEmpty {
-            router.transferSuccess(with: Strings.Localizable.sharedSuccessfully)
+            router.transferSuccess(with: Strings.Localizable.sharedSuccessfully, dismiss: alertPresented)
         } else if transferErrors.count < transfers.count {
-            router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong)
+            router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong, dismiss: alertPresented)
         } else {
-            router.transferFailed(error: String(format: "%@ %@", Strings.Localizable.transferFailed, Strings.Localizable.somethingWentWrong))
+            router.transferFailed(error: String(format: "%@ %@", Strings.Localizable.transferFailed, Strings.Localizable.somethingWentWrong), dismiss: alertPresented)
         }
     }
     

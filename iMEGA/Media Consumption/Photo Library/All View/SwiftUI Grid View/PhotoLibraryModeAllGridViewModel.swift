@@ -2,11 +2,11 @@ import SwiftUI
 import MEGADomain
 
 @available(iOS 14.0, *)
-final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {
+final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
     
-    @Published var zoomState = PhotoLibraryZoomState() {
+    override var zoomState: PhotoLibraryZoomState {
         willSet {
             zoomStateWillChange(to: newValue)
         }
@@ -15,7 +15,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     @Published var selectedNode: NodeEntity?
     @Published var columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 4),
-        count: PhotoLibraryZoomState.defaultScaleFactor
+        count: PhotoLibraryZoomState.defaultScaleFactor.rawValue
     )
     
     override var position: PhotoScrollPosition? {
@@ -24,8 +24,6 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel)
-        
-        photoCategoryList = libraryViewModel.library.photoMonthSections
         
         subscribeToLibraryChange()
         subscribeToSelectedModeChange()
@@ -39,7 +37,7 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
             .dropFirst()
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .map { [weak self] in
-                $0.photoDateSections(forZoomScaleFactor: self?.zoomState.scaleFactor)
+                $0.photoDateSections(for: self?.zoomState.scaleFactor ?? PhotoLibraryZoomState.defaultScaleFactor)
             }
             .filter { [weak self] in
                 self?.shouldRefreshTo($0) == true
@@ -74,28 +72,21 @@ final class PhotoLibraryAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection
     }
     
     private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
-        if shouldReloadPhotoCategoryList(onNewState: newState) {
-            photoCategoryList = libraryViewModel.library.photoDateSections(forZoomScaleFactor: newState.scaleFactor)
+        if newState.scaleFactor == .one || zoomState.scaleFactor == .one {
+            photoCategoryList = libraryViewModel.library.photoDateSections(for: newState.scaleFactor)
         }
         
         calculateLastScrollPosition()
         
         columns = Array(
             repeating: .init(.flexible(), spacing: 4),
-            count: newState.scaleFactor)
-    }
-    
-    /// Only reload category list section title when columns changed from 3 to 1 or 1 to 3
-    /// - Parameter newState:  new zoom state
-    /// - Returns: Should reload data or not
-    private func shouldReloadPhotoCategoryList(onNewState newState: PhotoLibraryZoomState) -> Bool {
-        newState.scaleFactor == 1 || zoomState.scaleFactor == 1
+            count: newState.scaleFactor.rawValue)
     }
 }
 
 // MARK: - Scroll Position Management
 @available(iOS 14.0, *)
-extension PhotoLibraryAllViewModel {
+extension PhotoLibraryModeAllGridViewModel {
     func hasPositionChange() -> Bool {
         libraryViewModel.cardScrollPosition != lastCardPosition ||
         libraryViewModel.photoScrollPosition != lastPhotoPosition

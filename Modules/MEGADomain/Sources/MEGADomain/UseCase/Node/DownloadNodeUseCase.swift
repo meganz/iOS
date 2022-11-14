@@ -8,11 +8,12 @@ public protocol DownloadNodeUseCaseProtocol {
     func cancelDownloadTransfers()
 }
 
-public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol>: DownloadNodeUseCaseProtocol {
+public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol>: DownloadNodeUseCaseProtocol {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileSystemRepository: V
     private let nodeRepository: W
+    private let nodeDataRepository: Y
     private let fileCacheRepository: Z
     private let mediaUseCase: M
     private let preferenceRepository: P
@@ -22,11 +23,12 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
-    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P) {
+    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileSystemRepository = fileSystemRepository
         self.nodeRepository = nodeRepository
+        self.nodeDataRepository = nodeDataRepository
         self.fileCacheRepository = fileCacheRepository
         self.mediaUseCase = mediaUseCase
         self.preferenceRepository = preferenceRepository
@@ -64,7 +66,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
             }
         }
         
-        guard let nodeSize = nodeRepository.sizeForNode(handle: handle), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
+        guard let nodeSize = nodeDataRepository.sizeForNode(handle: handle), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
             completion?(.failure(.notEnoughSpace))
             return
         }
@@ -103,7 +105,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
             }
         }
         
-        guard let nodeSize = nodeRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
+        guard let nodeSize = nodeDataRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
             completion?(.failure(.notEnoughSpace))
             return
         }

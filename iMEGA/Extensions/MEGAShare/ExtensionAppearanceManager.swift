@@ -34,12 +34,12 @@ class ExtensionAppearanceManager: NSObject {
         UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
         UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        self.setupThirdPartyAppereance(traitCollection)
+        self.configureSVProgressHUD(traitCollection)
         
         self.setupToolbar(traitCollection)
     }
     
-    class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
+    class func configureSVProgressHUD(_ traitCollection: UITraitCollection) {
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
         SVProgressHUD.setMinimumSize(CGSize(width: 180, height: 100))
         SVProgressHUD.setRingThickness(2)
@@ -60,6 +60,7 @@ class ExtensionAppearanceManager: NSObject {
         
         SVProgressHUD.setSuccessImage(Asset.Images.Hud.hudSuccess.image)
         SVProgressHUD.setErrorImage(Asset.Images.Hud.hudError.image)
+        SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {

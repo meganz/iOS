@@ -62,11 +62,12 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
             fileSystemRepository: fileSystemRepository,
             nodeRepository: nodeRepository,
+            nodeDataRepository: NodeDataRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,
             mediaUseCase: MediaUseCase(),
             preferenceRepository: PreferenceRepository.newRepo)
-        let nodeActionUC = NodeActionUseCase(repo: NodeRepository.newRepo)
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let nodeActionUC = NodeActionUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
@@ -130,7 +131,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         }
         
         Task{
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
             let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
             let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
             let nodeActionViewController = await NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, sender: button)

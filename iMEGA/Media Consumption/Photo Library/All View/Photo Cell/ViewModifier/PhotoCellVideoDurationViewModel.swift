@@ -1,9 +1,11 @@
 import Foundation
 
 final class PhotoCellVideoDurationViewModel {
-    private var fontSizeMapping: [Int: CGFloat] = [1:16,3:12,5:8]
+    private var fontSizeMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
+        .one : 16, .three : 12, .five : 8, .thirteen : 5
+    ]
     
-    func fontSize(with scaleFactor: Int) -> CGFloat {
+    func fontSize(with scaleFactor: PhotoLibraryZoomState.ScaleFactor) -> CGFloat {
         return fontSizeMapping[scaleFactor] ?? 12
     }
 }

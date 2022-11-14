@@ -10,10 +10,12 @@ enum AlbumContentAction: ActionType {
 final class AlbumContentViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case showAlbum(nodes: [NodeEntity])
+        case dismissAlbum
     }
     
     private var albumContentsUseCase: AlbumContentsUseCaseProtocol
     private let cameraUploadNode: NodeEntity?
+    private let album: AlbumEntity?
     private let router: AlbumContentRouter
     private var loadingTask: Task<Void, Never>?
     
@@ -27,11 +29,13 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     
     init(
         cameraUploadNode: NodeEntity?,
+        album: AlbumEntity?,
         albumName: String,
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
         router: AlbumContentRouter
     ) {
         self.cameraUploadNode = cameraUploadNode
+        self.album = album
         self.albumContentsUseCase = albumContentsUseCase
         self.router = router
         self.albumName = albumName
@@ -62,12 +66,29 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
     // MARK: Private
     @MainActor
     private func loadNodes() async {
+        isFavouriteAlbum ? await loadFavouriteNodes() : await loadOtherAlbumNodes()
+    }
+    
+    @MainActor
+    private func loadFavouriteNodes() async {
         do {
             let nodes = try await albumContentsUseCase.favouriteAlbumNodes()
             
             invokeCommand?(.showAlbum(nodes: nodes))
         } catch {
-            print(error)
+            MEGALogError("Error getting favourite nodes")
+        }
+    }
+    
+    @MainActor
+    private func loadOtherAlbumNodes() async {
+        guard let album else { return }
+        
+        do {
+            let nodes = try await albumContentsUseCase.nodes(forAlbum: album)
+            nodes.isNotEmpty ? invokeCommand?(.showAlbum(nodes: nodes)) : invokeCommand?(.dismissAlbum)
+        } catch {
+            MEGALogError("Error getting nodes for album")
         }
     }
     
@@ -82,5 +103,9 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
         updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
             self?.reloadAlbum()
         }
+    }
+    
+    private var isFavouriteAlbum: Bool {
+        cameraUploadNode != nil && album == nil
     }
 }

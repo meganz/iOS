@@ -15,9 +15,11 @@ public protocol NameCollisionUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepositoryProtocol>: NameCollisionUseCaseProtocol {
+public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepositoryProtocol, V: NodeDataRepositoryProtocol, W: FileSystemRepositoryProtocol>: NameCollisionUseCaseProtocol {
     private let nodeRepository: T
-    private let fileSystemRepository: U
+    private let nodeActionsRepository: U
+    private let nodeDataRepository: V
+    private let fileSystemRepository: W
     
     private let formatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
@@ -25,8 +27,10 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
         return formatter
     }()
     
-    public init(nodeRepository: T, fileSystemRepository: U) {
+    public init(nodeRepository: T, nodeActionsRepository: U, nodeDataRepository: V, fileSystemRepository: W) {
         self.nodeRepository = nodeRepository
+        self.nodeActionsRepository = nodeActionsRepository
+        self.nodeDataRepository = nodeDataRepository
         self.fileSystemRepository = fileSystemRepository
     }
     
@@ -44,7 +48,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
             for collision in collisions {
                 group.addTask {
                     try await removeOriginalDuplicatedItemIfNeeded(for: collision)
-                    return try await nodeRepository.copyNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed, isFolderLink: isFolderLink)
+                    return try await nodeActionsRepository.copyNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed, isFolderLink: isFolderLink)
                 }
             }
             
@@ -60,7 +64,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
             for collision in collisions {
                 group.addTask {
                     try await removeOriginalDuplicatedItemIfNeeded(for: collision)
-                    return try await nodeRepository.moveNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed)
+                    return try await nodeActionsRepository.moveNode(handle: collision.nodeHandle ?? .invalid, in: collision.parentHandle, newName: collision.renamed)
                 }
             }
             
@@ -72,7 +76,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
     }
     
     public func sizeForNode(handle: HandleEntity) -> String {
-        guard let size = nodeRepository.sizeForNode(handle: handle) else {
+        guard let size = nodeDataRepository.sizeForNode(handle: handle) else {
             return ""
         }
 
@@ -80,7 +84,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
     }
 
     public func creationDateForNode(handle: HandleEntity) -> String {
-        guard let date = nodeRepository.creationDateForNode(handle: handle) else {
+        guard let date = nodeDataRepository.creationDateForNode(handle: handle) else {
             return ""
         }
         
@@ -135,7 +139,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: FileSystemRepos
     //MARK: - Private
     private func removeOriginalDuplicatedItemIfNeeded(for collision: NameCollisionEntity) async throws {
         if (collision.collisionAction == .replace || collision.collisionAction == .update), let collisionHandle = collision.collisionNodeHandle, let rubbish = nodeRepository.rubbishNode() {
-            let _ = try await nodeRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)
+            let _ = try await nodeActionsRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)
         }
     }
 }

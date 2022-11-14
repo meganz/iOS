@@ -152,7 +152,6 @@ final class NodeActionViewControllerGenericDelegate:
     
     private func saveToPhotos(_ node: MEGANode) {
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savingToPhotos)
 
         saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity(), completion: saveToPhotosCompletion)
     }

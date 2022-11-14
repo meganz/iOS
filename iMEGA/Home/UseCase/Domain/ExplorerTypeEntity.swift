@@ -1,7 +1,5 @@
 
-enum ExplorerTypeEntity: Int {
-    case unknown
-    case photo
+enum ExplorerTypeEntity {
     case audio
     case video
     case document
