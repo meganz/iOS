@@ -388,7 +388,7 @@
                 [self setUserAvatar];
             }
             
-            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+            if ((request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) && request.email == nil) {
                 self.nameLabel.text = api.myUser.mnz_fullName;
             }
             break;
