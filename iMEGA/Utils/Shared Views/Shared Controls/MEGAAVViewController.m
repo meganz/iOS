@@ -143,23 +143,25 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                     name:kReachabilityChangedNotification
                                                   object:nil];
     
-    [self stopStreaming];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        [self stopStreaming];
+            
+        if (![AudioPlayerManager.shared isPlayerAlive]) {
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
+            [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
+            [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+        }
         
-    if (![AudioPlayerManager.shared isPlayerAlive]) {
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
-        [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
-        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-    }
+        if ([AudioPlayerManager.shared isPlayerAlive]) {
+            [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
+        }
+    });
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
                                                      withAnimation:YES
                                                         withLogout:YES
                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
-    }
-    
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
     }
 }
 
