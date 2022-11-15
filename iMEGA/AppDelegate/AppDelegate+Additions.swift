@@ -227,25 +227,6 @@ extension AppDelegate {
 // MARK: - Config Cookie Settings
 
 extension AppDelegate {
-    @objc func checkCookieSettingsUpdate(in userList: MEGAUserList) {
-        guard let size = userList.size?.intValue else {
-            return
-        }
-        
-        for index in 0..<size {
-            let user = userList.user(at: index)
-            if (user?.changes != nil) {
-                if user?.isOwnChange == 0 { //If the change is external
-                    if user?.handle == MEGASdkManager.sharedMEGASdk().myUser?.handle {
-                        if ((user?.hasChangedType(.cookieSetting)) != nil) {
-                            configAppWithNewCookieSettings()
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
     @objc func configAppWithNewCookieSettings() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         cookieSettingsUseCase.cookieSettings {

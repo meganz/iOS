@@ -1272,6 +1272,9 @@
                     if ([user hasChangedType:MEGAUserChangeTypeMyChatFilesFolder]) {
                         [NSNotificationCenter.defaultCenter postNotificationName:MEGAMyChatFilesFolderUpdatedInRemoteNotification object:nil];
                     }
+                    if ([user hasChangedType:MEGAUserChangeTypeCookieSetting]) {
+                        [self configAppWithNewCookieSettings];
+                    }
                 } else {
                     [user resetAvatarIfNeededInSdk:sdk];
                     
@@ -1293,8 +1296,6 @@
             [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
         }
     }
-    
-    [self checkCookieSettingsUpdateIn:userList];
 }
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
