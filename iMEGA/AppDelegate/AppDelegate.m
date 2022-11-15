@@ -1343,10 +1343,10 @@
                 __weak typeof(self) weakSelf = self;
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
-                        if (infor != nil) {
-                            [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
-                        }
-                    }];
+                    if (infor != nil) {
+                        [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                    }
+                }];
                 [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
             } else {
                 static BOOL alreadyPresented = NO;
@@ -1383,8 +1383,6 @@
             [self showLaunchViewController];
             break;
         }
-            
-            
         default:
             break;
     }

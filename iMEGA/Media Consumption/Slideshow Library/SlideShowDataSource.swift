@@ -5,6 +5,7 @@ protocol SlideShowDataSourceProtocol {
     var photos: [SlideShowMediaEntity] { get set }
     var nodeEntities: [NodeEntity] { get set }
     var slideshowComplete: Bool { get set }
+    var contentUpdatedCallback: (() -> Void)? { get set }
     var initialPhotoDownloadCallback: (() -> ())? { get set }
     
     func loadSelectedPhotoPreview() -> Bool
@@ -36,6 +37,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
 
     private var numberOfNodeProcessed = 0
     private var sortByShuffleOrder = false
+    var contentUpdatedCallback: (() -> Void)?
     
     init(
         currentPhoto: NodeEntity?,
@@ -63,8 +65,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         numberOfNodeProcessed += 1
         if let image = UIImage(contentsOfFile: pathForPreviewOrOriginal) {
             photos.append(SlideShowMediaEntity(image: image, node: node))
+            contentUpdatedCallback?()
         }
-
         return true
     }
     
@@ -151,6 +153,9 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
                 
                 if let mediaEntity = await loadMediaEntity(forNode: node) {
                     photos.append(mediaEntity)
+                    if node == nextSetOfPhotos.last {
+                        contentUpdatedCallback?()
+                    }
                 }
             }
         }
