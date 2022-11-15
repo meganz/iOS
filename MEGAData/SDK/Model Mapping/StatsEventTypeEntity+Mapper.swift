@@ -5,6 +5,10 @@ extension StatsEventEntity {
         let code: Int
         
         switch self {
+        case .delayBetweenChatdAndApi: code = 99300
+        case .delayBetweenApiAndPushserver: code = 99301
+        case .delayBetweenPushserverAndNSE: code = 99302
+        case .nseWillExpireAndMessageNotFound: code = 99303
         case .clickMediaDiscovery: code = 99304
         case .stayOnMediaDiscoveryOver10s: code = 99305
         case .stayOnMediaDiscoveryOver30s: code = 99306

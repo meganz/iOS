@@ -1,6 +1,7 @@
 import UserNotifications
 import Firebase
 import SAMKeychain
+import MEGADomain
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
@@ -18,6 +19,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private var waitingForThumbnail = false
     private var waitingForUserAttributes = false
+    
+    private lazy var statsUseCase: NSEStatsUseCase = {
+        NSEStatsUseCase(repo: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+    }()
     
     override init() {
         super.init()
@@ -77,7 +82,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 postNotification(withError: error ? "No chat room for message" : nil, message: message)
             }
         } else {
-            MEGASdkManager.sharedMEGASdk().sendEvent(99303, message: "NSE will expire and message not found")
+            statsUseCase.sendNSEWillExpireAndMessageNotFoundStats()
             postNotification(withError: "Service Extension time will expire and message not found")
         }
     }
@@ -332,7 +337,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
            let msgTime = message?.timestamp?.timeIntervalSince1970 {
             if (megatime - msgTime) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
-                MEGASdkManager.sharedMEGASdk().sendEvent(99300, message: "Delay between chatd and api")
+                statsUseCase.sendDelayBetweenChatdAndApiStats()
                 #endif
                 MEGALogWarning("Delay between chatd and api")
             }
@@ -343,7 +348,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             let megatime2 = megatime2 {
             if (megatime2 - megatime) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
-                MEGASdkManager.sharedMEGASdk().sendEvent(99301, message: "Delay between api and pushserver")
+                statsUseCase.sendDelayBetweenApiAndPushserverStats()
                 #endif
                 MEGALogWarning("Delay between api and pushserver")
             }
@@ -353,7 +358,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         if let megatime2 = megatime2 {
             if (pushReceivedTi - megatime2) > MEGAMinDelayInSecondsToSendAnEvent {
                 #if !DEBUG
-                MEGASdkManager.sharedMEGASdk().sendEvent(99302, message: "Delay between pushserver and Apple/device/NSE")
+                statsUseCase.sendDelayBetweenPushserverAndNSEStats()
                 #endif
                 MEGALogWarning("Delay between pushserver and Apple/device/NSE")
             }

@@ -1458,6 +1458,9 @@
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A860C80F26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift */; };
 		A861B57F27BE7D32009C29C2 /* SupportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A861B57E27BE7D32009C29C2 /* SupportRepository.swift */; };
+		A86280B5291E83390010D6E0 /* StatsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5712874E30200D23A58 /* StatsRepository.swift */; };
+		A86280B6291E84040010D6E0 /* StatsEventTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ED3B382877657F00A0F9A5 /* StatsEventTypeEntity+Mapper.swift */; };
+		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
 		A866D9A1271D806000146302 /* MockAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBC13EB26CE86D80010115B /* MockAccountUseCase.swift */; };
 		A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */; };
@@ -5028,6 +5031,7 @@
 				77AEB94723CDBC560047CEBF /* libwebrtc.a in Frameworks */,
 				7794AF11231E7D7B0039C1D2 /* VideoToolbox.framework in Frameworks */,
 				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
+				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
 				7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */,
 				77AEB94323CDBC550047CEBF /* libnative_api.a in Frameworks */,
 				BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */,
@@ -11537,6 +11541,7 @@
 				A828E686286B318A004CED9E /* FirebaseCrashlytics */,
 				B63D341B2898A9E90059DE66 /* MEGASwift */,
 				B6A01BB3289A644D00B503FD /* MEGAFoundation */,
+				A86280BB291E8D510010D6E0 /* MEGADomain */,
 			);
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
@@ -13656,6 +13661,7 @@
 				BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
 				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */,
+				A86280B6291E84040010D6E0 /* StatsEventTypeEntity+Mapper.swift in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */,
@@ -13665,6 +13671,7 @@
 				B5300AF52754A0A1001E516B /* Strings+Generated.swift in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */,
+				A86280B5291E83390010D6E0 /* StatsRepository.swift in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
@@ -16333,6 +16340,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		A86280BB291E8D510010D6E0 /* MEGADomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGADomain;
 		};
 		A863223E29091456004FED9B /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
