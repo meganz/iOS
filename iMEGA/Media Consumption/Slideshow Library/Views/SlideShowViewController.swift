@@ -119,6 +119,7 @@ final class SlideShowViewController: UIViewController, ViewType {
          case .initialPhotoLoaded: playSlideShow()
          case .resetTimer: resetTimer()
          case .restart: restart()
+         case .reload: reload()
          }
     }
     
@@ -223,6 +224,10 @@ final class SlideShowViewController: UIViewController, ViewType {
     @objc private func pauseSlideShow() {
         viewModel?.dispatch(.pause)
     }
+    
+    private func reload() {
+        collectionView.reloadData()
+    }
 }
 
 extension SlideShowViewController: UICollectionViewDelegate {
@@ -239,21 +244,18 @@ extension SlideShowViewController: UICollectionViewDelegate {
 
 extension SlideShowViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.numberOfSlideShowContents ?? 0
+        viewModel?.photos.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
         
         guard let viewModel = viewModel else { return cell }
-        guard indexPath.row < viewModel.photos.count,
-                let image = viewModel.photos[indexPath.row].image
-        else {
-            viewModel.dispatch(.finish)
-            return cell
+        
+        if let image = viewModel.photos[indexPath.row].image {
+            cell.update(withImage: image, andInteraction: self)
         }
         
-        cell.update(withImage: image, andInteraction: self)
         return cell
     }
 }

@@ -22,6 +22,7 @@ final class SlideShowViewModel: ViewModelType {
         case initialPhotoLoaded
         case resetTimer
         case restart
+        case reload
     }
     
     private var dataSource: SlideShowDataSourceProtocol
@@ -70,6 +71,9 @@ final class SlideShowViewModel: ViewModelType {
             invokeCommand?(.initialPhotoLoaded)
         } else {
             dataSource.startInitialDownload(false)
+        }
+        self.dataSource.contentUpdatedCallback = { [weak self] in
+            self?.invokeCommand?(.reload)
         }
     }
     
