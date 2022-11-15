@@ -1,6 +1,10 @@
 import Foundation
 
 public enum StatsEventEntity {
+    case delayBetweenChatdAndApi
+    case delayBetweenApiAndPushserver
+    case delayBetweenPushserverAndNSE
+    case nseWillExpireAndMessageNotFound
     case clickMediaDiscovery
     case stayOnMediaDiscoveryOver10s
     case stayOnMediaDiscoveryOver30s
@@ -17,6 +21,10 @@ public enum StatsEventEntity {
         let value: String
         
         switch self {
+        case .delayBetweenChatdAndApi: value = "Delay between chatd and api"
+        case .delayBetweenApiAndPushserver: value = "Delay between api and pushserver"
+        case .delayBetweenPushserverAndNSE:value = "Delay between pushserver and Apple/device/NSE"
+        case .nseWillExpireAndMessageNotFound: value = "NSE will expire and message not found"
         case .clickMediaDiscovery: value = "Media Discovery Option Tapped"
         case .stayOnMediaDiscoveryOver10s: value = "Stay on Media Discovery over 10s"
         case .stayOnMediaDiscoveryOver30s: value = "Stay on Media Discovery over 30s"
