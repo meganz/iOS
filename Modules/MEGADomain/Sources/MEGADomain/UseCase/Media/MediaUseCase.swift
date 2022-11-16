@@ -19,7 +19,8 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     }
     
     public func isImage(for url: URL) -> Bool {
-        ImageFileExtensionEntity().imagesSupportedExtensions.contains(url.pathExtension.lowercased())
+        ImageFileExtensionEntity().imagesSupportedExtensions.contains(url.pathExtension.lowercased()) ||
+        RawImageFileExtensionEntity().imagesSupportedExtensions.contains(url.pathExtension.lowercased())
     }
     
     public func isVideo(_ name: FileNameEntity) -> Bool {
