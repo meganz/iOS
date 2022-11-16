@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opções da apresentação de slides";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Incluir arquivos de mídia em subpastas na apresentação de slides";
+"slideshow.preferenceSetting.mediaInSubFolders"="Incluir imagens em subpastas na apresentação de slides";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Velocidade da apresentação de slides";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Álbuns";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favoritos";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Mensagem";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Chamar";
+"Call"="Áudio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Vídeo";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Atualizar";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="O arquivo será atualizado com uma nova versão.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Não tem mais ninguém aqui";
 /* Meetings end call dialog description */

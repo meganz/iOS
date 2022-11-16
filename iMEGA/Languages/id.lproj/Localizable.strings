@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opsi tayangan slide";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Sertakan media dalam sub-folder dalam tayangan slide";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Kecepatan tayangan slide";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favorit";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Akses fitur untuk Pro seperti mengatur password protection dan expiration dates untuk file umum.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Nyalakan mode DEBUG";
+"enableDebugMode_title"="Nyalakan mode debug";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Sebuah log akan dibuat di bagian Offline (MEGAiOS.log). Log dapat berisi informasi yang terkait dengan akun Anda.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Matikan mode DEBUG";
+"disableDebugMode_title"="Matikan mode debug";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Log (MEGAiOS.log) akan dihapus dari section Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1459,7 +1463,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Akses ditolak untuk pengguna non-admin";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="Akun bisnis telah kedaluwarsa";
+"Business account has expired"="";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Kartu kredit ditolak";
 /* SDK error returned when the billing failed */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Pesan";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Panggilan";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Perbarui";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="File akan diperbarui dengan versi baru.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Anda satu-satunya di sini";
 /* Meetings end call dialog description */

@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Slideshow options";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Slideshow speed";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Albume";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favorite";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF-uri";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrează";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Accesează funcțiile unice Pro precum setarea protecției prin parolă și datele de expirare pentru fișierele publice.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Activează modul DEPANARE";
+"enableDebugMode_title"="Activează modul depanare";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Un log va fi creat în secțiunea Offline (MEGAiOS.log). Fișierele log pot conține informații referitoare la contul tău.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Dezactivează modul DEPANARE";
+"disableDebugMode_title"="Dezactivează modul depanare";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Fișierul log (MEGAiOS.log) va fi șters din secțiunea Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Mesaj";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Apelează";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -2053,7 +2057,7 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Cont dezactivat";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Actualizează";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="The file will be updated with a new version.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ești singura persoană de aici";
 /* Meetings end call dialog description */
@@ -3123,4 +3129,4 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Cont dezactivat";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
+"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";

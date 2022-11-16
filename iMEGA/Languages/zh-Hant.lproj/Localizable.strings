@@ -33,7 +33,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="請在設定中允許MEGA App使用您的相機";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="請於您的設定中授予MEGA應用程式使用您麥克風的權限";
+"microphonePermissions"="請於您的設定中允許MEGA應用程式存取您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="請在設定中允許MEGA App存取您的相簿";
 /* Message shown when the user clicks on a confirm account link that has already been used */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="幻燈片選項";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="在幻燈片的子資料夾中包含媒體";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="幻燈片播放速度";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="相簿";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="收藏";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="篩選";
 /* Choose type headline within filter UI */
@@ -919,7 +923,7 @@
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="簡單密碼";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="清除本機資料";
+"eraseAllLocalDataLabel"="清除本地資料";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="嘗試10次失敗後，您將被強制登出而且您的離線檔案將被刪除";
 /* Button text to change the passcode type. */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="訊息";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="通話";
+"Call"="音樂";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="影片";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="更新";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="檔案將更新為新版本。";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="這裡只有你一人";
 /* Meetings end call dialog description */

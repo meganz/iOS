@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Настройки слайд-шоу";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Включать в слайд-шоу медиа во вложенных папках";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Скорость слайд-шоу";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Альбомы";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Избранное";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Фильтр";
 /* Choose type headline within filter UI */
@@ -991,7 +995,7 @@
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Полученные бонусы:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
-"storageQuota"="Квота на свободное место";
+"storageQuota"="Лимит хранения данных";
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ на диске";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
@@ -1079,7 +1083,7 @@
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Обновляется";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Входящие общие папки";
+"incomingShares"="Входящие элементы";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Улучшить аккаунт";
 /* account management button title in business account’s landing page */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Разблокируйте возможности Pro, такие как защита публичных файлов паролем и срок годности.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Включить режим ОТЛАДКИ";
+"enableDebugMode_title"="Включить режим отладки";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Журнал будет создан локально (MEGAiOS.log). Журналы могут содержать информацию о вашем аккаунте.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Отключить режим ОТЛАДКИ";
+"disableDebugMode_title"="Отключить режим отладки";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Журнал (MEGAiOS.log) будет удалён виз локального раздела.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1671,7 +1675,7 @@
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Камера";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Сохранять в «Фотографиях»";
+"Save in Photos"="Сохранять в «Фото»";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Сохраните копию изображений и видео из приложения MEGA в медиабиблиотеке вашего устройства.";
 /* Title of the Spotlight Search section */
@@ -1773,7 +1777,7 @@
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Скачивание %@";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Сохранено в фото";
+"Saved to Photos"="Сохранено в «Фото»";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Элемент не сохранён";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Сообщение";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Вызов";
+"Call"="Аудио";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Видео";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -2045,7 +2049,7 @@
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="К этой папке предъявлено требование о снятии.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="Оспорить блокировку";
+"Dispute Takedown"="Оспорить изъятие";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="Управление пользователями доступно только из настольного веб-браузера.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Изменить";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Этот файл будет обновлён новой версией.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Здесь только вы";
 /* Meetings end call dialog description */

@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opzioni della presentazione";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Includi media in sottocartelle nella presentazione";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Velocità di presentazione";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Album";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Preferiti";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Accedi a opzioni solo Pro, come impostare una password e una data di scadenza ai link pubblici.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Attiva modalità DEBUG";
+"enableDebugMode_title"="Attiva modalità debug";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Un log verrà creato nella sezione Offline (MEGAiOS.log). I log possono contenere informazioni relative al tuo account.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Disattiva modalità DEBUG";
+"disableDebugMode_title"="Disattiva modalità debug";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Il log (MEGAiOS.log) verrà cancellato dalla sezione Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1459,7 +1463,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="Accesso negato per gli utenti non amministratori";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="L’account Business è scaduto";
+"Business account has expired"="";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="Carta di credito rifiutata";
 /* SDK error returned when the billing failed */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Messaggio";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Chiama";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -2051,9 +2055,9 @@
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="C'è stato un problema con il tuo ultimo pagamento. Per favore, accedi a MEGA utilizzando un browser desktop per maggiori informazioni.";
 /* A dialog title shown to users when their business account is expired. */
-"Your business account is expired"="Account deactivated";
+"Your business account is expired"="Account disattivato";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Il tuo account Business è stato disattivato a causa del fallimento del pagamento. Non potrai accedere ai dati archiviati nel tuo account. Per effettuare un pagamento e riattivare il tuo abbonamento, effettua il login in MEGA tramite browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Il tuo account è [B]sospeso[/B] al momento. Puoi solo sfogliare tra i tuoi dati.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Aggiorna";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Il file verrà aggiornato con una nuova versione.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ci sei solo tu qui";
 /* Meetings end call dialog description */
@@ -3117,10 +3123,10 @@
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Account chiuso a causa di una violazione dei Termini di Servizio di MEGA, come abuso di diritti altrui, condivisione ed importazione di dati illegali, o abuso del sistema.";
 /* Account Storage title label of used storage size */
-"account.storage.storageUsed.title"="Storage used";
+"account.storage.storageUsed.title"="Spazio utilizzato";
 /* Account Storage title label of used transfer size */
-"account.storage.transferUsed.title"="Transfer used";
+"account.storage.transferUsed.title"="Banda utilizzata";
 /* Content title of expired Pro Flexi account view */
-"account.expired.proFlexi.title"="Account deactivated";
+"account.expired.proFlexi.title"="Account disattivato";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
+"account.expired.proFlexi.message"="Il tuo account Pro Flexi è stato disattivato a causa del fallimento del pagamento oppure perché hai disattivato il tuo abbonamento. Non potrai accedere ai dati archiviati nel tuo account. Per effettuare un pagamento e riattivare il tuo abbonamento, effettua il login in MEGA tramite browser.";
