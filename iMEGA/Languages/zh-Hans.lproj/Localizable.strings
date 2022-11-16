@@ -135,7 +135,7 @@
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
 "agreeWithLosingPasswordYouLoseData"="我了解[S]如果我忘记密码，则会丢失我的数据。[/S]了解更多关于<a href=\"terms\">MEGA的端到端加密技术</a>。";
 /* Error text shown when you have not entered a correct name */
-"nameInvalidFormat"="请输入一个有效的名字";
+"nameInvalidFormat"="输入一个有效的名字";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="幻灯片选项";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="在幻灯片的子文件夹中包含媒体";
+"slideshow.preferenceSetting.mediaInSubFolders"="幻灯片播放包含子文件夹内的图片";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="幻灯片播放速度";
 /* Slideshow Speed preference slow */
@@ -459,7 +459,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="重命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="请输入新名称";
+"renameNodeMessage"="输入新名称";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="不允许使用这些字符：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="相册";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="收藏";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="过滤";
 /* Choose type headline within filter UI */
@@ -1459,7 +1463,7 @@
 /* SDK error returned for operations only allowed for business master users */
 "Access denied for users"="非管理员用户的访问被拒绝";
 /* SDK error returned when a business account has expired */
-"Business account has expired"="企业帐户已到期";
+"Business account has expired"="";
 /* SDK error returned when the credit card has been rejected */
 "Credit card rejected"="信用卡被拒绝";
 /* SDK error returned when the billing failed */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="信息";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="通话";
+"Call"="语音";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="视频";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="更新";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="该文件将更新为新版本。";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="这里只有您一人";
 /* Meetings end call dialog description */
@@ -3029,7 +3035,7 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通话将在%@后结束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="可离线使用";
+"general.downloadToOffline"="设为离线可用";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="结束所有人的通话";
 /* Title of the popup that ends the meeting for all */

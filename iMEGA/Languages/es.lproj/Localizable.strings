@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opciones de la presentación";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Incluir imágenes y vídeos en subcarpetas en la presentación";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Velocidad de la presentación";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Álbumes";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favoritos";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Accede a las características de una cuenta Pro, como configurar la protección por contraseña o la fecha de caducidad para archivos públicos.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Activar modo depuración";
+"enableDebugMode_title"="Activar modo debug";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Se creará un log en la sección Sin conexión (MEGAiOS.log). Los logs pueden contener información relativa a tu cuenta.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Desactivar modo depuración";
+"disableDebugMode_title"="Desactivar modo debug";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Se eliminará el log (MEGAiOS.log) de la sección Sin conexión.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Mensaje";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Llamar";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Vídeo";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -2047,9 +2051,9 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar la retirada";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
-"User management is only available from a desktop web browser."="La gestión de usuarios solo está disponible desde el navegador en tu ordenador.";
+"User management is only available from a desktop web browser."="La gestión de usuarios solo está disponible desde el navegador en tu pc.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
-"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ha habido un problema con tu último pago. Accede a MEGA utilizando el navegador del ordenador para obtener más información.";
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ha habido un problema con tu último pago. Accede a MEGA utilizando el navegador de tu pc para obtener más información.";
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Cuenta desactivada";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
@@ -2903,7 +2907,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="No hay copias de seguridad";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="Aquí es donde se almacenan las copias de seguridad de tus archivos y carpetas. Estas copias de seguridad son de “solo lectura” para protegerlas de modificaciones accidentales en tu nube.\nPuedes crear copias de seguridad en MEGA desde tu ordenador usando nuestra aplicación de escritorio.";
+"backups.empty.state.description"="Aquí es donde se almacenan las copias de seguridad de tus archivos y carpetas. Estas copias de seguridad son de “solo lectura” para protegerlas de modificaciones accidentales en tu nube.\nPuedes crear copias de seguridad en MEGA desde tu pc usando nuestra aplicación de escritorio.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="¿Cancelar transferencias?";
 /* Message for action of cancelling a transfer */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Actualizar";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="El archivo se subirá con una nueva versión.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Solo estás tú aquí";
 /* Meetings end call dialog description */

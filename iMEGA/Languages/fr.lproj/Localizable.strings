@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Options du diaporama";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Afficher les médias des sous-dossiers dans le diaporama";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Vitesse du diaporama";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favoris";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrer";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Accédez aux fonctions propres aux comptes Pro telles que la protection par mot de passe et les dates d’expiration pour les fichiers publics.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Activer le mode de DÉBOGAGE";
+"enableDebugMode_title"="Activer le mode de débogage";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent comprendre des renseignements associés à votre compte.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Désactiver le mode de DÉBOGAGE";
+"disableDebugMode_title"="Désactiver le mode de débogage";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Message";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Appeler";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Vidéo";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Mettre à jour";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Le fichier sera mis à jour par une nouvelle version.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Vous êtes la seule personne ici";
 /* Meetings end call dialog description */
@@ -3029,7 +3035,7 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="L’appel se terminera dans %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Rendre disponible hors ligne";
+"general.downloadToOffline"="Rendre accessible hors ligne";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Mettre fin à l’appel pour tous";
 /* Title of the popup that ends the meeting for all */

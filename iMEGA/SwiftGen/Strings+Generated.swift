@@ -93,11 +93,11 @@ public enum Strings {
     public static let _24Hours = Strings.tr("Localizable", "24 hours")
     /// 30 minutes
     public static let _30Minutes = Strings.tr("Localizable", "30 minutes")
-    /// 4-Digit Numeric Code
+    /// 4-digit numeric code
     public static let _4DigitNumericCode = Strings.tr("Localizable", "4-Digit Numeric Code")
     /// 6 hours
     public static let _6Hours = Strings.tr("Localizable", "6 hours")
-    /// 6-Digit Numeric Code
+    /// 6-digit numeric code
     public static let _6DigitNumericCode = Strings.tr("Localizable", "6-Digit Numeric Code")
     /// < Slide to cancel
     public static let slideToCancel = Strings.tr("Localizable", "< Slide to cancel")
@@ -297,7 +297,7 @@ public enum Strings {
     public static let awaitingEmailConfirmation = Strings.tr("Localizable", "awaitingEmailConfirmation")
     /// Away
     public static let away = Strings.tr("Localizable", "away")
-    /// Back up Recovery Key
+    /// Back up Recovery key
     public static let backupRecoveryKey = Strings.tr("Localizable", "backupRecoveryKey")
     /// Bad session ID
     public static let badSessionID = Strings.tr("Localizable", "Bad session ID")
@@ -319,7 +319,7 @@ public enum Strings {
     public static let businessAccountHasExpired = Strings.tr("Localizable", "Business account has expired")
     /// Busy
     public static let busy = Strings.tr("Localizable", "busy")
-    /// Call
+    /// Audio
     public static let call = Strings.tr("Localizable", "Call")
     /// Call Started
     public static let callStarted = Strings.tr("Localizable", "Call Started")
@@ -627,7 +627,7 @@ public enum Strings {
     public static let deviceStorageAlmostFull = Strings.tr("Localizable", "Device Storage Almost Full")
     /// The log (MEGAiOS.log) will be deleted from the Offline section.
     public static let disableDebugModeMessage = Strings.tr("Localizable", "disableDebugMode_message")
-    /// Disable DEBUG mode
+    /// Disable debug mode
     public static let disableDebugModeTitle = Strings.tr("Localizable", "disableDebugMode_title")
     /// Disagree
     public static let disagree = Strings.tr("Localizable", "disagree")
@@ -725,7 +725,7 @@ public enum Strings {
     public static let enabled = Strings.tr("Localizable", "Enabled")
     /// A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.
     public static let enableDebugModeMessage = Strings.tr("Localizable", "enableDebugMode_message")
-    /// Enable DEBUG mode
+    /// Enable debug mode
     public static let enableDebugModeTitle = Strings.tr("Localizable", "enableDebugMode_title")
     /// Enable rich URL previews
     public static let enableRichUrlPreviews = Strings.tr("Localizable", "enableRichUrlPreviews")
@@ -759,9 +759,9 @@ public enum Strings {
     public static let expiryDate = Strings.tr("Localizable", "Expiry Date")
     /// Export the link and decryption key separately.
     public static let exportTheLinkAndDecryptionKeySeparately = Strings.tr("Localizable", "Export the link and decryption key separately.")
-    /// Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.
+    /// Exporting the Recovery key and keeping it in a secure location enables you to set a new password without data loss.
     public static let exportMasterKeyFooter = Strings.tr("Localizable", "exportMasterKeyFooter")
-    /// Export Recovery Key
+    /// Export Recovery key
     public static let exportRecoveryKey = Strings.tr("Localizable", "exportRecoveryKey")
     /// Failed permanently
     public static let failedPermanently = Strings.tr("Localizable", "Failed permanently")
@@ -1013,7 +1013,7 @@ public enum Strings {
     public static let invalidCode = Strings.tr("Localizable", "invalidCode")
     /// Invalid email or password. Please try again.
     public static let invalidMailOrPassword = Strings.tr("Localizable", "invalidMailOrPassword")
-    /// Invalid Recovery Key
+    /// Invalid Recovery key
     public static let invalidRecoveryKey = Strings.tr("Localizable", "invalidRecoveryKey")
     /// Invite
     public static let invite = Strings.tr("Localizable", "invite")
@@ -1159,9 +1159,9 @@ public enum Strings {
     public static let mapSettings = Strings.tr("Localizable", "Map settings")
     /// Mark as Read
     public static let markAsRead = Strings.tr("Localizable", "Mark as Read")
-    /// Recovery Key exported
+    /// Recovery key exported
     public static let masterKeyExported = Strings.tr("Localizable", "masterKeyExported")
-    /// The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.
+    /// The Recovery key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.
     public static let masterKeyExportedAlertMessage = Strings.tr("Localizable", "masterKeyExported_alertMessage")
     /// Me
     public static let me = Strings.tr("Localizable", "me")
@@ -1523,11 +1523,11 @@ public enum Strings {
     public static let pleaseTypeTheVerificationCodeSentTo = Strings.tr("Localizable", "Please type the verification code sent to")
     /// Please enter the 6-digit code generated by your Authenticator App.
     public static let pleaseEnterTheSixDigitCode = Strings.tr("Localizable", "pleaseEnterTheSixDigitCode")
-    /// Please enter your Recovery Key
+    /// Please enter your Recovery key
     public static let pleaseEnterYourRecoveryKey = Strings.tr("Localizable", "pleaseEnterYourRecoveryKey")
     /// Please log in to your account.
     public static let pleaseLogInToYourAccount = Strings.tr("Localizable", "pleaseLogInToYourAccount")
-    /// Please save your Recovery Key in a safe location
+    /// Please save your Recovery key in a safe location
     public static let pleaseSaveYourRecoveryKey = Strings.tr("Localizable", "pleaseSaveYourRecoveryKey")
     /// Please strengthen your password.
     public static let pleaseStrengthenYourPassword = Strings.tr("Localizable", "pleaseStrengthenYourPassword")
@@ -1609,9 +1609,9 @@ public enum Strings {
     public static let reconnecting = Strings.tr("Localizable", "Reconnecting...")
     /// Recording…
     public static let recording = Strings.tr("Localizable", "Recording...")
-    /// Recovery Key
+    /// Recovery key
     public static let recoveryKey = Strings.tr("Localizable", "recoveryKey")
-    /// The Recovery Key has been copied to the clipboard. Please store it in a safe place.
+    /// The Recovery key has been copied to the clipboard. Please store it in a safe place.
     public static let recoveryKeyCopiedToClipboard = Strings.tr("Localizable", "recoveryKeyCopiedToClipboard")
     /// This recovery link has expired, please try again.
     public static let recoveryLinkHasExpired = Strings.tr("Localizable", "recoveryLinkHasExpired")
@@ -1621,7 +1621,7 @@ public enum Strings {
     public static let rejectedByFraudProtection = Strings.tr("Localizable", "Rejected by fraud protection")
     /// Reminder: You have a contact request
     public static let reminderYouHaveAContactRequest = Strings.tr("Localizable", "Reminder: You have a contact request")
-    /// Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.
+    /// Before logging out we recommend you export your Recovery key to a safe place. Note that you’re not able to reset your password if you forget it.
     public static let remindPasswordLogoutText = Strings.tr("Localizable", "remindPasswordLogoutText")
     /// Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.
     public static let remindPasswordText = Strings.tr("Localizable", "remindPasswordText")
@@ -1801,6 +1801,8 @@ public enum Strings {
     public static let savedToPhotos = Strings.tr("Localizable", "Saved to Photos")
     /// Save Image
     public static let saveImage = Strings.tr("Localizable", "saveImage")
+    /// Saving to Photos…
+    public static let savingToPhotos = Strings.tr("Localizable", "Saving to Photos…")
     /// Scan Document
     public static let scanDocument = Strings.tr("Localizable", "Scan Document")
     /// Scan Code
@@ -1977,7 +1979,7 @@ public enum Strings {
     public static let startGroup = Strings.tr("Localizable", "Start Group")
     /// Start Conversation
     public static let startConversation = Strings.tr("Localizable", "startConversation")
-    /// I acknowledge that I am starting a fresh, empty account and that I will lose all data in my present account unless I recall my password or locate an exported Recovery Key.
+    /// I acknowledge that I am starting a fresh, empty account and that I will lose all data in my present account unless I recall my password or locate an exported Recovery key.
     public static let startingFreshAccount = Strings.tr("Localizable", "startingFreshAccount")
     /// Start new account
     public static let startNewAccount = Strings.tr("Localizable", "startNewAccount")
@@ -2149,7 +2151,7 @@ public enum Strings {
     public static let twoFactorAuthenticationEnabled = Strings.tr("Localizable", "twoFactorAuthenticationEnabled")
     /// Next time you log in to your account you will be asked to enter a 6-digit code provided by your Authenticator App.
     public static let twoFactorAuthenticationEnabledDescription = Strings.tr("Localizable", "twoFactorAuthenticationEnabledDescription")
-    /// If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.
+    /// If you lose access to your account after enabling 2FA and you have not backed up your Recovery key, MEGA cannot help you gain access to it again.
     public static let twoFactorAuthenticationEnabledWarning = Strings.tr("Localizable", "twoFactorAuthenticationEnabledWarning")
     /// An annual subscription is 16% cheaper than 12 monthly payments
     public static func twoMonthsFree(_ p1: CChar) -> String {
@@ -2319,7 +2321,7 @@ public enum Strings {
     public static let whileMEGADoesNotHaveAccessToYourDataYourOrganizationAdministratorsDoHaveTheAbilityToControlAndViewTheCameraUploadsInYourUserAccount = Strings.tr("Localizable", "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account")
     /// Why am I seeing this?
     public static let whyAmISeeingThis = Strings.tr("Localizable", "Why am I seeing this?")
-    /// Why do I need a Recovery Key?
+    /// Why do I need a Recovery key?
     public static let whyDoINeedARecoveryKey = Strings.tr("Localizable", "whyDoINeedARecoveryKey")
     /// Why do you need two-factor authentication?
     public static let whyYouDoNeedTwoFactorAuthentication = Strings.tr("Localizable", "whyYouDoNeedTwoFactorAuthentication")
@@ -2401,7 +2403,7 @@ public enum Strings {
     public static let yourBusinessAccountIsExpired = Strings.tr("Localizable", "Your business account is expired")
     /// Your Data is at Risk!
     public static let yourDataIsAtRisk = Strings.tr("Localizable", "Your Data is at Risk!")
-    /// Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.
+    /// Your password leaked and is now being used by bad actors to log in to your accounts, including, but not limited to, your MEGA account.
     public static let yourPasswordLeakedAndIsNowBeingUsedByBadActorsToLogIntoYourAccountsIncludingButNotLimitedToYourMEGAAccount = Strings.tr("Localizable", "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.")
     /// Your payment for the %1 plan was received.
     public static let yourPaymentForThe1PlanWasReceived = Strings.tr("Localizable", "Your payment for the %1 plan was received.")
@@ -2425,11 +2427,11 @@ public enum Strings {
     public static let yourPROMembershipPlanWillExpireIn1Day = Strings.tr("Localizable", "Your PRO membership plan will expire in 1 day.")
     /// Your upload(s) cannot proceed because your account is full
     public static let yourUploadSCannotProceedBecauseYourAccountIsFull = Strings.tr("Localizable", "Your upload(s) cannot proceed because your account is full")
-    /// Your old account has been parked successfully. You can now log into your new account.
+    /// Your old account has been parked successfully. You can now log in to your new account.
     public static let yourAccounHasBeenParked = Strings.tr("Localizable", "yourAccounHasBeenParked")
-    /// Your Recovery Key is going to be used to reset your password. Please enter your new password.
+    /// Your Recovery key is going to be used to reset your password. Please enter your new password.
     public static let youRecoveryKeyIsGoingTo = Strings.tr("Localizable", "youRecoveryKeyIsGoingTo")
-    /// Your password has been reset successfully. Please log into your account now.
+    /// Your password has been reset successfully. Please log in to your account now.
     public static let yourPasswordHasBeenReset = Strings.tr("Localizable", "yourPasswordHasBeenReset")
     /// You will lose all data associated with this account. Are you sure you want to proceed?
     public static let youWillLooseAllData = Strings.tr("Localizable", "youWillLooseAllData")
@@ -2545,7 +2547,7 @@ public enum Strings {
       public static let theMinimumPeriodIs7DaysAndYourMaximumPeriodIs30Days = Strings.tr("Localizable", "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.")
     }
     public enum ThereHasBeenAProblemProcessingYourPayment {
-      /// Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.
+      /// Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.
       public static let megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser = Strings.tr("Localizable", "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.")
     }
     public enum ThereHasBeenAProblemWithYourLastPayment {
@@ -2802,7 +2804,7 @@ public enum Strings {
       }
       public enum Expired {
         public enum ProFlexi {
-          /// Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.
+          /// Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.
           public static let message = Strings.tr("Localizable", "account.expired.proFlexi.message")
           /// Account deactivated
           public static let title = Strings.tr("Localizable", "account.expired.proFlexi.title")
@@ -4289,7 +4291,7 @@ public enum Strings {
     }
     public enum Slideshow {
       public enum PreferenceSetting {
-        /// Include media in sub-folders in the slideshow
+        /// Include images in sub-folders in the slideshow
         public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
         /// Options
         public static let options = Strings.tr("Localizable", "slideshow.preferenceSetting.options")

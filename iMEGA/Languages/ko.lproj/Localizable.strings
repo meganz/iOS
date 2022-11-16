@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="슬라이드쇼 옵션";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="하위 폴더에 있는 미디어도 슬라이드쇼에 포함";
+"slideshow.preferenceSetting.mediaInSubFolders"="하위 폴더에 있는 이미지도 슬라이드쇼에 포함";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="슬라이드쇼 속도";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="앨범";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="즐겨찾기";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="필터";
 /* Choose type headline within filter UI */
@@ -1045,9 +1049,9 @@
 /* Choose Your Country title */
 "Choose Your Country"="국가 선택";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
-"months"="개월";
+"months"="months";
 /*  */
-"days"="일";
+"days"="days";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="메시지";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="전화";
+"Call"="음성";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="동영상";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="업데이트";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="파일이 새 버전으로 업데이트 됩니다.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="Apply to all %@ duplicates";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="여기에 당신만 있습니다";
 /* Meetings end call dialog description */
@@ -3061,7 +3067,7 @@
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="새 대화";
 /* Title for chats section */
-"chat.title"="Chat";
+"chat.title"="대화";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
 "chat.message.changedRole.readOnly"="[A]님이 [B]님에 의해 [S]읽기만 가능[/S]하게 변경되었습니다";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */

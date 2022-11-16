@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opties voor diavoorstelling";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Media opnemen in submappen in de diavoorstelling";
+"slideshow.preferenceSetting.mediaInSubFolders"="Voeg afbeeldingen toe aan submappen in de diavoorstelling";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Snelheid diavoorstelling";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favorieten";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Krijg toegang tot exclusieve Pro functies zoals het instellen van wachtwoord bescherming en een verloopdatum voor openbare bestanden.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="DEBUG modus ingeschakeld";
+"enableDebugMode_title"="Debug modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Een logboek wordt gemaakt in het Offline gedeelte (MEGAiOS.log). Logboeken kunnen informatie bevatten die verwant zijn aan uw account.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="DEBUG modus uitgeschakeld";
+"disableDebugMode_title"="Debug modus uitgeschakeld";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Het logboek (MEGAiOS.log) wordt verwijderd uit het Offline gedeelte.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Bericht";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Bellen";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Het bestand wordt bijgewerkt met een nieuwe versie.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="Toepassen op alle %@ duplicaten";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="U bent de enige hier";
 /* Meetings end call dialog description */

@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Tùy chọn trình chiếu";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Bao gồm phương tiện số có trong các thư mục con trong trình chiếu";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Tốc độ trình chiếu";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Ưa Thích";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIF";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Lọc";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Sử dụng các tính mà chỉ có hạng Pro mới có, như đặt mật khẩu và gia hạn thời gian truy cập cho từng tệp tin muốn chia sẻ.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Bật chế độ DEBUG";
+"enableDebugMode_title"="Bật chế độ debug";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Một tệp log sẽ được lưu trong phần Ngoại Tuyến (tên MEGAiOS.log). Trong từng tệp log sẽ chứa thông tin liên quan tới tài khoản.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Tắt chế độ DEBUG";
+"disableDebugMode_title"="Tắt chế độ debug";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Tệp tin dữ liệu (MEGAiOS.log) sẽ bị xóa khỏi mục Ngoại Tuyến.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Tin nhắn";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Gọi";
+"Call"="Âm Thanh";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Gọi Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Cập nhật";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Tệp tin sẽ được cập nhật với phiên bản mới.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Bạn là người duy nhất ở đây";
 /* Meetings end call dialog description */
@@ -3117,9 +3123,9 @@
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Tài khoản đã bị chấm dứt hoạt động do vi phạm Điều Khoản Dịch Vụ của MEGA; chẳng hạn như lạm dụng hệ thống, quyền hạn sử dụng của người khác hoặc chia sẻ nội dung cấm.";
 /* Account Storage title label of used storage size */
-"account.storage.storageUsed.title"="Storage used";
+"account.storage.storageUsed.title"="Không gian sử dụng";
 /* Account Storage title label of used transfer size */
-"account.storage.transferUsed.title"="Transfer used";
+"account.storage.transferUsed.title"="Lượng truyền tải đã dùng";
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Tài khoản đã vô hiệu hóa";
 /* Content message of expired Pro Flexi account view */

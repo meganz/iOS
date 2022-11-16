@@ -45,11 +45,11 @@
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Der zugrundeliegende Account wurde wegen wiederholter Verletzung unserer [A]Nutzungsrichtlinien[/A] gesperrt.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="Entschlüsselungs-Code eingeben";
+"decryptionKeyAlertTitle"="Schlüssel eingeben";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="Um auf diesen Ordner oder diese Datei zugreifen zu können, benötigen Sie den passenden Schlüssel. Sollten Sie diesen Schlüssel nicht zur Hand haben, so setzen Sie sich bitte mit dem Ersteller des Links in Verbindung.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Kryptoschlüssel";
+"decryptionKey"="Schlüssel";
 /* Button title to try to decrypt the link */
 "decrypt"="Entschlüsseln";
 /* Alert title shown when you have written a decryption key not valid */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Diashow-Optionen";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Inhalte aus Unterordnern in die Diashow aufnehmen";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Diashow-Geschwindigkeit";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Alben";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favoriten";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Zugriff auf Pro-spezifische Features wie Passwortschutz und Gültigkeitsbegrenzung exportierter Links.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="DEBUG-Modus aktivieren";
+"enableDebugMode_title"="Debug-Modus aktivieren";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Eine Logdatei wird im Offline-Bereich erzeugt (MEGAiOS.log). Logdateien können private Accountinformationen enthalten.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="DEBUG-Modus deaktivieren";
+"disableDebugMode_title"="Debug-Modus deaktivieren";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Die Logdatei (MEGAiOS.log) wird aus dem Offlinebereich gelöscht.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Nachricht";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Anrufen";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Die Datei wird mit einer neuen Version aktualisiert.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Sie sind der einzige Teilnehmer";
 /* Meetings end call dialog description */

@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="خيارات عرض الشرائح";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="قم بتضمين الوسائط المتعددة في المجلدات الفرعية في عرض الشرائح";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="سرعة عرض الشرائح";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="ألبومات";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="المفضلة";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="فلتر";
 /* Choose type headline within filter UI */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="رسالة";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="اتصل";
+"Call"="صوتي";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="فيديو";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="تحديث";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="سيتم استبدال الملف بالنسخة الجديدة.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="انت الوحيد هنا";
 /* Meetings end call dialog description */
@@ -3117,9 +3123,9 @@
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="تم إنهاء الحساب بسبب خرق لشروط خدمة ميغا MEGA ، مثل إساءة استخدام حقوق الآخرين أو مشاركة واستيراد البيانات غير القانونية  أو إساءة استخدام النظام.";
 /* Account Storage title label of used storage size */
-"account.storage.storageUsed.title"="Storage used";
+"account.storage.storageUsed.title"="مساحة التخزين المستخدمة";
 /* Account Storage title label of used transfer size */
-"account.storage.transferUsed.title"="Transfer used";
+"account.storage.transferUsed.title"="حجم تراسل المعطيات المستخدم";
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="الحساب غير مفعل ";
 /* Content message of expired Pro Flexi account view */

@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="เพื่อเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์ถอดรหัสลับ หากไม่ กรุณาติดต่อผู้สร้างลิงก์";
+"decryptionKeyAlertMessage"="เพื่อเข้าถึงโฟลเดอร์หรือไฟล์นี้ คุณจะต้องมีคีย์ถอดรหัสลับ หากไม่มี กรุณาติดต่อผู้สร้างลิงก์";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="เข้าร่วมประชุมในฐานะแขกรับเชิญ";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+"invalidMailOrPassword"="อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="คุณได้พยายามเข้าสู่ระบบบ่อยเกินไป โปรดรอจนกว่า %@ และลองอีกครั้ง";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="ตัวเลือกการนำเสนอภาพนิ่ง";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="รวมทั้งสื่อในโฟลเดอร์ย่อยของการนำเสนอภาพนิ่งด้วย";
+"slideshow.preferenceSetting.mediaInSubFolders"="รูปภาพในโฟลเดอร์ย่อยจะรวมอยู่ในการนำเสนอภาพนิ่งด้วย";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="ความเร็วการนำเสนอภาพนิ่ง";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="อัลบัม";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="รายการโปรด";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFs";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="ตัวกรอง";
 /* Choose type headline within filter UI */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="ข้อความ";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="โทร";
+"Call"="เสียง";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="วิดีโอ";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="อัปเดต";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="ไฟล์จะได้รับการอัปเดตเป็นเวอร์ชันใหม่";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="ตอนนี้มีแค่คุณที่อยู่ในสาย";
 /* Meetings end call dialog description */

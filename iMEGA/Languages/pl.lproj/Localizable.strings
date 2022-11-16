@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opcje pokazu slajdów";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Załącz media w podkatalogach do slajdów";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Szybkość pokazu slajdów";
 /* Slideshow Speed preference slow */
@@ -520,6 +520,10 @@
 "cameraUploads.albums.title"="Albumy";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Ulubione";
+/* Gif album title */
+"cameraUploads.albums.gif.title"="GIFy";
+/* Raw album title */
+"cameraUploads.albums.raw.title"="RAW";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtr";
 /* Choose type headline within filter UI */
@@ -1079,7 +1083,7 @@
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Odnowienie";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Udostępnienia";
+"incomingShares"="Udostępnienia przychodzące";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Zmień konto";
 /* account management button title in business account’s landing page */
@@ -1159,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Plan Pro ma tylko takie funkcje, jak ustawianie ochrony hasłem i dat wygaśnięcia dla plików publicznych.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Odblokuj tryb DEBUG";
+"enableDebugMode_title"="Odblokuj tryb debug";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Dziennik zdarzeń zostanie utworzony w trybie Offlice (MEGAiOS.log). Dziennik może posiadać dane powiązane z Twoim kontem.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Zablokuj tryb DEBUG";
+"disableDebugMode_title"="Zablokuj tryb debug";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Plik (MEGAiOS.log) zostanie usunięty z trybu Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1945,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Wiadomość";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Połączenie";
+"Call"="Dzwięk";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Film";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3018,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Zapisz zmiany";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Plik zostanie zaktualizowany o nową wersję.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Tylko ty tu jesteś";
 /* Meetings end call dialog description */

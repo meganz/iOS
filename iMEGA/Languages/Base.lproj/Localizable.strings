@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Slideshow options";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include media in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Slideshow speed";
 /* Slideshow Speed preference slow */
@@ -781,15 +781,15 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Change Password";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.";
+"exportMasterKeyFooter"="Exporting the Recovery key and keeping it in a secure location enables you to set a new password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Why do I need a Recovery key?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="The Recovery Key has been copied to the clipboard. Please store it in a safe place.";
+"recoveryKeyCopiedToClipboard"="The Recovery key has been copied to the clipboard. Please store it in a safe place.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recovery Key exported";
+"masterKeyExported"="Recovery key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.";
+"masterKeyExported_alertMessage"="The Recovery key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -875,25 +875,25 @@
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Password reset";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
-"pleaseEnterYourRecoveryKey"="Please enter your Recovery Key";
+"pleaseEnterYourRecoveryKey"="Please enter your Recovery key";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Recovery Key";
+"recoveryKey"="Recovery key";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Invalid Recovery Key";
+"invalidRecoveryKey"="Invalid Recovery key";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please enter your new password.";
+"youRecoveryKeyIsGoingTo"="Your Recovery key is going to be used to reset your password. Please enter your new password.";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset successfully. Please log into your account now.";
+"yourPasswordHasBeenReset"="Your password has been reset successfully. Please log in to your account now.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Send";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Park account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="I acknowledge that I am starting a fresh, empty account and that I will lose all data in my present account unless I recall my password or locate an exported Recovery Key.";
+"startingFreshAccount"="I acknowledge that I am starting a fresh, empty account and that I will lose all data in my present account unless I recall my password or locate an exported Recovery key.";
 /* Caption of the button to proceed */
 "startNewAccount"="Start new account";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked successfully. You can now log into your new account.";
+"yourAccounHasBeenParked"="Your old account has been parked successfully. You can now log in to your new account.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="New email address";
 /* Button text for the user to confirm their change of email address. */
@@ -929,9 +929,9 @@
 /* Button text to change the passcode type. */
 "Passcode Options"="Passcode Options";
 /* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Digit Numeric Code";
+"4-Digit Numeric Code"="4-digit numeric code";
 /* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Digit Numeric Code";
+"6-Digit Numeric Code"="6-digit numeric code";
 /* Action text to change to Custom Alphanumeric passcode type. */
 "Custom Alphanumeric Code"="Custom Alphanumeric Code";
 /* Menu item */
@@ -1163,11 +1163,11 @@
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Access Pro only features like setting password protection and expiry dates for public files.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Enable DEBUG mode";
+"enableDebugMode_title"="Enable debug mode";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Disable DEBUG mode";
+"disableDebugMode_title"="Disable debug mode";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1557,13 +1557,13 @@
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Do not show again";
 /* Label for test password button and titles */
 "testPassword"="Test Password";
 /* Label for recovery key button */
-"backupRecoveryKey"="Back up Recovery Key";
+"backupRecoveryKey"="Back up Recovery key";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Please test your password below to ensure you remember it. If you lose your password, you will lose access to your MEGA data. [A]Learn more[/A]";
 /* Title text for the account confirmation. */
@@ -1571,7 +1571,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="Password accepted";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="Export Recovery Key";
+"exportRecoveryKey"="Export Recovery key";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Proceed to log out";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1657,9 +1657,9 @@
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Next time you log in to your account you will be asked to enter a 6-digit code provided by your Authenticator App.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
+"pleaseSaveYourRecoveryKey"="Please save your Recovery key in a safe location";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
+"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery key, MEGA cannot help you gain access to it again.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Two-factor authentication disabled";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1770,6 +1770,8 @@
 "Tap to return to call"="Tap to return to call";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Save to Photos";
+/* Text shown when starting the process to save a photo or video to Photos app */
+"Saving to Photos…"="Saving to Photos…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="All Media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -1947,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="Message";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="Call";
+"Call"="Audio";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -2055,7 +2057,7 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Account deactivated";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2175,7 +2177,7 @@
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log in to your accounts, including, but not limited to, your MEGA account.";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="Transfer over quota";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
@@ -3020,6 +3022,8 @@
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="The file will be updated with a new version.";
+/* Text to indicate the user that action selected will be applied to all duplicated transfers */
+"nameCollision.applyToAll"="Apply to all %@ duplicates";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="You’re the only one here";
 /* Meetings end call dialog description */
@@ -3125,4 +3129,4 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Account deactivated";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log into MEGA through a browser.";
+"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
