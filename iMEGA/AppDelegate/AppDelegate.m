@@ -1349,9 +1349,7 @@
                 }];
                 [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
             } else {
-                static BOOL alreadyPresented = NO;
-                if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
-                    alreadyPresented = YES;
+                if (event.number == StorageStateRed || event.number == StorageStateOrange) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [[CustomModalAlertStorageRouter.alloc init:CustomModalAlertModeStorageEvent event:event presenter:UIApplication.mnz_presentingViewController] start];
                     });

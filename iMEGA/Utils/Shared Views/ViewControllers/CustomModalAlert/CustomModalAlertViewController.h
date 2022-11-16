@@ -24,4 +24,6 @@
 @property (nonatomic) NSString *dismissButtonTitle;
 @property (nonatomic) NSString *link;
 
+- (void)setDetailLabelText:(NSString*)detail;
+
 @end

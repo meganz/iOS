@@ -42,4 +42,8 @@ extension CustomModalAlertViewController {
             self?.dismiss(animated: true, completion: nil)
         }
     }
+    
+    func configureUpgradeAccountDetailText(_ detailText: String) {
+        setDetailLabelText(detailText)
+    }
 }

@@ -5,14 +5,34 @@ extension CustomModalAlertViewController {
         let imageName = event.number == StorageState.orange.rawValue ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.storageFull.name
         
         let title = event.number == StorageState.orange.rawValue ? Strings.Localizable.upgradeAccount : Strings.Localizable.Dialog.Storage.Odq.title
-
-        let pricing: MEGAPricing = (MEGAPurchase.sharedInstance().pricing != nil) ? MEGAPurchase.sharedInstance().pricing : MEGAPricing()
+        
+        let detailText = storageDetailForEvent(event, pricing: MEGAPurchase.sharedInstance().pricing)
+        configureUpgradeAccountThreeButtons(title, detailText, nil, imageName)
+        
+        if MEGAPurchase.sharedInstance().pricing == nil {
+            SVProgressHUD.show()
+            let sdkDelegate = MEGAResultRequestDelegate { (result) in
+                SVProgressHUD.dismiss()
+                switch result {
+                case .success(let request):
+                    let pricing = request.pricing ?? MEGAPricing()
+                    let detailText = self.storageDetailForEvent(event, pricing: pricing)
+                    self.configureUpgradeAccountDetailText(detailText)
+                default:
+                    return
+                }
+            }
+            MEGASdkManager.sharedMEGASdk().getPricingWith(sdkDelegate)
+        }
+    }
+    
+    private func storageDetailForEvent(_ event: MEGAEvent, pricing: MEGAPricing?) -> String {
+        let pricing = pricing ?? MEGAPricing()
         let maxStorage = String(format: "%ld", pricing.storageGB(atProductIndex: 7))
         let maxStorageTB = String(format: "%ld", pricing.storageGB(atProductIndex: 7) / 1024)
         
         let detailText = event.number == StorageState.orange.rawValue ? Strings.Localizable.Dialog.Storage.AlmostFull.detail(maxStorageTB, maxStorage) : Strings.Localizable.Dialog.Storage.Odq.detail
-        
-        configureUpgradeAccountThreeButtons(title, detailText, nil, imageName)
+        return detailText
     }
     
     func configureForStorageQuotaError(_ uploading: Bool) {
