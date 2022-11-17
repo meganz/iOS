@@ -171,8 +171,12 @@ final class NodeActionBuilder {
         }
     }
     
-    func multiselectAlbumBuild() -> [NodeAction] {
-        albumActions()
+    func multiSelectFavouriteAlbumBuild() -> [NodeAction] {
+        favouriteAlbumActions()
+    }
+    
+    func mutiSelectNormalAlbumBuild() -> [NodeAction] {
+        normalAlbumActions()
     }
     
     // MARK: - Private methods
@@ -344,7 +348,10 @@ final class NodeActionBuilder {
                 if versionCount > 0 {
                     nodeActions.append(NodeAction.viewVersionsAction(versionCount: versionCount))
                 }
-                nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                if displayMode == .favouriteAlbumSelectionToolBar {
+                    nodeActions.append(NodeAction.favouriteAction(isFavourite: isFavourite))
+                }
+                
                 nodeActions.append(NodeAction.labelAction(label: label))
             }
         }
@@ -402,7 +409,10 @@ final class NodeActionBuilder {
             nodeActions = backupsNodeActions()
             
         case .favouriteAlbumSelectionToolBar:
-            nodeActions = albumActions()
+            nodeActions = favouriteAlbumActions()
+            
+        case .albumSelectionToolBar:
+            nodeActions = normalAlbumActions()
             
         @unknown default: break
         }
@@ -653,7 +663,7 @@ final class NodeActionBuilder {
         return actions
     }
     
-    private func albumActions() -> [NodeAction] {
+    private func favouriteAlbumActions() -> [NodeAction] {
         [.downloadAction(),
          .shareLinkAction(nodeCount: selectedNodeCount),
          .exportFileAction(nodeCount: selectedNodeCount),
@@ -661,6 +671,15 @@ final class NodeActionBuilder {
          .favouriteAction(isFavourite: isFavourite),
          .copyAction(),
          .moveToRubbishBinAction()]
+    }
+    
+    private func normalAlbumActions() -> [NodeAction] {
+        [.downloadAction(),
+         .shareLinkAction(nodeCount: selectedNodeCount),
+         .exportFileAction(nodeCount: selectedNodeCount),
+         .sendToChatAction(),
+         .moveAction(),
+         .copyAction(),]
     }
     
     private func takedownNodeActions() -> [NodeAction] {

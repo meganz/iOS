@@ -59,6 +59,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                 deleteAction: deleteButtonPressed,
                 favouriteAction: favouriteButtonPressed,
                 removeToRubbishBinAction: deleteButtonPressed,
+                exportAction: didPressedExportFile,
                 moreAction: moreButtonPressed,
                 albumType: albumType
             )
@@ -131,7 +132,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
             return
         }
         
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .favouriteAlbumSelectionToolBar, sender: button)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: albumToolbarConfigurator?.albumType == .favourite ? .favouriteAlbumSelectionToolBar : .albumSelectionToolBar, sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     
