@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Применить к дупликату</string>
         <key>few</key>
-        <string></string>
+        <string>Применить ко всем %d дупликатам</string>
         <key>many</key>
-        <string></string>
+        <string>Применить ко всем %d дупликатам</string>
         <key>other</key>
-        <string></string>
+        <string>Применить ко всем %d дупликатам</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>

@@ -12,8 +12,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Apply to the duplicate</string>
         <key>other</key>
-        <string></string>
+        <string>Apply to all %d duplicates</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
