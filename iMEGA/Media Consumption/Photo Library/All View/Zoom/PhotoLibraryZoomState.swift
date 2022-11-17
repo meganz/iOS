@@ -13,6 +13,8 @@ struct PhotoLibraryZoomState: Equatable {
         case thirteen = 13
     }
     
+    var isSingleColumn: Bool { scaleFactor == .one }
+    
     private let supportedScaleFactors = ScaleFactor.allCases
     
     static let defaultScaleFactor: ScaleFactor = .three

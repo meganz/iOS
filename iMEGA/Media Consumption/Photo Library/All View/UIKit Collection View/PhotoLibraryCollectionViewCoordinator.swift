@@ -7,9 +7,10 @@ import MEGADomain
 @available(iOS 16.0, *)
 final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var subscriptions = Set<AnyCancellable>()
+    private let router = PhotoLibraryContentViewRouter()
+    
     private let collectionViewRepresenter: PhotoLibraryCollectionViewRepresenter
     private var photoSections = [PhotoDateSection]()
-    
     private var collectionView: UICollectionView?
     private var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var cellRegistration: UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity>!
@@ -24,6 +25,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     func configureDataSource(for collectionView: UICollectionView) {
         self.collectionView = collectionView
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(
             elementKind: UICollectionView.elementKindSectionHeader
@@ -47,6 +49,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                 PhotoCellContent(viewModel: viewModel)
             }
             .margins(.all, 0)
+            
+            cell.clipsToBounds = true
         }
     }
 }
@@ -87,7 +91,7 @@ extension PhotoLibraryCollectionViewCoordinator {
     }
 }
 
-// MARK: - Collection View Data Source
+// MARK: - UICollectionViewDataSource
 @available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -102,11 +106,19 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
         collectionView.dequeueConfiguredReusableCell(
             using: cellRegistration,
             for: indexPath,
-            item: photoSections[indexPath.section].contentList[indexPath.item]
+            item: photoSections.photo(at: indexPath)
         )
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+@available(iOS 16.0, *)
+extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        router.openPhotoBrowser(for: photoSections.photo(at: indexPath), allPhotos: photoSections.allPhotos)
     }
 }

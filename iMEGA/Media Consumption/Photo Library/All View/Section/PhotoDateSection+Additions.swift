@@ -1,4 +1,4 @@
-import Foundation
+import MEGADomain
 
 extension Array where Element: PhotoDateSection {
     func toDataSourceSnapshot() -> NSDiffableDataSourceSnapshot<PhotoDateSection, PhotoDateSection.Content> {
@@ -10,5 +10,13 @@ extension Array where Element: PhotoDateSection {
         }
         
         return snapshot
+    }
+    
+    func photo(at indexPath: IndexPath) -> NodeEntity {
+        self[indexPath.section].contentList[indexPath.item]
+    }
+    
+    var allPhotos: [NodeEntity] {
+        flatMap { $0.contentList }
     }
 }

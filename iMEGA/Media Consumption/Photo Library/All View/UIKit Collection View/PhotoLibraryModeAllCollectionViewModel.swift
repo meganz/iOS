@@ -29,7 +29,7 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
     }
     
     private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
-        if newState.scaleFactor == .one || zoomState.scaleFactor == .one {
+        if newState.isSingleColumn || zoomState.isSingleColumn {
             photoCategoryList = libraryViewModel.library.photoDateSections(for: newState.scaleFactor)
         }
     }
