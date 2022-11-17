@@ -105,7 +105,7 @@ final class AlbumContentViewModel: NSObject, ViewModelType {
         }
     }
     
-    private var isFavouriteAlbum: Bool {
+    var isFavouriteAlbum: Bool {
         cameraUploadNode != nil && album == nil
     }
 }

@@ -49,6 +49,13 @@ class ExplorerToolbarConfigurator {
         action: #selector(buttonPressed(_:))
     )
     
+    lazy var exportItem = UIBarButtonItem(
+        image: Asset.Images.NodeActions.export.image,
+        style: .plain,
+        target: self,
+        action: #selector(buttonPressed(_:))
+    )
+    
     lazy var moreItem = UIBarButtonItem(
         image: Asset.Images.NavigationBar.moreNavigationBar.image,
         style: .plain,

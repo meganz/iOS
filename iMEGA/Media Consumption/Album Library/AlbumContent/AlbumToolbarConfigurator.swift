@@ -7,6 +7,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     
     let favouriteAction: ButtonAction
     let removeToRubbishBinAction: ButtonAction
+    let exportAction: ButtonAction
     let albumType: AlbumType
     
     private var favouriteItemImage: ImageAsset {
@@ -36,11 +37,13 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         deleteAction: @escaping ButtonAction,
         favouriteAction: @escaping ButtonAction,
         removeToRubbishBinAction: @escaping ButtonAction,
+        exportAction: @escaping ButtonAction,
         moreAction: @escaping ButtonAction,
         albumType: AlbumType
     ) {
         self.favouriteAction = favouriteAction
         self.removeToRubbishBinAction = removeToRubbishBinAction
+        self.exportAction = exportAction
         self.albumType = albumType
         
         super.init(
@@ -63,15 +66,17 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             favouriteAction(barButtonItem)
         case removeToRubbishBinItem:
             removeToRubbishBinAction(barButtonItem)
+        case exportItem:
+            exportAction(barButtonItem)
         case moreItem:
             super.moreAction(barButtonItem)
         default:
-            break
+            super.buttonPressed(barButtonItem)
         }
     }
     
     override func toolbarItems(forNodes nodes: [MEGANode]?) -> [UIBarButtonItem] {
-        let barButtonItems = [
+        var barButtonItems = [
             downloadItem,
             flexibleItem,
             shareLinkItem,
@@ -82,6 +87,16 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             flexibleItem,
             moreItem
         ]
+        
+        if albumType == .normal {
+            if barButtonItems.contains(favouriteItem), let indexOfFavouriteItem = barButtonItems.firstIndex(where: { $0 == favouriteItem }) {
+                barButtonItems[indexOfFavouriteItem] = moveItem
+            }
+            
+            if barButtonItems.contains(removeToRubbishBinItem), let indexOfRubbishBinItem = barButtonItems.firstIndex(where: { $0 == removeToRubbishBinItem }) {
+                barButtonItems[indexOfRubbishBinItem] = exportItem
+            }
+        }
 
         return enable(nodes?.isNotEmpty == true, barButtonItems: barButtonItems)
     }

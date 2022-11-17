@@ -102,7 +102,12 @@ class NodeActionViewController: ActionSheetViewController {
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsFavourite(true)
                 .setIsBackupNode(containsABackupNode)
-                .multiselectAlbumBuild()
+                .multiSelectFavouriteAlbumBuild()
+        } else if displayMode == .albumSelectionToolBar {
+            actions = NodeActionBuilder()
+                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
+                .setIsBackupNode(containsABackupNode)
+                .mutiSelectNormalAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
             actions = NodeActionBuilder()
