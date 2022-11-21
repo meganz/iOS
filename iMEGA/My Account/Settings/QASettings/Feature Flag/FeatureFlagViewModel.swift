@@ -4,7 +4,6 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case scheduleMeeting = "Schedule Meeting"
     case chatRoomsListingRevamp = "chatRooms Listing Revamp"
     case slideShowPreference = "Slide Show Preference"
-    case gifAndRawAlbum = "Gif and Raw Albums"
     case photoLibraryCollectionView = "Photo Library with Collection View"
 }
 
