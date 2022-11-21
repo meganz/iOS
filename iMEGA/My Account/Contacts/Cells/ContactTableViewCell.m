@@ -139,6 +139,7 @@
             if (userName) {
                 self.nameLabel.text = userName;
                 self.shareLabel.text = user.email;
+                self.shareLabel.hidden = NO;
             } else {
                 self.nameLabel.text = user.email;
                 self.shareLabel.hidden = YES;

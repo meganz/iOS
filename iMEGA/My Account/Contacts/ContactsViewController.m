@@ -1509,6 +1509,7 @@
                     return cell;
                 } else {
                     MEGAShare *share = self.outSharesForNodeMutableArray[indexPath.row - 1];
+                    cell.permissionsImageView.hidden = NO;
                     cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:share.access];
                 }
             } else if (indexPath.section == 1) {
@@ -1713,10 +1714,10 @@
                         return;
                     }
                     
+                    self.userTapped = user;
                     [MyBackupsOCWrapper.alloc.init isBackupNode:self.node completionHandler:^(BOOL isBackupNode) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (!isBackupNode) {
-                                self.userTapped = user;
                                 [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
                             }
                         });
