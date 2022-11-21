@@ -17,6 +17,7 @@ This document will guide you to build the application on a Mac machine with Xcod
 In order to build MEGA for iOS locally, it is necessary to install the following tools on the local machine:
 
 - Install [Xcode](https://itunes.apple.com/app/xcode/id497799835?mt=12) in your system.
+- Install [CMake](https://cmake.org/install/).
 
 #### Clone the project
 
@@ -35,17 +36,13 @@ git submodule update --init --recursive
 1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/tVEmQZqZ#geMefj40h0Aq6WlmJCC8iu2CiPexxhP-ZtMXSybPm1I
 2. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
 
-#### M1 SOC Macs specific
-1. You may have to install CMake by manually building it using `make install`; refer to **Linux, UNIX** section of above `CMake` link, and run commands locally.
-2. Right click Xcode icon and choose `Get Info`, and then tick `Open using Rosetta`, which can help us solve incompatible issues.
+#### Apple silicon Macs specific
+1. Right click Xcode icon and choose `Get Info`, and then tick `Open using Rosetta`, which can help us solve incompatible issues.
 
 #### Open and Run the project
 5. Open `iMEGA.xcworkspace`.
 6. Make sure the `MEGA` target is selected.
 7. Build and run (⌘R).
-
-## Troubleshooting
-- if you encouter `cmake command not found issue`, refer to [CMake](https://cmake.org/install/) page, there are multiple way to install it. 
 
 ## Build 3rdparty packages manually
 If you want to build the third party dependencies by yourself: 
