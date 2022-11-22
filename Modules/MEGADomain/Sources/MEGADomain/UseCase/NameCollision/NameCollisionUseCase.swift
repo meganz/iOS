@@ -40,7 +40,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepo
             collision.collisionNodeHandle = nodeRepository.childNodeNamed(name: collision.name, in: collision.parentHandle)?.handle
             resolvedCollisions.append(collision)
         }
-        return resolvedCollisions
+        return resolvedCollisions.sorted { !$0.isFile && $1.isFile }
     }
     
     public func copyNodesFromResolvedCollisions(_ collisions: [NameCollisionEntity], isFolderLink: Bool) async throws -> [HandleEntity] {
