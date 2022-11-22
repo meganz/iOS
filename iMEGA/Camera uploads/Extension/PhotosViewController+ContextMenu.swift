@@ -92,7 +92,7 @@ extension PhotosViewController {
         } else {
             if #available(iOS 14.0, *) {
                 var rightButtons = [UIBarButtonItem]()
-                if photoLibraryContentViewModel.selectedMode == .all {
+                if photoLibraryContentViewModel.selectedMode == .all || viewModel.mediaNodesArray.isEmpty {
                     rightButtons.append(makeContextMenuBarButton())
                 }
                 if viewModel.isFilterActive {
