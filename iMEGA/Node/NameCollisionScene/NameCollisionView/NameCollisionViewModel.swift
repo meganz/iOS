@@ -87,7 +87,6 @@ final class NameCollisionViewModel: ObservableObject {
             return
         }
         collision.collisionAction = action
-        collisions[index] = collision
         cancelLoading()
         
         switch collisionType {
@@ -120,6 +119,7 @@ final class NameCollisionViewModel: ObservableObject {
             self.nodes = nodes
         }
         
+        collisions[index] = collision
         loadNextCollision()
         calculateRemainingCollisions()
     } 
@@ -165,7 +165,16 @@ final class NameCollisionViewModel: ObservableObject {
         self.duplicatedItem = duplicatedItem
         
         if applyToAllEnabled {
-            selectedAction(applyToAllAction)
+            if applyToAllAction == .merge {
+                if !collision.isFile {
+                    selectedAction(applyToAllAction)
+                } else {
+                    applyToAllEnabled = false
+                    loadThumbnails()
+                }
+            } else {
+                selectedAction(applyToAllAction)
+            }
         } else {
             loadThumbnails()
         }
