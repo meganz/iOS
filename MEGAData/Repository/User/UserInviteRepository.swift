@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 struct UserInviteRepository: UserInviteRepositoryProtocol {
     private let sdk: MEGASdk

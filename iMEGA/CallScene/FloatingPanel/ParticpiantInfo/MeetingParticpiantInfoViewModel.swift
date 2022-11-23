@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 enum MeetingParticpiantInfoAction: ActionType {
     case onViewReady
