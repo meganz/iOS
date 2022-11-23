@@ -11,18 +11,26 @@ final class MockSdk: MEGASdk {
     private var statsEventType: Int?
     private var statsEventMessage: String?
     
+    let sets: [MEGASet]
+    let setElements: [MEGASetElement]
+    
     var hasGlobalDelegate = false
     
     init(nodes: [MEGANode] = [],
          rubbishNodes: [MEGANode] = [],
          myContacts: MEGAUserList = MEGAUserList(),
          myUser: MEGAUser? = nil,
-         myEmail: String? = nil) {
+         myEmail: String? = nil,
+         megaSets: [MEGASet] = [],
+         megaSetElements: [MEGASetElement] = []) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
         self.myContacts = myContacts
         user = myUser
         email = myEmail
+        sets = megaSets
+        setElements = megaSetElements
+        
         super.init()
     }
     
