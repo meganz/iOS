@@ -16,7 +16,7 @@ extension MEGAProviderDelegate {
             let audioSession = RTCAudioSession.sharedInstance()
             audioSession.lockForConfiguration()
             let configuration = RTCAudioSessionConfiguration.webRTC()
-            configuration.categoryOptions = [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers]
+            configuration.categoryOptions = [.allowBluetooth, .allowBluetoothA2DP]
             try? audioSession.setConfiguration(configuration)
             audioSession.unlockForConfiguration()
         }
