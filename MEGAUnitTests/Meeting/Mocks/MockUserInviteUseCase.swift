@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockUserInviteUseCase: UserInviteUseCaseProtocol {
     var result: Result<Void, InviteErrorEntity> = .failure(.generic(""))

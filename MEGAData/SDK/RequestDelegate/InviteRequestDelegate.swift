@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class InviteRequestDelegate: NSObject, MEGARequestDelegate {
     typealias Completion = (_ result: Result<Void, InviteErrorEntity>) -> Void

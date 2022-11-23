@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInfo()
