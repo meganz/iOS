@@ -17,8 +17,8 @@ else:
 
 transifex_token = os.getenv("TRANSIFEX_TOKEN")
 gitlab_token = os.getenv("GITLAB_TOKEN")
-transifex_bot_token = None
-transifex_bot_url = None
+transifex_bot_token = os.getenv('TRANSIFEX_BOT_TOKEN')
+transifex_bot_url = os.getenv('TRANSIFEX_BOT_URL')
 
 config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'transifexConfig.json')
 if os.path.exists(config_file):
@@ -520,8 +520,11 @@ def run_pruning():
                             return False
                     elif localizable in content and 'ok' in content[localizable]:
                         if content[localizable]['ok']:
-                            print("Creating updated file for review")
-                            store_file("Localizable", content[localizable]["file"])
+                            if content[localizable]['pruned'] > 0:
+                                print('Removed' + str(content[localizable]['pruned']) + ' unused string')
+                                print('Backup located in server directory ' + content[localizable]['backup'])
+                            else:
+                                print('Nothing to remove')
                             return True
                         elif 'error' in content[localizable]:
                             print('Error: ' + content[localizable]['error'])
