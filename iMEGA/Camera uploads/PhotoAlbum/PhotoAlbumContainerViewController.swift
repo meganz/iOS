@@ -1,6 +1,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import MEGADomain
 
 @available(iOS 14.0, *)
 final class PhotoAlbumContainerViewController: UIViewController {
@@ -95,7 +96,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
             let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
-                photoLibraryUseCase: photoLibraryUseCase
+                photoLibraryUseCase: photoLibraryUseCase,
+                mediaUseCase: MediaUseCase()
             )
             photoViewController.viewModel = viewModel
             photoViewController.photoUpdatePublisher = photoUpdatePublisher

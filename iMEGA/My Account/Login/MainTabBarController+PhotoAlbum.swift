@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 @available(iOS 14.0, *)
 extension MainTabBarController {
@@ -21,7 +22,8 @@ extension MainTabBarController {
             let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
-                photoLibraryUseCase: photoLibraryUseCase
+                photoLibraryUseCase: photoLibraryUseCase,
+                mediaUseCase: MediaUseCase()
             )
             
             photosVC.viewModel = viewModel

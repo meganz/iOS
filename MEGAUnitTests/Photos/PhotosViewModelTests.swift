@@ -1,4 +1,5 @@
 import XCTest
+import MEGADomainMock
 @testable import MEGA
 @testable import MEGADomain
 
@@ -14,7 +15,7 @@ final class PhotosViewModelTests: XCTestCase {
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
         
-        photosViewModel = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
+        photosViewModel = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, mediaUseCase: MockMediaUseCase())
     }
     
     private func mediaNodesSorted() -> [MEGANode] {
@@ -249,6 +250,7 @@ final class PhotosViewModelTests: XCTestCase {
                                               allPhotosFromCameraUpload: [])
         return PhotosViewModel(photoUpdatePublisher: publisher,
                                photoLibraryUseCase: usecase,
+                               mediaUseCase: MockMediaUseCase(),
                                featureFlagProvider: provider)
     }
 }
