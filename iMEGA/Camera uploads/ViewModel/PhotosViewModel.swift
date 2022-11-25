@@ -1,4 +1,5 @@
 import Combine
+import MEGADomain
 
 final class PhotosViewModel: NSObject {
     @objc var mediaNodesArray: [MEGANode] = [MEGANode]() {
@@ -11,6 +12,8 @@ final class PhotosViewModel: NSObject {
     private var featureFlagProvider: FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
+    private var mediaUseCase: MediaUseCaseProtocol
+    
     var cameraUploadExplorerSortOrderType: SortOrderType? {
         didSet {
             if let orderType = cameraUploadExplorerSortOrderType {
@@ -35,10 +38,12 @@ final class PhotosViewModel: NSObject {
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
+        mediaUseCase: MediaUseCaseProtocol,
         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
+        self.mediaUseCase = mediaUseCase
         self.featureFlagProvider = featureFlagProvider
         super.init()
         loadSortOrderType()
@@ -98,7 +103,7 @@ final class PhotosViewModel: NSObject {
     
     private func loadPhotos() async {
         let photos = try? await loadFilteredPhotos()
-        mediaNodesArray = photos ?? []
+        mediaNodesArray = photos?.filter { $0.hasThumbnail() } ?? []
     }
     
     private func shouldProcessOnNodesUpdate(

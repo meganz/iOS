@@ -43,6 +43,16 @@ final class MediaUseCaseTests: XCTestCase {
         }
     }
     
+    func testIsRawImageWithThumbnail_whenFilteringPhotos_shouldReturnTrue() {
+        let node = NodeEntity(name: "sample.raw", hasThumbnail: true)
+        XCTAssertTrue(sut.isRawImageWithThumbnail(node))
+    }
+    
+    func testIsRawImageWithThumbnail_whenFilteringPhotos_shouldReturnFalse() {
+        let node = NodeEntity(name: "sample.raw", hasThumbnail: false)
+        XCTAssertFalse(sut.isRawImageWithThumbnail(node))
+    }
+    
     func testIsNotRawImage_whenFilteringPhotos_shouldReturnFalse() {
         let name = "image.jpg"
         XCTAssertFalse(sut.isRawImage(name))

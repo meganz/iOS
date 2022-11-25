@@ -58,7 +58,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         var numOfRawPhotos = 0
         
         photos.forEach { photo in
-            if mediaUseCase.isRawImage(photo.name) {
+            if mediaUseCase.isRawImageWithThumbnail(photo) {
                 numOfRawPhotos += 1
                 if coverOfRawPhoto == nil { coverOfRawPhoto = photo }
             } else if mediaUseCase.isGifImage(photo.name){

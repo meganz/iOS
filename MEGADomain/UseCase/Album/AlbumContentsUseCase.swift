@@ -56,7 +56,7 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     private func filter(photos: [NodeEntity], forAlbum album: AlbumEntity) async -> [NodeEntity] {
         var nodes = [NodeEntity]()
         if album.type == .raw {
-            nodes = photos.filter { mediaUseCase.isRawImage($0.name) }
+            nodes = photos.filter { mediaUseCase.isRawImageWithThumbnail($0) }
         } else if album.type == .gif {
             nodes = photos.filter { mediaUseCase.isGifImage($0.name) }
         }
