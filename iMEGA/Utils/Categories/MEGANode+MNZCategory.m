@@ -57,10 +57,26 @@
     [navigationController popToRootViewControllerAnimated:NO];
     
     NSArray *parentTreeArray = self.mnz_parentTreeArray;
+    
+    __block MEGANode *backupsRootNode = [BackupRootNodeAccess.shared isTargetNodeFor:self] ? self : nil;
+    if (backupsRootNode == nil) {
+        [self.mnz_parentTreeArray enumerateObjectsUsingBlock:^(MEGANode * _Nonnull node, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([BackupRootNodeAccess.shared isTargetNodeFor:node]) {
+                backupsRootNode = node;
+                *stop = YES;
+            };
+        }];
+    }
+    
     for (MEGANode *node in parentTreeArray) {
-        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveVC.parentNode = node;        
-        [navigationController pushViewController:cloudDriveVC animated:NO];
+        if (node.handle != backupsRootNode.parentHandle) {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
+            if (backupsRootNode != nil) {
+                cloudDriveVC.displayMode = DisplayModeBackup;
+            }
+            [navigationController pushViewController:cloudDriveVC animated:NO];
+        }
     }
     
     switch (self.type) {
