@@ -643,7 +643,7 @@
 		5DF9910925789B5400DDDA83 /* PageControlStyleFactoory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */; };
 		5DFC8DC224ECEC9B00DDA006 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */; };
 		5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */; };
-		6D4AF9AD2934298A00A1C2D3 /* AddPhotosToAlbumRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AB2934298A00A1C2D3 /* AddPhotosToAlbumRequestDelegate.swift */; };
+		6D4AF9AD2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AB2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift */; };
 		6D4AF9AE2934298A00A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		6D4AF9AF293429F900A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		6D4AF9B0293429FA00A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
@@ -3332,7 +3332,7 @@
 		5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlStyleFactoory.swift; sourceTree = "<group>"; };
 		5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
 		5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarGeneratingUseCaseTests.swift; sourceTree = "<group>"; };
-		6D4AF9AB2934298A00A1C2D3 /* AddPhotosToAlbumRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhotosToAlbumRequestDelegate.swift; sourceTree = "<group>"; };
+		6D4AF9AB2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumElementRequestDelegate.swift; sourceTree = "<group>"; };
 		6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -7761,7 +7761,7 @@
 			isa = PBXGroup;
 			children = (
 				6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */,
-				6D4AF9AB2934298A00A1C2D3 /* AddPhotosToAlbumRequestDelegate.swift */,
+				6D4AF9AB2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift */,
 				5DF0E3CF2563A8540052CC95 /* MEGAResultMappingRequestDelegate.swift */,
 				5DF0E3D02563A8540052CC95 /* MEGAResultRequestDelegate.swift */,
 				BF66DF352612CE3100066F35 /* InviteRequestDelegate.swift */,
@@ -13450,7 +13450,7 @@
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
 				6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
-				6D4AF9AD2934298A00A1C2D3 /* AddPhotosToAlbumRequestDelegate.swift in Sources */,
+				6D4AF9AD2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift in Sources */,
 				B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
