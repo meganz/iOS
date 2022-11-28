@@ -4,13 +4,13 @@ import SwiftUI
 struct ChatRoomNotificationsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: ChatRoomNotificationsViewModel
-
-    let image: String
-    let text: String
     
     var body: some View {
         VStack {
-            ToogleView(image: image, text: text, isOn: $viewModel.isChatNotificationsOn) { newValue in
+            ToogleView(
+                image: Asset.Images.Meetings.Info.enableChatNotifications.name,
+                text: Strings.Localizable.chatNotifications,
+                isOn: $viewModel.isChatNotificationsOn) { newValue in
                 viewModel.chatNotificationsValueChanged(to: newValue)
             }
             if !viewModel.isChatNotificationsOn {

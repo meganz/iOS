@@ -3939,6 +3939,14 @@ public enum Strings {
       public enum Info {
         /// Meeting link
         public static let meetingLink = Strings.tr("Localizable", "meetings.info.meetingLink")
+        public enum ShareOptions {
+          /// Anyone with this link can join and view the chat.
+          public static let title = Strings.tr("Localizable", "meetings.info.shareOptions.title")
+          public enum ShareLink {
+            /// Copied link to the clipboard
+            public static let linkCopied = Strings.tr("Localizable", "meetings.info.shareOptions.shareLink.linkCopied")
+          }
+        }
       }
       public enum JoinMeeting {
         /// Unable to join the meeting. Please check the link is valid.
