@@ -4,7 +4,7 @@ import MEGADomain
 
 final class UserAlbumRepositoryTests: XCTestCase {
     
-    func testLoadingAlbums_onRetrieved_shouldReturnTrue() async throws {
+    func testLoadingAlbums_onRetrieved_shouldReturnAlbums() async throws {
         let megaSets = sampleSets()
         let sdk = MockSdk(megaSets:megaSets)
         let repo = UserAlbumRepository(sdk: sdk)
@@ -14,7 +14,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertEqual(sets.count, megaSets.count)
     }
     
-    func testLoadingAlbumContent_onRetrieved_shouldReturnTrue() async throws {
+    func testLoadingAlbumContent_onRetrieved_shouldReturnAlbumElements() async throws {
         let megaSetElements = sampleSetElements()
         let sdk = MockSdk(megaSetElements: megaSetElements)
         let repo = UserAlbumRepository(sdk: sdk)
@@ -24,7 +24,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertEqual(setElements.count, megaSetElements.count)
     }
     
-    func testCreateAlbum_onFinished_shouldReturnTrue() async throws {
+    func testCreateAlbum_onFinished_shouldReturnNewAlbum() async throws {
         let sdk = MockSdk()
         let repo = UserAlbumRepository(sdk: sdk)
         let setName = "Test Album"
@@ -33,7 +33,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertTrue(setEntity.name == setName)
     }
     
-    func testUpdateAlbum_onFinished_shouldReturnTrue() async throws {
+    func testUpdateAlbum_onFinished_shouldReturnNewName() async throws {
         let sdk = MockSdk()
         let repo = UserAlbumRepository(sdk: sdk)
         let newName = "New Name"
@@ -42,11 +42,49 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertTrue(name == newName)
     }
     
-    func testDeleteAlbum_onFinished_shouldReturnTrue() async throws {
+    func testDeleteAlbum_onFinished_shouldReturnDeletedAlbumId() async throws {
         let sdk = MockSdk()
         let repo = UserAlbumRepository(sdk: sdk)
         let deletionId: HandleEntity = 1
         let id = try await repo.deleteAlbum(by: deletionId)
+        
+        XCTAssertTrue(id == deletionId)
+    }
+    
+    func testAddPhotosToAlbum_onFinished_shouldReturnPhotosAddedToAlbum() async throws {
+        let nodes = sampleNodes().toNodeEntities()
+        let megaSetElements = sampleSetElements()
+        let sdk = MockSdk(megaSetElements: megaSetElements)
+        let repo = UserAlbumRepository(sdk: sdk)
+        
+        let setElements = try await repo.addPhotosToAlbum(by: 1, nodes: nodes)
+        
+        XCTAssertEqual(setElements.count, megaSetElements.count)
+    }
+    
+    func testUpdateAlbumElementName_onFinish_shouldReturnNewName() async throws {
+        let sdk = MockSdk()
+        let repo = UserAlbumRepository(sdk: sdk)
+        let newName = "New Set Element Name"
+        let name = try await repo.updateAlbumElementName(albumId: 1, elementId: 1, name: newName)
+        
+        XCTAssertTrue(name == newName)
+    }
+    
+    func testUpdateAlbumElementOrder_onFinish_shouldReturnNewOrder() async throws {
+        let sdk = MockSdk()
+        let repo = UserAlbumRepository(sdk: sdk)
+        let newOrder: Int64 = 8
+        let order = try await repo.updateAlbumElementOrder(albumId: 1, elementId: 1, order: newOrder)
+        
+        XCTAssertTrue(newOrder == order)
+    }
+    
+    func testDeleteAlbumElementr_onFinish_shouldReturnDeletedAlbumElementId() async throws {
+        let sdk = MockSdk()
+        let repo = UserAlbumRepository(sdk: sdk)
+        let deletionId: HandleEntity = 1
+        let id = try await repo.deleteAlbumElement(albumId: 1, elementId: deletionId)
         
         XCTAssertTrue(id == deletionId)
     }
@@ -66,5 +104,13 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let setElement2 = MockMEGASetElement(handle: 2, order: 0, nodeId: 2)
         
         return [setElement1,setElement2]
+    }
+    
+    private func sampleNodes() -> [MockNode] {
+        let node0 = MockNode(handle: 0, name: "Test0", parentHandle: 0)
+        let node1 = MockNode(handle: 1, name: "Test1", parentHandle: 0)
+        let node2 = MockNode(handle: 2, name: "Test2", parentHandle: 0)
+        
+        return [node0,node1,node2]
     }
 }
