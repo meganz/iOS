@@ -260,7 +260,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func showChatRoomInfo() {
         if chatListItem.group {
-            guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId), let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
                   MEGALinkManager.joiningOrLeavingChatBase64Handles.notContains(where: { element in
                       if let elementId = element as? String, elementId == chatIdString {
                           return true
@@ -270,7 +270,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                       return
                   }
             
-            router.showGroupChatInfo(forChatId: chatListItem.chatId)
+            if chatRoom.chatType == .group {
+                router.showGroupChatInfo(forChatId: chatListItem.chatId)
+            } else {
+                router.showMeetingInfo(for: chatListItem)
+            }
         } else {
             guard let userHandle = chatRoomUseCase.peerHandles(forChatId: chatListItem.chatId).first,
                     let userEmail = chatRoomUseCase.contactEmail(forUserHandle: userHandle) else {

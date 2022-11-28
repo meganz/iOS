@@ -24,6 +24,8 @@ protocol ChatRoomUseCaseProtocol {
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
+    func closeChatRoomPreview(chatRoom: ChatRoomEntity)
+    func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
 }
 
 struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -220,5 +222,13 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         }
         
         return chatRoomRepo.allowNonHostToAddParticipantsValueChanged(forChatId: chatId)
+    }
+    
+    func closeChatRoomPreview(chatRoom: ChatRoomEntity) {
+        chatRoomRepo.closeChatRoomPreview(chatRoom: chatRoom)
+    }
+
+    func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool {
+        await chatRoomRepo.leaveChatRoom(chatRoom: chatRoom)
     }
 }

@@ -24,6 +24,8 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userFullNames: [String] = []
     var userNickNames: [HandleEntity : String] = [:]
     var userEmails:  [HandleEntity : String] = [:]
+    var closePreviewChatId: ((ChatIdEntity) -> Void)? = nil
+    var leaveChatRoomSuccess = false
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -120,5 +122,13 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
         allowNonHostToAddParticipantsValueChangedSubject.eraseToAnyPublisher()
+    }
+    
+    func closeChatRoomPreview(chatRoom: ChatRoomEntity) {
+        closePreviewChatId?(chatRoom.chatId)
+    }
+    
+    func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool {
+        leaveChatRoomSuccess
     }
 }

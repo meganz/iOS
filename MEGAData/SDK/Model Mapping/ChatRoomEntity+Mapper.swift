@@ -6,6 +6,12 @@ extension MEGAChatRoom {
     }
 }
 
+extension ChatRoomEntity {
+    func toMEGAChatRoom() -> MEGAChatRoom? {
+        MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId)
+    }
+}
+
 fileprivate extension ChatRoomEntity {
     init(with chatRoom: MEGAChatRoom) {
         self.init(

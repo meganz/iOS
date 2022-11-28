@@ -532,6 +532,13 @@ internal enum Asset {
       internal static let splashScreenMEGALogo = ImageAsset(name: "splashScreenMEGALogo")
     }
     internal enum Meetings {
+      internal enum Info {
+        internal static let allowNonHostToAddParticipant = ImageAsset(name: "allowNonHostToAddParticipant")
+        internal static let enableChatNotifications = ImageAsset(name: "enableChatNotifications")
+        internal static let manageChatHistory = ImageAsset(name: "manageChatHistory")
+        internal static let meetingLink = ImageAsset(name: "meetingLink")
+        internal static let sharedFilesInfo = ImageAsset(name: "sharedFilesInfo")
+      }
       internal static let infoMeetings = ImageAsset(name: "InfoMeetings")
       internal static let shareWhite = ImageAsset(name: "ShareWhite")
       internal static let addContactMeetings = ImageAsset(name: "addContactMeetings")

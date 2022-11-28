@@ -3936,6 +3936,10 @@ public enum Strings {
         /// We are upgrading MEGA chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.
         public static let warningMessage = Strings.tr("Localizable", "meetings.incompatibility.warningMessage")
       }
+      public enum Info {
+        /// Meeting link
+        public static let meetingLink = Strings.tr("Localizable", "meetings.info.meetingLink")
+      }
       public enum JoinMeeting {
         /// Unable to join the meeting. Please check the link is valid.
         public static let description = Strings.tr("Localizable", "meetings.joinMeeting.description")

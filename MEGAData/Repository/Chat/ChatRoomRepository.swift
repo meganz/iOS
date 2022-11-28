@@ -264,6 +264,22 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         chatRoomUpdateListeners.remove(object: chatRoomUpdateListener(forChatId: chatId))
         return sdk.closeChatRoom(chatId, delegate: delegate)
     }
+    
+    func closeChatRoomPreview(chatRoom: ChatRoomEntity) {
+        sdk.closeChatPreview(chatRoom.chatId)
+    }
+    
+    func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool {
+        await withCheckedContinuation { continuation in
+            sdk.leaveChat(chatRoom.chatId, delegate: ChatRequestListener { (request, error) in
+                guard let error, error.type == .MEGAChatErrorTypeOk else {
+                    continuation.resume(returning: false)
+                    return
+                }
+                continuation.resume(returning: true)
+            })
+        }
+    }
 }
 
 fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
