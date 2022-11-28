@@ -32,6 +32,7 @@ protocol ChatRoomsListRouting {
         archiveAction: @escaping () -> Void
     )
     func showGroupChatInfo(forChatId chatId: HandleEntity)
+    func showMeetingInfo(for chatListItem: ChatListItemEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
     func showArchivedChatRooms()
     func joinActiveCall(_ call: CallEntity)

@@ -11,6 +11,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never>
     public var chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never>
     public var chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus , Never>
+    public var chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never>
     public var items: [ChatListItemEntity]?
     public var archivedChatsCount: UInt = 0
     public var totalUnreadChats = 0
@@ -26,6 +27,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never> =  PassthroughSubject<ChatListItemEntity, Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
         chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
+        chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never> = PassthroughSubject<ChatRoomEntity , Never>(),
         items: [ChatListItemEntity]? = []
     ) {
         self.fullName = fullName
@@ -36,6 +38,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.chatListItemUpdatePublisher = chatListItemUpdatePublisher
         self.chatCallStatusUpdatePublisher = chatCallStatusUpdatePublisher
         self.chatConnectionStatusUpdatePublisher = chatConnectionStatusUpdatePublisher
+        self.chatPrivateModeUpdatePublisher = chatPrivateModeUpdatePublisher
         self.items = items
     }
     
@@ -97,5 +100,9 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func retryPendingConnections() {
         retryPendingConnections_calledTimes += 1
+    }
+    
+    public func monitorChatPrivateModeUpdate(forChatId chatId: MEGADomain.HandleEntity) -> AnyPublisher<MEGADomain.ChatRoomEntity, Never> {
+        chatPrivateModeUpdatePublisher.eraseToAnyPublisher()
     }
 }

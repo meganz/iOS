@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ChatRoomsTopRowView: View {
+    @Environment(\.layoutDirection) var layoutDirection
+
     let state: ChatRoomsTopRowViewState
     private let discolureIndicator = "chevron.right"
     
@@ -25,6 +27,7 @@ struct ChatRoomsTopRowView: View {
             
             Image(systemName: discolureIndicator)
                 .foregroundColor(.gray.opacity(0.6))
+                .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
     }
 }

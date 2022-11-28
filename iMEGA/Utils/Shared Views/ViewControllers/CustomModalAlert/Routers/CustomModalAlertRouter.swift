@@ -9,6 +9,7 @@ import Foundation
     case businessGracePeriod
     case outgoingContactRequest
     case contactNotInMEGA
+    case enableKeyRotation
 }
 
 @objc class CustomModalAlertRouter: NSObject, Routing {
@@ -17,9 +18,17 @@ import Foundation
     
     internal var mode: CustomModalAlertMode
     
+    private var chatId: ChatId?
+    
     @objc init(_ mode: CustomModalAlertMode, presenter: UIViewController) {
         self.mode = mode
         self.presenter = presenter
+    }
+    
+    init(_ mode: CustomModalAlertMode, presenter: UIViewController, chatId: ChatId) {
+        self.mode = mode
+        self.presenter = presenter
+        self.chatId = chatId
     }
     
     func build() -> UIViewController {
@@ -36,6 +45,10 @@ import Foundation
             
         case .businessGracePeriod:
             customModalAlertVC.configureForBusinessGracePeriod()
+            
+        case .enableKeyRotation:
+            guard let chatId else { return customModalAlertVC }
+            customModalAlertVC.configureForEnableKeyRotation(in: chatId)
             
         default: break
         }

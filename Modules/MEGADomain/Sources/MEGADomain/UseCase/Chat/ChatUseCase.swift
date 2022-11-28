@@ -17,6 +17,7 @@ public protocol ChatUseCaseProtocol {
     func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
     func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never>
+    func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never>
 }
 
 // MARK: - Use case implementation -
@@ -85,5 +86,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never> {
         chatRepo.monitorChatConnectionStatusUpdate(forChatId: chatId)
+    }
+    
+    public func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never> {
+        chatRepo.monitorChatPrivateModeUpdate(forChatId: chatId)
     }
 }

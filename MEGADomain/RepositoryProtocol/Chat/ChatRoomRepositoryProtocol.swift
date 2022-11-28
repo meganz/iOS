@@ -25,4 +25,6 @@ protocol ChatRoomRepositoryProtocol {
     func isChatRoomOpen(chatId: HandleEntity) -> Bool
     func openChatRoom(chatId: HandleEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void) throws
     func closeChatRoom(chatId: HandleEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void)
+    func closeChatRoomPreview(chatRoom: ChatRoomEntity)
+    func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
 }

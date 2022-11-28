@@ -8,7 +8,8 @@ public final class ChatRepository: ChatRepositoryProtocol {
     private lazy var chatListItemUpdateListener = ChatListItemUpdateListener(sdk: chatSDK)
     private lazy var chatCallUpdateListener = ChatCallUpdateListener(sdk: chatSDK)
     private var chatConnectionUpdateListener: ChatConnectionUpdateListener?
-    
+    private var chatPrivateModeUpdateListener: ChatRequestListener?
+
     public init(sdk: MEGASdk, chatSDK: MEGAChatSdk) {
         self.sdk = sdk
         self.chatSDK = chatSDK
@@ -93,6 +94,13 @@ public final class ChatRepository: ChatRepositoryProtocol {
             .eraseToAnyPublisher()
     }
     
+    public func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never> {
+        let chatPrivateModeUpdateListener = ChatRequestListener(sdk: chatSDK, chatId: chatId, changeType: .setPrivateMode)
+        self.chatPrivateModeUpdateListener = chatPrivateModeUpdateListener
+        return chatPrivateModeUpdateListener
+            .monitor
+            .eraseToAnyPublisher()
+    }
     
     // - MARK: Private
     private func chatStatusUpdateListener(forUserHandle userHandle: HandleEntity) -> ChatStatusUpdateListener {
@@ -201,3 +209,34 @@ fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
     }
 }
 
+fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
+    private let sdk: MEGAChatSdk
+    private let changeType: MEGAChatRequestType
+    let chatId: HandleEntity
+
+    private let source = PassthroughSubject<ChatRoomEntity, Never>()
+
+    var monitor: AnyPublisher<ChatRoomEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+
+    init(sdk: MEGAChatSdk, chatId: HandleEntity, changeType: MEGAChatRequestType) {
+        self.sdk = sdk
+        self.changeType = changeType
+        self.chatId = chatId
+        super.init()
+        sdk.add(self)
+    }
+
+    deinit {
+        sdk.remove(self)
+    }
+
+    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+        if request.type == changeType,
+           chatId == request.chatHandle,
+           let chatRoom = sdk.chatRoom(forChatId: chatId) {
+            source.send(chatRoom.toChatRoomEntity())
+        }
+    }
+}

@@ -199,6 +199,14 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController?.pushViewController(groupChatDetailsController, animated: true)
     }
     
+    func showMeetingInfo(for chatListItem: ChatListItemEntity) {
+        guard let navigationController else {
+            return
+        }
+        
+        MeetingInfoRouter(presenter: navigationController, chatListItem: chatListItem).start()
+    }
+    
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String) {
         guard let contactDetailsViewController = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
             return
