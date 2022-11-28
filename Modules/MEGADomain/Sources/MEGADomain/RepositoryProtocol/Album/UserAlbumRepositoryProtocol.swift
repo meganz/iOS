@@ -36,9 +36,12 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     
     /// Add photos to the album
     /// - Parameters:
-    ///   - id: Album id
-    ///   - nodes: Nodes need to be added to the album
-    func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> [SetElementEntity]
+    ///   - id: The album id
+    ///   - nodes: The nodes need to be added to the album
+    /// - Returns: The CreateSetElementResultEntity
+    ///   - success: means the number of photos added to the album successfully
+    ///   - failure: means the number of photos added to the album unsuccessfully
+    func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity
     
     /// Update album element name
     /// - Parameters:
@@ -56,10 +59,12 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     /// - Returns: The new order
     func updateAlbumElementOrder(albumId: HandleEntity, elementId: HandleEntity, order: Int64) async throws -> Int64
     
-    /// Remove the photo from the album
+    ///  Remove the photo from the album
     /// - Parameters:
     ///   - albumId: The album id
-    ///   - elementId: The album element to be removed
-    /// - Returns: The removed element's id
-    func deleteAlbumElement(albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity
+    ///   - elementIds: Elements needs to be deleted
+    /// - Returns: The CreateSetElementResultEntity
+    ///   - success: means the number of photos deleted from the album successfully
+    ///   - failure: means the number of photos deleted from the album unsuccessfully
+    func deleteAlbumElements(albumId: HandleEntity, elementIds: [HandleEntity]) async throws -> AlbumElementsResultEntity
 }

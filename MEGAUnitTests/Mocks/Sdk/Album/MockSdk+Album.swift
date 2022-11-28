@@ -34,7 +34,6 @@ extension MockSdk {
     
     override func createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaElementInSet = setElements
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
@@ -56,7 +55,6 @@ extension MockSdk {
     
     override func removeSetElement(_ sid: MEGAHandle, eid: MEGAHandle, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSetElementHandle = eid
         mockRequest.updateSet = false
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())

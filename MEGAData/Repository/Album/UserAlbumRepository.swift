@@ -76,15 +76,17 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     // MARK: - Album Content
-    func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> [SetElementEntity] {
+    func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
+        guard nodes.isNotEmpty else { return AlbumElementsResultEntity(success: 0, failure: 0) }
+        
         return try await withCheckedThrowingContinuation { continuation in
-            let requestDelegate = AddPhotosToAlbumRequestDelegate(numberOfCalls: nodes.count) { result in
+            let requestDelegate = AlbumElementRequestDelegate(numberOfCalls: nodes.count) { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
                 
                 switch result {
-                case .success(let request):
-                    let elements = request.elementsInSet.toSetElementsEntities()
-                    continuation.resume(returning: elements)
+                case .success(let result):
+                    let entity = AlbumElementsResultEntity(success:result.0, failure: result.1)
+                    continuation.resume(returning:entity)
                 case .failure(_):
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
@@ -126,18 +128,25 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
         }
     }
     
-    func deleteAlbumElement(albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
+    func deleteAlbumElements(albumId: HandleEntity, elementIds: [HandleEntity]) async throws -> AlbumElementsResultEntity {
+        guard elementIds.isNotEmpty else { return AlbumElementsResultEntity(success: 0, failure: 0) }
+        
         return try await withCheckedThrowingContinuation { continuation in
-            sdk.removeSetElement(albumId, eid: elementId, delegate: RequestDelegate { result in
+            let requestDelegate = AlbumElementRequestDelegate(numberOfCalls: elementIds.count) { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
                 
                 switch result {
-                case .success(let request):
-                    continuation.resume(returning: request.parentHandle)
+                case .success(let result):
+                    let entity = AlbumElementsResultEntity(success:result.0, failure: result.1)
+                    continuation.resume(returning:entity)
                 case .failure(_):
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
-            })
+            }
+            
+            for eid in elementIds {
+                sdk.removeSetElement(albumId, eid: eid, delegate: requestDelegate)
+            }
         }
     }
 }
