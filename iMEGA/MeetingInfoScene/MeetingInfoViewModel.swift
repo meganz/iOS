@@ -5,9 +5,11 @@ protocol MeetingInfoRouting {
     func showSharedFiles(for chatRoom: ChatRoomEntity)
     func showManageChatHistory(for chatRoom: ChatRoomEntity)
     func showEnableKeyRotation(for chatRoom: ChatRoomEntity)
-    func showChatLinksMustHaveCustomTitleAlert()
     func closeMeetingInfoView()
     func showLeaveChatAlert(leaveAction: @escaping(() -> Void))
+    func showShareActivity(_ link: String, title: String?, description: String?)
+    func showSendToChat(_ link: String)
+    func showLinkCopied()
 }
 
 final class MeetingInfoViewModel: ObservableObject {
@@ -18,19 +20,17 @@ final class MeetingInfoViewModel: ObservableObject {
     private let userUseCase: UserUseCaseProtocol
     private var chatLinkUseCase: ChatLinkUseCaseProtocol
     private let router: MeetingInfoRouting
-    @Published var isMeetingLinkOn = false
-    @Published var isMeetingLinkDisabled = false
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
     @Published var isUserInChat = true
 
-    private var isChatLinkFirstQuery = false
     private var isAllowNonHostToAddParticipantsRemote = false
     private var chatRoom: ChatRoomEntity?
     private var subscriptions = Set<AnyCancellable>()
 
     var chatRoomNotificationsViewModel: ChatRoomNotificationsViewModel?
     var chatRoomAvatarViewModel: ChatRoomAvatarViewModel
+    var chatRoomLinkViewModel: ChatRoomLinkViewModel?
 
     var meetingLink: String?
     
@@ -50,7 +50,6 @@ final class MeetingInfoViewModel: ObservableObject {
         self.userUseCase = userUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId)
-        self.isMeetingLinkDisabled = chatRoom?.ownPrivilege != .moderator
         self.chatRoomAvatarViewModel =  ChatRoomAvatarViewModel(
             chatListItem: chatListItem,
             chatRoomUseCase: chatRoomUseCase,
@@ -66,9 +65,9 @@ final class MeetingInfoViewModel: ObservableObject {
         guard let chatRoom else { return }
         isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
         isPublicChat = chatRoom.isPublicChat
-        isChatLinkFirstQuery = true
         chatLinkUseCase.queryChatLink(for: chatRoom)
         chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(chatRoom: chatRoom)
+        chatRoomLinkViewModel = ChatRoomLinkViewModel(router: router, chatRoom: chatRoom, chatLinkUseCase: chatLinkUseCase)
     }
     
     private func initSubscriptions() {
@@ -97,54 +96,10 @@ final class MeetingInfoViewModel: ObservableObject {
                 self?.isPublicChat = chatRoom.isPublicChat
             })
             .store(in: &subscriptions)
-        
-        guard let chatRoom else { return }
-
-        chatLinkUseCase
-            .monitorChatLinkUpdate(for: chatRoom)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { error in
-                MEGALogError("error fetching chat link \(error)")
-            }, receiveValue: { [weak self] link in
-                guard let self else { return }
-                if self.isChatLinkFirstQuery {
-                    if link == nil {
-                        self.isChatLinkFirstQuery = false
-                    } else {
-                        self.isMeetingLinkOn.toggle()
-                    }
-                }
-                self.meetingLink = link
-            })
-            .store(in: &subscriptions)
     }
 }
 
 extension MeetingInfoViewModel{
-    //MARK: - Meeting Link
-    func meetingLinkValueChanged(to enabled: Bool) {
-        guard !isChatLinkFirstQuery else {
-            isChatLinkFirstQuery = false
-            return
-        }
-        
-        guard let chatRoom else { return }
-        
-        if meetingLink == nil {
-            if chatRoom.hasCustomTitle {
-                chatLinkUseCase.createChatLink(for: chatRoom)
-            } else {
-                router.showChatLinksMustHaveCustomTitleAlert()
-            }
-        } else {
-            chatLinkUseCase.removeChatLink(for: chatRoom)
-        }
-    }
-    
-    func shareMeetingLinkTapped() {
-        print("[cma] Link tapped: \(String(describing: meetingLink))")
-    }
-    
     //MARK: - Open Invite
     func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {
         guard !isAllowNonHostToAddParticipantsRemote else {

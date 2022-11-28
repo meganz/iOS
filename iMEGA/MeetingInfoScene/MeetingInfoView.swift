@@ -11,23 +11,13 @@ struct MeetingInfoView: View {
             VStack(spacing: 20) {
                 MeetingInfoHeaderView()
                     .environmentObject(viewModel)
-                
-                MeetingLinkToogleView(
-                    image: Asset.Images.Meetings.Info.meetingLink.name,
-                    text: Strings.Localizable.Meetings.Info.meetingLink,
-                    disabled: $viewModel.isMeetingLinkDisabled,
-                    isOn: $viewModel.isMeetingLinkOn) { newValue in
-                        viewModel.meetingLinkValueChanged(to: newValue)
-                    } action: {
-                        viewModel.shareMeetingLinkTapped()
-                    }
                  
+                if let chatRoomLinkViewModel = viewModel.chatRoomLinkViewModel {
+                    ChatRoomLinkView(viewModel: chatRoomLinkViewModel)
+                }
+                
                 if let chatRoomNotificationsViewModel = viewModel.chatRoomNotificationsViewModel {
-                    ChatRoomNotificationsView(
-                        viewModel: chatRoomNotificationsViewModel,
-                        image: Asset.Images.Meetings.Info.enableChatNotifications.name,
-                        text: Strings.Localizable.chatNotifications
-                    )
+                    ChatRoomNotificationsView(viewModel: chatRoomNotificationsViewModel)
                 }
                 
                 ToogleView(

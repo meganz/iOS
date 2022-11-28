@@ -3132,3 +3132,8 @@
 "account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
 /* Label to indicate the user about the activation of a meeting link */
 "meetings.info.meetingLink"="Meeting link";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="Anyone with this link can join and view the chat.";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="Copied link to the clipboard";
+
