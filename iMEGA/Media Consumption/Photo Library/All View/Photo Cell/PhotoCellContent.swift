@@ -3,7 +3,6 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PhotoCellContent: View {
     @ObservedObject var viewModel: PhotoCellViewModel
-    @Environment(\.editMode) var editMode
     
     private var tap: some Gesture { TapGesture().onEnded { _ in
         viewModel.isSelected.toggle()
@@ -14,14 +13,14 @@ struct PhotoCellContent: View {
             PhotoCellImage(container: viewModel.thumbnailContainer,
                            aspectRatio: viewModel.currentZoomScaleFactor == .one ? nil : 1)
             
-            if editMode?.wrappedValue.isEditing == true {
+            if viewModel.editMode.isEditing {
                 CheckMarkView(markedSelected: viewModel.isSelected)
                     .offset(x: -5, y: -5)
             }
         }
         .favorite(viewModel.isFavorite)
         .videoDuration(viewModel.isVideo, duration: viewModel.duration, with: viewModel.currentZoomScaleFactor)
-        .gesture(editMode?.wrappedValue.isEditing == true ? tap : nil)
+        .gesture(viewModel.editMode.isEditing ? tap : nil)
         .onAppear {
             viewModel.loadThumbnailIfNeeded()
         }
