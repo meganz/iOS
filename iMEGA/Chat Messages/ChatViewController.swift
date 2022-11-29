@@ -1001,9 +1001,13 @@ class ChatViewController: MessagesViewController {
         
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
-        AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
-        AVAudioSession.sharedInstance().mnz_activate()
-        AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(chatRoom.isMeeting)
+        let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
+        audioSessionUC.configureMeetingAudioSession()
+        if chatRoom.isMeeting {
+            audioSessionUC.enableLoudSpeaker()
+        } else {
+            audioSessionUC.disableLoudSpeaker()
+        }
         CallActionManager.shared.startCall(chatId:chatRoom.chatId,
                                            enableVideo:isVideoEnabled,
                                            enableAudio:!chatRoom.isMeeting,
@@ -1023,9 +1027,13 @@ class ChatViewController: MessagesViewController {
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
         
-        AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
-        AVAudioSession.sharedInstance().mnz_activate()
-        AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(chatRoom.isMeeting)
+        let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
+        audioSessionUC.configureMeetingAudioSession()
+        if chatRoom.isMeeting {
+            audioSessionUC.enableLoudSpeaker()
+        } else {
+            audioSessionUC.disableLoudSpeaker()
+        }
         CallActionManager.shared.answerCall(chatId:chatRoom.chatId,
                                             enableVideo:isVideoEnabled,
                                             enableAudio:!chatRoom.isMeeting,

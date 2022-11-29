@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 @objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     @objc static var shared = AudioPlayerManager()
@@ -257,7 +258,7 @@ import Foundation
     
     func closePlayer() {
         player?.close() {
-            AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
+            AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)).configureMeetingAudioSession()
         }
         
         player?.updateContentViews()
