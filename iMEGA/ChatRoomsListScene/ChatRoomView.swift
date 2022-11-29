@@ -84,10 +84,13 @@ fileprivate struct ChatRoomContentView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            ChatRoomAvatarView(
-                viewModel: viewModel.chatRoomAvatarViewModel,
-                size: Constants.avatarViewSize
-            )
+            if let avatarViewModel = viewModel.chatRoomAvatarViewModel {
+                ChatRoomAvatarView(
+                    viewModel: avatarViewModel,
+                    size: Constants.avatarViewSize
+                )
+            }
+            
             ChatRoomContentDetailsView()
         }
         .padding(.trailing, Constants.viewPadding)

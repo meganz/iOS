@@ -29,7 +29,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
 
     var chatRoomNotificationsViewModel: ChatRoomNotificationsViewModel?
-    var chatRoomAvatarViewModel: ChatRoomAvatarViewModel
+    let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     var chatRoomLinkViewModel: ChatRoomLinkViewModel?
 
     var meetingLink: String?
@@ -50,13 +50,21 @@ final class MeetingInfoViewModel: ObservableObject {
         self.userUseCase = userUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId)
-        self.chatRoomAvatarViewModel =  ChatRoomAvatarViewModel(
-            chatListItem: chatListItem,
-            chatRoomUseCase: chatRoomUseCase,
-            userImageUseCase: userImageUseCase,
-            chatUseCase: chatUseCase,
-            userUseCase: userUseCase
-        )
+        
+        if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
+            self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
+                title: chatListItem.title ?? "",
+                peerHandle: chatListItem.peerHandle,
+                chatRoomEntity: chatRoomEntity,
+                chatRoomUseCase: chatRoomUseCase,
+                userImageUseCase: userImageUseCase,
+                chatUseCase: chatUseCase,
+                userUseCase: userUseCase
+            )
+        } else {
+            self.chatRoomAvatarViewModel = nil
+        }
+
         initSubscriptions()
         fetchInitialValues()
     }

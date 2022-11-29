@@ -2348,6 +2348,8 @@
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFD28426283213A3001AACC2 /* TimeoutTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD28425283213A3001AACC2 /* TimeoutTask.swift */; };
 		BFD2ED4D281228B30018C05A /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = BFD2ED4C281228B30018C05A /* PieChart */; };
+		BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */; };
+		BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */; };
 		BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */; };
 		BFD6535525EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFD6535425EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib */; };
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
@@ -2388,6 +2390,11 @@
 		BFF9D86326C3AFCA00E6433F /* ChatRoomErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D48269BA4BA0001D169 /* ChatRoomErrorEntity.swift */; };
 		BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */; };
 		BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */; };
+		BFFE2289292F2F4B0063CFF2 /* FutureMeetingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */; };
+		BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */; };
+		BFFE22912931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */; };
+		BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */; };
+		BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */; };
 		BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
 		C42C35752743D8E1004D8BA9 /* BackupRootNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46050582727FC7300D67A44 /* BackupRootNodeAccess.swift */; };
@@ -4767,6 +4774,8 @@
 		BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomContextMenuOption.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFD28425283213A3001AACC2 /* TimeoutTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTask.swift; sourceTree = "<group>"; };
+		BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModelTests.swift; sourceTree = "<group>"; };
+		BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FutureMeetingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContactInfoHeaderView.swift; sourceTree = "<group>"; };
 		BFD6535425EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingContactInfoHeaderView.xib; sourceTree = "<group>"; };
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
@@ -4804,6 +4813,11 @@
 		BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsListViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModelTests.swift; sourceTree = "<group>"; };
+		BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingSection.swift; sourceTree = "<group>"; };
+		BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsListHeaderView.swift; sourceTree = "<group>"; };
+		BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModel.swift; sourceTree = "<group>"; };
+		BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomView.swift; sourceTree = "<group>"; };
 		BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
@@ -8457,6 +8471,8 @@
 				BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */,
 				BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */,
 				BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */,
+				BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */,
+				BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -8747,6 +8763,8 @@
 				83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */,
 				83B71A5F28F0356600E006C6 /* ChatRoomView.swift */,
 				BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */,
+				BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */,
+				BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */,
 			);
 			path = ChatRoomsListScene;
 			sourceTree = "<group>";
@@ -9945,6 +9963,7 @@
 				BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */,
 				BF66DFBD2613CC4500066F35 /* ChatRoomEntity+Mapper.swift */,
 				BF0A426B28A21C9A0071F923 /* ChatRoomEntity+Peer.swift */,
+				BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */,
 				BF66E036261420A000066F35 /* CallEntity+Mapper.swift */,
 				BF66E04A2614269000066F35 /* ChatSessionEntity+Mapper.swift */,
 				B6FD64F22689E87F00988A17 /* SortOrderEntity+Mapper.swift */,
@@ -10801,6 +10820,7 @@
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
 				BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */,
+				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -11138,6 +11158,7 @@
 				8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */,
 				BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */,
 				BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */,
+				BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */,
 			);
 			path = Meeting;
 			sourceTree = "<group>";
@@ -12381,6 +12402,7 @@
 				834D867F29197E8800CECEC0 /* ChatRoomAvatarView.swift in Sources */,
 				2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */,
 				B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */,
+				BFFE2289292F2F4B0063CFF2 /* FutureMeetingSection.swift in Sources */,
 				5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */,
 				B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */,
 				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
@@ -12401,6 +12423,7 @@
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
+				BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */,
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,
@@ -13420,6 +13443,7 @@
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */,
 				BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */,
+				BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */,
 				BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */,
 				B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */,
 				B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
@@ -13473,6 +13497,7 @@
 				83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */,
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
+				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
 				6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				6D4AF9AD2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift in Sources */,
 				B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */,
@@ -13564,6 +13589,7 @@
 				5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */,
 				C45F9819264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift in Sources */,
 				834AFD1D2492567A005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
+				BFFE22912931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
@@ -14357,6 +14383,7 @@
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				5BBC13E626CE64F50010115B /* NodeCellViewModelTests.swift in Sources */,
 				6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */,
+				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
@@ -14369,6 +14396,7 @@
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				B6FD6519268D8A2300988A17 /* RatingRequestingTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
+				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				6DB6D4262924D342005182CA /* SetEntity+Mapper.swift in Sources */,
 				BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */,
 				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,

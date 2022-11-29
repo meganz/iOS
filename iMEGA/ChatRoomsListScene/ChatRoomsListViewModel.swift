@@ -55,6 +55,22 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
+    
+    var isChatRoomEmpty: Bool {
+        if let displayChatRooms, displayChatRooms.isNotEmpty {
+            return false
+        }
+        
+        if let displayPastMeetings, displayPastMeetings.isNotEmpty {
+            return false
+        }
+        
+        if let displayFutureMeetings, displayFutureMeetings.isNotEmpty {
+            return false
+        }
+        
+        return true
+    }
 
     @Published var chatViewMode: ChatViewMode
     @Published var chatStatus: ChatStatusEntity?
@@ -63,16 +79,27 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var isConnectedToNetwork: Bool
     @Published var bottomViewHeight: CGFloat = 0
     @Published var displayChatRooms: [ChatRoomViewModel]?
+    
+    @Published var displayPastMeetings: [ChatRoomViewModel]?
+    @Published var displayFutureMeetings: [FutureMeetingSection]?
+
     @Published var activeCallViewModel: ActiveCallViewModel?
     @Published var searchText: String {
         didSet {
-            filterChats()
+            if chatViewMode == .meetings {
+                filterMeetings()
+            } else {
+                filterChats()
+            }
         }
     }
     @Published var isSearchActive: Bool
     
     private var chatRooms: [ChatRoomViewModel]?
-    private var filteredChatRooms: [ChatRoomViewModel]?
+    
+    private var pastMeetings: [ChatRoomViewModel]?
+    private var futureMeetings: [FutureMeetingSection]?
+    
     private var subscriptions = Set<AnyCancellable>()
     private var isViewOnScreen = false
     
@@ -133,21 +160,86 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     func fetchChats() {
-        guard let chatListItems = chatUseCase.chatsList(ofType: chatViewMode == .chats ? .nonMeeting : .meeting), isViewOnScreen else {
+        if chatViewMode == .meetings {
+            fetchMeetings()
+        } else {
+            fetchNonMeetingChats()
+        }
+    }
+    
+    private func fetchNonMeetingChats() {
+        guard let chatListItems = chatUseCase.chatsList(ofType: .nonMeeting), isViewOnScreen else {
             MEGALogDebug("Unable to fetch chat list items")
-            return 
+            return
         }
         
         chatRooms = chatListItems.map(constructChatRoomViewModel)
         filterChats()
     }
     
-    func filterChats() {
+    private func fetchMeetings() {
+        guard let chatListItems = chatUseCase.chatsList(ofType: .meeting), isViewOnScreen else {
+            MEGALogDebug("Unable to fetch chat list items")
+            return
+        }
+        
+        let scheduledMeetings = chatUseCase.scheduledMeetings()
+        let sortedScheduledMeetings = scheduledMeetings.sorted { $0.startDate < $1.startDate}
+        
+        let futureScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate >= Date() }
+        //let pastScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate < Date() }
+
+        populateFutureMeetings(futureScheduledMeetings)
+        
+        // past meetings only shows the chatroom currently. We need to all display the past meetings from the scheduled meetings.
+        pastMeetings = chatListItems.map(constructChatRoomViewModel)
+        filterMeetings()
+    }
+    
+    private func filterChats() {
         if searchText.isNotEmpty {
-            filteredChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
-            displayChatRooms = filteredChatRooms
+            displayChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
         } else {
             displayChatRooms = chatRooms
+        }
+    }
+    
+    private func filterMeetings() {
+        if searchText.isNotEmpty {
+            displayPastMeetings = pastMeetings?.filter { $0.contains(searchText: searchText)}
+            displayFutureMeetings = futureMeetings?.compactMap { $0.filter(withSearchText: searchText) }
+        } else {
+            displayPastMeetings = pastMeetings
+            displayFutureMeetings = futureMeetings
+        }
+    }
+    
+    private func populateFutureMeetings(_ meetings: [ScheduledMeetingEntity]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, d MMM"
+
+        self.futureMeetings = meetings.reduce([FutureMeetingSection]()) { partialResult, meeting in
+            let key: String
+            if Calendar.current.isDateInToday(meeting.startDate) {
+                key = "Today"
+            } else {
+                key = dateFormatter.string(from: meeting.startDate)
+            }
+            
+            var result = partialResult
+            let futureMeetingViewModel = constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting)
+            
+            if let index = result.firstIndex(where: { $0.title == key }) {
+                let futureMeetingSection = result[index]
+                result[index] = FutureMeetingSection(
+                    title: futureMeetingSection.title,
+                    items: futureMeetingSection.items + [futureMeetingViewModel]
+                )
+            } else {
+                result.append(FutureMeetingSection(title: key, items: [futureMeetingViewModel]))
+            }
+            
+            return result
         }
     }
     
@@ -273,6 +365,30 @@ final class ChatRoomsListViewModel: ObservableObject {
             ),
             userUseCase: UserUseCase(repo: .live),
             chatNotificationControl: chatNotificationControl
+        )
+    }
+    
+    private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity) -> FutureMeetingRoomViewModel {
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
+                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let userImageUseCase = UserImageUseCase(
+            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            fileSystemRepo: FileSystemRepository.newRepo
+        )
+        
+        return FutureMeetingRoomViewModel(
+            scheduledMeeting: scheduledMeetingEntity,
+            router: router,
+            chatRoomUseCase: chatRoomUseCase,
+            userImageUseCase: userImageUseCase,
+            chatUseCase: ChatUseCase(
+                chatRepo: ChatRepository(
+                    sdk: MEGASdkManager.sharedMEGASdk(),
+                    chatSDK: MEGASdkManager.sharedMEGAChatSdk())
+            ),
+            userUseCase: UserUseCase(repo: .live)
         )
     }
     

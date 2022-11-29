@@ -12,10 +12,13 @@ struct MeetingInfoHeaderView: View {
     var body: some View {
         Divider()
         HStack {
-            ChatRoomAvatarView(
-                viewModel: viewModel.chatRoomAvatarViewModel,
-                size: Constants.avatarViewSize
-            )
+            if let chatRoomAvatarViewModel = viewModel.chatRoomAvatarViewModel {
+                ChatRoomAvatarView(
+                    viewModel: chatRoomAvatarViewModel,
+                    size: Constants.avatarViewSize
+                )
+            }
+            
             VStack(alignment: .leading) {
                 Text("Book Club - Breasts&Eggs")
                     .font(.subheadline)

@@ -35,7 +35,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private var searchString = ""
 
     private var isInfoLoaded = false
-    let chatRoomAvatarViewModel: ChatRoomAvatarViewModel
+    let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
 
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -53,13 +53,20 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.chatNotificationControl = chatNotificationControl
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
-        self.chatRoomAvatarViewModel =  ChatRoomAvatarViewModel(
-            chatListItem: chatListItem,
-            chatRoomUseCase: chatRoomUseCase,
-            userImageUseCase: userImageUseCase,
-            chatUseCase: chatUseCase,
-            userUseCase: userUseCase
-        )
+        
+        if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
+            self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
+                title: chatListItem.title ?? "",
+                peerHandle: chatListItem.peerHandle,
+                chatRoomEntity: chatRoomEntity,
+                chatRoomUseCase: chatRoomUseCase,
+                userImageUseCase: userImageUseCase,
+                chatUseCase: chatUseCase,
+                userUseCase: userUseCase
+            )
+        } else {
+            self.chatRoomAvatarViewModel = nil
+        }
 
         self.contextMenuOptions = constructContextMenuOptions()
         self.displayDateString = formattedLastMessageSentDate()

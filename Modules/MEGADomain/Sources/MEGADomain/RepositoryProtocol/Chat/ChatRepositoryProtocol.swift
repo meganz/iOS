@@ -8,6 +8,7 @@ public protocol ChatRepositoryProtocol {
     func existsActiveCall() -> Bool
     func activeCall() -> CallEntity?
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
+    func scheduledMeetings() -> [ScheduledMeetingEntity]
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
