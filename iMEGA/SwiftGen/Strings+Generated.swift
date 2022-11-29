@@ -3357,6 +3357,10 @@ public enum Strings {
       }
     }
     public enum Extensions {
+      public enum OpenApp {
+        /// Open the MEGA app and log in to continue.
+        public static let message = Strings.tr("Localizable", "extensions.OpenApp.Message")
+      }
       public enum Share {
         public enum Destination {
           public enum Section {
