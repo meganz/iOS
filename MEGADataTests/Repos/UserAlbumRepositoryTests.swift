@@ -88,6 +88,16 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertEqual(resultEntity.success, UInt(elements.count))
     }
     
+    func testUpdateAlbumCover_onFinish_shouldReturnAlbumElementId() async throws {
+        let sdk = MockSdk()
+        let repo = UserAlbumRepository(sdk: sdk)
+        let eid: UInt64 = 2
+        
+        let coverId = try await repo.updateAlbumCover(for: 1, elementId: eid)
+        
+        XCTAssertTrue(coverId == eid)
+    }
+    
     // MARK: Private
     
     private func sampleSets() -> [MockMEGASet] {
