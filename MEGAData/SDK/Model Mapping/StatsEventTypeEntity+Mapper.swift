@@ -20,6 +20,7 @@ extension StatsEventEntity {
         case .meetingEnableCallSoundNotifications: code = 99312
         case .meetingDisableCallSoundNotifications: code = 99314
         case .meetingEndCallWhenEmptyCallTimeout: code = 99315
+        case .extensionWithoutNoDDatabase: code = 99316
         }
         
         return code

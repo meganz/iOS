@@ -16,6 +16,7 @@ public enum StatsEventEntity {
     case meetingEnableCallSoundNotifications
     case meetingDisableCallSoundNotifications
     case meetingEndCallWhenEmptyCallTimeout
+    case extensionWithoutNoDDatabase
     
     public var message: String {
         let value: String
@@ -36,6 +37,7 @@ public enum StatsEventEntity {
         case .meetingEnableCallSoundNotifications: value = "Meeting Enable Sound Notification"
         case .meetingDisableCallSoundNotifications: value = "Meeting Disable Sound Notification"
         case .meetingEndCallWhenEmptyCallTimeout: value = "Meeting Ended when Empty Call Timeout"
+        case .extensionWithoutNoDDatabase: value = "Extension without NoD database"
         }
         
         return value

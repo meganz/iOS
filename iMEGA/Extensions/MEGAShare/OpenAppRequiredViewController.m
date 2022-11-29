@@ -1,24 +1,28 @@
 
-#import "LoginRequiredViewController.h"
+#import "OpenAppRequiredViewController.h"
 #import "UIViewController+MNZCategory.h"
 
 #import "MEGAShare-Swift.h"
 
-@interface LoginRequiredViewController ()
+@interface OpenAppRequiredViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *loginLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *openButton;
 
 @end
 
-@implementation LoginRequiredViewController
+@implementation OpenAppRequiredViewController
 
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.loginLabel.text = NSLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
+    if (self.isLoginRequired) {
+        self.descriptionLabel.text = NSLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
+    } else {
+        self.descriptionLabel.text = NSLocalizedString(@"extensions.OpenApp.Message", nil);
+    }
     
     [self.openButton setTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
 }
@@ -45,7 +49,11 @@
 #pragma mark - IBActions
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    if (self.isLoginRequired) {
+        [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    } else {
+        [self openURL:[NSURL URLWithString:@"mega://"]];
+    }
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {

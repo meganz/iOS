@@ -10,7 +10,6 @@
 #import "ChatVideoUploadQuality.h"
 #import "Helper.h"
 #import "LaunchViewController.h"
-#import "LoginRequiredViewController.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGALogger.h"
@@ -75,7 +74,7 @@
 
 - (void)dealloc {
     [self removeShareDestinationView];
-    [self removeLoginRequiredView];
+    [self removeOpenAppView];
 }
 
 - (void)viewDidLoad {
@@ -131,21 +130,27 @@
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        [self initChatAndStartLogging];
-        [self fetchAttachments];
-        
-        if ([MEGAReachabilityManager isReachable]) {
-            [self loginToMEGA];
+        NodesOnDemandMigrationCheckerUseCaseOCWrapper *checker = NodesOnDemandMigrationCheckerUseCaseOCWrapper.alloc.init;
+        if ([checker doesExistNodesOnDemandDatabaseWith:self.session]) {
+            [self initChatAndStartLogging];
+            [self fetchAttachments];
+            
+            if ([MEGAReachabilityManager isReachable]) {
+                [self loginToMEGA];
+            } else {
+                [self addShareDestinationView];
+                [self checkPasscode];
+            }
+            
+            if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
+                [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
+            }
         } else {
-            [self addShareDestinationView];
-            [self checkPasscode];
-        }
-        
-        if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
-            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
+            [self openAppWithLoginRequired:NO];
+            [checker sendExtensionsWithoutNoDStats];
         }
     } else {
-        [self requireLogin];
+        [self openAppWithLoginRequired:YES];
     }
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
@@ -223,19 +228,21 @@
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        if (self.loginRequiredNC) {
-            [self.loginRequiredNC dismissViewControllerAnimated:YES completion:nil];
+        [self copyDatabasesFromMainApp];
+        BOOL hasNoDDatabase = [NodesOnDemandMigrationCheckerUseCaseOCWrapper.alloc.init doesExistNodesOnDemandDatabaseWith:self.session];
+        if (self.openAppNC) {
+            [self.openAppNC dismissViewControllerAnimated:YES completion:nil];
             [self initChatAndStartLogging];
             [self fetchAttachments];
         }
-        if (!self.fetchNodesDone) {
-            [self removeLoginRequiredView];
+        if (!self.fetchNodesDone && hasNoDDatabase) {
+            [self removeOpenAppView];
             [self loginToMEGA];
         }
         
         [self checkPasscode];
     } else {
-        [self requireLogin];
+        [self openAppWithLoginRequired:YES];
     }
 }
 
@@ -274,30 +281,6 @@
         }
     } else {
         [[MEGAReachabilityManager sharedManager] reconnect];
-    }
-}
-
-- (void)requireLogin {
-    // The user either needs to login or logged in before the current version of the MEGA app, so there is
-    // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
-    if (!self.loginRequiredNC) {
-        self.loginRequiredNC = [[UIStoryboard storyboardWithName:@"Share"
-                                                          bundle:[NSBundle bundleForClass:[LoginRequiredViewController class]]] instantiateViewControllerWithIdentifier:@"LoginRequiredNavigationControllerID"];
-        
-        LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
-        loginRequiredVC.navigationItem.title = NSLocalizedString(@"MEGA", nil);
-        loginRequiredVC.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
-        
-        __weak __typeof__(self) weakSelf = self;
-        loginRequiredVC.cancelCompletion = ^{
-            [weakSelf.loginRequiredNC dismissViewControllerAnimated:YES completion:^{
-                [weakSelf hideViewWithCompletion:^{
-                    [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-                }];
-            }];
-        };
-        
-        [self addLoginRequiredView];
     }
 }
 
@@ -409,9 +392,11 @@
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
-            if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
-                if (![fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
-                    MEGALogError(@"Copy item at path failed with error: %@", error);
+            if ([filename containsString:@"megaclient_statecache13"] || [filename containsString:@"karere"]) {
+                if ([fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
+                    MEGALogDebug(@"Copy item at URL: %@ to URL: %@", [groupSupportURL URLByAppendingPathComponent:filename], [applicationSupportDirectoryURL URLByAppendingPathComponent:filename]);
+                } else {
+                    MEGALogError(@"Copy item at URL failed with error: %@", error);
                 }
             }
         }
