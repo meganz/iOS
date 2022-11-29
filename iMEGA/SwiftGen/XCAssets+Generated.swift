@@ -312,6 +312,7 @@ internal enum Asset {
       internal static let poweredByGIPHY = ImageAsset(name: "poweredByGIPHY")
       internal static let privacyWarningIco = ImageAsset(name: "privacy_warning_ico")
       internal static let privateChat = ImageAsset(name: "privateChat")
+      internal static let recurringMeeting = ImageAsset(name: "recurringMeeting")
       internal static let removeMedia = ImageAsset(name: "remove_media")
       internal static let sendChatDisabled = ImageAsset(name: "sendChatDisabled")
       internal static let sendVoiceClipDefault1 = ImageAsset(name: "sendVoiceClipDefault-1")

@@ -3138,3 +3138,5 @@
 "meetings.info.shareOptions.title"="Anyone with this link can join and view the chat.";
 /* HUD message to inform user that the link is in the clipboard */
 "meetings.info.shareOptions.shareLink.linkCopied"="Copied link to the clipboard";
+/* Chat Meetings tab - Section header title for the chat listing screen*/
+"chat.listing.sectionHeader.pastMeetings.title"="Past meetings";

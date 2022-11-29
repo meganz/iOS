@@ -17,6 +17,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var totalUnreadChats = 0
     public var currentChatConnectionStatus = ChatConnectionStatus.invalid
     public var retryPendingConnections_calledTimes = 0
+    public var scheduledMeetingList = [ScheduledMeetingEntity]()
     
     public init(
         fullName: String? = nil,
@@ -104,5 +105,9 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func monitorChatPrivateModeUpdate(forChatId chatId: MEGADomain.HandleEntity) -> AnyPublisher<MEGADomain.ChatRoomEntity, Never> {
         chatPrivateModeUpdatePublisher.eraseToAnyPublisher()
+    }
+    
+    public func scheduledMeetings() -> [ScheduledMeetingEntity] {
+        scheduledMeetingList
     }
 }

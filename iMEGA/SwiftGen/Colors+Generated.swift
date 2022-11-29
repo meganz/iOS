@@ -33,7 +33,11 @@ internal enum Colors {
     }
     internal enum Listing {
       internal static let archiveSwipeActionBackground = ColorAsset(name: "archiveSwipeActionBackground")
+      internal static let meetingTimeTextColor = ColorAsset(name: "meetingTimeTextColor")
       internal static let moreSwipeActionBackground = ColorAsset(name: "moreSwipeActionBackground")
+      internal static let sectionBackground = ColorAsset(name: "sectionBackground")
+      internal static let sectionBottomDividerBackground = ColorAsset(name: "sectionBottomDividerBackground")
+      internal static let sectionTitle = ColorAsset(name: "sectionTitle")
       internal static let subtitleText = ColorAsset(name: "subtitleText")
     }
     internal enum ReactionBubble {

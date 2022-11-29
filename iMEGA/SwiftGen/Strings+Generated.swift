@@ -2999,6 +2999,14 @@ public enum Strings {
         /// Link removed
         public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")
       }
+      public enum Listing {
+        public enum SectionHeader {
+          public enum PastMeetings {
+            /// Past meetings
+            public static let title = Strings.tr("Localizable", "chat.listing.sectionHeader.pastMeetings.title")
+          }
+        }
+      }
       public enum ManageHistory {
         public enum Clearing {
           public enum Custom {

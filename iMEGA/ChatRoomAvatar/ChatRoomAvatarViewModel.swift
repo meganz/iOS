@@ -2,7 +2,9 @@ import MEGADomain
 import Combine
 
 final class ChatRoomAvatarViewModel: ObservableObject {
-    let chatListItem: ChatListItemEntity
+    let title: String
+    let peerHandle: HandleEntity
+    let chatRoomEntity: ChatRoomEntity
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
@@ -18,13 +20,19 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private var loadingAvatarSubscription: AnyCancellable?
     
     private var hasInitiatedFetchingAvatar = false
-
-    init(chatListItem: ChatListItemEntity,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
-        self.chatListItem = chatListItem
+    
+    init(
+        title: String,
+        peerHandle: HandleEntity,
+        chatRoomEntity: ChatRoomEntity,
+        chatRoomUseCase: ChatRoomUseCaseProtocol,
+        userImageUseCase: UserImageUseCaseProtocol,
+        chatUseCase: ChatUseCaseProtocol,
+        userUseCase: UserUseCaseProtocol
+    ) {
+        self.title = title
+        self.peerHandle = peerHandle
+        self.chatRoomEntity = chatRoomEntity
         self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
@@ -55,7 +63,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     
     private func createLoadingChatRoomAvatarTask(isRightToLeftLanguage: Bool) -> Task<Void, Never> {
         Task { [weak self] in
-            let chatId = chatListItem.chatId
+            let chatId = chatRoomEntity.chatId
             do {
                 try await self?.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
             } catch {
@@ -82,11 +90,10 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     }
     
     private func fetchAvatar(isRightToLeftLanguage: Bool) async throws {
-        if chatListItem.group {
-            if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
+        if chatRoomEntity.chatType != .oneToOne {
+            if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatRoomEntity.chatId) {
                 if chatRoom.peerCount == 0 {
-                    if let chatTitle = chatListItem.title,
-                       let avatar = createAvatar(usingName: chatTitle, isRightToLeftLanguage: isRightToLeftLanguage) {
+                    if let avatar = createAvatar(usingName: title, isRightToLeftLanguage: isRightToLeftLanguage) {
                         await updatePrimaryAvatar(avatar)
                     }
                 } else {
@@ -132,28 +139,27 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                 }
             }
         } else {
-            if let avatar = try await createAvatar(withHandle: chatListItem.peerHandle, isRightToLeftLanguage: isRightToLeftLanguage) {
+            if let avatar = try await createAvatar(withHandle: peerHandle, isRightToLeftLanguage: isRightToLeftLanguage) {
                 await updatePrimaryAvatar(avatar)
             }
             
-            subscribeToAvatarUpdateNotification(forHandles: [chatListItem.peerHandle])
+            subscribeToAvatarUpdateNotification(forHandles: [peerHandle])
             try Task.checkCancellation()
 
-            let downloadedAvatar = try await downloadAvatar(forHandle: chatListItem.peerHandle)
+            let downloadedAvatar = try await downloadAvatar(forHandle: peerHandle)
             await updatePrimaryAvatar(downloadedAvatar)
         }
     }
     
     private func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool) async throws -> UIImage? {
-        let name = try await username(forUserHandle: handle, shouldUseMeText: false)
+        let chatTitle = try await username(forUserHandle: handle, shouldUseMeText: false) ?? title
         
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
-              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle),
-              let chatTitle = name ?? chatListItem.title  else {
+              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return nil
         }
         
-        return try await userImageUseCase.createAvatar(withUserHandle: chatListItem.peerHandle,
+        return try await userImageUseCase.createAvatar(withUserHandle: peerHandle,
                                                        base64Handle: base64Handle,
                                                        avatarBackgroundHexColor: avatarBackgroundHexColor,
                                                        backgroundGradientHexColor: nil,
@@ -192,7 +198,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         if userHandle == userUseCase.myHandle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
-            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatId: chatListItem.chatId)
+            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatId: chatRoomEntity.chatId)
             return usernames.first
         }
     }
