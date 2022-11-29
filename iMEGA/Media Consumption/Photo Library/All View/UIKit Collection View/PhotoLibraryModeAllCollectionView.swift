@@ -7,6 +7,7 @@ struct PhotoLibraryModeAllCollectionView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             PhotoLibraryCollectionViewRepresenter(viewModel: viewModel)
+                .ignoresSafeArea(edges: .bottom)
             PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
         }
     }
