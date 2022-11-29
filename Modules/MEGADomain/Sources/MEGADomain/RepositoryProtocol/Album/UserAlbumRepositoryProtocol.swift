@@ -67,4 +67,13 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     ///   - success: means the number of photos deleted from the album successfully
     ///   - failure: means the number of photos deleted from the album unsuccessfully
     func deleteAlbumElements(albumId: HandleEntity, elementIds: [HandleEntity]) async throws -> AlbumElementsResultEntity
+    
+    // MARK: - Album Cover
+    
+    /// Update Album Cover
+    /// - Parameters:
+    ///   - albumId: The album need to be updated
+    ///   - elementId: The album element to be set as cover
+    /// - Returns: The album element id to be set as the new cover
+    func updateAlbumCover(for albumId: HandleEntity,elementId: HandleEntity) async throws -> HandleEntity
 }

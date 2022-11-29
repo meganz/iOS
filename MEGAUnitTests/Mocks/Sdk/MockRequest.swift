@@ -10,9 +10,11 @@ final class MockRequest: MEGARequest {
     var megaSet: MEGASet?
     var megaSetName: String?
     var updateSet = true
+    var updateSetCover = false
     var megaSetElementName: String?
     var megaElementInSet: [MEGASetElement] = []
     var megaSetElementOrder: Int64 = 0
+    var megaCoverId: HandleEntity = HandleEntity.invalid
     
     init(handle: HandleEntity) {
         self.handle = handle
@@ -20,7 +22,7 @@ final class MockRequest: MEGARequest {
         super.init()
     }
     
-    override var nodeHandle: HandleEntity { handle }
+    override var nodeHandle: HandleEntity { updateSetCover ? megaCoverId : handle }
     override var set: MEGASet? { megaSet }
     override var text: String? { updateSet ? megaSetName : megaSetElementName }
     override var parentHandle: UInt64 { updateSet ? megaSetHandle : megaSetElementHandle }

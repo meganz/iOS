@@ -59,4 +59,12 @@ extension MockSdk {
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
+    
+    override func putSetCover(_ sid: MEGAHandle, eid: MEGAHandle, delegate: MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1)
+        mockRequest.megaCoverId = eid
+        mockRequest.updateSetCover = true
+        
+        delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
 }
