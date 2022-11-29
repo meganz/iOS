@@ -38,6 +38,7 @@ final class PhotoCellViewModel: ObservableObject {
     }
     
     @Published var isFavorite: Bool = false
+    @Published var editMode: EditMode = .inactive
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
@@ -60,6 +61,7 @@ final class PhotoCellViewModel: ObservableObject {
         configZoomState(with: viewModel)
         configSelection()
         subscribeToPhotoFavouritesChange()
+        self.selection.$editMode.assign(to: &$editMode)
     }
     
     
