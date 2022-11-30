@@ -43,10 +43,6 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
         isRawImage
     }
     
-    public func isRawImageWithThumbnail(_ node: NodeEntity) -> Bool {
-        isRawImage(node.name) && node.hasThumbnail
-    }
-    
     public func isGifImage(_ name: FileNameEntity) -> Bool {
         isGifImage
     }

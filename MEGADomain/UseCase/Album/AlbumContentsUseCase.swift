@@ -41,7 +41,7 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     }
     
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
-        let allPhotos = try await fileSearchRepo.allPhotos()
+        let allPhotos = try await fileSearchRepo.allPhotos().filter { $0.hasThumbnail }
         return await filter(photos: allPhotos, forAlbum: album)
     }
     
@@ -56,7 +56,7 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     private func filter(photos: [NodeEntity], forAlbum album: AlbumEntity) async -> [NodeEntity] {
         var nodes = [NodeEntity]()
         if album.type == .raw {
-            nodes = photos.filter { mediaUseCase.isRawImageWithThumbnail($0) }
+            nodes = photos.filter { mediaUseCase.isRawImage($0.name) }
         } else if album.type == .gif {
             nodes = photos.filter { mediaUseCase.isGifImage($0.name) }
         }

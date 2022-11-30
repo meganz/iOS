@@ -12,8 +12,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
             photoUseCase: MockPhotoLibraryUseCase(allPhotos: [], allPhotosFromCloudDriveOnly: [], allPhotosFromCameraUpload: []),
             mediaUseCase: MockMediaUseCase(isGifImage: true),
             fileSearchRepo: MockFileSearchRepository(nodes: [
-                NodeEntity(name: "sample1.gif", handle: 1),
-                NodeEntity(name: "sample2.gif", handle: 2)
+                NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true),
+                NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true)
             ])
         )
     }

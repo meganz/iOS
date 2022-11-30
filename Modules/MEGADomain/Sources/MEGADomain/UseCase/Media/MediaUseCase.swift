@@ -8,7 +8,6 @@ public protocol MediaUseCaseProtocol {
     func isVideo(_ name: FileNameEntity) -> Bool
     func isImage(_ name: FileNameEntity) -> Bool
     func isRawImage(_ name: FileNameEntity) -> Bool
-    func isRawImageWithThumbnail(_ node: NodeEntity) -> Bool
     func isGifImage(_ name: FileNameEntity) -> Bool
 }
 
@@ -36,10 +35,6 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     
     public func isRawImage(_ name: FileNameEntity) -> Bool {
         RawImageFileExtensionEntity().imagesSupportedExtensions.contains(NSString(string: name).pathExtension.lowercased())
-    }
-    
-    public func isRawImageWithThumbnail(_ node: NodeEntity) -> Bool {
-        isRawImage(node.name) && node.hasThumbnail
     }
     
     public func isGifImage(_ name: FileNameEntity) -> Bool {
