@@ -8,7 +8,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true),
             NodeEntity(name: "3.cr2", handle: 3, hasThumbnail: false),
             NodeEntity(name: "4.dng", handle: 4, hasThumbnail: false),
-            NodeEntity(name: "5.gif", handle: 5)]
+            NodeEntity(name: "5.gif", handle: 5, hasThumbnail: true)]
     
     func testLoadCameraUploadNode_whenLoadingFavouriteAlbum_shouldReturnOneRootNode() async throws {
         let sut = AlbumListUseCase(
@@ -19,13 +19,22 @@ final class AlbumListUseCaseTests: XCTestCase {
         XCTAssertNotNil(rootNode)
     }
     
-    func testLoadAlbums_whenLoadingRawAndGifSystemAlbums_shouldReturnTwoAlbumEntity() async throws {
+    func testLoadAlbums_whenLoadingRawSystemAlbum_shouldReturnRawAlbumEntity() async throws {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(nodes: photos),
-            mediaUseCase: MockMediaUseCase(isRawImage: true, isGifImage: true))
+            mediaUseCase: MockMediaUseCase(isRawImage: true))
         let albums = try await sut.loadAlbums()
-        XCTAssert(albums.count == 2)
+        XCTAssert(albums.count == 1)
+    }
+    
+    func testLoadAlbums_whenLoadingGifSystemAlbum_shouldReturnGifAlbumEntity() async throws {
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            fileSearchRepository: MockFileSearchRepository(nodes: photos),
+            mediaUseCase: MockMediaUseCase(isGifImage: true))
+        let albums = try await sut.loadAlbums()
+        XCTAssert(albums.count == 1)
     }
 
 }

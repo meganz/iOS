@@ -47,7 +47,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
     // MARK: - Private
     
     private func loadSystemAlbums() async throws -> [AlbumEntity] {
-        let allPhotos = try await fileSearchRepository.allPhotos()
+        let allPhotos = try await fileSearchRepository.allPhotos().filter { $0.hasThumbnail }
         return await createSystemAlbums(allPhotos)
     }
     
@@ -58,7 +58,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         var numOfRawPhotos = 0
         
         photos.forEach { photo in
-            if mediaUseCase.isRawImageWithThumbnail(photo) {
+            if mediaUseCase.isRawImage(photo.name) {
                 numOfRawPhotos += 1
                 if coverOfRawPhoto == nil { coverOfRawPhoto = photo }
             } else if mediaUseCase.isGifImage(photo.name){
@@ -80,10 +80,6 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
     }
     
     private func onNodesUpdate(_ nodes: [NodeEntity]) {
-        let otherAlbumsNeedUpdate = nodes.contains(where: { mediaUseCase.isRawImage($0.name) || mediaUseCase.isGifImage($0.name) })
-
-        if otherAlbumsNeedUpdate {
-            callback?()
-        }
+        callback?()
     }
 }
