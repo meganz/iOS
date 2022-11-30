@@ -17,12 +17,12 @@ import System
         DDLog.add(DDOSLogger.sharedInstance)
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let folderURL = documentDirectory.appendingPathComponent("MEGAiOS/Logs")
-        let manager = CompressingLogFileManager(logsDirectory: folderURL.path)
+        let manager = DDLogFileManagerDefault(logsDirectory: folderURL.path)
         let fileLogger = DDFileLogger(logFileManager: manager)
         fileLogger.rollingFrequency = 0
         fileLogger.logFileManager.maximumNumberOfLogFiles = 20
         fileLogger.maximumFileSize = 10 * 1024 * 1024 // 10 MB
-        fileLogger.logFileManager.logFilesDiskQuota = 20 * 1024 * 1024 // 20 MB
+        fileLogger.logFileManager.logFilesDiskQuota = 200 * 1024 * 1024 // 200 MB
         fileLogger.logFormatter = CustomDDLogFormatter()
         DDLog.add(fileLogger)
         return Logger(fileLogger: fileLogger)
