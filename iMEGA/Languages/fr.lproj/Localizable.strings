@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Attention";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Veuillez donner à l’appli MEGA l’autorisation d’accéder à votre appareil photo dans vos Réglages";
+"cameraPermissions"="Veuillez donner à MEGA l’autorisation d’accéder à votre Appareil photo dans Réglages";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Veuillez donner à l’appli MEGA l’autorisation d’accéder à votre microphone dans vos réglages";
+"microphonePermissions"="Veuillez donner à MEGA l’autorisation d’accéder à votre Micro dans Réglages";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Veuillez donner à l’appli MEGA l’autorisation d’accéder à votre photothèque dans Réglages";
+"photoLibraryPermissions"="Veuillez donner à MEGA l’autorisation d’accéder à vos Photos dans Réglages";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Votre compte a été activé. Veuillez vous connecter.";
 /*  */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="La Corbeille est vide";
+"cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish bin";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Diaporama";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Options du diaporama";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Afficher les images des sous-dossiers dans le diaporama";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Vitesse du diaporama";
 /* Slideshow Speed preference slow */
@@ -327,7 +327,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nouveau dossier";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Découverte de médias";
+"cloudDrive.menu.mediaDiscovery.title"="Découverte des médias";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Fermer";
 /* Hint text shown on the create folder alert. */
@@ -591,7 +591,7 @@
 /* Message shown when some shares have been left */
 "sharesLeft"="Les partages ont été quittés";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Suppression du partage";
+"removeSharing"="Supprimer le partage";
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="Supprimer le partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -773,7 +773,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Version de la trousse SDK de MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Version de la trousse SDK de MEGA chat";
+"megachatSdkVersion"="Version de la trousse SDK de MEGA Chat";
 /* Link to the public code of the app */
 "View Source Code"="Visualiser le code source";
 /* Title for the section "Acknowledgements" of the app */
@@ -801,7 +801,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sur MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Vider la Corbeille";
+"emptyRubbishBin"="Empty Rubbish bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tous les éléments dans la Corbeille seront supprimés";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1217,7 +1217,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Aperçus d’URL enrichis";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Améliorez l’expérience MEGA chat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
+"richPreviewsFooter"="Améliorez l’expérience du dialogue en ligne MEGA Chat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Appels vocaux et vidéo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Autoriser l’accès à Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Veuillez donner à l’appli MEGA l’autorisation d’accéder à Photos pour partager vos photos et vidéos.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Veuillez donner à MEGA l’autorisation d’accéder à Photos pour partager vos photos et vidéos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1743,17 +1743,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Vous êtes sur le point de supprimer les historiques de version de tous les fichiers. Tout fichier partagé avec vous par un contact devra être supprimé par ce contact.\n\nVeuillez noter que les fichiers actuels ne seront pas supprimés.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Programmateur de vidage de la Corbeille";
+"Rubbish-Bin Cleaning Scheduler:"="Rubbish bin emptying scheduler";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Supprimer les fichiers de plus de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Pour une période de conservation plus longue, [S]Passez à un compte Pro[/S]";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La Corbeille est vidée pour vous automatiquement, au minimum tous les 7 jours et au maximum tous les 30 jours.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish bin is emptied for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La Corbeille peut être vidée pour vous automatiquement. La fréquence minimale est 7 jours.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish bin can be emptied for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la Corbeille ou pour définir une période de conservation plus longue, vous devez détenir un abonnement Pro.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish bin emptying scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Voulez-vous fermer toutes les autres sessions ? Vous serez déconnecté de toutes les autres sessions, sauf de la session actuelle.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2667,7 +2667,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Vous êtes la nouvelle ou le nouvel hôte";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Nous mettons MEGA chat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
+"meetings.incompatibility.warningMessage"="Nous mettons le dialogue en ligne MEGA Chat à niveau. Vos appels pourraient ne pas être connectés en raison d’incompatibilité des versions, à moins qu’appelant et appelés aient aussi mis à niveau leurs applis MEGA vers la version la plus récente.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Haut-parleur";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -3122,6 +3122,8 @@
 "account.suspension.message.copyright"="Votre compte a été désactivé en raison de violations du droit d’auteur. Nous vous avons envoyé un courriel avec plus de renseignements à ce sujet.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Le compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, tel qu’une violation des droits d’autrui, un partage ou une importation de données illégales, ou un abus du système.";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="Ouvrez l’appli MEGA et connectez-vous afin de poursuivre.";
 /* Account Storage title label of used storage size */
 "account.storage.storageUsed.title"="Espace de stockage utilisé";
 /* Account Storage title label of used transfer size */
@@ -3130,3 +3132,11 @@
 "account.expired.proFlexi.title"="Le compte est désactivé";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="Votre compte Pro Flexi a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte. Pour effectuer un paiement et réactiver votre abonnement, connectez-vous à MEGA dans un navigateur.";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="Lien de la réunion";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="Quiconque a ce lien peut se joindre à la réunion et lire la conversation de la réunion.";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="Le lien a été copié dans le presse-papiers";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="Réunions antérieures";

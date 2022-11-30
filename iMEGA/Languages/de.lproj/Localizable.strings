@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Achtung";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Bitte gewähren Sie der MEGA-App Zugriff auf Ihre Kamera";
+"cameraPermissions"="Please give MEGA permission to access your Camera in Settings";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Bitte erlauben Sie der MEGA-App den Zugriff auf Ihr Mikrofon (in den Einstellungen)";
+"microphonePermissions"="Please give MEGA permission to access your Microphone in Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Bitte geben Sie der MEGA-App in den Einstellungen Zugriff auf Ihre Fotos";
+"photoLibraryPermissions"="Please give MEGA permission to access your Photos in Settings";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Ihr Account wurde aktiviert. Bitte melden Sie sich an.";
 /*  */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Bitte melden Sie sich an.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie sich zunächst einloggen. Bitte benutzen Sie hierzu ihre bestehende E-Mail-Adresse. Klicken Sie dann erneut auf den Bestäigungslink.";
+"needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie angemeldet sein. Bitte melden Sie sich mit Ihrer aktuellen E-Mail-Adresse an und tippen Sie anschließend erneut auf Ihren Bestätigungslink.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Message for login option on Create Account screen */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Keine Treffer";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Der Papierkorb ist leer";
+"cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish bin";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Diashow";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Diashow-Optionen";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Bilder aus Unterordnern in Diashow zeigen";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Diashow-Geschwindigkeit";
 /* Slideshow Speed preference slow */
@@ -801,7 +801,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Auf MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Papierkorb leeren";
+"emptyRubbishBin"="Empty Rubbish bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Ihr Papierkorb wird unwiederbringlich geleert";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="MEGA Zugriff auf Photos gewähren";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Möchten Sie Photos und Videos auf MEGA hochladen?";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Please give MEGA permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon und Kamera aktivieren";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1743,17 +1743,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Sie löschen die Versionshistorie aller Dateien. Dateiversionen in Ordnerfreigaben eines Kontakts müssen durch diesen gelöscht werden.\n\nBitte beachten Sie: Die aktuelle Version jeder Datei bleibt erhalten.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Automatische Leerung des Papierkorbs";
+"Rubbish-Bin Cleaning Scheduler:"="Rubbish bin emptying scheduler";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Automatische Löschung nach";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Für eine längere Aufbewahrungsfrist führen Sie ein [S]Upgrade auf Pro[/S] durch";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Die Leerung des Papierkorbs erfolgt automatisch. Die Aufbewahrungsfrist beträgt zwischen sieben und 30 Tagen.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish bin is emptied for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Der Papierkorb kann für Sie automatisch geleert werden. Die minimale Aufbewahrungsdauer beträgt sieben Tage.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish bin can be emptied for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Eine Verlängerung der Aufbewahrungsfrist oder das Abschalten der automatischen Leerung erfordert ein Pro-Abonnement.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish bin emptying scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Alle anderen Logins beenden? Sie werden überall außer auf diesem Gerät ausgeloggt.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -3122,11 +3122,21 @@
 "account.suspension.message.copyright"="Der Account wurde aufgrund von Urheberrechtsverletzungen gesperrt. Wir haben Ihnen hierzu eine E-Mail mit weiteren Informationen gesendet.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Der Account wurde wegen Verletzung der MEGA-Nutzungsbedingungen (Verletzung der Rechte Dritter, Import oder Verteilung illegaler Dateien oder Systemmissbrauch) geschlossen.";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="Öffnen Sie die MEGA-App und melden Sie sich an, um fortzufahren.";
 /* Account Storage title label of used storage size */
-"account.storage.storageUsed.title"="Storage used";
+"account.storage.storageUsed.title"="Speichernutzung";
 /* Account Storage title label of used transfer size */
-"account.storage.transferUsed.title"="Transfer used";
+"account.storage.transferUsed.title"="Transfernutzung";
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Account deaktiviert";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="Ihr Pro-Flexi-Account wurde aufgrund einer fehlenden Zahlung deaktiviert oder Sie haben Ihr Abonnement gekündigt. Sie können auf die Daten in Ihrem Account nicht zugreifen. Um eine Zahlung vorzunehmen und Ihr Abonnement erneut zu aktivieren, melden Sie sich in einem Browser bei MEGA an.";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="Meetinglink";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="Mit diesem Link kann jeder dem Meeting beitreten und den Meeting-Chat einsehen.";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="Link in Zwischenablage kopiert";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="Vergangene Meetings";

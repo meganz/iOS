@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Внимание";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к камере в настройках";
+"cameraPermissions"="Пожалуйста, откройте MEGA доступ к камере в «Настройках»";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Пожалуйста, разрешите приложению MEGA использовать микрофон в меню настроек";
+"microphonePermissions"="Пожалуйста, откройте MEGA доступ к микрофону в «Настройках»";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Пожалуйста, предоставьте приложению MEGA доступ к библиотеке фотографий в настройках";
+"photoLibraryPermissions"="Пожалуйста, откройте MEGA доступ к «Фотографиям» в «Настройках»";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Ваш аккаунт активирован. Пожалуйста, авторизируйтесь.";
 /*  */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свою учётную запись. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке подтверждения.";
+"needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свой аккаунт. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке подтверждения.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Войти";
 /* Message for login option on Create Account screen */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Настройки слайд-шоу";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Включать в слайд-шоу изображения из вложенных папок";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Скорость слайд-шоу";
 /* Slideshow Speed preference slow */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Разрешить доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, дайте приложению MEGA разрешение на доступ к фотографиям для обмена фото и видео.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, откройте MEGA доступ к «Фотографиям» для обмена фото и видео.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -3122,6 +3122,8 @@
 "account.suspension.message.copyright"="Аккаунт заблокирован из-за нарушения авторских прав. Мы отправили вам электронное письмо с дополнительной информацией об этом.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Аккаунт заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц, обмен и импорт незаконных данных или злоупотребление системой.";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="Откройте приложение MEGA и войдите, чтобы продолжить.";
 /* Account Storage title label of used storage size */
 "account.storage.storageUsed.title"="Использованный объём";
 /* Account Storage title label of used transfer size */
@@ -3130,3 +3132,11 @@
 "account.expired.proFlexi.title"="Аккаунт деактивирован";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="Ваш аккаунт Pro Flexi был деактивирован из-за сбоя оплаты или из-за того, что вы отменили подписку. Вы не сможете получить доступ к данным, хранящимся в вашем аккаунте. Для оплаты и возобновления подписки войдите в MEGA через веб-браузер.";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="Ссылка на встречу";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="Любой пользователь с этой ссылкой может присоединиться к встрече и просмотреть чат встречи.";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="Ссылка скопирована в буфер обмена";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="Прошедшие встречи";

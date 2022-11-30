@@ -13,9 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Apply to the duplicate</string>
+        <string>Aplicar al duplicado</string>
+        <key>many</key>
+        <string>Aplicar a los %d duplicados</string>
         <key>other</key>
-        <string>Apply to all %d duplicates</string>
+        <string>Aplicar a los %d duplicados</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -663,7 +665,7 @@
         <key>many</key>
         <string>Estas carpetas solo se pueden compartir en solo lectura porque son carpetas de backup. Cualquier cambio en su contenido podría desactivar las copias de seguridad.</string>
         <key>other</key>
-        <string>Estas carpetas solo se pueden compartir en solo lectura porque son carpetas de backup. Cualquier cambio en su contenido podría desactivar las copias de seguridad.</string>
+        <string>Estas carpetas solo se pueden compartir en solo lectura porque son carpetas de backup. Cualquier cambio en su contenido podría desactivar los backups.</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>

@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="請注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="請在設定中允許MEGA App使用您的相機";
+"cameraPermissions"="請在設定中允許MEGA存取您的相機的權限";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="請於您的設定中允許MEGA應用程式存取您麥克風的權限";
+"microphonePermissions"="請在設定允許MEGA存取您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="請在設定中允許MEGA App存取您的相簿";
+"photoLibraryPermissions"="請在設定中允許MEGA存取您照片的權限";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
 /*  */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="請登入您的帳號。";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="您必須登入以完成您的電子郵件地址變更作業。請您使用目前的電子郵件地址重新登入，然後再次點擊您的確認連結。";
+"needToBeLoggedInToCompleteYourEmailChange"="您必須登入才能完成您的電子郵件地址變更。請您使用目前的電子郵件地址重新登入，然後再次點擊您的確認連結。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
 /* Message for login option on Create Account screen */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="幻燈片選項";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="幻燈片播放包含子資料夾的圖片";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="幻燈片播放速度";
 /* Slideshow Speed preference slow */
@@ -801,7 +801,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="於MEGA上";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="清空垃圾筒";
+"emptyRubbishBin"="空的垃圾筒";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="所有垃圾筒中的項目將被刪除";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="允許存取照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="請授予MEGA App存取照片的權限，以進行照片和影片的共享。";
+"Please give the MEGA App permission to access Photos to share photos and videos."="請允許MEGA存取照片的權限以進行照片和影片的共享。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="啟用麥克風和相機";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1743,17 +1743,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="您即將刪除所有檔案的版本歷史記錄。從聯絡人共享給您的任何檔案版本都只有對方能刪除。\n\n請注意，當前的這個檔案不會被刪除。";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="垃圾筒清理時程";
+"Rubbish-Bin Cleaning Scheduler:"="垃圾筒清空排程";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="刪除早於…的檔案";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="想要更長的保留期限，請[S]升級到Pro帳戶[/S]";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾筒會自動清除。最短清除期限為7天，最長清除期限為30天。";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾筒會自動為您清空。最短期限為7天，最長期限為30天。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾筒可執行自動清除。最短清除期限為7天。";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾筒可自動為您清空。 最短期限為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾筒定時清理排程或設定更長的保留期限，您需要訂閱Pro方案。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="若要停用垃圾筒自動清空排程或設定更長的保留期限，您需要訂閱Pro方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他工作階段嗎？這將使您登出除了目前頁面之外的所有其他進行中的工作階段。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1949,7 +1949,7 @@
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
 "Message"="訊息";
 /* Title of the button in the contact info screen to start an audio call */
-"Call"="音樂";
+"Call"="語音";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="影片";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
@@ -3122,6 +3122,8 @@
 "account.suspension.message.copyright"="帳戶因侵犯版權而被暫停。我們向您發送了一封電子郵件，其中有包含關於此的更多訊息。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="帳戶因違反MEGA服務條款而被終止，例如侵犯他人權益、共享和匯入非法資料、或濫用系統資源行為。";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="開啟MEGA應用程式並登入以繼續";
 /* Account Storage title label of used storage size */
 "account.storage.storageUsed.title"="已使用的儲存空間";
 /* Account Storage title label of used transfer size */
@@ -3130,3 +3132,11 @@
 "account.expired.proFlexi.title"="帳戶已停用";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="由於付款失敗或您已取消訂閱，您的Pro Flexi帳戶已被停用。您將無法存取儲存在您帳戶中的資料。若要付款並重新啟用您的訂閱，請透過網頁瀏覽器登入MEGA進行。";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="會議連結";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="知道此連結的任何人都可以加入會議並查看會議對話。";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="連結已複製到剪貼簿";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="過去的會議";

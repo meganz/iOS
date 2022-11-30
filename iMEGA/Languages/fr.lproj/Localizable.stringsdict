@@ -13,9 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Apply to the duplicate</string>
+        <string>Appliquer au doublon</string>
+        <key>many</key>
+        <string>Appliquer à tous les %d de doublons</string>
         <key>other</key>
-        <string>Apply to all %d duplicates</string>
+        <string>Appliquer à tous les %d doublons</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>

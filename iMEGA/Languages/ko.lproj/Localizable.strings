@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="주목";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="설정에서 MEGA 앱에 카메라 접근 권한을 주세요";
+"cameraPermissions"="설정에서 MEGA가 카메라에 접근할 수 있는 권한을 주세요";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="설정에서 MEGA 앱에 마이크 접근 권한을 주세요";
+"microphonePermissions"="설정에서 MEGA가 마이크에 접근할 수 있는 권한을 주세요";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="설정에서 MEGA 앱에 사진 라이브러리 접근 권한을 주세요";
+"photoLibraryPermissions"="설정에서 MEGA가 사진에 접근할 수 있는 권한을 주세요";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="계정이 활성화되었습니다. 로그인 하세요.";
 /*  */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="이메일 변경을 완료하려면 로그인하여야 합니다. 현재 이메일 주소로 다시 로그인한 후, 확인 링크를 다시 클릭하세요.";
+"needToBeLoggedInToCompleteYourEmailChange"="이메일 변경을 완료하려면 로그인하여야 합니다. 현재 이메일 주소로 다시 로그인한 후, 확인 링크를 다시 탭하세요.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="로그인";
 /* Message for login option on Create Account screen */
@@ -517,7 +517,7 @@
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="발견된 미디어 없음";
 /* Albums title within CU tab */
-"cameraUploads.albums.title"="앨범";
+"cameraUploads.albums.title"="사진첩";
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="즐겨찾기";
 /* Gif album title */
@@ -747,7 +747,7 @@
 /* Title of the switch to config whether to upload all burst photos */
 "Upload All Burst Photos"="모든 연속 촬영 사진 업로드";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="숨긴 앨범 업로드";
+"Upload Hidden Album"="숨긴 사진첩 업로드";
 /* Footer description when upload videos for Live Photos is enabled */
 "The video and the photo in each Live Photo will be uploaded."="라이브 포토의 사진과 동영상 버전이 업로드됩니다.";
 /* Footer description when upload videos for Live Photos is disabled */
@@ -759,13 +759,13 @@
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="공유된 앨범 업로드";
+"Upload Shared Albums"="공유된 사진첩 업로드";
 /* Footer description for Upload Shared Albums title when option enabled */
 "Shared Albums from your device's Photos app will be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드될 것입니다.";
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드되지 않을 것입니다.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload Albums Synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
+"Upload Albums Synced from iTunes"="iTunes에서 동기화된 사진첩 업로드";
 /* Footer description for upload synced albums title */
 "Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="동기화된 앨범은 당신의 기기의 사진 앱이 iTunes에서 공기화한 사진 또는 동영상이 저장되는 곳입니다.";
 /* App means “Application” */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="사진첩에 대한 접근 허용";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="MEGA 앱이 사진과 동영상을 공유하기 위해 사진에 접근할 수 있는 권한을 주세요.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="MEGA가 사진과 동영상을 공유하기 위해 사진에 접근할 수 있는 권한을 주세요.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1751,7 +1751,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="휴지통은 자동으로 비워집니다. 최단 기간은 7일이며 최장 기간은 30일입니다.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="휴지통은 자동으로 비워집니다. 최소 기간은 7일입니다.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="휴지통은 자동으로 비워집니다. 최단 기간은 7일입니다.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="휴지통 비우기 스케줄러를 해제하거나 더 긴 보유 기간을 설정하려면, Pro 요금제를 구독하여야 합니다.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -2127,7 +2127,7 @@
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="업로드(%d)";
 /* Used in Photos app browser album listing screen. */
-"Albums"="앨범";
+"Albums"="사진첩";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="선택 해제";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -3122,6 +3122,8 @@
 "account.suspension.message.copyright"="저작권 침해로 계정이 정지되었습니다. 이것에 대한 자세한 정보를 이메일로 보내드렸습니다.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="타인의 권리 침해, 불법 데이터의 공유 및 내보내기, 시스템 오용 등의 MEGA 이용 약관 위반으로 계정이 제거되었습니다.";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="계속하려면 MEGA를 열고 로그인하세요.";
 /* Account Storage title label of used storage size */
 "account.storage.storageUsed.title"="이용한 저장소";
 /* Account Storage title label of used transfer size */
@@ -3130,3 +3132,11 @@
 "account.expired.proFlexi.title"="계정 비활성화됨";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="당신의 Pro Flexi 계정은 결제 실패 또는 구독 취소로 인해 비활성화 되었습니다. 계정 안에 있는 데이터에 접근하지 못할 것입니다. 결제를 하고 구독을 재활성화 하려면, 브라우저에서 MEGA에 로그인 하세요.";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="회의 링크";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="클립보드에 링크 복사됨";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="지난 회의";

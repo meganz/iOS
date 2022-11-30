@@ -13,9 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Apply to the duplicate</string>
+        <string>Zastosuj do duplikatu</string>
+        <key>few</key>
+        <string>Zastosuj do wszystkich %d duplikatów</string>
+        <key>many</key>
+        <string>Zastosuj do wszystkich %d duplikatów</string>
         <key>other</key>
-        <string>Apply to all %d duplicates</string>
+        <string>Zastosuj do wszystkich %d duplikatów</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -729,13 +733,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ten folder może być udostępniony tylko do odczytu, ponieważ jest to folder kopii zapasowej. Wszelkie zmiany w jego zawartości mogą uniemożliwić tworzenie kopii zapasowych.</string>
+        <string>Ten katalog może być udostępniony tylko do odczytu, ponieważ jest to katalog kopii zapasowej. Wszelkie zmiany w jego zawartości mogą uniemożliwić tworzenie kopii zapasowych.</string>
         <key>few</key>
-        <string>Foldery te mogą być udostępniane tylko do odczytu, ponieważ są to foldery kopii zapasowych. Wszelkie zmiany w ich zawartości mogą spowodować wyłączenie kopii zapasowych.</string>
+        <string>Katalogi te mogą być udostępniane tylko do odczytu, ponieważ są to katalogi kopii zapasowych. Wszelkie zmiany w ich zawartości mogą spowodować wyłączenie kopii zapasowych.</string>
         <key>many</key>
-        <string>Foldery te mogą być udostępniane tylko do odczytu, ponieważ są to foldery kopii zapasowych. Wszelkie zmiany w ich zawartości mogą spowodować wyłączenie kopii zapasowych.</string>
+        <string>Katalogi te mogą być udostępniane tylko do odczytu, ponieważ są to katalogi kopii zapasowych. Wszelkie zmiany w ich zawartości mogą spowodować wyłączenie kopii zapasowych.</string>
         <key>other</key>
-        <string>Foldery te mogą być udostępniane tylko do odczytu, ponieważ są to foldery kopii zapasowych. Wszelkie zmiany w ich zawartości mogą spowodować wyłączenie kopii zapasowych.</string>
+        <string>Katalogi te mogą być udostępniane tylko do odczytu, ponieważ są to katalogi kopii zapasowych. Wszelkie zmiany w ich zawartości mogą spowodować wyłączenie kopii zapasowych.</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>
