@@ -31,9 +31,9 @@
 /* Alert title to attract attention */
 "attention"="Atenção";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Você deve dar permissão ao MEGA para acessar a sua Câmera nos Ajustes";
+"cameraPermissions"="Você deve dar permissão ao MEGA para acessar a sua câmera nos Ajustes";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Ajuste as Configurações do seu dispositivo para permitir que o MEGA acesse o seu microfone";
+"microphonePermissions"="Você deve dar permissão ao MEGA para acessar o seu microfone nos Ajustes";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Você deve dar permissão ao MEGA para acessar às suas fotos nos Ajustes";
 /* Message shown when the user clicks on a confirm account link that has already been used */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Você precisa estar logado para completar a sua mudança de email. Por favor, faça login novamente com o seu endereço de email atual e, em seguida, clique novamente no link de confirmação.";
+"needToBeLoggedInToCompleteYourEmailChange"="Você precisa estar logado para completar a sua mudança de e-mail. Por favor, faça login novamente com o seu endereço de e-mail atual e, em seguida, toque novamente no link de confirmação.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Entrar";
 /* Message for login option on Create Account screen */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opções da apresentação de slides";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Incluir imagens em subpastas na apresentação de slides";
+"slideshow.preferenceSetting.mediaInSubFolders"="Incluir imagens de subpastas na apresentação de slides";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Velocidade da apresentação de slides";
 /* Slideshow Speed preference slow */
@@ -327,7 +327,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nova Pasta";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Descobrir Mídias";
+"cloudDrive.menu.mediaDiscovery.title"="Galeria multimídia";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Sair";
 /* Hint text shown on the create folder alert. */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir acesso ao Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Permita ao aplicativo do MEGA acessar o Fotos para poder compartilhar fotos e vídeos.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Você deve dar permissão ao MEGA para acessar Fotos para compartilhar as suas fotos e os seus vídeos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Ativar microfone e câmera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -3122,6 +3122,8 @@
 "account.suspension.message.copyright"="Conta suspensa devido a infrações de direitos autorais. Enviamos um email com mais informações.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Conta encerrada devido a uma infração dos Termos de serviço do MEGA, como abuso dos direitos de terceiros, compartilhamento e importação de dados ilegais ou abuso do sistema.";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="Abra o aplicativo do MEGA e faça o login para continuar";
 /* Account Storage title label of used storage size */
 "account.storage.storageUsed.title"="Armazenamento usado";
 /* Account Storage title label of used transfer size */
@@ -3130,3 +3132,11 @@
 "account.expired.proFlexi.title"="Conta desativada";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="A sua conta Pro Flexi foi desativada porque o pagamento falhou ou porque você cancelou a sua assinatura. Já não será possível acessar os dados armazenados na sua conta. Para fazer o pagamento e assim reativar a sua assinatura, faça login no MEGA por meio de um navegador em um computador.";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="Link da reunião";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="Qualquer pessoa com este link pode entrar na reunião e visualizar o chat correspondente.";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="Link copiado para a área de transferência";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="Reuniões anteriores";

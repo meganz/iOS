@@ -12,10 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Apply to the duplicate</string>
         <key>other</key>
-        <string>Apply to all %d duplicates</string>
+        <string>นำไปใช้กับรายการที่ซ้ำกันทั้งหมด %d รายการ</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -519,7 +517,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>โฟลเดอร์เหล่านี้สามารถแชร์เป็นแบบอ่านอย่างเดียวเท่านั้น เนื่องจากเป็นโฟลเดอร์สำรองข้อมูล การเปลี่ยนแปลงใด ๆ ในเนื้อหาอาจจะเป็นการปิดใช้งานการสำรองข้อมูลได้</string>
+        <string>เนื่องจากโฟลเดอร์เหล่านี้เป็นโฟลเดอร์สำเนาสำรอง จึงแชร์ได้เฉพาะแบบอ่านอย่างเดียว การเปลี่ยนแปลงเนื้อหาอาจทำให้การสำรองข้อมูลไม่ถูกต้อง</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>

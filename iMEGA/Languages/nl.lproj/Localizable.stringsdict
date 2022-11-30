@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Apply to the duplicate</string>
+        <string>Toepassen op de duplicaat</string>
         <key>other</key>
-        <string>Apply to all %d duplicates</string>
+        <string>Toepassen op alle %d duplicaten</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>

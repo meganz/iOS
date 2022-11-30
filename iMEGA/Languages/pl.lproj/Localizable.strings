@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Uwaga";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Proszę nadaj uprawnienia dostępu dla aplikacji MEGA do kamery w ustawieniach";
+"cameraPermissions"="W ustawieniach należy zezwolić firmie MEGA na dostęp do kamery.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Prosimy o zezwolenie aplikacji MEGA na dostęp do mikrofonu w ustawieniach aplikacji";
+"microphonePermissions"="W ustawieniach należy zezwolić firmie MEGA na dostęp do mikrofonu.";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Dodaj uprawnienia dla aplikacji MEGA w celu dostępu do katalogu ze zdjęciami poprzez ustawienia";
+"photoLibraryPermissions"="W ustawieniach należy zezwolić firmie MEGA na dostęp do zdjęć.";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Twoje konto zostało aktywowane. Proszę się zalogować.";
 /*  */
@@ -47,7 +47,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego folderu lub pliku, będziesz potrzebować jego klucza odszyfrowywania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
+"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego katalogu lub pliku, będziesz potrzebować jego klucza odszyfrowywania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Klucz deszyfrowania";
 /* Button title to try to decrypt the link */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany a dokończyć zmianę adresu email. Zaloguj się używając dotychczasowego adresu email a następnie kliknij ponownie w link.";
+"needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany, aby dokończyć zmianę adresu e-mail. Zaloguj się ponownie przy użyciu aktualnego adresu e-mail, a następnie ponownie naciśnij link potwierdzający.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Zaloguj się";
 /* Message for login option on Create Account screen */
@@ -189,7 +189,7 @@
 /*  */
 "folderLinkUnavailableText1"="Z jednego z poniższych powodów:";
 /*  */
-"folderLinkUnavailableText2"="Łącze do folderu zostało usunięte, ponieważ naruszało nasze warunki korzystania z usługi.";
+"folderLinkUnavailableText2"="Łącze do katalogu zostało usunięte, ponieważ naruszało nasze warunki korzystania z usługi.";
 /*  */
 "folderLinkUnavailableText3"="Nieważny adres URL - link którego próbujesz użyć jest niedostępny";
 /*  */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Brak wyników";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Opróżnij kosz";
+"cloudDriveEmptyState_titleRubbishBin"="Opróżnij kosz na śmieci";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Pokaz slajdów";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -213,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Opcje pokazu slajdów";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Include images in sub-folders in the slideshow";
+"slideshow.preferenceSetting.mediaInSubFolders"="Dołączanie do pokazu slajdów obrazów z podkatalogów";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Szybkość pokazu slajdów";
 /* Slideshow Speed preference slow */
@@ -325,7 +325,7 @@
 /* Hint text shown on the new text file alert. */
 "file_name"="Nazwa pliku";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="Nowy folder";
+"newFolder"="Nowy katalog";
 /* Menu option from the `Add` section that displays all media files under current folder */
 "cloudDrive.menu.mediaDiscovery.title"="Odkrywanie mediów";
 /* Exit Text on Media Discovery Navigation Bar */
@@ -719,11 +719,11 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Po włączeniu zdjęcia zostaną przesłane.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Zdjęcia zostaną przesłane do folderu Uploads aparatu.";
+"Photos will be uploaded to Camera Uploads folder."="Zdjęcia zostaną przesłane do katalogu Wgrane aparatu.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Zdjęcia i filmy zostaną przesłane do folderu Uploads aparatu.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Zdjęcia i filmy zostaną przesłane do katalogu Wgrane aparatu.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Filmy zostaną przesłane do folderu Uploads aparatu.";
+"Videos will be uploaded to the Camera Uploads folder."="Filmy zostaną przesłane do katalogu Wgrane aparatu.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Po włączeniu filmy zostaną przesłane.";
 /* Title for new camera upload feature */
@@ -801,7 +801,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Na MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Wyczyść kosz";
+"emptyRubbishBin"="Opróżnij kosz na śmieci";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Wszystkie elementy z kosza zostaną usunięte";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1707,7 +1707,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Zezwalaj na dostęp do zdjęć";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Zezwól MEGA na dostęp do Zdjęć, aby udostępniać zdjęcia i filmy.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Proszę dać MEGA pozwolenie na dostęp do Zdjęć, aby udostępniać zdjęcia i filmy.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Włącz mikrofon i kamerę";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1743,17 +1743,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Zamierzasz usunąć historie wersji wszystkich plików. Każda wersja pliku udostępniona Ci z kontaktu będzie musiała zostać usunięta przez użytkownika.\n\n Należy pamiętać, że bieżące pliki nie zostaną usunięte.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Opróżnianie kosza";
+"Rubbish-Bin Cleaning Scheduler:"="Harmonogram opróżniania kosza na śmieci";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Usuń pliki starsze niż";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Aby uzyskać dłuższy okres retencji [S]Uaktualnij do wersji Pro[/S]";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz na śmieci jest automatycznie sprawdzany. Minimalny okres wynosi 7 dni, a maksymalny okres 30 dni.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz na śmieci jest opróżniany za Ciebie automatycznie. Minimalny okres wynosi 7 dni, a maksymalny 30 dni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Kosz na śmieci można wyczyścić automatycznie. Minimalny okres wynosi 7 dni.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Kosz na śmieci może być opróżniany za Ciebie automatycznie. Minimalny okres to 7 dni.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Aby wyłączyć harmonogram czyszczenia kosza lub ustawić dłuższy okres retencji, musisz wykupić plan Pro.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Aby wyłączyć harmonogram opróżniania Kosza na śmieci lub ustawić dłuższy okres przechowywania, musisz wykupić plan Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1861,7 +1861,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="Odrzucono twoją prośbę o kontakt";
 /* notification text */
-"A user has left the shared folder {0}"="Użytkownik opuścił udostępniony folder {0}";
+"A user has left the shared folder {0}"="Użytkownik opuścił udostępniony katalog {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="Dostęp do katalogów został usunięty.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2133,7 +2133,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Brak zdjęć i filmów";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Zobacz w folderze";
+"View in Folder"="Zobacz w katalogu";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Ten link nie jest powiązany z tym kontem. Zaloguj się na właściwe konto.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2253,7 +2253,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Ustaw sortowanie kolumn dla wybranego katalogu lub dla wszystkich swoich katalogów.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Wybierz tryb widoku (Lista lub Miniatura) dla poszczególnych folderów lub użyj tego samego trybu widoku dla wszystkich folderów.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Wybierz tryb widoku (Lista lub Miniatura) dla poszczególnych katalogów lub użyj tego samego trybu widoku dla wszystkich katalogów.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Po wylogowaniu trwające przelewy zostaną anulowane.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2383,7 +2383,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ten link jest niedostępny, ponieważ konto użytkownika zostało zamknięte z powodu rażącego naruszenia MEGA [A]Warunków świadczenia usług[/A].";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="Zgłoszono, że ten folder lub plik zawiera treści budzące zastrzeżenia, takie jak Materiał do wykorzystywania dzieci, Gwałtowny ekstremizm lub Bestiality. Konto twórcy linku zostało zamknięte, a jego pełne dane, w tym adres IP, zostały przekazane władzom.";
+"Taken down due to severe violation of our terms of service"="Zgłoszono, że ten katalog lub plik zawiera treści budzące zastrzeżenia, takie jak Materiał do wykorzystywania dzieci, gwałtowny ekstremizm lub przestępstwem. Konto twórcy linku zostało zamknięte, a jego pełne dane, w tym adres IP, zostały przekazane władzom.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Niedostępne";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -2423,13 +2423,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Przeszukuj swoje pliki";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="FOLDER DO PRZESYŁANIA ZDJĘĆ";
+"MEGA CAMERA UPLOADS FOLDER"="KATALOG DO PRZESYŁANIA ZDJĘĆ";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Wybierz katalog";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Odtwarzanie";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Czy na pewno chcesz przenieść folder przesłane z aparatu do kosza na śmieci? Jeśli tak, nowy folder zostanie automatycznie wygenerowany do przesyłania z aparatu.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Czy na pewno chcesz przenieść katalog przesłane z aparatu do kosza na śmieci? Jeśli tak, nowy katalog zostanie automatycznie wygenerowany do przesyłania z aparatu.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Wgrywanie pliku";
 /* Text title for shortcuts, ie in the widget */
@@ -2573,23 +2573,23 @@
 /* Backup setup warning title */
 "dialog.backup.setup.title"="Skonfiguruj kopię zapasową";
 /* Backup setup warning message */
-"dialog.backup.setup.message"="Użyj naszej aplikacji Desktop App, aby upewnić się, że folder kopii zapasowych jest zsynchronizowany z MEGA Cloud.";
+"dialog.backup.setup.message"="Użyj naszej aplikacji desktopowej, aby upewnić się, że katalog kopii zapasowych jest zsynchronizowany z MEGA Cloud.";
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Przenieś „%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="Zmieniasz domyślną lokalizację folderu kopii zapasowych. Może to wpłynąć na możliwość znalezienia folderu kopii zapasowych w przyszłości. Zapamiętaj, gdzie on się znajduje, aby móc go znaleźć w przyszłości.";
+"dialog.root.backup.folder.location.warning.message"="Zmieniasz domyślną lokalizację katalogu kopii zapasowych. Może to wpłynąć na możliwość znalezienia katalogu kopii zapasowych w przyszłości. Zapamiętaj, gdzie on się znajduje, aby móc go znaleźć w przyszłości.";
 /* Change the default backup location warning message */
-"dialog.backup.folder.location.warning.message"="Przeniesienie tego folderu powoduje zmianę miejsca docelowego kopii zapasowej. Kopia zapasowa zostanie wyłączona dla bezpieczeństwa. Czy to jest to, co chcesz zrobić? Kopie zapasowe mogą być ponownie włączone za pomocą aplikacji MEGA Desktop App.";
+"dialog.backup.folder.location.warning.message"="Przeniesienie tego katalogu powoduje zmianę miejsca docelowego kopii zapasowej. Kopia zapasowa zostanie wyłączona dla bezpieczeństwa. Czy to jest to, co chcesz zrobić? Kopie zapasowe mogą być ponownie włączone za pomocą aplikacji MEGA Desktop App.";
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="Przenieś „%@” do kosza";
 /* Delete the default backup folder warning message */
-"dialog.delete.root.backup.folder.warning.message"="Usuwasz folder kopii zapasowych. Spowoduje to usunięcie wszystkich kopii zapasowych, które ustawiłeś. Czy na pewno chcesz to zrobić?";
+"dialog.delete.root.backup.folder.warning.message"="Usuwasz katalog kopii zapasowych. Spowoduje to usunięcie wszystkich kopii zapasowych, które ustawiłeś. Czy na pewno chcesz to zrobić?";
 /* Delete the default backup folder warning message */
-"dialog.delete.backup.folder.warning.message"="Czy na pewno chcesz usunąć folder kopii zapasowych i wyłączyć kopie zapasowe, które ustawiłeś?";
+"dialog.delete.backup.folder.warning.message"="Czy na pewno chcesz usunąć katalog kopii zapasowych i wyłączyć kopie zapasowe, które ustawiłeś?";
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Dodaj element do „%@”";
 /* Add new items to a backup folder warning message */
-"dialog.add.items.backup.folder.warning.message"="Dodanie elementów do tego folderu powoduje zmianę miejsca docelowego kopii zapasowej. Kopia zapasowa zostanie wyłączona dla bezpieczeństwa. Czy to jest to, co chcesz zrobić? Kopie zapasowe mogą być ponownie włączone za pomocą aplikacji MEGA Desktop App.";
+"dialog.add.items.backup.folder.warning.message"="Dodanie elementów do tego katalogu powoduje zmianę miejsca docelowego kopii zapasowej. Kopia zapasowa zostanie wyłączona dla bezpieczeństwa. Czy to jest to, co chcesz zrobić? Kopie zapasowe mogą być ponownie włączone za pomocą aplikacji MEGA Desktop App.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
 "dialog.backup.warning.confirm.message"="Proszę wpisać „%@”, aby potwierdzić tę czynność";
 /* Change the location of a backup folder placeholder for a textfield */
@@ -2999,13 +2999,13 @@
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Katalog już istnieje";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="W tym miejscu docelowym istnieje już folder o nazwie %@.";
+"nameCollision.folders.alreadyExists"="W tym miejscu docelowym istnieje już katalog o nazwie %@.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.merge.title"="Połącz";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="Nowy folder zostanie połączony z folderem w tym miejscu docelowym.";
+"nameCollision.folders.action.merge.description"="Nowy katalog zostanie połączony z katalogiem w tym miejscu docelowym.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
-"nameCollision.folders.action.skip.title"="Pomiń ten folder";
+"nameCollision.folders.action.skip.title"="Pomiń ten katalog";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
 "nameCollision.files.alreadyExists"="Plik o nazwie %@ już istnieje w tym miejscu docelowym.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
@@ -3109,11 +3109,11 @@
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
 "notifications.message.takenDownReinstated.file"="Twój zdjęty plik “%@” został przywrócony.";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Twój zdjęty folder “%@” został przywrócony.";
+"notifications.message.takenDownReinstated.folder"="Twój zdjęty katalog “%@” został przywrócony.";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
 "notifications.message.takenDownPubliclyShared.file"="Twój publicznie udostępniony plik “%@” został zdjęty.";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Twój publicznie udostępniony folder “%@” został zdjęty.";
+"notifications.message.takenDownPubliclyShared.folder"="Twój publicznie udostępniony katalog “%@” został zdjęty.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Umożliwienie dodawania uczestników przez osoby niebędące gospodarzami";
 /* Start conversation: Schedule meeting context menu */
@@ -3122,11 +3122,21 @@
 "account.suspension.message.copyright"="Konto zawieszone z powodu naruszenia praw autorskich. Wysłaliśmy do Ciebie maila z większą ilością informacji na ten temat.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Konto zostało usunięte z powodu naruszenia warunków korzystania z usług firmy MEGA, takich jak nadużywanie praw innych osób, udostępnianie i importowanie nielegalnych danych lub nadużywanie systemu.";
+/* Text shown in extensions to notify users that they have to open the application first */
+"extensions.OpenApp.Message"="Otwórz aplikację MEGA i zaloguj się, aby kontynuować.";
 /* Account Storage title label of used storage size */
-"account.storage.storageUsed.title"="Storage used";
+"account.storage.storageUsed.title"="Wykorzystana pamięć";
 /* Account Storage title label of used transfer size */
-"account.storage.transferUsed.title"="Transfer used";
+"account.storage.transferUsed.title"="Wykorzystany transfer";
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Konto dezaktywowane";
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="Twoje konto Pro Flexi zostało dezaktywowane z powodu braku płatności lub anulowania subskrypcji. Nie będziesz miał dostępu do danych przechowywanych na swoim koncie. Aby dokonać płatności i reaktywować subskrypcję, zaloguj się do MEGA przez przeglądarkę.";
+/* Label to indicate the user about the activation of a meeting link */
+"meetings.info.meetingLink"="Link do spotkania";
+/* Label to inform user about privacy of sharing a chat link */
+"meetings.info.shareOptions.title"="Każda osoba posiadająca ten link może dołączyć do spotkania i obejrzeć czat spotkania.";
+/* HUD message to inform user that the link is in the clipboard */
+"meetings.info.shareOptions.shareLink.linkCopied"="Link skopiowany do schowka";
+/* Chat Meetings tab - Section header title for the chat listing screen */
+"chat.listing.sectionHeader.pastMeetings.title"="Dotychczasowe spotkania";
