@@ -126,13 +126,13 @@ extension ChatViewController {
     }
     
     private func showCallEndDialog(withCall call: CallEntity) {
-        let meetingStatsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let analyticsEventStatsUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
 
         let endCallDialog = EndCallDialog { [weak self] in
-            meetingStatsUseCase.sendStayOnCallWhenNoParticipantsStats()
+            analyticsEventStatsUseCase.sendAnalyticsEvent(.meetings(.stayOnCallInNoParticipantsPopup))
             self?.cancelEndCallSubscription()
         } endCallAction: { [weak self] in
-            meetingStatsUseCase.sendEndCallWhenNoParticipantsStats()
+            analyticsEventStatsUseCase.sendAnalyticsEvent(.meetings(.endCallInNoParticipantsPopup))
             self?.endCall(call)
             self?.cancelEndCallSubscription()
         }
@@ -144,7 +144,7 @@ extension ChatViewController {
             .delay(for: .seconds(120), scheduler: RunLoop.main)
             .sink() { [weak self] _ in
                 self?.tonePlayer.play(tone: .callEnded)
-                meetingStatsUseCase.sendEndCallWhenEmptyCallTimeoutStats()
+                analyticsEventStatsUseCase.sendAnalyticsEvent(.meetings(.endCallWhenEmptyCallTimeout))
                                 
                 // When ending call, CallKit decativation will interupt playing of tone.
                 // Adding a delay of 0.7 seconds so there is enough time to play the tone

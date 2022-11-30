@@ -6,18 +6,18 @@ final class CallsSettingsViewModel {
     var callsSoundNotificationPreference: Bool {
         didSet {
             if callsSoundNotificationPreference {
-                statsUseCase.sendEnableSoundNotificationStats()
+                analyticsEventUseCase.sendAnalyticsEvent(.meetings(.enableCallSoundNotifications))
             } else {
-                statsUseCase.sendDisableSoundNotificationStats()
+                analyticsEventUseCase.sendAnalyticsEvent(.meetings(.disableCallSoundNotifications))
             }
         }
     }
     
-    private let statsUseCase: MeetingStatsUseCaseProtocol
+    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
     
     init(preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         statsUseCase: MeetingStatsUseCaseProtocol) {
-        self.statsUseCase = statsUseCase
+         analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
+        self.analyticsEventUseCase = analyticsEventUseCase
         $callsSoundNotificationPreference.useCase = preferenceUseCase
     }
 }

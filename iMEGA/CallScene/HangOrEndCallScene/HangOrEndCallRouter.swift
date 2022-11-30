@@ -19,10 +19,10 @@ final class HangOrEndCallRouter: HangOrEndCallRouting {
     }
     
     func build() -> UIViewController {
-        let meetingStatsUseCase = MeetingStatsUseCase(
-            repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        let analyticsEventUseCase = AnalyticsEventUseCase(
+            repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk())
         )
-        let viewModel = HangOrEndCallViewModel(router: self, statsUseCase: meetingStatsUseCase)
+        let viewModel = HangOrEndCallViewModel(router: self, analyticsEventUseCase: analyticsEventUseCase)
         let hangOrEndCallView = HangOrEndCallView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: hangOrEndCallView)
         hostingController.view.backgroundColor = .clear

@@ -41,7 +41,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
-    private let statsUseCase: MeetingStatsUseCaseProtocol
+    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
 
@@ -61,7 +61,7 @@ final class MeetingContainerViewModel: ViewModelType {
          userUseCase: UserUseCaseProtocol,
          authUseCase: AuthUseCaseProtocol,
          noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol,
-         statsUseCase: MeetingStatsUseCaseProtocol) {
+         analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -70,7 +70,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.userUseCase = userUseCase
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
-        self.statsUseCase = statsUseCase
+        self.analyticsEventUseCase = analyticsEventUseCase
         
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callCoordinatorUseCase.addCallRemoved { [weak self] uuid in
@@ -244,11 +244,11 @@ final class MeetingContainerViewModel: ViewModelType {
         guard isOnlyMyselfInTheMeeting() else { return }
         router.showEndCallDialog { [weak self] in
             guard let self = self else { return }
-            self.statsUseCase.sendEndCallWhenNoParticipantsStats()
+            self.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallInNoParticipantsPopup))
             self.endCall()
         } stayOnCallCompletion: { [weak self] in
             guard let self = self else { return }
-            self.statsUseCase.sendStayOnCallWhenNoParticipantsStats()
+            self.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.stayOnCallInNoParticipantsPopup))
             stayOnCallCompletion?()
         }
     }

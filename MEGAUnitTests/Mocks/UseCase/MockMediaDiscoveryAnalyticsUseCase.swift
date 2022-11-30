@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGADomain
 
-final class MockMediaDiscoveryStatsUseCase: MediaDiscoveryStatsUseCaseProtocol {
+final class MockMediaDiscoveryAnalyticsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol {
     var hasPageVisitedCalled = false
     var hasPageStayCalled = false
     

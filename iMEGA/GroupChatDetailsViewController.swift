@@ -46,8 +46,8 @@ extension GroupChatDetailsViewController {
                 return
             }
             
-            let statsRepoSitory = StatsRepository(sdk: MEGASdkManager.sharedMEGASdk())
-            MeetingStatsUseCase(repository: statsRepoSitory).sendEndCallForAllStats()
+            let statsRepoSitory = AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+            AnalyticsEventUseCase(repository: statsRepoSitory).sendAnalyticsEvent(.meetings(.endCallForAll))
             
             MEGASdkManager.sharedMEGAChatSdk().endChatCall(call.callId)
             self.navigationController?.popViewController(animated: true)

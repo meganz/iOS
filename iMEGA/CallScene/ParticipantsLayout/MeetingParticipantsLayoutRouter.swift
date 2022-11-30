@@ -33,7 +33,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
-        let statsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
 
         let vm = MeetingParticipantsLayoutViewModel(
             router: self,
@@ -47,7 +47,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
                 userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
             userUseCase: UserUseCase(repo: .live),
             userImageUseCase: userImageUseCase,
-            statsUseCase: statsUseCase,
+            analyticsEventUseCase: analyticsEventUseCase,
             chatRoom: chatRoom,
             call: call
         )
