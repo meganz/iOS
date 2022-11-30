@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
     override var zoomState: PhotoLibraryZoomState {
         willSet {

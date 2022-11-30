@@ -17,7 +17,6 @@ class FavouriteItemsRepository: FavouriteItemsRepositoryProtocol {
         store.insertQuickAccessFavouriteItem(withBase64Handle: item.base64Handle, name: item.name, timestamp: item.timestamp)
     }
     
-    @available(iOS 14.0, *)
     func batchInsertFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         store.batchInsertQuickAccessFavouriteItems(items, completion: completion)
     }

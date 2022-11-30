@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 14.0, *)
 extension AlbumContentViewController: PhotoLibraryProvider {
     func hideNavigationEditBarButton(_ hide: Bool) {
         navigationItem.rightBarButtonItem = hide ? nil : rightBarButtonItem

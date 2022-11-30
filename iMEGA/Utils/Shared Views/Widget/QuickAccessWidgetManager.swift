@@ -4,7 +4,6 @@ import WidgetKit
 import MEGAFoundation
 import MEGADomain
 
-@available(iOS 14.0, *)
 class QuickAccessWidgetManager: NSObject {
     private let recentItemsUseCase: RecentItemsUseCaseProtocol
     private let recentNodesUseCase: RecentNodesUseCaseProtocol

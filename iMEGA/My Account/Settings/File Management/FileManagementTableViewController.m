@@ -162,9 +162,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             [SVProgressHUD dismiss];
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [[MEGAStore shareInstance] removeAllOfflineNodes];
-            if (@available(iOS 14.0, *)) {
-                [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-            }
+            [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
             [self reloadUI];
         });
     });

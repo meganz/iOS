@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoLibraryYearView: View {
     @StateObject var viewModel: PhotoLibraryYearViewModel
     let router: PhotoLibraryContentViewRouting
@@ -12,7 +11,6 @@ struct PhotoLibraryYearView: View {
     }
 }
 
-@available(iOS 14.0, *)
 extension PhotoLibraryYearView: Equatable {
     static func == (lhs: PhotoLibraryYearView, rhs: PhotoLibraryYearView) -> Bool {
         true // we are taking over the update of the view

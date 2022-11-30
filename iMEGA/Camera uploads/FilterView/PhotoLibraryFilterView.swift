@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoLibraryFilterView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
     @ObservedObject var filterViewModel: PhotoLibraryFilterViewModel

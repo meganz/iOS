@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGASwiftUI
 
-@available(iOS 14.0, *)
 struct CardImage: View {
     let container: any ImageContaining
     

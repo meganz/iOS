@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
@@ -85,7 +84,6 @@ final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
 }
 
 // MARK: - Scroll Position Management
-@available(iOS 14.0, *)
 extension PhotoLibraryModeAllGridViewModel {
     func hasPositionChange() -> Bool {
         libraryViewModel.cardScrollPosition != lastCardPosition ||

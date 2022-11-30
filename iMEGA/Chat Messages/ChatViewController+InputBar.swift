@@ -663,13 +663,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showFilesApp() {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypeContent as String,
-                                                                            kUTTypeData as String,
-                                                                            kUTTypePackage as String,
-                                                                            "com.apple.iwork.pages.pages",
-                                                                            "com.apple.iwork.numbers.numbers",
-                                                                            "com.apple.iwork.keynote.key"],
-                                                            in: .import)
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package], asCopy: true)
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = true
         present(documentPicker, animated: true)

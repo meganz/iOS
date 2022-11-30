@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGASwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoLibraryPicker: View {
     @Environment(\.editMode) var editMode
     @Binding var selectedMode: PhotoLibraryViewMode

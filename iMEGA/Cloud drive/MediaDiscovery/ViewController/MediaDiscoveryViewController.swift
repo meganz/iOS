@@ -1,6 +1,5 @@
 import UIKit
 
-@available(iOS 14.0, *)
 final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private var nodes: [MEGANode] = []
     private let folderName: String
@@ -204,7 +203,6 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     }
 }
 
-@available(iOS 14.0, *)
 extension MediaDiscoveryViewController: MEGAGlobalDelegate {
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let list = nodeList else { return }

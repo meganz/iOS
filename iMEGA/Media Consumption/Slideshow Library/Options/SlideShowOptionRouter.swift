@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 final class SlideShowOptionRouter: Routing {
     private weak var presenter: UIViewController?
     private var preference: SlideShowViewModelPreferenceProtocol
@@ -34,7 +33,6 @@ final class SlideShowOptionRouter: Routing {
     }
 }
 
-@available(iOS 14.0, *)
 extension SlideShowOptionRouter {
     @SlideShowOptionBuilder
     private func makeCells(withConfiguration config: SlideShowViewConfiguration) -> [SlideShowOptionCellViewModel] {

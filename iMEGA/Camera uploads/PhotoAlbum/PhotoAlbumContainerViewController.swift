@@ -3,7 +3,6 @@ import SwiftUI
 import Combine
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class PhotoAlbumContainerViewController: UIViewController {
     var photoViewController: PhotosViewController?
     var numberOfPages: Int = PhotoLibraryTab.allCases.count

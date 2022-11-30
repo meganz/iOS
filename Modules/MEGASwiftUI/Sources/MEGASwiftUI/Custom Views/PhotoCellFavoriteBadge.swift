@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoCellFavoriteBadge: ViewModifier {
     let isFavorite: Bool
     
@@ -27,7 +26,6 @@ struct PhotoCellFavoriteBadge: ViewModifier {
     }
 }
 
-@available(iOS 14.0, *)
 public extension View {
     func favorite(_ isFavorite: Bool) -> some View {
         modifier(PhotoCellFavoriteBadge(isFavorite: isFavorite))

@@ -16,11 +16,7 @@ final class SendFeedbackViewRouter: Routing {
 
         let mailComposeVC = createMailComposeController(presenter)
         
-        if #available(iOS 14.0, *) {
-            return mailComposeVC
-        } else {
-            return UserDefaults.standard.bool(forKey: "logging") ? createReportIssueAlertController(mailComposeVC) : mailComposeVC
-        }
+        return mailComposeVC
     }
     
     @objc func start() {

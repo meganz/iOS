@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 14.0, *)
 final class PhotoLibraryDayViewModel: PhotoLibraryModeCardViewModel<PhotoByDay> {
     init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel) {

@@ -9,7 +9,6 @@ enum MediaDiscoveryAction: ActionType {
     case onNodesUpdate(nodeList: MEGANodeList)
 }
 
-@available(iOS 14.0, *)
 final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtocol {
     enum Command: Equatable, CommandType {
         case loadMedia(nodes: [MEGANode])

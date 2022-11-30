@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 14.0, *)
 extension MediaDiscoveryViewController: PhotoLibraryProvider {
     func showNavigationRightBarButton(_ show: Bool) {
         navigationItem.rightBarButtonItem = show ? rightBarButtonItem : nil

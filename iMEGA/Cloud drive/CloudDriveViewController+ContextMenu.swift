@@ -17,30 +17,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
             let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
            
-            if #available(iOS 14.0, *) {
-                return CMConfigEntity(menuType: .menu(type: .display),
-                                      viewMode: isListViewModeSelected() ? .list : .thumbnail,
-                                      accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
-                                      sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
-                                      isAFolder: parentNode.type != .root,
-                                      isRubbishBinFolder: displayMode == .rubbishBin,
-                                      isViewInFolder: isFromViewInFolder,
-                                      isIncomingShareChild: isIncomingSharedRootChild,
-                                      isOutShare: parentNode.isOutShare(),
-                                      isExported: parentNode.isExported(),
-                                      showMediaDiscovery: shouldShowMediaDiscovery())
-            } else {
-                return CMConfigEntity(menuType: .menu(type: .display),
-                                      viewMode: isListViewModeSelected() ? .list : .thumbnail,
-                                      accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
-                                      sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
-                                      isAFolder: parentNode.type != .root,
-                                      isRubbishBinFolder: displayMode == .rubbishBin,
-                                      isViewInFolder: isFromViewInFolder,
-                                      isIncomingShareChild: isIncomingSharedRootChild,
-                                      isOutShare: parentNode.isOutShare(),
-                                      isExported: parentNode.isExported())
-            }
+            return CMConfigEntity(menuType: .menu(type: .display),
+                                  viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                                  accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
+                                  sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
+                                  isAFolder: parentNode.type != .root,
+                                  isRubbishBinFolder: displayMode == .rubbishBin,
+                                  isViewInFolder: isFromViewInFolder,
+                                  isIncomingShareChild: isIncomingSharedRootChild,
+                                  isOutShare: parentNode.isOutShare(),
+                                  isExported: parentNode.isExported(),
+                                  showMediaDiscovery: shouldShowMediaDiscovery())
         }
     }
     
@@ -57,26 +44,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     @objc func setNavigationBarButtons() {
-        if #available(iOS 14.0, *) {
-            guard let menuConfig = contextMenuConfiguration() else { return }
-            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+        guard let menuConfig = contextMenuConfiguration() else { return }
+        contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
                                                    menu: contextMenuManager?.contextMenu(with: menuConfig))
-        } else {
-            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
-        }
-        
         if displayMode != .rubbishBin,
            displayMode != .backup,
            !isFromViewInFolder,
            let parentNode = parentNode,
            MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
-            if #available(iOS 14.0, *) {
-                guard let menuConfig = uploadAddMenuConfiguration() else { return }
-                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+            guard let menuConfig = uploadAddMenuConfiguration() else { return }
+            uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
                                                          menu: contextMenuManager?.contextMenu(with: menuConfig))
-            } else {
-                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
-            }
             navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
         } else {
             navigationItem.rightBarButtonItems = [contextBarButtonItem]
@@ -92,22 +70,6 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     
     @objc func dismissController() {
         dismiss(animated: true)
-    }
-    
-    @objc private func presentActionSheet(sender: Any) {
-        guard let barButtonItem = sender as? UIBarButtonItem,
-              let menuConfig = barButtonItem == contextBarButtonItem ? contextMenuConfiguration() : uploadAddMenuConfiguration(),
-              let actions = contextMenuManager?.actionSheetActions(with: menuConfig) else { return }
-        presentActionSheet(actions: actions)
-    }
-    
-    @objc func presentActionSheet(actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions,
-                                                      headerTitle: nil,
-                                                      dismissCompletion: nil,
-                                                      sender: nil)
-
-        self.present(actionSheetVC, animated: true)
     }
     
     //MARK: - CloudDriveContextMenuDelegate functions
@@ -220,23 +182,12 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 }
             }
         case .importFrom:
-            let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypeContent as String,
-                                                                                kUTTypeData as String,
-                                                                                kUTTypePackage as String,
-                                                                                "com.apple.iwork.pages.pages",
-                                                                                "com.apple.iwork.numbers.numbers",
-                                                                                "com.apple.iwork.keynote.key"],
-                                                                in: .import)
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package], asCopy: true)
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = true
             documentPicker.popoverPresentationController?.barButtonItem = contextBarButtonItem
             present(documentPicker, animated: true)
         }
-    }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
-        present(actionSheetVC, animated: true)
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {

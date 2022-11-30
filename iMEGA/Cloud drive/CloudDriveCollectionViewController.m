@@ -225,9 +225,7 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated {
     self.collectionView.allowsMultipleSelection = editing;
     
-    if (@available(iOS 14.0, *)) {
-        self.collectionView.allowsMultipleSelectionDuringEditing = editing;
-    }
+    self.collectionView.allowsMultipleSelectionDuringEditing = editing;
     
     [self.cloudDrive setViewEditing:editing];
     

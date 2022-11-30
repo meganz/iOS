@@ -9,7 +9,7 @@ extension MainTabBarController {
     }
     
     @objc func chatViewController() -> UIViewController {
-        if #available(iOS 14.0, *), shouldShowNewChatRoomListingScreen {
+        if shouldShowNewChatRoomListingScreen {
             let router = ChatRoomsListRouter(tabBarController: self)
             return router.build()
         } else {
@@ -30,7 +30,7 @@ extension MainTabBarController {
             return
         }
         
-        if #available(iOS 14.0, *), shouldShowNewChatRoomListingScreen {
+        if shouldShowNewChatRoomListingScreen {
             if let chatRoomsListViewController = navigationController.viewControllers.first as? ChatRoomsListViewController {
                 chatRoomsListViewController.viewModel.router.presentStartConversation()
             }
@@ -47,7 +47,7 @@ extension MainTabBarController {
             return
         }
         
-        if #available(iOS 14.0, *), shouldShowNewChatRoomListingScreen {
+        if shouldShowNewChatRoomListingScreen {
             let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
                                                   userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
             let chatUseCase = ChatUseCase(

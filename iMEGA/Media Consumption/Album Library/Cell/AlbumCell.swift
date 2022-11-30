@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct AlbumCell: View {
     @StateObject var viewModel: AlbumCellViewModel
     

@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 struct AlbumContainerWrapper: UIViewControllerRepresentable {
     var albumNode: NodeEntity?
     var album: AlbumEntity?

@@ -61,9 +61,7 @@ final class HomeRecentActionViewModel:
                 nodeFavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
                     switch result {
                     case .success():
-                        if #available(iOS 14.0, *) {
-                            QuickAccessWidgetManager().deleteFavouriteItem(for: node)
-                        }
+                        QuickAccessWidgetManager().deleteFavouriteItem(for: node)
                     case .failure(_):
                         break
                     }
@@ -72,9 +70,7 @@ final class HomeRecentActionViewModel:
                 nodeFavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
                     switch result {
                     case .success():
-                        if #available(iOS 14.0, *) {
-                            QuickAccessWidgetManager().insertFavouriteItem(for: node)
-                        }
+                        QuickAccessWidgetManager().insertFavouriteItem(for: node)
                     case .failure(_):
                         break
                     }

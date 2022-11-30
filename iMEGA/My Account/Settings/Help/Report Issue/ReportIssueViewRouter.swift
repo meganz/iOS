@@ -3,12 +3,10 @@ import SwiftUI
 import MEGADomain
 import MEGAData
 
-@available(iOS 14.0, *)
 protocol ReportIssueViewRouting: Routing {
     func dismiss()
 }
 
-@available(iOS 14.0, *)
 @objc class ReportIssueViewRouter: NSObject, ReportIssueViewRouting {
     
     private weak var presenter: UIViewController?

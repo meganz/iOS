@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 14.0, *)
 @MainActor
 protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
@@ -14,7 +13,6 @@ protocol PhotoLibraryProvider: UIViewController {
     func updateNavigationTitle(withSelectedPhotoCount count: Int)
 }
 
-@available(iOS 14.0, *)
 extension PhotoLibraryProvider {
     func configPhotoLibraryView(in container: UIView, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)? = nil) {
         let content = PhotoLibraryContentView(

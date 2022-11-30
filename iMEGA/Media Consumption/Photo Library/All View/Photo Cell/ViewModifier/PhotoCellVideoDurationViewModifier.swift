@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoCellVideoDurationViewModifier: ViewModifier {
     let isVideo: Bool
     let duration: String
@@ -26,7 +25,6 @@ struct PhotoCellVideoDurationViewModifier: ViewModifier {
     }
 }
 
-@available(iOS 14.0, *)
 extension View {
     func videoDuration(_ isVideo: Bool,
                        duration: String,

@@ -2,7 +2,6 @@ import Combine
 import SwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class AlbumListViewModel: NSObject, ObservableObject  {
     var columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 10),

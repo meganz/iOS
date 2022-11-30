@@ -36,9 +36,7 @@
     self.rateUsLabel.text = NSLocalizedString(@"rateUsLabel", @"Title to rate the app");
     
     [self updateAppearance];
-    if (@available(iOS 14.0, *)) {
         self.reportIssueLabel.text = NSLocalizedString(@"help.reportIssue.title", nil);
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -57,9 +55,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 1) {
-        if (@available(iOS 14.0, *)) {
-            return 2;
-        }
+        return 2;
     }
     return 1;
 }
@@ -117,10 +113,8 @@
 }
 
 - (void)reportIssue {
-    if (@available(iOS 14.0, *)) {
-        ReportIssueViewRouter *reportIssueViewRouter = [ReportIssueViewRouter.alloc initWithPresenter:self];
-        [reportIssueViewRouter start];
-    }
+    ReportIssueViewRouter *reportIssueViewRouter = [ReportIssueViewRouter.alloc initWithPresenter:self];
+    [reportIssueViewRouter start];
 }
 
 - (void)rateApp {

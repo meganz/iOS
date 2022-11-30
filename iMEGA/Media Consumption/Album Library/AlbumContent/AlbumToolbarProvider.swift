@@ -1,6 +1,5 @@
 import UIKit
 
-@available(iOS 14.0, *)
 protocol AlbumToolbarProvider {
     var isToolbarShown: Bool { get }
     
@@ -14,7 +13,6 @@ protocol AlbumToolbarProvider {
     func moreButtonPressed(_ button: UIBarButtonItem)
 }
 
-@available(iOS 14.0, *)
 extension AlbumContentViewController: AlbumToolbarProvider {
     var isToolbarShown: Bool {
         return toolbar.superview != nil
@@ -207,7 +205,6 @@ extension AlbumContentViewController: AlbumToolbarProvider {
 }
 
 //MARK: - NodeActionViewControllerDelegate
-@available(iOS 14.0, *)
 extension AlbumContentViewController: NodeActionViewControllerDelegate {
     func nodeAction(
         _ nodeAction: NodeActionViewController,
@@ -257,7 +254,6 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
 }
 
 //MARK: - BrowserViewControllerDelegate
-@available(iOS 14.0, *)
 extension AlbumContentViewController: BrowserViewControllerDelegate {
     func nodeEditCompleted(_ complete: Bool) {
         endEditingMode()

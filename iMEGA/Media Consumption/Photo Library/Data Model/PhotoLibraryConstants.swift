@@ -9,7 +9,6 @@ enum PhotoLibraryConstants {
     static let libraryPadding: CGFloat = 16
     static let scrollViewCoordinateSpaceName = "scrollView"
     
-    @available(iOS 14.0, *)
     static let cardColumns = [
         GridItem(
             .adaptive(minimum: PhotoLibraryConstants.cardMinimumWidth,

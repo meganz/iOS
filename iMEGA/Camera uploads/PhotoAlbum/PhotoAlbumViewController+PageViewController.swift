@@ -1,6 +1,5 @@
 import UIKit
 
-@available(iOS 14.0, *)
 extension PhotoAlbumContainerViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -25,7 +24,6 @@ extension PhotoAlbumContainerViewController: UIPageViewControllerDataSource {
     }
 }
 
-@available(iOS 14.0, *)
 extension PhotoAlbumContainerViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController,
                             didFinishAnimating finished: Bool,

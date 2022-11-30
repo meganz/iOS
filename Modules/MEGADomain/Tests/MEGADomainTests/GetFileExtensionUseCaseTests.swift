@@ -38,7 +38,6 @@ class GetFileExtensionUseCaseTests: XCTestCase {
     }
     
     func testFileExtension_url_utType_mediaType() throws {
-        guard #available(iOS 14.0, *) else { return }
         
         let url = try XCTUnwrap(URL(string: "file://temp/file.hello"))
         
@@ -50,7 +49,6 @@ class GetFileExtensionUseCaseTests: XCTestCase {
     }
     
     func testFileExtension_utType_mediaType() throws {
-        guard #available(iOS 14.0, *) else { return }
         
         for media in MediaTypeEntity.allCases {
             for (uti, ext) in extensionsKeyedByUTIs {

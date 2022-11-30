@@ -3,7 +3,6 @@ import SwiftUI
 import MEGAUIKit
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
     private let viewModel: AlbumContentViewModel
     

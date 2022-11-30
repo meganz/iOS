@@ -281,11 +281,7 @@ public final class ContextMenuBuilder {
             viewTypeMenuActions.append(mediaDiscovery)
         }
         
-        if #available(iOS 14.0, *) {
-            viewTypeMenuActions.append(contentsOf: [thumbnailView, listView])
-        } else {
-            viewTypeMenuActions.append(contentsOf: [viewMode == .thumbnail ? listView : thumbnailView])
-        }
+        viewTypeMenuActions.append(contentsOf: [thumbnailView, listView])
         
         return CMEntity(displayInline: true,
                         children: viewTypeMenuActions
@@ -419,12 +415,9 @@ public final class ContextMenuBuilder {
     
     private func doNotDisturbMenu() -> CMEntity {
         var doNotDisturbElements = [CMElement]()
-        if #available(iOS 14.0, *) {
-            doNotDisturbElements.append(CMEntity(displayInline: true,
-                                                 children: [CMActionEntity(type: .chatDoNotDisturbDisabled(actionType: .off),
-                                                                           state: isDoNotDisturbEnabled ? .off : .on)]))
-        
-        }
+        doNotDisturbElements.append(CMEntity(displayInline: true,
+                                             children: [CMActionEntity(type: .chatDoNotDisturbDisabled(actionType: .off),
+                                                                       state: isDoNotDisturbEnabled ? .off : .on)]))
             
         if !isDoNotDisturbEnabled {
             doNotDisturbElements.append(CMEntity(displayInline: true,

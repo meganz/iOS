@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ChatRoomAvatarView: View {
     @ObservedObject var viewModel: ChatRoomAvatarViewModel
     @Environment(\.colorScheme) private var colorScheme

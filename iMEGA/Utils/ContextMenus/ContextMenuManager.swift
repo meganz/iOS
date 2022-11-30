@@ -3,12 +3,12 @@ import MEGADomain
 
 typealias CloudDriveContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & RubbishBinMenuDelegate & UploadAddMenuDelegate
 
-protocol DisplayMenuDelegate: ContextActionSheetDelegate {
+protocol DisplayMenuDelegate: AnyObject {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool)
     func sortMenu(didSelect sortType: SortOrderType)
 }
 
-protocol QuickActionsMenuDelegate: ContextActionSheetDelegate {
+protocol QuickActionsMenuDelegate: AnyObject {
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool)
 }
 
@@ -16,27 +16,22 @@ protocol RubbishBinMenuDelegate: AnyObject {
     func rubbishBinMenu(didSelect action: RubbishBinActionEntity)
 }
 
-protocol UploadAddMenuDelegate: ContextActionSheetDelegate {
+protocol UploadAddMenuDelegate: AnyObject {
     func uploadAddMenu(didSelect action: UploadAddActionEntity)
 }
 
-protocol ChatMenuDelegate: ContextActionSheetDelegate {
+protocol ChatMenuDelegate: AnyObject {
     func chatStatusMenu(didSelect action: ChatStatusEntity)
     func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption)
     func chatDisableDoNotDisturb()
 }
 
-protocol QRMenuDelegate: ContextActionSheetDelegate {
+protocol QRMenuDelegate: AnyObject {
     func qrMenu(didSelect action: MyQRActionEntity)
 }
 
-protocol MeetingContextMenuDelegate: ContextActionSheetDelegate {
+protocol MeetingContextMenuDelegate: AnyObject {
     func meetingContextMenu(didSelect action: MeetingActionEntity)
-}
-
-protocol ContextActionSheetDelegate: AnyObject {
-    // iOS 13 Action Sheet delegate functions
-    func showActionSheet(with actions: [ContextActionSheetAction])
 }
 
 final class ContextMenuManager: NSObject {
@@ -79,61 +74,24 @@ final class ContextMenuManager: NSObject {
     private func actionHandler(_ identifier: String, contextType: CMElementTypeEntity, subMenuActions: [ContextActionSheetAction]? = nil) {
         switch contextType {
         case .uploadAdd(let action):
-            if #available(iOS 14.0, *) {
-                uploadAddMenuDelegate?.uploadAddMenu(didSelect: action)
-            } else {
-                guard let subMenuActions = subMenuActions else {
-                    uploadAddMenuDelegate?.uploadAddMenu(didSelect: action)
-                    return
-                }
-
-                uploadAddMenuDelegate?.showActionSheet(with: subMenuActions)
-            }
+            uploadAddMenuDelegate?.uploadAddMenu(didSelect: action)
             
         case .display(let action):
-            if #available(iOS 14.0, *) {
-                displayMenuDelegate?.displayMenu(didSelect: action,
-                                                 needToRefreshMenu: action == .listView ||
-                                                                    action == .thumbnailView)
-            } else {
-                guard let subMenuActions = subMenuActions else {
-                    displayMenuDelegate?.displayMenu(didSelect: action, needToRefreshMenu: false)
-                    return
-                }
-
-                displayMenuDelegate?.showActionSheet(with: subMenuActions)
-            }
+            displayMenuDelegate?.displayMenu(didSelect: action,
+                                             needToRefreshMenu: action == .listView ||
+                                             action == .thumbnailView)
         case .sort(let option):
             displayMenuDelegate?.sortMenu(didSelect: option.toSortOrderType())
             
         case .quickActions(let action):
-            if #available(iOS 14.0, *) {
-                quickActionsMenuDelegate?.quickActionsMenu(didSelect: action,
-                                                                       needToRefreshMenu: action != .info &&
-                                                                                          action != .download &&
-                                                                                          action != .rename &&
-                                                                                          action != .copy)
-            } else {
-                guard let subMenuActions = subMenuActions else {
-                    quickActionsMenuDelegate?.quickActionsMenu(didSelect: action,
-                                                                           needToRefreshMenu: false)
-                    return
-                }
-
-                quickActionsMenuDelegate?.showActionSheet(with: subMenuActions)
-            }
+            quickActionsMenuDelegate?.quickActionsMenu(didSelect: action,
+                                                       needToRefreshMenu: action != .info &&
+                                                       action != .download &&
+                                                       action != .rename &&
+                                                       action != .copy)
             
         case .rubbishBin(let action):
             rubbishBinMenuDelegate?.rubbishBinMenu(didSelect: action)
-            
-        case .chat:
-            if #unavailable(iOS 14.0) {
-                guard let subMenuActions = subMenuActions else {
-                    return
-                }
-
-                chatMenuDelegate?.showActionSheet(with: subMenuActions)
-            }
             
         case .chatStatus(let action):
             let currentStatus = MEGASdkManager.sharedMEGAChatSdk().onlineStatus()
@@ -272,7 +230,6 @@ final class ContextMenuManager: NSObject {
     ///  - Parameters:
     ///     - menu: represent a context menu entity that contains the information related to this menu
     ///  - Returns: UIMenu that represent all actions and submenus of the current menu.
-    @available(iOS 14.0, *)
     func contextMenu(with configuration: CMConfigEntity) -> UIMenu? {
         guard let menuEntity = createContextMenuUC.createContextMenu(config: configuration) else { return nil }
         return convertToMenu(menu: menuEntity)

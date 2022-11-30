@@ -1054,14 +1054,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - UIDocumentPickerDelegate
 
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
-    if (controller.documentPickerMode == UIDocumentPickerModeImport) {
-        NSMutableArray *transfers = [NSMutableArray<CancellableTransfer *> new];
-        for (NSURL* url in urls) {
-            NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:url.path.mnz_coordinatesOfPhotoOrVideo];
-            [transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:url name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload]];
-        }
-        [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:transfers presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
+    NSMutableArray *transfers = [NSMutableArray<CancellableTransfer *> new];
+    for (NSURL* url in urls) {
+        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:url.path.mnz_coordinatesOfPhotoOrVideo];
+        [transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:url name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload]];
     }
+    [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:transfers presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
 }
 
 #pragma mark - MEGAGlobalDelegate

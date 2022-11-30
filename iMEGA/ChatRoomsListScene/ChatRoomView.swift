@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 struct ChatRoomView: View {
     @ObservedObject var viewModel: ChatRoomViewModel
     
@@ -71,7 +70,6 @@ struct ChatRoomView: View {
     }
 }
 
-@available(iOS 14.0, *)
 fileprivate struct ChatRoomContentView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     @Environment(\.layoutDirection) private var layoutDirection
@@ -119,7 +117,6 @@ fileprivate struct ChatRoomContentView: View {
     }
 }
 
-@available(iOS 14.0, *)
 fileprivate struct ChatRoomContentDetailsView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
@@ -178,7 +175,6 @@ fileprivate struct ChatRoomContentDetailsView: View {
     }
 }
 
-@available(iOS 14.0, *)
 fileprivate struct ChatRoomContentTitleView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
@@ -206,7 +202,6 @@ fileprivate struct ChatRoomContentTitleView: View {
     }
 }
 
-@available(iOS 14.0, *)
 fileprivate struct ChatRoomContentDescriptionView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     

@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
     var router: AlbumListViewRouting

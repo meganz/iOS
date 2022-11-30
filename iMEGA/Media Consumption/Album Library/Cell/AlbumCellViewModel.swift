@@ -3,7 +3,6 @@ import SwiftUI
 import MEGASwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class AlbumCellViewModel: NSObject, ObservableObject {
     let album: AlbumEntity?
     @Published var numberOfNodes = 0

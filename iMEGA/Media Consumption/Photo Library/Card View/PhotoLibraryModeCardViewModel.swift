@@ -1,7 +1,6 @@
 import Foundation
 import Combine
 
-@available(iOS 14.0, *)
 class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibraryModeViewModel<T> {
     private let categoryDateTransformation: (Date) -> Date?
     private let categoryListTransformation: (PhotoLibrary) -> [T]
@@ -53,7 +52,6 @@ class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibrary
 }
 
 // MARK: - Scroll Position Management
-@available(iOS 14.0, *)
 extension PhotoLibraryModeCardViewModel {
     private func calculateCurrentScrollPosition() -> PhotoScrollPosition? {
         func searchCategoryPosition(by position: PhotoScrollPosition) -> PhotoScrollPosition? {

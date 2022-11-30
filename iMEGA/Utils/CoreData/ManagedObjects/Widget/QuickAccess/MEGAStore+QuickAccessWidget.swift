@@ -37,7 +37,6 @@ extension MEGAStore {
         }
     }
     
-    @available(iOS 14.0, *)
     func batchInsertQuickAccessRecentItems(_ items: [RecentItemEntity], completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil) {
         guard !items.isEmpty else {
             completion?(.success(()))
@@ -48,7 +47,6 @@ extension MEGAStore {
         performBatchInsertRequest(batchInsert, completion: completion)
     }
     
-    @available(iOS 14.0, *)
     private func buildBatchInsertRequest(for items:[RecentItemEntity]) -> NSBatchInsertRequest {
         var insertIndex = 0
         let batchInsert = NSBatchInsertRequest(entity: QuickAccessWidgetRecentItem.entity()) { (managedObject: NSManagedObject) -> Bool in
@@ -106,7 +104,6 @@ extension MEGAStore {
         }
     }
     
-    @available(iOS 14.0, *)
     func batchInsertQuickAccessFavouriteItems(_ items: [FavouriteItemEntity], completion: ((Result<Void, GetFavouriteNodesErrorEntity>) -> Void)? = nil) {
         guard !items.isEmpty else {
             completion?(.success(()))

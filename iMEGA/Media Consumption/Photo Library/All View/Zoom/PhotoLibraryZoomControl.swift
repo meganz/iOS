@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGASwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoLibraryZoomControl: View {
     @Binding var zoomState: PhotoLibraryZoomState
     @Environment(\.editMode) var editMode

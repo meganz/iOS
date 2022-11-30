@@ -69,9 +69,7 @@
     [super viewDidLoad];
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
-    if (@available(iOS 14.0, *)) {
-        [self objcWrapper_configPhotosBannerView];
-    }
+    [self objcWrapper_configPhotosBannerView];
     
     self.currentState = MEGACameraUploadsStateLoading;
     
@@ -105,9 +103,7 @@
     [self.viewModel loadAllPhotos];
     [self refreshMyAvatar];
     
-    if (@available(iOS 14.0, *)) {
-        [self updateLimitedAccessBannerVisibility];
-    }
+    [self updateLimitedAccessBannerVisibility];
     
     [self setupNavigationBarButtons];
 }
@@ -180,13 +176,10 @@
 #pragma mark - config views
 - (void)configPhotoContainerView {
     [self configPhotoCollectionView];
+    self.photosCollectionView.delegate = nil;
+    self.photosCollectionView.dataSource = nil;
     
-    if (@available(iOS 14.0, *)) {
-        self.photosCollectionView.delegate = nil;
-        self.photosCollectionView.dataSource = nil;
-        
-        [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
-    }
+    [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
 }
 
 - (void)configPhotoCollectionView {
@@ -224,13 +217,8 @@
 
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
     if (shouldHide) {
-        if (@available(iOS 14.0, *)) {
-            [self.objcWrapper_parent.navigationItem setRightBarButtonItem:nil];
-            [self.objcWrapper_parent.navigationItem setRightBarButtonItems:nil];
-        } else {
-            [self.navigationItem setRightBarButtonItem:nil];
-            [self.navigationItem setRightBarButtonItems:nil];
-        }
+        [self.objcWrapper_parent.navigationItem setRightBarButtonItem:nil];
+        [self.objcWrapper_parent.navigationItem setRightBarButtonItems:nil];
     }
 }
 
@@ -388,37 +376,14 @@
     [self updateNavigationTitleBar];
     [self reloadHeader];
     [self setupNavigationBarButtons];
-    if (@available(iOS 14.0, *)) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
-            
-            if (self.viewModel.mediaNodesArray.count == 0) {
-                [self reloadPhotosCollectionView];
-            }
-            [self setupNavigationBarButtons];
-        });
-    } else {
-        NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
-        self.photosByMonthYearArray = [NSMutableArray new];
-        NSMutableArray *photosArray = [NSMutableArray new];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
         
-        for (MEGANode *node in self.viewModel.mediaNodesArray) {
-            NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
-            
-            if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
-                photosByMonthYearDictionary = [NSMutableDictionary new];
-                photosArray = [NSMutableArray new];
-                [photosArray addObject:node];
-                [photosByMonthYearDictionary setObject:photosArray forKey:currentMonthYearString];
-                [self.photosByMonthYearArray addObject:photosByMonthYearDictionary];
-            } else {
-                [photosArray addObject:node];
-            }
+        if (self.viewModel.mediaNodesArray.count == 0) {
+            [self reloadPhotosCollectionView];
         }
-        
-        [self reloadPhotosCollectionView];
         [self setupNavigationBarButtons];
-    }
+    });
 }
 
 - (void)reloadPhotosCollectionView {
@@ -516,9 +481,7 @@
         [self setToolbarActionsEnabled:YES];
     }
     
-    if (@available(iOS 14.0, *)) {
-        [self objcWrapper_configPhotoLibrarySelectAll];
-    }
+    [self objcWrapper_configPhotoLibrarySelectAll];
     
     [self.photosCollectionView reloadData];
 }
@@ -526,11 +489,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    if (@available(iOS 14.0, *)) {
-        [self objcWrapper_enablePhotoLibraryEditMode:editing];
-    } else {
-        self.photosCollectionView.allowsMultipleSelection = editing;
-    }
+    [self objcWrapper_enablePhotoLibraryEditMode:editing];
     
     if (editing) {
         [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];

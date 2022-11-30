@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ZoomViewModifier: ViewModifier {
     private let pinch = MagnificationGesture()
     
@@ -17,7 +16,6 @@ struct ZoomViewModifier: ViewModifier {
     }
 }
 
-@available(iOS 14.0, *)
 extension View {
     func zoom(_ state: Binding<PhotoLibraryZoomState>) -> some View {
         modifier(ZoomViewModifier(zoomState: state))

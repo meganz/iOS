@@ -1,7 +1,6 @@
 import SwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 struct FeatureFlagView: View {
     
     @StateObject var viewModel: FeatureFlagViewModel = FeatureFlagViewModel()

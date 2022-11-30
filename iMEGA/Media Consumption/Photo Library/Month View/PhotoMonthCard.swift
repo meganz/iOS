@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoMonthCard: View {
     @StateObject var viewModel: PhotoMonthCardViewModel
     
@@ -16,7 +15,6 @@ struct PhotoMonthCard: View {
     }
 }
 
-@available(iOS 14.0, *)
 extension PhotoMonthCard: Equatable {
     static func == (lhs: PhotoMonthCard, rhs: PhotoMonthCard) -> Bool {
         true // we are taking over the update of the view

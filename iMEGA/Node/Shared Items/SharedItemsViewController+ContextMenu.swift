@@ -49,33 +49,14 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         } else {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
             
-            if #available(iOS 14.0, *) {
-                contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                       menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
-            } else {
-                contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentActionSheet(sender:)))
-            }
+            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+                                                   menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
             
             contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
             
             navigationItem.rightBarButtonItem = contextBarButtonItem
             navigationItem.leftBarButtonItem = myAvatarManager?.myAvatarBarButton
         }
-    }
-    
-    @objc private func presentActionSheet(sender: Any) {
-        guard let actions = contextMenuManager?.actionSheetActions(with: contextMenuConfiguration()) else { return }
-        presentActionSheet(actions: actions)
-    }
-    
-    //MARK: - DisplayMenuDelegate functions
-    @objc func presentActionSheet(actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions,
-                                                      headerTitle: nil,
-                                                      dismissCompletion: nil,
-                                                      sender: nil)
-
-        self.present(actionSheetVC, animated: true)
     }
     
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
@@ -93,10 +74,5 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         if #available(iOS 14, *) {
             setNavigationBarButtons()
         }
-    }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
-        present(actionSheetVC, animated: true)
     }
 }
