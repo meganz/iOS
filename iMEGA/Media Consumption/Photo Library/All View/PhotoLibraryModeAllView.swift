@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoLibraryModeAllView: View {
     let viewModel: PhotoLibraryContentViewModel
     let router: PhotoLibraryContentViewRouting

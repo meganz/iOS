@@ -117,15 +117,9 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         case .onTransferCompleted(let node):
             listSource?.onTransferCompleted(forNode: node)
         case .updateContextMenu(let menu):
-            if #available(iOS 14.0, *) {
-                delegate?.updateContextMenu(menu: menu)
-            }
+            delegate?.updateContextMenu(menu: menu)
         case .updateUploadAddMenu(let menu):
-            if #available(iOS 14.0, *) {
-                delegate?.updateUploadAddMenu(menu: menu)
-            }
-        case .showActionSheet(let actions):
-            delegate?.showActionSheet(actions: actions)
+            delegate?.updateUploadAddMenu(menu: menu)
         case .sortTypeHasChanged:
             delegate?.updateSearchResults()
         case .editingModeStatusChanges:

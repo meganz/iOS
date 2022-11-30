@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct BlurryBackground: ViewModifier {
     let radius: CGFloat
     let singleColorTheme: Bool
@@ -26,7 +25,6 @@ struct BlurryBackground: ViewModifier {
     }
 }
 
-@available(iOS 14.0, *)
 public extension View {
     func blurryBackground(radius: CGFloat = 0, singleColorTheme: Bool = false) -> some View {
         modifier(BlurryBackground(radius: radius, singleColorTheme: singleColorTheme))

@@ -14,58 +14,35 @@ extension CloudDriveViewController {
             isMyBackupsChild = await myBackupsUseCase.isMyBackupsNodeChild(parentNodeEntity)
         }
        
-        if #available(iOS 14.0, *) {
-            return CMConfigEntity(menuType: .menu(type: .display),
-                                  viewMode: isListViewModeSelected() ? .list : .thumbnail,
-                                  accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
-                                  sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
-                                  isAFolder: parentNode.type != .root,
-                                  isRubbishBinFolder: displayMode == .rubbishBin,
-                                  isViewInFolder: isFromViewInFolder,
-                                  isIncomingShareChild: isIncomingSharedRootChild,
-                                  isMyBackupsNode: isMyBackupsNode,
-                                  isMyBackupsChild: isMyBackupsChild,
-                                  isOutShare: parentNode.isOutShare(),
-                                  isExported: parentNode.isExported(),
-                                  showMediaDiscovery: shouldShowMediaDiscovery())
-        } else {
-            return CMConfigEntity(menuType: .menu(type: .display),
-                                  viewMode: isListViewModeSelected() ? .list : .thumbnail,
-                                  accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
-                                  sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
-                                  isAFolder: parentNode.type != .root,
-                                  isRubbishBinFolder: displayMode == .rubbishBin,
-                                  isViewInFolder: isFromViewInFolder,
-                                  isIncomingShareChild: isIncomingSharedRootChild,
-                                  isMyBackupsNode: isMyBackupsNode,
-                                  isMyBackupsChild: isMyBackupsChild,
-                                  isOutShare: parentNode.isOutShare(),
-                                  isExported: parentNode.isExported())
-        }
+        return CMConfigEntity(menuType: .menu(type: .display),
+                              viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                              accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
+                              sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
+                              isAFolder: parentNode.type != .root,
+                              isRubbishBinFolder: displayMode == .rubbishBin,
+                              isViewInFolder: isFromViewInFolder,
+                              isIncomingShareChild: isIncomingSharedRootChild,
+                              isMyBackupsNode: isMyBackupsNode,
+                              isMyBackupsChild: isMyBackupsChild,
+                              isOutShare: parentNode.isOutShare(),
+                              isExported: parentNode.isExported(),
+                              showMediaDiscovery: shouldShowMediaDiscovery())
     }
     
     @objc func setBackupNavigationBarButtons() {
         Task { @MainActor in
-            if #available(iOS 14.0, *) {
-                guard let menuConfig = await contextMenuBackupConfiguration() else { return }
-                contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                       menu: contextMenuManager?.contextMenu(with: menuConfig))
-            } else {
-                contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(presentBackupActionSheet(sender:)))
-            }
+            guard let menuConfig = await contextMenuBackupConfiguration() else { return }
+            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+                                                   menu: contextMenuManager?.contextMenu(with: menuConfig))
             
             if displayMode != .rubbishBin,
                displayMode != .backup,
                !isFromViewInFolder,
                let parentNode = parentNode,
                MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
-                if #available(iOS 14.0, *) {
-                    guard let menuConfig = uploadAddMenuConfiguration() else { return }
-                    uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                                             menu: contextMenuManager?.contextMenu(with: menuConfig))
-                } else {
-                    uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: self, action: #selector(presentBackupActionSheet(sender:)))
-                }
+                guard let menuConfig = uploadAddMenuConfiguration() else { return }
+                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+                                                         menu: contextMenuManager?.contextMenu(with: menuConfig))
                 navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
             } else {
                 navigationItem.rightBarButtonItems = [contextBarButtonItem]
@@ -77,15 +54,6 @@ extension CloudDriveViewController {
                                                                style: .plain,
                                                                target: self,
                                                                action: #selector(dismissController))
-        }
-    }
-    
-    @objc private func presentBackupActionSheet(sender: Any) {
-        Task { @MainActor in
-            guard let barButtonItem = sender as? UIBarButtonItem,
-                  let menuConfig = barButtonItem == contextBarButtonItem ? await contextMenuBackupConfiguration() : uploadAddMenuConfiguration(),
-                  let actions = contextMenuManager?.actionSheetActions(with: menuConfig) else { return }
-            presentActionSheet(actions: actions)
         }
     }
     

@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoCard<Content: View>: View {
     @Environment(\.colorScheme) private var colorScheme
     private let badgeTitle: String?

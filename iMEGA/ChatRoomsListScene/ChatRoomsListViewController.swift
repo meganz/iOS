@@ -2,7 +2,6 @@ import SwiftUI
 import Combine
 import MEGAUIKit
 
-@available(iOS 14.0, *)
 final class ChatRoomsListViewController: UIViewController {
 
     lazy var addBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: nil, action: nil)
@@ -115,7 +114,6 @@ final class ChatRoomsListViewController: UIViewController {
     }
 }
 
-@available(iOS 14.0, *)
 extension ChatRoomsListViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
         viewModel.bottomViewHeight = height

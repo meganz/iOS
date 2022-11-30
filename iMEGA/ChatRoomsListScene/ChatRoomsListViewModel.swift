@@ -581,10 +581,6 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
             self?.notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
         }
     }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        // iOS 13 not supported for this class
-    }
 }
 
 //MARK: - MeetingContextMenuDelegate

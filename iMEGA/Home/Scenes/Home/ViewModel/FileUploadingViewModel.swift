@@ -4,8 +4,6 @@ import MEGADomain
 protocol HomeUploadingViewModelInputs {
 
     func viewIsReady()
-
-    func didTapUploadFromSourceItems() -> [ContextActionSheetAction]?
 }
 
 protocol HomeUploadingViewModelOutputs {
@@ -14,7 +12,6 @@ protocol HomeUploadingViewModelOutputs {
 
     var networkReachable: Bool { get }
     
-    @available(iOS 14.0, *)
     var contextMenu: UIMenu? { get }
 }
 
@@ -39,11 +36,6 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
             guard let self = self else { return }
             self.notifyUpdate?(self.outputs)
         }
-    }
-
-    func didTapUploadFromSourceItems() -> [ContextActionSheetAction]? {
-        let cmConfigEntity = CMConfigEntity(menuType: .menu(type: .uploadAdd), isHome: true)
-        return contextMenuManager?.actionSheetActions(with: cmConfigEntity)
     }
 
     func didTapUploadFromPhotoAlbum() {
@@ -117,30 +109,17 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         let networkReachable = networkMonitorUseCase.isConnected()
         let cmConfigEntity = CMConfigEntity(menuType: .menu(type: .uploadAdd), isHome: true)
         if let error = error {
-            if #available(iOS 14.0, *) {
-                return ViewState(
-                    state: .permissionDenied(error),
-                    networkReachable: networkReachable,
-                    contextMenu: contextMenuManager?.contextMenu(with: cmConfigEntity)
-                )
-            } else {
-                return ViewState(
-                    state: .permissionDenied(error),
-                    networkReachable: networkReachable
-                )
-            }
+            return ViewState(
+                state: .permissionDenied(error),
+                networkReachable: networkReachable,
+                contextMenu: contextMenuManager?.contextMenu(with: cmConfigEntity)
+            )
         }
         
-        if #available(iOS 14.0, *) {
-            return ViewState(state: .normal,
-                             networkReachable: networkReachable,
-                             contextMenu: contextMenuManager?.contextMenu(with: cmConfigEntity)
-            )
-        } else {
-            return ViewState(state: .normal,
-                             networkReachable: networkReachable
-            )
-        }
+        return ViewState(state: .normal,
+                         networkReachable: networkReachable,
+                         contextMenu: contextMenuManager?.contextMenu(with: cmConfigEntity)
+        )
     }
 
     var notifyUpdate: ((HomeUploadingViewModelOutputs) -> Void)?
@@ -198,8 +177,6 @@ extension HomeUploadingViewModel: UploadAddMenuDelegate {
         default: break
         }
     }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {}
 }
 
 // MARK: - Upload Options

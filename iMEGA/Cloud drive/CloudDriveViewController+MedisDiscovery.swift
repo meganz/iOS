@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 14.0, *)
 extension CloudDriveViewController {
     @objc func shouldShowMediaDiscovery() -> Bool {
         guard let parent = parentNode else { return false }

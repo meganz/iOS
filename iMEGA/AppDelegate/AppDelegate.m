@@ -1191,10 +1191,10 @@
             [MEGAStore.shareInstance deleteMessage:moMessage];
             completionHandler(UNNotificationPresentationOptionNone);
         } else {
-            completionHandler(UNNotificationPresentationOptionAlert);
+            completionHandler(UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner);
         }
     } else {
-        completionHandler(UNNotificationPresentationOptionAlert);
+        completionHandler(UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner);
     }    
 }
 
@@ -1298,9 +1298,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (nodeList) {
-        if (@available(iOS 14.0, *)) {
-            [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
-        }
+        [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
         
         [self postNodeUpdatesNotificationsFor:nodeList];
     } else {
@@ -1535,9 +1533,7 @@
             [self registerForVoIPNotifications];
             [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
-            if (@available(iOS 14.0, *)) {
-                [QuickAccessWidgetManager reloadAllWidgetsContent];
-            }
+            [QuickAccessWidgetManager reloadAllWidgetsContent];
             
             [api setAccountAuth:api.accountAuth];
             break;
@@ -1587,9 +1583,7 @@
                 [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
             }
 
-            if (@available(iOS 14.0, *)) {
-                [self.quickAccessWidgetManager createWidgetItemData];
-            }
+            [self.quickAccessWidgetManager createWidgetItemData];
             
             [self presentAccountExpiredViewIfNeeded];
             
@@ -1606,9 +1600,7 @@
                 
                 [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
                 
-                if (@available(iOS 14.0, *)) {
-                    [QuickAccessWidgetManager reloadAllWidgetsContent];
-                }
+                [QuickAccessWidgetManager reloadAllWidgetsContent];
                 if (sessionInvalidateInOtherClient && !self.API_ESIDAlertController) {
                     [self presentLogoutFromOtherClientAlert];
                 }
@@ -1860,9 +1852,7 @@
     if ([transfer type] == MEGATransferTypeDownload) {        
         [SaveNodeUseCaseOCWrapper.alloc.init saveNodeIfNeededFrom:transfer];
         
-        if (@available(iOS 14.0, *)) {
-            [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-        }
+        [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
         
         if (transfer.fileName.mnz_isVideoPathExtension && !node.hasThumbnail) {
             NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];

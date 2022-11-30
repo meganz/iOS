@@ -1,7 +1,6 @@
 import MEGADomain
 import MEGAData
 
-@available(iOS 14.0, *)
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     private(set) weak var navigationController: UINavigationController?
     private weak var chatRoomsListViewController: ChatRoomsListViewController?

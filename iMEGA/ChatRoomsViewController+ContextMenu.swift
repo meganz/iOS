@@ -10,12 +10,8 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     @objc func setEmptyViewButtonWithMeetingsOptions(button: UIButton) {
-        if #available(iOS 14.0, *) {
-            button.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .menu(type: .meeting)))
-            button.showsMenuAsPrimaryAction = true
-        } else {
-            button.addTarget(self, action: #selector(presentMeetingActionSheet(sender:)), for: .touchUpInside)
-        }
+        button.menu = contextMenuManager?.contextMenu(with: CMConfigEntity(menuType: .menu(type: .meeting)))
+        button.showsMenuAsPrimaryAction = true
     }
     
     @objc func setEmptyViewButtonWithChatOptions(button: UIButton) {
@@ -23,19 +19,14 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     private func setAddBarButtonWithMeetingsOptions() {
-        if #available(iOS 14.0, *) {
-            addBarButtonItem?.menu = contextMenuManager?.contextMenu(
-                with: CMConfigEntity(
-                    menuType: .menu(type: .meeting),
-                    shouldScheduleMeeting: FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting)
-                )
+        addBarButtonItem?.menu = contextMenuManager?.contextMenu(
+            with: CMConfigEntity(
+                menuType: .menu(type: .meeting),
+                shouldScheduleMeeting: FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting)
             )
-            addBarButtonItem?.target = nil
-            addBarButtonItem?.action = nil
-        } else {
-            addBarButtonItem?.target = self
-            addBarButtonItem?.action = #selector(presentMeetingActionSheet(sender:))
-        }
+        )
+        addBarButtonItem?.target = nil
+        addBarButtonItem?.action = nil
     }
     
     private func setAddBarButtonWithChatOptions() {
@@ -63,12 +54,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     @objc func refreshContextMenuBarButton() {
-        if #available(iOS 14.0, *) {
-            moreBarButtonItem?.menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration())
-        } else {
-            moreBarButtonItem?.target = self
-            moreBarButtonItem?.action = #selector(presentActionSheet(sender:))
-        }
+        moreBarButtonItem?.menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration())
     }
     
     @objc func changeToOnlineStatus(_ status: MEGAChatStatus) {
@@ -91,46 +77,6 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         contextMenuManager = ContextMenuManager(chatMenuDelegate: self,
                                                 meetingContextMenuDelegate: self,
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
-    }
-    
-    @objc private func presentActionSheet(sender: Any) {
-        guard let actions = contextMenuManager?.actionSheetActions(with: contextMenuConfiguration()) else { return }
-        presentActionSheet(actions: actions)
-    }
-    
-    @objc func presentActionSheet(actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions.compactMap { $0.type == CMElementTypeEntity.chat(actionType: .doNotDisturb) ? convertToSwitchAction(action: $0) : $0},
-                                                      headerTitle: nil,
-                                                      dismissCompletion: nil,
-                                                      sender: nil)
-
-        self.present(actionSheetVC, animated: true)
-    }
-    
-    private func convertToSwitchAction(action: ContextActionSheetAction) -> ActionSheetSwitchAction {
-        let dndSwitch = UISwitch(frame: .zero)
-        dndSwitch.addTarget(self, action: #selector(changeDNDStatus(sender:)), for: .valueChanged)
-        dndSwitch.setOn(globalDNDNotificationControl?.isGlobalDNDEnabled ?? false, animated: false)
-        
-        return ActionSheetSwitchAction(title: action.title,
-                                       detail: action.detail,
-                                       switchView: dndSwitch,
-                                       image: action.image,
-                                       style: .default) {
-            action.actionHandler(action)
-        }
-    }
-    
-    @objc func presentMeetingActionSheet(sender: Any) {
-        guard let actions = contextMenuManager?.actionSheetActions(with: CMConfigEntity(menuType: .menu(type: .meeting))) else { return }
-        
-        let actionSheetVC = ActionSheetViewController(
-            actions: actions,
-            headerTitle: nil,
-            dismissCompletion: nil,
-            sender: sender)
-        
-        present(actionSheetVC, animated: true)
     }
     
     //MARK: - ChatMenuDelegate functions
@@ -165,11 +111,6 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
                 self?.refreshContextMenuBarButton()
             }
         }
-    }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
-        present(actionSheetVC, animated: true)
     }
     
     func meetingContextMenu(didSelect action: MeetingActionEntity) {

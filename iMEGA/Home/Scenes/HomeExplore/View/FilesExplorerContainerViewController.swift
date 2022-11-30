@@ -137,20 +137,8 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     private func configureNavigationBarButtons() {
         contextBarButtonItem.image = Asset.Images.Generic.moreList.image
         
-        if #unavailable(iOS 14.0) {
-            contextBarButtonItem.style = .plain
-            contextBarButtonItem.target = self
-            contextBarButtonItem.action = #selector(moreButtonItemSelected(_:))
-        }
-        
         if viewModel.getExplorerType() == .document {
             uploadAddBarButonItem.image = Asset.Images.NavigationBar.add.image
-            
-            if #unavailable(iOS 14.0) {
-                uploadAddBarButonItem.style = .plain
-                uploadAddBarButonItem.target = self
-                uploadAddBarButonItem.action = #selector(uploadAddButtonItemSelected(_:))
-            }
 
             navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButonItem]
         } else {
@@ -164,12 +152,10 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         }
     }
     
-    @available(iOS 14.0, *)
     func updateContextMenu(menu: UIMenu) {
         contextBarButtonItem.menu = menu
     }
     
-    @available(iOS 14.0, *)
     func updateUploadAddMenu(menu: UIMenu) {
         uploadAddBarButonItem.menu = menu
     }
@@ -207,14 +193,6 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     //MARK:- Actions
-
-    @objc private func moreButtonItemSelected(_ button: UIBarButtonItem) {
-        viewModel.dispatch(.didTapOnMoreButton)
-    }
-    
-    @objc private func uploadAddButtonItemSelected(_ button: UIBarButtonItem) {
-        viewModel.dispatch(.didTapOnAddUploadButton)
-    }
     
     @objc private func cancelButtonPressed(_ button: UIBarButtonItem) {
         currentState.endEditingMode()
@@ -228,16 +206,6 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         if navigationItem.searchController == nil {
             navigationItem.searchController = searchController
         }
-    }
-    
-    //MARK:- Action sheet methods
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
-        present(actionSheetVC, animated: true)
-    }
-    
-    func showActionSheet(actions: [ContextActionSheetAction]) {
-        showActionSheet(with: actions)
     }
 }
 

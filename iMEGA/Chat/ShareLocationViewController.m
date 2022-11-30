@@ -34,7 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (!CLLocationManager.locationServicesEnabled || CLLocationManager.authorizationStatus == kCLAuthorizationStatusDenied || CLLocationManager.authorizationStatus == kCLAuthorizationStatusRestricted) {
+    CLLocationManager *locationManager = CLLocationManager.alloc.init;
+    if (!CLLocationManager.locationServicesEnabled || locationManager.authorizationStatus == kCLAuthorizationStatusDenied || locationManager.authorizationStatus == kCLAuthorizationStatusRestricted) {
         NSString *message = [[NSLocalizedString(@"NSLocationWhenInUseUsageDescription", @"Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed.") stringByAppendingString:@"\n\n"] stringByAppendingString:NSLocalizedString(@"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.", @"Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA")];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Please allow access", @"Title of a dialog in which we request access to a specific permission, like the Location Services") message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *notNow = [UIAlertAction actionWithTitle:NSLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil];

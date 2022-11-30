@@ -5,7 +5,6 @@ import MEGASwiftUI
 import MEGADomain
 import MEGASwift
 
-@available(iOS 14.0, *)
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailUseCase: ThumbnailUseCaseProtocol

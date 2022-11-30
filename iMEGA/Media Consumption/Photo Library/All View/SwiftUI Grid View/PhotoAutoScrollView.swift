@@ -1,7 +1,6 @@
 import SwiftUI
 import Combine
 
-@available(iOS 14.0, *)
 struct PhotoAutoScrollView: View {
     @StateObject var viewModel: PhotoAutoScrollViewModel
     let scrollProxy: ScrollViewProxy

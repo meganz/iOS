@@ -48,17 +48,7 @@ final class FileUploadingRouter {
     // MARK: - Display Import Selection View Controller
 
     private func presentImportSelection() {
-        let documentPickerViewController = UIDocumentPickerViewController(
-            documentTypes: [
-                kUTTypeContent as String,
-                kUTTypeData as String,
-                kUTTypePackage as String,
-                "com.apple.iwork.pages.pages",
-                "com.apple.iwork.numbers.numbers",
-                "com.apple.iwork.keynote.key"
-            ],
-            in: .import
-        )
+        let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package], asCopy: true)
         documentPickerViewController.allowsMultipleSelection = true
 
         var documentImportsDelegate: DocumentImportsDelegate? {
@@ -213,7 +203,6 @@ fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentPickerDeleg
     // MARK: - UIDocumentPickerDelegate
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard controller.documentPickerMode == .import else { return }
         importsURLsCompletion?(urls)
         importsURLsCompletion = nil
     }

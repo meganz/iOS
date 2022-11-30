@@ -3,16 +3,9 @@ import SwiftUI
 struct WarningView: View {
     @ObservedObject var viewModel: WarningViewModel
     
-    private var textFont: Font {
-        guard #available(iOS 14.0, *) else {
-            return .caption.bold()
-        }
-        return .caption2.bold()
-    }
-    
     var body: some View {
         Text(viewModel.warningType.description)
-            .font(textFont)
+            .font(.caption2.bold())
             .fixedSize(horizontal: false, vertical: true)
             .foregroundColor(Color(Colors.Banner.warningTextColor.name))
             .multilineTextAlignment(.leading)

@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 14.0, *)
 extension PhotosViewController: PhotoLibraryProvider {
     // MARK: - config views
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {

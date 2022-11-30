@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct PhotoCellContent: View {
     @ObservedObject var viewModel: PhotoCellViewModel
     

@@ -1,8 +1,6 @@
 public protocol RecentItemsUseCaseProtocol {
-    @available(iOS 14.0, *)
     func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func insertRecentItem(_ item: RecentItemEntity)
-    @available(iOS 14.0, *)
     func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
     func fetchRecentItems() -> [RecentItemEntity]
 }
@@ -14,7 +12,6 @@ public struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsU
         self.repo = repo
     }
     
-    @available(iOS 14.0, *)
     public func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         repo.deleteAllRecentItems { (result) in
             switch result {
@@ -32,7 +29,6 @@ public struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsU
         repo.insertRecentItem(item)
     }
     
-    @available(iOS 14.0, *)
     public func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         repo.batchInsertRecentItems(items, completion: completion)
     }

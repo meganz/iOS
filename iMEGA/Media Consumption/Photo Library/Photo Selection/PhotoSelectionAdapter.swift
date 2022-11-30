@@ -11,60 +11,32 @@ import MEGADomain
     }
     
     @objc var count: Int {
-        if #available(iOS 14.0, *) {
-            return nodeEntities.count
-        } else {
-            return megaNodes.count
-        }
+        nodeEntities.count
     }
     
     @objc var isEmpty: Bool {
-        if #available(iOS 14.0, *) {
-            return nodeEntities.isEmpty
-        } else {
-            return megaNodes.isEmpty
-        }
+        nodeEntities.isEmpty
     }
     
     @objc var nodes: [MEGANode] {
-        if #available(iOS 14.0, *) {
-            return nodeEntities.values.compactMap { $0.toMEGANode(in: self.sdk) }
-        } else {
-            return Array(megaNodes.values)
-        }
+        nodeEntities.values.compactMap { $0.toMEGANode(in: self.sdk) }
     }
     
     @objc subscript(handle: HandleEntity) -> MEGANode? {
         get {
-            if #available(iOS 14.0, *) {
-                return nodeEntities[handle]?.toMEGANode(in: self.sdk)
-            } else {
-                return megaNodes[handle]
-            }
+            nodeEntities[handle]?.toMEGANode(in: self.sdk)
         }
         set {
-            if #available(iOS 14.0, *) {
-                nodeEntities[handle] = newValue?.toNodeEntity()
-            } else {
-                megaNodes[handle] = newValue
-            }
+            nodeEntities[handle] = newValue?.toNodeEntity()
         }
     }
     
     @objc func removeAll() {
-        if #available(iOS 14.0, *) {
-            nodeEntities.removeAll()
-        } else {
-            megaNodes.removeAll()
-        }
+        nodeEntities.removeAll()
     }
     
     @objc func removeNode(by handle: HandleEntity) {
-        if #available(iOS 14.0, *) {
-            nodeEntities[handle] = nil
-        } else {
-            megaNodes[handle] = nil
-        }
+        nodeEntities[handle] = nil
     }
     
     func setSelectedNodes(_ nodes: [NodeEntity]) {

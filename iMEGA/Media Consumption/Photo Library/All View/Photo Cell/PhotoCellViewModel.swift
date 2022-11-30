@@ -5,7 +5,6 @@ import MEGASwiftUI
 import MEGADomain
 import MEGASwift
 
-@available(iOS 14.0, *)
 final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol

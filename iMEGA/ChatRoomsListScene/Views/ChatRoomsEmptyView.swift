@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ChatRoomsEmptyView: View {
     let emptyViewState: ChatRoomsEmptyViewState
     
@@ -69,7 +68,6 @@ fileprivate struct ChatRoomsEmptyCenterView: View {
     }
 }
 
-@available(iOS 14.0, *)
 fileprivate struct ChatRoomsEmptyBottomButtonView: View {
     let name: String
     var height: CGFloat? = 50

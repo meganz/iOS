@@ -20,32 +20,14 @@ public struct TermsAndPoliciesView: View {
     
     public var body: some View {
         List {
-            if #available(iOS 14.0, *) {
-                Link(destination: privacyUrl) {
-                    NavigationLink(privacyPolicyText, destination: EmptyView())
-                }
-                Link(destination: cookieUrl) {
-                    NavigationLink(cookiePolicyText, destination: EmptyView())
-                }
-                Link(destination: termsUrl) {
-                    NavigationLink(termsOfServicesText, destination: EmptyView())
-                }
-            } else {
-                Button(action: {
-                    UIApplication.shared.open(privacyUrl)
-                }) {
-                    NavigationLink(privacyPolicyText, destination: EmptyView())
-                }
-                Button(action: {
-                    UIApplication.shared.open(cookieUrl)
-                }) {
-                    NavigationLink(cookiePolicyText, destination: EmptyView())
-                }
-                Button(action: {
-                    UIApplication.shared.open(termsUrl)
-                }) {
-                    NavigationLink(privacyPolicyText, destination: EmptyView())
-                }
+            Link(destination: privacyUrl) {
+                NavigationLink(privacyPolicyText, destination: EmptyView())
+            }
+            Link(destination: cookieUrl) {
+                NavigationLink(cookiePolicyText, destination: EmptyView())
+            }
+            Link(destination: termsUrl) {
+                NavigationLink(termsOfServicesText, destination: EmptyView())
             }
         }
         .foregroundColor(.primary)

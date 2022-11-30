@@ -50,16 +50,12 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .info:
             showNodeInfo(node)
         case .favourite:
-            if #available(iOS 14.0, *) {
-                MEGASdkManager.sharedMEGASdk().setNodeFavourite(node, favourite: !node.isFavourite, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
-                    if error.type == .apiOk {
-                        request.numDetails == 1 ? QuickAccessWidgetManager().insertFavouriteItem(for: node) :
-                        QuickAccessWidgetManager().deleteFavouriteItem(for: node)
-                    }
-                }))
-            } else {
-                MEGASdkManager.sharedMEGASdk().setNodeFavourite(node, favourite: !node.isFavourite)
-            }
+            MEGASdkManager.sharedMEGASdk().setNodeFavourite(node, favourite: !node.isFavourite, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                if error.type == .apiOk {
+                    request.numDetails == 1 ? QuickAccessWidgetManager().insertFavouriteItem(for: node) :
+                    QuickAccessWidgetManager().deleteFavouriteItem(for: node)
+                }
+            }))
         case .label:
             node.mnz_labelActionSheet(in: self)
         case .leaveSharing:

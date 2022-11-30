@@ -2,7 +2,6 @@ import SwiftUI
 import Combine
 import MEGASwiftUI
 
-@available(iOS 14.0, *)
 struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel
     @Environment(\.colorScheme) var colorScheme

@@ -7,31 +7,13 @@ extension ContactLinkQRViewController: QRMenuDelegate {
     }
     
     @objc func setMoreButtonAction() {
-        if #available(iOS 14.0, *) {
-            moreButton?.menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration())
-            moreButton?.showsMenuAsPrimaryAction = true
-        } else {
-            moreButton?.addTarget(self, action: #selector(presentActionSheet(sender:)), for: .touchUpInside)
-        }
+        moreButton?.menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration())
+        moreButton?.showsMenuAsPrimaryAction = true
     }
     
     @objc func configureContextMenuManager() {
         contextMenuManager = ContextMenuManager(qrMenuDelegate: self,
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
-    }
-    
-    @objc private func presentActionSheet(sender: Any) {
-        guard let actions = contextMenuManager?.actionSheetActions(with: contextMenuConfiguration()) else { return }
-        presentActionSheet(actions: actions)
-    }
-    
-    @objc func presentActionSheet(actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions,
-                                                      headerTitle: nil,
-                                                      dismissCompletion: nil,
-                                                      sender: nil)
-
-        self.present(actionSheetVC, animated: true)
     }
     
     //MARK: - QRMenuDelegate functions
@@ -52,10 +34,5 @@ extension ContactLinkQRViewController: QRMenuDelegate {
             self.qrImageView?.image = nil
             MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(true, delegate: contactLinkCreateDelegate)
         }
-    }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
-        present(actionSheetVC, animated: true)
     }
 }

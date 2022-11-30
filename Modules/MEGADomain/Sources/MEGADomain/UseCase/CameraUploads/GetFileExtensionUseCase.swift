@@ -4,7 +4,6 @@ import AVFoundation
 import CoreServices
 
 public protocol GetFileExtensionUseCaseProtocol {
-    @available(iOS 14.0, *)
     func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension
     
     func fileExtension(for type: MediaTypeEntity, url: URL?, uniformTypeIdentifier uti: String?) -> FileExtension
@@ -13,7 +12,6 @@ public protocol GetFileExtensionUseCaseProtocol {
 public struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
     public init() { }
     
-    @available(iOS 14.0, *)
     public func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension {
         if let fileExtension = fileExtension(for: url) {
             return fileExtension
@@ -79,7 +77,6 @@ public struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
     }
 }
 
-@available(iOS 14.0, *)
 extension GetFileExtensionUseCase {
     private func fileExtension(for uti: UTType?) -> FileExtension? {
         guard let uti = uti else { return nil }

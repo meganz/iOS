@@ -1195,22 +1195,19 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
         }
             
-        case MegaNodeActionTypeFavourite:
-            if (@available(iOS 14.0, *)) {
-                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                    if (error.type == MEGAErrorTypeApiOk) {
-                        if (request.numDetails == 1) {
-                            [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
-                        } else {
-                            [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
-                        }
+        case MegaNodeActionTypeFavourite: {
+            MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                if (error.type == MEGAErrorTypeApiOk) {
+                    if (request.numDetails == 1) {
+                        [[QuickAccessWidgetManager.alloc init] insertFavouriteItemFor:node];
+                    } else {
+                        [[QuickAccessWidgetManager.alloc init] deleteFavouriteItemFor:node];
                     }
-                }];
-                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
-            } else {
-                [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite];
-            }
+                }
+            }];
+            [MEGASdkManager.sharedMEGASdk setNodeFavourite:node favourite:!node.isFavourite delegate:delegate];
             break;
+        }
             
         case MegaNodeActionTypeLabel:
             [node mnz_labelActionSheetInViewController:self];

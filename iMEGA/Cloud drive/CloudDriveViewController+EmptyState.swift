@@ -5,12 +5,8 @@ extension CloudDriveViewController: DZNEmptyDataSetSource {
         
         guard let menuConfig = uploadAddMenuConfiguration() else { return emptyStateView }
         
-        if #available(iOS 14.0, *) {
-            emptyStateView.button?.menu = contextMenuManager?.contextMenu(with: menuConfig)
-            emptyStateView.button?.showsMenuAsPrimaryAction =  true
-        } else {
-            emptyStateView.button?.addTarget(self, action: #selector(emptyStateButtonAction(sender:)), for: .touchUpInside)
-        }
+        emptyStateView.button?.menu = contextMenuManager?.contextMenu(with: menuConfig)
+        emptyStateView.button?.showsMenuAsPrimaryAction = true
         
         return emptyStateView
     }
@@ -104,22 +100,5 @@ extension CloudDriveViewController: DZNEmptyDataSetSource {
         }
         
         return nil
-    }
-    
-    @objc func emptyStateButtonAction(sender: Any) {
-        if MEGAReachabilityManager.isReachable() {
-            switch displayMode {
-            case .cloudDrive:
-                guard let config = uploadAddMenuConfiguration(),
-                      let actions = contextMenuManager?.actionSheetActions(with: config) else { return }
-                presentActionSheet(actions: actions)
-            default: break
-            }
-        } else {
-            if MEGAReachabilityManager.shared().isMobileDataEnabled {
-                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
     }
 }

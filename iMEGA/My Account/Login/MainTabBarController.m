@@ -267,11 +267,7 @@
 }
 
 - (UIViewController *)photosViewController {
-    if (@available(iOS 14.0, *)) {
-        return [self photoAlbumViewController];
-    } else {
-        return [self photoViewController];
-    }
+    return [self photoAlbumViewController];
 }
 
 - (UIViewController *)homeViewController {

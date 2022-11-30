@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 public struct TextEditorView: View {
     @Binding var text: String
     var placeholder: String?

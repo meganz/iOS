@@ -24,11 +24,9 @@ struct QASettingsView: View {
                 .listRowBackground(listRowBackgroundColor)
             }            
             
-            if #available(iOS 14.0, *) {
-                Section(header: Text(Constants.featureListHeaderText)) {
-                    FeatureFlagView()
-                        .listRowBackground(listRowBackgroundColor)
-                }
+            Section(header: Text(Constants.featureListHeaderText)) {
+                FeatureFlagView()
+                    .listRowBackground(listRowBackgroundColor)
             }
         }
         .listStyle(.plain)

@@ -17,7 +17,6 @@ class RecentItemsRepository: RecentItemsRepositoryProtocol {
         store.insertQuickAccessRecentItem(withBase64Handle: item.base64Handle, name: item.name, isUpdate: item.isUpdate, timestamp: item.timestamp)
     }
     
-    @available(iOS 14.0, *)
     func batchInsertRecentItems(_ items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         store.batchInsertQuickAccessRecentItems(items, completion: completion)
     }

@@ -5,8 +5,6 @@ enum FilesExplorerAction: ActionType {
     case onViewReady
     case startSearching(String?)
     case didSelectNode(MEGANode, [MEGANode])
-    case didTapOnMoreButton
-    case didTapOnAddUploadButton
     case didChangeViewMode(Int)
     case downloadNode(MEGANode)
 }
@@ -21,7 +19,6 @@ final class FilesExplorerViewModel {
         case onTransferCompleted(MEGANode)
         case updateContextMenu(UIMenu)
         case updateUploadAddMenu(UIMenu)
-        case showActionSheet([ContextActionSheetAction])
         case sortTypeHasChanged
         case editingModeStatusChanges
         case viewTypeHasChanged
@@ -113,12 +110,10 @@ final class FilesExplorerViewModel {
             configForUploadAddMenu = CMConfigEntity(menuType: .menu(type: .uploadAdd),
                                                     isDocumentExplorer: explorerType == .document)
             
-            if #available(iOS 14.0, *) {
-                guard let configForUploadAddMenu = configForUploadAddMenu,
-                        let menu = contextMenuManager?.contextMenu(with: configForUploadAddMenu) else { return }
-                
-                invokeCommand?(.updateUploadAddMenu(menu))
-            }
+            guard let configForUploadAddMenu,
+                  let menu = contextMenuManager?.contextMenu(with: configForUploadAddMenu) else { return }
+            
+            invokeCommand?(.updateUploadAddMenu(menu))
         } else {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: createContextMenuUseCase)
         }
@@ -131,12 +126,10 @@ final class FilesExplorerViewModel {
                                               isAudiosExplorer: explorerType == .audio,
                                               isVideosExplorer: explorerType == .video)
         
-        if #available(iOS 14.0, *) {
-            guard let configForDisplayMenu = configForDisplayMenu,
-                    let menu = contextMenuManager?.contextMenu(with: configForDisplayMenu) else { return }
-            
-            invokeCommand?(.updateContextMenu(menu))
-        }
+        guard let configForDisplayMenu,
+              let menu = contextMenuManager?.contextMenu(with: configForDisplayMenu) else { return }
+        
+        invokeCommand?(.updateContextMenu(menu))
     }
     
     // MARK: - Dispatch action
@@ -149,14 +142,6 @@ final class FilesExplorerViewModel {
             startSearching(text)
         case .didSelectNode(let node, let allNodes):
             didSelect(node: node, allNodes: allNodes)
-        case .didTapOnAddUploadButton:
-            guard let configForUploadAddMenu = configForUploadAddMenu,
-                    let actions = contextMenuManager?.actionSheetActions(with: configForUploadAddMenu) else { return }
-            invokeCommand?(.showActionSheet(actions))
-        case .didTapOnMoreButton:
-            guard let configForDisplayMenu = configForDisplayMenu,
-                    let actions = contextMenuManager?.actionSheetActions(with: configForDisplayMenu) else { return }
-            invokeCommand?(.showActionSheet(actions))
         case .didChangeViewMode(let viewType):
             viewTypePreference = ViewModePreference(rawValue: viewType) == .thumbnail ? .grid : .list
             configureContextMenus()
@@ -200,10 +185,6 @@ final class FilesExplorerViewModel {
         return self.explorerType
     }
     
-    func contextMenuActions(with config: CMConfigEntity) -> [ContextActionSheetAction]? {
-        contextMenuManager?.actionSheetActions(with: config)
-    }
-    
     //MARK: Favourites
     private func startSearchingFavouriteNodes(_ text: String?) {
         favouritesUseCase?.allFavouriteNodes(searchString: text) { [weak self] result in
@@ -237,10 +218,6 @@ extension FilesExplorerViewModel: DisplayMenuDelegate, UploadAddMenuDelegate {
         Helper.save(sortType.megaSortOrderType, for: nil)
         invokeCommand?(.sortTypeHasChanged)
         configureContextMenus()
-    }
-    
-    func showActionSheet(with actions: [ContextActionSheetAction]) {
-        invokeCommand?(.showActionSheet(actions))
     }
     
     func uploadAddMenu(didSelect action: UploadAddActionEntity) {

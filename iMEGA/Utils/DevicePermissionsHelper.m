@@ -45,24 +45,14 @@
 }
 
 + (void)photosPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
-    if (@available(iOS 14.0, *)) {
-        [PHPhotoLibrary requestAuthorizationForAccessLevel:PHAccessLevelReadWrite
-                                                   handler:^(PHAuthorizationStatus status) {
-            if (handler) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(status == PHAuthorizationStatusAuthorized || status == PHAuthorizationStatusLimited);
-                });
-            }
-        }];
-    } else {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            if (handler) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(status == PHAuthorizationStatusAuthorized);
-                });
-            }
-        }];
-    }
+    [PHPhotoLibrary requestAuthorizationForAccessLevel:PHAccessLevelReadWrite
+                                               handler:^(PHAuthorizationStatus status) {
+        if (handler) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(status == PHAuthorizationStatusAuthorized || status == PHAuthorizationStatusLimited);
+            });
+        }
+    }];
 }
 
 + (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {

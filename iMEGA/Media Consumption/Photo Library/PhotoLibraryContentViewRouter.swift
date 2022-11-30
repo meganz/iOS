@@ -3,7 +3,6 @@ import SwiftUI
 import Combine
 import MEGADomain
 
-@available(iOS 14.0, *)
 protocol PhotoLibraryContentViewRouting {
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard
     func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard
@@ -12,7 +11,6 @@ protocol PhotoLibraryContentViewRouting {
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity])
 }
 
-@available(iOS 14.0, *)
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
         return PhotoYearCard(

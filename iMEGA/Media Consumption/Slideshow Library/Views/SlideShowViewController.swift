@@ -207,14 +207,12 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     @IBAction func slideShowOptionTapped(_ sender: Any) {
-        if #available(iOS 14.0, *) {
-            guard let viewModel = viewModel else { return }
-            SlideShowOptionRouter(
-                presenter: self,
-                preference: viewModel,
-                currentConfiguration: viewModel.configuration
-            ).start()
-        }
+        guard let viewModel else { return }
+        SlideShowOptionRouter(
+            presenter: self,
+            preference: viewModel,
+            currentConfiguration: viewModel.configuration
+        ).start()
     }
     
     @IBAction func playSlideShow() {

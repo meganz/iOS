@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct SlideShowOptionDetailCellView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: SlideShowOptionDetailCellViewModel

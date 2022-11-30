@@ -2,13 +2,11 @@ import SwiftUI
 import Combine
 import MEGADomain
 
-@available(iOS 14.0, *)
 protocol AlbumListViewRouting {
     func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell
     func albumContent(for photo: NodeEntity?, album: AlbumEntity?) -> AlbumContainerWrapper
 }
 
-@available(iOS 14.0, *)
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
     func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell {

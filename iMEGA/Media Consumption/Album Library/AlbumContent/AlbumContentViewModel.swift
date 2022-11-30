@@ -6,7 +6,6 @@ enum AlbumContentAction: ActionType {
     case onViewReady
 }
 
-@available(iOS 14.0, *)
 final class AlbumContentViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case showAlbum(nodes: [NodeEntity])

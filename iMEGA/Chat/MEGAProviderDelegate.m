@@ -44,7 +44,7 @@
     if (self) {
         _megaCallManager = megaCallManager;
         
-        CXProviderConfiguration *configuration = [[CXProviderConfiguration alloc] initWithLocalizedName:@"MEGA"];
+        CXProviderConfiguration *configuration = [[CXProviderConfiguration alloc] init];
         configuration.supportsVideo = YES;
         configuration.maximumCallsPerCallGroup = 1;
         configuration.maximumCallGroups = 1;
@@ -462,10 +462,8 @@
         }
             
         case MEGAChatCallStatusJoining:
-            if (@available(iOS 14.0, *)) {
-                if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
-                    [self.megaCallManager answerCall:call];
-                }
+            if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
+                [self.megaCallManager answerCall:call];
             }
             break;
             

@@ -123,18 +123,12 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.audioPlayer(hidden: hidden)
     }
     
-    @available(iOS 14.0, *)
     func updateContextMenu(menu: UIMenu) {
         containerViewController.updateContextMenu(menu: menu)
     }
     
-    @available(iOS 14.0, *)
     func updateUploadAddMenu(menu: UIMenu) {
         containerViewController.updateUploadAddMenu(menu: menu)
-    }
-    
-    func showActionSheet(actions: [ContextActionSheetAction]) {
-        containerViewController.showActionSheet(with: actions)
     }
     
     func changeCurrentViewType() {

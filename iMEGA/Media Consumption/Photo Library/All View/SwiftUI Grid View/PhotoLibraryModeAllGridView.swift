@@ -2,7 +2,6 @@ import SwiftUI
 import MEGASwiftUI
 import MEGADomain
 
-@available(iOS 14.0, *)
 struct PhotoLibraryModeAllGridView: View {
     @StateObject var viewModel: PhotoLibraryModeAllGridViewModel
     let router: PhotoLibraryContentViewRouting

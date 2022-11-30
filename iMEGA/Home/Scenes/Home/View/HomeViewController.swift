@@ -174,9 +174,7 @@ final class HomeViewController: UIViewController {
                 case .normal: break
                 }
                 
-                if #available(iOS 14.0, *) {
-                    self.startUploadBarButtonItem.menu = homeUploadingViewModel.contextMenu
-                }
+                self.startUploadBarButtonItem.menu = homeUploadingViewModel.contextMenu
             }
         }
         uploadViewModel.inputs.viewIsReady()
@@ -283,12 +281,6 @@ final class HomeViewController: UIViewController {
         
         startUploadBarButtonItem.image = Asset.Images.Home.uploadFile.image
         
-        if #unavailable(iOS 14.0) {
-            startUploadBarButtonItem.style = .plain
-            startUploadBarButtonItem.target = self
-            startUploadBarButtonItem.action = .didTapNewUpload
-        }
-        
         startUploadBarButtonItem.accessibilityLabel = Strings.Localizable.upload
 
         navigationItem.setRightBarButtonItems([startUploadBarButtonItem, startConversationItem], animated: false)
@@ -359,17 +351,6 @@ final class HomeViewController: UIViewController {
 
     @objc fileprivate func didTapNewChat() {
         router.didTap(on: .newChat)
-    }
-
-    @objc fileprivate func didTapNewUpload() {
-        guard let actions = uploadViewModel.inputs.didTapUploadFromSourceItems() else { return }
-        
-        let actionSheetVC = ActionSheetViewController(actions: actions,
-                                                      headerTitle: nil,
-                                                      dismissCompletion: nil,
-                                                      sender: nil)
-
-        self.present(actionSheetVC, animated: true)
     }
     
     @objc func activateSearch() {
@@ -716,7 +697,6 @@ extension UIColor {
 private extension Selector {
     static let didTapAvatar = #selector(HomeViewController.didTapAvatarItem)
     static let didTapNewChat = #selector(HomeViewController.didTapNewChat)
-    static let didTapNewUpload = #selector(HomeViewController.didTapNewUpload)
 }
 
 //MARK: - AudioPlayer

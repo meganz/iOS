@@ -2,7 +2,6 @@
 import SwiftUI
 import MEGASwiftUI
 
-@available(iOS 14.0, *)
 struct ReportIssueView: View {
     @StateObject var viewModel: ReportIssueViewModel
     

@@ -1,6 +1,5 @@
 import MEGADomain
 
-@available(iOS 14.0, *)
 extension ChatRoomsListViewController {
     private func setEmptyViewButtonWithMeetingsOptions(button: UIButton) {
         button.menu = viewModel.contextMenuManager.contextMenu(with: CMConfigEntity(menuType: .menu(type: .meeting)))
