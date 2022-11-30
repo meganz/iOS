@@ -9,14 +9,15 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var subscriptions = Set<AnyCancellable>()
     private let router = PhotoLibraryContentViewRouter()
     
-    private let collectionViewRepresenter: PhotoLibraryCollectionViewRepresenter
+    private let representer: PhotoLibraryCollectionViewRepresenter
     private var photoSections = [PhotoDateSection]()
     private var collectionView: UICollectionView?
     private var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var cellRegistration: UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity>!
+    private var scrollTracker: PhotoLibraryCollectionViewScrollTracker!
     
-    init(_ collectionViewRepresenter: PhotoLibraryCollectionViewRepresenter) {
-        self.collectionViewRepresenter = collectionViewRepresenter
+    init(_ representer: PhotoLibraryCollectionViewRepresenter) {
+        self.representer = representer
         super.init()
         subscribeToPhotoCategoryList()
         subscribeToZoomState()
@@ -40,7 +41,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             [unowned self] cell, indexPath, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
-                viewModel: collectionViewRepresenter.viewModel,
+                viewModel: representer.viewModel,
                 thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
             )
             cell.viewModel = viewModel
@@ -52,6 +53,17 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             
             cell.clipsToBounds = true
         }
+        
+        configureScrollTracker(for: collectionView)
+    }
+    
+    private func configureScrollTracker(for collectionView: UICollectionView) {
+        scrollTracker = PhotoLibraryCollectionViewScrollTracker(
+            libraryViewModel: representer.viewModel.libraryViewModel,
+            collectionView: collectionView,
+            delegate: self
+        )
+        scrollTracker.startTrackingScrolls()
     }
 }
 
@@ -59,7 +71,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
 @available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewCoordinator {
     private func subscribeToPhotoCategoryList() {
-        collectionViewRepresenter.viewModel
+        representer.viewModel
             .$photoCategoryList
             .dropFirst()
             .sink { [weak self] in
@@ -78,7 +90,7 @@ extension PhotoLibraryCollectionViewCoordinator {
 @available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewCoordinator {
     private func subscribeToZoomState() {
-        collectionViewRepresenter.viewModel
+        representer.viewModel
             .$zoomState
             .dropFirst()
             .map {
@@ -120,5 +132,23 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         router.openPhotoBrowser(for: photoSections.photo(at: indexPath), allPhotos: photoSections.allPhotos)
+    }
+}
+
+// MARK: - PhotoLibraryCollectionViewScrolling
+@available(iOS 16.0, *)
+extension PhotoLibraryCollectionViewCoordinator: PhotoLibraryCollectionViewScrolling {
+    func scrollTo(_ position: PhotoScrollPosition) {
+        guard position != .top else {
+            collectionView?.setContentOffset(.zero, animated: false)
+            return
+        }
+        
+        guard let indexPath = photoSections.indexPath(of: position) else { return }
+        collectionView?.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+    }
+    
+    func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
+        photoSections.position(at: indexPath)
     }
 }

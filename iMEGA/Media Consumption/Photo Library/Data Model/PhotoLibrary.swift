@@ -34,6 +34,6 @@ extension PhotoLibrary: Equatable {
 
 extension PhotoLibrary {
     func photoDateSections(for factor: PhotoLibraryZoomState.ScaleFactor) -> [PhotoDateSection] {
-        factor == .one ? photosDaySections : photoMonthSections
+        factor == .one ? photoDaySections : photoMonthSections
     }
 }
