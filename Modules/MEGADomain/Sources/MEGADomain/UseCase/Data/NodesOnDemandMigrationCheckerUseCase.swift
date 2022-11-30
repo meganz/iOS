@@ -7,14 +7,14 @@ public protocol NodesOnDemandMigrationCheckerUseCaseProtocol {
     func sendExtensionsWithoutNoDStats()
 }
 
-public struct NodesOnDemandMigrationCheckerUseCase<T: MEGAClientRepositoryProtocol, U: StatsRepositoryProtocol>: NodesOnDemandMigrationCheckerUseCaseProtocol {
+public struct NodesOnDemandMigrationCheckerUseCase<T: MEGAClientRepositoryProtocol, U: AnalyticsEventUseCaseProtocol>: NodesOnDemandMigrationCheckerUseCaseProtocol {
     
     private var megaclientRepository: T
-    private var statsRepository: U
+    private var analyticsEventUseCase: U
     
-    public init(megaclientRepository: T, statsRepository: U) {
+    public init(megaclientRepository: T, analyticsEventUseCase: U) {
         self.megaclientRepository = megaclientRepository
-        self.statsRepository = statsRepository
+        self.analyticsEventUseCase = analyticsEventUseCase
     }
     
     public func doesExistNodesOnDemandDatabase(with session: SessionIdEntity) -> Bool {
@@ -22,7 +22,7 @@ public struct NodesOnDemandMigrationCheckerUseCase<T: MEGAClientRepositoryProtoc
     }
     
     public func sendExtensionsWithoutNoDStats() {
-        statsRepository.sendStatsEvent(StatsEventEntity.extensionWithoutNoDDatabase)
+        analyticsEventUseCase.sendAnalyticsEvent(.extensions(.withoutNoDDatabase))
     }
     
 }

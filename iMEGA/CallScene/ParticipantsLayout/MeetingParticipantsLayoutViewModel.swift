@@ -137,7 +137,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let statsUseCase: MeetingStatsUseCaseProtocol
+    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
     
@@ -176,7 +176,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
-         statsUseCase: MeetingStatsUseCaseProtocol,
+         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
          preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
@@ -190,7 +190,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.userUseCase = userUseCase
         self.userImageUseCase = userImageUseCase
-        self.statsUseCase = statsUseCase
+        self.analyticsEventUseCase = analyticsEventUseCase
         self.chatRoom = chatRoom
         self.call = call
 
@@ -534,7 +534,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                         self.invokeCommand?(.updateCallEndDurationRemainingString(timeRemainingString))
                     }
                 } else {
-                    self.statsUseCase.sendEndCallWhenEmptyCallTimeoutStats()
+                    self.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallWhenEmptyCallTimeout))
                     self.tonePlayer.play(tone: .callEnded)
                     self.endCallEndCountDownTimer()
 

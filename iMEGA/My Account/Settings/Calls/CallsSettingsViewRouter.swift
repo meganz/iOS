@@ -9,8 +9,8 @@ final class CallsSettingsViewRouter: Routing {
     }
     
     func build() -> UIViewController {
-        let statsUseCase = MeetingStatsUseCase(repository: StatsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
-        let viewModel = CallsSettingsViewModel(statsUseCase: statsUseCase)
+        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let viewModel = CallsSettingsViewModel(analyticsEventUseCase: analyticsEventUseCase)
         let callsSettingsView = CallsSettingsView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: callsSettingsView)
         return hostingController

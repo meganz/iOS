@@ -21,7 +21,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     private let parentNode: MEGANode
     private var nodes: [MEGANode] = []
     private let router: MediaDiscoveryRouter
-    private var statsUseCase: MediaDiscoveryStatsUseCaseProtocol
+    private var statsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -29,7 +29,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     // MARK: - Init
     
-    init(parentNode: MEGANode, router: MediaDiscoveryRouter, statsUseCase: MediaDiscoveryStatsUseCaseProtocol) {
+    init(parentNode: MEGANode, router: MediaDiscoveryRouter, statsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol) {
         self.parentNode = parentNode
         self.router = router
         self.statsUseCase = statsUseCase

@@ -13,7 +13,7 @@ import MEGADomain
     }
     
     func build() -> UIViewController {
-        let usecase = MediaDiscoveryStatsUseCase(repository: StatsRepository.newRepo)
+        let usecase = MediaDiscoveryAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: self, statsUseCase: usecase)
         let vc = MediaDiscoveryViewController(viewModel: viewModel, folderName: parentNode.name ?? "")
         

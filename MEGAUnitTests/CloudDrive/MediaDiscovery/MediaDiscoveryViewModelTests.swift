@@ -6,7 +6,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     func testAction_onViewReady_withEmptyMediaFiles() throws {
         let parentNode = MEGANode()
         let router = MediaDiscoveryRouter(viewController: nil, parentNode: parentNode)
-        let usecase = MockMediaDiscoveryStatsUseCase()
+        let usecase = MockMediaDiscoveryAnalyticsUseCase()
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: router, statsUseCase: usecase)
         
         test(viewModel: viewModel, action: MediaDiscoveryAction.onViewReady, expectedCommands: [.loadMedia(nodes: [])])
@@ -15,7 +15,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     func testAction_onNodesUpdate_shouldNotReload() throws {
         let parentNode = MEGANode()
         let router = MediaDiscoveryRouter(viewController: nil, parentNode: parentNode)
-        let usecase = MockMediaDiscoveryStatsUseCase()
+        let usecase = MockMediaDiscoveryAnalyticsUseCase()
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: router, statsUseCase: usecase)
         
         test(viewModel: viewModel, action: MediaDiscoveryAction.onNodesUpdate(nodeList: MEGANodeList()), expectedCommands: [])
@@ -24,7 +24,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     func testSendEvent_onMediaDiscoveryVisited_shouldReturnTrue() throws {
         let parentNode = MEGANode()
         let router = MediaDiscoveryRouter(viewController: nil, parentNode: parentNode)
-        let usecase = MockMediaDiscoveryStatsUseCase()
+        let usecase = MockMediaDiscoveryAnalyticsUseCase()
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: router, statsUseCase: usecase)
         
         test(viewModel: viewModel, action: MediaDiscoveryAction.onViewDidAppear, expectedCommands: [])
@@ -35,7 +35,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     func testSendEvent_onMediaDiscoveryExit_shouldReturnTrue() throws {
         let parentNode = MEGANode()
         let router = MediaDiscoveryRouter(viewController: nil, parentNode: parentNode)
-        let usecase = MockMediaDiscoveryStatsUseCase()
+        let usecase = MockMediaDiscoveryAnalyticsUseCase()
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: router, statsUseCase: usecase)
         
         test(viewModel: viewModel, action: MediaDiscoveryAction.onViewWillDisAppear, expectedCommands: [])

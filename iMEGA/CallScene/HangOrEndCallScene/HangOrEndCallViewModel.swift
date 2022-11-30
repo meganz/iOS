@@ -10,11 +10,11 @@ struct HangOrEndCallViewModel: ViewModelType {
     }
     
     private let router: HangOrEndCallRouting
-    private let statsUseCase: MeetingStatsUseCaseProtocol
+    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
     
-    init(router: HangOrEndCallRouting, statsUseCase: MeetingStatsUseCaseProtocol) {
+    init(router: HangOrEndCallRouting, analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
         self.router = router
-        self.statsUseCase = statsUseCase
+        self.analyticsEventUseCase = analyticsEventUseCase
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -24,7 +24,7 @@ struct HangOrEndCallViewModel: ViewModelType {
         case .leaveCall:
             router.leaveCall()
         case .endCallForAll:
-            statsUseCase.sendEndCallForAllStats()
+            analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallForAll))
             router.endCallForAll()
         }
     }
