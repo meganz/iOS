@@ -14818,7 +14818,6 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14891,7 +14890,6 @@
 					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15081,7 +15079,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15143,7 +15140,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15193,7 +15189,6 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15235,7 +15230,6 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15817,7 +15811,6 @@
 					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16177,7 +16170,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16228,7 +16220,6 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
