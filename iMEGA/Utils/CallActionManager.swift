@@ -8,6 +8,8 @@ import MEGADomain
     private var callInProgressListener: CallInProgressListener?
     var didEnableWebrtcAudioNow: Bool = false
     private var enableRTCAudioExternally = false
+    private var startCallRequestDelegate: MEGAChatStartCallRequestDelegate?
+    private var answerCallRequestDelegate: MEGAChatAnswerCallRequestDelegate?
     
     private var megaCallManager: MEGACallManager? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
@@ -40,16 +42,17 @@ import MEGADomain
             MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             
             self.configureAudioSessionForStartCall(chatId: chatId)
-            let requestDelegate = MEGAChatStartCallRequestDelegate { error in
+            self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     self.notifyStartCallToCallKit(chatId: chatId)
                     MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
                 }
                 delegate.completion(error)
             }
+            guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
             self.providerDelegate?.isOutgoingCall = self.isOneToOneChatRoom(forChatId: chatId)
-            self.chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: requestDelegate)
+            self.chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
         }
     }
     
@@ -88,15 +91,15 @@ import MEGADomain
                     self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
                 }
             }
-            let requestDelegate = MEGAChatAnswerCallRequestDelegate { error in
+            self.answerCallRequestDelegate = MEGAChatAnswerCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     self.notifyStartCallToCallKit(chatId: chatId)
                 }
                 delegate.completion(error)
             }
-            
+            guard let answerCallRequestDelegate = self.answerCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
-            self.chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: requestDelegate)
+            self.chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallRequestDelegate)
         }
     }
     
