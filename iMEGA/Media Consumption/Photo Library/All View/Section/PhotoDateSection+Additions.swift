@@ -1,22 +1,31 @@
 import MEGADomain
 
 extension Array where Element: PhotoDateSection {
-    func toDataSourceSnapshot() -> NSDiffableDataSourceSnapshot<PhotoDateSection, PhotoDateSection.Content> {
-        var snapshot = NSDiffableDataSourceSnapshot<PhotoDateSection, PhotoDateSection.Content>()
-        
-        for section in self {
-            snapshot.appendSections([section])
-            snapshot.appendItems(section.contentList, toSection: section)
-        }
-        
-        return snapshot
-    }
-    
     func photo(at indexPath: IndexPath) -> NodeEntity {
         self[indexPath.section].contentList[indexPath.item]
     }
     
     var allPhotos: [NodeEntity] {
         flatMap { $0.contentList }
+    }
+    
+    func indexPath(of position: PhotoScrollPosition, in timeZone: TimeZone? = nil) -> IndexPath? {
+        for (sectionIndex, section) in self.enumerated() {
+            if section.photoByDayList.contains(where: { $0.categoryDate == position.date.removeTimestamp(timeZone: timeZone) }) {
+                for (itemIndex, photo) in section.contentList.enumerated() {
+                    if photo.handle == position.handle {
+                        return IndexPath(item: itemIndex, section: sectionIndex)
+                    }
+                }
+                
+                break
+            }
+        }
+        
+        return nil
+    }
+    
+    func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
+        photo(at: indexPath).position
     }
 }

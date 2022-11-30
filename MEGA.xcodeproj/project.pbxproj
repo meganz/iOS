@@ -1997,11 +1997,14 @@
 		B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */; };
 		B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */; };
 		B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */; };
+		B6E18AED2937237800EDFC10 /* PhotoDateSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E18AEC2937237800EDFC10 /* PhotoDateSectionTests.swift */; };
+		B6E18AEF29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E18AEE29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
 		B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */; };
 		B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B342175852E00882F74 /* AssetUploadInfo.m */; };
 		B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B392178424600882F74 /* TransferSessionDelegate.m */; };
 		B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B3C2180126500882F74 /* CameraUploadCompletionManager.m */; };
+		B6E3A9F12936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E3A9F02936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift */; };
 		B6E5D248274C2A2D00C8AB96 /* PhotoLibraryMonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444DC274A287A00268D9A /* PhotoLibraryMonthViewModel.swift */; };
 		B6E5D24D274C2E8600C8AB96 /* PhotoDayCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D24B274C2E8600C8AB96 /* PhotoDayCardViewModel.swift */; };
 		B6E5D24E274C2E8600C8AB96 /* PhotoDayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D24C274C2E8600C8AB96 /* PhotoDayCard.swift */; };
@@ -4465,6 +4468,8 @@
 		B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGASdkManager+CleanUp.m"; sourceTree = "<group>"; };
 		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
 		B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewRouter.swift; sourceTree = "<group>"; };
+		B6E18AEC2937237800EDFC10 /* PhotoDateSectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDateSectionTests.swift; sourceTree = "<group>"; };
+		B6E18AEE29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionViewScrollTrackerTests.swift; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
 		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
 		B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionTaskDelegate.h; sourceTree = "<group>"; };
@@ -4475,6 +4480,7 @@
 		B6E19B392178424600882F74 /* TransferSessionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionDelegate.m; sourceTree = "<group>"; };
 		B6E19B3B2180126500882F74 /* CameraUploadCompletionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadCompletionManager.h; sourceTree = "<group>"; };
 		B6E19B3C2180126500882F74 /* CameraUploadCompletionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadCompletionManager.m; sourceTree = "<group>"; };
+		B6E3A9F02936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCollectionViewScrollTracker.swift; sourceTree = "<group>"; };
 		B6E5D24B274C2E8600C8AB96 /* PhotoDayCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDayCardViewModel.swift; sourceTree = "<group>"; };
 		B6E5D24C274C2E8600C8AB96 /* PhotoDayCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDayCard.swift; sourceTree = "<group>"; };
 		B6E5D250274C5FED00C8AB96 /* CardImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImage.swift; sourceTree = "<group>"; };
@@ -5980,6 +5986,8 @@
 				B60F818028BECC5E00E3C5BF /* PhotoLibraryModeAllViewModelTests.swift */,
 				B60F819028C1B1E700E3C5BF /* PhotoCardViewModelTests.swift */,
 				B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */,
+				B6E18AEC2937237800EDFC10 /* PhotoDateSectionTests.swift */,
+				B6E18AEE29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -10398,6 +10406,7 @@
 			children = (
 				B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift */,
 				B6F6E8EB290FB7E400B319CB /* PhotoLibraryCollectionViewCoordinator.swift */,
+				B6E3A9F02936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift */,
 				B6CA26DD28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift */,
 				B675B1FC28FCCE980075A344 /* PhotoLibraryModeAllCollectionView.swift */,
 				B675B20628FCF48C0075A344 /* PhotoLibraryModeAllCollectionViewModel.swift */,
@@ -13417,6 +13426,7 @@
 				BFD2141F28F7A2430057150E /* ChatContainsMetaEntity+Mapper.swift in Sources */,
 				12BC3E7D27B339D3009F7987 /* PhotoLibraryZoomViewModifier.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
+				B6E3A9F12936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift in Sources */,
 				C44D6DED257013FB003D1723 /* AudioPlaylistViewController.swift in Sources */,
 				C45F97F3264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
@@ -14317,6 +14327,7 @@
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
+				B6E18AED2937237800EDFC10 /* PhotoDateSectionTests.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockMeetingStatsUseCase.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
@@ -14450,6 +14461,7 @@
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
+				B6E18AEF29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
