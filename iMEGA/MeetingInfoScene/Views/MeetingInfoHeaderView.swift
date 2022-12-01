@@ -20,12 +20,12 @@ struct MeetingInfoHeaderView: View {
             }
             
             VStack(alignment: .leading) {
-                Text("Book Club - Breasts&Eggs")
+                Text(viewModel.title)
                     .font(.subheadline)
-                Text("6 July, 09:00-10:00")
+                Text(viewModel.time)
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
-                Text("Natsuko - The narrator role")
+                Text(viewModel.description)
                     .font(.caption2)
                     .foregroundColor(Color(UIColor.lightGray))
             }

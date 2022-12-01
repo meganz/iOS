@@ -12,11 +12,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     }
     
     var time: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .none
-        dateFormatter.timeStyle = .short
-        let start = dateFormatter.string(from: scheduledMeeting.startDate)
-        let end = dateFormatter.string(from: scheduledMeeting.endDate)
+        let dateFormatter = DateFormatter.timeShort()
+        let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+        let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
         return "\(start) - \(end)"
     }
 
