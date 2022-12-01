@@ -29,6 +29,14 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         self.configureInstantSoundsAudioSession_calledTimes = configureInstantSoundsAudioSession_calledTimes
         self.configureVideoAudioSession_calledTimes = configureVideoAudioSession_calledTimes
     }
+    
+    public func setSpeaker(enabled: Bool, completion: ((Result<Void, MEGADomain.AudioSessionErrorEntity>) -> Void)?) {
+        if enabled {
+            enableLoudSpeaker_calledTimes += 1
+        } else {
+            disableLoudSpeaker_calledTimes += 1
+        }
+    }
 
     public func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         enableLoudSpeaker_calledTimes += 1
