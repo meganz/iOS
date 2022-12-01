@@ -3,13 +3,13 @@ import MEGADomain
 @available(iOS 14.0, *)
 final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     private(set) var presenter: UINavigationController
-    private let chatListItem: ChatListItemEntity
+    private let scheduledMeeting: ScheduledMeetingEntity
     private var link: String?
 
     init(presenter: UINavigationController,
-         chatListItem: ChatListItemEntity) {
+         scheduledMeeting: ScheduledMeetingEntity) {
         self.presenter = presenter
-        self.chatListItem = chatListItem
+        self.scheduledMeeting = scheduledMeeting
     }
     
     func build() -> UIViewController {
@@ -26,7 +26,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         )
         
         let viewModel = MeetingInfoViewModel(
-            chatListItem: chatListItem,
+            scheduledMeeting: scheduledMeeting,
             router: self,
             chatRoomUseCase: chatRoomUseCase,
             userImageUseCase: userImageUseCase,
