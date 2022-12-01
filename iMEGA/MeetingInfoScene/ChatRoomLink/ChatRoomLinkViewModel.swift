@@ -7,7 +7,8 @@ final class ChatRoomLinkViewModel: ObservableObject {
     private let router: MeetingInfoRouting
 
     private var chatRoom: ChatRoomEntity
-    
+    private let scheduledMeeting: ScheduledMeetingEntity
+
     @Published var isMeetingLinkOn = false
     @Published var isMeetingLinkDisabled = false
     @Published var showShareMeetingLinkOptions = false
@@ -20,9 +21,11 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
     init(router: MeetingInfoRouting,
          chatRoom: ChatRoomEntity,
+         scheduledMeeting: ScheduledMeetingEntity,
          chatLinkUseCase: ChatLinkUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
+        self.scheduledMeeting = scheduledMeeting
         self.chatLinkUseCase = chatLinkUseCase
 
         fetchInitialValues()
@@ -89,7 +92,9 @@ final class ChatRoomLinkViewModel: ObservableObject {
         case .copy:
             router.showLinkCopied()
         case .share:
-            router.showShareActivity(meetingLink, title: chatRoom.title, description: chatRoom.title)
+            router.showShareActivity(meetingLink,
+                                     title: scheduledMeeting.title,
+                                     description: scheduledMeeting.description)
         case .cancel:
             showShareMeetingLinkOptions = false
         }
