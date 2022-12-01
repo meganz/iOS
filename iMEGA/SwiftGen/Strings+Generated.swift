@@ -279,7 +279,7 @@ public enum Strings {
     public static let autoAcceptFooter = Strings.tr("Localizable", "autoAcceptFooter")
     /// Auto-away
     public static let autoAway = Strings.tr("Localizable", "autoAway")
-    /// Automatically back up your photos and videos to your Cloud Drive.
+    /// Automatically back up your photos and videos to your Cloud drive.
     public static let automaticallyBackupYourPhotosAndVideosToTheCloudDrive = Strings.tr("Localizable", "Automatically backup your photos and videos to the Cloud Drive.")
     /// Automatically delete messages older than a certain amount of time.
     public static let automaticallyDeleteMessagesOlderThanACertainAmountOfTime = Strings.tr("Localizable", "Automatically delete messages older than a certain amount of time")
@@ -337,7 +337,7 @@ public enum Strings {
     public static let callWasRejected = Strings.tr("Localizable", "callWasRejected")
     /// Camera
     public static let camera = Strings.tr("Localizable", "Camera")
-    /// Please give the MEGA App permission to access your Camera in your Settings
+    /// Please give MEGA permission to access your Camera in Settings
     public static let cameraPermissions = Strings.tr("Localizable", "cameraPermissions")
     /// Camera uploads complete
     public static let cameraUploadsComplete = Strings.tr("Localizable", "cameraUploadsComplete")
@@ -439,11 +439,11 @@ public enum Strings {
     public static let closeAccount = Strings.tr("Localizable", "closeAccount")
     /// Close other sessions
     public static let closeOtherSessions = Strings.tr("Localizable", "closeOtherSessions")
-    /// Cloud Drive
+    /// Cloud drive
     public static let cloudDrive = Strings.tr("Localizable", "cloudDrive")
-    /// No files in your Cloud Drive
+    /// No files in your Cloud drive
     public static let cloudDriveEmptyStateTitle = Strings.tr("Localizable", "cloudDriveEmptyState_title")
-    /// Empty Rubbish Bin
+    /// Empty Rubbish bin
     public static let cloudDriveEmptyStateTitleRubbishBin = Strings.tr("Localizable", "cloudDriveEmptyState_titleRubbishBin")
     /// [S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
     public static func cloudDriveIsAlmostFull(_ p1: Any, _ p2: Any) -> String {
@@ -705,7 +705,7 @@ public enum Strings {
     public static let emailsDoNotMatch = Strings.tr("Localizable", "emailsDoNotMatch")
     /// Empty Folder
     public static let emptyFolder = Strings.tr("Localizable", "emptyFolder")
-    /// Clear Rubbish Bin
+    /// Empty Rubbish bin
     public static let emptyRubbishBin = Strings.tr("Localizable", "emptyRubbishBin")
     /// All the items in the Rubbish Bin will be deleted
     public static let emptyRubbishBinAlertTitle = Strings.tr("Localizable", "emptyRubbishBinAlertTitle")
@@ -919,11 +919,11 @@ public enum Strings {
     public static let forward = Strings.tr("Localizable", "forward")
     /// Free
     public static let free = Strings.tr("Localizable", "Free")
-    /// From Cloud Drive
+    /// From Cloud drive
     public static let fromCloudDrive = Strings.tr("Localizable", "fromCloudDrive")
     /// Full access
     public static let fullAccess = Strings.tr("Localizable", "fullAccess")
-    /// Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.
+    /// Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud drive.
     public static let fullyEncryptedChatWithVoiceAndVideoCallsGroupMessagingAndFileSharingIntegrationWithYourCloudDrive = Strings.tr("Localizable", "Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.")
     /// Generating link…
     public static let generatingLink = Strings.tr("Localizable", "generatingLink")
@@ -1169,7 +1169,7 @@ public enum Strings {
     public static let megaCameraUploadsFolder = Strings.tr("Localizable", "MEGA CAMERA UPLOADS FOLDER")
     /// MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.
     public static let megaWillNotUseThisDataForAnyOtherPurposeAndWillNeverInteractWithYourContactsWithoutYourConsent = Strings.tr("Localizable", "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.")
-    /// MEGA chat SDK Version
+    /// MEGA Chat SDK Version
     public static let megachatSdkVersion = Strings.tr("Localizable", "megachatSdkVersion")
     /// Message
     public static let message = Strings.tr("Localizable", "Message")
@@ -1181,7 +1181,7 @@ public enum Strings {
     public static let messageFileNotSupported = Strings.tr("Localizable", "message_fileNotSupported")
     /// Messages sent
     public static let messagesSent = Strings.tr("Localizable", "messagesSent")
-    /// Please give the MEGA App permission to access your Microphone in your Settings
+    /// Please give MEGA permission to access your Microphone in Settings
     public static let microphonePermissions = Strings.tr("Localizable", "microphonePermissions")
     /// Minimal
     public static let minimal = Strings.tr("Localizable", "Minimal")
@@ -1257,7 +1257,7 @@ public enum Strings {
     public static let nameDescending = Strings.tr("Localizable", "nameDescending")
     /// Enter a valid name
     public static let nameInvalidFormat = Strings.tr("Localizable", "nameInvalidFormat")
-    /// You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.
+    /// You need to be logged in to complete your email change. Please log in again with your current email address, then tap on your confirmation link again.
     public static let needToBeLoggedInToCompleteYourEmailChange = Strings.tr("Localizable", "needToBeLoggedInToCompleteYourEmailChange")
     /// Never
     public static let never = Strings.tr("Localizable", "never")
@@ -1495,7 +1495,7 @@ public enum Strings {
     public static let permissionTitle = Strings.tr("Localizable", "permissionTitle")
     /// Phone Number
     public static let phoneNumber = Strings.tr("Localizable", "Phone Number")
-    /// Please give the MEGA App permission to access your photo library in Settings
+    /// Please give MEGA permission to access your Photos in Settings
     public static let photoLibraryPermissions = Strings.tr("Localizable", "photoLibraryPermissions")
     /// Photos and videos will be uploaded to the Camera Uploads folder.
     public static let photosAndVideosWillBeUploadedToCameraUploadsFolder = Strings.tr("Localizable", "Photos and videos will be uploaded to Camera Uploads folder.")
@@ -1517,7 +1517,7 @@ public enum Strings {
     public static let pleaseAllowAccess = Strings.tr("Localizable", "Please allow access")
     /// Please supply a valid phone number.
     public static let pleaseEnterAValidPhoneNumber = Strings.tr("Localizable", "Please enter a valid phone number")
-    /// Please give the MEGA App permission to access Photos to share photos and videos.
+    /// Please give MEGA permission to access Photos to share photos and videos.
     public static let pleaseGiveTheMEGAAppPermissionToAccessPhotosToSharePhotosAndVideos = Strings.tr("Localizable", "Please give the MEGA App permission to access Photos to share photos and videos.")
     /// Please enter the verification code sent to
     public static let pleaseTypeTheVerificationCodeSentTo = Strings.tr("Localizable", "Please type the verification code sent to")
@@ -1763,13 +1763,13 @@ public enum Strings {
     public static let revert = Strings.tr("Localizable", "revert")
     /// You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?
     public static let richPreviewsConfirmation = Strings.tr("Localizable", "richPreviewsConfirmation")
-    /// Enhance the MEGA chat experience. URL content will be retrieved without end-to-end encryption.
+    /// Enhance the MEGA Chat experience. URL content will be retrieved without end-to-end encryption.
     public static let richPreviewsFooter = Strings.tr("Localizable", "richPreviewsFooter")
     /// Rich URL Previews
     public static let richUrlPreviews = Strings.tr("Localizable", "richUrlPreviews")
     /// Role:
     public static let role = Strings.tr("Localizable", "Role:")
-    /// Rubbish Bin Clearing Scheduler
+    /// Rubbish bin emptying scheduler
     public static let rubbishBinCleaningScheduler = Strings.tr("Localizable", "Rubbish-Bin Cleaning Scheduler:")
     /// Rubbish Bin
     public static let rubbishBinLabel = Strings.tr("Localizable", "rubbishBinLabel")
@@ -2089,7 +2089,7 @@ public enum Strings {
     public static let toAccessThisLinkYouWillNeedItsPassword = Strings.tr("Localizable", "To access this link, you will need its password.")
     /// To create a chat link you must name the group.
     public static let toCreateAChatLinkYouMustNameTheGroup = Strings.tr("Localizable", "To create a chat link you must name the group.")
-    /// To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a Pro plan.
+    /// To disable the Rubbish bin emptying scheduler or set a longer retention period, you need to subscribe to a Pro plan.
     public static let toDisableTheRubbishBinCleaningSchedulerOrSetALongerRetentionPeriodYouNeedToSubscribeToAPROPlan = Strings.tr("Localizable", "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.")
     /// To fully take advantage of your MEGA account we need to ask you some permissions.
     public static let toFullyTakeAdvantageOfYourMEGAAccountWeNeedToAskYouSomePermissions = Strings.tr("Localizable", "To fully take advantage of your MEGA account we need to ask you some permissions.")
@@ -2539,11 +2539,11 @@ public enum Strings {
       public static let areYouSure = Strings.tr("Localizable", "The MEGA app may not work as expected without the required permissions. Are you sure?")
     }
     public enum TheRubbishBinCanBeCleanedForYouAutomatically {
-      /// The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.
+      /// The Rubbish bin can be emptied for you automatically. The minimum period is 7 days.
       public static let theMinimumPeriodIs7Days = Strings.tr("Localizable", "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.")
     }
     public enum TheRubbishBinIsCleanedForYouAutomatically {
-      /// The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.
+      /// The Rubbish bin is emptied for you automatically. The minimum period is 7 days and the maximum period is 30 days.
       public static let theMinimumPeriodIs7DaysAndYourMaximumPeriodIs30Days = Strings.tr("Localizable", "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.")
     }
     public enum ThereHasBeenAProblemProcessingYourPayment {
@@ -2864,7 +2864,7 @@ public enum Strings {
       public static let title = Strings.tr("Localizable", "backups.title")
       public enum Empty {
         public enum State {
-          /// This is where your backed up files and folders are stored. Your backed up items are “read-only” to protect them from being accidentally modified in your cloud drive.
+          /// This is where your backed up files and folders are stored. Your backed up items are “read-only” to protect them from being accidentally modified in your Cloud drive.
           /// You can back up items from your computer to MEGA using our desktop app.
           public static let description = Strings.tr("Localizable", "backups.empty.state.description")
           /// No items in backups
@@ -3391,7 +3391,7 @@ public enum Strings {
       public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
-      /// Join Meeting as Guest
+      /// Join meeting as guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
       /// Unable to connect to the Internet. Please check your connection and try again.
       public static let noIntenerConnection = Strings.tr("Localizable", "general.NoIntenerConnection")
@@ -3945,17 +3945,17 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.enterMeetingLink.title")
       }
       public enum Incompatibility {
-        /// We are upgrading MEGA chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.
+        /// We are upgrading MEGA Chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.
         public static let warningMessage = Strings.tr("Localizable", "meetings.incompatibility.warningMessage")
       }
       public enum Info {
         /// Meeting link
         public static let meetingLink = Strings.tr("Localizable", "meetings.info.meetingLink")
         public enum ShareOptions {
-          /// Anyone with this link can join and view the chat.
+          /// Anyone with this link can join the meeting and view the meeting chat.
           public static let title = Strings.tr("Localizable", "meetings.info.shareOptions.title")
           public enum ShareLink {
-            /// Copied link to the clipboard
+            /// Copied link to clipboard
             public static let linkCopied = Strings.tr("Localizable", "meetings.info.shareOptions.shareLink.linkCopied")
           }
         }
@@ -4315,7 +4315,7 @@ public enum Strings {
     }
     public enum Slideshow {
       public enum PreferenceSetting {
-        /// Include images in sub-folders in the slideshow
+        /// Include images from sub-folders in the slideshow
         public static let mediaInSubFolders = Strings.tr("Localizable", "slideshow.preferenceSetting.mediaInSubFolders")
         /// Options
         public static let options = Strings.tr("Localizable", "slideshow.preferenceSetting.options")
