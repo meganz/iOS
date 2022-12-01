@@ -69,12 +69,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             guard !AVAudioSession.sharedInstance().mnz_isBluetoothAudioRouteAvailable else {
                 return
             }
-            let audioSessionUC = AudioSessionUseCase.default
-            if UIDevice.current.proximityState {
-                audioSessionUC.disableLoudSpeaker()
-            } else {
-                audioSessionUC.enableLoudSpeaker()
-            }
+            AudioSessionUseCase.default.setSpeaker(enabled: !UIDevice.current.proximityState)
         }
     }
 

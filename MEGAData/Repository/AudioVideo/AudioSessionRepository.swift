@@ -55,6 +55,27 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
     }
     
+    func setSpeaker(enabled: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+        MEGALogDebug("[AVAudioSession] Set speaker enabled: \(enabled)")
+        if audioSession.currentRoute.outputs.count > 0 {
+            let audioSessionPortDescription = audioSession.currentRoute.outputs.first
+            if enabled {
+                if audioSessionPortDescription?.portType == .builtInReceiver {
+                    MEGALogDebug("[AVAudioSession] Override output audio port from receiver to speaker")
+                    enableLoudSpeaker(completion: completion)
+                    return
+                }
+            } else {
+                if audioSessionPortDescription?.portType == .builtInSpeaker {
+                    MEGALogDebug("[AVAudioSession] Override output audio port from speaker to receiver")
+                    disableLoudSpeaker(completion: completion)
+                    return
+                }
+            }
+        }
+        completion?(.failure(.generic))
+    }
+    
     func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetooth, .allowBluetoothA2DP])

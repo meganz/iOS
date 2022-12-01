@@ -10,6 +10,7 @@ public protocol AudioSessionUseCaseProtocol {
     func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func isOutputFrom(port: AudioPort) -> Bool
+    func setSpeaker(enabled: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?)
@@ -42,6 +43,10 @@ extension AudioSessionUseCaseProtocol {
     
     public func configureVideoAudioSession() {
         configureVideoAudioSession(completion: nil)
+    }
+    
+    public func setSpeaker(enabled: Bool) {
+        setSpeaker(enabled: enabled, completion: nil)
     }
     
     public func enableLoudSpeaker() {
@@ -98,6 +103,10 @@ public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: Audio
     
     public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         audioSessionRepository.configureVideoAudioSession(completion: completion)
+    }
+    
+    public func setSpeaker(enabled: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+        audioSessionRepository.setSpeaker(enabled: enabled, completion: completion)
     }
     
     public func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {

@@ -1003,11 +1003,7 @@ class ChatViewController: MessagesViewController {
         updateRightBarButtons()
         let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
         audioSessionUC.configureMeetingAudioSession()
-        if chatRoom.isMeeting {
-            audioSessionUC.enableLoudSpeaker()
-        } else {
-            audioSessionUC.disableLoudSpeaker()
-        }
+        audioSessionUC.setSpeaker(enabled: chatRoom.isMeeting)
         CallActionManager.shared.startCall(chatId:chatRoom.chatId,
                                            enableVideo:isVideoEnabled,
                                            enableAudio:!chatRoom.isMeeting,
@@ -1029,11 +1025,7 @@ class ChatViewController: MessagesViewController {
         
         let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
         audioSessionUC.configureMeetingAudioSession()
-        if chatRoom.isMeeting {
-            audioSessionUC.enableLoudSpeaker()
-        } else {
-            audioSessionUC.disableLoudSpeaker()
-        }
+        audioSessionUC.setSpeaker(enabled: chatRoom.isMeeting)
         CallActionManager.shared.answerCall(chatId:chatRoom.chatId,
                                             enableVideo:isVideoEnabled,
                                             enableAudio:!chatRoom.isMeeting,
