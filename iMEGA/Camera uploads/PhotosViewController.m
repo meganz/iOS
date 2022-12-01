@@ -30,12 +30,7 @@
 @import Photos;
 @import MEGAUIKit;
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
-    BOOL allNodesSelected;
-}
-
-@property (nonatomic) CGSize cellSize;
-@property (nonatomic) CGFloat cellInset;
+@interface PhotosViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *stateView;
 @property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
@@ -54,11 +49,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionBarButtonItem;
 
-@property (assign, nonatomic) BOOL showToolBar;
-
 @property (nonatomic) MEGACameraUploadsState currentState;
 
-@property (nonatomic) NSIndexPath *browsingIndexPath;
 @property (nonatomic) NSLayoutConstraint *stateViewHeightConstraint;
 @end
 
@@ -91,7 +83,6 @@
         
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self.photoUpdatePublisher setupSubscriptions];
@@ -110,12 +101,6 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
-    CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
-        self.cellSize = cellSize;
-        [self.photosCollectionView reloadData];
-    }
     [self setupStateViewHeight];
 }
 
@@ -137,7 +122,6 @@
     
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     
     [self.photoUpdatePublisher cancelSubscriptions];
@@ -149,12 +133,6 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         if (self.photosByMonthYearArray.count == 0) {
             [self.photosCollectionView reloadEmptyDataSet];
-        } else {
-            CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-            if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
-                self.cellSize = cellSize;
-                [self.photosCollectionView reloadData];
-            }
         }
     } completion:nil];
 }
@@ -175,18 +153,10 @@
 
 #pragma mark - config views
 - (void)configPhotoContainerView {
-    [self configPhotoCollectionView];
-    self.photosCollectionView.delegate = nil;
-    self.photosCollectionView.dataSource = nil;
-    
-    [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
-}
-
-- (void)configPhotoCollectionView {
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
-    self.cellInset = 1.0f;
-    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    
+    [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
 }
 
 - (PhotoLibraryContentViewModel *)photoLibraryContentViewModel {
@@ -380,24 +350,14 @@
         [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
         
         if (self.viewModel.mediaNodesArray.count == 0) {
-            [self reloadPhotosCollectionView];
+            [self.photosCollectionView reloadEmptyDataSet];
         }
         [self setupNavigationBarButtons];
     });
 }
 
-- (void)reloadPhotosCollectionView {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.photosCollectionView reloadData];
-    });
-}
-
 - (void)updateNavigationTitleBar {
-    if ([self.photosCollectionView allowsMultipleSelection]) {
-        self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"selectTitle", @"Select items");
-    } else {
-        self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-    }
+    self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
@@ -406,36 +366,6 @@
     self.moveBarButtonItem.enabled = boolValue;
     self.actionBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
-}
-
-- (NSIndexPath *)indexPathForNode:(MEGANode *)node {
-    NSUInteger section = 0;
-    for (NSDictionary *sectionInArray in self.photosByMonthYearArray) {
-        NSUInteger item = 0;
-        NSArray *nodesInSection = [sectionInArray objectForKey:sectionInArray.allKeys.firstObject];
-        for (MEGANode *n in nodesInSection) {
-            if (n.handle == node.handle) {
-                return [NSIndexPath indexPathForItem:item inSection:section];
-            }
-            item++;
-        }
-        section++;
-    }
-    
-    return nil;
-}
-
-- (MEGANode *)nodeFromIndexPath:(NSIndexPath * _Nonnull)indexPath {
-    NSDictionary *dict = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
-    if (dict == nil) {return nil;}
-    NSString *key = dict.allKeys.firstObject;
-    NSArray *array = [dict objectForKey:key];
-    return [array objectOrNilAtIndex:indexPath.row];
-}
-
-- (BOOL)shouldSelectIndexPath:(NSIndexPath * _Nonnull)indexPath {
-    MEGANode *node = [self nodeFromIndexPath:indexPath];
-    return self.selection[node.handle] != nil;
 }
 
 #pragma mark - notifications
@@ -452,7 +382,7 @@
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    if (self.photosCollectionView.allowsMultipleSelection) {
+    if (self.isEditing) {
         [self setEditing:NO animated:NO];
     }
     
@@ -464,26 +394,7 @@
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
-    [self.selection removeAll];
-    
-    if (!allNodesSelected) {
-        [self.selection setSelectedNodes:self.viewModel.mediaNodesArray];
-        allNodesSelected = YES;
-    } else {
-        allNodesSelected = NO;
-    }
-    
-    [self didSelectedPhotoCountChange:self.selection.count];
-    
-    if (self.selection.isEmpty) {
-        [self setToolbarActionsEnabled:NO];
-    } else {
-        [self setToolbarActionsEnabled:YES];
-    }
-    
     [self objcWrapper_configPhotoLibrarySelectAll];
-    
-    [self.photosCollectionView reloadData];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -492,9 +403,6 @@
     [self objcWrapper_enablePhotoLibraryEditMode:editing];
     
     if (editing) {
-        [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
-        [self.photosCollectionView setAllowsMultipleSelection:YES];
-        
         UITabBar *tabBar = self.tabBarController.tabBar;
         if (tabBar == nil) {
             return;
@@ -518,11 +426,8 @@
             }];
         }
     } else {
-        allNodesSelected = NO;
-        self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-        [self.photosCollectionView setAllowsMultipleSelection:NO];
-        [self.selection removeAll];
-        [self.photosCollectionView reloadData];
+        [self updateNavigationTitleBar];
+        [self.photosCollectionView reloadEmptyDataSet];
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
         } completion:^(BOOL finished) {
@@ -531,14 +436,6 @@
             }
         }];
     }
-    
-    if (self.selection.isEmpty) {
-        [self setToolbarActionsEnabled:NO];
-    }
-}
-
-- (void)showToolbar:(BOOL)showToolbar {
-    self.showToolBar = showToolbar;
 }
 
 - (void)didSelectedPhotoCountChange:(NSInteger)count {
@@ -560,178 +457,6 @@
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     [self handleDeleteActionFor:self.selection.nodes];
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    if ([self.photosByMonthYearArray count] == 0) {
-        self.editBarButtonItem.enabled = NO;
-    } else {
-        self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
-    }
-    
-    return [self.photosByMonthYearArray count];
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSDictionary *dict = [self.photosByMonthYearArray objectOrNilAtIndex:section];
-    if (dict == nil) {return 0;}
-    NSString *key = dict.allKeys.firstObject;
-    NSArray *array = [dict objectForKey:key];
-    
-    return [array count];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (self.photosCollectionView.allowsSelection) {
-        BOOL shouldSelectActualCell = [self shouldSelectIndexPath:indexPath];
-        
-        if (shouldSelectActualCell) {
-            [self.photosCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-        }
-        
-        [cell setSelected:shouldSelectActualCell];
-    }
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"photoCellId";
-    
-    PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    
-    MEGANode *node = [self nodeFromIndexPath:indexPath];
-    
-    if ([node hasThumbnail]) {
-        [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
-    } else {
-        [cell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
-    }
-    
-    cell.nodeHandle = [node handle];
-    
-    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection].CGColor;
-    
-    cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
-    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
-    cell.thumbnailVideoDurationLabel.text = (node.name.mnz_isVideoPathExtension && node.duration > -1) ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
-    
-    cell.thumbnailImageView.hidden = self.browsingIndexPath && self.browsingIndexPath == indexPath;
-    
-    cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    
-    return cell;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if (kind == UICollectionElementKindSectionHeader) {
-        static NSString *headerIdentifier = @"photoHeaderId";
-        HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
-        
-        if (!headerView) {
-            headerView = [[HeaderCollectionReusableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 30)];
-        }
-        
-        
-        NSDictionary *dict = [self.photosByMonthYearArray objectOrNilAtIndex:indexPath.section];
-        if (dict != nil) {
-            NSString *month = dict.allKeys.firstObject;
-            
-            NSString *dateString = [NSString stringWithFormat:@"%@", month];
-            [headerView.dateLabel setText:dateString];
-        }
-        
-        return headerView;
-    } else {
-        static NSString *footerIdentifier = @"photoFooterId";
-        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerIdentifier forIndexPath:indexPath];
-        
-        if (!footerView) {
-            footerView = [[UICollectionReusableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 20)];
-        }
-        return  footerView;
-    }
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if (section == self.photosByMonthYearArray.count - 1) {
-        return CGSizeMake(0, 0);
-    } else {
-        return CGSizeMake(collectionView.frame.size.width, 20);
-    }
-}
-
-#pragma mark - UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeFromIndexPath:indexPath];
-    if (node == nil) {
-        return;
-    }
-    
-    PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[self.photosCollectionView cellForItemAtIndexPath:indexPath];
-    
-    if (![self.photosCollectionView allowsMultipleSelection]) {
-        CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
-        
-        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:[self.viewModel.mediaNodesArray mutableCopy] api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node];
-        photoBrowserVC.originFrame = cellFrame;
-        photoBrowserVC.delegate = self;
-        
-        [self presentViewController:photoBrowserVC animated:YES completion:nil];
-        
-        [collectionView clearSelectedItemsWithAnimated:NO];
-    } else {
-        self.selection[node.handle] = node;
-        [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:self.selection.count];
-        [self setToolbarActionsEnabled:YES];
-        
-        if (self.selection.count == self.viewModel.mediaNodesArray.count) {
-            allNodesSelected = YES;
-        } else {
-            allNodesSelected = NO;
-        }
-    }
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode * node = [self nodeFromIndexPath:indexPath];
-    
-    if ([self.photosCollectionView allowsMultipleSelection]) {
-        [self.selection removeNodeBy:node.handle];
-        [self didSelectedPhotoCountChange:self.selection.count];
-    }
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    view.layer.zPosition = 0.0;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
-    [self setEditing:YES animated:YES];
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return self.cellSize;
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(self.cellInset, self.cellInset, self.cellInset, self.cellInset);
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return self.cellInset;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return self.cellInset/2;
 }
 
 #pragma mark - View transitions
@@ -857,42 +582,6 @@
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-        }
-    }
-}
-
-#pragma mark - MEGAPhotoBrowserDelegate
-
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node {
-    NSIndexPath *indexPath = [self indexPathForNode:node];
-    if (indexPath) {
-        [self.photosCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-        PhotoCollectionViewCell *cell = [self collectionView:self.photosCollectionView cellForItemAtIndexPath:indexPath];
-        CGRect cellFrame = [self.photosCollectionView convertRect:cell.frame toView:nil];
-        photoBrowser.originFrame = cellFrame;
-    }
-    self.browsingIndexPath = indexPath;
-    [self.photosCollectionView reloadData];
-}
-
-- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
-    self.browsingIndexPath = nil;
-    [self.photosCollectionView reloadData];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        return;
-    }
-    
-    if (request.type == MEGARequestTypeGetAttrFile) {
-        for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
-            if ([request nodeHandle] == [pcvc nodeHandle]) {
-                MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                [Helper setThumbnailForNode:node api:api cell:pcvc];
-            }
         }
     }
 }
