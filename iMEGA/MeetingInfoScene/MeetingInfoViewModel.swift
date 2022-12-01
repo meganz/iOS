@@ -13,7 +13,7 @@ protocol MeetingInfoRouting {
 }
 
 final class MeetingInfoViewModel: ObservableObject {
-    private let chatListItem: ChatListItemEntity
+    private let scheduledMeeting: ScheduledMeetingEntity
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
@@ -34,7 +34,7 @@ final class MeetingInfoViewModel: ObservableObject {
 
     var meetingLink: String?
     
-    init(chatListItem: ChatListItemEntity,
+    init(scheduledMeeting: ScheduledMeetingEntity,
          router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
@@ -42,20 +42,20 @@ final class MeetingInfoViewModel: ObservableObject {
          userUseCase: UserUseCaseProtocol,
          chatLinkUseCase: ChatLinkUseCaseProtocol
     ) {
-        self.chatListItem = chatListItem
+        self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.userUseCase = userUseCase
         self.chatLinkUseCase = chatLinkUseCase
-        self.chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId)
+        self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
         
-        if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
+        if let chatRoom {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
-                title: chatListItem.title ?? "",
-                peerHandle: chatListItem.peerHandle,
-                chatRoomEntity: chatRoomEntity,
+                title: chatRoom.title ?? "",
+                peerHandle: .invalid,
+                chatRoomEntity: chatRoom,
                 chatRoomUseCase: chatRoomUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
@@ -79,13 +79,13 @@ final class MeetingInfoViewModel: ObservableObject {
     }
     
     private func initSubscriptions() {
-        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatId: chatListItem.chatId)
+        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatId: scheduledMeeting.chatId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching allow host to add participants with error \(error)")
             }, receiveValue: { [weak self] handle in
                 guard let self = self,
-                      let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else {
+                      let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
                     return
                 }
                 self.isAllowNonHostToAddParticipantsRemote = true
@@ -95,7 +95,7 @@ final class MeetingInfoViewModel: ObservableObject {
             .store(in: &subscriptions)
         
         chatUseCase
-            .monitorChatPrivateModeUpdate(forChatId: chatListItem.chatId)
+            .monitorChatPrivateModeUpdate(forChatId: scheduledMeeting.chatId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching private mode \(error)")
@@ -117,7 +117,7 @@ extension MeetingInfoViewModel{
         
         Task{
             do {
-                isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled: isAllowNonHostToAddParticipantsOn, chatId: chatListItem.chatId)
+                isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled: isAllowNonHostToAddParticipantsOn, chatId: scheduledMeeting.chatId)
             } catch {
                 
             }
