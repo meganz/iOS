@@ -26,7 +26,6 @@ import Combine
         subscribleToPhotoLibraryUpdate()
         
         photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] _ in
-            self?.photosVC?.showToolbar(true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self?.photosVC?.setupNavigationBarButtons()
             }
