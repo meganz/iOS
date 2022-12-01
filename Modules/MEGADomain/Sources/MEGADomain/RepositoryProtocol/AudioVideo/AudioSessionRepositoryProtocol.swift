@@ -10,6 +10,7 @@ public protocol AudioSessionRepositoryProtocol {
     func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
+    func setSpeaker(enabled: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func isOutputFrom(port: AudioPort) -> Bool

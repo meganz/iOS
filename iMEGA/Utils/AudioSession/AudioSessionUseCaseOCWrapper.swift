@@ -16,14 +16,6 @@ import MEGADomain
     }
     
     @objc func setSpeakerEnabled(_ enabled: Bool) {
-        enabled ? enableLoudSpeaker() : disableLoudSpeaker()
-    }
-    
-    private func enableLoudSpeaker() {
-        audioSessionUseCase.enableLoudSpeaker()
-    }
-    
-    private func disableLoudSpeaker() {
-        audioSessionUseCase.disableLoudSpeaker()
+        audioSessionUseCase.setSpeaker(enabled: enabled, completion: nil)
     }
 }
