@@ -168,7 +168,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showGroupChatInfo_calledTimes += 1
     }
     
-    func showMeetingInfo(for chatListItem: ChatListItemEntity) {
+    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
         showMeetingInfo_calledTimes += 1
     }
 

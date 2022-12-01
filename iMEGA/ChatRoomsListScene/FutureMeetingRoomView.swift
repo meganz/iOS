@@ -29,5 +29,17 @@ struct FutureMeetingRoomView: View {
             }
         }
         .frame(height: Constants.viewHeight)
+        .contentShape(Rectangle())
+        .contextMenu {
+            if let contextMenuOptions = viewModel.contextMenuOptions {
+                ForEach(contextMenuOptions) { contextMenuOption in
+                    Button {
+                        contextMenuOption.action()
+                    } label: {
+                        Label(contextMenuOption.title, image: contextMenuOption.imageName)
+                    }
+                }
+            }
+        }
     }
 }

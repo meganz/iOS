@@ -5,6 +5,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private var searchString = ""
+    private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
 
     var title: String {
         scheduledMeeting.title
@@ -48,6 +49,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         }
         
         self.futureMeetingSearchStringTask = createFutureMeetingSearchStringTask()
+        self.contextMenuOptions = constructContextMenuOptions()
     }
     
     func contains(searchText: String) -> Bool {
@@ -81,5 +83,25 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 MEGALogDebug("Unable to populate search string for \(scheduledMeeting.chatId) with error \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
+        var options: [ChatRoomContextMenuOption] = []
+        
+        options += [
+            ChatRoomContextMenuOption(
+                title: Strings.Localizable.info,
+                imageName: Asset.Images.Generic.info.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.showChatRoomInfo()
+                })
+        ]
+        
+        return options
+    }
+    
+    private func showChatRoomInfo() {
+        router.showMeetingInfo(for: scheduledMeeting)
     }
 }
