@@ -198,12 +198,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController?.pushViewController(groupChatDetailsController, animated: true)
     }
     
-    func showMeetingInfo(for chatListItem: ChatListItemEntity) {
+    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
         guard let navigationController else {
             return
         }
         
-        MeetingInfoRouter(presenter: navigationController, chatListItem: chatListItem).start()
+        MeetingInfoRouter(presenter: navigationController, scheduledMeeting: scheduledMeeting).start()
     }
     
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String) {
