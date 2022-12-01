@@ -34,6 +34,21 @@ final class MeetingInfoViewModel: ObservableObject {
 
     var meetingLink: String?
     
+    var title: String {
+        scheduledMeeting.title
+    }
+    
+    var time: String {
+        let dateFormatter = DateFormatter.timeShort()
+        let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+        let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
+        return "\(start) - \(end)"
+    }
+    
+    var description: String {
+        scheduledMeeting.description
+    }
+    
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
@@ -75,7 +90,11 @@ final class MeetingInfoViewModel: ObservableObject {
         isPublicChat = chatRoom.isPublicChat
         chatLinkUseCase.queryChatLink(for: chatRoom)
         chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(chatRoom: chatRoom)
-        chatRoomLinkViewModel = ChatRoomLinkViewModel(router: router, chatRoom: chatRoom, chatLinkUseCase: chatLinkUseCase)
+        chatRoomLinkViewModel = ChatRoomLinkViewModel(
+            router: router,
+            chatRoom: chatRoom,
+            scheduledMeeting: scheduledMeeting,
+            chatLinkUseCase: chatLinkUseCase)
     }
     
     private func initSubscriptions() {
