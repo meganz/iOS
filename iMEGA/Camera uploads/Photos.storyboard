@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,29 +14,29 @@
             <objects>
                 <viewController storyboardIdentifier="photoViewController" id="3GS-cK-Hw6" customClass="PhotosViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qAU-co-j9W">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qq-kN-G6C">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CHq-ed-0ka">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="255" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="nyf-uB-Tb3">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="255" verticalCompressionResistancePriority="749" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-Ea-Sdu">
                                                         <rect key="frame" x="8" y="12" width="398" height="33"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="999" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
-                                                                <rect key="frame" x="0.0" y="0.0" width="62.5" height="33"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="74" height="33"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="998" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
-                                                                <rect key="frame" x="66.5" y="0.0" width="0.0" height="33"/>
+                                                                <rect key="frame" x="78" y="0.0" width="0.0" height="33"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
                                                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="24"/>
@@ -81,13 +81,13 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YK9-Bg-gst">
-                                                <rect key="frame" x="0.0" y="68" width="414" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="50" width="414" height="0.0"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ta-Ix-lgL">
-                                                <rect key="frame" x="0.0" y="68" width="414" height="706"/>
+                                                <rect key="frame" x="0.0" y="50" width="414" height="720"/>
                                                 <subviews>
                                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="548" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="706"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="720"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy" customClass="MEGACollectionViewFlowLayout">
                                                             <size key="itemSize" width="120" height="120"/>
@@ -110,7 +110,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZM1-Wr-5Hw">
-                                                                                    <rect key="frame" x="2" y="104.5" width="31.5" height="13.5"/>
+                                                                                    <rect key="frame" x="2" y="103.5" width="34" height="14.5"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <nil key="highlightedColor"/>
@@ -174,7 +174,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5z-Zy-8op">
-                                                                    <rect key="frame" x="8" y="0.0" width="31" height="30"/>
+                                                                    <rect key="frame" x="8" y="0.0" width="33" height="30"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -193,10 +193,6 @@
                                                             <rect key="frame" x="0.0" y="152" width="414" height="20"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </collectionReusableView>
-                                                        <connections>
-                                                            <outlet property="dataSource" destination="3GS-cK-Hw6" id="5il-7z-ByA"/>
-                                                            <outlet property="delegate" destination="3GS-cK-Hw6" id="v1o-4A-TJF"/>
-                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                                 <constraints>
@@ -306,7 +302,7 @@
                     <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="0MC-VC-4jE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="o0V-gx-grO">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -324,7 +320,7 @@
                 <navigationController storyboardIdentifier="photosAlbumNavigationController" id="7rW-6E-88z" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="AVK-Bi-Ih2" userLabel="Tab Bar Item"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="V4d-NI-RtQ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -340,7 +336,7 @@
             <objects>
                 <viewController id="SFf-k3-6iZ" customClass="PhotoAlbumContainerViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w4U-Zb-u4j">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="8H8-eN-Dzu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

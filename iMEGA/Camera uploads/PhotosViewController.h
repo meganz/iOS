@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
     MEGACameraUploadsStateEnableVideo
 };
 
-@interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate>
+@interface PhotosViewController : UIViewController <MEGATransferDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 
@@ -40,7 +40,6 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 
 - (void)reloadHeader;
 - (void)reloadPhotos;
-- (void)showToolbar:(BOOL)showToolbar;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)didSelectedPhotoCountChange:(NSInteger)count;
 - (void)hideRightBarButtonItem:(BOOL)shouldHide;
