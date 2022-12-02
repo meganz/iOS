@@ -101,7 +101,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             .publisher(for: UIApplication.didBecomeActiveNotification)
             .sink() { [weak self] _ in
                 guard let self = self else { return }
-                self.audioSessionUseCase.configureMeetingAudioSession()
+                self.audioSessionUseCase.configureAudioSession()
                 self.addRouteChangedListener()
                 self.enableLoudSpeaker(enabled: self.isSpeakerEnabled)
             }
@@ -117,7 +117,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     func dispatch(_ action: MeetingCreatingViewAction) {
         switch action {
         case .onViewReady:
-            audioSessionUseCase.configureMeetingAudioSession()
+            audioSessionUseCase.configureAudioSession()
             addRouteChangedListener()
             if audioSessionUseCase.isBluetoothAudioRouteAvailable {
                 isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
@@ -224,7 +224,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func removeRouteChangedListener() {
-        audioSessionUseCase.routeChanged()
+        audioSessionUseCase.routeChanged(handler: nil)
     }
     
     private func enableLoudSpeaker(enabled: Bool) {

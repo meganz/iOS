@@ -1,7 +1,6 @@
 import UIKit
 import AVFoundation
 import MessageKit
-import MEGADomain
 
 /// The `PlayerState` indicates the current audio controller state
 public enum PlayerState {
@@ -69,7 +68,11 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             guard !AVAudioSession.sharedInstance().mnz_isBluetoothAudioRouteAvailable else {
                 return
             }
-            AudioSessionUseCase.default.setSpeaker(enabled: !UIDevice.current.proximityState)
+            if UIDevice.current.proximityState {
+                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(false)
+            } else {
+                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(true)
+            }
         }
     }
 
@@ -148,8 +151,13 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         startProgressTimer()
         audioCell.delegate?.didStartAudio(in: audioCell)
         setProximitySensorEnabled(true)
-        
-        AudioSessionUseCase.default.configureChatDefaultAudioPlayer()
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
+
+        } catch {
+            MEGALogInfo("Failed to set audio mode to default")
+        }
 
         proximityChanged()
     }
@@ -213,10 +221,6 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     /// Resume a currently pause audio sound
     open func resumeSound() {
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.audioInterruptionDidStart()
-        }
-        
         guard let player = audioPlayer, let cell = playingCell as? ChatVoiceClipCollectionViewCell else {
             stopAnyOngoingPlaying()
             return
