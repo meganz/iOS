@@ -237,9 +237,9 @@ final class AudioPlayer: NSObject {
     }
     
     func resetAudioSessionCategoryIfNeeded() {
-        if AVAudioSession.sharedInstance().category != .playback || AVAudioSession.sharedInstance().categoryOptions.contains(.mixWithOthers) {
+        if AVAudioSession.sharedInstance().category != .playback {
             do {
-                try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetooth, .allowBluetoothA2DP])
+                try AVAudioSession.sharedInstance().setCategory(.playback)
             } catch {
                 MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
             }
