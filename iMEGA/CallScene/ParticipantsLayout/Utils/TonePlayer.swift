@@ -1,6 +1,5 @@
 
 import Foundation
-import MEGADomain
 
 final class TonePlayer: NSObject {
     enum ToneType: String {
@@ -21,8 +20,6 @@ final class TonePlayer: NSObject {
             MEGALogDebug("\(tone.rawValue) file not found")
             return
         }
-        
-        try? AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
         
         if let audioPlayer = audioPlayer {
             audioPlayer.stop()
@@ -45,7 +42,5 @@ extension TonePlayer: AVAudioPlayerDelegate {
         if player === self.audioPlayer {
             resetAudioPlayer()
         }
-        
-        AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared)).configureAudioSession()
     }
 }
