@@ -6,28 +6,15 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     private let audioPortOutput: AudioPort
     public var enableLoudSpeaker_calledTimes: Int
     public var disableLoudSpeaker_calledTimes: Int
-    private var configureDefaultAudioSession_calledTimes: Int
-    private var configureMeetingAudioSession_calledTimes: Int
-    private var configureAudioPlayerAudioSession_calledTimes: Int
-    private var configureChatDefaultAudioPlayerAudioSession_calledTimes: Int
-    private var configureAudioRecorderAudioSession_calledTimes: Int
-    private var configureInstantSoundsAudioSession_calledTimes: Int
-    private var configureVideoAudioSession_calledTimes: Int
+    private var configureAudioSession_calledTimes: Int
     
-    public init(isBluetoothAudioRouteAvailable: Bool = false, currentSelectedAudioPort: AudioPort = .builtInReceiver, audioPortOutput: AudioPort = .builtInReceiver, enableLoudSpeaker_calledTimes: Int = 0, disableLoudSpeaker_calledTimes: Int = 0, configureDefaultAudioSession_calledTimes: Int = 0, configureMeetingAudioSession_calledTimes: Int = 0, configureAudioPlayerAudioSession_calledTimes: Int = 0, configureChatDefaultAudioPlayerAudioSession_calledTimes: Int = 0, configureAudioRecorderAudioSession_calledTimes: Int = 0, configureInstantSoundsAudioSession_calledTimes: Int = 0,
-        configureVideoAudioSession_calledTimes: Int = 0) {
+    public init(isBluetoothAudioRouteAvailable: Bool = false, currentSelectedAudioPort: AudioPort = .builtInReceiver, audioPortOutput: AudioPort = .builtInReceiver, enableLoudSpeaker_calledTimes: Int = 0, disableLoudSpeaker_calledTimes: Int = 0, configureAudioSession_calledTimes: Int = 0) {
         self.isBluetoothAudioRouteAvailable = isBluetoothAudioRouteAvailable
         self.currentSelectedAudioPort = currentSelectedAudioPort
         self.audioPortOutput = audioPortOutput
         self.enableLoudSpeaker_calledTimes = enableLoudSpeaker_calledTimes
         self.disableLoudSpeaker_calledTimes = disableLoudSpeaker_calledTimes
-        self.configureDefaultAudioSession_calledTimes = configureDefaultAudioSession_calledTimes
-        self.configureMeetingAudioSession_calledTimes = configureMeetingAudioSession_calledTimes
-        self.configureAudioPlayerAudioSession_calledTimes = configureAudioPlayerAudioSession_calledTimes
-        self.configureChatDefaultAudioPlayerAudioSession_calledTimes = configureChatDefaultAudioPlayerAudioSession_calledTimes
-        self.configureAudioRecorderAudioSession_calledTimes = configureAudioRecorderAudioSession_calledTimes
-        self.configureInstantSoundsAudioSession_calledTimes = configureInstantSoundsAudioSession_calledTimes
-        self.configureVideoAudioSession_calledTimes = configureVideoAudioSession_calledTimes
+        self.configureAudioSession_calledTimes = configureAudioSession_calledTimes
     }
     
     public func setSpeaker(enabled: Bool, completion: ((Result<Void, MEGADomain.AudioSessionErrorEntity>) -> Void)?) {
@@ -38,11 +25,11 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         }
     }
 
-    public func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         enableLoudSpeaker_calledTimes += 1
     }
     
-    public func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         disableLoudSpeaker_calledTimes += 1
     }
     
@@ -52,31 +39,7 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     
     public func routeChanged(handler: ((AudioSessionRouteChangedReason, AudioPort?) -> Void)?) {}
     
-    public func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureDefaultAudioSession_calledTimes += 1
-    }
-    
-    public func configureMeetingAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureMeetingAudioSession_calledTimes += 1
-    }
-    
-    public func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureAudioPlayerAudioSession_calledTimes += 1
-    }
-    
-    public func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureChatDefaultAudioPlayerAudioSession_calledTimes += 1
-    }
-    
-    public func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureAudioRecorderAudioSession_calledTimes += 1
-    }
-    
-    public func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureInstantSoundsAudioSession_calledTimes += 1
-    }
-    
-    public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        configureVideoAudioSession_calledTimes += 1
+    public func configureAudioSession() {
+        configureAudioSession_calledTimes += 1
     }
 }

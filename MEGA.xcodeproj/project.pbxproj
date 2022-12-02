@@ -1202,7 +1202,6 @@
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		83FF5030247E86F600EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		9405E70E28A3AC43005A16D1 /* BackupNodesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */; };
-		940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
@@ -1246,7 +1245,6 @@
 		943092F7291438200092B99A /* NodeDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F6291438200092B99A /* NodeDataRepository.swift */; };
 		943092F829143DE60092B99A /* NodeDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F6291438200092B99A /* NodeDataRepository.swift */; };
 		943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F9291440010092B99A /* NodeValidationRepository.swift */; };
-		94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */; };
 		9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
 		9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290C1EDD829F007DB542 /* CoreGraphics.framework */; };
 		9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
@@ -3757,7 +3755,6 @@
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
 		9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupNodesValidator.swift; sourceTree = "<group>"; };
-		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		9422494128DB77A2009626E6 /* ContactLinkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkContentView.swift; sourceTree = "<group>"; };
 		9422494328DB77B8009626E6 /* ContactLinkContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactLinkContentView.xib; sourceTree = "<group>"; };
@@ -3788,7 +3785,6 @@
 		943092F32913E26D0092B99A /* NodeActionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionsRepository.swift; sourceTree = "<group>"; };
 		943092F6291438200092B99A /* NodeDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDataRepository.swift; sourceTree = "<group>"; };
 		943092F9291440010092B99A /* NodeValidationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepository.swift; sourceTree = "<group>"; };
-		94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioSessionUseCase+Additions.swift"; sourceTree = "<group>"; };
 		9432290A1EDD8271007DB542 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9432290C1EDD829F007DB542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9432290E1EDD82CF007DB542 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -6143,7 +6139,6 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				940DB9122924D77F004E7349 /* AudioSession */,
 				9464C2EB28C5EF1900F8B082 /* SortOrder */,
 				B51DD9CB28B5D3110094A979 /* LiveText */,
 				B5E411A528AB658600D05719 /* FeatureFlags */,
@@ -8882,14 +8877,6 @@
 			path = BackupNodesValidator;
 			sourceTree = "<group>";
 		};
-		940DB9122924D77F004E7349 /* AudioSession */ = {
-			isa = PBXGroup;
-			children = (
-				940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */,
-			);
-			path = AudioSession;
-			sourceTree = "<group>";
-		};
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
@@ -10054,7 +10041,6 @@
 				B68ED09227D05F9F00713850 /* ThumbnailUseCase+Additions.swift */,
 				B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */,
 				B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */,
-				94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */,
 			);
 			path = DomainExtensions;
 			sourceTree = "<group>";
@@ -12439,7 +12425,6 @@
 				0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */,
 				5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */,
 				32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */,
-				940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */,
 				9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */,
 				BFD2141328F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift in Sources */,
 				B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */,
@@ -12472,7 +12457,6 @@
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
 				2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */,
-				94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */,

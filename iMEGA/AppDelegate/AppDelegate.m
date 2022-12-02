@@ -150,8 +150,9 @@
     
     SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
     [[SDImageCodersManager sharedManager] addCoder:webPCoder];
-    
-    [AudioSessionUseCaseOCWrapper.alloc.init configureDefaultAudioSession];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP error:nil];
+    [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     [MEGAReachabilityManager sharedManager];
     
@@ -918,8 +919,9 @@
         self.chatRoom = nil;
     }];
     
-    [AudioSessionUseCaseOCWrapper.alloc.init configureMeetingAudioSession];
-    [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:self.chatRoom.isMeeting];
+    [[AVAudioSession sharedInstance] mnz_configureAVSessionForCall];
+    [[AVAudioSession sharedInstance] mnz_activate];
+    [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:self.chatRoom.isMeeting];
     [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
                                         enableVideo:self.videoCall
                                         enableAudio:!self.chatRoom.isMeeting

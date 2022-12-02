@@ -15,16 +15,14 @@ final class TonePlayer: NSObject {
     }
     
     private var audioPlayer: AVAudioPlayer?
-    private var audioSessionUseCase: AudioSessionUseCaseProtocol?
     
     func play(tone: ToneType) {
         guard let toneURL = tone.fileURL else {
             MEGALogDebug("\(tone.rawValue) file not found")
             return
         }
-
-        audioSessionUseCase = AudioSessionUseCase.default
-        audioSessionUseCase?.configureInstantSoundsAudioSession()
+        
+        try? AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
         
         if let audioPlayer = audioPlayer {
             audioPlayer.stop()
@@ -48,6 +46,6 @@ extension TonePlayer: AVAudioPlayerDelegate {
             resetAudioPlayer()
         }
         
-        audioSessionUseCase?.configureMeetingAudioSession()
+        AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared)).configureAudioSession()
     }
 }
