@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PhotoCellContent: View {
     @ObservedObject var viewModel: PhotoCellViewModel
+    var isSelfSizing = true
     
     private var tap: some Gesture { TapGesture().onEnded { _ in
         viewModel.isSelected.toggle()
@@ -9,8 +10,7 @@ struct PhotoCellContent: View {
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            PhotoCellImage(container: viewModel.thumbnailContainer,
-                           aspectRatio: viewModel.currentZoomScaleFactor == .one ? nil : 1)
+            image()
             
             if viewModel.editMode.isEditing {
                 CheckMarkView(markedSelected: viewModel.isSelected)
@@ -25,6 +25,17 @@ struct PhotoCellContent: View {
         }
         .onDisappear {
             viewModel.cancelLoading()
+        }
+    }
+    
+    @ViewBuilder
+    private func image() -> some View {
+        if isSelfSizing {
+            PhotoCellImage(container: viewModel.thumbnailContainer,
+                           aspectRatio: viewModel.currentZoomScaleFactor == .one ? nil : 1)
+        } else {
+            Color.clear
+                .overlay(PhotoCellImage(container: viewModel.thumbnailContainer))
         }
     }
 }
