@@ -45,7 +45,7 @@ class AudioRecorder: NSObject {
         
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.audioInterruptionDidStart()
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
         }
         
         try AVAudioSession.sharedInstance().setMode(.default)

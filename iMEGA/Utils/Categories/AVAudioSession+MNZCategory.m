@@ -118,7 +118,7 @@
 - (void)mnz_configureAVSessionForCall {
     NSError *error;
     [AVAudioSession.sharedInstance setCategory:AVAudioSessionCategoryPlayAndRecord
-                                   withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP error:&error];
+                                   withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:&error];
     if (error) {
         MEGALogError(@"[AVAudioSession] set category play and recoed error: %@", error);
         error = nil;
