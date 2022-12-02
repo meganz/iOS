@@ -1,7 +1,6 @@
 import Foundation
 import AVFoundation
 import MEGAFoundation
-import MEGADomain
 
 enum PlayerConfiguration: String {
     case loop, shuffle, repeatOne
@@ -239,7 +238,11 @@ final class AudioPlayer: NSObject {
     
     func resetAudioSessionCategoryIfNeeded() {
         if AVAudioSession.sharedInstance().category != .playback || AVAudioSession.sharedInstance().categoryOptions.contains(.mixWithOthers) {
-            AudioSessionUseCase.default.configureAudioPlayerAudioSession()
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetooth, .allowBluetoothA2DP])
+            } catch {
+                MEGALogError("[AudioPlayer] AVAudioPlayerSession Error: \(error.localizedDescription)")
+            }
         }
     }
     

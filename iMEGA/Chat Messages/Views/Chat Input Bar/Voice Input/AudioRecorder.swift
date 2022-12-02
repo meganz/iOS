@@ -1,4 +1,4 @@
-import MEGADomain
+
 
 class AudioRecorder: NSObject {
 
@@ -43,7 +43,13 @@ class AudioRecorder: NSObject {
             throw RecordError.activeCall
         }
         
-        AudioSessionUseCase.default.configureAudioRecorderAudioSession()
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidStart()
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP])
+        }
+        
+        try AVAudioSession.sharedInstance().setMode(.default)
+        try AVAudioSession.sharedInstance().setActive(true)
         
         if !FileManager.default.fileExists(atPath: NSTemporaryDirectory()) {
             try FileManager.default.createDirectory(atPath: NSTemporaryDirectory(),

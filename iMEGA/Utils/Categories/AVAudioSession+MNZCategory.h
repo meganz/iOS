@@ -17,6 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 */
 @property (nonatomic, readonly, getter=mnz_isBluetoothAudioRouteAvailable) BOOL mnz_isBluetoothAudioRouteAvailable;
 
+/** @brief Enable built-in speaker or built-in receiver.
+ *
+ * @param enabled YES if you want to enable built-in speaker, NO if you want enable the built-in receiver.
+ */
+- (void)mnz_setSpeakerEnabled:(BOOL)enabled;
+
 /** @brief Check if the first object in the current route outputs match with the type used as parameter, otherwise NO.
  *
  * @param portType the av audio session port type to check with.
@@ -30,6 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 * @return string for a AVAudioSessionRouteChangeReason reason.
 */
 - (NSString *)stringForAVAudioSessionRouteChangeReason:(AVAudioSessionRouteChangeReason)reason;
+
+/// Configure audio session for calls. Category: play and record, mode: voice chat.
+- (void)mnz_configureAVSessionForCall;
+
+/// Activates the audio session
+- (void)mnz_activate;
 
 @end
 
