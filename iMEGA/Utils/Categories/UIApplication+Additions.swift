@@ -9,7 +9,7 @@ extension UIApplication {
     
     @available(iOS 15.0, *)
     @objc class func showManageSubscriptions() {
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+        guard let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
               !ProcessInfo.processInfo.isiOSAppOnMac else {
                   UIApplication.openAppleIDSubscriptionsPage()
                   return
