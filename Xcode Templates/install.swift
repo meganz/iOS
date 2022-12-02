@@ -9,7 +9,7 @@ enum Options: Int {
     case exit
 }
 
-let templates = ["MVVM.xctemplate", "Use Case.xctemplate", "Repository.xctemplate", "Repository Protocol.xctemplate"]
+let templates = ["MVVM.xctemplate", "MVVM-SwiftUI.xctemplate", "Use Case.xctemplate", "Repository.xctemplate", "Repository Protocol.xctemplate"]
 let destinationRelativePath = "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/File Templates/iOS"
 let fileManager = FileManager.default
 let customMEGATemplatesFolderName = "MEGA Templates"
@@ -44,7 +44,11 @@ func evaluateUser(option: String) {
     switch Options(rawValue: integerOption) {
     case .all:
         templates.forEach(installOrUpdate(template:))
-    case .mvvm, .useCase, .repository:
+    case .mvvm:
+        installOrUpdate(template: templates[0])
+        installOrUpdate(template: templates[1])
+        
+    case .useCase, .repository:
         installOrUpdate(template: templates[integerOption - 2])
         
         if selectedOption == .repository {
