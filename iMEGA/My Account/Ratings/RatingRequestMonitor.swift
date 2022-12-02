@@ -47,7 +47,8 @@ import MEGADomain
     
     func requestReview() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            SKStoreReviewController.requestReview()
+            guard let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return }
+            SKStoreReviewController.requestReview(in: scene)
             self.baseConditionUseCase.saveLastRequestedAppVersion(self.currentAppVersion)
         }
     }
