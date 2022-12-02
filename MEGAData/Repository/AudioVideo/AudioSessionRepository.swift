@@ -2,7 +2,7 @@ import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     private let audioSession: AVAudioSession
-    private let callActionManager: CallActionManager?
+    private let callActionManager: CallActionManager
 
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
 
@@ -23,7 +23,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
     }
 
-    init(audioSession: AVAudioSession, callActionManager: CallActionManager? = nil) {
+    init(audioSession: AVAudioSession, callActionManager: CallActionManager) {
         self.audioSession = audioSession
         self.callActionManager = callActionManager
         addObservers()
@@ -33,123 +33,35 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         removeObservers()
     }
     
-    func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP])
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureDefaultAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func configureMeetingAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    func configureAudioSession() {
         do {
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP])
             try audioSession.setActive(true)
-            completion?(.success)
         } catch (let error) {
-            MEGALogError("[AudioSession] configureMeetingAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
+            MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
         }
     }
     
-    func setSpeaker(enabled: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        MEGALogDebug("[AVAudioSession] Set speaker enabled: \(enabled)")
-        if audioSession.currentRoute.outputs.count > 0 {
-            let audioSessionPortDescription = audioSession.currentRoute.outputs.first
-            if enabled {
-                if audioSessionPortDescription?.portType == .builtInReceiver {
-                    MEGALogDebug("[AVAudioSession] Override output audio port from receiver to speaker")
-                    enableLoudSpeaker(completion: completion)
-                    return
-                }
-            } else {
-                if audioSessionPortDescription?.portType == .builtInSpeaker {
-                    MEGALogDebug("[AVAudioSession] Override output audio port from speaker to receiver")
-                    disableLoudSpeaker(completion: completion)
-                    return
-                }
-            }
-        }
-        completion?(.failure(.generic))
-    }
     
-    func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetooth, .allowBluetoothA2DP])
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureAudioPlayerAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
-            completion?(.success)
-        } catch {
-            MEGALogInfo("[AudioSession] configureChatDefaultAudioPlayerAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            if AudioPlayerManager.shared.isPlayerAlive() {
-                AudioPlayerManager.shared.audioInterruptionDidStart()
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP]) 
-            }
-            try AVAudioSession.sharedInstance().setActive(true)
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureAudioRecorderAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureInstantSoundsAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureVideoAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    func enableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         MEGALogDebug("AudioSession: enabling loud speaker")
         do {
             try audioSession.overrideOutputAudioPort(.speaker)
-            completion?(.success)
+            completion(.success(()))
         } catch {
             MEGALogError("Error enabling the loudspeaker \(error.localizedDescription)")
-            completion?(.failure(.generic))
+            completion(.failure(.generic))
         }
     }
     
-    func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    func disableLoudSpeaker(completion: @escaping (Result<Void, AudioSessionErrorEntity>) -> Void) {
         MEGALogDebug("AudioSession: disable loud speaker")
         do {
             try audioSession.overrideOutputAudioPort(.none)
-            completion?(.success)
+            completion(.success(()))
         } catch {
             MEGALogError("Error disabling the loudspeaker \(error.localizedDescription)")
-            completion?(.failure(.generic))
+            completion(.failure(.generic))
         }
     }
     
@@ -189,15 +101,15 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         if reason == .categoryChange,
            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription,
            let previousAudioPort = previousRoute.outputs.first?.toAudioPort(),
-           callActionManager?.didEnableWebrtcAudioNow ?? false,
+           callActionManager.didEnableWebrtcAudioNow,
            previousAudioPort == .builtInSpeaker,
            currentAudioPort != .builtInSpeaker {
             MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
-            callActionManager?.didEnableWebrtcAudioNow = false
+            callActionManager.didEnableWebrtcAudioNow = false
             enableLoudSpeaker { _ in }
             return
-        } else if callActionManager?.didEnableWebrtcAudioNow ?? false {
-            callActionManager?.didEnableWebrtcAudioNow = false
+        } else if callActionManager.didEnableWebrtcAudioNow {
+            callActionManager.didEnableWebrtcAudioNow = false
         }
         
         if let handler = routeChanged, let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {

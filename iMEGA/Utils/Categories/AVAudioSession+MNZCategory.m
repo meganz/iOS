@@ -3,6 +3,31 @@
 
 @implementation AVAudioSession (MNZCategory)
 
+- (void)mnz_setSpeakerEnabled:(BOOL)enabled {
+    MEGALogDebug(@"[AVAudioSession] Set speaker enabled %@", enabled ? @"YES" : @"NO");
+    if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
+        NSError *error;
+        if (enabled) {
+            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+                MEGALogDebug(@"[AVAudioSession] Override output audio port from receiver to speaker");
+                if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
+                    MEGALogError(@"[AVAudioSession] Error %@ overriding output audio port to AVAudioSessionPortOverrideSpeaker", error);
+                }
+            }
+        } else {
+            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+                MEGALogDebug(@"[AVAudioSession] Override output audio port from speaker to receiver");
+                if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
+                    MEGALogError(@"[AVAudioSession] Error %@ overriding output audio port to AVAudioSessionPortOverrideNone", error);
+                }
+            }
+        }
+    } else {
+        MEGALogWarning(@"[AVAudioSession] Array of audio outputs is empty");
+    }
+}
+
 - (BOOL)mnz_isOutputEqualToPortType:(AVAudioSessionPort)portType {
     BOOL ret = NO;
     if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
@@ -88,6 +113,30 @@
     }
     
     return ret;
+}
+
+- (void)mnz_configureAVSessionForCall {
+    NSError *error;
+    [AVAudioSession.sharedInstance setCategory:AVAudioSessionCategoryPlayAndRecord
+                                   withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP error:&error];
+    if (error) {
+        MEGALogError(@"[AVAudioSession] set category play and recoed error: %@", error);
+        error = nil;
+    }
+    
+    [AVAudioSession.sharedInstance setMode:AVAudioSessionModeVoiceChat error:&error];
+    if (error) {
+        MEGALogError(@"[AVAudioSession] set mode voice chat error: %@", error);
+        error = nil;
+    }
+}
+
+- (void)mnz_activate {
+    NSError *error;
+    [AVAudioSession.sharedInstance setActive:YES error:&error];
+    if (error) {
+        MEGALogError(@"[AVAudioSession] set active error: %@", error);
+    }
 }
 
 @end
