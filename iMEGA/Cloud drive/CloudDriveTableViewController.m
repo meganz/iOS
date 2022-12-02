@@ -272,45 +272,7 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];
-    if (node == nil || [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
-        return [UISwipeActionsConfiguration configurationWithActions:@[]];
-    }
-    
-    if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
-        MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
-        if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
-            UIContextualAction *restoreAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                [node mnz_restore];
-                [self setTableViewEditing:NO animated:YES];
-            }];
-            restoreAction.image = [[UIImage imageNamed:@"restore"] imageWithTintColor:UIColor.whiteColor];
-            restoreAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection] ;
-            
-            return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
-        }
-    } else {
-        UIContextualAction *shareLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
-            }
-            [self setTableViewEditing:NO animated:YES];
-        }];
-        shareLinkAction.image = [[UIImage imageNamed:@"link"] imageWithTintColor:UIColor.whiteColor];
-        shareLinkAction.backgroundColor = UIColor.systemOrangeColor;
-        
-        UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            if (node != nil) {
-                [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
-            }
-            [self.cloudDrive setEditMode:NO];
-        }];
-        downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
-        downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-        
-        return [UISwipeActionsConfiguration configurationWithActions:@[shareLinkAction, downloadAction]];
-    }
-    return [UISwipeActionsConfiguration configurationWithActions:@[]];
+    return [self configureSwipeActionsForIndex:indexPath];
 }
 
 - (UIContextMenuConfiguration *)tableView:(UITableView *)tableView
