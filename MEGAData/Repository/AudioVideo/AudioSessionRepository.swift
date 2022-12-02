@@ -35,7 +35,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     func configureAudioSession() {
         do {
-            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP])
+            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
             try audioSession.setActive(true)
         } catch (let error) {
             MEGALogError("[AudioPlayer] AVAudioSession Error: \(error.localizedDescription)")
