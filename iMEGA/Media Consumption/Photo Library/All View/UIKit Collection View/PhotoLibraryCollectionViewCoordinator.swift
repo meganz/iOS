@@ -47,7 +47,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             cell.viewModel = viewModel
             
             cell.contentConfiguration = UIHostingConfiguration {
-                PhotoCellContent(viewModel: viewModel)
+                PhotoCellContent(viewModel: viewModel, isSelfSizing: false)
             }
             .margins(.all, 0)
             
