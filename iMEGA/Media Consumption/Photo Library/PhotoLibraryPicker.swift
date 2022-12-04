@@ -10,6 +10,12 @@ struct PhotoLibraryPicker: View {
             .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
     }
     
+    init(selectedMode: Binding<PhotoLibraryViewMode>) {
+        _selectedMode = selectedMode
+        
+        configSegmentedControlAppearance()
+    }
+    
     private func pickerView() -> some View {
         Picker("View Mode", selection: $selectedMode.animation()) {
             ForEach(PhotoLibraryViewMode.allCases) {
@@ -22,9 +28,6 @@ struct PhotoLibraryPicker: View {
         .pickerStyle(.segmented)
         .blurryBackground(radius: 7, singleColorTheme: true)
         .padding(16)
-        .onAppear {
-            configSegmentedControlAppearance()
-        }
     }
     
     private func configSegmentedControlAppearance() {
