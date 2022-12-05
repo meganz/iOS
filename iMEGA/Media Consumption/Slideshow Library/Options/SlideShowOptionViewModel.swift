@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 enum SlideShowOptionName {
     case none
@@ -20,14 +21,14 @@ final class SlideShowOptionViewModel: ObservableObject {
     let footerNote = Strings.Localizable.Slideshow.PreferenceSetting.mediaInSubFolders
     let doneButtonTitle = Strings.Localizable.done
     let cellViewModels: [SlideShowOptionCellViewModel]
-    let currentConfiguration: SlideShowViewConfiguration
+    let currentConfiguration: SlideShowConfigurationEntity
     private(set) var selectedCell: SlideShowOptionCellViewModel!
     
     @Published var shouldShowDetail = false
     
     init(
         cellViewModels: [SlideShowOptionCellViewModel],
-        currentConfiguration: SlideShowViewConfiguration
+        currentConfiguration: SlideShowConfigurationEntity
     ) {
         self.cellViewModels = cellViewModels
         self.currentConfiguration = currentConfiguration
@@ -40,8 +41,8 @@ final class SlideShowOptionViewModel: ObservableObject {
         }
     }
     
-    private func selectedSpeed(from cellViewModels: [SlideShowOptionDetailCellViewModel]) -> SlideShowTimeIntervalOption {
-        var speed = SlideShowTimeIntervalOption.normal
+    private func selectedSpeed(from cellViewModels: [SlideShowOptionDetailCellViewModel]) -> SlideShowTimeIntervalOptionEntity {
+        var speed = SlideShowTimeIntervalOptionEntity.normal
         
         cellViewModels.forEach { cell in
             if cell.name == .speedFast && cell.isSelcted {
@@ -53,8 +54,8 @@ final class SlideShowOptionViewModel: ObservableObject {
         return speed
     }
     
-    private func selectedOrder(from cellViewModels: [SlideShowOptionDetailCellViewModel]) -> SlideShowPlayingOrder {
-        var order = SlideShowPlayingOrder.shuffled
+    private func selectedOrder(from cellViewModels: [SlideShowOptionDetailCellViewModel]) -> SlideShowPlayingOrderEntity {
+        var order = SlideShowPlayingOrderEntity.shuffled
         
         cellViewModels.forEach { cell in
             if cell.name == .orderNewest && cell.isSelcted {
@@ -66,7 +67,7 @@ final class SlideShowOptionViewModel: ObservableObject {
         return order
     }
     
-    func configuration() -> SlideShowViewConfiguration {
+    func configuration() -> SlideShowConfigurationEntity {
         var config = currentConfiguration
        
         cellViewModels.forEach { cellViewModel in
@@ -86,7 +87,7 @@ final class SlideShowOptionViewModel: ObservableObject {
 extension SlideShowOptionViewModel {
     convenience init(
         @SlideShowOptionBuilder _ makeCells: () -> [SlideShowOptionCellViewModel],
-        currentConfiguration: SlideShowViewConfiguration
+        currentConfiguration: SlideShowConfigurationEntity
     ) {
         self.init(cellViewModels: makeCells(), currentConfiguration: currentConfiguration)
     }

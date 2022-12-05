@@ -11,7 +11,7 @@ protocol SlideShowDataSourceProtocol {
     func loadSelectedPhotoPreview() -> Bool
     func startInitialDownload(_ initialPhotoDownloaded: Bool)
     func processData(basedOnCurrentSlideNumber currentSlideNumber: Int, andOldSlideNumber oldSlideNumber: Int)
-    func sortNodes(byOrder order: SlideShowPlayingOrder)
+    func sortNodes(byOrder order: SlideShowPlayingOrderEntity)
 }
 
 final class SlideShowDataSource: SlideShowDataSourceProtocol {
@@ -91,7 +91,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         }
     }
     
-    func sortNodes(byOrder order: SlideShowPlayingOrder) {
+    func sortNodes(byOrder order: SlideShowPlayingOrderEntity) {
         sortByShuffleOrder = false
         if order == .newest {
             nodeEntities.sort { $0.modificationTime > $1.modificationTime }

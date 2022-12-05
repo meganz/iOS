@@ -1,5 +1,6 @@
 import UIKit
 import MEGADomain
+import MEGAData
 
 struct SlideShowRouter: Routing {
     private let homeViewController: MEGAPhotoBrowserViewController
@@ -24,12 +25,7 @@ struct SlideShowRouter: Routing {
                 advanceNumberOfPhotosToLoad: 20,
                 numberOfUnusedPhotosBuffer: 20
             ),
-            configuration: .init(
-                playingOrder: .shuffled,
-                timeIntervalForSlideInSeconds: .normal,
-                isRepeat: false,
-                includeSubfolders: false
-            )
+            slideShowUseCase: SlideShowUseCase(slideShowRepository: SlideShowRepository.newRepo)
         )
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)
