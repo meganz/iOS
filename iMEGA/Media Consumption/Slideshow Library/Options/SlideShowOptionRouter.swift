@@ -1,15 +1,16 @@
 import SwiftUI
+import MEGADomain
 
 final class SlideShowOptionRouter: Routing {
     private weak var presenter: UIViewController?
     private var preference: SlideShowViewModelPreferenceProtocol
-    private let currentConfiguration: SlideShowViewConfiguration
-    private var newConfiguration: SlideShowViewConfiguration
+    private let currentConfiguration: SlideShowConfigurationEntity
+    private var newConfiguration: SlideShowConfigurationEntity
     
     init(
         presenter: UIViewController?,
         preference: SlideShowViewModelPreferenceProtocol,
-        currentConfiguration: SlideShowViewConfiguration
+        currentConfiguration: SlideShowConfigurationEntity
     ) {
         self.presenter = presenter
         self.preference = preference
@@ -35,14 +36,14 @@ final class SlideShowOptionRouter: Routing {
 
 extension SlideShowOptionRouter {
     @SlideShowOptionBuilder
-    private func makeCells(withConfiguration config: SlideShowViewConfiguration) -> [SlideShowOptionCellViewModel] {
+    private func makeCells(withConfiguration config: SlideShowConfigurationEntity) -> [SlideShowOptionCellViewModel] {
         SlideShowOptionCellViewModel(name: .speed, title: Strings.Localizable.Slideshow.PreferenceSetting.speed, type: .detail, children: makeChildrenForSlideShowSpeed(withConfiguration: config))
         SlideShowOptionCellViewModel(name: .order, title: Strings.Localizable.Slideshow.PreferenceSetting.order, type: .detail, children: makeChildrenForSlideShowOrder(withConfiguration: config))
         SlideShowOptionCellViewModel(name: .repeat, title: Strings.Localizable.Slideshow.PreferenceSetting.SlideshowOptions.repeat, type: .toggle, children: [], isOn: config.isRepeat)
     }
     
     @SlideShowOptionChildrenBuilder
-    private func makeChildrenForSlideShowSpeed(withConfiguration config: SlideShowViewConfiguration) -> [SlideShowOptionDetailCellViewModel] {
+    private func makeChildrenForSlideShowSpeed(withConfiguration config: SlideShowConfigurationEntity) -> [SlideShowOptionDetailCellViewModel] {
         SlideShowOptionDetailCellViewModel(
             name: .speedSlow,
             title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.slow,
@@ -58,7 +59,7 @@ extension SlideShowOptionRouter {
     }
     
     @SlideShowOptionChildrenBuilder
-    private func makeChildrenForSlideShowOrder(withConfiguration config: SlideShowViewConfiguration) -> [SlideShowOptionDetailCellViewModel] {
+    private func makeChildrenForSlideShowOrder(withConfiguration config: SlideShowConfigurationEntity) -> [SlideShowOptionDetailCellViewModel] {
         SlideShowOptionDetailCellViewModel(name: .orderShuffle,
                                            image: Asset.Images.AudioPlayer.shuffleAudio,
                                            title: Strings.Localizable.Slideshow.PreferenceSetting.Order.shuffle,
