@@ -23,12 +23,7 @@ class SlideshowViewModelTests: XCTestCase {
                 advanceNumberOfPhotosToLoad: 20,
                 numberOfUnusedPhotosBuffer: 20
             ),
-            configuration: .init(
-                playingOrder: .shuffled,
-                timeIntervalForSlideInSeconds: .normal,
-                isRepeat: false,
-                includeSubfolders: false
-            )
+            slideShowUseCase: MockSlideShowUseCase(slideShowRepository: MockSlideShowRepository.newRepo)
         )
     }
 
@@ -85,7 +80,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.timeIntervalForSlideInSeconds == 4)
         XCTAssertTrue(slideShowViewModel.configuration.isRepeat == false)
         
-        sut.restart(withConfig: SlideShowViewConfiguration(
+        sut.restart(withConfig: SlideShowConfigurationEntity(
             playingOrder: .shuffled, timeIntervalForSlideInSeconds: .normal, isRepeat: true, includeSubfolders: false)
         )
         

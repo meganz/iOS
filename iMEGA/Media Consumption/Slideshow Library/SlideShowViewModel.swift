@@ -12,7 +12,7 @@ enum SlideShowAction: ActionType {
 protocol SlideShowViewModelPreferenceProtocol {
     func pause()
     func cancel()
-    func restart(withConfig config: SlideShowViewConfiguration)
+    func restart(withConfig config: SlideShowConfigurationEntity)
 }
 
 final class SlideShowViewModel: ViewModelType {
@@ -26,8 +26,9 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     private var dataSource: SlideShowDataSourceProtocol
-
-    var configuration: SlideShowViewConfiguration
+    private let slideShowUseCase: SlideShowUseCaseProtocol
+    
+    var configuration: SlideShowConfigurationEntity
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -57,12 +58,13 @@ final class SlideShowViewModel: ViewModelType {
         }
     }
     
-    init(
-        dataSource: SlideShowDataSourceProtocol,
-        configuration: SlideShowViewConfiguration
-    ) {
+    init(dataSource: SlideShowDataSourceProtocol,
+         slideShowUseCase: SlideShowUseCaseProtocol) {
+        
         self.dataSource = dataSource
-        self.configuration = configuration
+        self.slideShowUseCase = slideShowUseCase
+        
+        configuration = slideShowUseCase.loadConfiguration()
         
         dataSource.sortNodes(byOrder: configuration.playingOrder)
         
@@ -135,7 +137,9 @@ extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
         resumeSlideShow()
     }
     
-    func restart(withConfig config: SlideShowViewConfiguration) {
+    func restart(withConfig config: SlideShowConfigurationEntity) {
+        slideShowUseCase.saveConfiguration(config)
+        
         if config.playingOrder != configuration.playingOrder {
             dataSource.sortNodes(byOrder: config.playingOrder)
             configuration = config
