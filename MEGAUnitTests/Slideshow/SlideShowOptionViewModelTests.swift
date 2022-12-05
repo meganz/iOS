@@ -1,4 +1,5 @@
 import XCTest
+import MEGADomain
 @testable import MEGA
 
 final class SlideShowOptionViewModelTests: XCTestCase {
@@ -6,8 +7,8 @@ final class SlideShowOptionViewModelTests: XCTestCase {
         [SlideShowOptionCellViewModel(name: .speed, title: Strings.Localizable.Slideshow.PreferenceSetting.speed, type: .detail, children: [SlideShowOptionDetailCellViewModel(name: .speedNormal, title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.slow, isSelcted: false)])]
     }
     
-    private func getConfiguration() -> SlideShowViewConfiguration {
-        SlideShowViewConfiguration(playingOrder: .shuffled, timeIntervalForSlideInSeconds: .normal, isRepeat: false, includeSubfolders: false)
+    private func getConfiguration() -> SlideShowConfigurationEntity {
+        SlideShowConfigurationEntity(playingOrder: .shuffled, timeIntervalForSlideInSeconds: .normal, isRepeat: false, includeSubfolders: false)
     }
     
     func testDidSelectCell_forDetailCell_selected() {
@@ -52,6 +53,6 @@ final class SlideShowOptionViewModelTests: XCTestCase {
         let viewModel = SlideShowOptionViewModel(cellViewModels: cellViewModels, currentConfiguration: getConfiguration())
         let sut = viewModel.configuration()
         
-        XCTAssert(sut.timeIntervalForSlideInSeconds == SlideShowTimeIntervalOption.fast)
+        XCTAssert(sut.timeIntervalForSlideInSeconds == SlideShowTimeIntervalOptionEntity.fast)
     }
 }

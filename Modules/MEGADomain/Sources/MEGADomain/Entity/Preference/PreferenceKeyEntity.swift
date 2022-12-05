@@ -20,4 +20,8 @@ public enum PreferenceKeyEntity: String {
     case savePhotoToGallery = "IsSavePhotoToGalleryEnabled"
     case saveVideoToGallery = "IsSaveVideoToGalleryEnabled"
     case callsSoundNotification
+    case slideShowConfigPlayingOrder
+    case slideShowConfigTimeInterval
+    case slideShowConfigIsRepeat
+    case slideShowConfigIncludeSubfolder
 }
