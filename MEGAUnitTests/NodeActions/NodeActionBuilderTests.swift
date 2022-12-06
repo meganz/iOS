@@ -291,6 +291,18 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .label, .download, .rename, .copy, .leaveSharing]))
     }
     
+    func testIncomingFullSharedFolder_verifyContact_enabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessFull)
+            .setIsFile(false)
+            .setisIncomingShareChildView(true)
+            .setIsVerifyContact(true, contactName: "")
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .label, .leaveSharing]))
+    }
+    
     func testIncomingFullSharedFolderTextFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -333,6 +345,18 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .download, .copy, .leaveSharing]))
+    }
+    
+    func testIncomingReadAndReadWriteSharedFolder_verifyContact_enabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessReadWrite)
+            .setIsFile(false)
+            .setisIncomingShareChildView(true)
+            .setIsVerifyContact(true, contactName: "")
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .leaveSharing]))
     }
     
     func testIncomingReadAndReadWriteSharedFolderTextFile() {
@@ -379,6 +403,18 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .copy, .removeSharing]))
     }
     
+    func testOutgoingSharedFolder_verifyContact_enabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(false)
+            .setIsOutshare(true)
+            .setIsVerifyContact(true, contactName: "")
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .copy, .removeSharing]))
+    }
+    
     func testOutgoingSharedFolderExported() {
         actions = NodeActionBuilder()
             .setDisplayMode(.sharedItem)
@@ -389,6 +425,19 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .copy, .removeSharing]))
+    }
+    
+    func testOutgoingSharedFolder_verifyContactAndExported_enabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(false)
+            .setIsOutshare(true)
+            .setIsExported(true)
+            .setIsVerifyContact(true, contactName: "")
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .copy, .removeSharing]))
     }
     
     // MARK: - Links tests
