@@ -65,6 +65,7 @@ internal enum Asset {
       internal static let sort = ImageAsset(name: "sort")
       internal static let thumbnailsThin = ImageAsset(name: "thumbnailsThin")
       internal static let upload = ImageAsset(name: "upload")
+      internal static let verifyContact = ImageAsset(name: "verifyContact")
     }
     internal enum Activities {
       internal static let activityGetLink = ImageAsset(name: "activity_getLink")
