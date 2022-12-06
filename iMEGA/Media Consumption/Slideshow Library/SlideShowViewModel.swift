@@ -22,7 +22,6 @@ final class SlideShowViewModel: ViewModelType {
         case initialPhotoLoaded
         case resetTimer
         case restart
-        case reload
     }
     
     private var dataSource: SlideShowDataSourceProtocol
@@ -74,21 +73,10 @@ final class SlideShowViewModel: ViewModelType {
         } else {
             dataSource.startInitialDownload(false)
         }
-        self.dataSource.contentUpdatedCallback = { [weak self] in
-            self?.invokeCommand?(.reload)
-        }
     }
     
     private func playOrPauseSlideShow() {
-        guard playbackStatus == .playing
-        else {
-            playbackStatus = .playing
-            invokeCommand?(.play)
-            return
-        }
-        
-        playbackStatus = .pause
-        invokeCommand?(.pause)
+        playbackStatus == .playing ? pauseSlideShow() : resumeSlideShow()
     }
     
     func pauseSlideShow() {
@@ -110,6 +98,10 @@ final class SlideShowViewModel: ViewModelType {
         dataSource.initialPhotoDownloadCallback = { [weak self] in
             self?.invokeCommand?(.restart)
         }
+    }
+    
+    func photo(at indexPath: IndexPath) -> UIImage? {
+        photos.indices.contains(indexPath.row) ? photos[indexPath.row].image : nil
     }
     
     func dispatch(_ action: SlideShowAction) {
@@ -139,6 +131,12 @@ extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
     
     func restart(withConfig config: SlideShowConfigurationEntity) {
         slideShowUseCase.saveConfiguration(config)
+        
+        if dataSource.isInitialDownload(currentSlideNumber) {
+            dataSource.startInitialDownload(false)
+        } else {
+            dataSource.processData(basedOnCurrentSlideNumber: currentSlideNumber, andOldSlideNumber: currentSlideNumber)
+        }
         
         if config.playingOrder != configuration.playingOrder {
             dataSource.sortNodes(byOrder: config.playingOrder)

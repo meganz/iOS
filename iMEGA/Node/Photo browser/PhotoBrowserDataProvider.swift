@@ -76,6 +76,10 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         }
     }
     
+    func fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase) async -> [NodeEntity] {
+        allPhotoEntities.filter { mediaUseCase.isImage($0.name) }
+    }
+    
     func convertToNodeEntities(from photos: [MEGANode]) {
         nodeEntities = photos.toNodeEntities()
         megaNodes = photos
