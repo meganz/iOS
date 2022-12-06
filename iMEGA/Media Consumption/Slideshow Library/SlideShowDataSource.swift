@@ -5,9 +5,8 @@ protocol SlideShowDataSourceProtocol {
     var photos: [SlideShowMediaEntity] { get set }
     var nodeEntities: [NodeEntity] { get set }
     var slideshowComplete: Bool { get set }
-    var contentUpdatedCallback: (() -> Void)? { get set }
     var initialPhotoDownloadCallback: (() -> ())? { get set }
-    
+    func isInitialDownload(_ currentSlideNumber: Int) -> Bool
     func loadSelectedPhotoPreview() -> Bool
     func startInitialDownload(_ initialPhotoDownloaded: Bool)
     func processData(basedOnCurrentSlideNumber currentSlideNumber: Int, andOldSlideNumber oldSlideNumber: Int)
@@ -31,26 +30,22 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     var initialPhotoDownloadCallback: (() -> ())?
     
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
     private let advanceNumberOfPhotosToLoad: Int
     private let numberOfUnusedPhotosBuffer: Int
 
     private var numberOfNodeProcessed = 0
     private var sortByShuffleOrder = false
-    var contentUpdatedCallback: (() -> Void)?
     
     init(
         currentPhoto: NodeEntity?,
         nodeEntities: [NodeEntity],
         thumbnailUseCase: ThumbnailUseCaseProtocol,
-        mediaUseCase: MediaUseCaseProtocol,
         advanceNumberOfPhotosToLoad: Int,
         numberOfUnusedPhotosBuffer: Int
     ) {
         self.currentPhoto = currentPhoto
         self.nodeEntities = nodeEntities
         self.thumbnailUseCase = thumbnailUseCase
-        self.mediaUseCase = mediaUseCase
         self.advanceNumberOfPhotosToLoad = advanceNumberOfPhotosToLoad
         self.numberOfUnusedPhotosBuffer = numberOfUnusedPhotosBuffer
     }
@@ -65,7 +60,6 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         numberOfNodeProcessed += 1
         if let image = UIImage(contentsOfFile: pathForPreviewOrOriginal) {
             photos.append(SlideShowMediaEntity(image: image, node: node))
-            contentUpdatedCallback?()
         }
         return true
     }
@@ -104,8 +98,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     
     // MARK: - Private
     
-    private func isInitialDownload(_ currentSlideNumber: Int) -> Bool {
-        currentSlideNumber < 10 && photos.count <= advanceNumberOfPhotosToLoad
+    func isInitialDownload(_ currentSlideNumber: Int) -> Bool {
+        currentSlideNumber < advanceNumberOfPhotosToLoad/2 && photos.count <= advanceNumberOfPhotosToLoad
     }
     
     private func shouldLoadMorePhotos(_ currentSlideNumber: Int) -> Bool {
@@ -126,11 +120,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
             let node = nodeEntities[i]
             
             if !initialPhoto, let currentPhoto = currentPhoto, currentPhoto.handle == node.handle { continue }
-            
-            if mediaUseCase.isImage(for: URL(fileURLWithPath: node.name)) {
-                counter += 1
-                nextPhotoSet.append(node)
-            }
+            counter += 1
+            nextPhotoSet.append(node)
             if counter >= numOfPhotos { break }
         }
         
@@ -153,9 +144,6 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
                 
                 if let mediaEntity = await loadMediaEntity(forNode: node) {
                     photos.append(mediaEntity)
-                    if node == nextSetOfPhotos.last {
-                        contentUpdatedCallback?()
-                    }
                 }
             }
         }
