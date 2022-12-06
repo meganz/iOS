@@ -96,6 +96,7 @@ extension PhotoLibraryCollectionViewCoordinator {
             .map {
                 PhotoLibraryCollectionLayoutBuilder(zoomState: $0).buildLayout()
             }
+            .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.collectionView?.setCollectionViewLayout($0, animated: true)
             }
