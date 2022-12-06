@@ -16,7 +16,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     @IBOutlet weak var bottomBarBackgroundViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var statusBarBackgroundViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var slideShowOptionButton: UIBarButtonItem!
-    
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var slideShowTimer = Timer()
     
     private var backgroundColor: UIColor {
@@ -54,20 +54,39 @@ final class SlideShowViewController: UIViewController, ViewType {
         view.backgroundColor = backgroundColor
         slideShowOptionButton.title = Strings.Localizable.Slideshow.PreferenceSetting.options
         collectionView.updateLayout()
-        viewModel?.invokeCommand = { [weak self] command in
-            DispatchQueue.main.async { self?.executeCommand(command) }
-        }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(pauseSlideShow), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        if let viewModel = viewModel, viewModel.photos.isNotEmpty {
-            playSlideShow()
-        }
         
         adjustHeightOfTopAndBottomView()
         setVisibility(false)
         setNavigationAndToolbarColor()
         hideOptionsButton()
+        setupActivityIndicator()
+        guard let viewModel = viewModel else {
+            showLoader()
+            return
+        }
+        if viewModel.photos.isNotEmpty {
+            playSlideShow()
+        }
+    }
+    
+    private func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    private func showLoader() {
+        activityIndicator.color = .white
+        view.bringSubviewToFront(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideLoader() {
+        activityIndicator.stopAnimating()
+        view.sendSubviewToBack(activityIndicator)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,6 +129,14 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     func update(viewModel: SlideShowViewModel) {
         self.viewModel = viewModel
+        self.viewModel?.invokeCommand = { [weak self] command in
+            DispatchQueue.main.async { self?.executeCommand(command) }
+        }
+        reload()
+        hideLoader()
+        if viewModel.photos.isNotEmpty {
+            playSlideShow()
+        }
     }
     
     func executeCommand(_ command: SlideShowViewModel.Command) {
@@ -119,7 +146,6 @@ final class SlideShowViewController: UIViewController, ViewType {
          case .initialPhotoLoaded: playSlideShow()
          case .resetTimer: resetTimer()
          case .restart: restart()
-         case .reload: reload()
          }
     }
     
@@ -159,6 +185,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func finish() {
         collectionView.backgroundColor = UIColor.mnz_background()
         slideShowTimer.invalidate()
+        hideLoader()
         viewModel?.dispatch(.finish)
     }
     
@@ -172,8 +199,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func restart() {
         guard let viewModel = viewModel else { return }
-        
-        collectionView.reloadData()
+        reload()
         collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideNumber, section: 0), at: .left, animated: false)
         play()
     }
@@ -181,14 +207,20 @@ final class SlideShowViewController: UIViewController, ViewType {
     @objc private func changeImage() {
         guard let viewModel = viewModel else { return }
         
-        viewModel.currentSlideNumber += 1
-        if viewModel.currentSlideNumber < viewModel.photos.count {
+        let slideNumber = viewModel.currentSlideNumber + 1
+        if slideNumber < viewModel.photos.count {
+            viewModel.currentSlideNumber = slideNumber
+            hideLoader()
             updateSlideInView()
         } else if viewModel.configuration.isRepeat {
             viewModel.currentSlideNumber = 0
+            hideLoader()
             updateSlideInView()
-        } else {
+        } else if slideNumber >= viewModel.numberOfSlideShowContents {
+            hideLoader()
             finish()
+        } else {
+            showLoader()
         }
     }
     
@@ -202,7 +234,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     @IBAction func dismissViewController() {
-        viewModel?.dispatch(.finish)
+        finish()
         dismiss(animated: true)
     }
     
@@ -221,6 +253,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     @objc private func pauseSlideShow() {
         viewModel?.dispatch(.pause)
+        hideLoader()
     }
     
     private func reload() {
@@ -242,18 +275,14 @@ extension SlideShowViewController: UICollectionViewDelegate {
 
 extension SlideShowViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.photos.count ?? 0
+        viewModel?.numberOfSlideShowContents ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
         
         guard let viewModel = viewModel else { return cell }
-        
-        if let image = viewModel.photos[indexPath.row].image {
-            cell.update(withImage: image, andInteraction: self)
-        }
-        
+        cell.update(withImage: viewModel.photo(at: indexPath), andInteraction: self)
         return cell
     }
 }
@@ -278,5 +307,6 @@ extension SlideShowViewController: UIScrollViewDelegate {
 extension SlideShowViewController: SlideShowInteraction {
     func pausePlaying() {
         viewModel?.dispatch(.pause)
+        hideLoader()
     }
 }

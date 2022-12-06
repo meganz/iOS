@@ -39,7 +39,6 @@ class SlideShowDataSourceTests: XCTestCase {
                 cachedThumbnailURLs: [(.preview, thumbnailUrl)],
                 loadPreviewResult: .success(try XCTUnwrap(thumbnailUrl))
             ),
-            mediaUseCase: MockMediaUseCase(isURLVideo: false, isURLImage: true),
             advanceNumberOfPhotosToLoad: 20,
             numberOfUnusedPhotosBuffer: 20
         )
