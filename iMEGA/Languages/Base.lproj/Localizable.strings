@@ -3140,3 +3140,5 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="Copied link to clipboard";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Past meetings";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title" = "Verify %@";

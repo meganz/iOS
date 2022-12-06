@@ -75,4 +75,18 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             setNavigationBarButtons()
         }
     }
+
+    //MARK: - NodeActionMenu
+    @objc func showContactVerificationView() {
+        guard let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
+            return
+        }
+        verifyCredentialsVC.user = MEGAUser()
+        verifyCredentialsVC.userName = ""
+        verifyCredentialsVC.statusUpdateCompletionBlock = {}
+        
+        let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
+        navigationController.addRightCancelButton()
+        self.present(navigationController, animated: true)
+    }
 }

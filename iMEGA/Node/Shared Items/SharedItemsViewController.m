@@ -957,16 +957,21 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveVC.isFromSharedItem = YES;
-                    [cloudDriveVC setParentNode:node];
-                    [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
-                    
-                    [self.navigationController pushViewController:cloudDriveVC animated:YES];
-                });
-            }];
+            BOOL isVerifyContacts = [self isFeatureFlagFingerprintVerificationEnabled];
+            if (isVerifyContacts) {
+                [self showContactVerificationView];
+            } else {
+                [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                        cloudDriveVC.isFromSharedItem = YES;
+                        [cloudDriveVC setParentNode:node];
+                        [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
+                        
+                        [self.navigationController pushViewController:cloudDriveVC animated:YES];
+                    });
+                }];
+            }
             break;
         }
         
@@ -1224,6 +1229,10 @@
             
         case MegaNodeActionTypeCopy:
             [node mnz_copyInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeVerifyContact:
+            [self showContactVerificationView];
             break;
             
         default:

@@ -24,6 +24,8 @@ final class NodeActionBuilder {
     private var nodeSelectionType: NodeSelectionType = .single
     private var isBackupNode: Bool = false
     private var isTakedown = false
+    private var isVerifyContact = false
+    private var verifyContactName = ""
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -139,6 +141,12 @@ final class NodeActionBuilder {
     
     func setIsTakedown(_ isTakedown: Bool) -> NodeActionBuilder {
         self.isTakedown = isTakedown
+        return self
+    }
+    
+    func setIsVerifyContact(_ isVerifyContact: Bool, contactName: String) -> NodeActionBuilder {
+        self.isVerifyContact = isVerifyContact
+        self.verifyContactName = contactName
         return self
     }
     
@@ -295,6 +303,21 @@ final class NodeActionBuilder {
         [.retryAction(), .clearAction()]
     }
     
+    private func verifyContactNodeActions(accessType: MEGAShareType) -> [NodeAction] {
+        var nodeActions: [NodeAction] = []
+        nodeActions.append(NodeAction.verifyContactAction(contactName: verifyContactName))
+        nodeActions.append(NodeAction.infoAction())
+        
+        if accessType == .accessFull {
+            nodeActions.append(NodeAction.labelAction(label: label))
+        }
+        
+        if isIncomingShareChildView {
+            nodeActions.append(NodeAction.leaveSharingAction())
+        }
+        return nodeActions
+    }
+    
     private func unknownAccessLevelNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = [.importAction()]
         if isMediaFile {
@@ -305,6 +328,10 @@ final class NodeActionBuilder {
     }
     
     private func readAndWriteAccessLevelNodeActions() -> [NodeAction] {
+        guard !isVerifyContact else {
+            return verifyContactNodeActions(accessType: .accessReadWrite)
+        }
+        
         var nodeActions: [NodeAction] = []
 
         if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) && !isBackupNode {
@@ -337,7 +364,15 @@ final class NodeActionBuilder {
     }
     
     private func fullAccessLevelNodeActions() -> [NodeAction] {
+        guard !isVerifyContact else {
+            return verifyContactNodeActions(accessType: .accessFull)
+        }
+        
         var nodeActions: [NodeAction] = []
+        
+        if isVerifyContact {
+            nodeActions.append(NodeAction.verifyContactAction(contactName: verifyContactName))
+        }
 
         if !isBackupNode && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
@@ -458,6 +493,10 @@ final class NodeActionBuilder {
     
     private func cloudLikeViewsNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
+        
+        if isVerifyContact {
+            nodeActions.append(NodeAction.verifyContactAction(contactName: verifyContactName))
+        }
         
         if !isBackupNode && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
             nodeActions.append(NodeAction.textEditorAction())
