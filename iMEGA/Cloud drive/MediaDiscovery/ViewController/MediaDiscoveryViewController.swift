@@ -1,7 +1,6 @@
 import UIKit
 
 final class MediaDiscoveryViewController: ExplorerBaseViewController {
-    private var nodes: [MEGANode] = []
     private let folderName: String
     
     lazy var rightBarButtonItem = UIBarButtonItem(
@@ -45,8 +44,6 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         
         configPhotoLibraryView(in: view)
         setupPhotoLibrarySubscriptions()
-        
-        MEGASdkManager.sharedMEGASdk().add(self)
         
         viewModel.invokeCommand = { [weak self] command in
             self?.excuteCommand(command)
@@ -200,13 +197,5 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
         configPhotoLibrarySelectAll()
         configureToolbarButtons()
-    }
-}
-
-extension MediaDiscoveryViewController: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let list = nodeList else { return }
-        
-        viewModel.dispatch(.onNodesUpdate(nodeList: list))
     }
 }

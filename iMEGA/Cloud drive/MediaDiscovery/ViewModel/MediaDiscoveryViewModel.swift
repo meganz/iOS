@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import MEGADomain
 import MEGAFoundation
 
@@ -6,35 +7,37 @@ enum MediaDiscoveryAction: ActionType {
     case onViewReady
     case onViewDidAppear
     case onViewWillDisAppear
-    case onNodesUpdate(nodeList: MEGANodeList)
 }
 
 final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtocol {
     enum Command: Equatable, CommandType {
-        case loadMedia(nodes: [MEGANode])
+        case loadMedia(nodes: [NodeEntity])
     }
     
-    // MARK: - Debouncer
-    private static let REQUESTS_DELAY: TimeInterval = 0.35
-    private let debouncer = Debouncer(delay: REQUESTS_DELAY)
-    
-    private let parentNode: MEGANode
-    private var nodes: [MEGANode] = []
+    private let parentNode: NodeEntity
+    private var nodes: [NodeEntity] = []
     private let router: MediaDiscoveryRouter
-    private var statsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol
+    private let analyticsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol
+    private let mediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol
     
+    private var loadingTask: Task<Void, Never>?
+    private var subscriptions = Set<AnyCancellable>()
     var invokeCommand: ((Command) -> Void)?
     
     lazy var pageStayTimeTracker = PageStayTimeTracker()
     
     // MARK: - Init
     
-    init(parentNode: MEGANode, router: MediaDiscoveryRouter, statsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol) {
+    init(parentNode: NodeEntity, router: MediaDiscoveryRouter,
+         analyticsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol,
+         mediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol) {
         self.parentNode = parentNode
         self.router = router
-        self.statsUseCase = statsUseCase
+        self.analyticsUseCase = analyticsUseCase
+        self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         
         super.init()
+        initSubscriptions()
     }
     
     // MARK: - Dispatch action
@@ -44,53 +47,43 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
         case .onViewReady:
             sendPageVisitedStats()
             loadNodes()
-            invokeCommand?(.loadMedia(nodes: nodes))
-        case .onNodesUpdate(let nodeList):
-            debouncer.start { [weak self] in
-                if self?.shouldReload(with: nodeList) == true {
-                    self?.loadNodes()
-                    self?.invokeCommand?(.loadMedia(nodes: self?.nodes ?? []))
-                }
-            }
         case .onViewDidAppear:
             startTracking()
             sendPageVisitedStats()
         case .onViewWillDisAppear:
             endTracking()
             sendPageStayStats()
+            cancelLoading()
         }
     }
     
     // MARK: Private
     
-    private func isAnyNodeMovedToTrash(nodes: [MEGANode], updatedNodes: [MEGANode]) -> Bool {
-        let nodesRemoved = updatedNodes.filter { node in
-            if node.hasChangedType(.parent),
-               nodes.contains(where: { $0 == node }),
-               MEGASdkManager.sharedMEGASdk().rubbishNode == node {
-                return true
-            }
-            
-            return false
-        }
-        
-        return !nodesRemoved.isEmpty
-    }
-    
-    private func shouldReload(with nodeList: MEGANodeList) -> Bool {
-        guard shouldProcessOnNodesUpdate(with: nodeList, childNodes: nodes, parentNode: parentNode) else { return false }
-        
-        let updatedNodes = nodeList.toNodeArray()
-        
-        return isAnyNodeMovedToTrash(nodes:nodes, updatedNodes:updatedNodes) ||
-        updatedNodes.containsNewNode() ||
-        updatedNodes.hasModifiedAttributes() ||
-        updatedNodes.hasModifiedParent()
+    private func initSubscriptions() {
+        mediaDiscoveryUseCase.nodeUpdatesPublisher
+            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+            .sink { [weak self] updatedNodes in
+                guard let self else { return }
+                if self.mediaDiscoveryUseCase.shouldReload(parentNode: self.parentNode, loadedNodes: self.nodes, updatedNodes: updatedNodes) {
+                    self.loadNodes()
+                }
+            }.store(in: &subscriptions)
     }
     
     private func loadNodes() {
-        let nodelist = MEGASdkManager.sharedMEGASdk().children(forParent: parentNode, order: MEGASortOrderType.modificationDesc.rawValue)
-        nodes = (nodelist.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
+        loadingTask = Task { @MainActor in
+            do {
+                nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode)
+                invokeCommand?(.loadMedia(nodes: nodes))
+            } catch {
+                MEGALogError("Error loading nodes: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func cancelLoading() {
+        loadingTask?.cancel()
+        subscriptions.removeAll()
     }
     
     private func startTracking() {
@@ -102,12 +95,12 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     }
     
     private func sendPageVisitedStats() {
-        statsUseCase.sendPageVisitedStats()
+        analyticsUseCase.sendPageVisitedStats()
     }
     
     private func sendPageStayStats() {
         let duration = Int(pageStayTimeTracker.duration)
         
-        statsUseCase.sendPageStayStats(with: duration)
+        analyticsUseCase.sendPageStayStats(with: duration)
     }
 }
