@@ -12,13 +12,12 @@ struct PhotoCellContent: View {
         ZStack(alignment: .bottomTrailing) {
             image()
             
-            if viewModel.editMode.isEditing {
-                CheckMarkView(markedSelected: viewModel.isSelected)
-                    .offset(x: -5, y: -5)
-            }
+            CheckMarkView(markedSelected: viewModel.isSelected)
+                .offset(x: -5, y: -5)
+                .opacity(viewModel.shouldShowEditState ? 1 : 0)
         }
-        .favorite(viewModel.isFavorite)
-        .videoDuration(viewModel.isVideo, duration: viewModel.duration, with: viewModel.currentZoomScaleFactor)
+        .favorite(viewModel.shouldShowFavorite)
+        .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .onAppear {
             viewModel.loadThumbnailIfNeeded()
