@@ -24,22 +24,16 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @MainActor
     func loadAlbums() {
         loadFavouriteAlbum()
+        loadOtherAlbums()
         
-        if FeatureFlagProvider().isFeatureFlagEnabled(for: .gifAndRawAlbum) {
-            loadOtherAlbums()
-            
-            usecase.startMonitoringNodesUpdate { [weak self] in
-                self?.loadOtherAlbums()
-            }
+        usecase.startMonitoringNodesUpdate { [weak self] in
+            self?.loadOtherAlbums()
         }
     }
     
     func cancelLoading() {
         cancelFavouriteAlbumLoading()
-
-        if FeatureFlagProvider().isFeatureFlagEnabled(for: .gifAndRawAlbum) {
-            cancelOtherAlbumsLoading()
-        }
+        cancelOtherAlbumsLoading()
     }
     
     // MARK: - Private
