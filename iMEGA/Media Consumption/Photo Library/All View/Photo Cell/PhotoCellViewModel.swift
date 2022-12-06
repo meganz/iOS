@@ -39,6 +39,14 @@ final class PhotoCellViewModel: ObservableObject {
     @Published var isFavorite: Bool = false
     @Published var editMode: EditMode = .inactive
     
+    var shouldShowEditState: Bool {
+        editMode.isEditing && currentZoomScaleFactor != .thirteen
+    }
+    
+    var shouldShowFavorite: Bool {
+        isFavorite && currentZoomScaleFactor != .thirteen
+    }
+    
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
          thumbnailUseCase: ThumbnailUseCaseProtocol,
