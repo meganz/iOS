@@ -289,6 +289,8 @@ class NodeActionViewController: ActionSheetViewController {
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         let isTakedown = node.isTakenDown()
+        let isVerifyContact = FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+        let verifyContactName = ""
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
@@ -308,6 +310,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
             .setIsTakedown(isTakedown)
+            .setIsVerifyContact(isVerifyContact, contactName: verifyContactName)
             .build()
     }
 }

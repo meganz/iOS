@@ -3690,6 +3690,12 @@ public enum Strings {
             return Strings.tr("Localizable", "general.menuAction.shareLink.title", p1)
           }
         }
+        public enum VerifyContact {
+          /// Verify %@
+          public static func title(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "general.menuAction.verifyContact.title", String(describing: p1))
+          }
+        }
       }
       public enum Security {
         /// MEGA-RECOVERYKEY

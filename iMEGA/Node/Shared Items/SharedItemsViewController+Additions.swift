@@ -20,3 +20,9 @@ extension SharedItemsViewController: ContatctsViewControllerDelegate {
         }
     }
 }
+
+extension SharedItemsViewController {
+    @objc func isFeatureFlagFingerprintVerificationEnabled() -> Bool {
+        FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+    }
+}
