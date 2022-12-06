@@ -22,10 +22,10 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(singleTapGesture)
     }
     
-    func update(withImage image: UIImage, andInteraction slideshowInteraction: SlideShowInteraction) {
+    func update(withImage image: UIImage?, andInteraction slideshowInteraction: SlideShowInteraction) {
         self.slideshowInteraction = slideshowInteraction
         imageScrollView.setup()
-        
+        guard let image = image else { return }
         imageScrollView.display(image: image)
     }
     

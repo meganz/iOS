@@ -19,7 +19,6 @@ class SlideshowViewModelTests: XCTestCase {
                 currentPhoto: try XCTUnwrap(nodeEntities.first),
                 nodeEntities: nodeEntities,
                 thumbnailUseCase: MockThumbnailUseCase(),
-                mediaUseCase: MockMediaUseCase(isURLVideo: false, isURLImage: true),
                 advanceNumberOfPhotosToLoad: 20,
                 numberOfUnusedPhotosBuffer: 20
             ),

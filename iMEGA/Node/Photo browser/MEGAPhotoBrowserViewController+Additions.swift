@@ -76,7 +76,7 @@ extension MEGAPhotoBrowserViewController {
     }
 
     @objc func openSlideShow() {
-        SlideShowRouter(dataProvider: dataProvider, megaPhotoBrowserViewController: self).start()
+        SlideShowRouter(dataProvider: dataProvider, presenter: self).start()
     }
     
     @objc func isSlideShowEnabled() -> Bool {
