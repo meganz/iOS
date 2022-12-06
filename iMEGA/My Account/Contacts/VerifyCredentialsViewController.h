@@ -2,8 +2,8 @@
 
 @interface VerifyCredentialsViewController : UIViewController
 
-@property (weak, nonatomic) MEGAUser *user;
-@property (weak, nonatomic) NSString *userName;
+@property (strong, nonatomic) MEGAUser *user;
+@property (nonatomic, copy) NSString *userName;
 
 typedef void (^CompletionBlock)(void);
 @property (nonatomic, copy) CompletionBlock statusUpdateCompletionBlock;
