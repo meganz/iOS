@@ -342,4 +342,52 @@ final class PhotoCellViewModelTests: XCTestCase {
             return
         }
     }
+    
+    func testShouldShowEditState_editing() {
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase())
+        sut.editMode = .active
+        
+        for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
+            sut.currentZoomScaleFactor = scaleFactor
+            XCTAssertEqual(sut.shouldShowEditState, scaleFactor != .thirteen)
+        }
+    }
+    
+    func testShouldShowEditState_notEditing() {
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase())
+        sut.editMode = .inactive
+        
+        for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
+            sut.currentZoomScaleFactor = scaleFactor
+            XCTAssertFalse(sut.shouldShowEditState)
+        }
+    }
+    
+    func testShouldShowFavorite_favourite() {
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase())
+        sut.isFavorite = true
+        
+        for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
+            sut.currentZoomScaleFactor = scaleFactor
+            XCTAssertEqual(sut.shouldShowFavorite, scaleFactor != .thirteen)
+        }
+    }
+    
+    func testShouldShowFavorite_notFavourite() {
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase())
+        sut.isFavorite = false
+        
+        for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
+            sut.currentZoomScaleFactor = scaleFactor
+            XCTAssertFalse(sut.shouldShowFavorite)
+        }
+    }
 }

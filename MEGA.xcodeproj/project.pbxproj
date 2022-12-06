@@ -1829,6 +1829,7 @@
 		B6873AE425A6C7DD00BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */; };
 		B6873AF725A6C86100BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */; };
 		B6880C2728C495750089D2A2 /* PhotoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */; };
+		B688C014293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688C013293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift */; };
 		B68BAEC3221DEA7600FF6FCD /* AssetIdentifierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B68BAEC2221DEA7600FF6FCD /* AssetIdentifierInfo.m */; };
 		B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B68BAEC5221DEB4E00FF6FCD /* SavedIdentifierParser.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
@@ -4287,6 +4288,7 @@
 		B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellViewModelTests.swift; sourceTree = "<group>"; };
+		B688C013293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellVideoDurationViewModelTests.swift; sourceTree = "<group>"; };
 		B68BAEC1221DEA7600FF6FCD /* AssetIdentifierInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetIdentifierInfo.h; sourceTree = "<group>"; };
 		B68BAEC2221DEA7600FF6FCD /* AssetIdentifierInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetIdentifierInfo.m; sourceTree = "<group>"; };
 		B68BAEC4221DEB4E00FF6FCD /* SavedIdentifierParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SavedIdentifierParser.h; sourceTree = "<group>"; };
@@ -5970,6 +5972,7 @@
 		32F03D54287D222800C518A4 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				B688C015293ED95800976CE9 /* Photo Cell */,
 				32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */,
 				3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */,
 				B6DAED3E28AB322800703E28 /* PhotoSelectionTests.swift */,
@@ -5979,7 +5982,6 @@
 				B60F816C28BD94F000E3C5BF /* PhotoLibraryDayViewModelTests.swift */,
 				B60F818028BECC5E00E3C5BF /* PhotoLibraryModeAllViewModelTests.swift */,
 				B60F819028C1B1E700E3C5BF /* PhotoCardViewModelTests.swift */,
-				B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */,
 				B6E18AEC2937237800EDFC10 /* PhotoDateSectionTests.swift */,
 				B6E18AEE29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift */,
 			);
@@ -10071,6 +10073,15 @@
 				A861B57927BE7B8C009C29C2 /* Help */,
 			);
 			path = RepositoryProtocol;
+			sourceTree = "<group>";
+		};
+		B688C015293ED95800976CE9 /* Photo Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */,
+				B688C013293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift */,
+			);
+			path = "Photo Cell";
 			sourceTree = "<group>";
 		};
 		B68ED09127D05F8700713850 /* DomainExtensions */ = {
@@ -14344,6 +14355,7 @@
 				8393E32426C52884000AACFA /* CallParticipantEntity+Additions.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */,
+				B688C014293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift in Sources */,
 				A81BD5D627EB708000234902 /* MockHistoryRetentionUseCase.swift in Sources */,
 				BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
