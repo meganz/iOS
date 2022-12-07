@@ -73,16 +73,28 @@ extension PhotoLibraryCollectionViewCoordinator {
     private func subscribeToPhotoCategoryList() {
         representer.viewModel
             .$photoCategoryList
-            .dropFirst()
             .sink { [weak self] in
-                self?.reloadPhotoSections($0)
+                let shouldRefresh = self?.shouldRefresh(to: $0) == true
+                self?.photoSections = $0
+                if shouldRefresh {
+                    self?.collectionView?.reloadData()
+                }
             }
             .store(in: &subscriptions)
     }
     
-    func reloadPhotoSections(_ photoSections: [PhotoDateSection]) {
-        self.photoSections = photoSections
-        collectionView?.reloadData()
+    private func shouldRefresh(to sections: [PhotoDateSection]) -> Bool {
+        guard let collectionView else { return false }
+        let visiblePositions = Dictionary(
+            uniqueKeysWithValues:
+                collectionView.indexPathsForVisibleItems.compactMap {
+                    self.photoSections.position(at: $0)
+                }.map {
+                    ($0, true)
+                }
+        )
+        
+        return photoSections.shouldRefresh(to: sections, visiblePositions: visiblePositions)
     }
 }
 

@@ -19,6 +19,8 @@ struct PhotoLibraryCollectionViewRepresenter: UIViewRepresentable {
     
     func updateUIView(_ uiView: UICollectionView, context: Context) {
         MEGALogDebug("[Photos] update collection view")
-        context.coordinator.reloadPhotoSections(viewModel.photoCategoryList)
+        // View updates are handled by coordinator, because here we can not differentiate if we need to reload collection view or not, and we want to avoid reloading collection view if it is not needed.
+        // For example, we do not need to reload data when zoom level changes.
+        // So, we manage view updates and collection view reload in our coordinator.
     }
 }
