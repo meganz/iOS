@@ -46,14 +46,12 @@ final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     }
     
     private func shouldRefreshTo(_ categories: [PhotoDateSection]) -> Bool {
-        photoCategoryList.flatMap {
-            $0.contentList
-        }
-        .shouldRefreshTo(
-            categories.flatMap {
-                $0.contentList
-            },
-            forVisiblePositions: scrollTracker.visiblePositions)
+        photoCategoryList
+            .flatMap(\.contentList)
+            .shouldRefresh(
+                to: categories.flatMap(\.contentList),
+                visiblePositions: scrollTracker.visiblePositions
+            )
     }
     
     private func subscribeToSelectedModeChange() {

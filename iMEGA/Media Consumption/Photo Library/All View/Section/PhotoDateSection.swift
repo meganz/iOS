@@ -33,9 +33,3 @@ class PhotoDateSection: PhotoSection {
         AttributedString()
     }
 }
-
-extension PhotoDateSection: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
