@@ -2,17 +2,12 @@ import SwiftUI
 import MEGADomain
 
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
-    override var zoomState: PhotoLibraryZoomState {
-        willSet {
-            zoomStateWillChange(to: newValue)
-        }
-    }
-    
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel)
         zoomState = PhotoLibraryZoomState(maximumScaleFactor: .thirteen)
         
         subscribeToLibraryChange()
+        subscribeToZoomStateChange()
     }
     
     // MARK: Private
@@ -27,9 +22,16 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
             .assign(to: &$photoCategoryList)
     }
     
-    private func zoomStateWillChange(to newState: PhotoLibraryZoomState) {
-        if newState.isSingleColumn || zoomState.isSingleColumn {
-            photoCategoryList = libraryViewModel.library.photoDateSections(for: newState.scaleFactor)
-        }
+    private func subscribeToZoomStateChange() {
+        $zoomState
+            .dropFirst()
+            .sink { [weak self] in
+                guard let self else { return }
+                
+                if $0.isSingleColumn || self.zoomState.isSingleColumn == true {
+                    self.photoCategoryList = self.libraryViewModel.library.photoDateSections(for: $0.scaleFactor)
+                }
+            }
+            .store(in: &subscriptions)
     }
 }
