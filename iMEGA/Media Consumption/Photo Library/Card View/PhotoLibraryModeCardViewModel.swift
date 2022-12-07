@@ -34,7 +34,7 @@ class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibrary
             }
             .filter { [weak self] in
                 let visiblePositions = self?.scrollTracker.visiblePositions ?? [:]
-                return self?.photoCategoryList.shouldRefreshTo($0, forVisiblePositions: visiblePositions) == true
+                return self?.photoCategoryList.shouldRefresh(to: $0, visiblePositions: visiblePositions) == true
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$photoCategoryList)
