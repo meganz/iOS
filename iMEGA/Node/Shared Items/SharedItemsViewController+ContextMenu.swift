@@ -83,6 +83,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         }
         verifyCredentialsVC.user = MEGAUser()
         verifyCredentialsVC.userName = ""
+        verifyCredentialsVC.setContactVerificationWithIncomingSharedItem(incomingButton?.isSelected ?? false)
         verifyCredentialsVC.statusUpdateCompletionBlock = {}
         
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
