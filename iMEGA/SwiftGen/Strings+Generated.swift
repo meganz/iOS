@@ -4312,6 +4312,26 @@ public enum Strings {
       }
     }
     public enum SharedItems {
+      public enum ContactVerification {
+        /// Contact verification
+        public static let title = Strings.tr("Localizable", "sharedItems.contactVerification.title")
+        public enum Section {
+          public enum MyCredentials {
+            /// To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.
+            public static let message = Strings.tr("Localizable", "sharedItems.contactVerification.section.myCredentials.message")
+          }
+          public enum VerifyContact {
+            public enum Owner {
+              /// We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.
+              public static let message = Strings.tr("Localizable", "sharedItems.contactVerification.section.verifyContact.owner.message")
+            }
+            public enum Receiver {
+              /// We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.
+              public static let message = Strings.tr("Localizable", "sharedItems.contactVerification.section.verifyContact.receiver.message")
+            }
+          }
+        }
+      }
       public enum Menu {
         public enum Slideshow {
           /// Slideshow
