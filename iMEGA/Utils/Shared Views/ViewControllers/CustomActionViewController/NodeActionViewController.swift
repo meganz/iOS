@@ -289,7 +289,7 @@ class NodeActionViewController: ActionSheetViewController {
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         let isTakedown = node.isTakenDown()
-        let isVerifyContact = FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+        let isVerifyContact = displayMode == .sharedItem ? FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification) : false
         let verifyContactName = ""
         
         self.actions = NodeActionBuilder()
