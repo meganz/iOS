@@ -28,8 +28,6 @@
 @property (weak, nonatomic) IBOutlet UIView *myCredentialsView;
 @property (weak, nonatomic) IBOutlet UIView *myCredentialsSubView;
 
-@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *yourCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *firstPartOfYourCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondPartOfYourCredentialsLabel;
@@ -52,8 +50,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = NSLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     
     self.userNameLabel.text = self.userName;
     self.userEmailLabel.text = self.user.email;
@@ -82,8 +78,6 @@
     }];
     [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
     
-    self.explanationLabel.text = NSLocalizedString(@"thisIsBestDoneInRealLife", @"'Verify user' dialog description");
-    
     self.yourCredentialsLabel.text = NSLocalizedString(@"My credentials", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
     NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
     if (yourCredentials.length == 40) {
@@ -99,6 +93,8 @@
         self.tenthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 9), length)];
     }
     
+    [self setContentMessages];
+    
     [self updateVerifyOrResetButton];
     
     [self updateAppearance];
@@ -110,6 +106,13 @@
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
     }
+}
+
+#pragma mark - Public
+
+- (void)setContactVerificationWithIncomingSharedItem:(BOOL)isIncomingSharedItem {
+    self.incomingSharedItem = isIncomingSharedItem;
+    self.verifyContactForSharedItem = true;
 }
 
 #pragma mark - Private
