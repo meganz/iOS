@@ -22,6 +22,7 @@ final class SlideShowViewModel: ViewModelType {
         case initialPhotoLoaded
         case resetTimer
         case restart
+        case showLoader
     }
     
     private var dataSource: SlideShowDataSourceProtocol
@@ -31,13 +32,7 @@ final class SlideShowViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    var playbackStatus: SlideshowPlaybackStatus = .initialized {
-        didSet {
-            if playbackStatus == .complete || playbackStatus == .pause {
-                dataSource.slideshowComplete = true
-            }
-        }
-    }
+    var playbackStatus: SlideshowPlaybackStatus = .initialized
     
     var numberOfSlideShowContents: Int {
         dataSource.nodeEntities.count
@@ -90,14 +85,12 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     func restartSlideShow() {
-        dataSource.photos.removeAll()
-        dataSource.startInitialDownload(false)
-        playbackStatus = .playing
-        currentSlideNumber = 0
-        
+        invokeCommand?(.showLoader)
         dataSource.initialPhotoDownloadCallback = { [weak self] in
+            self?.currentSlideNumber = 0
             self?.invokeCommand?(.restart)
         }
+        dataSource.resetData()
     }
     
     func photo(at indexPath: IndexPath) -> UIImage? {
@@ -131,13 +124,7 @@ extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
     
     func restart(withConfig config: SlideShowConfigurationEntity) {
         slideShowUseCase.saveConfiguration(config)
-        
-        if dataSource.isInitialDownload(currentSlideNumber) {
-            dataSource.startInitialDownload(false)
-        } else {
-            dataSource.processData(basedOnCurrentSlideNumber: currentSlideNumber, andOldSlideNumber: currentSlideNumber)
-        }
-        
+
         if config.playingOrder != configuration.playingOrder {
             dataSource.sortNodes(byOrder: config.playingOrder)
             configuration = config
