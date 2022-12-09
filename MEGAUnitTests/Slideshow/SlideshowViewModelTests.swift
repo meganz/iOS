@@ -87,4 +87,29 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.timeIntervalForSlideInSeconds == 4)
         XCTAssertTrue(slideShowViewModel.configuration.isRepeat == true)
     }
+    
+    func testSlideShowViewModel_invokeCommandRestartSlideShow_shouldExecuteCommandShowLoaderAndRestart() throws {
+        let dataSource = MockSlideShowDataSource(nodeEntities: nodeEntities, thumbnailUseCase: MockThumbnailUseCase())
+        
+        let sut = SlideShowViewModel(
+            dataSource: dataSource,
+            slideShowUseCase: MockSlideShowUseCase(slideShowRepository: MockSlideShowRepository.newRepo)
+        )
+        
+        let expectation = expectation(description: "Initial Photo Download Callback")
+        
+        sut.invokeCommand = { command in
+            if command == .restart {
+                expectation.fulfill()
+                return
+            }
+            XCTAssertTrue(command == .showLoader)
+        }
+        
+        sut.currentSlideNumber = 1
+        sut.restartSlideShow()
+        XCTAssertTrue(sut.currentSlideNumber == 0)
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
 }
