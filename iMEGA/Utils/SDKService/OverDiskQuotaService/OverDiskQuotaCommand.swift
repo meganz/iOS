@@ -1,4 +1,5 @@
 import Foundation
+import MEGAFoundation
 
 @objc final class OverDiskQuotaCommand: NSObject {
 

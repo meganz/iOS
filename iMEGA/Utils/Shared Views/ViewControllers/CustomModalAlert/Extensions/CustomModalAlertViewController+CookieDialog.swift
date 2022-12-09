@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
@@ -16,7 +17,7 @@ extension CustomModalAlertViewController {
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+                let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
                 cookieSettingsUseCase.setCookieSettings(with: CookiesBitmap.all.rawValue) { [weak self] in
                     switch $0 {
                     case .success(_):

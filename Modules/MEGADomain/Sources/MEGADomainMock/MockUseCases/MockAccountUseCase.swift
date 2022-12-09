@@ -1,23 +1,21 @@
 import MEGADomain
 
-public struct MockAccountRepository: AccountRepositoryProtocol {
-    public static var newRepo: MockAccountRepository {
-        MockAccountRepository()
-    }
+public struct MockAccountUseCase: AccountUseCaseProtocol {
+    let totalNodesCountVariable: UInt
+    let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
+    let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     
-    private let nodesCount: UInt
-    private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
-    private let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
-    
-    public init(nodesCount: UInt = 0,
+    public init(totalNodesCountVariable: UInt = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic)) {
-        self.nodesCount = nodesCount
+        self.totalNodesCountVariable = totalNodesCountVariable
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetails = accountDetails
     }
     
-    public func totalNodesCount() -> UInt { nodesCount }
+    public func totalNodesCount() -> UInt {
+        totalNodesCountVariable
+    }
     
     public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
         completion(getMyChatFilesFolderResult)
