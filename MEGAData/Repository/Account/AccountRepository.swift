@@ -2,6 +2,10 @@ import Foundation
 import MEGADomain
 
 struct AccountRepository: AccountRepositoryProtocol {
+    static var newRepo: AccountRepository {
+        AccountRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {

@@ -1,6 +1,8 @@
 
 import XCTest
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
 
 class CookieSettingsViewModelTests: XCTestCase {
     private let mockRouter = MockCookieSettingsRouter()
@@ -61,30 +63,6 @@ class CookieSettingsViewModelTests: XCTestCase {
         test(viewModel: sut,
              action: .save,
              expectedCommands: [.cookieSettingsSaved])
-    }
-    
-    func testAction_save_setCookieSettings_fail() {
-        let cookieSettingsUseCase = MockCookieSettingsUseCase(cookieBannerEnable: true,
-                                                              setCookieSettings: .failure(.invalidBitmap))
-        let sut = CookieSettingsViewModel(cookieSettingsUseCase: cookieSettingsUseCase,
-                                          router: mockRouter)
-        sut.dispatch(.acceptCookiesSwitchValueChanged(true))
-        
-        test(viewModel: sut,
-             action: .save,
-             expectedCommands: [.showResult(.error("The operation couldn’t be completed. (MEGA.CookieSettingsErrorEntity error 1.)"))])
-    }
-    
-    func testDidTapOnShowCookiePolicy() {
-        let cookieSettingsUseCase = MockCookieSettingsUseCase(cookieBannerEnable: true,
-                                                              setCookieSettings: .failure(.invalidBitmap))
-        let sut = CookieSettingsViewModel(cookieSettingsUseCase: cookieSettingsUseCase,
-                                          router: mockRouter)
-        sut.dispatch(.acceptCookiesSwitchValueChanged(true))
-        
-        test(viewModel: sut,
-             action: .save,
-             expectedCommands: [.showResult(.error("The operation couldn’t be completed. (MEGA.CookieSettingsErrorEntity error 1.)"))])
     }
 }
 
