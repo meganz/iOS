@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 protocol CookieSettingsRouting: Routing {
     func didTap(on source: CookieSettingsSource)
@@ -24,7 +25,7 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
         }
 
         let viewModel = CookieSettingsViewModel(
-            cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository(sdk:  MEGASdkManager.sharedMEGASdk())),
+            cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo),
             router: self
         )
         

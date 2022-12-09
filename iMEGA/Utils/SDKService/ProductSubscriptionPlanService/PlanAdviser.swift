@@ -1,4 +1,5 @@
 import Foundation
+import MEGAFoundation
 
 enum MEGAPlanUpgradeAdviser {
     static func suggestMinimumPlan(for currentPlan: MEGAPlan? = nil,

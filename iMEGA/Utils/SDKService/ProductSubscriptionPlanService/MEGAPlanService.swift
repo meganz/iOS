@@ -1,4 +1,5 @@
 import Foundation
+import MEGAFoundation
 
 final class MEGAPlanCommand: NSObject {
 

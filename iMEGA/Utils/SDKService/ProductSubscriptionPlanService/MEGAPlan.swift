@@ -1,4 +1,5 @@
 import Foundation
+import MEGAFoundation
 
 struct MEGAPlan: Equatable {
     typealias DataMeasurementInGB = Measurement<UnitDataStorage>

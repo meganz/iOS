@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 @objc final class AddPhoneNumberRouter: NSObject, AddPhoneNumberRouting {
     private weak var baseViewController: UIViewController?
