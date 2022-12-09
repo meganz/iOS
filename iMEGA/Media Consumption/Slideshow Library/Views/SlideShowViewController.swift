@@ -146,6 +146,7 @@ final class SlideShowViewController: UIViewController, ViewType {
          case .initialPhotoLoaded: playSlideShow()
          case .resetTimer: resetTimer()
          case .restart: restart()
+         case .showLoader: showLoader()
          }
     }
     
@@ -199,6 +200,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func restart() {
         guard let viewModel = viewModel else { return }
+        hideLoader()
         reload()
         collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideNumber, section: 0), at: .left, animated: false)
         play()
@@ -208,6 +210,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         guard let viewModel = viewModel else { return }
         
         let slideNumber = viewModel.currentSlideNumber + 1
+        
         if slideNumber < viewModel.photos.count {
             viewModel.currentSlideNumber = slideNumber
             hideLoader()
@@ -217,8 +220,8 @@ final class SlideShowViewController: UIViewController, ViewType {
             hideLoader()
             updateSlideInView()
         } else if slideNumber >= viewModel.numberOfSlideShowContents {
-            hideLoader()
-            finish()
+           hideLoader()
+           finish()
         } else {
             showLoader()
         }
