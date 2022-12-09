@@ -1,26 +1,26 @@
 import Foundation
 
-protocol AccountCleanerUseCaseProcotol {
+public protocol AccountCleanerUseCaseProcotol {
     func cleanCredentialSessions()
     func cleanAppGroupContainer()
 }
 
-struct AccountCleanerUseCase<C: CredentialRepositoryProtocol, G: AppGroupContainerRepositoryProtocol>: AccountCleanerUseCaseProcotol {
+public struct AccountCleanerUseCase<C: CredentialRepositoryProtocol, G: AppGroupContainerRepositoryProtocol>: AccountCleanerUseCaseProcotol {
     private let credentialRepo: C
     private let groupContainerRepo: G
     
-    init(credentialRepo: C,
-         groupContainerRepo: G) {
+    public init(credentialRepo: C,
+                groupContainerRepo: G) {
         self.credentialRepo = credentialRepo
         self.groupContainerRepo = groupContainerRepo
     }
     
-    func cleanCredentialSessions() {
+    public func cleanCredentialSessions() {
         credentialRepo.clearSession()
         credentialRepo.clearEphemeralSession()
     }
     
-    func cleanAppGroupContainer() {
+    public func cleanAppGroupContainer() {
         groupContainerRepo.cleanContainer()
     }
 }

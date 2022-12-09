@@ -1,6 +1,6 @@
 import Foundation
+import MEGADomain
 
-// MARK: - Use case protocol -
 protocol AuthUseCaseProtocol {
     func logout()
     func login(sessionId: String, delegate: MEGARequestDelegate)
@@ -8,7 +8,6 @@ protocol AuthUseCaseProtocol {
     func isLoggedIn() -> Bool
 }
 
-// MARK: - Use case implementation -
 struct AuthUseCase<T: AuthRepositoryProtocol, U: CredentialRepositoryProtocol>: AuthUseCaseProtocol {
     private let repo: T
     private let credentialRepo: U
