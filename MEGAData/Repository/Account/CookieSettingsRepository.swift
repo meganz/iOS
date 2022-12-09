@@ -1,8 +1,13 @@
 
 import Foundation
 import FirebaseCrashlytics
+import MEGADomain
 
 struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
+    static var newRepo: CookieSettingsRepository {
+        CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     private let crashlytics: Crashlytics = Crashlytics.crashlytics()
     

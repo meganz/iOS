@@ -1,6 +1,12 @@
 import Foundation
+import MEGADomain
+import MEGAFoundation
 
 struct AchievementRepository: AchievementRepositoryProtocol {
+    static var newRepo: AchievementRepository {
+        AchievementRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {

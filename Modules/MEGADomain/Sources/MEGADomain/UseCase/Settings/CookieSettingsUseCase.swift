@@ -1,8 +1,7 @@
-
 import Foundation
 
 // MARK: - Use case protocol
-protocol CookieSettingsUseCaseProtocol {
+public protocol CookieSettingsUseCaseProtocol {
     func cookieBannerEnabled() -> Bool
     
     func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void)
@@ -13,26 +12,26 @@ protocol CookieSettingsUseCaseProtocol {
 }
 
 // MARK: - Use case implementation
-struct CookieSettingsUseCase<T: CookieSettingsRepositoryProtocol>: CookieSettingsUseCaseProtocol {
+public struct CookieSettingsUseCase<T: CookieSettingsRepositoryProtocol>: CookieSettingsUseCaseProtocol {
     private let repository: T
     
-    init(repository: T) {
+    public init(repository: T) {
         self.repository = repository
     }
     
-    func cookieBannerEnabled() -> Bool {
+    public func cookieBannerEnabled() -> Bool {
         repository.cookieBannerEnabled()
     }
     
-    func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    public func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         repository.cookieSettings(completion: completion)
     }
     
-    func setCookieSettings(with settings: NSInteger, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    public func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         repository.setCookieSettings(with: settings, completion: completion)
     }
     
-    func setCrashlyticsEnabled(_ bool: Bool) -> Void {
+    public func setCrashlyticsEnabled(_ bool: Bool) -> Void {
         repository.setCrashlyticsEnabled(bool)
     }
 }

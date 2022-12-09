@@ -1,6 +1,6 @@
 import Foundation
 
-enum AchievementErrorEntity: Error {
+public enum AchievementErrorEntity: Error {
     case generic
     case achievementsDisabled
 }

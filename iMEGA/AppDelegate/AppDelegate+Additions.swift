@@ -95,7 +95,7 @@ extension AppDelegate {
     }
     
     @objc func showCookieDialogIfNeeded() {
-        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
         
         if cookieSettingsUseCase.cookieBannerEnabled() {
             cookieSettingsUseCase.cookieSettings { [weak self] in
@@ -228,7 +228,7 @@ extension AppDelegate {
 
 extension AppDelegate {
     @objc func configAppWithNewCookieSettings() {
-        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
         cookieSettingsUseCase.cookieSettings {
             switch $0 {
             case .success(let bitmap):
