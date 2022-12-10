@@ -1,4 +1,5 @@
 import Foundation
+import SDWebImage
 
 final class ImageScrollView: UIScrollView {
     
@@ -126,17 +127,29 @@ final class ImageScrollView: UIScrollView {
         }
     }
     
-    func display(image: UIImage) {
+    func display(image: UIImage, gifImageFileUrl: URL? = nil) {
         if let zoomView = zoomView {
             zoomView.removeFromSuperview()
         }
-        zoomView = UIImageView(image: image)
-        zoomView!.isUserInteractionEnabled = true
-        addSubview(zoomView!)
+        
+        if let gifImageFileUrl = gifImageFileUrl {
+            zoomView?.sd_setImage(with: gifImageFileUrl, placeholderImage: image)
+            zoomView?.startAnimating()
+        } else {
+            zoomView = UIImageView(image: image)
+        }
+        configureAfterDisplay()
+        configureImageForSize(image.size)
+    }
+    
+    private func configureAfterDisplay() {
+        guard let zoomView = zoomView else { return }
+        
+        zoomView.isUserInteractionEnabled = true
+        addSubview(zoomView)
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(ImageScrollView.doubleTapGestureRecognizer(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
-        zoomView!.addGestureRecognizer(doubleTapGesture)
-        configureImageForSize(image.size)
+        zoomView.addGestureRecognizer(doubleTapGesture)
     }
     
     private func configureImageForSize(_ size: CGSize) {

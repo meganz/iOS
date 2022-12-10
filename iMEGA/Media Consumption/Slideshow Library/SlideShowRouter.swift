@@ -22,6 +22,8 @@ struct SlideShowRouter: Routing {
             currentPhoto: dataProvider.currentPhoto?.toNodeEntity(),
             nodeEntities: photos,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            mediaUseCase: MediaUseCase(),
+            fileExistenceUseCase: FileExistUseCase(fileSystemRepository: FileSystemRepository.newRepo),
             advanceNumberOfPhotosToLoad: 20,
             numberOfUnusedPhotosBuffer: 20
         )
