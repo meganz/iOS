@@ -38,7 +38,7 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     
     func processData(basedOnCurrentSlideNumber currentSlideNumber: Int, andOldSlideNumber oldSlideNumber: Int) {
         nodeEntities.forEach { node in
-            photos.append(SlideShowMediaEntity(image: nil, node: node))
+            photos.append(SlideShowMediaEntity(image: nil, node: node, fileUrl: nil))
         }
     }
     

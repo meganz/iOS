@@ -39,6 +39,8 @@ class SlideShowDataSourceTests: XCTestCase {
                 cachedPreviewURL: thumbnailUrl,
                 loadPreviewResult: .success(try XCTUnwrap(thumbnailUrl))
             ),
+            mediaUseCase: MediaUseCase(),
+            fileExistenceUseCase: FileExistUseCase(fileSystemRepository: MockFileSystemRepository.newRepo),
             advanceNumberOfPhotosToLoad: 20,
             numberOfUnusedPhotosBuffer: 20
         )

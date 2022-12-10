@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 final class SlideShowCollectionViewCell: UICollectionViewCell {
     let imageScrollView = ImageScrollView()
@@ -22,11 +23,11 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(singleTapGesture)
     }
     
-    func update(withImage image: UIImage?, andInteraction slideshowInteraction: SlideShowInteraction) {
+    func update(with mediaEntity: SlideShowMediaEntity, andInteraction slideshowInteraction: SlideShowInteraction) {
         self.slideshowInteraction = slideshowInteraction
         imageScrollView.setup()
-        guard let image = image else { return }
-        imageScrollView.display(image: image)
+        guard let image = mediaEntity.image else { return }
+        imageScrollView.display(image: image, gifImageFileUrl: mediaEntity.fileUrl)
     }
     
     func resetZoomScale() {
