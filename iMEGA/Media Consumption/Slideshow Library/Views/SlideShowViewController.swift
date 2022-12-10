@@ -284,8 +284,8 @@ extension SlideShowViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
         
-        guard let viewModel = viewModel else { return cell }
-        cell.update(withImage: viewModel.photo(at: indexPath), andInteraction: self)
+        guard let viewModel = viewModel, let mediaEntity = viewModel.mediaEntity(at: indexPath) else { return cell }
+        cell.update(with: mediaEntity, andInteraction: self)
         return cell
     }
 }

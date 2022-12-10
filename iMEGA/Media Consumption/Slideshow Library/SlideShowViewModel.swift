@@ -93,8 +93,8 @@ final class SlideShowViewModel: ViewModelType {
         dataSource.resetData()
     }
     
-    func photo(at indexPath: IndexPath) -> UIImage? {
-        photos.indices.contains(indexPath.row) ? photos[indexPath.row].image : nil
+    func mediaEntity(at indexPath: IndexPath) -> SlideShowMediaEntity? {
+        photos[safe:indexPath.row]
     }
     
     func dispatch(_ action: SlideShowAction) {
