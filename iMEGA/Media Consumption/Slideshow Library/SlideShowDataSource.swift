@@ -27,8 +27,9 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     
     var thumbnailLoadingTask: Task<Void, Never>?
     var initialPhotoDownloadCallback: (() -> ())?
-    
+    private let fileExistenceUseCase: FileExistUseCaseProtocol
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let mediaUseCase: MediaUseCase
     private let advanceNumberOfPhotosToLoad: Int
     private let numberOfUnusedPhotosBuffer: Int
     private var sortByShuffleOrder = false
@@ -47,14 +48,18 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         currentPhoto: NodeEntity?,
         nodeEntities: [NodeEntity],
         thumbnailUseCase: ThumbnailUseCaseProtocol,
+        mediaUseCase: MediaUseCase,
+        fileExistenceUseCase: FileExistUseCaseProtocol,
         advanceNumberOfPhotosToLoad: Int,
         numberOfUnusedPhotosBuffer: Int
     ) {
         self.currentPhoto = currentPhoto
         self.nodeEntities = nodeEntities
         self.thumbnailUseCase = thumbnailUseCase
+        self.mediaUseCase = mediaUseCase
         self.advanceNumberOfPhotosToLoad = advanceNumberOfPhotosToLoad
         self.numberOfUnusedPhotosBuffer = numberOfUnusedPhotosBuffer
+        self.fileExistenceUseCase = fileExistenceUseCase
     }
     
     func loadSelectedPhotoPreview() -> Bool {
@@ -64,8 +69,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
             return false
         }
         
-        if let image = UIImage(contentsOfFile: pathForPreviewOrOriginal) {
-            photos.append(SlideShowMediaEntity(image: image, node: node))
+        if let entity = slideShowMediaEntity(for: node, with: mediaUseCase.isGifImage(node.name) ? thumbnailUseCase.cachedThumbnail(for: node, type: .original).path : pathForPreviewOrOriginal) {
+            photos.append(entity)
         }
         return true
     }
@@ -168,11 +173,31 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     }
     
     private func loadMediaEntity(forNode node: NodeEntity) async -> SlideShowMediaEntity? {
-        async let photo = try? thumbnailUseCase.loadThumbnail(for: node, type: .preview)
-        if let photoPath = await photo?.path, let image = UIImage(contentsOfFile: photoPath) {
-            return SlideShowMediaEntity(image: image, node: node)
+        async let photo = try? thumbnailUseCase.loadThumbnail(for: node, type: mediaUseCase.isGifImage(node.name) ? .original : .preview)
+        if let photoPath = await photo?.path {
+            return slideShowMediaEntity(for: node, with: photoPath)
         }
-        
+        return nil
+    }
+    
+    private func slideShowMediaEntity(for node: NodeEntity, with filePath: String) -> SlideShowMediaEntity? {
+        if mediaUseCase.isGifImage(node.name),
+            let url = getFileUrl(for: node, having: filePath),
+            let data = try? Data(contentsOf: url),
+            let image = UIImage(data: data) {
+            return SlideShowMediaEntity(image: image, node: node, fileUrl: url)
+        }
+        if let image = UIImage(contentsOfFile: filePath) {
+            return SlideShowMediaEntity(image: image, node: node, fileUrl: nil)
+        }
+        return nil
+    }
+    
+    func getFileUrl(for node: NodeEntity, having path: String) -> URL? {
+        let fileUrl = URL(fileURLWithPath: path.append(pathComponent: node.name))
+        if fileExistenceUseCase.fileExists(at: fileUrl) {
+            return fileUrl
+        }
         return nil
     }
     
@@ -191,7 +216,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         guard currentSlideNumber >= numberOfUnusedPhotosBuffer else { return }
         
         let unusedPhotoIdx = currentSlideNumber - numberOfUnusedPhotosBuffer
-        if unusedPhotoIdx >= 0 {
+        if photos.indices.contains(unusedPhotoIdx) {
             photos[unusedPhotoIdx].image = nil
         }
     }
