@@ -131,12 +131,9 @@ final class ImageScrollView: UIScrollView {
         if let zoomView = zoomView {
             zoomView.removeFromSuperview()
         }
-        
+        zoomView = UIImageView(image: image)
         if let gifImageFileUrl = gifImageFileUrl {
             zoomView?.sd_setImage(with: gifImageFileUrl, placeholderImage: image)
-            zoomView?.startAnimating()
-        } else {
-            zoomView = UIImageView(image: image)
         }
         configureAfterDisplay()
         configureImageForSize(image.size)
