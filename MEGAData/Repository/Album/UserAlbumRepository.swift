@@ -15,7 +15,17 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
     // MARK: - Albums
     func albums() async -> [SetEntity] {
         let megaSets = sdk.megaSets()
-        return megaSets.toSetEntities()
+        var results: [SetEntity] = []
+        
+        for megaSet in megaSets {
+            let size = await albumContent(by: megaSet.handle).count
+            var setEntity = megaSet.toSetEntity()
+            setEntity.size = size
+            
+            results.append(setEntity)
+        }
+        
+        return results
     }
     
     func albumContent(by id: HandleEntity) async -> [SetElementEntity] {
