@@ -3,7 +3,7 @@ extension VerifyCredentialsViewController {
     
     @objc func setContentMessages() {
         if isVerifyContactForSharedItem {
-            navigationItem.title = Strings.Localizable.SharedItems.ContactVerification.title
+            navigationItem.title = Strings.Localizable.verifyCredentials
             myCredentialsHeaderLabel.text = Strings.Localizable.SharedItems.ContactVerification.Section.MyCredentials.message
             contactHeaderLabel.text = isIncomingSharedItem ?
             Strings.Localizable.SharedItems.ContactVerification.Section.VerifyContact.Receiver.message:
