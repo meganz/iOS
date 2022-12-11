@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 extension MainTabBarController {
     
