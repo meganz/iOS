@@ -78,7 +78,7 @@
     }];
     [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
     
-    self.yourCredentialsLabel.text = NSLocalizedString(@"My credentials", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
+    self.yourCredentialsLabel.text = NSLocalizedString(@"verifyCredentials.yourCredentials.title", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
     NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
@@ -93,6 +93,8 @@
         self.tenthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 9), length)];
     }
     
+    [self objcWrapper_configSharedItemWarningView];
+    
     [self setContentMessages];
     
     [self updateVerifyOrResetButton];
@@ -103,6 +105,8 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    [self updateSharedItemWarningViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
+    
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
     }
@@ -110,9 +114,11 @@
 
 #pragma mark - Public
 
-- (void)setContactVerificationWithIncomingSharedItem:(BOOL)isIncomingSharedItem {
+- (void)setContactVerificationWithIncomingSharedItem:(BOOL)isIncomingSharedItem
+                       isShowIncomingItemWarningView:(BOOL)isShowIncomingItemWarningView {
     self.incomingSharedItem = isIncomingSharedItem;
     self.verifyContactForSharedItem = true;
+    self.showIncomingItemWarningView = isShowIncomingItemWarningView;
 }
 
 #pragma mark - Private

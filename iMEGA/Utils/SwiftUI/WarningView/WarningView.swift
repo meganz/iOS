@@ -4,17 +4,37 @@ struct WarningView: View {
     @ObservedObject var viewModel: WarningViewModel
     
     var body: some View {
-        Text(viewModel.warningType.description)
-            .font(.caption2.bold())
-            .fixedSize(horizontal: false, vertical: true)
-            .foregroundColor(Color(Colors.Banner.warningTextColor.name))
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity)
-            .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
-            .background(Color(Colors.Banner.warningBannerBackground.name))
-            .onTapGesture {
-                viewModel.tapAction()
+        ZStack {
+            Color(Colors.Banner.warningBannerBackground.name)
+            HStack {
+                Text(viewModel.warningType.description)
+                    .font(.caption2.bold())
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(Color(Colors.Banner.warningTextColor.name))
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
+                    .onTapGesture {
+                        viewModel.tapAction()
+                    }
+                
+                if viewModel.isShowCloseButton {
+                    Spacer()
+                    warningCloseButton
+                }
             }
-            .edgesIgnoringSafeArea(.all)
+        }
+        .frame(height: viewModel.isHideWarningView ? 0 : nil)
+        .opacity(viewModel.isHideWarningView ? 0 : 1)
+        .edgesIgnoringSafeArea(.all)
+    }
+
+    private var warningCloseButton: some View {
+        Button {
+            viewModel.closeAction()
+        } label: {
+            Image(uiImage: Asset.Images.Banner.closeCircle.image)
+                .padding()
+        }
     }
 }
