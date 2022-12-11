@@ -1,5 +1,10 @@
+import MEGADomain
 
 struct PSARepository: PSARepositoryProtocol {
+    static var newRepo: PSARepository {
+        PSARepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
+    
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {
