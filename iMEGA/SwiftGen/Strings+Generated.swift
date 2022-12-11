@@ -4321,6 +4321,8 @@ public enum Strings {
             public static let message = Strings.tr("Localizable", "sharedItems.contactVerification.section.myCredentials.message")
           }
           public enum VerifyContact {
+            /// To access the shared folder, the person who shared it with you should verify you, too.
+            public static let bannerMessage = Strings.tr("Localizable", "sharedItems.contactVerification.section.verifyContact.bannerMessage")
             public enum Owner {
               /// We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.
               public static let message = Strings.tr("Localizable", "sharedItems.contactVerification.section.verifyContact.owner.message")
@@ -4423,6 +4425,12 @@ public enum Strings {
             return Strings.tr("Localizable", "transfers.cancellable.scanning.count", String(describing: p1), String(describing: p2))
           }
         }
+      }
+    }
+    public enum VerifyCredentials {
+      public enum YourCredentials {
+        /// Your credentials
+        public static let title = Strings.tr("Localizable", "verifyCredentials.yourCredentials.title")
       }
     }
   }
