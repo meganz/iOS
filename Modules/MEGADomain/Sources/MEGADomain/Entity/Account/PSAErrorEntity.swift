@@ -1,6 +1,4 @@
-
-
-enum PSAErrorEntity: Error {
+public enum PSAErrorEntity: Error {
     case generic
     case noDataAvailable
 }
