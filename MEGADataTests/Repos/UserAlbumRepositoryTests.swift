@@ -5,12 +5,17 @@ import MEGADomain
 final class UserAlbumRepositoryTests: XCTestCase {
     func testLoadingAlbums_onRetrieved_shouldReturnAlbums() async throws {
         let megaSets = sampleSets()
-        let sdk = MockSdk(megaSets:megaSets)
+        let megaSetElements = sampleSetElements()
+        let sdk = MockSdk(megaSets:megaSets,megaSetElements: megaSetElements)
         let repo = UserAlbumRepository(sdk: sdk)
         
         let sets = await repo.albums()
         
         XCTAssertEqual(sets.count, megaSets.count)
+        
+        for set in sets {
+            XCTAssertEqual(set.size, megaSetElements.count)
+        }
     }
     
     func testLoadingAlbumContent_onRetrieved_shouldReturnAlbumElements() async throws {

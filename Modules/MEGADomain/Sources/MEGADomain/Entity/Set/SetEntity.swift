@@ -6,6 +6,7 @@ public struct SetEntity {
     public let coverId: HandleEntity
     public let modificationTime: Date
     public let name: String
+    public var size: Int = 0
     
     public init(handle: HandleEntity, userId: HandleEntity, coverId: HandleEntity, modificationTime: Date, name: String) {
         self.handle = handle
