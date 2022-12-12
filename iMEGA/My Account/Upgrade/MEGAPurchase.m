@@ -25,12 +25,16 @@
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
-        self.purchaseDelegateMutableArray = NSMutableArray.new;
-        self.restoreDelegateMutableArray = NSMutableArray.new;
-        self.pricingsDelegateMutableArray = NSMutableArray.new;
+        [self requestPricing];
     }
     return self;
+}
+
+- (void)requestPricing {
+    [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
+    self.purchaseDelegateMutableArray = NSMutableArray.new;
+    self.restoreDelegateMutableArray = NSMutableArray.new;
+    self.pricingsDelegateMutableArray = NSMutableArray.new;
 }
 
 - (void)requestProducts {
