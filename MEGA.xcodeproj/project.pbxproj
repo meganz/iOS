@@ -1480,7 +1480,6 @@
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
-		A860C80F26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift */; };
 		A861B57F27BE7D32009C29C2 /* SupportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A861B57E27BE7D32009C29C2 /* SupportRepository.swift */; };
 		A86280B5291E83390010D6E0 /* AnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
@@ -1947,8 +1946,6 @@
 		B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */; };
 		B6D0B33C283C5B1A0020C64D /* FileCacheRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0B33B283C5B1A0020C64D /* FileCacheRepository.swift */; };
 		B6D0B342283C7A6B0020C64D /* AppGroupContainerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0B341283C7A6B0020C64D /* AppGroupContainerRepository.swift */; };
-		B6D0B347283CD9200020C64D /* AppFirstLaunchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift */; };
-		B6D0B348283CD9210020C64D /* AppFirstLaunchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A860C80E26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift */; };
 		B6D0B34D283CD9E90020C64D /* AppGroupContainerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0B341283C7A6B0020C64D /* AppGroupContainerRepository.swift */; };
 		B6D0B34E283CD9EA0020C64D /* AppGroupContainerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D0B341283C7A6B0020C64D /* AppGroupContainerRepository.swift */; };
 		B6D0B34F283CD9F10020C64D /* AppGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665A6A2283755AA00A251C3 /* AppGroupContainer.swift */; };
@@ -1966,7 +1963,6 @@
 		B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE421A24C7700446B86 /* PutNodeOperation.m */; };
 		B6D176872236F16600098084 /* ImageExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D176862236F16600098084 /* ImageExporter.m */; };
 		B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */; };
-		B6D54832283E2D0F00D7302F /* MockAppFirstLaunchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D54831283E2D0F00D7302F /* MockAppFirstLaunchUseCase.swift */; };
 		B6D7FB1A2762A534003D9570 /* PhotoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */; };
 		B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */; };
 		B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */; };
@@ -3954,7 +3950,6 @@
 		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
-		A860C80E26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFirstLaunchUseCase.swift; sourceTree = "<group>"; };
 		A861B57E27BE7D32009C29C2 /* SupportRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportRepository.swift; sourceTree = "<group>"; };
 		A863223D2909142A004FED9B /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountDetailsEntity+Mapper.swift"; sourceTree = "<group>"; };
@@ -4414,7 +4409,6 @@
 		B6D176852236F16600098084 /* ImageExporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageExporter.h; sourceTree = "<group>"; };
 		B6D176862236F16600098084 /* ImageExporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageExporter.m; sourceTree = "<group>"; };
 		B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFirstLaunchSecurityCheckerTests.swift; sourceTree = "<group>"; };
-		B6D54831283E2D0F00D7302F /* MockAppFirstLaunchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppFirstLaunchUseCase.swift; sourceTree = "<group>"; };
 		B6D7FB192762A533003D9570 /* PhotoCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardViewModel.swift; sourceTree = "<group>"; };
 		B6D90BC02224D46800E0623A /* AssetLocalAttribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetLocalAttribute.h; sourceTree = "<group>"; };
 		B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetLocalAttribute.m; sourceTree = "<group>"; };
@@ -9640,7 +9634,6 @@
 				B6B278DB24E1E89C00BB3E9A /* SMSUseCase.swift */,
 				B662B87424F70A570089376A /* GetSMSUseCase.swift */,
 				B662B87624F75FEF0089376A /* CheckSMSUseCase.swift */,
-				A860C80E26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -10560,7 +10553,6 @@
 				B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */,
 				A81BD5D327EB702200234902 /* MockClearChatHistoryUseCase.swift */,
 				A81BD5D527EB708000234902 /* MockHistoryRetentionUseCase.swift */,
-				B6D54831283E2D0F00D7302F /* MockAppFirstLaunchUseCase.swift */,
 				12B1E57F28751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift */,
 				12BCECD5287F795C00F98E33 /* MockPhotoLibraryUseCase.swift */,
 			);
@@ -13154,7 +13146,6 @@
 				83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */,
 				5D79B52224986A4F0070FECD /* PlanAdviser.swift in Sources */,
 				5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
-				A860C80F26BBDECF004BFD23 /* AppFirstLaunchUseCase.swift in Sources */,
 				2F18DEE92458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift in Sources */,
 				2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
@@ -13945,7 +13936,6 @@
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
 				94C85E6D28B9405C00007A38 /* NodeAssetsManager.swift in Sources */,
-				B6D0B347283CD9200020C64D /* AppFirstLaunchUseCase.swift in Sources */,
 				B64A71AE287943B90085087D /* NodeEntity+Mapper.swift in Sources */,
 				B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */,
 				7747B2D9208625B50011814E /* Reachability.m in Sources */,
@@ -14207,7 +14197,6 @@
 				6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */,
 				83CCBC4F279599F700B90EF2 /* TransferStateEntity+Mapper.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
-				B6D0B348283CD9210020C64D /* AppFirstLaunchUseCase.swift in Sources */,
 				A82D5CE926BC090D00E73D27 /* CredentialRepository.swift in Sources */,
 				A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
@@ -14425,7 +14414,6 @@
 				B6FD651B268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift in Sources */,
 				BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
-				B6D54832283E2D0F00D7302F /* MockAppFirstLaunchUseCase.swift in Sources */,
 				A81BD5D227EB6CEB00234902 /* HistoryRetentionUseCaseTests.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,

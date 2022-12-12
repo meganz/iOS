@@ -782,7 +782,7 @@
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
     
     // This key is to check if the app has been reinstalled. Don't remove it when logging out
-    [sharedUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
+    [self markAppAsLaunched];
 }
 
 + (void)deletePasscode {
