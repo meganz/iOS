@@ -1534,7 +1534,7 @@
             [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             [QuickAccessWidgetManager reloadAllWidgetsContent];
-            
+            [[MEGAPurchase sharedInstance] requestPricing];
             [api setAccountAuth:api.accountAuth];
             break;
         }
