@@ -37,18 +37,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
     }
     
-    private func hideOptionsButton() {
-        if !FeatureFlagProvider().isFeatureFlagEnabled(for: .slideShowPreference) {
-            if #available(iOS 16.0, *) {
-                slideShowOptionButton.isHidden = true
-            } else {
-                slideShowOptionButton.isEnabled = false
-                slideShowOptionButton.tintColor = UIColor.clear
-                slideShowOptionButton.title = nil
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
@@ -60,7 +48,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         adjustHeightOfTopAndBottomView()
         setVisibility(false)
         setNavigationAndToolbarColor()
-        hideOptionsButton()
         setupActivityIndicator()
         guard let viewModel = viewModel else {
             showLoader()
