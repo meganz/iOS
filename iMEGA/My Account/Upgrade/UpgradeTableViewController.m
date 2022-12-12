@@ -232,7 +232,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
         self.tableView.tableHeaderView = self.chooseFromOneOfThePlansPROHeaderView;
     }
     
-    self.proLevelsMutableArray = [NSMutableArray arrayWithArray:@[[NSNumber numberWithInteger:MEGAAccountTypeLite], [NSNumber numberWithInteger:MEGAAccountTypeProI], [NSNumber numberWithInteger:MEGAAccountTypeProII], [NSNumber numberWithInteger:MEGAAccountTypeProIII]]];
+    self.proLevelsMutableArray = [NSMutableArray arrayWithArray:[self getAvailableProductPlans]];
     
     switch (self.userProLevel) {
         case MEGAAccountTypeFree:
