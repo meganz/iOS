@@ -3,7 +3,6 @@ import MEGADomain
 enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case scheduleMeeting = "Schedule Meeting"
     case chatRoomsListingRevamp = "chatRooms Listing Revamp"
-    case slideShowPreference = "Slide Show Preference"
     case mandatoryFingerprintVerification = "Mandatory Fingerprint Verification"
 }
 
