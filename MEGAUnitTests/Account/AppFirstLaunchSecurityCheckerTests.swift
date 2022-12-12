@@ -6,7 +6,7 @@ import MEGADomainMock
 final class AppFirstLaunchSecurityCheckerTests: XCTestCase {
     func testAppFirstLaunch() {
         let appFirstLaunchUseCase = MockAppFirstLaunchUseCase()
-        XCTAssertTrue(appFirstLaunchUseCase.isFirstLaunch)
+        XCTAssertTrue(appFirstLaunchUseCase.isAppFirstLaunch())
         
         let accountCleanerUseCase = MockAccountCleanerUseCase()
         XCTAssertFalse(accountCleanerUseCase.isAppGroupContainerCleaned)
@@ -15,7 +15,7 @@ final class AppFirstLaunchSecurityCheckerTests: XCTestCase {
         let sut = AppFirstLaunchSecurityChecker(appFirstLaunchUseCase: appFirstLaunchUseCase,
                                                 accountCleanerUseCase: accountCleanerUseCase)
         sut.performSecurityCheck()
-        XCTAssertFalse(appFirstLaunchUseCase.isFirstLaunch)
+        XCTAssertFalse(appFirstLaunchUseCase.isAppFirstLaunch())
         XCTAssertFalse(accountCleanerUseCase.isAppGroupContainerCleaned)
         XCTAssertTrue(accountCleanerUseCase.isCredentialSessionsCleaned)
     }
@@ -23,7 +23,7 @@ final class AppFirstLaunchSecurityCheckerTests: XCTestCase {
     func testAppNotFirstLaunch() {
         let appFirstLaunchUseCase = MockAppFirstLaunchUseCase()
         appFirstLaunchUseCase.markAppAsLaunched()
-        XCTAssertFalse(appFirstLaunchUseCase.isFirstLaunch)
+        XCTAssertFalse(appFirstLaunchUseCase.isAppFirstLaunch())
         
         let accountCleanerUseCase = MockAccountCleanerUseCase()
         XCTAssertFalse(accountCleanerUseCase.isAppGroupContainerCleaned)
@@ -32,7 +32,7 @@ final class AppFirstLaunchSecurityCheckerTests: XCTestCase {
         let sut = AppFirstLaunchSecurityChecker(appFirstLaunchUseCase: appFirstLaunchUseCase,
                                                 accountCleanerUseCase: accountCleanerUseCase)
         sut.performSecurityCheck()
-        XCTAssertFalse(appFirstLaunchUseCase.isFirstLaunch)
+        XCTAssertFalse(appFirstLaunchUseCase.isAppFirstLaunch())
         XCTAssertFalse(accountCleanerUseCase.isAppGroupContainerCleaned)
         XCTAssertFalse(accountCleanerUseCase.isCredentialSessionsCleaned)
     }
