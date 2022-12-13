@@ -51,29 +51,19 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
         let nodesCameraUpload = photosRepository.nodes(inParent: container.cameraUploadNode)
         let nodesMediaUpload = photosRepository.nodes(inParent: container.mediaUploadNode)
         var nodes = nodesCameraUpload + nodesMediaUpload
-        
-        sort(nodes: &nodes)
-        
+
         return nodes
     }
     
     func allPhotos() async throws -> [MEGANode] {
-        var nodes = try await loadAllPhotos()
-        
-        sort(nodes: &nodes)
-        
-        return nodes
+        try await loadAllPhotos()
     }
     
     func allPhotosFromCloudDriveOnly() async throws -> [MEGANode] {
         let container = await photoLibraryContainer()
         var nodes: [MEGANode] = try await loadAllPhotos()
         
-        nodes = nodes.filter({$0.parentHandle != container.cameraUploadNode?.handle && $0.parentHandle != container.mediaUploadNode?.handle})
-        
-        sort(nodes: &nodes)
-        
-        return nodes
+        return nodes.filter({$0.parentHandle != container.cameraUploadNode?.handle && $0.parentHandle != container.mediaUploadNode?.handle})
     }
     
     func allPhotosFromCameraUpload() async throws -> [MEGANode] {
@@ -85,26 +75,10 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
         var nodes: [MEGANode] = []
         nodes.append(contentsOf: await photosCameraUpload)
         nodes.append(contentsOf: await photosMediaUpload)
-        
-        sort(nodes: &nodes)
-        
         return nodes
     }
     
     // MARK: - Private
-    
-    private func sort(nodes: inout [MEGANode]) {
-        nodes.sort { node1, node2 in
-            if let modiTime1 = node1.modificationTime,
-               let modiTime2 = node2.modificationTime {
-                return modiTime1 > modiTime2
-            }
-            else {
-                return node1.name ?? "" < node2.name ?? ""
-            }
-        }
-    }
-    
     private func loadAllPhotos() async throws -> [MEGANode] {
         let photosFromCloudDrive = try? await searchRepository.search(string: "", inNode: nil, sortOrderType: .defaultDesc, formatType: .photo)
         let videosFromCloudDrive = try? await searchRepository.search(string: "", inNode: nil, sortOrderType: .defaultDesc, formatType: .video)
