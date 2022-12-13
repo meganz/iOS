@@ -12,7 +12,7 @@ final class ThumbnailRepositoryTests: XCTestCase {
     }
     
     func testHasCachedThumbnail_onCloudDrive_shouldReturnFalse() throws {
-        XCTAssertFalse(repo().hasCachedThumbnail(for: nodeEntity(), type: .thumbnail))
+        XCTAssertNil(repo().cachedThumbnail(for: nodeEntity(), type: .thumbnail))
     }
     
     func testCachedPreviewOrOriginalPath_onSlideShow_shouldReturnNil() throws {

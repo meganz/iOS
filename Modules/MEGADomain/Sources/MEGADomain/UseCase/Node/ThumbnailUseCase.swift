@@ -5,19 +5,19 @@ import MEGASwift
 // MARK: - Use case protocol -
 public protocol ThumbnailUseCaseProtocol {
     
-    /// Check if there is cached thumbnail in thumbnail repository
+    /// Get the cacheced thumbnail
     /// - Parameters:
     ///   - node: The node to be checked
     ///   - type: `ThumbnailTypeEntity` thumbnail type
-    /// - Returns: If a thumbnail is cached or not
-    func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool
+    /// - Returns: The cached URL if a thumbnail is cached, otherwise it returns nil
+    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL?
     
-    /// Find cached thumbnail in thumbnail repository
+    /// Generate caching URL for a thumbnail
     /// - Parameters:
     ///   - node: The node to be checked
     ///   - type: `ThumbnailTypeEntity` thumbnail type
-    /// - Returns: The url of the cached thumbnail in thumbnail repository
-    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL
+    /// - Returns: The caching URL to cache a thumbnail
+    func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL
     
     /// Load thumbnail asynchronously with Swift Concurrency
     /// - Parameters:
@@ -62,12 +62,12 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
         self.repository = repository
     }
     
-    public func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
-        repository.hasCachedThumbnail(for: node, type: type)
+    public func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL? {
+        repository.cachedThumbnail(for: node, type: type)
     }
     
-    public func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
-        repository.cachedThumbnailURL(for: node, type: type)
+    public func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+        repository.generateCachingURL(for: node, type: type)
     }
     
     public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {

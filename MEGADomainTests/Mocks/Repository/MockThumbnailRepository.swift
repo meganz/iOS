@@ -3,27 +3,20 @@ import Foundation
 import MEGADomain
 
 struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
-    var hasCachedThumbnail = false
-    var hasCachedPreview = false
-    var hasOriginalPreview = false
+    var cachedThumbnailURLs = [(ThumbnailTypeEntity, URL?)]()
     var cachedThumbnailURL = URL(string: "https://MEGA.NZ")!
     var cachedPreviewURL = URL(string: "https://MEGA.NZ")!
     var cachedOriginalURL = URL(string: "https://MEGA.NZ")!
     var loadThumbnailResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic)
     var loadPreviewResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic)
     
-    func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
-        switch type {
-        case .thumbnail:
-            return hasCachedThumbnail
-        case .preview:
-            return hasCachedPreview
-        case .original:
-            return hasOriginalPreview
-        }
+    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL? {
+        cachedThumbnailURLs.first {
+            $0.0 == type
+        }?.1
     }
     
-    func cachedThumbnailURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+    func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
         switch type {
         case .thumbnail:
             return cachedThumbnailURL
@@ -34,7 +27,7 @@ struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
         }
     }
     
-    func cachedThumbnailURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
+    func generateCachingURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
         switch type {
         case .thumbnail:
             return cachedThumbnailURL

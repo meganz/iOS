@@ -52,7 +52,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         base64Handle: Base64HandleEntity,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let destinationThumbnailCachePath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+        let destinationThumbnailCachePath = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
         let fileExists = fileSystemClient.fileExists(destinationThumbnailCachePath)
         if fileExists {
             fileSystemClient.loadCachedImageAsync(destinationThumbnailCachePath) { cachedImageData in

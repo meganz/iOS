@@ -50,7 +50,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                          name: String,
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
         
-        let destinationURLPath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail).path
+        let destinationURLPath = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail).path
         if let image = fetchImage(fromPath: destinationURLPath) {
             completion(.success(image))
             return
@@ -78,13 +78,13 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
     
     func clearAvatarCache(withUserHandle handle: HandleEntity,
                           base64Handle: Base64HandleEntity) {
-        let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+        let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
         guard fileSystemRepo.fileExists(at: destinationURL) else { return }
         fileSystemRepo.removeFile(at: destinationURL)
     }
     
     func downloadAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) async throws -> UIImage {
-        let destinationURLPath = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail).path
+        let destinationURLPath = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail).path
         return try await userImageRepo.avatar(forUserHandle: base64Handle, destinationPath: destinationURLPath)
     }
     
@@ -146,7 +146,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         size: CGSize = CGSize(width: 100.0, height: 100.0)
     ) throws -> UIImage {
         if let base64Handle {
-            let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+            let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
             if let image = fetchImage(fromPath: destinationURL.path) {
                 return image
             }
@@ -166,7 +166,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             isRightToLeftLanguage: isRightToLeftLanguage)
         
         if let base64Handle, shouldCache {
-            let destinationURL = thumbnailRepo.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+            let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
             if let imageData = image?.jpegData(compressionQuality: 1.0) {
                 try imageData.write(to: destinationURL, options: .atomic)
             }
