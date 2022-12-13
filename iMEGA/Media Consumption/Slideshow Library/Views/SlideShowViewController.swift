@@ -97,6 +97,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
             adjustHeightOfTopAndBottomView()
+            collectionView.reloadData()
         }
     }
     
