@@ -20,4 +20,5 @@ public enum ChatMessageTypeEntity{
     case voiceClip
     case loading
     case joinedGroupChat
+    case scheduledMeeting
 }
