@@ -1,5 +1,10 @@
+import MEGADomain
 
 struct FeedbackRepository: FeedbackRepositoryProtocol {
+    static var newRepo: FeedbackRepository {
+        FeedbackRepository(sdk: MEGASdkManager.sharedMEGASdk(), bundle: .main, device: .current, locale: NSLocale.current as NSLocale, timeZone: NSTimeZone.local)
+    }
+    
     private let sdk: MEGASdk
     private let bundle: Bundle
     private let device: UIDevice
