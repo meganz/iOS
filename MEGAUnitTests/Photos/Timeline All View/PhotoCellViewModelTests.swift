@@ -49,7 +49,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertNil(sut.thumbnailLoadingTask)
     }
     
-    func testLoadThumbnail_zoomInAndHasCachedThumbnail_loadLocalThumbnailAndRemotePreview() async throws {
+    func testLoadThumbnail_zoomInAndHasCachedThumbnail_onlyLoadPreview() async throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
@@ -63,16 +63,16 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURL: localURL, loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)], loadPreviewResult: .success(remoteURL))
         )
         
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
         let exp = expectation(description: "thumbnail is changed")
-        exp.expectedFulfillmentCount = 2
-        var thumbnails = [URLImageContainer(imageURL: localURL), URLImageContainer(imageURL: remoteURL)]
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(thumbnails.removeFirst()))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -80,8 +80,8 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 3.0)
-        XCTAssertTrue(thumbnails.isEmpty)
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
     }
     
     func testLoadThumbnail_zoomOut_noLoadLocalThumbnailAndRemotePreview() async throws {
@@ -98,7 +98,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURL: localURL, loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)], loadPreviewResult: .success(remoteURL))
         )
         
         let exp = expectation(description: "thumbnail is changed")
@@ -112,38 +112,29 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.out)
         XCTAssertEqual(sut.currentZoomScaleFactor, .five)
         XCTAssertNil(sut.thumbnailLoadingTask)
-        let result = XCTWaiter.wait(for: [exp], timeout: 3.0)
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("Thumbnail should not be changed")
             return
         }
     }
     
-    func testLoadThumbnail_placeholderAndLoadThumbnail_loadThumbnail() async throws {
-        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
-        let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
-        XCTAssertTrue(isRemoteFileCreated)
+    func testLoadThumbnail_hasCachedThumbnail_showThumbnailUponInit() async throws {
+        let image = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isFileCreated = FileManager.default.createFile(atPath:url.path, contents: image.pngData())
+        XCTAssertTrue(isFileCreated)
         
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, url)])
         )
         
-        sut.$thumbnailContainer
-            .dropFirst()
-            .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
-            }
-            .store(in: &subscriptions)
-        
-        sut.loadThumbnailIfNeeded()
-        await sut.thumbnailLoadingTask?.value
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: url)))
     }
     
-    func testLoadThumbnail_nonPlaceholderAndLoadThumbnail_noLoadThumbnail() async throws {
+    func testLoadThumbnail_hasDifferentThumbnailAndLoadThumbnail_loadThumbnail() async throws {
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
@@ -157,16 +148,469 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.thumbnailContainer = ImageContainer(image: Image(systemName: "heart"))
         
+        let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("Thumbnail should not be changed")
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
-        sut.loadThumbnailIfNeeded()
+        sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(systemName: "heart"))))
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+    }
+    
+    func testLoadThumbnail_noThumbnails_showPlaceholder() async throws {
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase()
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTFail("thumbnail should not be changed")
+            }
+            .store(in: &subscriptions)
+        
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+        
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("thumbnail should not be changed")
+            return
+        }
+    }
+    
+    func testLoadThumbnail_noCachedThumbnailAndNonSingleColumn_loadThumbnail() async throws {
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "eraser"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteThumbnailURL)))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        XCTAssertEqual(sut.currentZoomScaleFactor, .three)
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteThumbnailURL)))
+    }
+    
+    func testLoadThumbnail_noCachedThumbnailAndZoomInToSingleColumn_loadBothThumbnailAndPreview() async throws {
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "eraser"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        exp.expectedFulfillmentCount = 2
+        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL), URLImageContainer(imageURL: remotePreviewURL)]
+        
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(expectedContainers.removeFirst()))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .one)
+        await sut.thumbnailLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(expectedContainers.isEmpty)
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndNonSingleColumnAndSameRemoteThumbnail_noLoading() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
+                                                   loadThumbnailResult: .success(localURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTFail("thumbnail should not be changed")
+            }
+            .store(in: &subscriptions)
+        
+        XCTAssertEqual(sut.currentZoomScaleFactor, .three)
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+    
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("thumbnail should not be changed")
+            return
+        }
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndNonSingleColumnAndDifferentRemoteThumbnail_noLoading() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "eraser"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
+                                                   loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTFail("thumbnail should not be changed")
+            }
+            .store(in: &subscriptions)
+        
+        XCTAssertEqual(sut.currentZoomScaleFactor, .three)
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+    
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("thumbnail should not be changed")
+            return
+        }
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndZoomInToSingleColumnAndSameRemoteThumbnail_onlyLoadPreview() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
+                                                   loadThumbnailResult: .success(localURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .one)
+        await sut.thumbnailLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndZoomInToSingleColumnAndDifferentRemoteThumbnail_loadBothThumbnailAndPreview() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "eraser"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
+                                                   loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        exp.expectedFulfillmentCount = 2
+        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL), URLImageContainer(imageURL: remotePreviewURL)]
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(expectedContainers.removeFirst()))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .one)
+        await sut.thumbnailLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(expectedContainers.isEmpty)
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndPreviewAndZoomInToSingleColumnAndSameRemoteThumbnailAndPreview_onlyLoadCachedPreview() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let previewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:previewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL), (.preview, previewURL)],
+                                                   loadThumbnailResult: .success(localURL),
+                                                   loadPreviewResult: .success(previewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: previewURL)))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .one)
+        await sut.thumbnailLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: previewURL)))
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndPreviewAndZoomInToSingleColumnAndDifferentRemoteThumbnailAndPreview_onlyLoadCachedPreview() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let localPreviewImage = try XCTUnwrap(UIImage(systemName: "doc"))
+        let localPreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalPreviewFileCreated = FileManager.default.createFile(atPath:localPreviewURL.path, contents: localPreviewImage.pngData())
+        XCTAssertTrue(isLocalPreviewFileCreated)
+        
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "eraser"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL), (.preview, localPreviewURL)],
+                                                   loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertEqual(sut.currentZoomScaleFactor, .one)
+        await sut.thumbnailLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+    }
+    
+    func testLoadThumbnail_hasCachedPreviewAndSingleColumn_showPreviewAndNoLoading() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertTrue(allViewModel.zoomState.isSingleColumn)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localURL)],
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTFail("thumbnail should not be changed")
+            }
+            .store(in: &subscriptions)
+        
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("thumbnail should not be changed")
+            return
+        }
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndPreviewAndSingleColumn_showPreviewAndNoLoading() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let localPreviewImage = try XCTUnwrap(UIImage(systemName: "doc"))
+        let localPreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalPreviewFileCreated = FileManager.default.createFile(atPath:localPreviewURL.path, contents: localPreviewImage.pngData())
+        XCTAssertTrue(isLocalPreviewFileCreated)
+        
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "eraser"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertTrue(allViewModel.zoomState.isSingleColumn)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localPreviewURL), (.thumbnail, localURL)],
+                                                   loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+        
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTFail("thumbnail should not be changed")
+            }
+            .store(in: &subscriptions)
+        
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("thumbnail should not be changed")
+            return
+        }
     }
     
     func testIsSelected_notSelectedAndSelect_selected() {
@@ -290,7 +734,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: true)])
-        wait(for: [exp], timeout: 3.0)
+        wait(for: [exp], timeout: 2.0)
         XCTAssertTrue(sut.isFavorite)
     }
     
@@ -313,7 +757,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: false)])
-        wait(for: [exp], timeout: 3.0)
+        wait(for: [exp], timeout: 2.0)
         XCTAssertFalse(sut.isFavorite)
     }
     
@@ -335,7 +779,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "00.jpg", handle: 1, isFavourite: true)])
-        let result = XCTWaiter.wait(for: [exp], timeout: 3.0)
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
         XCTAssertFalse(sut.isFavorite)
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("isFavourite should not be updated")

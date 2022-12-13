@@ -20,10 +20,10 @@ struct PhotoCellContent: View {
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .onAppear {
-            viewModel.loadThumbnailIfNeeded()
+            viewModel.startLoadingThumbnail()
         }
         .onDisappear {
-            viewModel.cancelLoading()
+            viewModel.cancelLoadingThumbnail()
         }
     }
     
