@@ -69,7 +69,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
             return false
         }
         
-        if let entity = slideShowMediaEntity(for: node, with: mediaUseCase.isGifImage(node.name) ? thumbnailUseCase.cachedThumbnail(for: node, type: .original).path : pathForPreviewOrOriginal) {
+        if let entity = slideShowMediaEntity(for: node, with: mediaUseCase.isGifImage(node.name) ? thumbnailUseCase.generateCachingURL(for: node, type: .original).path : pathForPreviewOrOriginal) {
             photos.append(entity)
         }
         return true
