@@ -1,4 +1,5 @@
 import MessageUI
+import MEGADomain
 
 final class SendFeedbackViewRouter: Routing {
     private weak var presenter: UIViewController?
