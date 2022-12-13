@@ -29,7 +29,7 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(cachedPreviewURL: localURL, loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localURL)], loadPreviewResult: .success(remoteURL))
         )
         let loadedThumbnail = ImageContainer(image: Image(systemName: "heart"))
         sut.thumbnailContainer = loadedThumbnail
@@ -52,7 +52,7 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(cachedPreviewURL: localURL, loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localURL)], loadPreviewResult: .success(remoteURL))
         )
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
         sut.loadThumbnail()
@@ -83,9 +83,133 @@ final class PhotoCardViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         sut.loadThumbnail()
-        wait(for: [exp], timeout: 3.0)
+        wait(for: [exp], timeout: 2.0)
         
         XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+    }
+    
+    func testLoadThumbnail_noLocalCacheAndHasRemoteThumbnailAndPreview_loadBothThumbnailAndPreview() throws {
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remotePreviewImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remotePreviewImage.pngData())
+        XCTAssertTrue(isRemotePreviewFileCreated)
+        
+        let sut = PhotoCardViewModel(
+            coverPhoto: NodeEntity(handle: 1),
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        
+        let exp = expectation(description: "thumbnailContainer is updated")
+        exp.expectedFulfillmentCount = 2
+        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL), URLImageContainer(imageURL: remotePreviewURL)]
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(expectedContainers.removeFirst()))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.loadThumbnail()
+        wait(for: [exp], timeout: 2.0)
+        
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(expectedContainers.isEmpty)
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndHasDifferentRemoteThumbnailAndPreview_loadBothThumbnailAndPreview() throws {
+        let localThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let localThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalThumbnailFileCreated = FileManager.default.createFile(atPath:localThumbnailURL.path, contents: localThumbnailImage.pngData())
+        XCTAssertTrue(isLocalThumbnailFileCreated)
+        
+        let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        XCTAssertTrue(isRemoteThumbnailFileCreated)
+        
+        let remotePreviewImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remotePreviewImage.pngData())
+        XCTAssertTrue(isRemotePreviewFileCreated)
+        
+        let sut = PhotoCardViewModel(
+            coverPhoto: NodeEntity(handle: 1),
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localThumbnailURL)],
+                                                   loadThumbnailResult: .success(remoteThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        
+        let exp = expectation(description: "thumbnailContainer is updated")
+        exp.expectedFulfillmentCount = 3
+        var expectedContainers = [URLImageContainer(imageURL: localThumbnailURL),
+                                  URLImageContainer(imageURL: remoteThumbnailURL),
+                                  URLImageContainer(imageURL: remotePreviewURL)]
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(expectedContainers.removeFirst()))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.loadThumbnail()
+        wait(for: [exp], timeout: 2.0)
+        
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(expectedContainers.isEmpty)
+    }
+    
+    func testLoadThumbnail_hasCachedThumbnailAndHasSameRemoteThumbnailAndPreview_onlyLoadPreview() throws {
+        let localThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let localThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalThumbnailFileCreated = FileManager.default.createFile(atPath:localThumbnailURL.path, contents: localThumbnailImage.pngData())
+        XCTAssertTrue(isLocalThumbnailFileCreated)
+        
+        let remotePreviewImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remotePreviewImage.pngData())
+        XCTAssertTrue(isRemotePreviewFileCreated)
+        
+        let sut = PhotoCardViewModel(
+            coverPhoto: NodeEntity(handle: 1),
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localThumbnailURL)],
+                                                   loadThumbnailResult: .success(localThumbnailURL),
+                                                   loadPreviewResult: .success(remotePreviewURL))
+        )
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        
+        let exp = expectation(description: "thumbnailContainer is updated")
+        exp.expectedFulfillmentCount = 2
+        var expectedContainers = [URLImageContainer(imageURL: localThumbnailURL),
+                                  URLImageContainer(imageURL: remotePreviewURL)]
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTAssertTrue(container.isEqual(expectedContainers.removeFirst()))
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.loadThumbnail()
+        wait(for: [exp], timeout: 2.0)
+        
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(expectedContainers.isEmpty)
     }
 }

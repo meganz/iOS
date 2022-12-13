@@ -104,7 +104,7 @@ final class AlbumCellViewModel: NSObject, ObservableObject {
     
     @MainActor
     private func loadThumbnail(for node: NodeEntity) async {
-        guard let imageContainer = try? await thumbnailUseCase.loadThumbnailImageContainer(for: node, type: .thumbnail) else {
+        guard let imageContainer = try? await thumbnailUseCase.loadThumbnailContainer(for: node, type: .thumbnail) else {
             isLoading = false
             return
         }
