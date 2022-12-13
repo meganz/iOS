@@ -16,8 +16,17 @@ extension Array where Element == MEGANode {
 
 extension Array where Element == NodeEntity {
     func toPhotoLibrary(withSortType type: SortOrderType, in timeZone: TimeZone? = nil) -> PhotoLibrary {
+        var photos = self
+        photos.sort {
+            if $0.modificationTime == $1.modificationTime {
+                return $0.handle > $1.handle
+            } else {
+                return $0.modificationTime > $1.modificationTime
+            }
+        }
+        
         var tempDayDict = [Date: PhotoByDayDataProvider]()
-        for node in self where NSString(string: node.name).mnz_isVisualMediaPathExtension {
+        for node in photos where NSString(string: node.name).mnz_isVisualMediaPathExtension {
             guard let day = node.categoryDate.removeTimestamp(timeZone: timeZone) else { continue }
             if let photoByDay = tempDayDict[day] {
                 photoByDay.photos.append(node)
