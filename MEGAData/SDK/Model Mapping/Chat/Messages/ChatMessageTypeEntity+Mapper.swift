@@ -39,6 +39,8 @@ extension MEGAChatMessageType {
             return .containsMeta
         case .voiceClip:
             return .voiceClip
+        case .scheduledMeeting:
+            return .scheduledMeeting
         @unknown default:
             if self.rawValue == 255 {
                 return .loading

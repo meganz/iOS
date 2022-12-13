@@ -2184,6 +2184,8 @@
 		BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */; };
 		BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */; };
 		BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895F126312EA1002A18CA /* MockCallUseCase.swift */; };
+		BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */; };
+		BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */; };
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */; };
 		BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */; };
@@ -4605,6 +4607,8 @@
 		BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModelTests.swift; sourceTree = "<group>"; };
 		BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallCoordinatorUseCase.swift; sourceTree = "<group>"; };
 		BF8895F126312EA1002A18CA /* MockCallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallUseCase.swift; sourceTree = "<group>"; };
+		BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModelTests.swift; sourceTree = "<group>"; };
+		BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
 		BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MEGAProviderDelegate.swift; path = Chat/MEGAProviderDelegate.swift; sourceTree = "<group>"; };
 		BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -10793,6 +10797,7 @@
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
 				BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */,
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
+				BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -11131,6 +11136,7 @@
 				BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */,
 				BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */,
 				BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */,
+				BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */,
 			);
 			path = Meeting;
 			sourceTree = "<group>";
@@ -14326,6 +14332,7 @@
 				B6A6E19A287BCE3800179806 /* MockUser.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
+				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				9449939328BD41CC001AE14B /* MockFolderSdk.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
@@ -14337,6 +14344,7 @@
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FileSearchRepositoryTests.swift in Sources */,
 				B688C03129412B4A00976CE9 /* PhotoChronologicalCategory_nodeEntity_refreshTests.swift in Sources */,
+				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
