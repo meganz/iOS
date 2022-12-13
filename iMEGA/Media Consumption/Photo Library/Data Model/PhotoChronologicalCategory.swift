@@ -2,7 +2,7 @@ import Foundation
 import MEGASwift
 import MEGADomain
 
-protocol PhotoChronologicalCategory: Identifiable, PhotoScrollPositioning, Refreshable, Equatable {
+protocol PhotoChronologicalCategory: Identifiable, PhotoScrollPositioning, Equatable, Refreshable, RefreshableWhenVisible {
     associatedtype Content: PhotoChronologicalCategory
     var contentList: [Content] { get }
     
