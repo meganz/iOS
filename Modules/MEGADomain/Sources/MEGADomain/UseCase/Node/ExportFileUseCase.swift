@@ -156,7 +156,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 completion(.failure(.failedToCreateContact))
                 return
             }
-            let avatarUrl = thumbnailRepository.cachedThumbnailURL(for: base64Handle, type: .thumbnail)
+            let avatarUrl = thumbnailRepository.generateCachingURL(for: base64Handle, type: .thumbnail)
             if let contactUrl = exportChatMessagesRepository.exportContact(message: message, contactAvatarImage: fileSystemRepository.fileExists(at: avatarUrl) ? avatarUrl.path : nil) {
                 completion(.success(contactUrl))
             } else {

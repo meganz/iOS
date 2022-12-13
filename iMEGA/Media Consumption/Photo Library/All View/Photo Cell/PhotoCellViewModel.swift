@@ -9,7 +9,6 @@ final class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private let mediaUseCase: MediaUseCaseProtocol
-    private let placeholderThumbnail: ImageContainer
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
     
@@ -20,9 +19,7 @@ final class PhotoCellViewModel: ObservableObject {
     @Published var currentZoomScaleFactor: PhotoLibraryZoomState.ScaleFactor {
         didSet {
             if currentZoomScaleFactor == .one || oldValue == .one {
-                thumbnailLoadingTask = Task {
-                    await loadThumbnail()
-                }
+                startLoadingThumbnail()
             }
         }
     }
@@ -61,9 +58,14 @@ final class PhotoCellViewModel: ObservableObject {
         isFavorite = photo.isFavourite
         duration = NSString.mnz_string(fromTimeInterval: Double(photo.duration))
         
-        let placeholderFileType = FileTypes().fileType(forFileName: photo.name)
-        placeholderThumbnail = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
-        thumbnailContainer = placeholderThumbnail
+        let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
+        if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: type) {
+            thumbnailContainer = container
+        } else {
+            let placeholderFileType = FileTypes().fileType(forFileName: photo.name)
+            let placeholder = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
+            thumbnailContainer = placeholder
+        }
         
         configZoomState(with: viewModel)
         configSelection()
@@ -71,38 +73,43 @@ final class PhotoCellViewModel: ObservableObject {
         self.selection.$editMode.assign(to: &$editMode)
     }
     
-    
     // MARK: Internal
-    
-    func loadThumbnailIfNeeded() {
-        guard isShowingThumbnail(placeholderThumbnail) else {
-            return
-        }
-        
+    func startLoadingThumbnail() {
         thumbnailLoadingTask = Task {
             await loadThumbnail()
         }
     }
     
-    func cancelLoading() {
+    func cancelLoadingThumbnail() {
         thumbnailLoadingTask?.cancel()
     }
     
     // MARK: Private
     private func loadThumbnail() async {
         let type: ThumbnailTypeEntity = currentZoomScaleFactor == .one ? .preview : .thumbnail
-        
         switch type {
         case .thumbnail:
-            guard let container = try? await thumbnailUseCase.loadThumbnailImageContainer(for: photo, type: .thumbnail) else { return }
-            await updateThumbailContainer(container)
-        case .preview, .original:
-            if let container = thumbnailUseCase.cachedThumbnailImageContainer(for: photo, type: .thumbnail) {
-                await updateThumbailContainer(container)
+            if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .thumbnail) {
+                await updateThumbailContainerIfNeeded(container)
+            } else if let container = try? await thumbnailUseCase.loadThumbnailContainer(for: photo, type: .thumbnail) {
+                await updateThumbailContainerIfNeeded(container)
             }
-            
-            requestPreview()
+        case .preview, .original:
+            if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .preview) {
+                await updateThumbailContainerIfNeeded(container)
+            } else {
+                if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .thumbnail) {
+                    await updateThumbailContainerIfNeeded(container)
+                }
+                
+                requestPreview()
+            }
         }
+    }
+    
+    private func updateThumbailContainerIfNeeded(_ container: any ImageContaining) async {
+        guard !isShowingThumbnail(container) else { return }
+        await updateThumbailContainer(container)
     }
     
     @MainActor

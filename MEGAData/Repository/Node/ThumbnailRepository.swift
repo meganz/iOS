@@ -24,16 +24,17 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         appGroupCacheURL = groupContainer.url(for: .cache)
     }
     
-    func hasCachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Bool {
-        fileExists(at: cachedThumbnailURL(for: node.base64Handle, type: type))
+    func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL? {
+        let url = generateCachingURL(for: node.base64Handle, type: type)
+        return fileExists(at: url) ? url : nil
     }
     
-    func cachedThumbnailURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
-        cachedThumbnailURL(for: node.base64Handle, type: type)
+    func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
+        generateCachingURL(for: node.base64Handle, type: type)
     }
     
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        let url = cachedThumbnailURL(for: node, type: type)
+        let url = generateCachingURL(for: node, type: type)
         if fileExists(at: url) {
             completion(.success(url))
         } else {
@@ -49,7 +50,7 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
         }
     }
     
-    func cachedThumbnailURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
+    func generateCachingURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
         let directory: String
         switch type {
         case .thumbnail:
@@ -66,12 +67,12 @@ struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     }
     
     func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
-        let previewFileURL = cachedThumbnailURL(for: node.base64Handle, type: .preview)
+        let previewFileURL = generateCachingURL(for: node.base64Handle, type: .preview)
         if fileExists(at: previewFileURL) {
             return previewFileURL.path
         }
         
-        let originalFileURL = cachedThumbnailURL(for: node.base64Handle, type: .original)
+        let originalFileURL = generateCachingURL(for: node.base64Handle, type: .original)
         if fileExists(at: originalFileURL) {
             return originalFileURL.path.append(pathComponent: node.name)
         }

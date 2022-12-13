@@ -27,9 +27,13 @@ class PhotoCardViewModel: ObservableObject {
             return
         }
         
-        if let container = thumbnailUseCase.cachedThumbnailImageContainer(for: photo, type: .preview) {
+        if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .preview) {
             thumbnailContainer = container
         } else {
+            if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .thumbnail) {
+                thumbnailContainer = container
+            }
+            
             loadThumbnailFromRemote(for: photo)
         }
     }
