@@ -22,6 +22,7 @@ class PhotoLibraryMapperTests: XCTestCase {
     
     override func setUpWithError() throws {
         nodes = [
+            NodeEntity(name: "a.jpg", handle: 0, modificationTime: try "2022-08-18T22:01:04Z".date),
             NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
             NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date),
             NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2022-04-18T22:01:04Z".date),
@@ -34,6 +35,8 @@ class PhotoLibraryMapperTests: XCTestCase {
             NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2016-03-18T22:01:04Z".date),
             NodeEntity(name: "k.jpg", handle: 11, modificationTime: try "2016-03-18T20:01:04Z".date),
             NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date),
+            NodeEntity(name: "l.jpg", handle: 20, modificationTime: try "2016-03-15T10:01:04Z".date),
+            NodeEntity(name: "l.jpg", handle: 13, modificationTime: try "2016-03-15T10:01:04Z".date),
         ]
     }
     
@@ -46,6 +49,8 @@ class PhotoLibraryMapperTests: XCTestCase {
             PhotoByYear(categoryDate: try "2016-03-01T00:00:00Z".date.year, contentList: [
                 PhotoByMonth(categoryDate: try "2016-03-01T00:00:00Z".date.month, contentList: [
                     PhotoByDay(categoryDate: try "2016-03-15T10:01:04Z".date.day, contentList: [
+                        NodeEntity(name: "l.jpg", handle: 20, modificationTime: try "2016-03-15T10:01:04Z".date),
+                        NodeEntity(name: "l.jpg", handle: 13, modificationTime: try "2016-03-15T10:01:04Z".date),
                         NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date),
                     ]),
                     PhotoByDay(categoryDate: try "2016-03-18T17:01:04Z".date.day, contentList: [
@@ -102,6 +107,7 @@ class PhotoLibraryMapperTests: XCTestCase {
                 PhotoByMonth(categoryDate: try "2022-08-01T00:00:00Z".date.month, contentList: [
                     PhotoByDay(categoryDate: try "2022-08-18T22:01:04Z".date.day, contentList: [
                         NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
+                        NodeEntity(name: "a.jpg", handle: 0, modificationTime: try "2022-08-18T22:01:04Z".date),
                     ])
                 ])
             ]),
@@ -120,6 +126,7 @@ class PhotoLibraryMapperTests: XCTestCase {
                 PhotoByMonth(categoryDate: try "2022-08-01T00:00:00Z".date.month, contentList: [
                     PhotoByDay(categoryDate: try "2022-08-18T22:01:04Z".date.day, contentList: [
                         NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
+                        NodeEntity(name: "a.jpg", handle: 0, modificationTime: try "2022-08-18T22:01:04Z".date),
                     ])
                 ]),
                 PhotoByMonth(categoryDate: try "2022-07-01T00:00:00Z".date.month, contentList: [
@@ -174,6 +181,8 @@ class PhotoLibraryMapperTests: XCTestCase {
                         NodeEntity(name: "k.jpg", handle: 11, modificationTime: try "2016-03-18T20:01:04Z".date),
                     ]),
                     PhotoByDay(categoryDate: try "2016-03-15T10:01:04Z".date.day, contentList: [
+                        NodeEntity(name: "l.jpg", handle: 20, modificationTime: try "2016-03-15T10:01:04Z".date),
+                        NodeEntity(name: "l.jpg", handle: 13, modificationTime: try "2016-03-15T10:01:04Z".date),
                         NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date),
                     ]),
                 ])
