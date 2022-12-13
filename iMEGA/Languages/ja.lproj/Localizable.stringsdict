@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Apply to the duplicate</string>
         <key>other</key>
         <string>%d個の重複すべてに適用</string>
       </dict>
