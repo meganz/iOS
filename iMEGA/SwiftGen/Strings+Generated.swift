@@ -3000,6 +3000,14 @@ public enum Strings {
         public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")
       }
       public enum Listing {
+        public enum Description {
+          public enum MeetingCreated {
+            /// %@: Created a meeting
+            public static func message(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "chat.listing.description.meetingCreated.message", String(describing: p1))
+            }
+          }
+        }
         public enum SectionHeader {
           public enum PastMeetings {
             /// Past meetings

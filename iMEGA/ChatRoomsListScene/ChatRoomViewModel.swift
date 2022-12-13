@@ -152,6 +152,45 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         objectWillChange.send()
     }
     
+    func updateDescription() async throws {
+        switch chatListItem.lastMessageType {
+        case .loading:
+            updateDescription(withMessage: Strings.Localizable.loading)
+        case .invalid:
+            updateDescription(withMessage: Strings.Localizable.noConversationHistory)
+        case .attachment:
+            try await updateDescriptionForAttachment()
+        case .voiceClip:
+            try await updateDescriptionForVoiceClip()
+        case .contact:
+            try await updateDescriptionForContact()
+        case .truncate:
+            try await updateDescriptionForTruncate()
+        case .privilegeChange:
+            try await updateDescriptionForPrivilageChange()
+        case .alterParticipants:
+            try await updateDescriptionForAlertParticipants()
+        case .setRetentionTime:
+           try await updateDescriptionForRententionTime()
+        case .chatTitle:
+            try await updateDesctiptionWithChatTitleChange()
+        case .callEnded:
+            await updateDescriptionForCallEnded()
+        case .callStarted:
+            updateDescription(withMessage: Strings.Localizable.callStarted)
+        case .publicHandleCreate:
+            try await updateDescriptionWithSender(usingMessage: Strings.Localizable.createdAPublicLinkForTheChat)
+        case .publicHandleDelete:
+            try await updateDescriptionWithSender(usingMessage: Strings.Localizable.removedAPublicLinkForTheChat)
+        case .setPrivateMode:
+            try await updateDescriptionWithSender(usingMessage: Strings.Localizable.enabledEncryptedKeyRotation)
+        case .scheduledMeeting:
+            try await updateDescriptionForScheduledMeeting()
+        default:
+            try await updateDescriptionForDefault()
+        }
+    }
+    
     //MARK: - Private methods
 
     private func formattedLastMessageSentDate() -> String? {
@@ -293,43 +332,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             chatNotificationControl.turnOffDND(chatId: chatListItem.chatId)
         } else {
             showDNDTurnOnOptions = true
-        }
-    }
-    
-    private func updateDescription() async throws {
-        switch chatListItem.lastMessageType {
-        case .loading:
-            updateDescription(withMessage: Strings.Localizable.loading)
-        case .invalid:
-            updateDescription(withMessage: Strings.Localizable.noConversationHistory)
-        case .attachment:
-            try await updateDescriptionForAttachment()
-        case .voiceClip:
-            try await updateDescriptionForVoiceClip()
-        case .contact:
-            try await updateDescriptionForContact()
-        case .truncate:
-            try await updateDescriptionForTruncate()
-        case .privilegeChange:
-            try await updateDescriptionForPrivilageChange()
-        case .alterParticipants:
-            try await updateDescriptionForAlertParticipants()
-        case .setRetentionTime:
-           try await updateDescriptionForRententionTime()
-        case .chatTitle:
-            try await updateDesctiptionWithChatTitleChange()
-        case .callEnded:
-            await updateDescriptionForCallEnded()
-        case .callStarted:
-            updateDescription(withMessage: Strings.Localizable.callStarted)
-        case .publicHandleCreate:
-            try await updateDescriptionWithSender(usingMessage: Strings.Localizable.createdAPublicLinkForTheChat)
-        case .publicHandleDelete:
-            try await updateDescriptionWithSender(usingMessage: Strings.Localizable.removedAPublicLinkForTheChat)
-        case .setPrivateMode:
-            try await updateDescriptionWithSender(usingMessage: Strings.Localizable.enabledEncryptedKeyRotation)
-        default:
-            try await updateDescriptionForDefault()
         }
     }
     
@@ -620,6 +622,14 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 updateDescription(withMessage: message)
             }
         }
+    }
+    
+    private func updateDescriptionForScheduledMeeting() async throws {
+        guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: true) else {
+            return
+        }
+        
+        updateDescription(withMessage: Strings.Localizable.Chat.Listing.Description.MeetingCreated.message(sender))
     }
     
     private func callDurationString(fromSeconds seconds: Int) -> String? {
