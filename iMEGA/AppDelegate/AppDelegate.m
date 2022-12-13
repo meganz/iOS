@@ -1596,6 +1596,7 @@
         case MEGARequestTypeLogout: {
             // if logout (not if localLogout) or session killed in other client
             BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+            [MEGAPurchase.sharedInstance.products removeAllObjects];
             if (request.flag || sessionInvalidateInOtherClient) {
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];
