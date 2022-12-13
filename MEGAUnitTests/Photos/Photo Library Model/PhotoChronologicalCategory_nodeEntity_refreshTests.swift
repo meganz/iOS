@@ -58,7 +58,7 @@ final class PhotoChronologicalCategory_nodeEntity_refreshTests: XCTestCase {
         XCTAssertTrue(testCategories.shouldRefresh(to: newCategories, visiblePositions: [:]))
     }
     
-    func testShouldRefresh_nodeEntityAndNotEqualDate_noRefresh() throws {
+    func testShouldRefresh_nodeEntityAndNotEqualDate_refresh() throws {
         let testCategories = [
             NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
             NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date),
@@ -71,7 +71,7 @@ final class PhotoChronologicalCategory_nodeEntity_refreshTests: XCTestCase {
             NodeEntity(name: "c.mov", handle: 3, modificationTime: try "2022-05-18T22:01:04Z".date)
         ]
         
-        XCTAssertFalse(testCategories.shouldRefresh(to: newCategories, visiblePositions: [:]))
+        XCTAssertTrue(testCategories.shouldRefresh(to: newCategories, visiblePositions: [:]))
     }
     
     func testShouldRefresh_nodeEntityAndEqual_noRefresh() throws {
@@ -117,7 +117,6 @@ final class PhotoChronologicalCategory_nodeEntity_refreshTests: XCTestCase {
         
         let visibleAndRefreshableNodes = [
             NodeEntity(name: "a.jpg", handle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:01:04Z".date),
-            NodeEntity(name: "b.jpg", handle: 2, isFavourite: true, modificationTime: try "2022-07-18T22:01:04Z".date),
             NodeEntity(name: "c.mov", handle: 3, hasPreview: true, modificationTime: try "2022-04-18T22:01:04Z".date)
         ]
         
