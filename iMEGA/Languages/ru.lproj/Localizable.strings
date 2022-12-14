@@ -415,7 +415,7 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="Файлы успешно отправлены (%d)";
 /* Title show when a file is being downloaded */
-"downloading"="Загрузка";
+"downloading"="Скачивание";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Выбрать целевую папку";
 /* Text of the button for user to select files in MEGA. */
@@ -453,7 +453,7 @@
 /* Success message shown when you have copied 1 file and {1+} folders */
 "copyFileFoldersMessage"="1 файл и %d папок(и) скопированы";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d файлов и 1 папка скопированы";
+"copyFilesFolderMessage"="Файлы (%d) и 1 папка скопированы";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="Скопировано файлов: [A] и папок: [B]";
 /* Title for the action that allows you to rename a file or folder */
@@ -609,7 +609,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Добавить из контактов";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Добавить контакт";
+"addContact"="Добавление контакта";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Эл. почта контакта";
 /* Button title to 'Add' the contact to your contacts list */
@@ -657,7 +657,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Настройки";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Загрузки с камеры";
+"cameraUploadsLabel"="Загрузки из камеры";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA имеет ограниченный доступ к вашей библиотеке фотографий и не может создавать резервные копии всех ваших фотографий. Нажмите, чтобы изменить разрешения.";
 /* Navigation title for Photo Controller */
@@ -685,7 +685,7 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Пожалуйста, напишите свой отзыв здесь:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="На вашем устройстве не найдено ни одной учётной записи с адресом эл. почты";
+"noEmailAccountConfigured"="На вашем устройстве не найдено ни одного аккаунта с адресом эл. почты";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
@@ -1129,7 +1129,7 @@
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Продукт %@ не найден, пожалуйста, свяжитесь с ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Разрешить покупки";
+"allowPurchase_title"="Разрешение покупок";
 /* Alert message to remenber the user that needs to enable purchases before continue */
 "allowPurchase_message"="Вы должны включить покупки внутри приложения в настройках iOS перед восстановлением покупки.";
 /* Button title to restore failed purchases */
@@ -1695,7 +1695,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Ваши фотографии в облаке";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Загрузка из камеры — важная функция для любого мобильного устройства, и мы о ней позаботились. Зарегистрируйтесь сейчас.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Загрузки из камеры — важная функция для любого мобильного устройства, и мы о ней позаботились. Зарегистрируйтесь сейчас.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Настроить MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1831,7 +1831,7 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Pro-подписка скоро истекает";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="Уведомление о нарушении";
+"Takedown notice"="Заявление на изъятие";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="Объекты восстановлены";
 /* Label shown inside an unseen notification */
@@ -2251,7 +2251,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Настройки режима отображения";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Установить порядок сортировки столбцов отдельно для каждой папки или использовать единый порядок сортировки для всех папок.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Установить порядок сортировки столбцов отдельно для каждой папки или единый для всех папок.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Выберите режим просмотра (список или эскизы) для каждой папки или используйте один и тот же режим просмотра для всех папок.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="Ссылка скопирована в буфер обмена";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Прошедшие встречи";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="Подтвердить %@";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, с которыми вы делитесь информацией, прежде чем они смогут получить доступ к общим папкам.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="Чтобы подтвердить контакт, убедитесь, что учётные данные, которые вы видите выше, соответствуют его учётным данным. Вы можете попросить его поделиться с вами своими учётными данными.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, от которых вы получаете информацию, прежде чем вы сможете получить доступ к общим папкам.";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="Ваши учётные данные";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
