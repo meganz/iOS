@@ -84,6 +84,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) { [weak self] in
             self?.updateSlideInView()
@@ -97,7 +98,6 @@ final class SlideShowViewController: UIViewController, ViewType {
         
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
             adjustHeightOfTopAndBottomView()
-            collectionView.reloadData()
         }
     }
     
