@@ -469,7 +469,7 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1個のファイルをごみ箱に移動しました";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d個のファイルをごみ箱に移動しました";
+"filesMovedToRubbishBinMessage"="ゴミ箱にファイル%dこ、移動しました。";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1個のフォルダをごみ箱に移動しました";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="リンクをクリップボードにコピーしました";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="過去のミーティング";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="%@さんを認証する";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="連絡先の認証";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、連絡先が共有フォルダにアクセスする前に、情報を共有する連絡先を認証するようお願いしています。";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="連絡先を認証するには、上記の資格情報がアカウントの資格情報と一致していることを確認してください。連絡先に資格情報を共有するように依頼できます。";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、あなたが共有フォルダにアクセスする前に、あなたが情報を受け取る連絡先を認証するようお願いしています。";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="共有フォルダにアクセスするには、あなたと共有した人もあなたを承認する必要があります。";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="あなたの資格情報";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";

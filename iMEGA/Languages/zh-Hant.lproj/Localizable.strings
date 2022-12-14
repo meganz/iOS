@@ -467,9 +467,9 @@
 /* Title for the action that allows you to replace a file. */
 "replace"="取代";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1個檔案已被移至垃圾筒";
+"fileMovedToRubbishBinMessage"="1個檔案已移到垃圾筒";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d個檔案已移至垃圾筒";
+"filesMovedToRubbishBinMessage"="%d 個檔案已被移動到垃圾桶";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="已將1個資料夾移至垃圾筒";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -1695,7 +1695,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="您在雲端的照片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的必要功能，我們現已為您提供這項服務。請立即建立您的帳戶。";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的必要功能，我們現已為您提供這項服務。立即建立您的帳戶。";
 /* Button which triggers the initial setup */
 "Setup MEGA"="設定MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="連結已複製到剪貼簿";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="過去的會議";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="驗證%@";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="聯絡人驗證";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="我們使用零知識加密保護您的資料。為確保額外的安全性，我們會要求您驗證您與之共享資訊的聯絡人，他們才能存取共享資料夾。";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="若要驗證您的聯絡人，請確定您在上面看到的憑證與他們的帳戶憑證相匹配。您可以要求對方分享他們的憑證給您。";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="我們使用零知識加密保護您的資料。為確保額外的安全性，我們會要求您驗證您從之接收資訊的聯絡人，您才能存取共享資料夾。";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="若要存取共享資料夾，與您共享資料夾的人也會對您進行驗證。";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="您的憑證";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
