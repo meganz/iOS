@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="클립보드에 링크 복사됨";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="지난 회의";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="%@님 확인";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="당신의 자격 증명";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";

@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="การประชุมที่ผ่านมา";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="ตรวจสอบ %@";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="เราปกป้องข้อมูลของคุณด้วยกระบวนการเข้ารหัส zero-knowledge และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณแชร์ข้อมูลอยู่ด้วยนั้น ก่อนที่จะให้สิทธิ์ในการเข้าถึงโฟลเดอร์ที่แชร์ได้";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="ในการตรวจสอบผู้ติดต่อของคุณ ตรวจสอบให้แน่ใจว่าข้อมูลประจำตัวที่แสดงด้านบนตรงกับข้อมูลประจำตัวของคุณ คุณสามารถขอให้ผู้ติดต่อของคุณให้ข้อมูลประจำตัวแก่คุณได้";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="เราปกป้องข้อมูลของคุณด้วยกระบวนการเข้ารหัส zero-knowledge และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณได้รับข้อมูลอยู่ด้วยนั้น ก่อนที่จะให้สิทธิ์ในการเข้าถึงโฟลเดอร์ที่แชร์ได้";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="หากต้องการเข้าถึงโฟลเดอร์ที่แชร์ บุคคลที่แชร์โฟลเดอร์กับคุณควรมีการตรวจสอบด้วย";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="ข้อมูลประจำตัวของคุณ";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";

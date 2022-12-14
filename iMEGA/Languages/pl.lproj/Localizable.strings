@@ -99,13 +99,13 @@
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Twoje konto zostało zlikwidowane z powodu naruszenia warunków korzystania z usług firmy MEGA, w tym między innymi klauzuli 15.";
 /* Message shown when the user writes an invalid format in the email field */
-"emailInvalidFormat"="Wprowadź poprawny adres email";
+"emailInvalidFormat"="Wprowadź poprawny adres e-mail";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="Format adresu email jest nie prawidłowy";
+"theEmailAddressFormatIsInvalid"="Format adresu e-mail jest nie prawidłowy";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Wprowadź poprawne hasło";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Email";
+"emailPlaceholder"="E-mail";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Hasło";
 /* Account, Change Password view. Error shown when you type your current password. */
@@ -145,7 +145,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Podany adres e-mail został już użyty podczas rejestracji";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="Oczekiwanie na potwierdzenie adresu email.";
+"awaitingEmailConfirmation"="Oczekiwanie na potwierdzenie adresu e-mail.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Wprowadź hasło, w celu potwierdzenia konta";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
@@ -153,7 +153,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Błędne hasło";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Błąd. Ten adres email jest już używany.";
+"emailAlreadyInUse"="Błąd. Ten adres e-mail jest już używany.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Zwiększ dostępną, wolną pamięć na urządzeniu";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -503,7 +503,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Automatyczne tworzenie kopii zapasowych zdjęć i filmów na dysku Cloud.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Włącz wgrwyanie plików z kamery";
+"enableCameraUploadsButton"="Włącz przesyłanie zdjęć z kamery";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Przesyłanie zdjęć z kamery odblokowane";
 /* Message shown when the camera uploads have been completed */
@@ -573,7 +573,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d katalogów";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Wprowadź adres email";
+"addFromEmail"="Wprowadź adres e-mail";
 /* Title of Shared Items section */
 "sharedItems"="Udostępnione";
 /* Title of the tab bar item for the Shared Items section */
@@ -615,7 +615,7 @@
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Dodaj";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="Nie ma potrzeby podawania własnego adresu email";
+"noNeedToAddYourOwnEmailAddress"="Nie ma potrzeby podawania własnego adresu e-mail";
 /* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
 "dialog.inviteContact.outgoingContactRequest"="Użytkownik [X] został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Success message shown when some contacts have been invited */
@@ -685,7 +685,7 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Napisz swoją wiadomość tutaj:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Nie ustawiono adresu email na Twoim urządzeniu";
+"noEmailAccountConfigured"="Nie ustawiono adresu e-mail na Twoim urządzeniu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Polityka Prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
@@ -897,23 +897,23 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nowy adres e-mail";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Potwierdź email";
+"confirmEmail"="Potwierdź e-mail";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Potwierdź nowy adres email";
+"confirmNewEmail"="Potwierdź nowy adres e-mail";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Zmień adres email";
+"Change Email"="Zmień adres e-mail";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="Nowy i stary adres email muszą być różne";
+"oldAndNewEmailMatch"="Nowy i stary adres e-mail muszą być różne";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Adresy email nie są jednakowe";
+"emailsDoNotMatch"="Adresy e-mail nie są jednakowe";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="Link potwierdzający został już wygenerowany dla podanego adresu email.";
+"emailAddressChangeAlreadyRequested"="Link potwierdzający został już wygenerowany dla podanego adresu e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Przejdz do skrzynki email i kliknij w otrzymany link aby potwierdzić nowy adres email.";
+"emailIsChanging_description"="Przejdz do skrzynki e-mail i kliknij w otrzymany link aby potwierdzić nowy adres e-mail.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Wprowadź swoje hasło w celu weryfikacji adresu email";
+"verifyYourEmailAddress_description"="Wprowadź swoje hasło w celu weryfikacji adresu e-mail";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Gratulacje, Twój nowy adresy email dla tego konta MEGA jest: [X]";
+"congratulationsNewEmailAddress"="Gratulacje, Twój nowy adresy e-mail dla tego konta MEGA jest: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Zamknij pozostałe sesje";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -989,7 +989,7 @@
 /*  */
 "howItWorksMain"="Twój znajomy musi zarejestrować darmowe konto na MEGA i [S]zainstalować przynajmniej jedną aplikację kliencką MEGA[/S] (albo Aplikację MEGA Desktop, albo jedną z naszych Aplikacji MEGA Mobile)";
 /*  */
-"howItWorksSecondary"="Możesz powiadomić znajomego dowolnym sposobem. Zdobędziesz nowe limity tylko gdy wpiszesz emaile znajomych tutaj.";
+"howItWorksSecondary"="Możesz powiadomić znajomego dowolnym sposobem. Zdobędziesz nowe limity tylko gdy wpiszesz e-maile znajomych tutaj.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Promocja darmowych limitów nie obejmuje sytuacji kiedy zapraszasz osoby, które już wcześniej posiadały konto na MEGA.";
 /* Header of block with achievements bonuses. */
@@ -1247,7 +1247,7 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Zweryfikuj uprawnienia";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Weryfikacja";
+"verify"="Potwierdź";
 /* Button title */
 "verified"="Zweryfikowany";
 /* A button title to delete the history of a chat. */
@@ -1369,7 +1369,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Czy na pewno chcesz przerwać proces rejestracji?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Jeżeli wprowadzony adres email jest błędny, popraw go i naciśnij „Wyślij ponownie”.";
+"misspelledEmailAddress"="Jeżeli wprowadzony adres e-mail jest błędny, popraw go i naciśnij „Wyślij ponownie”.";
 /* A button to resend the email confirmation. */
 "resend"="Wyślin ponownie";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2021,7 +2021,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Klknij spację, aby wprowadzić wiele wiadomości e-mail";
 /* Text used as a section title or similar */
-"Enter Email"="Wpisz adres email";
+"Enter Email"="Wpisz adres e-mail";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="KONTAKTY NA MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -2171,7 +2171,7 @@
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Dlaczego to widzę?";
 /* Text to notify user an email has been sent */
-"Email sent"="Email został wysłany";
+"Email sent"="E-mail został wysłany";
 /* Title of a helping view about locked accounts */
 "Locked Accounts"="Zablokowane konta";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
@@ -2387,7 +2387,7 @@
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Niedostępne";
 /* Error text shown when requesting email for email verification within 10 minutes */
-"Email already sent. Please wait a few minutes before trying again."="Email już wysłany. Poczekaj kilka minut, zanim spróbujesz ponownie.";
+"Email already sent. Please wait a few minutes before trying again."="E-mail już wysłany. Poczekaj kilka minut, zanim spróbujesz ponownie.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
 "Manage Chat History"="Zarządzaj historią czatów";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
@@ -2561,7 +2561,7 @@
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="Twoje dane są zagrożone!";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Niestety nie podjąłeś żadnych działań w ciągu <b>%@</b> od momentu wysłania naszych emaili do <b>%@</b>, na <b>%@</b>. Nadal używasz <b>%@</b> przestrzeni dyskowej, co przekracza Twój bezpłatny limit. Prosimy o zapoznanie się z wysłanymi przez nas emailami, w których znajdziesz więcej informacji na temat tego, co powinieneś zrobić.</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Niestety nie podjąłeś żadnych działań w ciągu <b>%@</b> od momentu wysłania naszych e-maili do <b>%@</b>, na <b>%@</b>. Nadal używasz <b>%@</b> przestrzeni dyskowej, co przekracza Twój bezpłatny limit. Prosimy o zapoznanie się z wysłanymi przez nas e-mailami, w których znajdziesz więcej informacji na temat tego, co powinieneś zrobić.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
 "dialog.storage.paywall.final.detail"="<paragraph>Niestety nie zaktualizowałeś jeszcze swojego konta. Jeśli nie dokonasz aktualizacji teraz, Twoje dane zostaną jutro usunięte. Więcej informacji na temat tego, co musisz zrobić, znajdziesz w swoim e-mailu.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="Link skopiowany do schowka";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Dotychczasowe spotkania";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="Zweryfikuj %@";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="Twoje uprawnienia";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";

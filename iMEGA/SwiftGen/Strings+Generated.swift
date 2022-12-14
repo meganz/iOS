@@ -205,7 +205,7 @@ public enum Strings {
     public static let agreeWithTheMEGATermsOfService = Strings.tr("Localizable", "agreeWithTheMEGATermsOfService")
     /// Albums
     public static let albums = Strings.tr("Localizable", "Albums")
-    /// Alias or Nickname
+    /// Alias or nickname
     public static let aliasNickname = Strings.tr("Localizable", "Alias/ Nickname")
     /// All
     public static let all = Strings.tr("Localizable", "all")
@@ -1635,7 +1635,7 @@ public enum Strings {
     public static let removeFilesOlderThan = Strings.tr("Localizable", "Remove files older than")
     /// Remove Label
     public static let removeLabel = Strings.tr("Localizable", "Remove Label")
-    /// Remove Nickname
+    /// Remove nickname
     public static let removeNickname = Strings.tr("Localizable", "Remove Nickname")
     /// Remove Password
     public static let removePassword = Strings.tr("Localizable", "Remove Password")
@@ -1889,7 +1889,7 @@ public enum Strings {
     public static let serversAreTooBusy = Strings.tr("Localizable", "serversAreTooBusy")
     /// Sessions closed
     public static let sessionsClosed = Strings.tr("Localizable", "sessionsClosed")
-    /// Set Nickname
+    /// Set nickname
     public static let setNickname = Strings.tr("Localizable", "Set Nickname")
     /// Set Password
     public static let setPassword = Strings.tr("Localizable", "Set Password")

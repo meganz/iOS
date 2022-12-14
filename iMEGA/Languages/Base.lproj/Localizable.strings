@@ -2105,13 +2105,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inactive chat";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Set Nickname";
+"Set Nickname"="Set nickname";
 /* Contact details screen: Edit the alias(nickname) for a user */
 "Edit Nickname"="Edit Nickname";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Remove Nickname";
+"Remove Nickname"="Remove nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias or Nickname";
+"Alias/ Nickname"="Alias or nickname";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Payment overdue";
 /* Business account status */
@@ -3141,7 +3141,7 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Past meetings";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title" = "Verify %@";
+"general.menuAction.verifyContact.title"="Verify %@";
 /* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
 "sharedItems.contactVerification.title"="Contact verification";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
