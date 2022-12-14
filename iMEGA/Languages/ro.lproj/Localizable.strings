@@ -503,7 +503,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Fă backup automat fotografiilor și videoclipurilor în unitatea cloud.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activează încărcări cameră";
+"enableCameraUploadsButton"="Activează Încărcări cameră";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Încărcări cameră activată";
 /* Message shown when the camera uploads have been completed */
@@ -3133,10 +3133,26 @@
 /* Content message of expired Pro Flexi account view */
 "account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
 /* Label to indicate the user about the activation of a meeting link */
-"meetings.info.meetingLink"="Link al întâlnirii";
+"meetings.info.meetingLink"="Link pentru întâlnire";
 /* Label to inform user about privacy of sharing a chat link */
 "meetings.info.shareOptions.title"="Anyone with this link can join the meeting and view the meeting chat.";
 /* HUD message to inform user that the link is in the clipboard */
-"meetings.info.shareOptions.shareLink.linkCopied"="Copied link to clipboard";
+"meetings.info.shareOptions.shareLink.linkCopied"="Link copiat în clipboard";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Întâlniri din trecut";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="Verifică %@";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="Acreditările tale";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";

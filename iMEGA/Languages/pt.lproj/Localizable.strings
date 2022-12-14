@@ -1139,7 +1139,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Esta compra pelo aplicativo não está disponível na App Store neste momento. Por favor, verifique as configurações de pagamento do seu Apple ID.";
+"inAppPurchase.error.alert.title.notAvailable"="Esta compra pelo aplicativo não está disponível na App Store neste momento. Por favor, revise as configurações de pagamento do seu Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Configurações da App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -2617,7 +2617,7 @@
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="Reunião %@";
 /* Start meeting button title */
-"meetings.createMeeting.startMeeting"="Fazer uma reunião";
+"meetings.createMeeting.startMeeting"="Começar a reunião";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Reunião finalizada";
 /* Meeting ended Alert button -- View Meeting Chat history. */
@@ -3081,7 +3081,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "chat.sendLocation.map.hybrid"="Híbrido";
 /* Meeting - start converstion context menu text for starting a meeting */
-"meetings.startConversation.contextMenu.startMeeting"="Fazer uma reunião agora";
+"meetings.startConversation.contextMenu.startMeeting"="Começar a reunião agora";
 /* Meeting - start conversation context menu text for joining a meeting */
 "meetings.startConversation.contextMenu.joinMeeting"="Entrar na reunião";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
@@ -3140,3 +3140,19 @@
 "meetings.info.shareOptions.shareLink.linkCopied"="Link copiado para a área de transferência";
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Reuniões anteriores";
+/* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
+"general.menuAction.verifyContact.title"="Confirmar %@";
+/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
+"sharedItems.contactVerification.title"="";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos com os quais compartilha informações antes que eles possam acessar as pastas compartilhadas.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
+"sharedItems.contactVerification.section.myCredentials.message"="Para verificar o seu contato, confirme que as credenciais que você vê acima correspondem às credenciais da conta dele. Você pode pedir que eles compartilhem as credenciais com você.";
+/* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos dos quais você recebe informações antes de poder acessar as pastas compartilhadas.";
+/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acessar a pasta compartilhada, a pessoa que a compartilhou com você também deve verificar as suas credenciais.";
+/* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"verifyCredentials.yourCredentials.title"="Suas credenciais";
+/* Chat Listing - row description for the created meeting */
+"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
