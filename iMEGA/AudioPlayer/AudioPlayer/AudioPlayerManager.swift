@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 @objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     @objc static var shared = AudioPlayerManager()
@@ -8,6 +9,7 @@ import Foundation
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
     private var nodeInfoUseCase: NodeInfoUseCaseProtocol?
+    private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
     
     override private init() {
         super.init()
@@ -256,8 +258,8 @@ import Foundation
     }
     
     func closePlayer() {
-        player?.close() {
-            AVAudioSession.sharedInstance().mnz_configureAVSessionForCall()
+        player?.close() { [weak self] in
+            self?.audioSessionUseCase.configureCallAudioSession()
         }
         
         player?.updateContentViews()
