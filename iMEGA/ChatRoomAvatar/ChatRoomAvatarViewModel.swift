@@ -19,8 +19,6 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private var loadingChatRoomAvatarTask: Task<Void, Never>?
     private var loadingAvatarSubscription: AnyCancellable?
     
-    private var hasInitiatedFetchingAvatar = false
-    
     init(
         title: String,
         peerHandle: HandleEntity,
@@ -44,19 +42,8 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     func loadData(isRightToLeftLanguage: Bool) {
         self.isRightToLeftLanguage = isRightToLeftLanguage
         
-        guard hasInitiatedFetchingAvatar == false else { return }
-        
-        hasInitiatedFetchingAvatar = true
-        let subject = PassthroughSubject<Void, Never>()
-
-        loadingAvatarSubscription = subject
-            .debounce(for: .seconds(1.0), scheduler: DispatchQueue.global())
-            .sink { [weak self] _ in
-                guard let self else { return }
-                self.loadingChatRoomAvatarTask = self.createLoadingChatRoomAvatarTask(isRightToLeftLanguage: isRightToLeftLanguage)
-            }
-        
-        subject.send()
+        guard self.loadingChatRoomAvatarTask == nil else { return }
+        self.loadingChatRoomAvatarTask = self.createLoadingChatRoomAvatarTask(isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
     //MARK: - Private methods
