@@ -2,20 +2,10 @@ import UIKit
 import MEGADomain
 
 struct AlbumContentRouter: Routing {
-    private let cameraUploadNode: NodeEntity?
-    private let album: AlbumEntity?
+    private let album: AlbumEntity
     
-    init(cameraUploadNode: NodeEntity?, album: AlbumEntity?) {
-        self.cameraUploadNode = cameraUploadNode
+    init(album: AlbumEntity) {
         self.album = album
-    }
-    
-    private var isFavouriteAlbum: Bool {
-        cameraUploadNode != nil && album == nil
-    }
-    
-    private var albumName: String {
-        isFavouriteAlbum ? Strings.Localizable.CameraUploads.Albums.Favourites.title : album?.name ?? ""
     }
     
     func build() -> UIViewController {
@@ -42,14 +32,11 @@ struct AlbumContentRouter: Routing {
             fileSearchRepo: FileSearchRepository.newRepo
         )
         
-        let viewModel = AlbumContentViewModel(cameraUploadNode: cameraUploadNode,
-                                              album: album,
-                                              albumName: albumName,
-                                              albumContentsUseCase: albumContentsUseCase,
-                                              router: self)
-        let vc = AlbumContentViewController(viewModel: viewModel)
-        
-        return vc
+        let viewModel = AlbumContentViewModel(
+            album: album,
+            albumContentsUseCase: albumContentsUseCase,
+            router: self)
+        return AlbumContentViewController(viewModel: viewModel)
     }
     
     func start() {}

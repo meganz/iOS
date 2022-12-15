@@ -47,17 +47,38 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
     // MARK: - Private
     
     private func loadSystemAlbums() async throws -> [AlbumEntity] {
-        let allPhotos = try await fileSearchRepository.allPhotos().filter { $0.hasThumbnail }
+        let allPhotos = try await allSortedThumbnailPhotosAndVideos()
         return await createSystemAlbums(allPhotos)
     }
     
+    private func allSortedThumbnailPhotosAndVideos() async throws -> [NodeEntity] {
+        async let allPhotos = try await fileSearchRepository.allPhotos()
+        async let allVideos = try await fileSearchRepository.allVideos()
+        var allThumbnailPhotosAndVideos = try await [allPhotos, allVideos]
+            .flatMap { $0 }
+            .filter { $0.hasThumbnail }
+        allThumbnailPhotosAndVideos.sort {
+            if $0.modificationTime == $1.modificationTime {
+                return $0.handle > $1.handle
+            }
+            return $0.modificationTime > $1.modificationTime
+        }
+        return allThumbnailPhotosAndVideos
+    }
+    
     private func createSystemAlbums(_ photos: [NodeEntity]) async -> [AlbumEntity] {
+        var coverOfFavouritePhoto: NodeEntity?
         var coverOfGifPhoto: NodeEntity?
         var coverOfRawPhoto: NodeEntity?
+        var numOfFavouritePhotos = 0
         var numOfGifPhotos = 0
         var numOfRawPhotos = 0
         
         photos.forEach { photo in
+            if photo.isFavourite {
+                numOfFavouritePhotos += 1
+                if coverOfFavouritePhoto == nil { coverOfFavouritePhoto = photo }
+            }
             if mediaUseCase.isRawImage(photo.name) {
                 numOfRawPhotos += 1
                 if coverOfRawPhoto == nil { coverOfRawPhoto = photo }
@@ -68,6 +89,8 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         }
         
         var albums = [AlbumEntity]()
+        albums.append(AlbumEntity(id: AlbumIdEntity.favourite.value, name: "", coverNode: coverOfFavouritePhoto, count: numOfFavouritePhotos, type: .favourite))
+        
         if let coverOfGifPhoto {
             albums.append(AlbumEntity(id: AlbumIdEntity.gif.value, name: "", coverNode: coverOfGifPhoto, count: numOfGifPhotos, type: .gif))
         }
