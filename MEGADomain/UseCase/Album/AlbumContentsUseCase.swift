@@ -41,8 +41,16 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     }
     
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
-        let allPhotos = try await fileSearchRepo.allPhotos().filter { $0.hasThumbnail }
-        return await filter(photos: allPhotos, forAlbum: album)
+        async let allPhotos = try await fileSearchRepo.allPhotos()
+        if (album.type == .favourite) {
+            async let allVideos = try fileSearchRepo.allVideos()
+            return try await [allPhotos, allVideos]
+                .flatMap { $0 }
+                .filter { $0.hasThumbnail && $0.isFavourite }
+        } else {
+            let allThumbnailPhotos = try await allPhotos.filter { $0.hasThumbnail }
+            return filter(photos: allThumbnailPhotos, forAlbum: album)
+        }
     }
     
     // MARK: Private
@@ -53,7 +61,7 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
         return isImage || (isVideo && node.parentHandle == container.cameraUploadNode?.handle || node.parentHandle == container.mediaUploadNode?.handle)
     }
     
-    private func filter(photos: [NodeEntity], forAlbum album: AlbumEntity) async -> [NodeEntity] {
+    private func filter(photos: [NodeEntity], forAlbum album: AlbumEntity) -> [NodeEntity] {
         var nodes = [NodeEntity]()
         if album.type == .raw {
             nodes = photos.filter { mediaUseCase.isRawImage($0.name) }

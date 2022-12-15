@@ -19,16 +19,8 @@ struct AlbumListView: View {
                             if viewModel.isCreateAlbumFeatureFlagEnabled {
                                 CreateAlbumCell()
                             }
-                            
-                            router.cell(withCameraUploadNode: viewModel.cameraUploadNode, album: nil)
-                                .onTapGesture(count: 1)  {
-                                    viewModel.album = nil
-                                    isPresenting.toggle()
-                                }
-                                .clipped()
-                            
                             ForEach(viewModel.albums, id: \.self) { album in
-                                router.cell(withCameraUploadNode: nil, album: album)
+                                router.cell(album: album)
                                     .onTapGesture(count: 1)  {
                                         viewModel.album = album
                                         isPresenting.toggle()
@@ -42,8 +34,7 @@ struct AlbumListView: View {
             }
         }
         .fullScreenCover(isPresented: $isPresenting) {
-            router.albumContent(for: viewModel.cameraUploadNode, album: viewModel.album)
-                .ignoresSafeArea()
+            albumContent
         }
         .padding([.top, .bottom], 10)
         .onAppear {
@@ -51,6 +42,20 @@ struct AlbumListView: View {
         }
         .onDisappear {
             viewModel.cancelLoading()
+        }
+    }
+    
+    @ViewBuilder
+    private var albumContent: some View {
+        if let album = viewModel.album {
+            router.albumContent(album: album)
+                .ignoresSafeArea()
+        } else {
+            ZStack {
+                EmptyView()
+            }.onAppear {
+                isPresenting.toggle()
+            }
         }
     }
 }

@@ -5,18 +5,22 @@ import MEGADomainMock
 
 final class FileSearchRepositoryTests: XCTestCase {
     
-    private let photos = [
-            NodeEntity(name: "1.raw", handle: 1),
-            NodeEntity(name: "2.nef", handle: 2),
-            NodeEntity(name: "3.cr2", handle: 3),
-            NodeEntity(name: "4.dng", handle: 4),
-            NodeEntity(name: "5.gif", handle: 5)]
+    private let rootNode = MockNode(handle: 0, name: "root")
     
-    func testAllPhotos_onAlbumScreen_shouldReturnPhotos() async throws {
-        let sut = MockFileSearchRepository(nodes: photos)
-        let photos = try await sut.allPhotos()
-        
-        XCTAssertTrue(photos.count == photos.count)
+    func testAllPhotos_onFileSearchNodeList_shouldReturnPhotos() async throws {
+        let nodes = photoNodes()
+        let sdk = MockSdk(nodes: nodes, megaRootNode: rootNode)
+        let repo = FileSearchRepository(sdk: sdk)
+        let photos = try await repo.allPhotos()
+        XCTAssertEqual(photos.count, nodes.count)
+    }
+    
+    func testAllVideos_onFileSearchNodeList_shouldReturnVideos() async throws {
+        let nodes = videoNodes()
+        let sdk = MockSdk(nodes: nodes, megaRootNode: rootNode)
+        let repo = FileSearchRepository(sdk: sdk)
+        let videos = try await repo.allVideos()
+        XCTAssertEqual(videos.count, nodes.count)
     }
     
     func testStartMonitoring_onAlbumScreen_shouldSetCallBack() throws {
@@ -35,5 +39,20 @@ final class FileSearchRepositoryTests: XCTestCase {
         repo.stopMonitoringNodesUpdate()
         
         XCTAssertFalse(sdk.hasGlobalDelegate)
+    }
+    
+    // MARK: Private
+    
+    private func photoNodes() -> [MockNode] {
+        [MockNode(handle: 1, name: "1.raw"),
+                     MockNode(handle: 2, name: "2.nef"),
+                     MockNode(handle: 3, name: "3.cr2"),
+                     MockNode(handle: 4, name: "4.dng"),
+                     MockNode(handle: 5, name: "5.gif")]
+    }
+    
+    private func videoNodes() -> [MockNode] {
+        [MockNode(handle: 1, name: "1.mp4"),
+                     MockNode(handle: 2, name: "2.mov")]
     }
 }
