@@ -239,6 +239,7 @@
 		32D1676D29399F89008C5ED6 /* SlideShowRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D1676C29399F89008C5ED6 /* SlideShowRepository.swift */; };
 		32D1676F29399FA6008C5ED6 /* SlideShowRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D1676E29399FA6008C5ED6 /* SlideShowRepositoryTests.swift */; };
 		32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */; };
+		32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */; };
 		32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */; };
 		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
 		32F9E68028348B320002132D /* AlbumContentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67F28348B320002132D /* AlbumContentsUseCase.swift */; };
@@ -2854,6 +2855,7 @@
 		32D1676C29399F89008C5ED6 /* SlideShowRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowRepository.swift; sourceTree = "<group>"; };
 		32D1676E29399FA6008C5ED6 /* SlideShowRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowRepositoryTests.swift; sourceTree = "<group>"; };
 		32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSlideShowDataSource.swift; sourceTree = "<group>"; };
+		32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlbumCell.swift; sourceTree = "<group>"; };
 		32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModelTests.swift; sourceTree = "<group>"; };
 		32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
 		32F9E67F28348B320002132D /* AlbumContentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUseCase.swift; sourceTree = "<group>"; };
@@ -5400,6 +5402,7 @@
 			children = (
 				12397E1C2820C47100A30CCC /* AlbumCell.swift */,
 				12397E1E2820C47E00A30CCC /* AlbumCellViewModel.swift */,
+				32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -13004,6 +13007,7 @@
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				C4653A4F274BDA9C00BB14C2 /* BucketHeaderView.swift in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
+				32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				0D7E5FA62634E1E800C5CB2A /* DownloadFileRepository.swift in Sources */,
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,

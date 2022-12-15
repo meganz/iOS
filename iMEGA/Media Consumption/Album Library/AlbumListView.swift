@@ -16,6 +16,10 @@ struct AlbumListView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns, spacing: 0) {
+                            if viewModel.isCreateAlbumFeatureFlagEnabled {
+                                CreateAlbumCell()
+                            }
+                            
                             router.cell(withCameraUploadNode: viewModel.cameraUploadNode, album: nil)
                                 .onTapGesture(count: 1)  {
                                     viewModel.album = nil
