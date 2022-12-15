@@ -15,6 +15,14 @@ public final class ChatRepository: ChatRepositoryProtocol {
         self.chatSDK = chatSDK
     }
     
+    public func myUserHandle() -> HandleEntity {
+        chatSDK.myUserHandle
+    }
+    
+    public func isGuestAccount() -> Bool {
+        sdk.isGuestAccount
+    }
+    
     public func chatStatus() -> ChatStatusEntity {
         chatSDK.onlineStatus().toChatStatusEntity()
     }

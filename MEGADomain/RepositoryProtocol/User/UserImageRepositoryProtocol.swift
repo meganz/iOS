@@ -1,7 +1,7 @@
 import Combine
 import MEGADomain
 
-protocol UserImageRepositoryProtocol {
+protocol UserImageRepositoryProtocol: RepositoryProtocol {
     func loadUserImage(withUserHandle handle: String?,
                        destinationPath: String,
                        completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)

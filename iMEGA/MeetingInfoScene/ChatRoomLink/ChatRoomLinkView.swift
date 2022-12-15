@@ -1,7 +1,8 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ChatRoomLinkView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     @StateObject var viewModel: ChatRoomLinkViewModel
 
     var body: some View {
@@ -32,6 +33,7 @@ struct ChatRoomLinkView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
+        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
     }
     
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {

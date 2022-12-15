@@ -1,14 +1,17 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct MeetingInfoView: View {
     @Environment(\.colorScheme) private var colorScheme
 
+    private enum Constants {
+        static let spacing: CGFloat = 20
+    }
+    
     @ObservedObject var viewModel: MeetingInfoViewModel
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: Constants.spacing) {
                 MeetingInfoHeaderView()
                     .environmentObject(viewModel)
                  
@@ -26,18 +29,21 @@ struct MeetingInfoView: View {
                     isOn: $viewModel.isAllowNonHostToAddParticipantsOn) { newValue in
                         viewModel.allowNonHostToAddParticipantsValueChanged(to: newValue)
                     }
+                    .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
                 
                 DisclosureView(
                     image: Asset.Images.Meetings.Info.sharedFilesInfo.name,
                     text: Strings.Localizable.sharedFiles) {
                         viewModel.sharedFilesViewTapped()
                     }
+                    .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
                 
                 DisclosureView(
                     image: Asset.Images.Meetings.Info.manageChatHistory.name,
                     text: Strings.Localizable.manageChatHistory) {
                         viewModel.manageChatHistoryViewTapped()
                     }
+                    .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
                 
                 KeyRotationView(
                     title: Strings.Localizable.enableEncryptedKeyRotation,
@@ -47,14 +53,18 @@ struct MeetingInfoView: View {
                         viewModel.enableEncryptionKeyRotationViewTapped()
                     }
                 
+                if let chatRoomParticipantsListViewModel = viewModel.chatRoomParticipantsListViewModel {
+                    ChatRoomParticipantsListView(viewModel: chatRoomParticipantsListViewModel)
+                }
+                
                 if $viewModel.isUserInChat.wrappedValue {
-                    LeaveChatButtonView(text: viewModel.isChatPreview() ? Strings.Localizable.close : Strings.Localizable.leaveGroup) {
+                    LeaveChatButtonView(text: viewModel.isChatPreview() ? Strings.Localizable.close : Strings.Localizable.Meetings.Info.leaveMeeting) {
                         viewModel.leaveGroupViewTapped()
                     }
                 }
             }
         }
         .padding(.vertical)
-        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : Color(Colors.General.White.f7F7F7.name))
+        .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
     }
 }

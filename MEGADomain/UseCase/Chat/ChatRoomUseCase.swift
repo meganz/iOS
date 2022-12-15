@@ -23,9 +23,13 @@ protocol ChatRoomUseCaseProtocol {
     func userEmails(forChatId chatId: ChatId) async throws -> [HandleEntity: String]
     mutating func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never>
     mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
+    func ownPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never>
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never>
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
+    func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
+    func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
 }
 
 struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -216,6 +220,10 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
         chatRoomRepo.userPrivilegeChanged(forChatId: chatId)
     }
     
+    func ownPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        chatRoomRepo.ownPrivilegeChanged(forChatId: chatId)
+    }
+    
     mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
         if chatRoomRepo.isChatRoomOpen(chatId: chatId) == false {
             try? chatRoomRepo.openChatRoom(chatId: chatId) { _ in }
@@ -230,5 +238,17 @@ struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol, U: UserStoreRepositoryProt
 
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool {
         await chatRoomRepo.leaveChatRoom(chatRoom: chatRoom)
+    }
+    
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
+        chatRoomRepo.updateChatPrivilege(chatRoom: chatRoom, userHandle: userHandle, privilege: privilege)
+    }
+    
+    func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {
+        chatRoomRepo.invite(toChat: chat, userId: userId)
+    }
+    
+    func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) {
+        chatRoomRepo.remove(fromChat: chat, userId: userId)
     }
 }
