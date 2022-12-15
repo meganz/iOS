@@ -10,11 +10,12 @@ struct CreateAlbumCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack (alignment: .center) {
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(Color(Colors.General.Gray.ebebeb.color))
+                Color(Colors.General.Gray.ebebeb.color)
+                    .aspectRatio(contentMode: .fill)
+                    .cornerRadius(6)
                 
                 Image(systemName: "plus")
-                    .frame(width: 18)
+                    .font(.system(size: UIDevice.current.iPad ? 22: 20))
                     .foregroundColor(plusIconColor)
             }
             
