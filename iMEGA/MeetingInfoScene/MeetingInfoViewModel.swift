@@ -10,6 +10,14 @@ protocol MeetingInfoRouting {
     func showShareActivity(_ link: String, title: String?, description: String?)
     func showSendToChat(_ link: String)
     func showLinkCopied()
+    func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity)
+    func inviteParticipants(
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        excludeParticpantsId: Set<HandleEntity>,
+        selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
+    )
+    func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
+    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
 }
 
 final class MeetingInfoViewModel: ObservableObject {
@@ -31,6 +39,7 @@ final class MeetingInfoViewModel: ObservableObject {
     var chatRoomNotificationsViewModel: ChatRoomNotificationsViewModel?
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     var chatRoomLinkViewModel: ChatRoomLinkViewModel?
+    var chatRoomParticipantsListViewModel: ChatRoomParticipantsListViewModel?
 
     var meetingLink: String?
     
@@ -95,6 +104,7 @@ final class MeetingInfoViewModel: ObservableObject {
             chatRoom: chatRoom,
             scheduledMeeting: scheduledMeeting,
             chatLinkUseCase: chatLinkUseCase)
+        chatRoomParticipantsListViewModel = ChatRoomParticipantsListViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatRoom: chatRoom)
     }
     
     private func initSubscriptions() {

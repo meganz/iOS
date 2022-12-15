@@ -1,6 +1,12 @@
 import SwiftUI
 
 struct LeaveChatButtonView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private enum Constants {
+        static let viewHeight: CGFloat = 44
+    }
+    
     let text: String
     let action: (() -> Void)
 
@@ -16,6 +22,7 @@ struct LeaveChatButtonView: View {
             }
             Divider()
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: Constants.viewHeight)
+        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
     }
 }

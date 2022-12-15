@@ -2,6 +2,9 @@ import Combine
 import MEGADomain
 
 struct UserImageRepository: UserImageRepositoryProtocol {
+    static var newRepo: UserImageRepository {
+        UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    }
    
     private let sdk: MEGASdk
     private var userAvatarChangeSubscriber: UserAvatarChangeSubscriber?

@@ -3158,3 +3158,7 @@
 "verifyCredentials.yourCredentials.title"="Your credentials";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="See more";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Leave meeting";

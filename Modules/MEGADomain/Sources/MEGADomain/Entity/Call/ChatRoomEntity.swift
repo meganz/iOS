@@ -81,3 +81,8 @@ public struct ChatRoomEntity {
     }
 }
 
+extension ChatRoomEntity: Equatable {
+    public static func == (lhs: ChatRoomEntity, rhs: ChatRoomEntity) -> Bool {
+        lhs.chatId == rhs.chatId
+    }
+}
