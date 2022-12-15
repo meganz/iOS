@@ -17,6 +17,10 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     var albumLoadingTask: Task<Void, Never>?
     private var usecase: AlbumListUseCaseProtocol
     
+    var isCreateAlbumFeatureFlagEnabled: Bool {
+        FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum)
+    }
+    
     init(usecase: AlbumListUseCaseProtocol) {
         self.usecase = usecase
     }
