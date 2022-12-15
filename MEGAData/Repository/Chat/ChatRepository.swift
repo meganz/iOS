@@ -72,7 +72,12 @@ public final class ChatRepository: ChatRepositoryProtocol {
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         chatSDK
             .getAllScheduledMeetings()
-            .compactMap { $0.toScheduledMeetingEntity() }
+            .compactMap {
+                guard !$0.isCancelled else {
+                    return nil
+                }
+                return $0.toScheduledMeetingEntity()
+            }
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
