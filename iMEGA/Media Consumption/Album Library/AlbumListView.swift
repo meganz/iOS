@@ -4,8 +4,6 @@ struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
     var router: AlbumListViewRouting
     
-    @State private var isPresenting = false
-    
     var body: some View {
         ZStack(alignment: .topTrailing)  {
             GeometryReader { proxy in
@@ -23,7 +21,6 @@ struct AlbumListView: View {
                                 router.cell(album: album)
                                     .onTapGesture(count: 1)  {
                                         viewModel.album = album
-                                        isPresenting.toggle()
                                     }
                                     .clipped()
                             }
@@ -33,8 +30,9 @@ struct AlbumListView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $isPresenting) {
-            albumContent
+        .fullScreenCover(item: $viewModel.album) {
+            router.albumContainer(album: $0)
+                .ignoresSafeArea()
         }
         .padding([.top, .bottom], 10)
         .onAppear {
@@ -42,20 +40,6 @@ struct AlbumListView: View {
         }
         .onDisappear {
             viewModel.cancelLoading()
-        }
-    }
-    
-    @ViewBuilder
-    private var albumContent: some View {
-        if let album = viewModel.album {
-            router.albumContent(album: album)
-                .ignoresSafeArea()
-        } else {
-            ZStack {
-                EmptyView()
-            }.onAppear {
-                isPresenting.toggle()
-            }
         }
     }
 }
