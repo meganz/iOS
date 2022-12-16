@@ -4,7 +4,7 @@ import MEGADomain
 
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity) -> AlbumCell
-    func albumContent(album: AlbumEntity) -> AlbumContainerWrapper
+    func albumContainer(album: AlbumEntity) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
@@ -17,7 +17,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return AlbumCell(viewModel: vm)
     }
     
-    func albumContent(album: AlbumEntity) -> AlbumContainerWrapper {
+    func albumContainer(album: AlbumEntity) -> AlbumContainerWrapper {
         return AlbumContainerWrapper(album: album)
     }
     

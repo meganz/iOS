@@ -12,7 +12,7 @@ final class FileSearchRepositoryTests: XCTestCase {
         let sdk = MockSdk(nodes: nodes, megaRootNode: rootNode)
         let repo = FileSearchRepository(sdk: sdk)
         let photos = try await repo.allPhotos()
-        XCTAssertEqual(photos.count, nodes.count)
+        XCTAssertEqual(photos, nodes.toNodeEntities())
     }
     
     func testAllVideos_onFileSearchNodeList_shouldReturnVideos() async throws {
@@ -20,7 +20,7 @@ final class FileSearchRepositoryTests: XCTestCase {
         let sdk = MockSdk(nodes: nodes, megaRootNode: rootNode)
         let repo = FileSearchRepository(sdk: sdk)
         let videos = try await repo.allVideos()
-        XCTAssertEqual(videos.count, nodes.count)
+        XCTAssertEqual(videos, nodes.toNodeEntities())
     }
     
     func testStartMonitoring_onAlbumScreen_shouldSetCallBack() throws {

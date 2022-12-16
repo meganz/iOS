@@ -5,41 +5,48 @@ import MEGADomainMock
 @testable import MEGA
 
 final class AlbumContentUseCaseTests: XCTestCase {
-    private let albumContentsRepo = MockAlbumContentsUpdateNotifierRepository(sdk: MockSdk())
-    private let favouriteRepo = MockFavouriteNodesRepository.newRepo
-    private let photoUseCase = MockPhotoLibraryUseCase(allPhotos: [], allPhotosFromCloudDriveOnly: [], allPhotosFromCameraUpload: [])
+    private let albumContentsRepo = MockAlbumContentsUpdateNotifierRepository()
     
     private var subscriptions = Set<AnyCancellable>()
     
     func testNodesForAlbum_onThumbnailPhotosReturned_shouldReturnGifNodes() async throws {
-        let expectedNodes = [
+        let nodes = [
             NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true)
+            NodeEntity(name: "sample3.gif", handle: 7, hasThumbnail: false),
+            NodeEntity(name: "test.raw", handle: 3, hasThumbnail: true),
+            NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: true),
+            NodeEntity(name: "test3.png", handle: 5, hasThumbnail: true),
+            NodeEntity(name: "test3.mp4", handle: 6, hasThumbnail: true),
+            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true),
         ]
+        let gifNodes = nodes.filter { $0.name.contains(".gif") }
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            favouriteRepo: favouriteRepo,
-            photoUseCase: photoUseCase,
-            mediaUseCase: MockMediaUseCase(isGifImage: true),
-            fileSearchRepo: MockFileSearchRepository(photoNodes: expectedNodes)
+            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name)),
+            fileSearchRepo: MockFileSearchRepository(photoNodes: nodes)
         )
         let nodesForGifAlbum = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif))
-        XCTAssertEqual(nodesForGifAlbum, expectedNodes)
+        XCTAssertEqual(nodesForGifAlbum, gifNodes.filter { $0.hasThumbnail })
     }
     
     func testNodesForAlbum_onThumbnailPhotosReturned_shouldReturnRawNodes() async throws {
-        let expectedNodes = [
+        let nodes = [
             NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true),
+            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false),
+            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true),
+            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
+            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
+            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
+            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true),
         ]
+        let rawImageNodes = nodes.filter { $0.name.contains(".raw") }
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            favouriteRepo: favouriteRepo,
-            photoUseCase: photoUseCase,
-            mediaUseCase: MockMediaUseCase(isRawImage: true),
-            fileSearchRepo: MockFileSearchRepository(photoNodes: expectedNodes)
+            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name)),
+            fileSearchRepo: MockFileSearchRepository(photoNodes: nodes)
         )
         let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
-        XCTAssertEqual(result, expectedNodes)
+        XCTAssertEqual(result,  rawImageNodes.filter { $0.hasThumbnail })
     }
     
     func testNodesForAlbum_onThumbnailPhotosReturned_onlyFavouritesAreReturned() async throws {
@@ -48,8 +55,6 @@ final class AlbumContentUseCaseTests: XCTestCase {
         
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            favouriteRepo: favouriteRepo,
-            photoUseCase: photoUseCase,
             mediaUseCase: MockMediaUseCase(isGifImage: true),
             fileSearchRepo: MockFileSearchRepository(photoNodes: [
                 expectedPhotoNode,

@@ -12,15 +12,6 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     private let emptyFavouritesAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "", coverNode: nil, count: 0, type: .favourite)
     
-    func testLoadCameraUploadNode_whenLoadingFavouriteAlbum_shouldReturnOneRootNode() async throws {
-        let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository.newRepo,
-            mediaUseCase: MockMediaUseCase())
-        let rootNode = try await sut.loadCameraUploadNode()
-        XCTAssertNotNil(rootNode)
-    }
-    
     func testLoadAlbums_whenLoadingRawSystemAlbum_shouldReturnFavouriteAndRawAlbumEntity() async throws {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
