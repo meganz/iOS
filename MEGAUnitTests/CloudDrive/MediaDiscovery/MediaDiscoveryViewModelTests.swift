@@ -40,7 +40,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodeUpdates: AnyPublisher(nodeUpdatesPublisher))
         let sut = MediaDiscoveryViewModel(parentNode: parentNode, router: router,
                                       analyticsUseCase: analyticsUseCase, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
-        test(viewModel: sut, action: .onViewDidAppear, expectedCommands: [])
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: [])])
         
         XCTAssertTrue(analyticsUseCase.hasPageVisitedCalled)
     }

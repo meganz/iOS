@@ -183,17 +183,25 @@ final class ChatRoomsListViewModel: ObservableObject {
             return
         }
         
+        fetchFutureScheduledMeetings()
+        
+        let futureScheduledMeetingsChatIds: [ChatIdEntity] = self.futureMeetings?.flatMap(\.allChatIds) ?? []
+        pastMeetings = chatListItems.compactMap { chatListItem in
+            guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
+                return nil
+            }
+            
+            return constructChatRoomViewModel(forChatListItem: chatListItem)
+        }
+        
+        filterMeetings()
+    }
+    
+    private func fetchFutureScheduledMeetings() {
         let scheduledMeetings = chatUseCase.scheduledMeetings()
         let sortedScheduledMeetings = scheduledMeetings.sorted { $0.startDate < $1.startDate}
-        
         let futureScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate >= Date() }
-        //let pastScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate < Date() }
-
         populateFutureMeetings(futureScheduledMeetings)
-        
-        // past meetings only shows the chatroom currently. We need to all display the past meetings from the scheduled meetings.
-        pastMeetings = chatListItems.map(constructChatRoomViewModel)
-        filterMeetings()
     }
     
     private func filterChats() {
@@ -507,31 +515,55 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func onChatListItemUpdate(_ chatListItem: ChatListItemEntity) {
-        guard doesBelongToCurrentTab(chatListItem), let changes = chatListItem.changeType else { return }
+        if chatViewMode == .chats {
+            if let chatRooms,
+                chatRooms.filter({ $0.chatListItem == chatListItem}).isNotEmpty {
+                update(chatListItem: chatListItem, inList: &self.chatRooms, andDisplayList: &self.displayChatRooms)
+            } else {
+                fetchChats()
+            }
+        } else {
+            if let pastMeetings,
+               pastMeetings.filter({ $0.chatListItem == chatListItem}).isNotEmpty {
+                update(chatListItem: chatListItem, inList: &self.pastMeetings, andDisplayList: &self.displayPastMeetings)
+            } else if let futureMeetings, futureMeetings.filter({ $0.contains(itemsWithChatId: chatListItem.chatId) }).isNotEmpty {
+                reloadFutureMeetings()
+            } else {
+                fetchChats()
+            }
+        }
+    }
+    
+    private func reloadFutureMeetings() {
+        fetchFutureScheduledMeetings()
+        filterMeetings()
+    }
+    
+    private func update(
+        chatListItem: ChatListItemEntity,
+        inList list: inout [ChatRoomViewModel]?,
+        andDisplayList displayList: inout [ChatRoomViewModel]?
+    ) {
+        guard let changes = chatListItem.changeType else { return }
         
         switch changes {
         case .unreadCount, .title, .lastMessage, .lastTimestamp, .participants, .noChanges:
-            updateList(withChatListItem: chatListItem)
+            let chatRoomViewModel = constructChatRoomViewModel(forChatListItem: chatListItem)
+            let index = index(forChatListItem: chatListItem, in: list)
+            
+            update(&list, with: chatRoomViewModel, at: index)
+            update(&displayList, with: chatRoomViewModel, at: index)
+            
         case .closed, .previewClosed, .archived:
-            if let chatRooms, let chatRoomIndex = index(forChatListItem: chatListItem, in: chatRooms) {
-                self.chatRooms?.remove(at: chatRoomIndex)
+            if let chatRoomIndex = index(forChatListItem: chatListItem, in: list) {
+                list?.remove(at: chatRoomIndex)
                 
-                if let displayChatRooms, let filteredIndex = index(forChatListItem: chatListItem, in: displayChatRooms) {
-                    self.displayChatRooms?.remove(at: filteredIndex)
+                if let filteredIndex = index(forChatListItem: chatListItem, in: displayList) {
+                    displayList?.remove(at: filteredIndex)
                 }
             }
         default:
             break
-        }
-    }
-    
-    private func updateList(withChatListItem chatListItem: ChatListItemEntity) {
-        if let chatRooms {
-            let chatRoomViewModel = constructChatRoomViewModel(forChatListItem: chatListItem)
-            update(&self.chatRooms, with: chatRoomViewModel, at: index(forChatListItem: chatListItem, in: chatRooms))
-            update(&self.displayChatRooms, with: chatRoomViewModel, at: index(forChatListItem: chatListItem, in: chatRooms))
-        } else {
-            fetchChats()
         }
     }
     
@@ -540,22 +572,11 @@ final class ChatRoomsListViewModel: ObservableObject {
             list?[index] = chatRoomViewModel
         } else {
             list?.append(chatRoomViewModel)
-            
         }
     }
     
-    private func index(forChatListItem chatListItem: ChatListItemEntity, in list: [ChatRoomViewModel]) -> Int? {
-        list.firstIndex { $0.chatListItem == chatListItem }
-    }
-    
-    
-    private func doesBelongToCurrentTab(_ chatListItem: ChatListItemEntity) -> Bool {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
-                chatRoom.isArchived == false else {
-            return false
-        }
-        
-        return (chatRoom.chatType == .meeting && chatViewMode == .meetings) || (!(chatRoom.chatType == .meeting) && chatViewMode == .chats)
+    private func index(forChatListItem chatListItem: ChatListItemEntity, in list: [ChatRoomViewModel]?) -> Int? {
+        list?.firstIndex { $0.chatListItem == chatListItem }
     }
 }
 

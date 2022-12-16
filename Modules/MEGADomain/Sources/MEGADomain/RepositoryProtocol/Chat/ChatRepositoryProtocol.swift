@@ -1,6 +1,8 @@
 import Combine
 
 public protocol ChatRepositoryProtocol {
+    func myUserHandle() -> HandleEntity
+    func isGuestAccount() -> Bool
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
     func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>

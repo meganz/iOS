@@ -6,9 +6,9 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
     public var updatePublisher: AnyPublisher<Void, Never>
     private var nodes = [NodeEntity]()
 
-    public init(nodes: [NodeEntity]) {
+    public init(nodes: [NodeEntity], updatePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()) {
         self.nodes = nodes
-        updatePublisher = AnyPublisher(PassthroughSubject())
+        self.updatePublisher = updatePublisher
     }
 
     public func favouriteAlbumNodes() async throws -> [NodeEntity] {

@@ -1,6 +1,7 @@
 import UIKit
 import AVFoundation
 import MessageKit
+import MEGADomain
 
 /// The `PlayerState` indicates the current audio controller state
 public enum PlayerState {
@@ -68,10 +69,11 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             guard !AVAudioSession.sharedInstance().mnz_isBluetoothAudioRouteAvailable else {
                 return
             }
+            let audioSessionUC = AudioSessionUseCase.default
             if UIDevice.current.proximityState {
-                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(false)
+                audioSessionUC.disableLoudSpeaker()
             } else {
-                AVAudioSession.sharedInstance().mnz_setSpeakerEnabled(true)
+                audioSessionUC.enableLoudSpeaker()
             }
         }
     }
@@ -151,13 +153,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         startProgressTimer()
         audioCell.delegate?.didStartAudio(in: audioCell)
         setProximitySensorEnabled(true)
-        do {
-            try AVAudioSession.sharedInstance().setMode(.default)
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
-
-        } catch {
-            MEGALogInfo("Failed to set audio mode to default")
-        }
+        
+        AudioSessionUseCase.default.configureChatDefaultAudioPlayer()
 
         proximityChanged()
     }
