@@ -80,7 +80,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-        
+    
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
@@ -589,9 +589,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
-    });
+    [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
 }
 
 @end
