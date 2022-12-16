@@ -10,6 +10,7 @@ final class MockSdk: MEGASdk {
     private let email: String?
     private var statsEventType: Int?
     private var statsEventMessage: String?
+    private let megaRootNode: MEGANode?
     
     let sets: [MEGASet]
     let setElements: [MEGASetElement]
@@ -22,7 +23,8 @@ final class MockSdk: MEGASdk {
          myUser: MEGAUser? = nil,
          myEmail: String? = nil,
          megaSets: [MEGASet] = [],
-         megaSetElements: [MEGASetElement] = []) {
+         megaSetElements: [MEGASetElement] = [],
+         megaRootNode: MEGANode? = nil) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
         self.myContacts = myContacts
@@ -30,6 +32,7 @@ final class MockSdk: MEGASdk {
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
+        self.megaRootNode = megaRootNode
         
         super.init()
     }
@@ -79,5 +82,11 @@ final class MockSdk: MEGASdk {
     
     override func remove(_ delegate: MEGAGlobalDelegate) {
         hasGlobalDelegate = false
+    }
+    
+    override var rootNode: MEGANode? { megaRootNode }
+    
+    override func nodeListSearch(for node: MEGANode, search searchString: String?, cancelToken: MEGACancelToken, recursive: Bool, orderType: MEGASortOrderType, nodeFormatType: MEGANodeFormatType, folderTargetType: MEGAFolderTargetType) -> MEGANodeList {
+        MockNodeList(nodes: nodes)
     }
 }

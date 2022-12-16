@@ -2,6 +2,8 @@ import MEGADomain
 import Combine
 
 public final class MockChatUseCase: ChatUseCaseProtocol {
+    public var userHandle: HandleEntity
+    public var guestAccount: Bool
     public var fullName: String?
     public var status: ChatStatusEntity
     public var isCallActive: Bool
@@ -20,6 +22,8 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var scheduledMeetingList = [ScheduledMeetingEntity]()
     
     public init(
+        myUserHandle: HandleEntity = .invalid,
+        isGuestAccount: Bool = false,
         fullName: String? = nil,
         status: ChatStatusEntity = .offline,
         isCallActive: Bool = false,
@@ -31,6 +35,8 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never> = PassthroughSubject<ChatRoomEntity , Never>(),
         items: [ChatListItemEntity]? = []
     ) {
+        self.userHandle = myUserHandle
+        self.guestAccount = isGuestAccount
         self.fullName = fullName
         self.status = status
         self.isCallActive = isCallActive
@@ -41,6 +47,14 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.chatConnectionStatusUpdatePublisher = chatConnectionStatusUpdatePublisher
         self.chatPrivateModeUpdatePublisher = chatPrivateModeUpdatePublisher
         self.items = items
+    }
+    
+    public func myUserHandle() -> MEGADomain.HandleEntity {
+        userHandle
+    }
+    
+    public func isGuestAccount() -> Bool {
+        guestAccount
     }
     
     public func chatStatus() -> ChatStatusEntity {

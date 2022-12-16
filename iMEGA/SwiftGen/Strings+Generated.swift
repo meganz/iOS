@@ -2902,6 +2902,10 @@ public enum Strings {
       public enum Albums {
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
+        public enum CreateAlbum {
+          /// Create album
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.createAlbum.title")
+        }
         public enum Favourites {
           /// Favourites
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.favourites.title")
@@ -3963,8 +3967,14 @@ public enum Strings {
         public static let warningMessage = Strings.tr("Localizable", "meetings.incompatibility.warningMessage")
       }
       public enum Info {
+        /// Leave meeting
+        public static let leaveMeeting = Strings.tr("Localizable", "meetings.info.leaveMeeting")
         /// Meeting link
         public static let meetingLink = Strings.tr("Localizable", "meetings.info.meetingLink")
+        public enum Participants {
+          /// See more
+          public static let seeMore = Strings.tr("Localizable", "meetings.info.participants.seeMore")
+        }
         public enum ShareOptions {
           /// Anyone with this link can join the meeting and view the meeting chat.
           public static let title = Strings.tr("Localizable", "meetings.info.shareOptions.title")

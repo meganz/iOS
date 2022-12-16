@@ -1,44 +1,78 @@
 import XCTest
+import Combine
 import MEGADomainMock
 import MEGADomain
 @testable import MEGA
 
 final class AlbumContentViewModelTests: XCTestCase {
-    private var albumEntity: AlbumEntity {
-        AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif)
+    private let albumEntity =
+    AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif)
+    
+    
+    private lazy var router = AlbumContentRouter(album: albumEntity)
+    
+    func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbum() throws {
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
+                             NodeEntity(name: "sample2.gif", handle: 2)]
+        
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: expectedNodes)])
     }
     
-    private func albumContentViewModel() -> AlbumContentViewModel {
-        let mockAlbumContentUseCase = MockAlbumContentUseCase(nodes: [NodeEntity(name: "sample1.gif", handle: 1),
-                                                                      NodeEntity(name: "sample2.gif", handle: 2)])
+    func testDispatchViewReady_onLoadedNodesSuccessfully_shouldSortAndThenReturnNodesForFavouritesAlbum() throws {
+        let expectedNodes = [NodeEntity(name: "sample2.gif", handle: 4, modificationTime: try "2022-12-15T20:01:04Z".date),
+                             NodeEntity(name: "sample2.gif", handle: 3, modificationTime: try "2022-12-3T20:01:04Z".date),
+                             NodeEntity(name: "sample1.gif", handle: 2, modificationTime: try "2022-08-19T20:01:04Z".date),
+                             NodeEntity(name: "sample2.gif", handle: 1, modificationTime: try "2022-08-19T20:01:04Z".date)]
         
-        return AlbumContentViewModel(cameraUploadNode: nil,
-                                     album: albumEntity,
-                                     albumName: "",
-                                     albumContentsUseCase: mockAlbumContentUseCase,
-                                     router: AlbumContentRouter(cameraUploadNode: nil, album: albumEntity))
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes.reversed()),
+                                        router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: expectedNodes)])
     }
-
-    func testOtherAlbumNodes_whenUserTapOnGifAlbum_shouldReturnTwoGifNodes() throws {
-        let sut = albumContentViewModel()
-        let expectation = XCTestExpectation(description: "Download album contents")
-        var gifNodes = [NodeEntity]()
-        
+    
+    func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() throws {
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: [])])
+    }
+    
+    func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() throws {
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
+    }
+    
+    func testSubscription_onAlbumContentUpdated_shouldShowAlbumWithNewNodes() throws {
+        let updatePublisher = PassthroughSubject<Void, Never>()
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+        let useCase = MockAlbumContentUseCase(nodes: expectedNodes, updatePublisher: updatePublisher.eraseToAnyPublisher())
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        albumContentsUseCase: useCase,
+                                        router: router)
+        let exp = expectation(description: "show album nodes after update publisher triggered")
         sut.invokeCommand = { command in
             switch command {
             case .showAlbum(let nodes):
-                gifNodes = nodes
-                expectation.fulfill()
+                XCTAssertEqual(nodes, expectedNodes)
+                exp.fulfill()
             case .dismissAlbum:
                 XCTFail()
             }
         }
+        updatePublisher.send()
         
-        sut.dispatch(.onViewReady)
-        
-        wait(for: [expectation], timeout: 1.0)
-        
-        XCTAssert(gifNodes.count == 2)
+        wait(for: [exp], timeout: 1.0)
     }
     
+    func testIsFavouriteAlbum_isEqualToAlbumEntityType() {
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        router: router)
+        XCTAssertTrue(sut.isFavouriteAlbum)
+    }
 }

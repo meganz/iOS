@@ -1,7 +1,10 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ToogleView: View {
+    private enum Constants {
+        static let viewHeight: CGFloat = 44
+    }
+    
     let image: String
     let text: String
     @Binding var isOn: Bool
@@ -21,7 +24,7 @@ struct ToogleView: View {
             }
             Divider()
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: Constants.viewHeight)
     }
 }
 

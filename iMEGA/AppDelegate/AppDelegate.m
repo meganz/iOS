@@ -150,9 +150,8 @@
     
     SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
     [[SDImageCodersManager sharedManager] addCoder:webPCoder];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
-    [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+    
+    [AudioSessionUseCaseOCWrapper.alloc.init configureDefaultAudioSession];
     
     [MEGAReachabilityManager sharedManager];
     
@@ -919,9 +918,8 @@
         self.chatRoom = nil;
     }];
     
-    [[AVAudioSession sharedInstance] mnz_configureAVSessionForCall];
-    [[AVAudioSession sharedInstance] mnz_activate];
-    [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:self.chatRoom.isMeeting];
+    [AudioSessionUseCaseOCWrapper.alloc.init configureCallAudioSession];
+    [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:self.chatRoom.isMeeting];
     [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
                                         enableVideo:self.videoCall
                                         enableAudio:!self.chatRoom.isMeeting
@@ -1596,6 +1594,7 @@
         case MEGARequestTypeLogout: {
             // if logout (not if localLogout) or session killed in other client
             BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+            [MEGAPurchase.sharedInstance.products removeAllObjects];
             if (request.flag || sessionInvalidateInOtherClient) {
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];

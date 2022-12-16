@@ -4,8 +4,6 @@ struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
     var router: AlbumListViewRouting
     
-    @State private var isPresenting = false
-    
     var body: some View {
         ZStack(alignment: .topTrailing)  {
             GeometryReader { proxy in
@@ -16,18 +14,13 @@ struct AlbumListView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns, spacing: 0) {
-                            router.cell(withCameraUploadNode: viewModel.cameraUploadNode, album: nil)
-                                .onTapGesture(count: 1)  {
-                                    viewModel.album = nil
-                                    isPresenting.toggle()
-                                }
-                                .clipped()
-                            
+                            if viewModel.isCreateAlbumFeatureFlagEnabled {
+                                CreateAlbumCell()
+                            }
                             ForEach(viewModel.albums, id: \.self) { album in
-                                router.cell(withCameraUploadNode: nil, album: album)
+                                router.cell(album: album)
                                     .onTapGesture(count: 1)  {
                                         viewModel.album = album
-                                        isPresenting.toggle()
                                     }
                                     .clipped()
                             }
@@ -37,8 +30,8 @@ struct AlbumListView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $isPresenting) {
-            router.albumContent(for: viewModel.cameraUploadNode, album: viewModel.album)
+        .fullScreenCover(item: $viewModel.album) {
+            router.albumContainer(album: $0)
                 .ignoresSafeArea()
         }
         .padding([.top, .bottom], 10)
