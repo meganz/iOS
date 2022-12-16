@@ -221,6 +221,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     /// Resume a currently pause audio sound
     open func resumeSound() {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidStart()
+        }
+        
         guard let player = audioPlayer, let cell = playingCell as? ChatVoiceClipCollectionViewCell else {
             stopAnyOngoingPlaying()
             return
