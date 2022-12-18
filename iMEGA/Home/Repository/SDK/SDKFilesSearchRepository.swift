@@ -45,6 +45,8 @@ final class SDKFilesSearchRepository: FilesSearchRepositoryProtocol {
                 formatType: MEGANodeFormatType) async throws -> [MEGANode] {
         return try await withCheckedThrowingContinuation({ continuation in
             search(string: string, inNode: node, sortOrderType: sortOrderType, formatType: formatType) {
+                guard Task.isCancelled == false else { continuation.resume(throwing: FileSearchResultErrorEntity.cancelled); return }
+                
                 continuation.resume(with: $0)
             }
         })
