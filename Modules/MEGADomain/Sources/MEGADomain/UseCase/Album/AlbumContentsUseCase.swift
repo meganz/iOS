@@ -1,15 +1,19 @@
 import Combine
-import MEGADomain
 
-final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: MediaUseCaseProtocol, V: FileSearchRepositoryProtocol>: AlbumContentsUseCaseProtocol {
+public protocol AlbumContentsUseCaseProtocol {
+    var updatePublisher: AnyPublisher<Void, Never> { get }
+    func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
+}
+
+public final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: MediaUseCaseProtocol, V: FileSearchRepositoryProtocol>: AlbumContentsUseCaseProtocol {
     private var albumContentsRepo: T
     private let mediaUseCase: U
     private let fileSearchRepo: V
     
-    let updatePublisher: AnyPublisher<Void, Never>
+    public let updatePublisher: AnyPublisher<Void, Never>
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    init(albumContentsRepo: T, mediaUseCase: U, fileSearchRepo: V) {
+    public init(albumContentsRepo: T, mediaUseCase: U, fileSearchRepo: V) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
@@ -23,7 +27,7 @@ final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtoc
     
     // MARK: Protocols
     
-    func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
+    public func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
         async let allPhotos = try await fileSearchRepo.allPhotos()
         if (album.type == .favourite) {
             async let allVideos = try fileSearchRepo.allVideos()
