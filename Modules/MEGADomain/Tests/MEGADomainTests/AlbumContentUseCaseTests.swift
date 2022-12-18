@@ -2,7 +2,6 @@ import XCTest
 import Combine
 import MEGADomain
 import MEGADomainMock
-@testable import MEGA
 
 final class AlbumContentUseCaseTests: XCTestCase {
     private let albumContentsRepo = MockAlbumContentsUpdateNotifierRepository()
@@ -46,7 +45,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
             fileSearchRepo: MockFileSearchRepository(photoNodes: nodes)
         )
         let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
-        XCTAssertEqual(result,  rawImageNodes.filter { $0.hasThumbnail })
+        XCTAssertEqual(result, rawImageNodes.filter { $0.hasThumbnail })
     }
     
     func testNodesForAlbum_onThumbnailPhotosReturned_onlyFavouritesAreReturned() async throws {
