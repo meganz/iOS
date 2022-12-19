@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 import MEGADomain
 
 protocol AlbumListViewRouting {
@@ -29,10 +28,10 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 mediaUseCase: MediaUseCase()
             )
         )
-        let content = AlbumListView(viewModel: vm, router: self)
+        
+        let content = AlbumListView(viewModel: vm, createAlbumCellViewModel: CreateAlbumCellViewModel(), router: self)
         
         return UIHostingController(rootView: content)
     }
-    
     func start() {}
 }

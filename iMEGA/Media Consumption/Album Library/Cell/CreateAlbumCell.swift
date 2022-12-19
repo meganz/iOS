@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CreateAlbumCell: View {
     @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject var viewModel: CreateAlbumCellViewModel
     
     private var plusIconColor: Color {
         colorScheme == .light ? Color(Colors.General.Gray._515151.color) : Color(Colors.General.White.fcfcfc.color)
@@ -15,7 +16,7 @@ struct CreateAlbumCell: View {
                     .cornerRadius(6)
                 
                 Image(systemName: "plus")
-                    .font(.system(size: UIDevice.current.iPad ? 22: 20))
+                    .font(.system(size: viewModel.plusIconSize))
                     .foregroundColor(plusIconColor)
             }
             
