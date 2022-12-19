@@ -27,9 +27,6 @@ struct MeetingInfoHeaderView: View {
                     Text(viewModel.time)
                         .font(.caption)
                         .foregroundColor(Color(UIColor.lightGray))
-                    Text(viewModel.description)
-                        .font(.caption2)
-                        .foregroundColor(Color(UIColor.lightGray))
                 }
                 Spacer()
             }

@@ -3,7 +3,7 @@ import Combine
 
 final class ChatRoomParticipantsListViewModel: ObservableObject {
     
-    private let initialParticipantsLoadCount: Int = 3
+    private let initialParticipantsLoadCount: Int = 2
     
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private var chatUseCase: ChatUseCaseProtocol
@@ -105,7 +105,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func updateShouldShowAddParticipants() {
-        shouldShowAddParticipants = chatRoom.ownPrivilege == .moderator || (chatRoom.isOpenInviteEnabled && !chatUseCase.isGuestAccount())
+        shouldShowAddParticipants = chatRoom.ownPrivilege == .moderator || (chatRoom.isOpenInviteEnabled && !chatUseCase.isGuestAccount() && chatRoom.ownPrivilege.isUserInChat)
     }
     
     private func listenToInviteChanges() {

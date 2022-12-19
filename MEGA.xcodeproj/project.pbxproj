@@ -1047,6 +1047,8 @@
 		8375B76E25EFC7FF00B70F6B /* FavouritesQuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B72425EFC65200B70F6B /* FavouritesQuickAccessWidgetViewModel.swift */; };
 		8375B77A25EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B77825EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift */; };
 		8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B77925EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift */; };
+		8375BE96294CA712006339C0 /* ChatRoomLinkNonHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375BE95294CA712006339C0 /* ChatRoomLinkNonHostView.swift */; };
+		83792B882950A4080033ED3E /* MeetingDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83792B872950A4080033ED3E /* MeetingDescriptionView.swift */; };
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
@@ -3636,6 +3638,8 @@
 		8375B73025EFC68000B70F6B /* RecentsQuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsQuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
 		8375B77825EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineQuickAccessWidget.swift; sourceTree = "<group>"; };
 		8375B77925EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineQuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
+		8375BE95294CA712006339C0 /* ChatRoomLinkNonHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkNonHostView.swift; sourceTree = "<group>"; };
+		83792B872950A4080033ED3E /* MeetingDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDescriptionView.swift; sourceTree = "<group>"; };
 		837A88BD20B42290007B55D1 /* CloudDriveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveViewController.h; sourceTree = "<group>"; };
 		837A88BE20B42290007B55D1 /* CloudDriveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveViewController.m; sourceTree = "<group>"; };
 		837A88C020B44AA8007B55D1 /* OfflineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineViewController.h; sourceTree = "<group>"; };
@@ -8449,6 +8453,7 @@
 			children = (
 				836826B4292F7CBB00A0AB5F /* ChatRoomLinkView.swift */,
 				836826B6292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift */,
+				8375BE95294CA712006339C0 /* ChatRoomLinkNonHostView.swift */,
 			);
 			path = ChatRoomLink;
 			sourceTree = "<group>";
@@ -8721,6 +8726,7 @@
 				8358A6E72925460800EE197C /* ToogleView.swift */,
 				8358A6E92925461C00EE197C /* DisclosureView.swift */,
 				834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */,
+				83792B872950A4080033ED3E /* MeetingDescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -12943,6 +12949,7 @@
 				A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */,
 				5B118EC31FB1B0C6005D7D90 /* NSArray+MNZCategory.m in Sources */,
 				BFBE04C826AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift in Sources */,
+				8375BE96294CA712006339C0 /* ChatRoomLinkNonHostView.swift in Sources */,
 				6DB6D4282924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */,
 				B6C5D09C2718D19B004FB105 /* PhotoLibraryContentViewModel.swift in Sources */,
 				B6F853492794FB5A00028D51 /* PhotoLibraryPicker.swift in Sources */,
@@ -13724,6 +13731,7 @@
 				83E135F8292E5209004EAA0D /* ChatRoomNotificationsView.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
 				BFE3B9FE28596715003949FF /* GroupChatDetailsViewController.swift in Sources */,
+				83792B882950A4080033ED3E /* MeetingDescriptionView.swift in Sources */,
 				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,

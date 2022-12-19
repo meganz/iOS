@@ -5,7 +5,7 @@ struct ToogleView: View {
         static let viewHeight: CGFloat = 44
     }
     
-    let image: String
+    let image: String?
     let text: String
     @Binding var isOn: Bool
     let valueChanged: ((Bool) -> Void)
@@ -14,7 +14,9 @@ struct ToogleView: View {
         VStack {
             Divider()
             HStack {
-                Image(image)
+                if let image {
+                    Image(image)
+                }
                 Toggle(text, isOn: $isOn)
                     .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
             }

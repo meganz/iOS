@@ -21,7 +21,7 @@ struct SeeMoreParticipantsView: View {
                     .foregroundColor(.gray.opacity(Constants.disclosureOpacity))
                     .rotationEffect(.degrees(Constants.rotation))
                     .padding(.horizontal)
-                Text(Strings.Localizable.Meetings.Info.Participants.seeMore)
+                Text(Strings.Localizable.Meetings.Info.Participants.seeAll)
                     .font(.body)
                 Spacer()
             }

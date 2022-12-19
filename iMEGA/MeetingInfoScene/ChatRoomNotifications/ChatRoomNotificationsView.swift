@@ -8,7 +8,7 @@ struct ChatRoomNotificationsView: View {
         VStack {
             ToogleView(
                 image: Asset.Images.Meetings.Info.enableChatNotifications.name,
-                text: Strings.Localizable.chatNotifications,
+                text: Strings.Localizable.Meetings.Info.chatNotifications,
                 isOn: $viewModel.isChatNotificationsOn) { newValue in
                 viewModel.chatNotificationsValueChanged(to: newValue)
             }

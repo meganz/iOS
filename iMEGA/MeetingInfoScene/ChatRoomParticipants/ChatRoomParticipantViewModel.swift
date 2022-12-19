@@ -89,7 +89,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
                 MEGALogDebug("error fetching the changed privilege \(error)")
             }, receiveValue: { [weak self] handle in
                 guard  let self,
-                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId)else {
+                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId) else {
                     return
                 }
                 self.chatRoom = chatRoom
