@@ -1477,6 +1477,7 @@
 		A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */; };
 		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
 		A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
+		A84683052939FBD500FACCA1 /* AppConfigurationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
@@ -3955,6 +3956,7 @@
 		A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAHandleList+Mapper.swift"; sourceTree = "<group>"; };
 		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
 		A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Mapper.swift"; sourceTree = "<group>"; };
+		A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationRepository.swift; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
@@ -9205,6 +9207,14 @@
 			path = Messages;
 			sourceTree = "<group>";
 		};
+		A84683032939FBC100FACCA1 /* AppConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */,
+			);
+			path = AppConfiguration;
+			sourceTree = "<group>";
+		};
 		A84E92E126FB5F6300606AA7 /* Versions */ = {
 			isa = PBXGroup;
 			children = (
@@ -9873,6 +9883,7 @@
 		B662B84C24EC6F790089376A /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				A84683032939FBC100FACCA1 /* AppConfiguration */,
 				129D51D32821D63000A4D4D3 /* Album */,
 				6D854F77290E012A006CEC20 /* MediaDiscovery */,
 				B57AD23928C1DBEB00FB173A /* MEGASdk */,
@@ -13125,6 +13136,7 @@
 				839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,
+				A84683052939FBD500FACCA1 /* AppConfigurationRepository.swift in Sources */,
 				B6ADE4D927320C3300C19F36 /* PhotoYearCard.swift in Sources */,
 				6D60256428F8946E00FF9767 /* NodesUpdateProtocol.swift in Sources */,
 				BF5E33FC2559E29B0055395E /* FilesExplorerContainerViewState.swift in Sources */,
@@ -14788,7 +14800,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";

@@ -15,7 +15,6 @@
 #import "DevicePermissionsHelper.h"
 #import "MEGAApplication.h"
 #import "MEGALinkManager.h"
-#import "MEGALogger.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -124,12 +123,7 @@
     
     [MEGASdk setLogToConsole:YES];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        [MEGASdk setLogLevel:MEGALogLevelMax];
-        [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
-        [MEGASdkManager.sharedMEGASdk addLoggerDelegate:Logger.shared];
-        [MEGAChatSdk setLogObject:Logger.shared];
-    }
+    [self enableLogsIfNeeded];
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
@@ -204,9 +198,7 @@
         [self initProviderDelegate];
                 
         MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [MEGASdkManager.sharedMEGASdk removeLoggerDelegate:Logger.shared];
-        }
+        [self removeSDKLoggerWhenInitChatIfNeeded];
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");
             NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
