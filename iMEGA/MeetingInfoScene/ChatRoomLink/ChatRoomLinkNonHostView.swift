@@ -1,28 +1,19 @@
+
 import SwiftUI
 
-struct ChatRoomLinkView: View {
+struct ChatRoomLinkNonHostView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @StateObject var viewModel: ChatRoomLinkViewModel
 
     var body: some View {
         VStack {
-            ToogleView(
-                image: nil,
-                text: Strings.Localizable.Meetings.Info.meetingLink,
-                isOn: $viewModel.isMeetingLinkOn) { newValue in
-                viewModel.meetingLinkValueChanged(to: newValue)
-            }
-            if viewModel.isMeetingLinkOn {
-                Button {
+            DisclosureView(
+                image: Asset.Images.Meetings.Info.meetingLink.name,
+                text: Strings.Localizable.Meetings.Info.shareChatLink) {
                     viewModel.shareMeetingLinkTapped()
-                } label: {
-                    Text(Strings.Localizable.Meetings.Action.shareLink)
-                        .padding(.horizontal)
-                        .foregroundColor(Color(UIColor.mnz_green00A886()))
                 }
-                Divider()
-            }
+                .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
         }
         .alert(isPresented: $viewModel.showChatLinksMustHaveCustomTitleAlert) {
             Alert(title: Text(Strings.Localizable.chatLink),

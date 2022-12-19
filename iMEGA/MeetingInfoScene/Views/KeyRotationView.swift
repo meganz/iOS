@@ -10,8 +10,6 @@ struct KeyRotationView: View {
     @Binding var isPublicChat: Bool
     let action: (() -> Void)
 
-    private let discolureIndicator = "chevron.right"
-
     private enum Constants {
         static let disclosureOpacity: CGFloat = 0.6
         static let textOpacity: CGFloat = 0.6
@@ -25,11 +23,7 @@ struct KeyRotationView: View {
                     Text(title)
                         .font(.body)
                     Spacer()
-                    if isPublicChat {
-                        Image(systemName: discolureIndicator)
-                            .foregroundColor(.gray.opacity(Constants.disclosureOpacity))
-                            .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
-                    } else {
+                    if !isPublicChat {
                         Text(rightDetail)
                             .font(.footnote)
                             .foregroundColor(colorScheme == .dark ? Color(UIColor.mnz_grayB5B5B5()) : Color(UIColor.mnz_gray848484()))

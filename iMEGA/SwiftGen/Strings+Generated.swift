@@ -3967,15 +3967,31 @@ public enum Strings {
         public static let warningMessage = Strings.tr("Localizable", "meetings.incompatibility.warningMessage")
       }
       public enum Info {
+        /// Chat notifications
+        public static let chatNotifications = Strings.tr("Localizable", "meetings.info.chatNotifications")
         /// Leave meeting
         public static let leaveMeeting = Strings.tr("Localizable", "meetings.info.leaveMeeting")
+        /// Manage chat history
+        public static let manageChatHistory = Strings.tr("Localizable", "meetings.info.manageChatHistory")
         /// Meeting link
         public static let meetingLink = Strings.tr("Localizable", "meetings.info.meetingLink")
+        /// Share chat link
+        public static let shareChatLink = Strings.tr("Localizable", "meetings.info.shareChatLink")
+        /// Shared files
+        public static let sharedFiles = Strings.tr("Localizable", "meetings.info.sharedFiles")
+        public enum KeyRotation {
+          /// Key rotation is slightly more secure, but doesn't allow you to create a chat link and hides past messages from new participants.
+          public static let description = Strings.tr("Localizable", "meetings.info.keyRotation.description")
+          /// Enable encryption key rotation
+          public static let title = Strings.tr("Localizable", "meetings.info.keyRotation.title")
+        }
         public enum Participants {
-          /// See more
-          public static let seeMore = Strings.tr("Localizable", "meetings.info.participants.seeMore")
+          /// See all
+          public static let seeAll = Strings.tr("Localizable", "meetings.info.participants.seeAll")
         }
         public enum ShareOptions {
+          /// Send to chat
+          public static let sendToChat = Strings.tr("Localizable", "meetings.info.shareOptions.sendToChat")
           /// Anyone with this link can join the meeting and view the meeting chat.
           public static let title = Strings.tr("Localizable", "meetings.info.shareOptions.title")
           public enum ShareLink {

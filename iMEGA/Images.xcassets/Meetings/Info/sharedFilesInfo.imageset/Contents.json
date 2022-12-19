@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "sharedFiles.pdf",
+      "filename" : "sharedFilesInfo.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,6 +11,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "sharedFilesInfo 1.pdf",
       "idiom" : "universal"
     }
   ],

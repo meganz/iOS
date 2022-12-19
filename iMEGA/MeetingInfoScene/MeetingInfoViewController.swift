@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 final class MeetingInfoViewController: UIViewController {
     lazy var editBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.edit, style: .plain, target: self, action: #selector(editButtonItemTapped)
@@ -7,6 +8,8 @@ final class MeetingInfoViewController: UIViewController {
     private(set) var viewModel: MeetingInfoViewModel
 
     lazy var hostingView = UIHostingController(rootView: MeetingInfoView(viewModel: viewModel))
+
+    private var subscriptions = Set<AnyCancellable>()
 
     init(viewModel: MeetingInfoViewModel) {
         self.viewModel = viewModel
@@ -20,16 +23,30 @@ final class MeetingInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubview()
+        initSubscriptions()
         navigationItem.title = Strings.Localizable.info
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = editBarButtonItem
+        addEditButton(isModerator: viewModel.isModerator)
+        navigationItem.backButtonTitle = ""
     }
     
     @objc func editButtonItemTapped() {
 
+    }
+    
+    private func addEditButton(isModerator: Bool) {
+        navigationItem.rightBarButtonItem = isModerator ? editBarButtonItem : nil
+    }
+    
+    private func initSubscriptions() {
+        subscriptions = [
+            viewModel.$isModerator.sink(receiveValue: { [weak self] isModerator in
+                self?.addEditButton(isModerator: isModerator)
+            })
+        ]
     }
     
     private func configureSubview() {

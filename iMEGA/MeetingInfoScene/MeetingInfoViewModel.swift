@@ -31,6 +31,7 @@ final class MeetingInfoViewModel: ObservableObject {
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
     @Published var isUserInChat = true
+    @Published var isModerator = false
 
     private var isAllowNonHostToAddParticipantsRemote = false
     private var chatRoom: ChatRoomEntity?
@@ -38,7 +39,7 @@ final class MeetingInfoViewModel: ObservableObject {
 
     var chatRoomNotificationsViewModel: ChatRoomNotificationsViewModel?
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
-    var chatRoomLinkViewModel: ChatRoomLinkViewModel?
+    @Published var chatRoomLinkViewModel: ChatRoomLinkViewModel?
     var chatRoomParticipantsListViewModel: ChatRoomParticipantsListViewModel?
 
     var meetingLink: String?
@@ -48,10 +49,12 @@ final class MeetingInfoViewModel: ObservableObject {
     }
     
     var time: String {
-        let dateFormatter = DateFormatter.timeShort()
+        var dateFormatter = DateFormatter.timeShort()
         let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
         let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
-        return "\(start) - \(end)"
+        dateFormatter = DateFormatter.dateFull()
+        let fullDate = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+        return "\(fullDate) · \(start) - \(end)"
     }
     
     var description: String {
@@ -85,6 +88,7 @@ final class MeetingInfoViewModel: ObservableObject {
                 chatUseCase: chatUseCase,
                 userUseCase: userUseCase
             )
+            self.isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
         } else {
             self.chatRoomAvatarViewModel = nil
         }
@@ -97,14 +101,30 @@ final class MeetingInfoViewModel: ObservableObject {
         guard let chatRoom else { return }
         isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
         isPublicChat = chatRoom.isPublicChat
+        self.isUserInChat = chatRoom.ownPrivilege.isUserInChat
         chatLinkUseCase.queryChatLink(for: chatRoom)
         chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(chatRoom: chatRoom)
-        chatRoomLinkViewModel = ChatRoomLinkViewModel(
+        if chatRoom.ownPrivilege == .moderator {
+            chatRoomLinkViewModel = chatRoomLinkViewModel(for: chatRoom)
+        } else {
+            Task {
+                do {
+                    _ = try await chatLinkUseCase.queryChatLink(for: chatRoom)
+                    chatRoomLinkViewModel = chatRoomLinkViewModel(for: chatRoom)
+                } catch { }
+            }
+        }
+        
+        chatRoomParticipantsListViewModel = ChatRoomParticipantsListViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatRoom: chatRoom)
+    }
+    
+    private func chatRoomLinkViewModel(for chatRoom: ChatRoomEntity) -> ChatRoomLinkViewModel {
+        ChatRoomLinkViewModel(
             router: router,
             chatRoom: chatRoom,
             scheduledMeeting: scheduledMeeting,
-            chatLinkUseCase: chatLinkUseCase)
-        chatRoomParticipantsListViewModel = ChatRoomParticipantsListViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatRoom: chatRoom)
+            chatLinkUseCase: chatLinkUseCase,
+            formattedTime: time)
     }
     
     private func initSubscriptions() {
@@ -131,6 +151,21 @@ final class MeetingInfoViewModel: ObservableObject {
             }, receiveValue: { [weak self] chatRoom in
                 self?.chatRoom = chatRoom
                 self?.isPublicChat = chatRoom.isPublicChat
+            })
+            .store(in: &subscriptions)
+        
+        chatRoomUseCase.ownPrivilegeChanged(forChatId: scheduledMeeting.chatId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { error in
+                MEGALogDebug("error fetching the changed privilege \(error)")
+            }, receiveValue: { [weak self] handle in
+                guard  let self,
+                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
+                    return
+                }
+                self.chatRoom = chatRoom
+                self.isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
+                self.isUserInChat = chatRoom.ownPrivilege.isUserInChat
             })
             .store(in: &subscriptions)
     }
@@ -175,6 +210,14 @@ extension MeetingInfoViewModel{
             return
         }
         router.showEnableKeyRotation(for: chatRoom)
+    }
+    
+    //MARK: - Share link non host
+    func shareMeetingLinkViewTapped() {
+        guard let chatRoomLinkViewModel else {
+            return
+        }
+        chatRoomLinkViewModel.showShareMeetingLinkOptions = true
     }
     
     //MARK: - Leave group
