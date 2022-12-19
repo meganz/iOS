@@ -24,4 +24,5 @@ public enum PreferenceKeyEntity: String {
     case slideShowConfigTimeInterval
     case slideShowConfigIsRepeat
     case slideShowConfigIncludeSubfolder
+    case logging
 }
