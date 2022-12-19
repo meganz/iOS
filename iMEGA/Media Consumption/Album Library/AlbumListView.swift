@@ -2,6 +2,8 @@ import SwiftUI
 
 struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
+    @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
+    
     var router: AlbumListViewRouting
     
     var body: some View {
@@ -15,7 +17,7 @@ struct AlbumListView: View {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns, spacing: 0) {
                             if viewModel.isCreateAlbumFeatureFlagEnabled {
-                                CreateAlbumCell()
+                                CreateAlbumCell(viewModel: createAlbumCellViewModel)
                             }
                             ForEach(viewModel.albums, id: \.self) { album in
                                 router.cell(album: album)
