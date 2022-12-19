@@ -4358,6 +4358,12 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "sharedItems.menu.slideshow.title")
         }
       }
+      public enum Tab {
+        public enum Incoming {
+          /// [Undecrypted folder]
+          public static let undecryptedFolderName = Strings.tr("Localizable", "sharedItems.tab.incoming.undecryptedFolderName")
+        }
+      }
     }
     public enum Slideshow {
       public enum PreferenceSetting {

@@ -44,6 +44,7 @@ class NodeInfoViewController: UIViewController {
     private var folderInfo : MEGAFolderInfo?
     private weak var delegate: NodeInfoViewControllerDelegate?
     private var nodeVersions: [MEGANode] = []
+    private var isUndecryptedFolder: Bool = false
     
     //MARK: - Lifecycle
 
@@ -55,6 +56,18 @@ class NodeInfoViewController: UIViewController {
         nodeInfoVC.node = node
         nodeInfoVC.delegate = delegate
         nodeInfoVC.nodeVersions = node.mnz_versions()
+        return MEGANavigationController.init(rootViewController: nodeInfoVC)
+    }
+    
+    @objc class func instantiate(withNode node: MEGANode, isUndecryptedFolder: Bool, delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
+        guard let nodeInfoVC = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(withIdentifier: "NodeInfoViewControllerID") as? NodeInfoViewController else {
+            fatalError("Could not instantiate NodeInfoViewController")
+        }
+
+        nodeInfoVC.node = node
+        nodeInfoVC.delegate = delegate
+        nodeInfoVC.nodeVersions = node.mnz_versions()
+        nodeInfoVC.isUndecryptedFolder = isUndecryptedFolder
         return MEGANavigationController.init(rootViewController: nodeInfoVC)
     }
     
@@ -352,7 +365,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node, isNodeInRubbish: node.mnz_isInRubbishBin(), folderInfo: folderInfo)
+        cell.configure(forNode: node, isNodeInRubbish: node.mnz_isInRubbishBin(), folderInfo: folderInfo, isUndecryptedFolder: isUndecryptedFolder)
         return cell
     }
     
