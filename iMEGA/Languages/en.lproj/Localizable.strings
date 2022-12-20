@@ -3178,3 +3178,7 @@
 "meetings.info.shareOptions.sendToChat"="Send to chat";
 /* Title for share chat link option in meeting info */
 "meetings.info.shareChatLink"="Share chat link";
+/* Button title to see more participants in meeting info view */
+"meetings.info.participants.seeMore"="See more";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="See less";
