@@ -9,19 +9,22 @@ final class MockNode: MEGANode {
     private let nodeHandle: HandleEntity
     private let changeType: MEGANodeChangeType
     private var nodeModificationTime: Date?
+    private let _hasThumbnail: Bool
     
     init(handle: HandleEntity,
          name: String = "",
          nodeType: MEGANodeType = .file,
          parentHandle: HandleEntity = .invalid,
          changeType: MEGANodeChangeType = .new,
-         modificationTime: Date? = nil ) {
+         modificationTime: Date? = nil,
+         hasThumbnail: Bool = false) {
         nodeHandle = handle
         nodeName = name
         self.nodeType = nodeType
         nodeParentHandle = parentHandle
         self.changeType = changeType
         nodeModificationTime = modificationTime
+        _hasThumbnail = hasThumbnail
         super.init()
     }
     
@@ -44,4 +47,6 @@ final class MockNode: MEGANode {
     override var parentHandle: HandleEntity { nodeParentHandle }
     
     override var modificationTime: Date? { nodeModificationTime }
+    
+    override func hasThumbnail() -> Bool { _hasThumbnail }
 }
