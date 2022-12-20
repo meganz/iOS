@@ -1,10 +1,10 @@
 import Combine
 import MEGADomain
 
+@MainActor
 final class PhotosViewModel: NSObject {
     @objc var mediaNodesArray: [MEGANode] = [MEGANode]() {
         didSet {
-            guard cameraUploadExplorerSortOrderType != nil else { return }
             photoUpdatePublisher.updatePhotoLibrary()
         }
     }
@@ -14,10 +14,10 @@ final class PhotosViewModel: NSObject {
     private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     private var mediaUseCase: MediaUseCaseProtocol
     
-    var cameraUploadExplorerSortOrderType: SortOrderType? {
+    var cameraUploadExplorerSortOrderType: SortOrderType = .newest {
         didSet {
-            if let orderType = cameraUploadExplorerSortOrderType {
-                mediaNodesArray = reorderPhotos(orderType, mediaNodes: mediaNodesArray)
+            if cameraUploadExplorerSortOrderType != oldValue {
+                photoUpdatePublisher.updatePhotoLibrary()
             }
         }
     }
@@ -46,7 +46,7 @@ final class PhotosViewModel: NSObject {
         self.mediaUseCase = mediaUseCase
         self.featureFlagProvider = featureFlagProvider
         super.init()
-        loadSortOrderType()
+        cameraUploadExplorerSortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
     }
     
     @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
@@ -60,15 +60,33 @@ final class PhotosViewModel: NSObject {
         }
     }
     
-    @MainActor
     @objc func loadAllPhotos() {
         Task.detached(priority: .userInitiated) { [weak self] in
             await self?.loadPhotos()
         }
     }
     
-    @MainActor
-    func loadFilteredPhotos() async throws -> [MEGANode] {
+    func loadPhotos() async {
+        do {
+            mediaNodesArray = try await loadFilteredPhotos()
+        } catch {
+            MEGALogError("[Photos] - error when to load photos \(error)")
+        }
+    }
+    
+    func updateFilter(
+        filterType: PhotosFilterOptions,
+        filterLocation: PhotosFilterOptions
+    ) {
+        guard self.filterType != filterType || self.filterLocation != filterLocation else { return }
+        
+        self.filterType = filterType
+        self.filterLocation = filterLocation
+        loadAllPhotos()
+    }
+    
+    // MARK: - Private
+    private func loadFilteredPhotos() async throws -> [MEGANode] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
         var nodes: [MEGANode]
         
@@ -87,25 +105,6 @@ final class PhotosViewModel: NSObject {
         return nodes
     }
     
-    @MainActor
-    func updateFilter(
-        filterType: PhotosFilterOptions,
-        filterLocation: PhotosFilterOptions
-    ) {
-        guard self.filterType != filterType || self.filterLocation != filterLocation else { return }
-        
-        self.filterType = filterType
-        self.filterLocation = filterLocation
-        loadAllPhotos()
-    }
-    
-    // MARK: - Private
-    
-    private func loadPhotos() async {
-        let photos = try? await loadFilteredPhotos()
-        mediaNodesArray = photos?.filter { $0.hasThumbnail() } ?? []
-    }
-    
     private func shouldProcessOnNodesUpdate(
         nodeList: MEGANodeList,
         container: PhotoLibraryContainerEntity
@@ -120,12 +119,7 @@ final class PhotosViewModel: NSObject {
     }
     
     private func loadSortOrderType() {
-        let sortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
-        cameraUploadExplorerSortOrderType = sortOrderType
-    }
-    
-    private func updateMediaNodesArray(_ photos: [MEGANode]){
-        mediaNodesArray = reorderPhotos(cameraUploadExplorerSortOrderType, mediaNodes: photos)
+
     }
 }
 
