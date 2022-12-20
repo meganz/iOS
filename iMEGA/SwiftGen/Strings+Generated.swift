@@ -3988,6 +3988,10 @@ public enum Strings {
         public enum Participants {
           /// See all
           public static let seeAll = Strings.tr("Localizable", "meetings.info.participants.seeAll")
+          /// See less
+          public static let seeLess = Strings.tr("Localizable", "meetings.info.participants.seeLess")
+          /// See more
+          public static let seeMore = Strings.tr("Localizable", "meetings.info.participants.seeMore")
         }
         public enum ShareOptions {
           /// Send to chat

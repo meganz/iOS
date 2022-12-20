@@ -33,8 +33,8 @@ struct ChatRoomParticipantsListView: View {
             ChatRoomParticipantView(viewModel: viewModel.myUserParticipant)
             Divider()
 
-            if !viewModel.allParticipantsLoaded {
-                SeeMoreParticipantsView()
+            if viewModel.showExpandCollapseButton {
+                SeeMoreParticipantsView(isExpanded: viewModel.listExpanded)
                     .onTapGesture {
                         viewModel.seeMoreParticipantsTapped()
                     }

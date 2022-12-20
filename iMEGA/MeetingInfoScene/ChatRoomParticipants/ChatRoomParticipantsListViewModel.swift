@@ -3,7 +3,7 @@ import Combine
 
 final class ChatRoomParticipantsListViewModel: ObservableObject {
     
-    private let initialParticipantsLoadCount: Int = 2
+    private let initialParticipantsLoad: Int = 4
     
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private var chatUseCase: ChatUseCaseProtocol
@@ -15,7 +15,8 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     @Published var chatRoomParticipants = [ChatRoomParticipantViewModel]()
     @Published var shouldShowAddParticipants = false
     @Published var totalParcitipantsCount = 0
-    @Published var allParticipantsLoaded = false
+    @Published var showExpandCollapseButton = true
+    @Published var listExpanded = false
 
     init(router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
@@ -41,8 +42,8 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     
     func fetchParticipants() {
         totalParcitipantsCount = chatRoom.peers.count + 1
-        
-        if  chatRoom.peers.count <= initialParticipantsLoadCount {
+        if chatRoom.peers.count <= initialParticipantsLoad {
+            showExpandCollapseButton = false
             loadAllParticipants()
         } else {
             loadInitialParticipants()
@@ -54,7 +55,12 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     func seeMoreParticipantsTapped() {
-        loadAllParticipants()
+        if listExpanded {
+            loadInitialParticipants()
+        } else {
+            loadAllParticipants()
+        }
+        listExpanded.toggle()
     }
     
     //MARK:- Private methods
@@ -64,11 +70,10 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
             .map {
                 ChatRoomParticipantViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatParticipantId: $0.handle, chatRoom: chatRoom)
             }
-        allParticipantsLoaded = true
     }
     
     private func loadInitialParticipants() {
-        chatRoomParticipants =  chatRoom.peers[0...initialParticipantsLoadCount]
+        chatRoomParticipants =  chatRoom.peers[0..<(initialParticipantsLoad - 1)]
             .map {
                 ChatRoomParticipantViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatParticipantId: $0.handle, chatRoom: chatRoom)
             }
@@ -148,14 +153,16 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
                     return
                 }
                 self.chatRoom = chatRoom
-                self.totalParcitipantsCount = chatRoom.peers.count + 1
                 self.updateParticipants()
             })
             .store(in: &subscriptions)
     }
     
     private func updateParticipants() {
-        if allParticipantsLoaded {
+        totalParcitipantsCount = chatRoom.peers.count + 1
+        showExpandCollapseButton = initialParticipantsLoad <= totalParcitipantsCount
+        
+        if showExpandCollapseButton {
             loadAllParticipants()
         } else {
             if chatRoomParticipants.count > chatRoom.peers.count {

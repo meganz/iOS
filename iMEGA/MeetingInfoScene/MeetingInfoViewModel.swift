@@ -33,7 +33,6 @@ final class MeetingInfoViewModel: ObservableObject {
     @Published var isUserInChat = true
     @Published var isModerator = false
 
-    private var isAllowNonHostToAddParticipantsRemote = false
     private var chatRoom: ChatRoomEntity?
     private var subscriptions = Set<AnyCancellable>()
 
@@ -52,7 +51,7 @@ final class MeetingInfoViewModel: ObservableObject {
         var dateFormatter = DateFormatter.timeShort()
         let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
         let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
-        dateFormatter = DateFormatter.dateFull()
+        dateFormatter = DateFormatter.dateMedium()
         let fullDate = dateFormatter.localisedString(from: scheduledMeeting.startDate)
         return "\(fullDate) · \(start) - \(end)"
     }
@@ -137,7 +136,6 @@ final class MeetingInfoViewModel: ObservableObject {
                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
                     return
                 }
-                self.isAllowNonHostToAddParticipantsRemote = true
                 self.chatRoom = chatRoom
                 self.isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
             })
@@ -173,12 +171,8 @@ final class MeetingInfoViewModel: ObservableObject {
 
 extension MeetingInfoViewModel{
     //MARK: - Open Invite
-    func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {
-        guard !isAllowNonHostToAddParticipantsRemote else {
-            isAllowNonHostToAddParticipantsRemote = false
-            return
-        }
-        
+    
+    @MainActor func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {
         Task{
             do {
                 isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled: isAllowNonHostToAddParticipantsOn, chatId: scheduledMeeting.chatId)
