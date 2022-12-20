@@ -1233,6 +1233,7 @@
 		942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255071EDC04BA0074C51A /* DocumentPickerViewController.m */; };
 		9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9422550A1EDC04DC0074C51A /* MainInterface.storyboard */; };
 		942578062824312800D1E17D /* SharedItemsViewController+EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */; };
+		9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */; };
 		9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */; };
 		94282D3928A3B06D00F794BA /* SharedItemsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */; };
 		94282D3E28A3B29200F794BA /* MyAccountHallViewController+Backups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */; };
@@ -1307,6 +1308,9 @@
 		943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432293A1EDD88E3007DB542 /* MediaPlayer.framework */; };
 		943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
 		943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		943FF9EF292FA33E00B744C8 /* MainTabBarController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */; };
+		943FF9F1292FD74A00B744C8 /* SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */; };
+		943FF9F5292FEDA600B744C8 /* SnackBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */; };
 		944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */; };
 		9440D6BF28BE62CF0010D167 /* ChatStatusEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D6BE28BE62CF0010D167 /* ChatStatusEntity+Mapper.swift */; };
 		9440D6C128BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D6C028BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift */; };
@@ -1323,6 +1327,7 @@
 		944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
+		9455CF532927F17200E6FB8F /* SnackBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */; };
 		945605401EDD65400094EF0F /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		945605411EDD65490094EF0F /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
@@ -1335,6 +1340,7 @@
 		9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
 		9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
 		945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
+		9458610C292696B300866F03 /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458610B292696B300866F03 /* SnackBarView.swift */; };
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
 		9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */; };
 		94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */; };
@@ -3792,6 +3798,7 @@
 		942255081EDC04BA0074C51A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MEGAPicker/Info.plist; sourceTree = SOURCE_ROOT; };
 		9422550B1EDC04DC0074C51A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iMEGA/Extensions/MEGAPicker/Base.lproj/MainInterface.storyboard; sourceTree = SOURCE_ROOT; };
 		942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+EmptyStates.swift"; sourceTree = "<group>"; };
+		9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+Backups.swift"; sourceTree = "<group>"; };
@@ -3831,6 +3838,9 @@
 		943F8B1E1EF2704900AFD89F /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = iMEGA/Extensions/MEGAShare/ShareViewController.h; sourceTree = SOURCE_ROOT; };
 		943F8B241EF2708E00AFD89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAShare-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SnackBar.swift"; sourceTree = "<group>"; };
+		943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarPresenting.swift; sourceTree = "<group>"; };
+		943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarRouter.swift; sourceTree = "<group>"; };
 		944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		9440D6BE28BE62CF0010D167 /* ChatStatusEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatStatusEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9440D6C028BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModePreferenceEntity+Mapper.swift"; sourceTree = "<group>"; };
@@ -3843,7 +3853,9 @@
 		944AD0B028EF039700AB1E59 /* MyBackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* MyBackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBackupsOCWrapper.swift; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarViewModel.swift; sourceTree = "<group>"; };
 		945605431EDD66350094EF0F /* MEGAPicker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-Bridging-Header.h"; path = "iMEGA/Extensions/MEGAPicker/Supporting Files/MEGAPicker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		9458610B292696B300866F03 /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
@@ -6071,6 +6083,7 @@
 				C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */,
 				12397E262820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift */,
 				836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */,
+				943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */,
@@ -9037,6 +9050,17 @@
 			path = ReportIssue;
 			sourceTree = "<group>";
 		};
+		9458610A2926963200866F03 /* Snackbar */ = {
+			isa = PBXGroup;
+			children = (
+				9458610B292696B300866F03 /* SnackBarView.swift */,
+				9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */,
+				943FF9F0292FD74A00B744C8 /* SnackBarPresenting.swift */,
+				943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */,
+			);
+			path = Snackbar;
+			sourceTree = "<group>";
+		};
 		9464C2EB28C5EF1900F8B082 /* SortOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -9983,6 +10007,7 @@
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
 				5BB68C9D203599EC00B03C00 /* Views */,
 				83E3460B25B5DB6D006F2AD6 /* Widget */,
+				9458610A2926963200866F03 /* Snackbar */,
 				C467AD4D26A8651400AFE4D2 /* DynamicType */,
 				B654BF3824FF123700A3CBC8 /* MVVM-R.swift */,
 			);
@@ -11471,6 +11496,7 @@
 				E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */,
 				E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */,
 				837B179828815F7400A4D01B /* FileLinkViewController+Additions.swift */,
+				9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */,
 			);
 			path = Links;
 			sourceTree = "<group>";
@@ -12375,6 +12401,7 @@
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				B6AB265127BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift in Sources */,
 				BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */,
+				9455CF532927F17200E6FB8F /* SnackBarViewModel.swift in Sources */,
 				BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */,
 				83E3460225B5C73E006F2AD6 /* QuickAccessWidgetManager.swift in Sources */,
 				5D166B7B25219762004F4F4A /* HomeSearchState.swift in Sources */,
@@ -13125,6 +13152,7 @@
 				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				B699D58B2759724C006132EF /* PhotoCard.swift in Sources */,
 				83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */,
+				9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */,
 				839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,
@@ -13200,6 +13228,7 @@
 				BFAB114523CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
 				C45F9807264AA88C0004DCA5 /* ChatRoomsViewController+MyAvatar.swift in Sources */,
+				943FF9EF292FA33E00B744C8 /* MainTabBarController+SnackBar.swift in Sources */,
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
@@ -13241,6 +13270,7 @@
 				BF6D30AA25390BBA00BD4653 /* FilesSearchUseCase.swift in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
 				12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */,
+				943FF9F1292FD74A00B744C8 /* SnackBarPresenting.swift in Sources */,
 				83A4E47327F49AE000A429F4 /* TransferStage.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				8342CB0228EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift in Sources */,
@@ -13509,6 +13539,7 @@
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
 				C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */,
+				9458610C292696B300866F03 /* SnackBarView.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				83BFDBD9291BE95000FFFEA0 /* MeetingInfoRouter.swift in Sources */,
 				9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */,
@@ -13598,6 +13629,7 @@
 				5D64660424890A34006030A5 /* ThemeColor.swift in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
+				943FF9F5292FEDA600B744C8 /* SnackBarRouter.swift in Sources */,
 				83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */,
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
