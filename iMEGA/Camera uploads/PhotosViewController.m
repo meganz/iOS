@@ -347,8 +347,7 @@
     [self reloadHeader];
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self objcWrapper_updatePhotoLibraryBy: self.viewModel.mediaNodesArray];
-        
+        [self objcWrapper_updatePhotoLibrary];
         if (self.viewModel.mediaNodesArray.count == 0) {
             [self.photosCollectionView reloadEmptyDataSet];
         }
