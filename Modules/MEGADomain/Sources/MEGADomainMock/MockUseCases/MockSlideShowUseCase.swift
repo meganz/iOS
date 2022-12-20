@@ -1,17 +1,26 @@
 import MEGADomain
 
-public struct MockSlideShowUseCase: SlideShowUseCaseProtocol {
-    private let slideShowRepository: SlideShowRepositoryProtocol
+public final class MockSlideShowUseCase: SlideShowUseCaseProtocol {
+    public var defaultConfig = SlideShowConfigurationEntity(
+        playingOrder: .shuffled,
+        timeIntervalForSlideInSeconds: .normal,
+        isRepeat: false,
+        includeSubfolders: false)
     
-    public init(slideShowRepository: SlideShowRepositoryProtocol) {
-        self.slideShowRepository = slideShowRepository
+    private var config: SlideShowConfigurationEntity
+    private var userId: HandleEntity
+    
+    public init(config: SlideShowConfigurationEntity, forUser userId: HandleEntity) {
+        self.config = config
+        self.userId = userId
     }
     
-    public func loadConfiguration() -> SlideShowConfigurationEntity {
-        slideShowRepository.loadConfiguration()
+    public func loadConfiguration(forUser userId: HandleEntity) -> SlideShowConfigurationEntity {
+        config
     }
     
-    public func saveConfiguration(_ config: SlideShowConfigurationEntity) {
-        slideShowRepository.saveConfiguration(config)
+    public func saveConfiguration(config: SlideShowConfigurationEntity, forUser userId: HandleEntity) throws {
+        self.config = config
+        self.userId = userId
     }
 }
