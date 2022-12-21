@@ -1,6 +1,10 @@
 
 
 struct UserStoreRepository: UserStoreRepositoryProtocol {
+    static var newRepo: UserStoreRepository {
+        UserStoreRepository(store: MEGAStore.shareInstance())
+    }
+    
     private let store: MEGAStore
     
     init(store: MEGAStore) {

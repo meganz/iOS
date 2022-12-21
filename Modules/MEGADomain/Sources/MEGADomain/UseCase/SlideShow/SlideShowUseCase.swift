@@ -1,22 +1,41 @@
 import Foundation
 
 public protocol SlideShowUseCaseProtocol {
-    func loadConfiguration() -> SlideShowConfigurationEntity
-    func saveConfiguration(_ config: SlideShowConfigurationEntity)
+    var defaultConfig: SlideShowConfigurationEntity { get }
+    func loadConfiguration(forUser userId: HandleEntity) -> SlideShowConfigurationEntity
+    func saveConfiguration(config: SlideShowConfigurationEntity, forUser userId: HandleEntity) throws
 }
 
-public struct SlideShowUseCase: SlideShowUseCaseProtocol {
-    private let slideShowRepository: SlideShowRepositoryProtocol
+public final class SlideShowUseCase: SlideShowUseCaseProtocol {
+    private var preferenceRepo: PreferenceRepositoryProtocol
     
-    public init(slideShowRepository: SlideShowRepositoryProtocol) {
-        self.slideShowRepository = slideShowRepository
+    public let defaultConfig = SlideShowConfigurationEntity(
+        playingOrder: .shuffled,
+        timeIntervalForSlideInSeconds: .normal,
+        isRepeat: false,
+        includeSubfolders: false
+    )
+
+    public init(preferenceRepo: PreferenceRepositoryProtocol) {
+        self.preferenceRepo = preferenceRepo
     }
     
-    public func loadConfiguration() -> SlideShowConfigurationEntity {
-        slideShowRepository.loadConfiguration()
+    private func preferenceKey(_ userId: HandleEntity) -> String {
+        "slideshowConfig_\(userId)"
     }
     
-    public func saveConfiguration(_ config: SlideShowConfigurationEntity) {
-        slideShowRepository.saveConfiguration(config)
+    public func loadConfiguration(forUser userId: HandleEntity) -> SlideShowConfigurationEntity {
+        let jsonData: Data? = preferenceRepo[preferenceKey(userId)]
+        guard let jsonData = jsonData,
+              let config = try? JSONDecoder().decode(SlideShowConfigurationEntity.self, from: jsonData)
+        else {
+            return defaultConfig
+        }
+        return config
+    }
+    
+    public func saveConfiguration(config: SlideShowConfigurationEntity, forUser userId: HandleEntity) throws {
+        let jsonConfig = try JSONEncoder().encode(config)
+        preferenceRepo[preferenceKey(userId)] = jsonConfig
     }
 }

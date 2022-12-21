@@ -1,18 +1,18 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ChatRoomLinkView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     @StateObject var viewModel: ChatRoomLinkViewModel
 
     var body: some View {
         VStack {
             ToogleView(
-                image: Asset.Images.Meetings.Info.meetingLink.name,
+                image: nil,
                 text: Strings.Localizable.Meetings.Info.meetingLink,
                 isOn: $viewModel.isMeetingLinkOn) { newValue in
                 viewModel.meetingLinkValueChanged(to: newValue)
             }
-            .disabled(viewModel.isMeetingLinkDisabled)
             if viewModel.isMeetingLinkOn {
                 Button {
                     viewModel.shareMeetingLinkTapped()
@@ -32,13 +32,16 @@ struct ChatRoomLinkView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
+        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
     }
     
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {
-        return viewModel.shareOptions().map { shareOption in
+        var buttons = viewModel.shareOptions().map { shareOption in
             ActionSheet.Button.default(Text(shareOption.localizedTitle)) {
                 viewModel.shareOptionTapped(shareOption)
             }
         }
+        buttons.append(ActionSheet.Button.cancel())
+        return buttons
     }
 }

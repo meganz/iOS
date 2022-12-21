@@ -24,6 +24,7 @@ class NodeActionViewController: ActionSheetViewController {
     let subtitleLabel = UILabel.newAutoLayout()
     let downloadImageView = UIImageView.newAutoLayout()
     let separatorLineView = UIView.newAutoLayout()
+    private var isUndecryptedFolder = false
     
     // MARK: - NodeActionViewController initializers
     
@@ -67,7 +68,7 @@ class NodeActionViewController: ActionSheetViewController {
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
-        
+        self.isUndecryptedFolder = isIncoming && FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
@@ -247,7 +248,7 @@ class NodeActionViewController: ActionSheetViewController {
         titleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
         titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -10)
-        titleLabel.text = node.name
+        titleLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
         titleLabel.font = .preferredFont(style: .subheadline, weight: .medium)
         titleLabel.adjustsFontForContentSizeCategory = true
         

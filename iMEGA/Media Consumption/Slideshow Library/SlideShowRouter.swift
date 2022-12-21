@@ -13,8 +13,17 @@ struct SlideShowRouter: Routing {
     
     private func configSlideShowViewModel() async -> SlideShowViewModel {
         let photoEntities = await dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase())
+        
+        var preferenceRepo: PreferenceRepository
+        if let slideshowUserDefaults = UserDefaults(suiteName: "slideshow") {
+            preferenceRepo = PreferenceRepository(userDefaults: slideshowUserDefaults)
+        } else {
+            preferenceRepo = PreferenceRepository.newRepo
+        }
+        
         return SlideShowViewModel(dataSource: slideShowDataSource(photos: photoEntities),
-                                  slideShowUseCase: SlideShowUseCase(slideShowRepository: SlideShowRepository.newRepo))
+                                  slideShowUseCase: SlideShowUseCase(preferenceRepo: preferenceRepo),
+                                  userUseCase: UserUseCase(repo: .live))
     }
     
     private func slideShowDataSource(photos: [NodeEntity]) -> SlideShowDataSource {

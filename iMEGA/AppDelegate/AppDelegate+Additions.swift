@@ -286,3 +286,28 @@ extension AppDelegate {
         }
     }
 }
+
+// MARK: - Logger
+extension AppDelegate {
+    @objc func enableLogsIfNeeded() {
+        let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appConfigurationRepository: AppConfigurationRepository.newRepo)
+        if logUseCase.shouldEnableLogs() {
+            enableLogs()
+        }
+    }
+    
+    private func enableLogs() {
+        MEGASdk.setLogLevel(.max)
+        MEGAChatSdk.setLogLevel(.max)
+        MEGASdkManager.sharedMEGASdk().add(Logger.shared())
+        MEGAChatSdk.setLogObject(Logger.shared())
+    }
+    
+    @objc func removeSDKLoggerWhenInitChatIfNeeded() {
+        let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appConfigurationRepository: AppConfigurationRepository.newRepo)
+
+        if logUseCase.shouldEnableLogs() {
+            MEGASdkManager.sharedMEGASdk().remove(Logger.shared())
+        }
+    }
+}

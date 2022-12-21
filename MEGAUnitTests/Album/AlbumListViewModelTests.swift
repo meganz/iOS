@@ -1,30 +1,62 @@
 import XCTest
+import Combine
 import MEGADomainMock
 import MEGADomain
 @testable import MEGA
 
 final class AlbumListViewModelTests: XCTestCase {
+    private var subscriptions = Set<AnyCancellable>()
     
-    @MainActor
-    func testLoadAlbums_onAlbumScreen_shouldReturnOneRootNodeForFavouriteAlbum() async throws {
-        let sut = AlbumListViewModel(usecase: AlbumListUseCase(
-                                                    albumRepository: MockAlbumRepository.newRepo,
-                                                    fileSearchRepository: MockFileSearchRepository.newRepo,
-                                                    mediaUseCase: MockMediaUseCase()))
+    func testLoadAlbums_onAlbumsLoaded_albumsAreLoadedAndTitlesAreUpdated() async throws {
+        let favouriteAlbum = AlbumEntity(id: 1, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
+        let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
+        let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
+        let userAlbum = AlbumEntity(id: 3, name: "Custom Name", coverNode: NodeEntity(handle: 3), count: 1, type: .user)
+        let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum, userAlbum])
+        let sut = AlbumListViewModel(usecase: useCase)
         
-        sut.loadAlbums()
-        await sut.loadingTask?.value
-        XCTAssertNotNil(sut.cameraUploadNode)
+        let exp = expectation(description: "albums titles are updated when retrieved")
+        sut.$albums
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, [
+                    favouriteAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Favourites.title),
+                    gifAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Gif.title),
+                    rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title),
+                    userAlbum
+                ])
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        await sut.loadAlbums()
+        await sut.albumLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
     }
     
-    func testCancelLoading_onAlbumScreen_shouldFavouriteAlbumLoadingTaskBeNil() async throws {
-        let sut = AlbumListViewModel(usecase: AlbumListUseCase(
-                                                    albumRepository: MockAlbumRepository.newRepo,
-                                                    fileSearchRepository: MockFileSearchRepository.newRepo,
-                                                    mediaUseCase: MockMediaUseCase()))
+    func testLoadAlbums_onAlbumsLoadedFinsihed_shouldLoadSetToFalse() async throws {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase())
+        let exp = expectation(description: "should load set after album load")
         
+        sut.$shouldLoad
+            .dropFirst()
+            .sink {
+                XCTAssertFalse($0)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        await sut.loadAlbums()
+        await sut.albumLoadingTask?.value
+        wait(for: [exp], timeout: 2.0)
+    }
+    
+    func testCancelLoading_stopMonitoringForNodeUpdates() async throws {
+        let useCase = MockAlbumListUseCase()
+        let sut = AlbumListViewModel(usecase: useCase)
+        XCTAssertTrue(useCase.startMonitoringNodesUpdateCalled == 0)
+        XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 0)
+        await sut.loadAlbums()
+        XCTAssertTrue(useCase.startMonitoringNodesUpdateCalled == 1)
         sut.cancelLoading()
-        XCTAssertNil(sut.cameraUploadNode)
+        XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 1)
     }
 }
 

@@ -50,7 +50,7 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
         let container = await photoLibraryContainer()
         let nodesCameraUpload = photosRepository.nodes(inParent: container.cameraUploadNode)
         let nodesMediaUpload = photosRepository.nodes(inParent: container.mediaUploadNode)
-        var nodes = nodesCameraUpload + nodesMediaUpload
+        let nodes = nodesCameraUpload + nodesMediaUpload
 
         return nodes
     }
@@ -61,7 +61,7 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
     
     func allPhotosFromCloudDriveOnly() async throws -> [MEGANode] {
         let container = await photoLibraryContainer()
-        var nodes: [MEGANode] = try await loadAllPhotos()
+        let nodes: [MEGANode] = try await loadAllPhotos()
         
         return nodes.filter({$0.parentHandle != container.cameraUploadNode?.handle && $0.parentHandle != container.mediaUploadNode?.handle})
     }

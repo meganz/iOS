@@ -3,8 +3,8 @@ import MEGADomain
 @objc final class AudioSessionUseCaseOCWrapper: NSObject {
     let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared))
     
-    @objc func configureMeetingAudioSession() {
-        audioSessionUseCase.configureMeetingAudioSession()
+    @objc func configureCallAudioSession() {
+        audioSessionUseCase.configureCallAudioSession()
     }
     
     @objc func configureDefaultAudioSession() {
@@ -16,6 +16,14 @@ import MEGADomain
     }
     
     @objc func setSpeakerEnabled(_ enabled: Bool) {
-        audioSessionUseCase.setSpeaker(enabled: enabled, completion: nil)
+        enabled ? enableLoudSpeaker() : disableLoudSpeaker()
+    }
+    
+    private func enableLoudSpeaker() {
+        audioSessionUseCase.enableLoudSpeaker()
+    }
+    
+    private func disableLoudSpeaker() {
+        audioSessionUseCase.disableLoudSpeaker()
     }
 }
