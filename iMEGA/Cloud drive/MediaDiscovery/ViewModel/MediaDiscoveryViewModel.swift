@@ -49,7 +49,6 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
             loadNodes()
         case .onViewDidAppear:
             startTracking()
-            sendPageVisitedStats()
         case .onViewWillDisAppear:
             endTracking()
             sendPageStayStats()

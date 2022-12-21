@@ -1,9 +1,6 @@
 import CocoaLumberjackSwift
 import Foundation
 
-import AppleArchive
-import System
-
 @objc final class Logger: NSObject {
     private let fileLogger: DDFileLogger
     

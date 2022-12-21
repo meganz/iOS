@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRepositoryProtocol {
     var onAlbumReload: (() -> Void)?
     

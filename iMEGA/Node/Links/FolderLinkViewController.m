@@ -148,6 +148,7 @@
     
     [AudioPlayerManager.shared removeDelegate:self];
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
+    [self removeSnackBarPresenter];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -157,6 +158,7 @@
     
     [AudioPlayerManager.shared addDelegate:self];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self configureSnackBarPresenter];
     [self shouldShowMiniPlayer];
 }
 

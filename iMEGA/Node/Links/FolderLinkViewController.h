@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
+@property (nonatomic, strong, nullable) UIView *snackBarContainerView;
 @property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
 

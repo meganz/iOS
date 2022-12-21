@@ -15,7 +15,6 @@
 #import "DevicePermissionsHelper.h"
 #import "MEGAApplication.h"
 #import "MEGALinkManager.h"
-#import "MEGALogger.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -124,12 +123,7 @@
     
     [MEGASdk setLogToConsole:YES];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        [MEGASdk setLogLevel:MEGALogLevelMax];
-        [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
-        [MEGASdkManager.sharedMEGASdk addLoggerDelegate:Logger.shared];
-        [MEGAChatSdk setLogObject:Logger.shared];
-    }
+    [self enableLogsIfNeeded];
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
@@ -150,9 +144,8 @@
     
     SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
     [[SDImageCodersManager sharedManager] addCoder:webPCoder];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
-    [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+    
+    [AudioSessionUseCaseOCWrapper.alloc.init configureDefaultAudioSession];
     
     [MEGAReachabilityManager sharedManager];
     
@@ -205,9 +198,7 @@
         [self initProviderDelegate];
                 
         MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [MEGASdkManager.sharedMEGASdk removeLoggerDelegate:Logger.shared];
-        }
+        [self removeSDKLoggerWhenInitChatIfNeeded];
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");
             NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
@@ -919,9 +910,8 @@
         self.chatRoom = nil;
     }];
     
-    [[AVAudioSession sharedInstance] mnz_configureAVSessionForCall];
-    [[AVAudioSession sharedInstance] mnz_activate];
-    [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:self.chatRoom.isMeeting];
+    [AudioSessionUseCaseOCWrapper.alloc.init configureCallAudioSession];
+    [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:self.chatRoom.isMeeting];
     [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
                                         enableVideo:self.videoCall
                                         enableAudio:!self.chatRoom.isMeeting
@@ -1596,6 +1586,7 @@
         case MEGARequestTypeLogout: {
             // if logout (not if localLogout) or session killed in other client
             BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+            [MEGAPurchase.sharedInstance.products removeAllObjects];
             if (request.flag || sessionInvalidateInOtherClient) {
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];

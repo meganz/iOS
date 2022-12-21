@@ -596,9 +596,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             }
         }];
         
-        [[AVAudioSession sharedInstance] mnz_configureAVSessionForCall];
-        [[AVAudioSession sharedInstance] mnz_activate];
-        [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:chatRoom.isMeeting || videoCall];
+        [AudioSessionUseCaseOCWrapper.alloc.init configureCallAudioSession];
+        [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:chatRoom.isMeeting || videoCall];
         [[CallActionManager shared] startCallWithChatId:chatRoom.chatId
                                             enableVideo:videoCall
                                             enableAudio:!chatRoom.isMeeting

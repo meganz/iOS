@@ -2,6 +2,8 @@ import Combine
 
 // MARK: - Use case protocol -
 public protocol ChatUseCaseProtocol {
+    func myUserHandle() -> HandleEntity
+    func isGuestAccount() -> Bool
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
     func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>
@@ -27,6 +29,14 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
 
     public init(chatRepo: T) {
         self.chatRepo = chatRepo
+    }
+
+    public func myUserHandle() -> HandleEntity {
+        chatRepo.myUserHandle()
+    }
+    
+    public func isGuestAccount() -> Bool {
+        chatRepo.isGuestAccount()
     }
     
     public func chatStatus() -> ChatStatusEntity {
