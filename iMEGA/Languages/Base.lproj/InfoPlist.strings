@@ -12,7 +12,7 @@
 "NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Search";
-/*  */
+/* Upload on the iOS home screen quick action menu. "Upload" here is a verb.*/
 "quickActionUploadString"="Upload";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
