@@ -18,6 +18,8 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
+@import MEGAUIKit;
+
 @interface FileLinkViewController () <NodeActionViewControllerDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
@@ -198,7 +200,7 @@
 
 - (void)setNavigationBarTitleLabel {
     if (self.node.name != nil) {
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:NSLocalizedString(@"fileLink", nil)];
+        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.node.name subtitle:NSLocalizedString(@"fileLink", nil) color:UIColor.mnz_label];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
         self.navigationItem.titleView = self.navigationBarLabel;
@@ -214,7 +216,7 @@
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
-    self.navigationBarLabel = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"fileLink", nil) subtitle:NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
+    self.navigationBarLabel = [UILabel.new customNavigationBarLabelWithTitle:NSLocalizedString(@"fileLink", nil) subtitle:NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.mnz_label];
     self.navigationItem.titleView = self.navigationBarLabel;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {

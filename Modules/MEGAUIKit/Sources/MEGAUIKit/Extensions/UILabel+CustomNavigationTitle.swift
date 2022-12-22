@@ -1,7 +1,7 @@
 import UIKit
 
 public extension UILabel {
-    func customNavigationBarLabel(title: String, subtitle: String?, color: UIColor = UIColor.label) -> UILabel {
+    @objc func customNavigationBarLabel(title: String, subtitle: String?, color: UIColor = UIColor.label) -> UILabel {
         let label = UILabel()
         label.numberOfLines = (subtitle != nil) ? 2 : 1
         label.lineBreakMode = .byClipping

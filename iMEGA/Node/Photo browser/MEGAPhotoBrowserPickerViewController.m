@@ -11,6 +11,8 @@
 
 #import "MEGA-Swift.h"
 
+@import MEGAUIKit;
+
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
@@ -43,7 +45,7 @@
         numberOfFiles = @"";
     }
     
-    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:UIColor.mnz_label];
+    UILabel *titleLabel = [UILabel.new customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:UIColor.mnz_label];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
