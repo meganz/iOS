@@ -172,6 +172,7 @@
     switch ([request type]) {
         case MEGARequestTypeLogin: {
             [api fetchNodesWithDelegate:self];
+            [api sendEvent:99310 message:@"Login In File Provider"];
             break;
         }
             
