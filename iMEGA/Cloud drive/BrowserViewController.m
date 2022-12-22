@@ -25,6 +25,7 @@
 #import "NodeTableViewCell.h"
 
 @import DZNEmptyDataSet;
+@import MEGAUIKit;
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -344,7 +345,7 @@
             }
             
             if ([self.parentNode name] != nil) {
-                UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString];
+                UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString color:UIColor.mnz_label];
                 label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
                 self.navigationItem.titleView = label;
             } else {

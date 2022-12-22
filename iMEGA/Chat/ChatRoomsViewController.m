@@ -28,6 +28,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAUIKit;
+
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
@@ -604,7 +606,7 @@
             NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
             
             if (onlineStatusString) {
-                UILabel *label = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"chat.title", @"Title for chats section") subtitle:onlineStatusString];
+                UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:NSLocalizedString(@"chat.title", @"Title for chats section") subtitle:onlineStatusString color:UIColor.mnz_label];
                 label.adjustsFontSizeToFitWidth = YES;
                 label.minimumScaleFactor = 0.8f;
                 label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);

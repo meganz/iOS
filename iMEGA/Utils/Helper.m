@@ -660,34 +660,6 @@
 
 #pragma mark - Utils for UI
 
-+ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    return [self customNavigationBarLabelWithTitle:title subtitle:subtitle color:UIColor.mnz_label];
-}
-
-+ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
-    if (!title) {
-        title = @"";
-    }
-    NSMutableAttributedString *titleMutableAttributedString = [NSMutableAttributedString.alloc initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName:color}];
-    
-    UIColor *colorWithAlpha = [color colorWithAlphaComponent:0.8];
-    if (![subtitle isEqualToString:@""]) {
-        subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-        NSMutableAttributedString *subtitleMutableAttributedString = [NSMutableAttributedString.alloc initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:colorWithAlpha}];
-        
-        [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    }
-    
-    UILabel *label = [[UILabel alloc] init];
-    [label setNumberOfLines:[subtitle isEqualToString:@""] ? 1 : 2];
-    [label setLineBreakMode:NSLineBreakByClipping];
-    
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    
-    return label;
-}
-
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate {
     UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = searchResultsUpdaterDelegate;

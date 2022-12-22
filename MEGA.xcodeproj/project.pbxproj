@@ -939,6 +939,7 @@
 		835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */; };
 		835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
 		835223B42059588300A47438 /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
+		835294592954AF58000E4D5A /* MEGAUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 835294582954AF58000E4D5A /* MEGAUIKit */; };
 		8354DF58288FF4880027011A /* FileSystemHelperOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354DF57288FF4880027011A /* FileSystemHelperOCWrapper.swift */; };
 		8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		8358332C29487F2900394F1A /* ChatRoomParticipantPrivilege.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358332B29487F2900394F1A /* ChatRoomParticipantPrivilege.swift */; };
@@ -5185,6 +5186,7 @@
 				A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */,
 				A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */,
 				A811DCC32476C53A002FCD98 /* MetalKit.framework in Frameworks */,
+				835294592954AF58000E4D5A /* MEGAUIKit in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
 				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
 				9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */,
@@ -11794,6 +11796,7 @@
 				B610446F28979E9300AAECF4 /* MEGADomain */,
 				B63D34172898A9DB0059DE66 /* MEGASwift */,
 				B6A01BB1289A640800B503FD /* MEGAFoundation */,
+				835294582954AF58000E4D5A /* MEGAUIKit */,
 			);
 			productName = MEGAPicker;
 			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
@@ -16506,6 +16509,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		835294582954AF58000E4D5A /* MEGAUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAUIKit;
+		};
 		A828E680286B3112004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
