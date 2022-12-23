@@ -4,6 +4,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let scheduledMeeting: ScheduledMeetingEntity
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatUseCase: ChatUseCaseProtocol
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
 
@@ -16,6 +17,25 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
         let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
         return "\(start) - \(end)"
+    }
+    
+    var unreadChatCount: Int? {
+        chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)?.unreadCount
+    }
+    
+    var lastMessageTimestamp: String? {
+        let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
+        if let lastMessageDate = chatListItem?.lastMessageDate {
+            if lastMessageDate.isToday(on: .autoupdatingCurrent) {
+                return DateFormatter.fromTemplate("HH:mm").localisedString(from: lastMessageDate)
+            } else if let difference = lastMessageDate.dayDistance(toFutureDate: Date(), on: .autoupdatingCurrent), difference < 7 {
+                return DateFormatter.fromTemplate("EEE").localisedString(from: lastMessageDate)
+            } else {
+                return DateFormatter.fromTemplate("ddyyMM").localisedString(from: lastMessageDate)
+            }
+        }
+        
+        return nil
     }
 
     private let router: ChatRoomsListRouting
@@ -31,6 +51,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatUseCase = chatUseCase
         
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
@@ -101,5 +122,11 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     private func showChatRoomInfo() {
         router.showMeetingInfo(for: scheduledMeeting)
+    }
+}
+
+extension FutureMeetingRoomViewModel: Equatable {
+    static func == (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
+        lhs.scheduledMeeting.scheduledId == rhs.scheduledMeeting.scheduledId
     }
 }

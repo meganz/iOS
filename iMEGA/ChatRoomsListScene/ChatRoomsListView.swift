@@ -71,19 +71,34 @@ struct ChatRoomsListView: View {
                     if let futureMeetings = viewModel.displayFutureMeetings,
                        let pastMeetings = viewModel.displayPastMeetings {
                             List {
-                                SearchBarView(
-                                    text: $viewModel.searchText,
-                                    isEditing: $viewModel.isSearchActive,
-                                    placeholder: Strings.Localizable.search,
-                                    cancelTitle: Strings.Localizable.cancel)
+                                if #available(iOS 15.0, *) {
+                                    SearchBarView(
+                                        text: $viewModel.searchText,
+                                        isEditing: $viewModel.isSearchActive,
+                                        placeholder: Strings.Localizable.search,
+                                        cancelTitle: Strings.Localizable.cancel)
+                                    .listRowSeparator(.hidden)
+                                } else {
+                                    SearchBarView(
+                                        text: $viewModel.searchText,
+                                        isEditing: $viewModel.isSearchActive,
+                                        placeholder: Strings.Localizable.search,
+                                        cancelTitle: Strings.Localizable.cancel)
+                                }
                                 
                                 if pastMeetings.isNotEmpty || futureMeetings.isNotEmpty {
                                     ForEach(futureMeetings, id: \.title) { futureMeetingSection in
                                         MeetingsListHeaderView(title: futureMeetingSection.title)
                                             .listRowInsets(EdgeInsets())
                                         ForEach(futureMeetingSection.items) { futureMeeting in
-                                            FutureMeetingRoomView(viewModel: futureMeeting)
-                                                .listRowInsets(EdgeInsets())
+                                            if #available(iOS 15.0, *) {
+                                                FutureMeetingRoomView(viewModel: futureMeeting)
+                                                    .listRowSeparator(futureMeeting == futureMeetingSection.items.last ? .hidden : .visible)
+                                                    .listRowInsets(EdgeInsets())
+                                            } else {
+                                                FutureMeetingRoomView(viewModel: futureMeeting)
+                                                    .listRowInsets(EdgeInsets())
+                                            }
                                         }
                                     }
                                     

@@ -43,6 +43,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
         MEGAChatConnection(rawValue: chatSDK.initState().rawValue)?.toChatConnectionStatus() ?? .invalid
     }
     
+    public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
+        chatSDK.chatListItem(forChatId: chatId)?.toChatListItemEntity()
+    }
+    
     public func retryPendingConnections() {
         sdk.retryPendingConnections()
         chatSDK.retryPendingConnections()
@@ -54,9 +58,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
             .eraseToAnyPublisher()
     }
     
-    public func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never> {
+    public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {
         chatListItemUpdateListener
             .monitor
+            .collect(.byTime(DispatchQueue.global(qos: .background), .seconds(5)))
             .eraseToAnyPublisher()
     }
     
@@ -80,11 +85,13 @@ public final class ChatRepository: ChatRepositoryProtocol {
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         chatSDK
             .getAllScheduledMeetings()
-            .compactMap {
-                guard !$0.isCancelled else {
+            .compactMap { scheduledMeeting in
+                guard !scheduledMeeting.isCancelled,
+                      let chatRoom = chatSDK.chatRoom(forChatId: scheduledMeeting.chatId),
+                      !chatRoom.isArchived else {
                     return nil
                 }
-                return $0.toScheduledMeetingEntity()
+                return scheduledMeeting.toScheduledMeetingEntity()
             }
     }
     
