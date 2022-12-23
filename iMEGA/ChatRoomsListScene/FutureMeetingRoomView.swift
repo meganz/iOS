@@ -26,8 +26,28 @@ struct FutureMeetingRoomView: View {
                     .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
                     .font(.caption)
             }
+            
+            if let unreadCount = viewModel.unreadChatCount, unreadCount != 0 {
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 0) {
+                    if let lastMessageTimestamp = viewModel.lastMessageTimestamp {
+                        Text(lastMessageTimestamp)
+                            .font(.caption2.bold())
+                    }
+                    
+                    Text(unreadCount > 0 ? "\(unreadCount)" : "\(-unreadCount)+")
+                        .font(.caption2)
+                        .foregroundColor(.white)
+                        .padding(4)
+                        .background(Color.red)
+                        .clipShape(Circle())
+                }
+            }
+            
         }
         .frame(height: Constants.viewHeight)
+        .padding(.trailing, 10)
         .contentShape(Rectangle())
         .contextMenu {
             if let contextMenuOptions = viewModel.contextMenuOptions {

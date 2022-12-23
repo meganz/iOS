@@ -36,6 +36,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
 
     private var isInfoLoaded = false
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
+    
+    let shouldShowUnreadCount: Bool
+    let unreadCountString: String
 
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -53,6 +56,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.chatNotificationControl = chatNotificationControl
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+        self.shouldShowUnreadCount = chatListItem.unreadCount != 0
+        self.unreadCountString = chatListItem.unreadCount > 0 ? "\(chatListItem.unreadCount)" : "\(-chatListItem.unreadCount)+"
         
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(

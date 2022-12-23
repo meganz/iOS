@@ -456,9 +456,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func listenToChatListUpdate() {
         chatUseCase
             .monitorChatListItemUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] chatListItem in
-                self?.onChatListItemUpdate(chatListItem)
+            .sink { [weak self] chatListItems in
+                self?.onChatListItemsUpdate(chatListItems)
             }
             .store(in: &subscriptions)
     }
@@ -514,69 +513,16 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func onChatListItemUpdate(_ chatListItem: ChatListItemEntity) {
-        if chatViewMode == .chats {
-            if let chatRooms,
-                chatRooms.filter({ $0.chatListItem == chatListItem}).isNotEmpty {
-                update(chatListItem: chatListItem, inList: &self.chatRooms, andDisplayList: &self.displayChatRooms)
-            } else {
-                fetchChats()
-            }
-        } else {
-            if let pastMeetings,
-               pastMeetings.filter({ $0.chatListItem == chatListItem}).isNotEmpty {
-                update(chatListItem: chatListItem, inList: &self.pastMeetings, andDisplayList: &self.displayPastMeetings)
-            } else if let futureMeetings, futureMeetings.filter({ $0.contains(itemsWithChatId: chatListItem.chatId) }).isNotEmpty {
-                reloadFutureMeetings()
-            } else {
-                fetchChats()
+    private func onChatListItemsUpdate(_ chatListItems: [ChatListItemEntity]) {
+        let chatRooms = chatListItems.compactMap { chatRoomUseCase.chatRoom(forChatId: $0.chatId) }
+        if (chatViewMode == .chats
+            && chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group }))
+            || (chatViewMode == .meetings
+                && chatRooms.contains(where: { $0.chatType == .meeting })) {
+            DispatchQueue.main.async {
+                self.fetchChats()
             }
         }
-    }
-    
-    private func reloadFutureMeetings() {
-        fetchFutureScheduledMeetings()
-        filterMeetings()
-    }
-    
-    private func update(
-        chatListItem: ChatListItemEntity,
-        inList list: inout [ChatRoomViewModel]?,
-        andDisplayList displayList: inout [ChatRoomViewModel]?
-    ) {
-        guard let changes = chatListItem.changeType else { return }
-        
-        switch changes {
-        case .unreadCount, .title, .lastMessage, .lastTimestamp, .participants, .noChanges:
-            let chatRoomViewModel = constructChatRoomViewModel(forChatListItem: chatListItem)
-            let index = index(forChatListItem: chatListItem, in: list)
-            
-            update(&list, with: chatRoomViewModel, at: index)
-            update(&displayList, with: chatRoomViewModel, at: index)
-            
-        case .closed, .previewClosed, .archived:
-            if let chatRoomIndex = index(forChatListItem: chatListItem, in: list) {
-                list?.remove(at: chatRoomIndex)
-                
-                if let filteredIndex = index(forChatListItem: chatListItem, in: displayList) {
-                    displayList?.remove(at: filteredIndex)
-                }
-            }
-        default:
-            break
-        }
-    }
-    
-    private func update(_ list: inout [ChatRoomViewModel]?, with chatRoomViewModel: ChatRoomViewModel, at index: Int? = nil) {
-        if let index {
-            list?[index] = chatRoomViewModel
-        } else {
-            list?.append(chatRoomViewModel)
-        }
-    }
-    
-    private func index(forChatListItem chatListItem: ChatListItemEntity, in list: [ChatRoomViewModel]?) -> Int? {
-        list?.firstIndex { $0.chatListItem == chatListItem }
     }
 }
 
@@ -648,7 +594,8 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     }
     
     func reloadDataIfNeeded() {
-        chatRooms?.forEach { $0.pushNotificationSettingsChanged() }
+        let list = chatViewMode == .chats ? chatRooms : pastMeetings
+        list?.forEach { $0.pushNotificationSettingsChanged() }
     }
     
     func pushNotificationSettingsLoaded() {

@@ -7,7 +7,7 @@ public protocol ChatUseCaseProtocol {
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
     func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>
-    func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never>
+    func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never>
     func existsActiveCall() -> Bool
     func activeCall() -> CallEntity?
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
@@ -17,6 +17,7 @@ public protocol ChatUseCaseProtocol {
     func archivedChatListCount() -> UInt
     func unreadChatMessagesCount() -> Int
     func chatConnectionStatus() -> ChatConnectionStatus
+    func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity?
     func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
     func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never>
@@ -51,7 +52,7 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
         chatRepo.monitorChatStatusChange(forUserHandle: userHandle)
     }
     
-    public func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never> {
+    public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {
         chatRepo.monitorChatListItemUpdate()
     }
     
@@ -89,6 +90,10 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func chatConnectionStatus() -> ChatConnectionStatus {
         chatRepo.chatConnectionStatus()
+    }
+    
+    public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
+        chatRepo.chatListItem(forChatId: chatId)
     }
     
     public func retryPendingConnections() {

@@ -10,7 +10,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var isCallInProgress: Bool
     public var activeCallEntity: CallEntity?
     public var statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never>
-    public var chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never>
+    public var chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never>
     public var chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never>
     public var chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus , Never>
     public var chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never>
@@ -29,7 +29,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         isCallActive: Bool = false,
         isCallInProgress: Bool = false,
         statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never> = PassthroughSubject<ChatStatusEntity, Never>(),
-        chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never> =  PassthroughSubject<ChatListItemEntity, Never>(),
+        chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  PassthroughSubject<[ChatListItemEntity], Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
         chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
         chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never> = PassthroughSubject<ChatRoomEntity , Never>(),
@@ -69,7 +69,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         statusChangePublisher.eraseToAnyPublisher()
     }
     
-    public func monitorChatListItemUpdate() -> AnyPublisher<MEGADomain.ChatListItemEntity, Never> {
+    public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {
         chatListItemUpdatePublisher.eraseToAnyPublisher()
     }
     
@@ -111,6 +111,10 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func chatConnectionStatus() -> ChatConnectionStatus {
         currentChatConnectionStatus
+    }
+    
+    public func chatListItem(forChatId chatId: MEGADomain.ChatIdEntity) -> ChatListItemEntity? {
+        items?.first
     }
     
     public func retryPendingConnections() {
