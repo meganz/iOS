@@ -12,9 +12,20 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     private let emptyFavouritesAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "", coverNode: nil, count: 0, type: .favourite)
     
+    func testLoadCameraUploadNode_whenLoadingFavouriteAlbum_shouldReturnOneRootNode() async throws {
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
+            fileSearchRepository: MockFileSearchRepository.newRepo,
+            mediaUseCase: MockMediaUseCase())
+        let rootNode = try await sut.loadCameraUploadNode()
+        XCTAssertNotNil(rootNode)
+    }
+    
     func testLoadAlbums_whenLoadingRawSystemAlbum_shouldReturnFavouriteAndRawAlbumEntity() async throws {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isRawImage: true))
         let albums = try await sut.loadAlbums()
@@ -26,6 +37,7 @@ final class AlbumListUseCaseTests: XCTestCase {
     func testLoadAlbums_whenLoadingGifSystemAlbum_shouldReturnFavouriteAndGifAlbumEntity() async throws {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isGifImage: true))
         let albums = try await sut.loadAlbums()
@@ -40,6 +52,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         ]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: favouriteGifPhotos),
             mediaUseCase: MockMediaUseCase(isGifImage: true))
         let albums = try await sut.loadAlbums()
@@ -54,6 +67,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         }
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: favouriteRawPhotos),
             mediaUseCase: MockMediaUseCase(isRawImage: true))
         let albums = try await sut.loadAlbums()
@@ -76,11 +90,31 @@ final class AlbumListUseCaseTests: XCTestCase {
         let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.isFavourite }.count
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase())
         let albums = try await sut.loadAlbums()
         XCTAssertTrue(albums.count == 1)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
                                                  coverNode: expectedCoverNode, count: expectedFavouritesCount, type: .favourite))
+    }
+    
+    func testCreateUserAlbum_shouldCreateAlbumWithName() async throws {
+        let expectedCoverNode = NodeEntity(name: "a.mp4", handle: 4, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date)
+        let favouritePhotos = [
+            NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "1.png", handle: 1, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date)
+        ]
+        let favouriteVideos = [
+            NodeEntity(name: "b.mp4", handle: 3, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date),
+            expectedCoverNode
+        ]
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
+            fileSearchRepository: MockFileSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
+            mediaUseCase: MockMediaUseCase())
+        let result = try await sut.createUserAlbum(with: "Custom Album")
+        XCTAssertEqual(result.name, "Custom Album")
     }
 }

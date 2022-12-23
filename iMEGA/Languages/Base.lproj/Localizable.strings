@@ -526,6 +526,10 @@
 "cameraUploads.albums.raw.title"="RAW";
 /* Create album title */
 "cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.album.create.alert.title"="Enter Album Name";
+/* Used in create album popup. */
+"cameraUploads.album.create.alert.placeholder"="New Album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */

@@ -58,5 +58,24 @@ final class AlbumListViewModelTests: XCTestCase {
         sut.cancelLoading()
         XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 1)
     }
+    
+    @MainActor
+    func testCreateUserAlbum_shouldCreateUserAlbum() {
+        let exp = expectation(description: "should load album at first after creating")
+        let useCase = MockAlbumListUseCase()
+        let sut = AlbumListViewModel(usecase: useCase)
+        sut.createUserAlbum(with: "userAlbum")
+        sut.$shouldLoad
+            .dropFirst()
+            .sink {
+                XCTAssertFalse($0)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertEqual(sut.albums.last?.name, "userAlbum")
+        XCTAssertEqual(sut.albums.last?.type, .user)
+        XCTAssertEqual(sut.albums.last?.count, 0)
+    }
 }
 
