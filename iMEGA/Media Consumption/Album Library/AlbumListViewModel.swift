@@ -12,6 +12,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var album: AlbumEntity?
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
+    @Published var showCreateAlbumAlert = false
     
     var albumLoadingTask: Task<Void, Never>?
     private let usecase: AlbumListUseCaseProtocol
@@ -42,16 +43,12 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @MainActor
     private func loadAllAlbums() {
         albumLoadingTask = Task {
-            do {
-                albums = try await usecase.loadAlbums().map { album in
-                    if let localizedAlbumName = localisedName(forAlbumType: album.type) {
-                        return album.update(name: localizedAlbumName)
-                    }
-                    return album
+            albums = await usecase.loadAlbums().map({ album in
+                if let localizedAlbumName = localisedName(forAlbumType: album.type) {
+                    return album.update(name: localizedAlbumName)
                 }
-            } catch {
-                MEGALogError("Error loading albums: \(error.localizedDescription)")
-            }
+                return album
+            })
             shouldLoad = false
         }
     }
@@ -66,6 +63,22 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             return Strings.Localizable.CameraUploads.Albums.Raw.title
         default:
             return nil
+        }
+    }
+    
+    @MainActor
+    func createUserAlbum(with name: String?) {
+        guard let name = name, !name.isEmpty else { return }
+        shouldLoad = true
+        Task {
+            do {
+                let newAlbum = try await usecase.createUserAlbum(with: name)
+                self.albums.append(newAlbum)
+                self.albums.sort(by: { $0.name < $1.name })
+            } catch {
+                MEGALogError("Error creating album: \(error.localizedDescription)")
+            }
+            shouldLoad = false
         }
     }
 }

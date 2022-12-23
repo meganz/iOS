@@ -28,4 +28,10 @@ final public class MockFileSearchRepository: NSObject, FileSearchRepositoryProto
     public func stopMonitoringNodesUpdate() {
         self.callback = nil
     }
+    
+    public func fetchNode(by id: HandleEntity) -> NodeEntity? {
+        (photoNodes + videoNodes).first { node in
+            node.handle == id
+        }
+    }
 }

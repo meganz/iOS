@@ -57,6 +57,10 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
             continuation.resume(returning: nodeList.toNodeEntities())
         }
     }
+    
+    func fetchNode(by id: HandleEntity) -> NodeEntity? {
+        sdk.node(forHandle: id)?.toNodeEntity()
+    }
 }
 
 extension FileSearchRepository: MEGAGlobalDelegate {

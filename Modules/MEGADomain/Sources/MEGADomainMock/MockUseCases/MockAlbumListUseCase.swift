@@ -8,6 +8,10 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     public var startMonitoringNodesUpdateCalled = 0
     public var stopMonitoringNodesUpdateCalled = 0
     
+    private var sampleUserAlbum: AlbumEntity {
+        AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
+    }
+    
     public init(cameraUploadNode: NodeEntity? = nil, albums: [AlbumEntity] = []) {
         self.cameraUploadNode = cameraUploadNode
         self.albums = albums
@@ -17,7 +21,7 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
         cameraUploadNode
     }
     
-    public func loadAlbums() async throws -> [AlbumEntity] {
+    public func loadAlbums() async -> [AlbumEntity] {
         albums
     }
     
@@ -27,5 +31,9 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     
     public func stopMonitoringNodesUpdate() {
         stopMonitoringNodesUpdateCalled += 1
+    }
+    
+    public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
+        sampleUserAlbum.update(name: name ?? "")
     }
 }

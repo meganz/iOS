@@ -24,12 +24,24 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
                 albumRepository: AlbumRepository.newRepo,
+                userAlbumRepository: UserAlbumRepository.newRepo,
                 fileSearchRepository: FileSearchRepository.newRepo,
                 mediaUseCase: MediaUseCase()
             )
         )
         
-        let content = AlbumListView(viewModel: vm, createAlbumCellViewModel: CreateAlbumCellViewModel(), router: self)
+        let alertVm = TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Album.Create.Alert.title,
+                                              invalidTextTitle: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters),
+                                              placeholderText: Strings.Localizable.CameraUploads.Album.Create.Alert.placeholder,
+                                              affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+                                              message: nil) { newAlbumName in
+            Task { await vm.createUserAlbum(with: newAlbumName) }
+        }
+        
+        let content = AlbumListView(viewModel: vm,
+                                    createAlbumCellViewModel: CreateAlbumCellViewModel(),
+                                    alertViewModel: alertVm,
+                                    router: self)
         
         return UIHostingController(rootView: content)
     }
