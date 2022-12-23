@@ -414,7 +414,6 @@
     
     self.isAudioSessionActive = NO;
     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
-    [CallActionManager.shared disableRTCAudioSession];
     
     if (self.shouldPlayCallEndedSound) {
         self.playCallEndedSound = NO;
