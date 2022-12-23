@@ -471,9 +471,7 @@
 - (void)mnz_restore {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:nil];
-        moveRequestDelegate.restore = YES;
-        [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
+        [[NameCollisionRouterOCWrapper.alloc init] moveNodes:@[self] to:restoreNode presenter:UIApplication.mnz_presentingViewController];
         [MEGASdkManager.sharedMEGASdk disableExportNode:self];
     }
 }
