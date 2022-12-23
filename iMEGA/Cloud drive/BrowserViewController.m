@@ -442,16 +442,10 @@
 - (void)setToolbarItemsEnabled:(BOOL)boolValue {
     boolValue = boolValue && [MEGAReachabilityManager isReachable];
     
-    self.toolBarNewFolderBarButtonItem.enabled = boolValue;
-    
     MEGANode *firstNode = self.selectedNodesArray.firstObject;
-    if ((self.browserAction == BrowserActionMove || self.browserAction == BrowserActionCopy) && self.parentNode.handle == firstNode.parentHandle) {
-        self.toolBarMoveBarButtonItem.enabled = NO;
-        self.toolBarCopyBarButtonItem.enabled = NO;
-    } else {
-        self.toolBarMoveBarButtonItem.enabled = boolValue;
-        self.toolBarCopyBarButtonItem.enabled = boolValue;
-    }
+    self.toolBarMoveBarButtonItem.enabled = self.browserAction == BrowserActionMove && self.parentNode.handle != firstNode.parentHandle;
+    self.toolBarCopyBarButtonItem.enabled = boolValue;
+    self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
 }
