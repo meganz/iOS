@@ -30,9 +30,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             )
         )
         
-        let alertVm = TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Album.Create.Alert.title,
+        let alertVm = TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                               invalidTextTitle: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters),
-                                              placeholderText: Strings.Localizable.CameraUploads.Album.Create.Alert.placeholder,
+                                              placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                               affirmativeButtonTitle: Strings.Localizable.createFolderButton,
                                               message: nil) { newAlbumName in
             Task { await vm.createUserAlbum(with: newAlbumName) }

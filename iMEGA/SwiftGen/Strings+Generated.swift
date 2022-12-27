@@ -2899,19 +2899,17 @@ public enum Strings {
       }
     }
     public enum CameraUploads {
-      public enum Album {
-        public enum Create {
-          public enum Alert {
-            /// New Album
-            public static let placeholder = Strings.tr("Localizable", "cameraUploads.album.create.alert.placeholder")
-            /// Enter Album Name
-            public static let title = Strings.tr("Localizable", "cameraUploads.album.create.alert.title")
-          }
-        }
-      }
       public enum Albums {
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
+        public enum Create {
+          public enum Alert {
+            /// New album
+            public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")
+            /// Enter album name
+            public static let title = Strings.tr("Localizable", "cameraUploads.albums.create.alert.title")
+          }
+        }
         public enum CreateAlbum {
           /// Create album
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.createAlbum.title")

@@ -73,8 +73,8 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
-                self.albums.append(newAlbum)
-                self.albums.sort(by: { $0.name < $1.name })
+                albums.append(newAlbum)
+                albums.sort(by: { $0.name < $1.name })
             } catch {
                 MEGALogError("Error creating album: \(error.localizedDescription)")
             }
