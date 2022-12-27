@@ -8,7 +8,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
     private var chatRoom: ChatRoomEntity
     private let scheduledMeeting: ScheduledMeetingEntity
-    private let formattedTime: String
+    private let subtitle: String
 
     @Published var isMeetingLinkOn = false
     @Published var showShareMeetingLinkOptions = false
@@ -24,12 +24,12 @@ final class ChatRoomLinkViewModel: ObservableObject {
          chatRoom: ChatRoomEntity,
          scheduledMeeting: ScheduledMeetingEntity,
          chatLinkUseCase: ChatLinkUseCaseProtocol,
-         formattedTime: String) {
+         subtitle: String) {
         self.router = router
         self.chatRoom = chatRoom
         self.scheduledMeeting = scheduledMeeting
         self.chatLinkUseCase = chatLinkUseCase
-        self.formattedTime = formattedTime
+        self.subtitle = subtitle
 
         fetchInitialValues()
         initSubscriptions()
@@ -97,7 +97,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
         case .share:
             router.showShareActivity(meetingLink,
                                      title: scheduledMeeting.title,
-                                     description: formattedTime)
+                                     description: subtitle)
         }
     }
 }

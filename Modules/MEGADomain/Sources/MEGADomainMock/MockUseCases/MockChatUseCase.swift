@@ -128,4 +128,8 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         scheduledMeetingList
     }
+    
+    public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
+        scheduledMeetingList
+    }
 }
