@@ -469,10 +469,6 @@
     browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
     
     [self.navigationController pushViewController:browserVC animated:YES];
-
-    if (self.searchController.isActive) {
-        self.searchController.active = NO;
-    }
 }
 
 - (void)attachNodes {
