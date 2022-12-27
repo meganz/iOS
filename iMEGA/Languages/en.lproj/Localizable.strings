@@ -527,9 +527,9 @@
 /* Create album title */
 "cameraUploads.albums.createAlbum.title"="Create album";
 /* Used in create album popup. */
-"cameraUploads.album.create.alert.title"="Enter Album Name";
+"cameraUploads.albums.create.alert.title"="Enter album name";
 /* Used in create album popup. */
-"cameraUploads.album.create.alert.placeholder"="New Album";
+"cameraUploads.albums.create.alert.placeholder"="New album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */

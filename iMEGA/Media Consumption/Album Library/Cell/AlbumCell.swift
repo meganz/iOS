@@ -15,6 +15,8 @@ struct AlbumCell: View {
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(viewModel.title)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
                     .font(.system(size: 13.0))
                 
                 Text("\(viewModel.numberOfNodes)")
