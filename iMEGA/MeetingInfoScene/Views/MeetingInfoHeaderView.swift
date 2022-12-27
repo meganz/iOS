@@ -24,7 +24,7 @@ struct MeetingInfoHeaderView: View {
                 VStack(alignment: .leading) {
                     Text(viewModel.title)
                         .font(.subheadline)
-                    Text(viewModel.time)
+                    Text(viewModel.subtitle)
                         .font(.caption)
                         .foregroundColor(Color(UIColor.lightGray))
                 }

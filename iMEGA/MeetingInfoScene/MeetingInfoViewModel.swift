@@ -47,13 +47,17 @@ final class MeetingInfoViewModel: ObservableObject {
         scheduledMeeting.title
     }
     
-    var time: String {
-        var dateFormatter = DateFormatter.timeShort()
-        let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
-        let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
-        dateFormatter = DateFormatter.dateMedium()
-        let fullDate = dateFormatter.localisedString(from: scheduledMeeting.startDate)
-        return "\(fullDate) · \(start) - \(end)"
+    var subtitle: String {
+        if scheduledMeeting.startDate < Date(), let chatRoom {
+            return Strings.Localizable.Meetings.Panel.participantsCount(chatRoom.peers.count + 1)
+        } else {
+            var dateFormatter = DateFormatter.timeShort()
+            let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+            let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
+            dateFormatter = DateFormatter.dateMedium()
+            let fullDate = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+            return "\(fullDate) · \(start) - \(end)"
+        }
     }
     
     var description: String {
@@ -123,7 +127,7 @@ final class MeetingInfoViewModel: ObservableObject {
             chatRoom: chatRoom,
             scheduledMeeting: scheduledMeeting,
             chatLinkUseCase: chatLinkUseCase,
-            formattedTime: time)
+            subtitle: subtitle)
     }
     
     private func initSubscriptions() {
