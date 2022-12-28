@@ -2023,9 +2023,6 @@
 		B6FD64F32689E87F00988A17 /* SortOrderEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD64F22689E87F00988A17 /* SortOrderEntity+Mapper.swift */; };
 		B6FD64F5268AABC000988A17 /* MEGAShareList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD64F4268AABC000988A17 /* MEGAShareList+Mapper.swift */; };
 		B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD6505268B39D700988A17 /* AccountRepository.swift */; };
-		B6FD6515268D818D00988A17 /* MockShareUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD6514268D818D00988A17 /* MockShareUseCase.swift */; };
-		B6FD6519268D8A2300988A17 /* RatingRequestingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD6518268D8A2300988A17 /* RatingRequestingTests.swift */; };
-		B6FD651B268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */; };
 		B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */; };
 		BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */; };
 		BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */; };
@@ -4474,9 +4471,6 @@
 		B6FD64F22689E87F00988A17 /* SortOrderEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SortOrderEntity+Mapper.swift"; sourceTree = "<group>"; };
 		B6FD64F4268AABC000988A17 /* MEGAShareList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAShareList+Mapper.swift"; sourceTree = "<group>"; };
 		B6FD6505268B39D700988A17 /* AccountRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepository.swift; sourceTree = "<group>"; };
-		B6FD6514268D818D00988A17 /* MockShareUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockShareUseCase.swift; sourceTree = "<group>"; };
-		B6FD6518268D8A2300988A17 /* RatingRequestingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRequestingTests.swift; sourceTree = "<group>"; };
-		B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRatingRequestBaseConditionsUseCase.swift; sourceTree = "<group>"; };
 		B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemImageCacheClient.swift; sourceTree = "<group>"; };
 		BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 4.xcdatamodel"; sourceTree = "<group>"; };
 		BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceClipInputBar.swift; sourceTree = "<group>"; };
@@ -10201,7 +10195,6 @@
 			children = (
 				B6AADEDE2518A323009A874C /* GetSMSUseCaseTests.swift */,
 				B6AADF032518B80D009A874C /* CheckSMSUseCaseTests.swift */,
-				B6FD6518268D8A2300988A17 /* RatingRequestingTests.swift */,
 				12BCECD9287FAC2D00F98E33 /* PhotoLibraryUseCaseTests.swift */,
 			);
 			path = UseCases;
@@ -10534,8 +10527,6 @@
 				0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */,
 				5B8DE74927A00F3700B265EB /* MockExportNodeUseCase.swift */,
 				5BBC13E726CE68380010115B /* MockFavouriteNodesUseCase.swift */,
-				B6FD6514268D818D00988A17 /* MockShareUseCase.swift */,
-				B6FD651A268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift */,
 				12B1E57F28751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift */,
 				12BCECD5287F795C00F98E33 /* MockPhotoLibraryUseCase.swift */,
 			);
@@ -14251,7 +14242,6 @@
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				12BCECDA287FAC2D00F98E33 /* PhotoLibraryUseCaseTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,
-				B6FD6515268D818D00988A17 /* MockShareUseCase.swift in Sources */,
 				6DD04A38292B07CF00B7E797 /* MockMEGASet.swift in Sources */,
 				B67B182025CAACC00022D6C0 /* SDKUserClient+Additions.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
@@ -14321,7 +14311,6 @@
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
 				5D52C747250C4F0200286A43 /* UserAlert.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
-				B6FD6519268D8A2300988A17 /* RatingRequestingTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				6DB6D4262924D342005182CA /* SetEntity+Mapper.swift in Sources */,
@@ -14385,7 +14374,6 @@
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				B64A71D7287BBB250085087D /* MockSdk.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
-				B6FD651B268D8BA300988A17 /* MockRatingRequestBaseConditionsUseCase.swift in Sources */,
 				BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
