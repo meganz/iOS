@@ -1241,6 +1241,10 @@
             [self showContactVerificationView];
             break;
             
+        case MegaNodeActionTypeViewVersions:
+            [node mnz_showNodeVersionsInViewController:self];
+            break;
+            
         default:
             break;
     }
