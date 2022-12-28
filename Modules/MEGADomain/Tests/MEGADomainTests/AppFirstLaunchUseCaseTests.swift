@@ -1,5 +1,4 @@
 import XCTest
-@testable import MEGA
 import MEGADomain
 import MEGADomainMock
 
