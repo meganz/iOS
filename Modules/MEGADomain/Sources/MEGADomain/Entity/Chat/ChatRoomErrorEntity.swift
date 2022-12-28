@@ -1,6 +1,5 @@
 
-
-enum ChatRoomErrorEntity: Error {
+public enum ChatRoomErrorEntity: Error {
     case generic
     case emptyTextResponse
     case noChatRoomFound

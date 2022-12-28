@@ -1,6 +1,7 @@
 
 import XCTest
-@testable import MEGA
+import MEGADomain
+import MEGADomainMock
 
 final class ClearChatHistoryUseCaseTests: XCTestCase {
     func test_clearChatHistory_success() {

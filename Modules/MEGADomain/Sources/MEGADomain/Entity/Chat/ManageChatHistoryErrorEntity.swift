@@ -1,7 +1,5 @@
 
-import Foundation
-
-enum ManageChatHistoryErrorEntity: Error {
+public enum ManageChatHistoryErrorEntity: Error {
     case generic
     case chatIdInvalid
     case chatIdDoesNotExist

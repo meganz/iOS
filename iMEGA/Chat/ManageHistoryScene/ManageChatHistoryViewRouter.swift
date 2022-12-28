@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 protocol ManageChatHistoryProtocol {
     func didTap(on source: ManageChatHistoryRoutingSource)

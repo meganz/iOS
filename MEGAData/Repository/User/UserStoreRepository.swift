@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 struct UserStoreRepository: UserStoreRepositoryProtocol {
     static var newRepo: UserStoreRepository {
