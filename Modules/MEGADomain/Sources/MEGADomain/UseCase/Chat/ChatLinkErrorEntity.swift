@@ -1,5 +1,5 @@
 
-enum ChatLinkErrorEntity: Error {
+public enum ChatLinkErrorEntity: Error {
     case generic
     case resourceNotFound
     case noRequestObjectFound

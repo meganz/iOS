@@ -1,7 +1,6 @@
 import Combine
-import MEGADomain
 
-protocol ChatRoomRepositoryProtocol {
+public protocol ChatRoomRepositoryProtocol {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
     func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity]

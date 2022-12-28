@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 typealias ChatId = UInt64
 
