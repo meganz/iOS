@@ -10,6 +10,8 @@ final class CancellableTransferViewModel: ViewModelType {
 
     private let uploadFileUseCase: UploadFileUseCaseProtocol
     private let downloadNodeUseCase: DownloadNodeUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
+    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
 
     private let transfers: [CancellableTransfer]
     private let fileTransfers: [CancellableTransfer]
@@ -35,11 +37,15 @@ final class CancellableTransferViewModel: ViewModelType {
     init(router: routingProtocols,
          uploadFileUseCase: UploadFileUseCaseProtocol,
          downloadNodeUseCase: DownloadNodeUseCaseProtocol,
+         mediaUseCase: MediaUseCaseProtocol,
+         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
          transfers: [CancellableTransfer],
          transferType: CancellableTransferType) {
         self.router = router
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadNodeUseCase = downloadNodeUseCase
+        self.mediaUseCase = mediaUseCase
+        self.analyticsEventUseCase = analyticsEventUseCase
         self.transfers = transfers
         self.fileTransfers = transfers.filter { $0.isFile }
         self.folderTransfers = transfers.filter { !$0.isFile }
@@ -59,12 +65,14 @@ final class CancellableTransferViewModel: ViewModelType {
                     startFolderUploads()
                 }
             case .download:
+                sendDownloadAnalyticsStats()
                 if fileTransfers.isNotEmpty {
                     startFileDownloads()
                 } else {
                     startFolderDownloads()
                 }
             case .downloadChat:
+                sendDownloadAnalyticsStats()
                 startChatFileDownloads()
             case .downloadFileLink:
                 startFileLinkDownload()
@@ -351,6 +359,19 @@ final class CancellableTransferViewModel: ViewModelType {
                     break
                 }
             }
+        }
+    }
+    
+    private func sendDownloadAnalyticsStats() {
+        let multimediaNodesCount = transfers.filter{ mediaUseCase.isMultimedia($0.name ?? "") == true }.count
+        
+        if multimediaNodesCount == transfers.count {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOfflinePhotosVideos))
+        } else if multimediaNodesCount == 0 {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOffline))
+        } else {
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOfflinePhotosVideos))
+            analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOffline))
         }
     }
 }

@@ -9,6 +9,7 @@ public protocol MediaUseCaseProtocol {
     func isImage(_ name: FileNameEntity) -> Bool
     func isRawImage(_ name: FileNameEntity) -> Bool
     func isGifImage(_ name: FileNameEntity) -> Bool
+    func isMultimedia(_ name: FileNameEntity) -> Bool
 }
 
 public struct MediaUseCase: MediaUseCaseProtocol {
@@ -39,5 +40,9 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     
     public func isGifImage(_ name: FileNameEntity) -> Bool {
         NSString(string: name).pathExtension.lowercased() == FileExtensionEntity.gif.rawValue
+    }
+    
+    public func isMultimedia(_ name: FileNameEntity) -> Bool {
+        isImage(name) || isVideo(name)
     }
 }

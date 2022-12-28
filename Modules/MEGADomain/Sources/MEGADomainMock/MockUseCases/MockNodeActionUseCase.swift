@@ -7,19 +7,24 @@ public final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
     private let versions: Bool
     private let downloaded: Bool
     private let inRubbishBin: Bool
+    private var multimediaNodes: [NodeEntity]
+    
+    public var isMultimediaFileNode_CalledTimes = 0
     
     public init(nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown,
-         labelString: String = "",
-         filesAndFolders: (Int, Int) = (0, 0),
-         versions: Bool = false,
-         downloaded: Bool = false,
-         inRubbishBin: Bool = false) {
+                labelString: String = "",
+                filesAndFolders: (Int, Int) = (0, 0),
+                versions: Bool = false,
+                downloaded: Bool = false,
+                inRubbishBin: Bool = false,
+                multimediaNodes: [NodeEntity] = []) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelString = labelString
         self.filesAndFolders = filesAndFolders
         self.versions = versions
         self.downloaded = downloaded
         self.inRubbishBin = inRubbishBin
+        self.multimediaNodes = multimediaNodes
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
