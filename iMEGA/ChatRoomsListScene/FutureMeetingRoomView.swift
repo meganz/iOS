@@ -60,5 +60,18 @@ struct FutureMeetingRoomView: View {
                 }
             }
         }
+        .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
+            ActionSheet(title: Text(""), buttons: actionSheetButtons())
+        }
+    }
+    
+    private func actionSheetButtons() -> [ActionSheet.Button] {
+        var buttons = viewModel.dndTurnOnOptions().map { dndOption in
+            ActionSheet.Button.default(Text(dndOption.localizedTitle)) {
+                viewModel.turnOnDNDOption(dndOption)
+            }
+        }
+        buttons.append(ActionSheet.Button.cancel())
+        return buttons
     }
 }

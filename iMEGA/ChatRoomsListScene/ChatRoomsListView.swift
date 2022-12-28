@@ -91,14 +91,8 @@ struct ChatRoomsListView: View {
                                         MeetingsListHeaderView(title: futureMeetingSection.title)
                                             .listRowInsets(EdgeInsets())
                                         ForEach(futureMeetingSection.items) { futureMeeting in
-                                            if #available(iOS 15.0, *) {
-                                                FutureMeetingRoomView(viewModel: futureMeeting)
-                                                    .listRowSeparator(futureMeeting == futureMeetingSection.items.last ? .hidden : .visible)
-                                                    .listRowInsets(EdgeInsets())
-                                            } else {
-                                                FutureMeetingRoomView(viewModel: futureMeeting)
-                                                    .listRowInsets(EdgeInsets())
-                                            }
+                                            FutureMeetingRoomView(viewModel: futureMeeting)
+                                                .listRowInsets(EdgeInsets())
                                         }
                                     }
                                     

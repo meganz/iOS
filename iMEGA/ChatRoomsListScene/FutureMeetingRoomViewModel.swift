@@ -5,6 +5,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
+    private var chatNotificationControl: ChatNotificationControl
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
 
@@ -41,18 +42,22 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private let router: ChatRoomsListRouting
     private var futureMeetingSearchStringTask: Task<Void, Never>?
 
+    @Published var showDNDTurnOnOptions = false
+
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         userUseCase: UserUseCaseProtocol,
+         chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
-        
+        self.chatNotificationControl = chatNotificationControl
+
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: scheduledMeeting.title,
@@ -73,6 +78,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     func contains(searchText: String) -> Bool {
         searchString.localizedCaseInsensitiveContains(searchText)
+    }
+    
+    func dndTurnOnOptions() -> [DNDTurnOnOption] {
+        ChatNotificationControl.dndTurnOnOptions()
+    }
+    
+    func turnOnDNDOption(_ option: DNDTurnOnOption) {
+        chatNotificationControl.turnOnDND(chatId: scheduledMeeting.chatId, option: option)
     }
     
     //MARK: - Private methods.
@@ -107,13 +120,29 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
         
+        let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
+
         options += [
+            ChatRoomContextMenuOption(
+                title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
+                imageName: Asset.Images.Chat.mutedChat.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.toggleDND()
+                }),
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.info,
                 imageName: Asset.Images.Generic.info.name,
                 action: { [weak self] in
                     guard let self else { return }
                     self.showChatRoomInfo()
+                }),
+            ChatRoomContextMenuOption(
+                title: Strings.Localizable.archiveChat,
+                imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.archiveChat()
                 })
         ]
         
@@ -122,6 +151,18 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     private func showChatRoomInfo() {
         router.showMeetingInfo(for: scheduledMeeting)
+    }
+    
+    private func toggleDND() {
+        if chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId) {
+            chatNotificationControl.turnOffDND(chatId: scheduledMeeting.chatId)
+        } else {
+            showDNDTurnOnOptions = true
+        }
+    }
+    
+    private func archiveChat() {
+        chatRoomUseCase.archive(true, chatId: scheduledMeeting.chatId)
     }
 }
 

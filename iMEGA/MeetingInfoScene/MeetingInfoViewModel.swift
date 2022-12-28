@@ -48,7 +48,7 @@ final class MeetingInfoViewModel: ObservableObject {
     }
     
     var subtitle: String {
-        if scheduledMeeting.startDate < Date(), let chatRoom {
+        if scheduledMeeting.endDate < Date(), let chatRoom {
             return Strings.Localizable.Meetings.Panel.participantsCount(chatRoom.peers.count + 1)
         } else {
             var dateFormatter = DateFormatter.timeShort()

@@ -88,7 +88,7 @@ public final class ChatRepository: ChatRepositoryProtocol {
             .compactMap { scheduledMeeting in
                 guard !scheduledMeeting.isCancelled,
                       let chatRoom = chatSDK.chatRoom(forChatId: scheduledMeeting.chatId),
-                      !chatRoom.isArchived else {
+                      !chatRoom.isArchived, chatRoom.ownPrivilege.toOwnPrivilegeEntity().isUserInChat else {
                     return nil
                 }
                 return scheduledMeeting.toScheduledMeetingEntity()
