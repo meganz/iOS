@@ -396,7 +396,8 @@ final class ChatRoomsListViewModel: ObservableObject {
                     sdk: MEGASdkManager.sharedMEGASdk(),
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
-            userUseCase: UserUseCase(repo: .live)
+            userUseCase: UserUseCase(repo: .live),
+            chatNotificationControl: chatNotificationControl
         )
     }
     
