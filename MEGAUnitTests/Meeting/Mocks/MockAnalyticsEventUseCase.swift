@@ -2,6 +2,9 @@
 import MEGADomain
 
 final class MockAnalyticsEventUseCase: AnalyticsEventUseCaseProtocol {
-    func sendAnalyticsEvent(_ event: MEGADomain.AnalyticsEventEntity) { }
+    public private(set) var type: AnalyticsEventEntity?
     
+    func sendAnalyticsEvent(_ event: MEGADomain.AnalyticsEventEntity) {
+        self.type = event
+    }
 }

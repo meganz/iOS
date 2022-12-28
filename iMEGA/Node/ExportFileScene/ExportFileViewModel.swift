@@ -21,14 +21,17 @@ final class ExportFileViewModel: ViewModelType {
     // MARK: - Private properties
     private let router: ExportFileViewRouting
     private let exportFileUseCase: ExportFileUseCaseProtocol
+    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     init(router: ExportFileViewRouting,
+         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
          exportFileUseCase: ExportFileUseCaseProtocol) {
         self.router = router
+        self.analyticsEventUseCase = analyticsEventUseCase
         self.exportFileUseCase = exportFileUseCase
     }
     
@@ -38,17 +41,16 @@ final class ExportFileViewModel: ViewModelType {
         switch action {
         case .exportFileFromNode(let node):
             exportFileUseCase.export(node: node) { result in
-                switch result {
-                case .success(let url):
+                if case let .success(url) = result {
+                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
                     self.router.exportedFiles(urls: [url])
                     self.router.hideProgressView()
-                case .failure(_):
-                    break
                 }
             }
         case .exportFilesFromNodes(let nodes):
             exportFileUseCase.export(nodes: nodes) { urls in
                 if urls.isNotEmpty {
+                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
                     self.router.exportedFiles(urls: urls)
                     self.router.hideProgressView()
                 } else {
@@ -58,6 +60,7 @@ final class ExportFileViewModel: ViewModelType {
         case .exportFilesFromMessages(let messages, let chatId):
             exportFileUseCase.export(messages: messages, chatId: chatId) { urls in
                 if urls.isNotEmpty {
+                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
                     self.router.exportedFiles(urls: urls)
                     self.router.hideProgressView()
                 } else {
@@ -66,12 +69,10 @@ final class ExportFileViewModel: ViewModelType {
             }
         case .exportFileFromMessageNode(let node, let messageId, let chatId):
             exportFileUseCase.exportNode(node.toNodeEntity(), messageId:messageId, chatId:chatId) { result in
-                switch result {
-                case .success(let url):
+                if case let .success(url) = result {
+                    self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
                     self.router.exportedFiles(urls: [url])
                     self.router.hideProgressView()
-                case .failure(_):
-                    break
                 }
             }
         }

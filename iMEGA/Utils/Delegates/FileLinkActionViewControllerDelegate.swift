@@ -44,6 +44,7 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
 
         saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
             if case let .failure(error) = result, error != .cancelled {
+                AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
                 SVProgressHUD.dismiss()
                 SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
             }
