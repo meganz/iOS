@@ -595,8 +595,13 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     }
     
     func reloadDataIfNeeded() {
-        let list = chatViewMode == .chats ? chatRooms : pastMeetings
-        list?.forEach { $0.pushNotificationSettingsChanged() }
+        switch chatViewMode {
+        case .chats:
+            chatRooms?.forEach { $0.pushNotificationSettingsChanged() }
+        case .meetings:
+            pastMeetings?.forEach { $0.pushNotificationSettingsChanged() }
+            futureMeetings?.forEach { $0.items.forEach { $0.pushNotificationSettingsChanged() } }
+        }
     }
     
     func pushNotificationSettingsLoaded() {

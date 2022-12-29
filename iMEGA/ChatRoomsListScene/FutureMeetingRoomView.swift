@@ -19,9 +19,13 @@ struct FutureMeetingRoomView: View {
             }
             
             VStack(alignment: .leading, spacing: 3) {
-                Text(viewModel.title)
-                    .font(.subheadline)
-                
+                HStack(spacing: 3) {
+                    Text(viewModel.title)
+                        .font(.subheadline)
+                    if viewModel.isMuted {
+                        Image(uiImage: Asset.Images.Chat.mutedChat.image)
+                    }
+                }
                 Text(viewModel.time)
                     .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
                     .font(.caption)

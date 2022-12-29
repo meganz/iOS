@@ -8,6 +8,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private var chatNotificationControl: ChatNotificationControl
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
+    private(set) var isMuted: Bool
 
     var title: String {
         scheduledMeeting.title
@@ -57,6 +58,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.chatNotificationControl = chatNotificationControl
+        self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
 
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
@@ -86,6 +88,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     func turnOnDNDOption(_ option: DNDTurnOnOption) {
         chatNotificationControl.turnOnDND(chatId: scheduledMeeting.chatId, option: option)
+    }
+    
+    func pushNotificationSettingsChanged() {
+        let newValue = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
+        guard isMuted != newValue else { return }
+        
+        contextMenuOptions = constructContextMenuOptions()
+        isMuted = newValue
+        objectWillChange.send()
     }
     
     //MARK: - Private methods.

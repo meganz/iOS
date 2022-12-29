@@ -10,6 +10,7 @@ struct ChatRoomsListView: View {
             ChatTabsSelectorView(chatViewMode: viewModel.chatViewMode) { mode in
                 viewModel.selectChatMode(mode)
             }
+            .ignoresSafeArea()
             
             if let activeCallViewModel = viewModel.activeCallViewModel {
                 ChatRoomActiveCallView(viewModel: activeCallViewModel)
@@ -62,6 +63,7 @@ struct ChatRoomsListView: View {
                             }
                             , alignment: .center
                         )
+                        .edgesIgnoringSafeArea([.top, .bottom])
                     } else {
                         ChatRoomsEmptyView(emptyViewState: viewModel.emptyChatRoomsViewState())
                     }
@@ -121,7 +123,6 @@ struct ChatRoomsListView: View {
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: viewModel.bottomViewHeight)
         }
-        .ignoresSafeArea()
         .onAppear {
             viewModel.loadChatRooms()
         }
