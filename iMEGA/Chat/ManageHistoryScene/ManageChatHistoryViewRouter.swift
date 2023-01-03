@@ -15,9 +15,9 @@ final class ManageChatHistoryViewRouter: NSObject, ManageChatHistoryProtocol {
     private weak var baseViewController: UITableViewController?
     private weak var navigationController: UINavigationController?
     
-    private let chatId: ChatId
+    private let chatId: ChatIdEntity
     
-    @objc init(chatId: ChatId, navigationController: UINavigationController) {
+    @objc init(chatId: ChatIdEntity, navigationController: UINavigationController) {
         self.navigationController = navigationController
         self.chatId = chatId
         

@@ -1,5 +1,6 @@
 
 import Foundation
+import MEGADomain
 
 @objc enum CustomModalAlertMode: Int {
     case storageEvent = 0
@@ -18,14 +19,14 @@ import Foundation
     
     internal var mode: CustomModalAlertMode
     
-    private var chatId: ChatId?
+    private var chatId: ChatIdEntity?
     
     @objc init(_ mode: CustomModalAlertMode, presenter: UIViewController) {
         self.mode = mode
         self.presenter = presenter
     }
     
-    init(_ mode: CustomModalAlertMode, presenter: UIViewController, chatId: ChatId) {
+    init(_ mode: CustomModalAlertMode, presenter: UIViewController, chatId: ChatIdEntity) {
         self.mode = mode
         self.presenter = presenter
         self.chatId = chatId

@@ -87,7 +87,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController.pushViewController(chatViewController, animated: true)
     }
     
-    func openChatRoom(withChatId chatId: ChatId, publicLink: String?, unreadMessageCount: Int) {
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int) {
         guard let navigationController else { return }
         
         if let chatViewController = navigationController.viewControllers[safe: 1] as? ChatViewController {

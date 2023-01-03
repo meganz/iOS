@@ -198,7 +198,7 @@ fileprivate final class ChatListItemUpdateListener: ChatListener {
 }
 
 fileprivate final class ChatConnectionUpdateListener: ChatListener {
-    private let chatId: ChatId
+    private let chatId: ChatIdEntity
     private let source = PassthroughSubject<ChatConnectionStatus, Never>()
 
     var monitor: AnyPublisher<ChatConnectionStatus, Never> {

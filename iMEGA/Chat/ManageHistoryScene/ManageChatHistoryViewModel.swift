@@ -55,7 +55,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
     //MARK: Domain Layer
     private let manageChatHistoryUseCase: ManageChatHistoryUseCase
     
-    private let chatId: ChatId
+    private let chatId: ChatIdEntity
     private var historyRetentionValue: UInt = 0
     
     private var historyRetentionOption = HistoryRetentionOption.disabled
@@ -69,7 +69,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
     
     init(router: ManageChatHistoryViewRouter,
          manageChatHistoryUseCase: ManageChatHistoryUseCase,
-         chatId: ChatId) {
+         chatId: ChatIdEntity) {
         self.router = router
         self.manageChatHistoryUseCase = manageChatHistoryUseCase
         self.chatId = chatId
