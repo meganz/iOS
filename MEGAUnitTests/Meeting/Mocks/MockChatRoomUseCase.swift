@@ -109,11 +109,11 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         userFullNames
     }
     
-    func userNickNames(forChatId chatId: MEGA.ChatId) async throws -> [HandleEntity : String] {
+    func userNickNames(forChatId chatId: ChatIdEntity) async throws -> [HandleEntity : String] {
         userNickNames
     }
     
-    func userEmails(forChatId chatId: ChatId) async throws -> [HandleEntity : String] {
+    func userEmails(forChatId chatId: ChatIdEntity) async throws -> [HandleEntity : String] {
         userEmails
     }
     

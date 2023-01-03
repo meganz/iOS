@@ -22,7 +22,7 @@ protocol ChatRoomsListRouting {
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
-    func openChatRoom(withChatId chatId: ChatId, publicLink: String?, unreadMessageCount: Int)
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int)
     func present(alert: UIAlertController, animated: Bool)
     func presentMoreOptionsForChat(
         withDNDEnabled dndEnabled: Bool,

@@ -1,6 +1,7 @@
+import MEGADomain
 
 extension CustomModalAlertViewController {
-    func configureForEnableKeyRotation(in chatId: ChatId) {
+    func configureForEnableKeyRotation(in chatId: ChatIdEntity) {
         image = Asset.Images.Chat.lock.image
         viewTitle = Strings.Localizable.enableEncryptedKeyRotation
         detail = Strings.Localizable.keyRotationIsSlightlyMoreSecureButDoesNotAllowYouToCreateAChatLinkAndNewParticipantsWillNotSeePastMessages

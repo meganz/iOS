@@ -184,7 +184,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         joinActiveCall_calledTimes += 1
     }
     
-    func openChatRoom(withChatId chatId: MEGA.ChatId, publicLink: String?, unreadMessageCount: Int) {
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int) {
         openChatRoom_calledTimes += 1
     }
 }
