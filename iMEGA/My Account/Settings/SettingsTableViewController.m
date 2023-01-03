@@ -18,6 +18,7 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self updateAppearance];
+    self.navigationItem.title = NSLocalizedString(@"settingsTitle", nil);
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
