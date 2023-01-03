@@ -40,12 +40,20 @@ struct FutureMeetingRoomView: View {
                             .font(.caption2.bold())
                     }
                     
-                    Text(unreadCount > 0 ? "\(unreadCount)" : "\(-unreadCount)+")
-                        .font(.caption2)
-                        .foregroundColor(.white)
-                        .padding(4)
-                        .background(Color.red)
-                        .clipShape(Circle())
+                    HStack(spacing: 4) {
+                        if viewModel.existsInProgressCallInChatRoom {
+                            Image(uiImage: Asset.Images.Chat.onACall.image)
+                                .resizable()
+                                .frame(width: 21, height: 21)
+                        }
+                        
+                        Text(unreadCount > 0 ? "\(unreadCount)" : "\(-unreadCount)+")
+                            .font(.caption2)
+                            .foregroundColor(.white)
+                            .padding(4)
+                            .background(Color.red)
+                            .clipShape(Circle())
+                    }
                 }
             }
             

@@ -1,4 +1,5 @@
 import MEGADomain
+import Combine
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let scheduledMeeting: ScheduledMeetingEntity
@@ -9,6 +10,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
+    private var subscriptions = Set<AnyCancellable>()
 
     var title: String {
         scheduledMeeting.title
@@ -44,6 +46,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private var futureMeetingSearchStringTask: Task<Void, Never>?
 
     @Published var showDNDTurnOnOptions = false
+    @Published var existsInProgressCallInChatRoom = false
 
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: ChatRoomsListRouting,
@@ -76,6 +79,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         
         self.futureMeetingSearchStringTask = createFutureMeetingSearchStringTask()
         self.contextMenuOptions = constructContextMenuOptions()
+        
+        self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: scheduledMeeting.chatId)
+        monitorActiveCallChanges()
     }
     
     func contains(searchText: String) -> Bool {
@@ -174,6 +180,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     private func archiveChat() {
         chatRoomUseCase.archive(true, chatId: scheduledMeeting.chatId)
+    }
+    
+    private func monitorActiveCallChanges() {
+        chatUseCase.monitorChatCallStatusUpdate()
+            .sink { [weak self] call in
+                guard let self, call.chatId == self.scheduledMeeting.chatId else { return }
+                self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
+            }
+            .store(in: &subscriptions)
     }
 }
 
