@@ -28,7 +28,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isRawImage: true))
-        let albums = try await sut.loadAlbums()
+        let albums = await sut.loadAlbums()
         XCTAssert(albums.count == 2)
         XCTAssertEqual(albums.first, emptyFavouritesAlbum)
         XCTAssertEqual(albums.last?.type, .raw)
@@ -40,7 +40,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isGifImage: true))
-        let albums = try await sut.loadAlbums()
+        let albums = await sut.loadAlbums()
         XCTAssert(albums.count == 2)
         XCTAssertEqual(albums.first, emptyFavouritesAlbum)
         XCTAssertEqual(albums.last?.type, .gif)
@@ -55,7 +55,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: favouriteGifPhotos),
             mediaUseCase: MockMediaUseCase(isGifImage: true))
-        let albums = try await sut.loadAlbums()
+        let albums = await sut.loadAlbums()
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first?.type, AlbumEntityType.favourite)
         XCTAssertEqual(albums.last?.type, AlbumEntityType.gif)
@@ -70,7 +70,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: favouriteRawPhotos),
             mediaUseCase: MockMediaUseCase(isRawImage: true))
-        let albums = try await sut.loadAlbums()
+        let albums = await sut.loadAlbums()
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
                                                  coverNode: favouriteRawPhotos.last, count: favouriteRawPhotos.count, type: .favourite))
@@ -93,7 +93,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFileSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase())
-        let albums = try await sut.loadAlbums()
+        let albums = await sut.loadAlbums()
         XCTAssertTrue(albums.count == 1)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
                                                  coverNode: expectedCoverNode, count: expectedFavouritesCount, type: .favourite))
