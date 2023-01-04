@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import PhoneNumberKit
 
 enum SMSVerificationAction: ActionType {
     case onViewReady
@@ -119,7 +120,18 @@ final class SMSVerificationViewModel: ViewModelType {
     // MARK: - Send code
     private func sendCodeToPhoneNumber(_ phoneNumber: String) {
         invokeCommand?(.startLoading)
-        smsUseCase.checkSMSUseCase.sendVerification(toPhoneNumber: phoneNumber) { [weak self] in
+        let formattedNumber: String
+        do {
+            let numberKit = PhoneNumberKit()
+            let parsedNumber = try numberKit.parse(phoneNumber)
+            formattedNumber = numberKit.format(parsedNumber, toType: .e164)
+        } catch {
+            let message = Strings.Localizable.pleaseEnterAValidPhoneNumber
+            invokeCommand?(.finishLoading)
+            invokeCommand?(.sendCodeToPhoneNumberError(message: message))
+            return
+        }
+        smsUseCase.checkSMSUseCase.sendVerification(toPhoneNumber: formattedNumber) { [weak self] in
             self?.invokeCommand?(.finishLoading)
             switch $0 {
             case .success(let number):
@@ -133,8 +145,6 @@ final class SMSVerificationViewModel: ViewModelType {
                     message = Strings.Localizable.yourAccountIsAlreadyVerified
                 case .alreadyVerifiedWithAnotherAccount:
                     message = Strings.Localizable.thisNumberIsAlreadyAssociatedWithAMegaAccount
-                case .wrongFormat:
-                    message = Strings.Localizable.pleaseEnterAValidPhoneNumber
                 default:
                     message = Strings.Localizable.unknownError
                 }
