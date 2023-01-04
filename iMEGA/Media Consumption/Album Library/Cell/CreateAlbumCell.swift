@@ -22,9 +22,11 @@ struct CreateAlbumCell: View {
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(Strings.Localizable.CameraUploads.Albums.CreateAlbum.title)
-                    .font(.system(size: 13.0))
-                Text("")
-                    .font(.system(size: 12.0))
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .font(.caption)
+                Text(" ")
+                    .font(.footnote)
             }
         }
     }

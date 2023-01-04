@@ -17,10 +17,10 @@ struct AlbumCell: View {
                 Text(viewModel.title)
                     .lineLimit(1)
                     .truncationMode(.middle)
-                    .font(.system(size: 13.0))
+                    .font(.caption)
                 
                 Text("\(viewModel.numberOfNodes)")
-                    .font(.system(size: 12.0))
+                    .font(.footnote)
             }
         }
         .onAppear {
