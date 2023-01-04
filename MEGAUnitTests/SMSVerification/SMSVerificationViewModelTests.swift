@@ -134,7 +134,6 @@ final class SMSVerificationViewModelTests: XCTestCase {
         [.reachedDailyLimit: Strings.Localizable.youHaveReachedTheDailyLimit,
          .alreadyVerifiedWithCurrentAccount: Strings.Localizable.yourAccountIsAlreadyVerified,
          .alreadyVerifiedWithAnotherAccount: Strings.Localizable.thisNumberIsAlreadyAssociatedWithAMegaAccount,
-         .wrongFormat: Strings.Localizable.pleaseEnterAValidPhoneNumber,
          .generic: Strings.Localizable.unknownError]
         
         for (error, message) in errorMessageDict {
@@ -147,6 +146,26 @@ final class SMSVerificationViewModelTests: XCTestCase {
                                                verificationType: .unblockAccount)
             test(viewModel: sut,
                  action: SMSVerificationAction.sendCodeToLocalPhoneNumber("+64273142791"),
+                 expectedCommands: [.startLoading,
+                                    .finishLoading,
+                                    .sendCodeToPhoneNumberError(message: message)])
+        }
+    }
+    
+    func testAction_sendCodeToLocalPhoneNumber_wrongFormatError() {
+        let errorMessageDict: [CheckSMSErrorEntity: String] =
+        [.wrongFormat: Strings.Localizable.pleaseEnterAValidPhoneNumber]
+        
+        for (error, message) in errorMessageDict {
+            let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(),
+                                 checkSMSUseCase: MockCheckSMSUseCase(sendToNumberResult: .failure(error)))
+            let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
+                                               smsUseCase: sms,
+                                               achievementUseCase: MockAchievementUseCase(),
+                                               authUseCase: MockAuthUseCase(isUserLoggedIn: true),
+                                               verificationType: .unblockAccount)
+            test(viewModel: sut,
+                 action: SMSVerificationAction.sendCodeToLocalPhoneNumber("12345"),
                  expectedCommands: [.startLoading,
                                     .finishLoading,
                                     .sendCodeToPhoneNumberError(message: message)])

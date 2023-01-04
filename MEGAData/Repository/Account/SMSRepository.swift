@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct SMSRepository: SMSRepositoryProtocol {
     private let sdk: MEGASdk
@@ -47,8 +48,8 @@ struct SMSRepository: SMSRepositoryProtocol {
         })
     }
 
-    func sendVerification(toPhoneNumber number: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
-        sdk.sendSMSVerificationCode(toPhoneNumber: number, delegate: MEGAGenericRequestDelegate { request, error in
+    func sendVerification(toPhoneNumber: String, completion: @escaping (Result<String, CheckSMSErrorEntity>) -> Void) {
+        sdk.sendSMSVerificationCode(toPhoneNumber: toPhoneNumber, delegate: MEGAGenericRequestDelegate { request, error in
             if error.type == .apiOk {
                 completion(.success(request.text))
                 return

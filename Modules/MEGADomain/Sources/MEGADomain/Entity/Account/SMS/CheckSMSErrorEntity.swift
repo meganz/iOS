@@ -1,6 +1,5 @@
-import Foundation
 
-enum CheckSMSErrorEntity: Error {
+public enum CheckSMSErrorEntity: Error {
     case generic
     case reachedDailyLimit
     case alreadyVerifiedWithCurrentAccount
