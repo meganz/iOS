@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct DisclosureView: View {
+    private enum Constants {
+        static let disclosureOpacity: CGFloat = 0.6
+    }
+    
     let image: String?
     let text: String
     let action: (() -> Void)
@@ -19,7 +23,7 @@ struct DisclosureView: View {
                     .font(.body)
                 Spacer()
                 Image(systemName: discolureIndicator)
-                    .foregroundColor(.gray.opacity(0.6))
+                    .foregroundColor(.gray.opacity(Constants.disclosureOpacity))
                     .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
             }
             .padding(.horizontal)

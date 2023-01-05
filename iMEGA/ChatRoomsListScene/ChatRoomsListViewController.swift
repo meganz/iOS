@@ -30,6 +30,7 @@ final class ChatRoomsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
         configureNavigationBarButtons(chatViewMode: viewModel.chatViewMode)
         viewModel.refreshMyAvatar()

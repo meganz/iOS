@@ -377,7 +377,10 @@
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
+    BOOL isUndecryptedFolder = self.incomingButton.selected && [self isFeatureFlagFingerprintVerificationEnabled];
+    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node
+                                                                           isUndecryptedFolder:isUndecryptedFolder
+                                                                                      delegate:self];
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
@@ -421,7 +424,8 @@
 
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
-    cell.nameLabel.text = node.name;
+    cell.nameLabel.text = [self incomingSharedFolderNameWithNode:node];
+    cell.nameLabel.textColor = UIColor.mnz_label;
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
@@ -429,7 +433,8 @@
     NSString *userDisplayName = user.mnz_displayName;
     cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
 
-    [cell.permissionsButton setImage:[UIImage mnz_permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
+    [cell.permissionsButton setImage:[self incomingSharedFolderPermissionIconWithType:share.access]
+                            forState:UIControlStateNormal];
     cell.permissionsButton.hidden = NO;
 
     cell.nodeHandle = node.handle;
@@ -483,6 +488,7 @@
     
     cell.nodeHandle = share.nodeHandle;
     
+    [self configOutgoingVerifyCredentialCellIfNeeded:cell];
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
     
@@ -1233,6 +1239,10 @@
             
         case MegaNodeActionTypeVerifyContact:
             [self showContactVerificationView];
+            break;
+            
+        case MegaNodeActionTypeViewVersions:
+            [node mnz_showNodeVersionsInViewController:self];
             break;
             
         default:

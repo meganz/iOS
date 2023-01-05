@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ChatRoomNotificationsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: ChatRoomNotificationsViewModel
@@ -9,7 +8,7 @@ struct ChatRoomNotificationsView: View {
         VStack {
             ToogleView(
                 image: Asset.Images.Meetings.Info.enableChatNotifications.name,
-                text: Strings.Localizable.chatNotifications,
+                text: Strings.Localizable.Meetings.Info.chatNotifications,
                 isOn: $viewModel.isChatNotificationsOn) { newValue in
                 viewModel.chatNotificationsValueChanged(to: newValue)
             }
@@ -22,6 +21,7 @@ struct ChatRoomNotificationsView: View {
         .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
             ActionSheet(title: Text(""), buttons: actionSheetButtons())
         }
+        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
     }
     
     private func actionSheetButtons() -> [ActionSheet.Button] {

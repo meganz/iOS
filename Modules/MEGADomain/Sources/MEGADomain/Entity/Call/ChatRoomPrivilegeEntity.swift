@@ -16,4 +16,13 @@ extension ChatRoomPrivilegeEntity {
             return true
         }
     }
+    
+    public var isUserInChat: Bool {
+        switch self {
+        case .unknown, .removed:
+            return false
+        case .readOnly, .standard, .moderator:
+            return true
+        }
+    }
 }

@@ -16,6 +16,24 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
     
     // MARK: - Protocols
     public func allPhotos() async throws -> [NodeEntity] {
+        try await rootNodeSearch(for: .photo)
+    }
+    
+    func allVideos() async throws -> [NodeEntity] {
+        try await rootNodeSearch(for: .video)
+    }
+    
+    func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+        self.callback = callback
+        sdk.add(self)
+    }
+    
+    func stopMonitoringNodesUpdate() {
+        sdk.remove(self)
+    }
+    
+    //MARK: - Private
+    private func rootNodeSearch(for nodeFormatType: MEGANodeFormatType) async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else { continuation.resume(throwing: FileSearchResultErrorEntity.generic); return }
             
@@ -32,7 +50,7 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
                 cancelToken: cancelToken,
                 recursive: true,
                 orderType: .modificationDesc,
-                nodeFormatType: .photo,
+                nodeFormatType: nodeFormatType,
                 folderTargetType: .rootNode
             )
             
@@ -40,13 +58,8 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
         }
     }
     
-    func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
-        self.callback = callback
-        sdk.add(self)
-    }
-    
-    func stopMonitoringNodesUpdate() {
-        sdk.remove(self)
+    func fetchNode(by id: HandleEntity) -> NodeEntity? {
+        sdk.node(forHandle: id)?.toNodeEntity()
     }
 }
 

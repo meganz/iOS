@@ -15,10 +15,12 @@ struct AlbumCell: View {
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(viewModel.title)
-                    .font(.system(size: 13.0))
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .font(.caption)
                 
                 Text("\(viewModel.numberOfNodes)")
-                    .font(.system(size: 12.0))
+                    .font(.footnote)
             }
         }
         .onAppear {

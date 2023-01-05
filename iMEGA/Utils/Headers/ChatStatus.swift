@@ -25,4 +25,19 @@ enum ChatStatus: Int, CaseIterable {
         default: return nil
         }
     }
+    
+    var color: UIColor? {
+        switch self {
+        case .online:
+            return Colors.Chat.Status.online.color
+        case .offline:
+            return Colors.Chat.Status.offline.color
+        case .away:
+            return Colors.Chat.Status.away.color
+        case .busy:
+            return Colors.Chat.Status.busy.color
+        default:
+            return nil
+        }
+    }
 }

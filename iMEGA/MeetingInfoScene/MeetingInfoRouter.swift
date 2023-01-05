@@ -1,10 +1,10 @@
 import MEGADomain
 
-@available(iOS 14.0, *)
 final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     private(set) var presenter: UINavigationController
     private let scheduledMeeting: ScheduledMeetingEntity
     private var link: String?
+    private var inviteToMegaNavigationController: MEGANavigationController?
 
     init(presenter: UINavigationController,
          scheduledMeeting: ScheduledMeetingEntity) {
@@ -76,9 +76,10 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     }
     
     func showShareActivity(_ link: String, title: String?, description: String?) {
-        guard let url = URL(string: link) else { return }
+        guard let url = URL(string: link), let sourceView = presenter.viewControllers.first?.view else { return }
         let metadataItemSource = ContactLinkPresentationItemSource(title: title ?? "", description: description ?? "", icon: Asset.Images.Logo.megaShareContactLink, url: url)
         let shareActivity = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: [SendToChatActivity(text: link)])
+        shareActivity.popoverPresentationController?.sourceView = sourceView
         presenter.present(shareActivity, animated: true)
     }
 
@@ -98,9 +99,82 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     func showLinkCopied() {
         SVProgressHUD.show(Asset.Images.Hud.hudSuccess.image, status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
+    
+    func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity) {
+        guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
+            return
+        }
+        contactDetailsVC.contactDetailsMode = .fromGroupChat
+        contactDetailsVC.userEmail = email
+        contactDetailsVC.userHandle = userHandle
+        contactDetailsVC.groupChatRoom = chatRoom.toMEGAChatRoom()
+        
+        presenter.pushViewController(contactDetailsVC, animated: true)
+    }
+    
+    func inviteParticipants(
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        excludeParticpantsId: Set<HandleEntity>,
+        selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
+    ) {
+        guard let contactsNavigationController = participantsAddingViewFactory.addContactsViewController(
+            withContactsMode: .inviteParticipants,
+            additionallyExcludedParticipantsId: excludeParticpantsId,
+            selectedUsersHandler: selectedUsersHandler
+        ) else { return }
+        
+        contactsNavigationController.overrideUserInterfaceStyle = .dark
+        presenter.present(contactsNavigationController, animated: true)
+    }
+    
+    func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
+        showContactsAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory,
+                          action: participantsAddingViewFactory.allContactsAlreadyAddedAlert)
+        
+    }
+    
+    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
+        showContactsAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory,
+                          action: participantsAddingViewFactory.noAvailableContactsAlert)
+    }
+    
+    // MARK: - Private methods.
+    
+    private func showInviteToMega(_ inviteContactsViewController: InviteContactViewController) {
+        let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
+        
+        let backBarButton = UIBarButtonItem(
+            image: Asset.Images.Chat.backArrow.image,
+            style: .plain,
+            target: self,
+            action: #selector(self.dismissInviteContactsScreen)
+        )
+        
+        navigationController.addLeftDismissBarButton(backBarButton)
+        navigationController.overrideUserInterfaceStyle = .dark
+        self.inviteToMegaNavigationController = navigationController
+        presenter.present(navigationController, animated: true)
+    }
+    
+    private func showContactsAlert(
+        withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
+        action: (@escaping () -> Void) -> UIAlertController
+    ) {
+        let contactsAlert = action {
+            guard let inviteContactController = participantsAddingViewFactory.inviteContactController() else { return }
+            self.showInviteToMega(inviteContactController)
+        }
+        
+        contactsAlert.overrideUserInterfaceStyle = .dark
+        presenter.present(contactsAlert, animated: true)
+    }
+    
+    @objc private func dismissInviteContactsScreen() {
+        self.inviteToMegaNavigationController?.dismiss(animated: true)
+        self.inviteToMegaNavigationController = nil
+    }
 }
 
-@available(iOS 14.0, *)
 extension MeetingInfoRouter: SendToChatActivityDelegate {
     func send(_ viewController: SendToViewController!, didFinishActivity completed: Bool) {
         viewController.dismiss(animated: true)

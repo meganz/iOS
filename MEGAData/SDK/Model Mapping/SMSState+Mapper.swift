@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension SMSState {
     func toStateEntity() -> SMSStateEntity {

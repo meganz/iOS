@@ -2,16 +2,14 @@ import SwiftUI
 import MEGADomain
 
 struct AlbumContainerWrapper: UIViewControllerRepresentable {
-    var albumNode: NodeEntity?
-    var album: AlbumEntity?
+    private let album: AlbumEntity
     
-    init(albumNode: NodeEntity?, album: AlbumEntity?) {
-        self.albumNode = albumNode
+    init(album: AlbumEntity) {
         self.album = album
     }
     
     func makeUIViewController(context: Context) -> UINavigationController {
-        let nav = MEGANavigationController(rootViewController: AlbumContentRouter(cameraUploadNode: albumNode, album: album).build())
+        let nav = MEGANavigationController(rootViewController: AlbumContentRouter(album: album).build())
         nav.modalPresentationStyle = .fullScreen
         
         return nav

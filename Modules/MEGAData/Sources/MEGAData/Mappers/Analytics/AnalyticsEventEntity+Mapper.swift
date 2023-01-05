@@ -11,6 +11,8 @@ extension AnalyticsEventEntity: AnalyticsEventProtocol {
             return nseAnalyticsEventEntity.code
         case .extensions(let extensionsAnalyticsEventEntity):
             return extensionsAnalyticsEventEntity.code
+        case .download(let downloadAnalyticsEventEntity):
+            return downloadAnalyticsEventEntity.code
         }
     }
     
@@ -24,6 +26,8 @@ extension AnalyticsEventEntity: AnalyticsEventProtocol {
                 return nseAnalyticsEventEntity.description
             case .extensions(let extensionsAnalyticsEventEntity):
                 return extensionsAnalyticsEventEntity.description
+            case .download(let downloadAnalyticsEventEntity):
+                return downloadAnalyticsEventEntity.description
             }
     }
 }

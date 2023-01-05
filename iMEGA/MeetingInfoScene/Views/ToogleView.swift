@@ -1,8 +1,11 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct ToogleView: View {
-    let image: String
+    private enum Constants {
+        static let viewHeight: CGFloat = 44
+    }
+    
+    let image: String?
     let text: String
     @Binding var isOn: Bool
     let valueChanged: ((Bool) -> Void)
@@ -11,7 +14,9 @@ struct ToogleView: View {
         VStack {
             Divider()
             HStack {
-                Image(image)
+                if let image {
+                    Image(image)
+                }
                 Toggle(text, isOn: $isOn)
                     .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
             }
@@ -21,7 +26,7 @@ struct ToogleView: View {
             }
             Divider()
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: Constants.viewHeight)
     }
 }
 

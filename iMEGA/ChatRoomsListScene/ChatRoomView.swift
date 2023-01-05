@@ -121,7 +121,7 @@ fileprivate struct ChatRoomContentDetailsView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
-        if viewModel.chatListItem.unreadCount > 0 || viewModel.existsInProgressCallInChatRoom {
+        if viewModel.shouldShowUnreadCount || viewModel.existsInProgressCallInChatRoom {
             HStack(spacing: 3) {
                 VStack(alignment: .leading, spacing: 4) {
                     ChatRoomContentTitleView()
@@ -143,11 +143,11 @@ fileprivate struct ChatRoomContentDetailsView: View {
                                 .frame(width: 21, height: 21)
                         }
                         
-                        if viewModel.chatListItem.unreadCount > 0  {
-                            Text(String(viewModel.chatListItem.unreadCount))
+                        if viewModel.shouldShowUnreadCount {
+                            Text(viewModel.unreadCountString)
                                 .font(.caption2)
                                 .foregroundColor(.white)
-                                .padding(7)
+                                .padding(4)
                                 .background(Color.red)
                                 .clipShape(Circle())
                         }
@@ -181,7 +181,7 @@ fileprivate struct ChatRoomContentTitleView: View {
     var body: some View {
         HStack(spacing: 3) {
             Text(viewModel.chatListItem.title ?? "")
-                .font(viewModel.chatListItem.unreadCount > 0 ? .subheadline.bold() : .subheadline)
+                .font(viewModel.shouldShowUnreadCount ? .subheadline.bold() : .subheadline)
                 .lineLimit(1)
             
             if let chatStatus = viewModel.chatStatus,
@@ -210,7 +210,7 @@ fileprivate struct ChatRoomContentDescriptionView: View {
             HStack(spacing: 0) {
                 if let sender = hybridDescription.sender {
                     Text(sender)
-                        .font(viewModel.chatListItem.unreadCount > 0 ? .caption.bold(): .caption)
+                        .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
                         .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
                 }
                 
@@ -220,12 +220,12 @@ fileprivate struct ChatRoomContentDescriptionView: View {
                     .frame(width: 16, height: 16)
                 
                 Text(hybridDescription.duration)
-                    .font(viewModel.chatListItem.unreadCount > 0 ? .caption.bold(): .caption)
+                    .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
                     .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
             }
         } else if let description = viewModel.description {
             Text(description)
-                .font(viewModel.chatListItem.unreadCount > 0 ? .caption.bold(): .caption)
+                .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
                 .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
                 .lineLimit(1)
         } else {

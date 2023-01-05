@@ -1,11 +1,16 @@
 import MEGADomain
+import Combine
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let scheduledMeeting: ScheduledMeetingEntity
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatUseCase: ChatUseCaseProtocol
+    private var chatNotificationControl: ChatNotificationControl
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
+    private(set) var isMuted: Bool
+    private var subscriptions = Set<AnyCancellable>()
 
     var title: String {
         scheduledMeeting.title
@@ -17,21 +22,47 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
         return "\(start) - \(end)"
     }
+    
+    var unreadChatCount: Int? {
+        chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)?.unreadCount
+    }
+    
+    var lastMessageTimestamp: String? {
+        let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
+        if let lastMessageDate = chatListItem?.lastMessageDate {
+            if lastMessageDate.isToday(on: .autoupdatingCurrent) {
+                return DateFormatter.fromTemplate("HH:mm").localisedString(from: lastMessageDate)
+            } else if let difference = lastMessageDate.dayDistance(toFutureDate: Date(), on: .autoupdatingCurrent), difference < 7 {
+                return DateFormatter.fromTemplate("EEE").localisedString(from: lastMessageDate)
+            } else {
+                return DateFormatter.fromTemplate("ddyyMM").localisedString(from: lastMessageDate)
+            }
+        }
+        
+        return nil
+    }
 
     private let router: ChatRoomsListRouting
     private var futureMeetingSearchStringTask: Task<Void, Never>?
+
+    @Published var showDNDTurnOnOptions = false
+    @Published var existsInProgressCallInChatRoom = false
 
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         userUseCase: UserUseCaseProtocol,
+         chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
-        
+        self.chatUseCase = chatUseCase
+        self.chatNotificationControl = chatNotificationControl
+        self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
+
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: scheduledMeeting.title,
@@ -48,10 +79,30 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         
         self.futureMeetingSearchStringTask = createFutureMeetingSearchStringTask()
         self.contextMenuOptions = constructContextMenuOptions()
+        
+        self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: scheduledMeeting.chatId)
+        monitorActiveCallChanges()
     }
     
     func contains(searchText: String) -> Bool {
         searchString.localizedCaseInsensitiveContains(searchText)
+    }
+    
+    func dndTurnOnOptions() -> [DNDTurnOnOption] {
+        ChatNotificationControl.dndTurnOnOptions()
+    }
+    
+    func turnOnDNDOption(_ option: DNDTurnOnOption) {
+        chatNotificationControl.turnOnDND(chatId: scheduledMeeting.chatId, option: option)
+    }
+    
+    func pushNotificationSettingsChanged() {
+        let newValue = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
+        guard isMuted != newValue else { return }
+        
+        contextMenuOptions = constructContextMenuOptions()
+        isMuted = newValue
+        objectWillChange.send()
     }
     
     //MARK: - Private methods.
@@ -86,13 +137,29 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
         
+        let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
+
         options += [
+            ChatRoomContextMenuOption(
+                title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
+                imageName: Asset.Images.Chat.mutedChat.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.toggleDND()
+                }),
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.info,
                 imageName: Asset.Images.Generic.info.name,
                 action: { [weak self] in
                     guard let self else { return }
                     self.showChatRoomInfo()
+                }),
+            ChatRoomContextMenuOption(
+                title: Strings.Localizable.archiveChat,
+                imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    self.archiveChat()
                 })
         ]
         
@@ -101,5 +168,32 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     private func showChatRoomInfo() {
         router.showMeetingInfo(for: scheduledMeeting)
+    }
+    
+    private func toggleDND() {
+        if chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId) {
+            chatNotificationControl.turnOffDND(chatId: scheduledMeeting.chatId)
+        } else {
+            showDNDTurnOnOptions = true
+        }
+    }
+    
+    private func archiveChat() {
+        chatRoomUseCase.archive(true, chatId: scheduledMeeting.chatId)
+    }
+    
+    private func monitorActiveCallChanges() {
+        chatUseCase.monitorChatCallStatusUpdate()
+            .sink { [weak self] call in
+                guard let self, call.chatId == self.scheduledMeeting.chatId else { return }
+                self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
+            }
+            .store(in: &subscriptions)
+    }
+}
+
+extension FutureMeetingRoomViewModel: Equatable {
+    static func == (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
+        lhs.scheduledMeeting.scheduledId == rhs.scheduledMeeting.scheduledId
     }
 }

@@ -30,7 +30,7 @@ final class ExportFileRouter: ExportFileViewRouting {
     
     //MARK: - Private -
     private lazy var viewModel: ExportFileViewModel = {
-        let uc = ExportFileUseCase(
+        let exportFileUC = ExportFileUseCase(
             downloadFileRepository: DownloadFileRepository.newRepo,
             offlineFilesRepository: OfflineFilesRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,
@@ -40,7 +40,9 @@ final class ExportFileRouter: ExportFileViewRouting {
             importNodeRepository: ImportNodeRepository.newRepo,
             megaHandleRepository: MEGAHandleRepository.newRepo)
         
-        return ExportFileViewModel(router: self, exportFileUseCase: uc)
+        return ExportFileViewModel(router: self,
+                                   analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
+                                   exportFileUseCase: exportFileUC)
     }()
     
     //MARK: - ExportFileViewRouting -

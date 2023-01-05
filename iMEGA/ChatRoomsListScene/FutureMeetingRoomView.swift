@@ -1,7 +1,6 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct FutureMeetingRoomView: View {
     @ObservedObject var viewModel: FutureMeetingRoomViewModel
     
@@ -20,15 +19,47 @@ struct FutureMeetingRoomView: View {
             }
             
             VStack(alignment: .leading, spacing: 3) {
-                Text(viewModel.title)
-                    .font(.subheadline)
-                
+                HStack(spacing: 3) {
+                    Text(viewModel.title)
+                        .font(.subheadline)
+                    if viewModel.isMuted {
+                        Image(uiImage: Asset.Images.Chat.mutedChat.image)
+                    }
+                }
                 Text(viewModel.time)
                     .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
                     .font(.caption)
             }
+            
+            if let unreadCount = viewModel.unreadChatCount, unreadCount != 0 {
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 0) {
+                    if let lastMessageTimestamp = viewModel.lastMessageTimestamp {
+                        Text(lastMessageTimestamp)
+                            .font(.caption2.bold())
+                    }
+                    
+                    HStack(spacing: 4) {
+                        if viewModel.existsInProgressCallInChatRoom {
+                            Image(uiImage: Asset.Images.Chat.onACall.image)
+                                .resizable()
+                                .frame(width: 21, height: 21)
+                        }
+                        
+                        Text(unreadCount > 0 ? "\(unreadCount)" : "\(-unreadCount)+")
+                            .font(.caption2)
+                            .foregroundColor(.white)
+                            .padding(4)
+                            .background(Color.red)
+                            .clipShape(Circle())
+                    }
+                }
+            }
+            
         }
         .frame(height: Constants.viewHeight)
+        .padding(.trailing, 10)
         .contentShape(Rectangle())
         .contextMenu {
             if let contextMenuOptions = viewModel.contextMenuOptions {
@@ -41,5 +72,18 @@ struct FutureMeetingRoomView: View {
                 }
             }
         }
+        .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
+            ActionSheet(title: Text(""), buttons: actionSheetButtons())
+        }
+    }
+    
+    private func actionSheetButtons() -> [ActionSheet.Button] {
+        var buttons = viewModel.dndTurnOnOptions().map { dndOption in
+            ActionSheet.Button.default(Text(dndOption.localizedTitle)) {
+                viewModel.turnOnDNDOption(dndOption)
+            }
+        }
+        buttons.append(ActionSheet.Button.cancel())
+        return buttons
     }
 }

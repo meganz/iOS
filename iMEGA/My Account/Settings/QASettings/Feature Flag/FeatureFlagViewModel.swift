@@ -4,6 +4,7 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case scheduleMeeting = "Schedule Meeting"
     case chatRoomsListingRevamp = "chatRooms Listing Revamp"
     case mandatoryFingerprintVerification = "Mandatory Fingerprint Verification"
+    case createAlbum = "Create Album"
 }
 
 final class FeatureFlagViewModel: ObservableObject {

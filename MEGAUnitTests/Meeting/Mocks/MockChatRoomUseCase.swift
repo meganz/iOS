@@ -3,6 +3,7 @@ import Combine
 import MEGADomain
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
+    
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var userDisplayNamesCompletion: Result<[(handle: HandleEntity, name: String)], ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
@@ -26,6 +27,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var userEmails:  [HandleEntity : String] = [:]
     var closePreviewChatId: ((ChatIdEntity) -> Void)? = nil
     var leaveChatRoomSuccess = false
+    var ownPrivilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
+    var updatedChatPrivilege: ((HandleEntity, ChatRoomPrivilegeEntity) -> Void)? = nil
+    var invitedToChat: ((HandleEntity) -> Void)? = nil
+    var removedFromChat: ((HandleEntity) -> Void)? = nil
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -104,11 +109,11 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         userFullNames
     }
     
-    func userNickNames(forChatId chatId: MEGA.ChatId) async throws -> [HandleEntity : String] {
+    func userNickNames(forChatId chatId: ChatIdEntity) async throws -> [HandleEntity : String] {
         userNickNames
     }
     
-    func userEmails(forChatId chatId: ChatId) async throws -> [HandleEntity : String] {
+    func userEmails(forChatId chatId: ChatIdEntity) async throws -> [HandleEntity : String] {
         userEmails
     }
     
@@ -130,5 +135,21 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool {
         leaveChatRoomSuccess
+    }
+    
+    func ownPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        ownPrivilegeChangedSubject.eraseToAnyPublisher()
+    }
+    
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
+        updatedChatPrivilege?(userHandle, privilege)
+    }
+    
+    func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {
+        invitedToChat?(userId)
+    }
+    
+    func remove(fromChat chat: MEGADomain.ChatRoomEntity, userId: HandleEntity) {
+        removedFromChat?(userId)
     }
 }

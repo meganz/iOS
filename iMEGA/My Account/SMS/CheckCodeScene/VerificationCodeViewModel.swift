@@ -1,5 +1,6 @@
 import Foundation
 import PhoneNumberKit
+import MEGADomain
 
 enum VerificationCodeAction: ActionType {
     case onViewReady

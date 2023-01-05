@@ -12,9 +12,9 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var playIconImage: UIImageView!
     @IBOutlet weak var linkedView: UIView!
 
-    func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?) {
+    func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        nameLabel.text = node.name
+        nameLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
         linkedView.isHidden = !node.isExported()
         if (node.type == .file) {
             previewImage.mnz_setThumbnail(by: node)

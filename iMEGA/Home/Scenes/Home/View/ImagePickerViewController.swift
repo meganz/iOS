@@ -113,7 +113,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
             }
 
             let videoName = modificationDate.mnz_formattedDefaultNameForMedia().appending(".mov")
-            guard let localFilePath = FileManager.default.uploadsDirectory()?.appending(videoName) else {
+            guard let localFilePath = FileManager.default.uploadsDirectory()?.append(pathComponent:videoName) else {
                 completion?(.failure(.failedCreateTemporaryData))
                 return
             }

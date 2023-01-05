@@ -25,4 +25,29 @@ extension SharedItemsViewController {
     @objc func isFeatureFlagFingerprintVerificationEnabled() -> Bool {
         FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
     }
+    
+    @objc func incomingSharedFolderName(node: MEGANode) -> String? {
+        guard isFeatureFlagFingerprintVerificationEnabled() else {
+            return node.name
+        }
+        return Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+    }
+    
+    @objc func incomingSharedFolderPermissionIcon(type: MEGAShareType) -> UIImage? {
+        guard isFeatureFlagFingerprintVerificationEnabled() else {
+            return UIImage.mnz_permissionsButtonImage(for: type)
+        }
+        return Asset.Images.SharedItems.warningPermission.image
+    }
+    
+    @objc func configOutgoingVerifyCredentialCellIfNeeded(_ cell: SharedItemsTableViewCell) {
+        guard isFeatureFlagFingerprintVerificationEnabled() else {
+            cell.nameLabel.textColor = UIColor.mnz_label()
+            cell.permissionsButton.isHidden = true
+            return
+        }
+        cell.nameLabel.textColor = UIColor.mnz_red(for: self.traitCollection)
+        cell.permissionsButton.setImage(Asset.Images.SharedItems.warningPermission.image, for: .normal)
+        cell.permissionsButton.isHidden = false
+    }
 }

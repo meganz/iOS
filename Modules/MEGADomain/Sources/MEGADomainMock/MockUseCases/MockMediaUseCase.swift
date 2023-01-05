@@ -8,19 +8,28 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
     private let isStringImage: Bool
     private let isRawImage: Bool
     private let isGifImage: Bool
+    private let rawImageFiles: [FileNameEntity]?
+    private let gifImageFiles: [FileNameEntity]?
+    private var multimediaNodeNames: [String]
     
     public init(isURLVideo: Bool = false,
                 isURLImage: Bool = false,
                 isStringVideo: Bool = false,
                 isStringImage: Bool = false,
                 isRawImage: Bool = false,
-                isGifImage: Bool = false) {
+                isGifImage: Bool = false,
+                rawImageFiles: [FileNameEntity]? = nil,
+                gifImageFiles: [FileNameEntity]? = nil,
+                multimediaNodeNames: [String] = []) {
         self.isURLVideo = isURLVideo
         self.isURLImage = isURLImage
         self.isStringVideo = isStringVideo
         self.isStringImage = isStringImage
         self.isRawImage = isRawImage
         self.isGifImage = isGifImage
+        self.rawImageFiles = rawImageFiles
+        self.gifImageFiles = gifImageFiles
+        self.multimediaNodeNames = multimediaNodeNames
     }
     
     public func isVideo(for url: URL) -> Bool {
@@ -40,10 +49,14 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
     }
     
     public func isRawImage(_ name: FileNameEntity) -> Bool {
-        isRawImage
+        rawImageFiles?.contains(name) ?? isRawImage
     }
     
     public func isGifImage(_ name: FileNameEntity) -> Bool {
-        isGifImage
+        gifImageFiles?.contains(name) ?? isGifImage
+    }
+    
+    public func isMultimedia(_ name: FileNameEntity) -> Bool {
+        multimediaNodeNames.contains(where: {$0 == name})
     }
 }

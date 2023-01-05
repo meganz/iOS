@@ -2,23 +2,27 @@ import Combine
 
 // MARK: - Use case protocol -
 public protocol ChatUseCaseProtocol {
+    func myUserHandle() -> HandleEntity
+    func isGuestAccount() -> Bool
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
     func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>
-    func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never>
+    func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never>
     func existsActiveCall() -> Bool
     func activeCall() -> CallEntity?
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
     func scheduledMeetings() -> [ScheduledMeetingEntity]
+    func scheduledMeetingsByChat(chatId: HandleEntity) -> [ScheduledMeetingEntity]
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
     func unreadChatMessagesCount() -> Int
     func chatConnectionStatus() -> ChatConnectionStatus
+    func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity?
     func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
     func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never>
-    func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never>
+    func monitorChatPrivateModeUpdate(forChatId chatId: ChatIdEntity) -> AnyPublisher<ChatRoomEntity, Never>
 }
 
 // MARK: - Use case implementation -
@@ -27,6 +31,14 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
 
     public init(chatRepo: T) {
         self.chatRepo = chatRepo
+    }
+
+    public func myUserHandle() -> HandleEntity {
+        chatRepo.myUserHandle()
+    }
+    
+    public func isGuestAccount() -> Bool {
+        chatRepo.isGuestAccount()
     }
     
     public func chatStatus() -> ChatStatusEntity {
@@ -41,7 +53,7 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
         chatRepo.monitorChatStatusChange(forUserHandle: userHandle)
     }
     
-    public func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never> {
+    public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {
         chatRepo.monitorChatListItemUpdate()
     }
     
@@ -59,6 +71,10 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         chatRepo.scheduledMeetings()
+    }
+    
+    public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
+        chatRepo.scheduledMeetingsByChat(chatId: chatId)
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
@@ -79,6 +95,10 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func chatConnectionStatus() -> ChatConnectionStatus {
         chatRepo.chatConnectionStatus()
+    }
+    
+    public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
+        chatRepo.chatListItem(forChatId: chatId)
     }
     
     public func retryPendingConnections() {

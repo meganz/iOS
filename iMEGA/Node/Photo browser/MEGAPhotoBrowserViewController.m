@@ -27,6 +27,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAUIKit;
+
 static const CGFloat GapBetweenPages = 10.0;
 static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
 static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Don't request the preview and download the original if the photo is smaller than 1 MB
@@ -319,7 +321,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
     }
     
-    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:self.dataProvider.currentPhoto.name subtitle:subtitle color:UIColor.mnz_label];
+    UILabel *titleLabel = [UILabel.new customNavigationBarLabelWithTitle:self.dataProvider.currentPhoto.name subtitle:subtitle color:UIColor.mnz_label];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;

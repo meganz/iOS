@@ -127,7 +127,7 @@ final class NameCollisionViewModel: ObservableObject {
     func actionsForCurrentDuplicatedItem() -> [NameCollisionAction] {
         var actions = [NameCollisionAction]()
         if duplicatedItem.isFile {
-            if isVersioningEnabled {
+            if isVersioningEnabled && collisionType == .upload {
                 actions.append(NameCollisionAction(actionType: .update, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
             } else {
                 actions.append(NameCollisionAction(actionType: .replace, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))

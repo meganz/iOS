@@ -1,7 +1,6 @@
 
 import Foundation
-
-typealias ChatId = UInt64
+import MEGADomain
 
 struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
     private let chatSdk: MEGAChatSdk
@@ -10,7 +9,7 @@ struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    func chatRetentionTime(for chatId: ChatId, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
+    func chatRetentionTime(for chatId: ChatIdEntity, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
         if let chatRoom = chatSdk.chatRoom(forChatId: chatId) {
             completion(.success(chatRoom.retentionTime))
         } else {
@@ -18,7 +17,7 @@ struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
         }
     }
     
-    func setChatRetentionTime(for chatId: ChatId, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
+    func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
         let delegate = MEGAChatGenericRequestDelegate { request, error in
             if error.type == .MEGAChatErrorTypeOk {
                 let requestPeriod = UInt(truncatingIfNeeded: request.number)
@@ -47,7 +46,7 @@ struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
         chatSdk.setChatRetentionTime(chatId, period: period, delegate: delegate)
     }
     
-    func clearChatHistory(for chatId: ChatId, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void) {
+    func clearChatHistory(for chatId: ChatIdEntity, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void) {
         chatSdk.clearChatHistory(chatId, delegate: MEGAChatGenericRequestDelegate { request, error in
             let clearChatHistoryError: ManageChatHistoryErrorEntity
             switch error.type {

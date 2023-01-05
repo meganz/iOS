@@ -30,6 +30,8 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
+@import MEGAUIKit;
+
 @interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
@@ -148,6 +150,7 @@
     
     [AudioPlayerManager.shared removeDelegate:self];
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
+    [self removeSnackBarPresenter];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -157,6 +160,7 @@
     
     [AudioPlayerManager.shared addDelegate:self];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self configureSnackBarPresenter];
     [self shouldShowMiniPlayer];
 }
 
@@ -239,7 +243,7 @@
         }
     } else {
         if (self.parentNode.name && !self.isFolderLinkNotValid) {
-            UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:NSLocalizedString(@"folderLink", nil)];
+            UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:NSLocalizedString(@"folderLink", nil) color:UIColor.mnz_label];
             label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
             self.navigationItem.titleView = label;
         } else {
@@ -251,7 +255,7 @@
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     [SVProgressHUD dismiss];
     
-    self.navigationItem.titleView = [Helper customNavigationBarLabelWithTitle:NSLocalizedString(@"folderLink", nil) subtitle:NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
+    self.navigationItem.titleView = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle: NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.mnz_label];
     
     [self disableUIItems];
     
