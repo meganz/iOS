@@ -102,8 +102,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
-    self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
-    self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+    self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+    self.retypePasswordView.passwordTextField.textContentType = UITextContentTypePassword;
     
     [self.createAccountButton setTitle:NSLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     

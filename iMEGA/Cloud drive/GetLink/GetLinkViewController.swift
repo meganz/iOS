@@ -345,17 +345,12 @@ class GetLinkViewController: UIViewController {
     }
     
     private func setExpiryDate() {
-        MEGASdkManager.sharedMEGASdk().export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] (request) in
-            guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: self?.nodes[0].handle ?? MEGAInvalidHandle) else {
+        MEGASdkManager.sharedMEGASdk().export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] request in
+            guard let nodeHandle = request?.nodeHandle, let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
                 return
             }
-            
-            if self?.getLinkVM.passwordProtect ?? false, let password = self?.getLinkVM.password, let publicLink = nodeUpdated.publicLink {
-                self?.encrypt(link: publicLink, with: password)
-            } else {
-                SVProgressHUD.dismiss()
-                self?.updateModel(forNode: nodeUpdated)
-            }
+            SVProgressHUD.dismiss()
+            self?.updateModel(forNode: nodeUpdated)
         }, multipleLinks: false))
     }
     

@@ -26,7 +26,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     lazy var toolbar = UIToolbar()
     var albumToolbarConfigurator: AlbumToolbarConfigurator?
     
-    private lazy var emptyView = EmptyStateView.create(for: .favourites)
+    private lazy var emptyView = EmptyStateView.create(for: viewModel.isFavouriteAlbum ? .favourites: .album)
     
     // MARK: - Init
     

@@ -15,6 +15,14 @@ public final class ChatRepository: ChatRepositoryProtocol {
         self.chatSDK = chatSDK
     }
     
+    public func myUserHandle() -> HandleEntity {
+        chatSDK.myUserHandle
+    }
+    
+    public func isGuestAccount() -> Bool {
+        sdk.isGuestAccount
+    }
+    
     public func chatStatus() -> ChatStatusEntity {
         chatSDK.onlineStatus().toChatStatusEntity()
     }
@@ -35,6 +43,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
         MEGAChatConnection(rawValue: chatSDK.initState().rawValue)?.toChatConnectionStatus() ?? .invalid
     }
     
+    public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
+        chatSDK.chatListItem(forChatId: chatId)?.toChatListItemEntity()
+    }
+    
     public func retryPendingConnections() {
         sdk.retryPendingConnections()
         chatSDK.retryPendingConnections()
@@ -46,9 +58,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
             .eraseToAnyPublisher()
     }
     
-    public func monitorChatListItemUpdate() -> AnyPublisher<ChatListItemEntity, Never> {
+    public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {
         chatListItemUpdateListener
             .monitor
+            .collect(.byTime(DispatchQueue.global(qos: .background), .seconds(5)))
             .eraseToAnyPublisher()
     }
     
@@ -72,7 +85,22 @@ public final class ChatRepository: ChatRepositoryProtocol {
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         chatSDK
             .getAllScheduledMeetings()
-            .compactMap { $0.toScheduledMeetingEntity() }
+            .compactMap { scheduledMeeting in
+                guard !scheduledMeeting.isCancelled,
+                      let chatRoom = chatSDK.chatRoom(forChatId: scheduledMeeting.chatId),
+                      !chatRoom.isArchived, chatRoom.ownPrivilege.toOwnPrivilegeEntity().isUserInChat else {
+                    return nil
+                }
+                return scheduledMeeting.toScheduledMeetingEntity()
+            }
+    }
+    
+    public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
+        chatSDK
+            .scheduledMeetings(byChat: chatId)
+            .compactMap {
+                $0.toScheduledMeetingEntity()
+            }
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
@@ -170,7 +198,7 @@ fileprivate final class ChatListItemUpdateListener: ChatListener {
 }
 
 fileprivate final class ChatConnectionUpdateListener: ChatListener {
-    private let chatId: ChatId
+    private let chatId: ChatIdEntity
     private let source = PassthroughSubject<ChatConnectionStatus, Never>()
 
     var monitor: AnyPublisher<ChatConnectionStatus, Never> {

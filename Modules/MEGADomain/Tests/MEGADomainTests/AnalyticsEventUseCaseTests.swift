@@ -155,4 +155,43 @@ final class AnalyticsEventUseCaseTests: XCTestCase {
         
         XCTAssertTrue(repo.type == .extensions(.withoutNoDDatabase))
     }
+    
+    // MARK: - Download Behavior
+    
+    func testSendEvent_makeAvailableOfflinePhotosVideos() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.download(.makeAvailableOfflinePhotosVideos))
+        
+        XCTAssertTrue(repo.type == .download(.makeAvailableOfflinePhotosVideos))
+    }
+    
+    func testSendEvent_saveToPhotos() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.download(.saveToPhotos))
+        
+        XCTAssertTrue(repo.type == .download(.saveToPhotos))
+    }
+    
+    func testSendEvent_makeAvailableOffline() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.download(.makeAvailableOffline))
+        
+        XCTAssertTrue(repo.type == .download(.makeAvailableOffline))
+    }
+    
+    func testSendEvent_exportFile() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.download(.exportFile))
+        
+        XCTAssertTrue(repo.type == .download(.exportFile))
+    }
+    
 }

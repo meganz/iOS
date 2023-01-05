@@ -212,6 +212,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
         chatRoomUpdateListener(forChatId: chatId)
             .monitor
+            .filter{ $0.changeType == .participants }
             .map({ $0.peers.map({ $0.handle })})
             .eraseToAnyPublisher()
     }
@@ -219,6 +220,15 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
         chatRoomUpdateListener(forChatId: chatId)
             .monitor
+            .filter{ $0.changeType == .participants }
+            .map(\.userHandle)
+            .eraseToAnyPublisher()
+    }
+    
+    func ownPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+        chatRoomUpdateListener(forChatId: chatId)
+            .monitor
+            .filter{ $0.changeType == .ownPrivilege }
             .map(\.userHandle)
             .eraseToAnyPublisher()
     }
@@ -226,13 +236,14 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
         chatRoomUpdateListener(forChatId: chatId)
             .monitor
+            .filter{ $0.changeType == .openInvite}
             .map(\.isOpenInviteEnabled)
             .eraseToAnyPublisher()
     }
     
     private func chatRoomUpdateListener(forChatId chatId: HandleEntity) -> ChatRoomUpdateListener {
-        guard let chatRoomUpdateListener = chatRoomUpdateListeners.filter({ $0.chatId == chatId}).first else {
-            let chatRoomUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId, changeType: .openInvite)
+        guard let chatRoomUpdateListener = chatRoomUpdateListeners.filter({ $0.chatId == chatId }).first else {
+            let chatRoomUpdateListener = ChatRoomUpdateListener(sdk: sdk, chatId: chatId)
             chatRoomUpdateListeners.append(chatRoomUpdateListener)
             return chatRoomUpdateListener
         }
@@ -261,7 +272,10 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func closeChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
         openChatRooms.remove(chatId)
-        chatRoomUpdateListeners.remove(object: chatRoomUpdateListener(forChatId: chatId))
+        let listenersForChatId = chatRoomUpdateListeners.filter { $0.chatId == chatId }
+        listenersForChatId.forEach({ listener in
+            chatRoomUpdateListeners.remove(object: listener)
+        })
         return sdk.closeChatRoom(chatId, delegate: delegate)
     }
     
@@ -279,6 +293,18 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
                 continuation.resume(returning: true)
             })
         }
+    }
+    
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
+        sdk.updateChatPermissions(chatRoom.chatId, userHandle: userHandle, privilege: privilege.toMEGAChatRoomPrivilege().rawValue)
+    }
+    
+    func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {
+        sdk.invite(toChat: chat.chatId, user: userId, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+    }
+    
+    func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) {
+        sdk.remove(fromChat: chat.chatId, userHandle: userId)
     }
 }
 
@@ -298,7 +324,6 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
 
 fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     private let sdk: MEGAChatSdk
-    private let changeType: ChatRoomEntity.ChangeType
     let chatId: HandleEntity
     
     private let source = PassthroughSubject<ChatRoomEntity, Never>()
@@ -307,9 +332,8 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
         source.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGAChatSdk, chatId: HandleEntity, changeType: ChatRoomEntity.ChangeType) {
+    init(sdk: MEGAChatSdk, chatId: HandleEntity) {
         self.sdk = sdk
-        self.changeType = changeType
         self.chatId = chatId
         super.init()
         sdk.addChatRoomDelegate(chatId, delegate: self)
@@ -320,11 +344,7 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     }
     
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
-        guard case let chatRoom = chat.toChatRoomEntity(),
-              chatRoom.changeType == changeType else {
-            return
-        }
-        source.send(chatRoom)
+        source.send(chat.toChatRoomEntity())
     }
 }
 

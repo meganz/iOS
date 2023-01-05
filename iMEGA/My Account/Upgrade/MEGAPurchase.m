@@ -22,14 +22,6 @@
     return storeManagerSharedInstance;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self != nil) {
-        [self requestPricing];
-    }
-    return self;
-}
-
 - (void)requestPricing {
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     self.purchaseDelegateMutableArray = NSMutableArray.new;

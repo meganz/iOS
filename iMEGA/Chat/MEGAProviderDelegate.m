@@ -404,7 +404,7 @@
         MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatRoom.chatId];
         if (chatCall != nil) {
             MEGALogDebug(@"[CallKit] Loud speaker is %d", chatRoom.isMeeting);
-            [audioSession mnz_setSpeakerEnabled:chatRoom.isMeeting];
+            [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:chatRoom.isMeeting];
         }
     }
 }
@@ -414,7 +414,6 @@
     
     self.isAudioSessionActive = NO;
     [self sendAudioPlayerInterruptDidEndNotificationIfNeeded];
-    [CallActionManager.shared disableRTCAudioSession];
     
     if (self.shouldPlayCallEndedSound) {
         self.playCallEndedSound = NO;
@@ -565,7 +564,7 @@
     MEGALogWarning(@"[CallKit] Answering call for chat id %@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId]);
     self.callKitAnsweredCall = YES;
     self.answeredChatId = @(chatRoom.chatId);
-    [[AVAudioSession sharedInstance] mnz_setSpeakerEnabled:chatRoom.isMeeting];
+    [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:chatRoom.isMeeting];
     [[CallActionManager shared] answerCallWithChatId:chatRoom.chatId
                                          enableVideo:call.hasLocalVideo
                                          enableAudio:!chatRoom.isMeeting

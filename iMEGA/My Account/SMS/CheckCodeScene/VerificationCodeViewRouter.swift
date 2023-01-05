@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     private weak var baseViewController: UIViewController?

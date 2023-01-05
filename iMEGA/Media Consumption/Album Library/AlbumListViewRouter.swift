@@ -1,64 +1,49 @@
 import SwiftUI
-import Combine
 import MEGADomain
 
 protocol AlbumListViewRouting {
-    func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell
-    func albumContent(for photo: NodeEntity?, album: AlbumEntity?) -> AlbumContainerWrapper
+    func cell(album: AlbumEntity) -> AlbumCell
+    func albumContainer(album: AlbumEntity) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     
-    func cell(withCameraUploadNode node: NodeEntity?, album: AlbumEntity?) -> AlbumCell {
-        let sdk = MEGASdkManager.sharedMEGASdk()
-        let favouriteRepo = FavouriteNodesRepository.newRepo
-        let thumbnailRepo = ThumbnailRepository.newRepo
-        let nodesUpdateRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
-        let albumContentsRepo = AlbumContentsUpdateNotifierRepository(
-            sdk: sdk,
-            nodesUpdateListenerRepo: nodesUpdateRepo
-        )
-        let photoUseCase = PhotoLibraryUseCase(
-            photosRepository: PhotoLibraryRepository.newRepo,
-            searchRepository: SDKFilesSearchRepository.newRepo
-        )
-        
-        let thumbnailUsecase = ThumbnailUseCase(repository: thumbnailRepo)
-        let mediaUseCase = MediaUseCase()
-        let albumContentsUseCase = AlbumContentsUseCase(
-            albumContentsRepo: albumContentsRepo,
-            favouriteRepo: favouriteRepo,
-            photoUseCase: photoUseCase,
-            mediaUseCase: mediaUseCase,
-            fileSearchRepo: FileSearchRepository.newRepo
-        )
-        
+    func cell(album: AlbumEntity) -> AlbumCell {
         let vm = AlbumCellViewModel(
-            cameraUploadNode: node,
-            thumbnailUseCase: thumbnailUsecase,
-            albumContentsUseCase: albumContentsUseCase,
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             album: album
         )
-        
         return AlbumCell(viewModel: vm)
     }
     
-    func albumContent(for albumNode: NodeEntity?, album: AlbumEntity?) -> AlbumContainerWrapper {
-        return AlbumContainerWrapper(albumNode: albumNode, album: album)
+    func albumContainer(album: AlbumEntity) -> AlbumContainerWrapper {
+        return AlbumContainerWrapper(album: album)
     }
     
     func build() -> UIViewController {
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
                 albumRepository: AlbumRepository.newRepo,
+                userAlbumRepository: UserAlbumRepository.newRepo,
                 fileSearchRepository: FileSearchRepository.newRepo,
                 mediaUseCase: MediaUseCase()
             )
         )
-        let content = AlbumListView(viewModel: vm, router: self)
+        
+        let alertVm = TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
+                                              invalidTextTitle: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters),
+                                              placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
+                                              affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+                                              message: nil) { newAlbumName in
+            Task { await vm.createUserAlbum(with: newAlbumName) }
+        }
+        
+        let content = AlbumListView(viewModel: vm,
+                                    createAlbumCellViewModel: CreateAlbumCellViewModel(),
+                                    alertViewModel: alertVm,
+                                    router: self)
         
         return UIHostingController(rootView: content)
     }
-    
     func start() {}
 }

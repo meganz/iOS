@@ -27,6 +27,7 @@ final class SlideShowViewModel: ViewModelType {
     
     private var dataSource: SlideShowDataSourceProtocol
     private let slideShowUseCase: SlideShowUseCaseProtocol
+    private let userUseCase: UserUseCaseProtocol
     
     var configuration: SlideShowConfigurationEntity
     
@@ -53,12 +54,18 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     init(dataSource: SlideShowDataSourceProtocol,
-         slideShowUseCase: SlideShowUseCaseProtocol) {
+         slideShowUseCase: SlideShowUseCaseProtocol,
+         userUseCase: UserUseCaseProtocol) {
         
         self.dataSource = dataSource
         self.slideShowUseCase = slideShowUseCase
+        self.userUseCase = userUseCase
         
-        configuration = slideShowUseCase.loadConfiguration()
+        if let userHandle = userUseCase.myHandle {
+            configuration = slideShowUseCase.loadConfiguration(forUser: userHandle)
+        } else {
+            configuration = slideShowUseCase.defaultConfig
+        }
         
         dataSource.sortNodes(byOrder: configuration.playingOrder)
         
@@ -123,7 +130,13 @@ extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
     }
     
     func restart(withConfig config: SlideShowConfigurationEntity) {
-        slideShowUseCase.saveConfiguration(config)
+        do {
+            if let userHandle = userUseCase.myHandle {
+                try slideShowUseCase.saveConfiguration(config: config, forUser: userHandle)
+            }
+        } catch {
+            MEGALogError("Slideshow configuration saving error: \(error)")
+        }
 
         if config.playingOrder != configuration.playingOrder {
             dataSource.sortNodes(byOrder: config.playingOrder)

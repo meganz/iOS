@@ -10,6 +10,7 @@ extension FutureMeetingRoomViewModel {
         userImageUseCase: UserImageUseCaseProtocol = MockUserImageUseCase(),
         chatUseCase: ChatUseCaseProtocol = MockChatUseCase(),
         userUseCase: UserUseCaseProtocol = MockUserUseCase(),
+        chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         isTesting: Bool = true
     ) {
         self.init(
@@ -18,7 +19,10 @@ extension FutureMeetingRoomViewModel {
             chatRoomUseCase: chatRoomUseCase,
             userImageUseCase: userImageUseCase,
             chatUseCase: chatUseCase,
-            userUseCase: userUseCase
+            userUseCase: userUseCase,
+            chatNotificationControl: chatNotificationControl
         )
     }
 }
+
+fileprivate final class MockPushNotificationControl: PushNotificationControlProtocol {}

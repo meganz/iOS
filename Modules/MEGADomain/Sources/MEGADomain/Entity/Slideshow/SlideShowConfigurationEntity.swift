@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SlideShowPlayingOrderEntity {
+public enum SlideShowPlayingOrderEntity: Codable {
     case shuffled
     case newest
     case oldest
@@ -27,7 +27,7 @@ public enum SlideShowPlayingOrderEntity {
     }
 }
 
-public enum SlideShowTimeIntervalOptionEntity {
+public enum SlideShowTimeIntervalOptionEntity: Codable {
     case slow
     case normal
     case fast
@@ -54,7 +54,7 @@ public enum SlideShowTimeIntervalOptionEntity {
     }
 }
 
-public struct SlideShowConfigurationEntity: Equatable {
+public struct SlideShowConfigurationEntity: Equatable, Codable {
     public var playingOrder: SlideShowPlayingOrderEntity
     public var timeIntervalForSlideInSeconds: SlideShowTimeIntervalOptionEntity
     public var isRepeat: Bool

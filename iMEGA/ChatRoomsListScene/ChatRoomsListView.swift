@@ -10,6 +10,7 @@ struct ChatRoomsListView: View {
             ChatTabsSelectorView(chatViewMode: viewModel.chatViewMode) { mode in
                 viewModel.selectChatMode(mode)
             }
+            .ignoresSafeArea()
             
             if let activeCallViewModel = viewModel.activeCallViewModel {
                 ChatRoomActiveCallView(viewModel: activeCallViewModel)
@@ -62,6 +63,7 @@ struct ChatRoomsListView: View {
                             }
                             , alignment: .center
                         )
+                        .edgesIgnoringSafeArea([.top, .bottom])
                     } else {
                         ChatRoomsEmptyView(emptyViewState: viewModel.emptyChatRoomsViewState())
                     }
@@ -71,11 +73,20 @@ struct ChatRoomsListView: View {
                     if let futureMeetings = viewModel.displayFutureMeetings,
                        let pastMeetings = viewModel.displayPastMeetings {
                             List {
-                                SearchBarView(
-                                    text: $viewModel.searchText,
-                                    isEditing: $viewModel.isSearchActive,
-                                    placeholder: Strings.Localizable.search,
-                                    cancelTitle: Strings.Localizable.cancel)
+                                if #available(iOS 15.0, *) {
+                                    SearchBarView(
+                                        text: $viewModel.searchText,
+                                        isEditing: $viewModel.isSearchActive,
+                                        placeholder: Strings.Localizable.search,
+                                        cancelTitle: Strings.Localizable.cancel)
+                                    .listRowSeparator(.hidden)
+                                } else {
+                                    SearchBarView(
+                                        text: $viewModel.searchText,
+                                        isEditing: $viewModel.isSearchActive,
+                                        placeholder: Strings.Localizable.search,
+                                        cancelTitle: Strings.Localizable.cancel)
+                                }
                                 
                                 if pastMeetings.isNotEmpty || futureMeetings.isNotEmpty {
                                     ForEach(futureMeetings, id: \.title) { futureMeetingSection in
@@ -112,7 +123,6 @@ struct ChatRoomsListView: View {
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: viewModel.bottomViewHeight)
         }
-        .ignoresSafeArea()
         .onAppear {
             viewModel.loadChatRooms()
         }

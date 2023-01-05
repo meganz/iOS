@@ -322,22 +322,23 @@
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
-                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:alertViewTextField.text recursive:NO];
                 
+                MEGANodeType nodeType = MEGANodeTypeFile;
                 if (self.isFolder) {
-                    if ([childrenNodeList mnz_existsFolderWithName:alertViewTextField.text]) {
-                        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
-                    } else {
-                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds delegate:delegate];
+                    nodeType = MEGANodeTypeFolder;
+                }
+                
+                MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:parentNode name:alertViewTextField.text type:nodeType];
+                
+                if (existingChildNode) {
+                    NSString *duplicateErrorMessage = NSLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.");
+                    if (self.isFolder) {
+                        duplicateErrorMessage = NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.");
                     }
+                    [SVProgressHUD showErrorWithStatus:duplicateErrorMessage];
                 } else {
-                    if ([childrenNodeList mnz_existsFileWithName:alertViewTextField.text]) {
-                        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
-                    } else {
-                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds delegate:delegate];
-                    }
+                    MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                    [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds delegate:delegate];
                 }
             }
         }];
@@ -470,9 +471,7 @@
 - (void)mnz_restore {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:nil];
-        moveRequestDelegate.restore = YES;
-        [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
+        [[NameCollisionRouterOCWrapper.alloc init] moveNodes:@[self] to:restoreNode presenter:UIApplication.mnz_presentingViewController];
         [MEGASdkManager.sharedMEGASdk disableExportNode:self];
     }
 }

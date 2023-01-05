@@ -22,7 +22,7 @@ protocol ChatRoomsListRouting {
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
-    func openChatRoom(withChatId chatId: ChatId, publicLink: String?, unreadMessageCount: Int)
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int)
     func present(alert: UIAlertController, animated: Bool)
     func presentMoreOptionsForChat(
         withDNDEnabled dndEnabled: Bool,
@@ -183,17 +183,25 @@ final class ChatRoomsListViewModel: ObservableObject {
             return
         }
         
+        fetchFutureScheduledMeetings()
+        
+        let futureScheduledMeetingsChatIds: [ChatIdEntity] = self.futureMeetings?.flatMap(\.allChatIds) ?? []
+        pastMeetings = chatListItems.compactMap { chatListItem in
+            guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
+                return nil
+            }
+            
+            return constructChatRoomViewModel(forChatListItem: chatListItem)
+        }
+        
+        filterMeetings()
+    }
+    
+    private func fetchFutureScheduledMeetings() {
         let scheduledMeetings = chatUseCase.scheduledMeetings()
         let sortedScheduledMeetings = scheduledMeetings.sorted { $0.startDate < $1.startDate}
-        
         let futureScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate >= Date() }
-        //let pastScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate < Date() }
-
         populateFutureMeetings(futureScheduledMeetings)
-        
-        // past meetings only shows the chatroom currently. We need to all display the past meetings from the scheduled meetings.
-        pastMeetings = chatListItems.map(constructChatRoomViewModel)
-        filterMeetings()
     }
     
     private func filterChats() {
@@ -388,7 +396,8 @@ final class ChatRoomsListViewModel: ObservableObject {
                     sdk: MEGASdkManager.sharedMEGASdk(),
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
-            userUseCase: UserUseCase(repo: .live)
+            userUseCase: UserUseCase(repo: .live),
+            chatNotificationControl: chatNotificationControl
         )
     }
     
@@ -448,9 +457,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func listenToChatListUpdate() {
         chatUseCase
             .monitorChatListItemUpdate()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] chatListItem in
-                self?.onChatListItemUpdate(chatListItem)
+            .sink { [weak self] chatListItems in
+                self?.onChatListItemsUpdate(chatListItems)
             }
             .store(in: &subscriptions)
     }
@@ -506,56 +514,16 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func onChatListItemUpdate(_ chatListItem: ChatListItemEntity) {
-        guard doesBelongToCurrentTab(chatListItem), let changes = chatListItem.changeType else { return }
-        
-        switch changes {
-        case .unreadCount, .title, .lastMessage, .lastTimestamp, .participants, .noChanges:
-            updateList(withChatListItem: chatListItem)
-        case .closed, .previewClosed, .archived:
-            if let chatRooms, let chatRoomIndex = index(forChatListItem: chatListItem, in: chatRooms) {
-                self.chatRooms?.remove(at: chatRoomIndex)
-                
-                if let displayChatRooms, let filteredIndex = index(forChatListItem: chatListItem, in: displayChatRooms) {
-                    self.displayChatRooms?.remove(at: filteredIndex)
-                }
+    private func onChatListItemsUpdate(_ chatListItems: [ChatListItemEntity]) {
+        let chatRooms = chatListItems.compactMap { chatRoomUseCase.chatRoom(forChatId: $0.chatId) }
+        if (chatViewMode == .chats
+            && chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group }))
+            || (chatViewMode == .meetings
+                && chatRooms.contains(where: { $0.chatType == .meeting })) {
+            DispatchQueue.main.async {
+                self.fetchChats()
             }
-        default:
-            break
         }
-    }
-    
-    private func updateList(withChatListItem chatListItem: ChatListItemEntity) {
-        if let chatRooms {
-            let chatRoomViewModel = constructChatRoomViewModel(forChatListItem: chatListItem)
-            update(&self.chatRooms, with: chatRoomViewModel, at: index(forChatListItem: chatListItem, in: chatRooms))
-            update(&self.displayChatRooms, with: chatRoomViewModel, at: index(forChatListItem: chatListItem, in: chatRooms))
-        } else {
-            fetchChats()
-        }
-    }
-    
-    private func update(_ list: inout [ChatRoomViewModel]?, with chatRoomViewModel: ChatRoomViewModel, at index: Int? = nil) {
-        if let index {
-            list?[index] = chatRoomViewModel
-        } else {
-            list?.append(chatRoomViewModel)
-            
-        }
-    }
-    
-    private func index(forChatListItem chatListItem: ChatListItemEntity, in list: [ChatRoomViewModel]) -> Int? {
-        list.firstIndex { $0.chatListItem == chatListItem }
-    }
-    
-    
-    private func doesBelongToCurrentTab(_ chatListItem: ChatListItemEntity) -> Bool {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
-                chatRoom.isArchived == false else {
-            return false
-        }
-        
-        return (chatRoom.chatType == .meeting && chatViewMode == .meetings) || (!(chatRoom.chatType == .meeting) && chatViewMode == .chats)
     }
 }
 
@@ -627,7 +595,13 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     }
     
     func reloadDataIfNeeded() {
-        chatRooms?.forEach { $0.pushNotificationSettingsChanged() }
+        switch chatViewMode {
+        case .chats:
+            chatRooms?.forEach { $0.pushNotificationSettingsChanged() }
+        case .meetings:
+            pastMeetings?.forEach { $0.pushNotificationSettingsChanged() }
+            futureMeetings?.forEach { $0.items.forEach { $0.pushNotificationSettingsChanged() } }
+        }
     }
     
     func pushNotificationSettingsLoaded() {

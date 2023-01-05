@@ -2,45 +2,42 @@ import SwiftUI
 
 struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
+    @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
+    @State var alertViewModel: TextFieldAlertViewModel
+    
     var router: AlbumListViewRouting
     
-    @State private var isPresenting = false
-    
     var body: some View {
-        ZStack(alignment: .topTrailing)  {
-            GeometryReader { proxy in
-                if viewModel.shouldLoad {
-                    ProgressView()
-                        .position(x: proxy.frame(in: .local).midX, y: proxy.frame(in: .local).midY)
-                        .scaleEffect(1.5)
-                } else {
-                    ScrollView {
-                        LazyVGrid(columns: viewModel.columns, spacing: 0) {
-                            router.cell(withCameraUploadNode: viewModel.cameraUploadNode, album: nil)
-                                .onTapGesture(count: 1)  {
-                                    viewModel.album = nil
-                                    isPresenting.toggle()
-                                }
-                                .clipped()
-                            
-                            ForEach(viewModel.albums, id: \.self) { album in
-                                router.cell(withCameraUploadNode: nil, album: album)
-                                    .onTapGesture(count: 1)  {
-                                        viewModel.album = album
-                                        isPresenting.toggle()
-                                    }
-                                    .clipped()
+        VStack(spacing: 0) {
+            ScrollView {
+                LazyVGrid(columns: viewModel.columns, spacing: 10) {
+                    if viewModel.isCreateAlbumFeatureFlagEnabled {
+                        CreateAlbumCell(viewModel: createAlbumCellViewModel)
+                            .onTapGesture {
+                                viewModel.showCreateAlbumAlert.toggle()
                             }
-                        }
                     }
-                    .padding(.horizontal, 6)
+                    ForEach(viewModel.albums, id: \.self) { album in
+                        router.cell(album: album)
+                            .onTapGesture(count: 1)  {
+                                viewModel.album = album
+                            }
+                            .clipped()
+                    }
                 }
             }
+            .padding(.horizontal, 6)
         }
-        .fullScreenCover(isPresented: $isPresenting) {
-            router.albumContent(for: viewModel.cameraUploadNode, album: viewModel.album)
+        .alert(isPresented: $viewModel.showCreateAlbumAlert, alertViewModel)
+        .overlay(viewModel.shouldLoad ? ProgressView()
+            .scaleEffect(1.5) : nil)
+        .fullScreenCover(item: $viewModel.album) {
+            router.albumContainer(album: $0)
                 .ignoresSafeArea()
         }
+        .sheet(item: $viewModel.newlyAddedAlbum, content: { item in
+            AlbumContentAdditionView(viewModel: AlbumContentAdditionViewModel(albumName: item.name, locationName: "All Locations"))
+        })
         .padding([.top, .bottom], 10)
         .onAppear {
             viewModel.loadAlbums()
@@ -48,5 +45,6 @@ struct AlbumListView: View {
         .onDisappear {
             viewModel.cancelLoading()
         }
+        .progressViewStyle(.circular)
     }
 }

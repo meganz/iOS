@@ -41,7 +41,7 @@ extension MainTabBarController {
         }
     }
     
-    @objc func openChatRoom(withPublicLink publicLink: String?, chatID: ChatId) {
+    @objc func openChatRoom(withPublicLink publicLink: String?, chatID: ChatIdEntity) {
         selectedIndex = TabType.chat.rawValue
         guard let navigationController = self.children[safe: TabType.chat.rawValue] as? MEGANavigationController else {
             return
@@ -88,13 +88,13 @@ extension MainTabBarController {
         }
     }
     
-    @objc func openChatRoom(chatId: ChatId) {
+    @objc func openChatRoom(chatId: ChatIdEntity) {
         openChatRoom(withPublicLink: nil, chatID: chatId)
     }
     
     //MARK: - Private methods.
     
-    private func openChatRoom(usingChatRoomsViewController vc: ChatRoomsViewController, chatID: ChatId, publicLink: String?) {
+    private func openChatRoom(usingChatRoomsViewController vc: ChatRoomsViewController, chatID: ChatIdEntity, publicLink: String?) {
         if let publicLink {
             vc.openChatRoom(withPublicLink: publicLink, chatID: chatID)
         } else {

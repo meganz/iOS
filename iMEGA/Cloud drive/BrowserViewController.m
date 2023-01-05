@@ -25,6 +25,7 @@
 #import "NodeTableViewCell.h"
 
 @import DZNEmptyDataSet;
+@import MEGAUIKit;
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -344,7 +345,7 @@
             }
             
             if ([self.parentNode name] != nil) {
-                UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString];
+                UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString color:UIColor.mnz_label];
                 label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
                 self.navigationItem.titleView = label;
             } else {
@@ -441,16 +442,10 @@
 - (void)setToolbarItemsEnabled:(BOOL)boolValue {
     boolValue = boolValue && [MEGAReachabilityManager isReachable];
     
-    self.toolBarNewFolderBarButtonItem.enabled = boolValue;
-    
     MEGANode *firstNode = self.selectedNodesArray.firstObject;
-    if ((self.browserAction == BrowserActionMove || self.browserAction == BrowserActionCopy) && self.parentNode.handle == firstNode.parentHandle) {
-        self.toolBarMoveBarButtonItem.enabled = NO;
-        self.toolBarCopyBarButtonItem.enabled = NO;
-    } else {
-        self.toolBarMoveBarButtonItem.enabled = boolValue;
-        self.toolBarCopyBarButtonItem.enabled = boolValue;
-    }
+    self.toolBarMoveBarButtonItem.enabled = self.browserAction == BrowserActionMove && self.parentNode.handle != firstNode.parentHandle;
+    self.toolBarCopyBarButtonItem.enabled = boolValue;
+    self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
 }
@@ -474,10 +469,6 @@
     browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
     
     [self.navigationController pushViewController:browserVC animated:YES];
-
-    if (self.searchController.isActive) {
-        self.searchController.active = NO;
-    }
 }
 
 - (void)attachNodes {

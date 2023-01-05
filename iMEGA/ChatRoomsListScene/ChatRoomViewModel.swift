@@ -36,6 +36,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
 
     private var isInfoLoaded = false
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
+    
+    let shouldShowUnreadCount: Bool
+    let unreadCountString: String
 
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -53,6 +56,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.chatNotificationControl = chatNotificationControl
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+        self.shouldShowUnreadCount = chatListItem.unreadCount != 0
+        self.unreadCountString = chatListItem.unreadCount > 0 ? "\(chatListItem.unreadCount)" : "\(-chatListItem.unreadCount)+"
         
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
@@ -306,17 +311,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func showChatRoomInfo() {
         if chatListItem.group {
-            guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
-                  MEGALinkManager.joiningOrLeavingChatBase64Handles.notContains(where: { element in
-                      if let elementId = element as? String, elementId == chatIdString {
-                          return true
+            if let scheduledMeeting = chatUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
+                router.showMeetingInfo(for: scheduledMeeting)
+            } else {
+                guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
+                      MEGALinkManager.joiningOrLeavingChatBase64Handles.notContains(where: { element in
+                          if let elementId = element as? String, elementId == chatIdString {
+                              return true
+                          }
+                          return false
+                      }) else {
+                          return
                       }
-                      return false
-                  }) else {
-                      return
-                  }
-            
-            router.showGroupChatInfo(forChatId: chatListItem.chatId)
+                
+                router.showGroupChatInfo(forChatId: chatListItem.chatId)
+            }
         } else {
             guard let userHandle = chatRoomUseCase.peerHandles(forChatId: chatListItem.chatId).first,
                     let userEmail = chatRoomUseCase.contactEmail(forUserHandle: userHandle) else {

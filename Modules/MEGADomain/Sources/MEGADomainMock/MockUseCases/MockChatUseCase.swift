@@ -2,13 +2,15 @@ import MEGADomain
 import Combine
 
 public final class MockChatUseCase: ChatUseCaseProtocol {
+    public var userHandle: HandleEntity
+    public var guestAccount: Bool
     public var fullName: String?
     public var status: ChatStatusEntity
     public var isCallActive: Bool
     public var isCallInProgress: Bool
     public var activeCallEntity: CallEntity?
     public var statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never>
-    public var chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never>
+    public var chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never>
     public var chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never>
     public var chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus , Never>
     public var chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never>
@@ -20,17 +22,21 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var scheduledMeetingList = [ScheduledMeetingEntity]()
     
     public init(
+        myUserHandle: HandleEntity = .invalid,
+        isGuestAccount: Bool = false,
         fullName: String? = nil,
         status: ChatStatusEntity = .offline,
         isCallActive: Bool = false,
         isCallInProgress: Bool = false,
         statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never> = PassthroughSubject<ChatStatusEntity, Never>(),
-        chatListItemUpdatePublisher: PassthroughSubject<ChatListItemEntity, Never> =  PassthroughSubject<ChatListItemEntity, Never>(),
+        chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  PassthroughSubject<[ChatListItemEntity], Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
         chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
         chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity , Never> = PassthroughSubject<ChatRoomEntity , Never>(),
         items: [ChatListItemEntity]? = []
     ) {
+        self.userHandle = myUserHandle
+        self.guestAccount = isGuestAccount
         self.fullName = fullName
         self.status = status
         self.isCallActive = isCallActive
@@ -41,6 +47,14 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.chatConnectionStatusUpdatePublisher = chatConnectionStatusUpdatePublisher
         self.chatPrivateModeUpdatePublisher = chatPrivateModeUpdatePublisher
         self.items = items
+    }
+    
+    public func myUserHandle() -> MEGADomain.HandleEntity {
+        userHandle
+    }
+    
+    public func isGuestAccount() -> Bool {
+        guestAccount
     }
     
     public func chatStatus() -> ChatStatusEntity {
@@ -55,7 +69,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         statusChangePublisher.eraseToAnyPublisher()
     }
     
-    public func monitorChatListItemUpdate() -> AnyPublisher<MEGADomain.ChatListItemEntity, Never> {
+    public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {
         chatListItemUpdatePublisher.eraseToAnyPublisher()
     }
     
@@ -99,6 +113,10 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         currentChatConnectionStatus
     }
     
+    public func chatListItem(forChatId chatId: MEGADomain.ChatIdEntity) -> ChatListItemEntity? {
+        items?.first
+    }
+    
     public func retryPendingConnections() {
         retryPendingConnections_calledTimes += 1
     }
@@ -108,6 +126,10 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     }
     
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
+        scheduledMeetingList
+    }
+    
+    public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
         scheduledMeetingList
     }
 }

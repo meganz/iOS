@@ -12,10 +12,15 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var album: AlbumEntity?
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
+    @Published var showCreateAlbumAlert = false
+    @Published var newlyAddedAlbum: AlbumEntity?
     
-    var loadingTask: Task<Void, Never>?
     var albumLoadingTask: Task<Void, Never>?
-    private var usecase: AlbumListUseCaseProtocol
+    private let usecase: AlbumListUseCaseProtocol
+    
+    var isCreateAlbumFeatureFlagEnabled: Bool {
+        FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum)
+    }
     
     init(usecase: AlbumListUseCaseProtocol) {
         self.usecase = usecase
@@ -23,56 +28,59 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     @MainActor
     func loadAlbums() {
-        loadFavouriteAlbum()
-        loadOtherAlbums()
-        
+        loadAllAlbums()
         usecase.startMonitoringNodesUpdate { [weak self] in
-            self?.loadOtherAlbums()
+            self?.loadAllAlbums()
         }
     }
     
     func cancelLoading() {
-        cancelFavouriteAlbumLoading()
-        cancelOtherAlbumsLoading()
+        usecase.stopMonitoringNodesUpdate()
+        albumLoadingTask?.cancel()
     }
     
     // MARK: - Private
+    
     @MainActor
-    private func loadFavouriteAlbum() {
-        loadingTask = Task {
-            do {
-                cameraUploadNode = try await usecase.loadCameraUploadNode()
-            } catch {}
-            
+    private func loadAllAlbums() {
+        albumLoadingTask = Task {
+            albums = await usecase.loadAlbums().map({ album in
+                if let localizedAlbumName = localisedName(forAlbumType: album.type) {
+                    return album.update(name: localizedAlbumName)
+                }
+                return album
+            })
             shouldLoad = false
         }
     }
     
-    @MainActor
-    private func loadOtherAlbums() {
-        albumLoadingTask = Task {
-            do {
-                albums = try await usecase.loadAlbums().map { album in
-                    album.update(name: localisedName(forAlbum: album))
-                }
-            } catch {}
+    private func localisedName(forAlbumType albumType: AlbumEntityType) -> String? {
+        switch (albumType) {
+        case .favourite:
+            return Strings.Localizable.CameraUploads.Albums.Favourites.title
+        case .gif:
+            return Strings.Localizable.CameraUploads.Albums.Gif.title
+        case .raw:
+            return Strings.Localizable.CameraUploads.Albums.Raw.title
+        default:
+            return nil
         }
     }
     
-    private func localisedName(forAlbum album: AlbumEntity) -> String {
-        if album.type == .gif { return Strings.Localizable.CameraUploads.Albums.Gif.title }
-        else if album.type == .raw { return Strings.Localizable.CameraUploads.Albums.Raw.title }
-        return ""
-    }
-    
-    private func cancelFavouriteAlbumLoading() {
-        loadingTask?.cancel()
-        loadingTask = nil
-    }
-    
-    private func cancelOtherAlbumsLoading() {
-        usecase.stopMonitoringNodesUpdate()
-        albumLoadingTask?.cancel()
-        albumLoadingTask = nil
+    @MainActor
+    func createUserAlbum(with name: String?) {
+        guard let name = name, !name.isEmpty else { return }
+        shouldLoad = true
+        Task {
+            do {
+                let newAlbum = try await usecase.createUserAlbum(with: name)
+                albums.append(newAlbum)
+                albums.sort(by: { $0.name < $1.name })
+                newlyAddedAlbum = newAlbum
+            } catch {
+                MEGALogError("Error creating album: \(error.localizedDescription)")
+            }
+            shouldLoad = false
+        }
     }
 }

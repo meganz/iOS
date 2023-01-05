@@ -905,8 +905,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:weakSelf.parentNode searchString:textField.text recursive:NO];
-            if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
+            MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:weakSelf.parentNode name:textField.text type:MEGANodeTypeFolder];
+            if (existingChildNode) {
                 [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {

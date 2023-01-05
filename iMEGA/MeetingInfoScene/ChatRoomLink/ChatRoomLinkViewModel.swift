@@ -8,9 +8,9 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
     private var chatRoom: ChatRoomEntity
     private let scheduledMeeting: ScheduledMeetingEntity
+    private let subtitle: String
 
     @Published var isMeetingLinkOn = false
-    @Published var isMeetingLinkDisabled = false
     @Published var showShareMeetingLinkOptions = false
     @Published var showChatLinksMustHaveCustomTitleAlert = false
 
@@ -19,21 +19,23 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
     var meetingLink: String?
 
+    
     init(router: MeetingInfoRouting,
          chatRoom: ChatRoomEntity,
          scheduledMeeting: ScheduledMeetingEntity,
-         chatLinkUseCase: ChatLinkUseCaseProtocol) {
+         chatLinkUseCase: ChatLinkUseCaseProtocol,
+         subtitle: String) {
         self.router = router
         self.chatRoom = chatRoom
         self.scheduledMeeting = scheduledMeeting
         self.chatLinkUseCase = chatLinkUseCase
+        self.subtitle = subtitle
 
         fetchInitialValues()
         initSubscriptions()
     }
     
     private func fetchInitialValues() {
-        isMeetingLinkDisabled = chatRoom.ownPrivilege != .moderator
         isChatLinkFirstQuery = true
         chatLinkUseCase.queryChatLink(for: chatRoom)
     }
@@ -81,7 +83,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
     }
     
     func shareOptions() -> [ShareChatLinkOption] {
-        [.send, .copy, .share, .cancel]
+        [.send, .copy, .share]
     }
     
     func shareOptionTapped(_ shareOption: ShareChatLinkOption) {
@@ -90,13 +92,12 @@ final class ChatRoomLinkViewModel: ObservableObject {
         case .send:
             router.showSendToChat(meetingLink)
         case .copy:
+            UIPasteboard.general.string = meetingLink
             router.showLinkCopied()
         case .share:
             router.showShareActivity(meetingLink,
                                      title: scheduledMeeting.title,
-                                     description: scheduledMeeting.description)
-        case .cancel:
-            showShareMeetingLinkOptions = false
+                                     description: subtitle)
         }
     }
 }
@@ -105,18 +106,15 @@ enum ShareChatLinkOption: String, CaseIterable {
     case send
     case copy
     case share
-    case cancel
     
     var localizedTitle: String {
         switch self {
         case .send:
-            return Strings.Localizable.General.sendToChat
+            return Strings.Localizable.Meetings.Info.ShareOptions.sendToChat
         case .copy:
             return Strings.Localizable.copy
         case .share:
             return Strings.Localizable.General.share
-        case .cancel:
-            return Strings.Localizable.cancel
         }
     }
 }
