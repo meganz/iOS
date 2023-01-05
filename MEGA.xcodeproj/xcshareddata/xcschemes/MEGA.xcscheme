@@ -80,11 +80,6 @@
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "DYLD_PRINT_STATISTICS"
-            value = "1"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
             key = "SQLITE_ENABLE_THREAD_ASSERTIONS"
             value = "1"
             isEnabled = "YES">
