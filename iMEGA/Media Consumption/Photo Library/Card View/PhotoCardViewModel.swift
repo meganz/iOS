@@ -8,7 +8,7 @@ import MEGASwift
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)
+    private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)
     
     @Published var thumbnailContainer: any ImageContaining
     
@@ -42,8 +42,8 @@ class PhotoCardViewModel: ObservableObject {
     private func loadThumbnailFromRemote(for photo: NodeEntity) {
         thumbnailUseCase
             .requestPreview(for: photo)
-            .map { url in
-                URLImageContainer(imageURL: url)
+            .map {
+                $0.toURLImageContainer()
             }
             .replaceError(with: nil)
             .compactMap { $0 }

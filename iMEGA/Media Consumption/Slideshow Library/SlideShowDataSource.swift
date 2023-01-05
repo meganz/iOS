@@ -174,7 +174,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     
     private func loadMediaEntity(forNode node: NodeEntity) async -> SlideShowMediaEntity? {
         async let photo = try? thumbnailUseCase.loadThumbnail(for: node, type: mediaUseCase.isGifImage(node.name) ? .original : .preview)
-        if let photoPath = await photo?.path {
+        if let photoPath = await photo?.url.path {
             return slideShowMediaEntity(for: node, with: photoPath)
         }
         return nil

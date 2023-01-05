@@ -13,7 +13,7 @@ final class PhotoCardViewModelTests: XCTestCase {
     
     func testInit_defaultVaue() throws {
         let sut = PhotoCardViewModel(coverPhoto: nil, thumbnailUseCase: MockThumbnailUseCase())
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
     }
     
     func testLoadThumbnail_nonPlaceholder_doNotLoadLocalCacheAndDoNotLoadRemoteThumbnail() throws {
@@ -29,14 +29,15 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localURL)], loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .preview)],
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
-        let loadedThumbnail = ImageContainer(image: Image(systemName: "heart"))
+        let loadedThumbnail = ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)
         sut.thumbnailContainer = loadedThumbnail
         sut.loadThumbnail()
         XCTAssertTrue(sut.thumbnailContainer.isEqual(loadedThumbnail))
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
     }
     
     func testLoadThumbnail_placeholderAndHasLocalCache_useLocalCache() throws {
@@ -52,13 +53,14 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localURL)], loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .preview)],
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
         sut.loadThumbnail()
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
     }
     
     func testLoadThumbnail_placeholderAndNoLocalCache_loadRemoteThumbnail() throws {
@@ -69,15 +71,15 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnailContainer is updated")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -85,8 +87,8 @@ final class PhotoCardViewModelTests: XCTestCase {
         sut.loadThumbnail()
         wait(for: [exp], timeout: 2.0)
         
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
     }
     
     func testLoadThumbnail_noLocalCacheAndHasRemoteThumbnailAndPreview_loadBothThumbnailAndPreview() throws {
@@ -102,15 +104,16 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnailContainer is updated")
         exp.expectedFulfillmentCount = 2
-        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL), URLImageContainer(imageURL: remotePreviewURL)]
+        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail),
+                                  URLImageContainer(imageURL: remotePreviewURL, type: .preview)]
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
@@ -122,8 +125,8 @@ final class PhotoCardViewModelTests: XCTestCase {
         sut.loadThumbnail()
         wait(for: [exp], timeout: 2.0)
         
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
     
@@ -145,18 +148,18 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localThumbnailURL)],
-                                                   loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localThumbnailURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnailContainer is updated")
         exp.expectedFulfillmentCount = 3
-        var expectedContainers = [URLImageContainer(imageURL: localThumbnailURL),
-                                  URLImageContainer(imageURL: remoteThumbnailURL),
-                                  URLImageContainer(imageURL: remotePreviewURL)]
+        var expectedContainers = [URLImageContainer(imageURL: localThumbnailURL, type: .thumbnail),
+                                  URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail),
+                                  URLImageContainer(imageURL: remotePreviewURL, type: .preview)]
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
@@ -168,8 +171,8 @@ final class PhotoCardViewModelTests: XCTestCase {
         sut.loadThumbnail()
         wait(for: [exp], timeout: 2.0)
         
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
     
@@ -186,17 +189,17 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let sut = PhotoCardViewModel(
             coverPhoto: NodeEntity(handle: 1),
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localThumbnailURL)],
-                                                   loadThumbnailResult: .success(localThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localThumbnailURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: localThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnailContainer is updated")
         exp.expectedFulfillmentCount = 2
-        var expectedContainers = [URLImageContainer(imageURL: localThumbnailURL),
-                                  URLImageContainer(imageURL: remotePreviewURL)]
+        var expectedContainers = [URLImageContainer(imageURL: localThumbnailURL, type: .thumbnail),
+                                  URLImageContainer(imageURL: remotePreviewURL, type: .preview)]
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
@@ -208,8 +211,8 @@ final class PhotoCardViewModelTests: XCTestCase {
         sut.loadThumbnail()
         wait(for: [exp], timeout: 2.0)
         
-        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), isPlaceholder: true)))
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
 }

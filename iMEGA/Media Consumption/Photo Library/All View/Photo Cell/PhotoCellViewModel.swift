@@ -63,7 +63,7 @@ final class PhotoCellViewModel: ObservableObject {
             thumbnailContainer = container
         } else {
             let placeholderFileType = FileTypes().fileType(forFileName: photo.name)
-            let placeholder = ImageContainer(image: Image(placeholderFileType), isPlaceholder: true)
+            let placeholder = ImageContainer(image: Image(placeholderFileType), type: .placeholder)
             thumbnailContainer = placeholder
         }
         
@@ -75,8 +75,14 @@ final class PhotoCellViewModel: ObservableObject {
     
     // MARK: Internal
     func startLoadingThumbnail() {
-        thumbnailLoadingTask = Task {
-            await loadThumbnail()
+        if currentZoomScaleFactor == .one && thumbnailContainer.type == .preview {
+            return
+        } else if currentZoomScaleFactor != .one && thumbnailContainer.type == .thumbnail {
+            return
+        } else {
+            thumbnailLoadingTask = Task {
+                await loadThumbnail()
+            }
         }
     }
     
@@ -121,7 +127,7 @@ final class PhotoCellViewModel: ObservableObject {
         thumbnailUseCase
             .requestPreview(for: photo)
             .map {
-                URLImageContainer(imageURL: $0)
+                $0.toURLImageContainer()
             }
             .replaceError(with: nil)
             .compactMap { $0 }

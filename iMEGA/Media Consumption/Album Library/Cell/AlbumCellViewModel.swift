@@ -23,7 +23,7 @@ final class AlbumCellViewModel: ObservableObject {
         
         title = album.name
         numberOfNodes = album.count
-        thumbnailContainer = ImageContainer(image: Image(Asset.Images.Album.placeholder.name), isPlaceholder: true)
+        thumbnailContainer = ImageContainer(image: Image(Asset.Images.Album.placeholder.name), type: .placeholder)
     }
     
     func loadAlbumInfo() {

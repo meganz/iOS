@@ -40,7 +40,7 @@ final class PhotoCellViewModelTests: XCTestCase {
                                      viewModel: allViewModel,
                                      thumbnailUseCase: MockThumbnailUseCase())
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), type: .placeholder)))
         XCTAssertEqual(sut.duration, "00:00")
         XCTAssertEqual(sut.isVideo, false)
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
@@ -63,16 +63,17 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)], loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -81,7 +82,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
     }
     
     func testLoadThumbnail_zoomOut_noLoadLocalThumbnailAndRemotePreview() async throws {
@@ -98,7 +99,8 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)], loadPreviewResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
         
         let exp = expectation(description: "thumbnail is changed")
@@ -128,13 +130,13 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, url)])
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: url, type: .thumbnail)])
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: url)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: url, type: .thumbnail)))
     }
     
-    func testLoadThumbnail_hasDifferentThumbnailAndLoadThumbnail_loadThumbnail() async throws {
+    func testLoadThumbnail_hasDifferentThumbnailAndLoadThumbnail_noLoading() async throws {
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
         let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
@@ -143,24 +145,29 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteURL))
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteURL, type: .thumbnail)))
         )
         
-        sut.thumbnailContainer = ImageContainer(image: Image(systemName: "heart"))
+        sut.thumbnailContainer = ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteURL)))
-                exp.fulfill()
+                XCTFail("Thumbnail should not be changed")
             }
             .store(in: &subscriptions)
         
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL)))
+        
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("Thumbnail should not be changed")
+            return
+        }
+        
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)))
     }
     
     func testLoadThumbnail_noThumbnails_showPlaceholder() async throws {
@@ -170,7 +177,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase()
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
@@ -184,7 +191,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         await sut.thumbnailLoadingTask?.value
         
         let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("thumbnail should not be changed")
             return
@@ -205,17 +212,17 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteThumbnailURL)))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -224,7 +231,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteThumbnailURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail)))
     }
     
     func testLoadThumbnail_noCachedThumbnailAndZoomInToSingleColumn_loadBothThumbnailAndPreview() async throws {
@@ -241,15 +248,16 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), isPlaceholder: true)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
         
         let exp = expectation(description: "thumbnail is changed")
         exp.expectedFulfillmentCount = 2
-        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL), URLImageContainer(imageURL: remotePreviewURL)]
+        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail),
+                                  URLImageContainer(imageURL: remotePreviewURL, type: .preview)]
         
         sut.$thumbnailContainer
             .dropFirst()
@@ -263,7 +271,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
     
@@ -281,12 +289,12 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
-                                                   loadThumbnailResult: .success(localURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
@@ -299,9 +307,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-    
+        
         let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("thumbnail should not be changed")
             return
@@ -327,12 +335,12 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
-                                                   loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
@@ -345,9 +353,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-    
+        
         let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("thumbnail should not be changed")
             return
@@ -368,18 +376,18 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
-                                                   loadThumbnailResult: .success(localURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -388,7 +396,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
     }
     
     func testLoadThumbnail_hasCachedThumbnailAndZoomInToSingleColumnAndDifferentRemoteThumbnail_loadBothThumbnailAndPreview() async throws {
@@ -410,16 +418,17 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL)],
-                                                   loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         exp.expectedFulfillmentCount = 2
-        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL), URLImageContainer(imageURL: remotePreviewURL)]
+        var expectedContainers = [URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail),
+                                  URLImageContainer(imageURL: remotePreviewURL, type: .preview)]
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
@@ -432,7 +441,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
     
@@ -450,18 +459,19 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL), (.preview, previewURL)],
-                                                   loadThumbnailResult: .success(localURL),
-                                                   loadPreviewResult: .success(previewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail),
+                                                                      ThumbnailEntity(url: previewURL, type: .preview)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: previewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: previewURL)))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: previewURL, type: .preview)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -470,7 +480,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: previewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: previewURL, type: .preview)))
     }
     
     func testLoadThumbnail_hasCachedThumbnailAndPreviewAndZoomInToSingleColumnAndDifferentRemoteThumbnailAndPreview_onlyLoadCachedPreview() async throws {
@@ -497,18 +507,19 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.thumbnail, localURL), (.preview, localPreviewURL)],
-                                                   loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail),
+                                                                      ThumbnailEntity(url: localPreviewURL, type: .preview)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+                XCTAssertTrue(container.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -517,7 +528,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
     }
     
     func testLoadThumbnail_hasCachedPreviewAndSingleColumn_showPreviewAndNoLoading() async throws {
@@ -537,11 +548,11 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localURL)],
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .preview)],
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
@@ -554,7 +565,52 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
         let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
+        guard case XCTWaiter.Result.timedOut = result else {
+            XCTFail("thumbnail should not be changed")
+            return
+        }
+    }
+    
+    func testLoadThumbnail_hasCachedPreviewAndSingleColumnAndHasDifferentCachedPreview_noLoading() async throws {
+        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
+        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        XCTAssertTrue(isLocalFileCreated)
+        
+        let newLocalImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
+        let newLocalURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isNewLocalFileCreated = FileManager.default.createFile(atPath:newLocalURL.path, contents: newLocalImage.pngData())
+        XCTAssertTrue(isNewLocalFileCreated)
+        
+        let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.circle"))
+        let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
+        let isRemoteFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remoteImage.pngData())
+        XCTAssertTrue(isRemoteFileCreated)
+        
+        allViewModel.zoomState.zoom(.in)
+        XCTAssertTrue(allViewModel.zoomState.isSingleColumn)
+        
+        let sut = PhotoCellViewModel(
+            photo: NodeEntity(name: "0.jpg", handle: 0),
+            viewModel: allViewModel,
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: newLocalURL, type: .preview)],
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
+        )
+        
+        sut.thumbnailContainer = try XCTUnwrap(URLImageContainer(imageURL: localURL, type: .preview))
+        let exp = expectation(description: "thumbnail is changed")
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { container in
+                XCTFail("thumbnail should not be changed")
+            }
+            .store(in: &subscriptions)
+        
+        sut.startLoadingThumbnail()
+        await sut.thumbnailLoadingTask?.value
+        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("thumbnail should not be changed")
             return
@@ -588,12 +644,13 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnailURLs: [(.preview, localPreviewURL), (.thumbnail, localURL)],
-                                                   loadThumbnailResult: .success(remoteThumbnailURL),
-                                                   loadPreviewResult: .success(remotePreviewURL))
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localPreviewURL, type: .preview),
+                                                                      ThumbnailEntity(url: localURL, type: .thumbnail)],
+                                                   loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
@@ -606,7 +663,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
         let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
         guard case XCTWaiter.Result.timedOut = result else {
             XCTFail("thumbnail should not be changed")
             return

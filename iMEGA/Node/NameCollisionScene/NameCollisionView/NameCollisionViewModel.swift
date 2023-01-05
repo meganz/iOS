@@ -284,7 +284,7 @@ final class NameCollisionViewModel: ObservableObject {
     @MainActor
     private func loadNodeThumbnail(for handle: HandleEntity) async -> URL? {
         guard let node = nameCollisionUseCase.node(for: handle) else { return nil }
-        guard let url = try? await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail) else { return nil }
+        guard let url = try? await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail).url else { return nil }
         return url
     }
 }
