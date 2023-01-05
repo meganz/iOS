@@ -7,4 +7,5 @@ enum EmptyStateType {
     case allMedia
     case favourites
     case backups(searchActive: Bool)
+    case album
 }

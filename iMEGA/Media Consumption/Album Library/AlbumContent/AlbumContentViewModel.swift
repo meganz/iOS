@@ -68,7 +68,8 @@ final class AlbumContentViewModel: ViewModelType {
                     return $0.modificationTime > $1.modificationTime
                 }
             }
-            nodes.isNotEmpty || album.type == .favourite ? invokeCommand?(.showAlbum(nodes: nodes)) : invokeCommand?(.dismissAlbum)
+            
+            nodes.isEmpty && album.systemAlbum ? invokeCommand?(.dismissAlbum): invokeCommand?(.showAlbum(nodes: nodes))
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
