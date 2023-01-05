@@ -1387,6 +1387,7 @@
 		9D3563DC28B5523F00CB3365 /* SettingViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563DB28B5523F00CB3365 /* SettingViewRouter.swift */; };
 		9D3563DF28B5568500CB3365 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563DD28B5568500CB3365 /* SettingsTableViewCell.swift */; };
 		9D3563E028B5568500CB3365 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3563DE28B5568500CB3365 /* SettingsTableViewCell.xib */; };
+		9D4B25322964D5A20017E51A /* AlbumContentAdditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4B25312964D5A20017E51A /* AlbumContentAdditionView.swift */; };
 		9D68BBB228B55E23006FCBC5 /* MyAccountHallViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */; };
 		9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68BBBE28B69F26006FCBC5 /* SettingsViewModelTests.swift */; };
 		9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D68BBC028B6A135006FCBC5 /* SettingCellViewModelTests.swift */; };
@@ -1401,6 +1402,8 @@
 		9D7E603D28DD73C500055875 /* SlideShowOptionContentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E603C28DD73C500055875 /* SlideShowOptionContentRouter.swift */; };
 		9D7E603F28DD79F200055875 /* SlideShowOptionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E603E28DD79F200055875 /* SlideShowOptionBuilder.swift */; };
 		9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E604028DD7E0100055875 /* SlideShowOptionViewModelTests.swift */; };
+		9D94AF6C296532EE00C7FBAA /* AlbumContentAdditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6B296532EE00C7FBAA /* AlbumContentAdditionViewModel.swift */; };
+		9D94AF7029653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6F29653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift */; };
 		9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC1B622951589E00562475 /* NodeInfoRepository.swift */; };
 		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
 		9DD2E84B29555880000983A3 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */; };
@@ -3862,6 +3865,7 @@
 		9D3563DB28B5523F00CB3365 /* SettingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewRouter.swift; sourceTree = "<group>"; };
 		9D3563DD28B5568500CB3365 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		9D3563DE28B5568500CB3365 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		9D4B25312964D5A20017E51A /* AlbumContentAdditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentAdditionView.swift; sourceTree = "<group>"; };
 		9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+Addition.swift"; sourceTree = "<group>"; };
 		9D68BBBE28B69F26006FCBC5 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		9D68BBC028B6A135006FCBC5 /* SettingCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -3876,6 +3880,8 @@
 		9D7E603C28DD73C500055875 /* SlideShowOptionContentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionContentRouter.swift; sourceTree = "<group>"; };
 		9D7E603E28DD79F200055875 /* SlideShowOptionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilder.swift; sourceTree = "<group>"; };
 		9D7E604028DD7E0100055875 /* SlideShowOptionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionViewModelTests.swift; sourceTree = "<group>"; };
+		9D94AF6B296532EE00C7FBAA /* AlbumContentAdditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentAdditionViewModel.swift; sourceTree = "<group>"; };
+		9D94AF6F29653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentAdditionViewModelTests.swift; sourceTree = "<group>"; };
 		9DAC1B622951589E00562475 /* NodeInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
@@ -5364,6 +5370,8 @@
 				12397E202820C4A600A30CCC /* AlbumListView.swift */,
 				12397E222820C4BC00A30CCC /* AlbumListViewModel.swift */,
 				127053A32822216800D64C21 /* AlbumListViewRouter.swift */,
+				9D4B25312964D5A20017E51A /* AlbumContentAdditionView.swift */,
+				9D94AF6B296532EE00C7FBAA /* AlbumContentAdditionViewModel.swift */,
 			);
 			path = "Album Library";
 			sourceTree = "<group>";
@@ -5832,6 +5840,7 @@
 				328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */,
 				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
 				3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */,
+				9D94AF6F29653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -12866,6 +12875,7 @@
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				2F9F111F2508A3F400896DFF /* Services.swift in Sources */,
 				A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */,
+				9D94AF6C296532EE00C7FBAA /* AlbumContentAdditionViewModel.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
 				B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */,
@@ -13517,6 +13527,7 @@
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				837ABEF825DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
 				BFD2146328FF8BD50057150E /* ChatRoomContextMenuOption.swift in Sources */,
+				9D4B25322964D5A20017E51A /* AlbumContentAdditionView.swift in Sources */,
 				83B71A6228F03A2D00E006C6 /* ChatRoomsTopRowView.swift in Sources */,
 				5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,
@@ -14289,6 +14300,7 @@
 				B6E18AEF29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
+				9D94AF7029653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				83B5E88A27F71BC70073C870 /* MockPhotosLibraryRepository.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,

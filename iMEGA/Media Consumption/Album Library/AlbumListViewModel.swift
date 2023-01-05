@@ -13,6 +13,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
     @Published var showCreateAlbumAlert = false
+    @Published var newlyAddedAlbum: AlbumEntity?
     
     var albumLoadingTask: Task<Void, Never>?
     private let usecase: AlbumListUseCaseProtocol
@@ -75,6 +76,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
                 albums.append(newAlbum)
                 albums.sort(by: { $0.name < $1.name })
+                newlyAddedAlbum = newAlbum
             } catch {
                 MEGALogError("Error creating album: \(error.localizedDescription)")
             }

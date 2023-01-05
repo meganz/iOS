@@ -2903,6 +2903,8 @@ public enum Strings {
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
         public enum Create {
+          /// Add items to
+          public static let location = Strings.tr("Localizable", "cameraUploads.albums.create.location")
           public enum Alert {
             /// New album
             public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")

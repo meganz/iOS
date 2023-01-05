@@ -530,6 +530,8 @@
 "cameraUploads.albums.create.alert.title"="Enter album name";
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="New album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */

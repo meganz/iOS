@@ -35,6 +35,9 @@ struct AlbumListView: View {
             router.albumContainer(album: $0)
                 .ignoresSafeArea()
         }
+        .sheet(item: $viewModel.newlyAddedAlbum, content: { item in
+            AlbumContentAdditionView(viewModel: AlbumContentAdditionViewModel(albumName: item.name, locationName: "All Locations"))
+        })
         .padding([.top, .bottom], 10)
         .onAppear {
             viewModel.loadAlbums()
