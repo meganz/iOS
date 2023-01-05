@@ -25,12 +25,13 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.title, album.name)
         XCTAssertEqual(sut.numberOfNodes, album.count)
-        XCTAssertTrue(sut.thumbnailContainer.isPlaceholder)
+        XCTAssertTrue(sut.thumbnailContainer.type == .placeholder)
         XCTAssertFalse(sut.isLoading)
     }
     
     func testLoadAlbumInfo_onThumbnailLoaded_loadingStateIsCorrect() throws {
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(imageURL)),
+        let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),
                                      album: album)
         
         let exp = expectation(description: "loading should change during loading of albums")
@@ -50,14 +51,15 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testLoadAlbumInfo_onLoadThumbnail_thumbnailContainerIsUpdatedWithLoadedImage() throws {
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(imageURL)),
+        let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),
                                      album: album)
         
         let exp = expectation(description: "thumbnail image changed")
         sut.$thumbnailContainer
             .dropFirst()
             .sink {
-                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL)))
+                XCTAssertTrue($0.isEqual(URLImageContainer(imageURL: self.imageURL, type: .thumbnail)))
                 exp.fulfill()
             }.store(in: &subscriptions)
         

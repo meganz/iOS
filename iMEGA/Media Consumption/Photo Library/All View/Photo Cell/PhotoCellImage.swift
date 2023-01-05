@@ -7,7 +7,7 @@ struct PhotoCellImage: View {
     var bgColor = Color.clear
     
     var body: some View {
-        if container.isPlaceholder {
+        if container.type == .placeholder {
             bgColor
                 .aspectRatio(contentMode: .fill)
                 .overlay(

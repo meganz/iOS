@@ -36,8 +36,8 @@ class SlideShowDataSourceTests: XCTestCase {
             currentPhoto: try XCTUnwrap(nodeEntities.first),
             nodeEntities: nodeEntities,
             thumbnailUseCase: MockThumbnailUseCase(
-                cachedThumbnailURLs: [(.preview, thumbnailUrl)],
-                loadPreviewResult: .success(try XCTUnwrap(thumbnailUrl))
+                cachedThumbnails: [ThumbnailEntity(url: thumbnailUrl, type: .preview)],
+                loadPreviewResult: .success(ThumbnailEntity(url: thumbnailUrl, type: .preview))
             ),
             mediaUseCase: MediaUseCase(),
             fileExistenceUseCase: FileExistUseCase(fileSystemRepository: MockFileSystemRepository.newRepo),

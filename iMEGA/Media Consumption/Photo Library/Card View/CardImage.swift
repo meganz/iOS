@@ -5,7 +5,7 @@ struct CardImage: View {
     let container: any ImageContaining
     
     var body: some View {
-        if container.isPlaceholder {
+        if container.type == .placeholder {
             container.image
         } else {
             thumbnail()

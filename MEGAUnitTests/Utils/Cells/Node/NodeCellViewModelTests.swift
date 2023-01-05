@@ -225,7 +225,7 @@ final class NodeCellViewModelTests: XCTestCase {
         let mockNodeModel = NodeEntity(isFile: true, hasThumbnail: true)
         let mockNodeActionUC = MockNodeActionUseCase()
         let thumbnailURL = try XCTUnwrap(URL(string: "file://thumbnail/abc"))
-        let mockNodeThumbnailUC = MockThumbnailUseCase(loadThumbnailResult: .success(thumbnailURL))
+        let mockNodeThumbnailUC = MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: thumbnailURL, type: .thumbnail)))
         let mockAccountUC = MockAccountUseCase()
         
         let viewModel = NodeCellViewModel(nodeOpener: nodeOpener,
