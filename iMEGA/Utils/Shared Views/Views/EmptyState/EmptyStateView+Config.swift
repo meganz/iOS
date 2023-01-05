@@ -25,6 +25,8 @@ extension EmptyStateView {
             
         case .allMedia:
             return allMediaEmptyState()
+        case .album:
+            return albumEmptyState()
         }
     }
     
@@ -83,6 +85,13 @@ extension EmptyStateView {
         EmptyStateView(forHomeWith: searchActive ? Asset.Images.EmptyStates.searchEmptyState.image : Asset.Images.EmptyStates.folderEmptyState.image,
                        title: searchActive ? Strings.Localizable.noResults : Strings.Localizable.Backups.Empty.State.message,
                        description: searchActive ? nil : Strings.Localizable.Backups.Empty.State.description,
+                       buttonTitle: nil)
+    }
+    
+    private class func albumEmptyState() -> EmptyStateView {
+        EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
+                       title: Strings.Localizable.CameraUploads.Albums.Empty.title,
+                       description: nil,
                        buttonTitle: nil)
     }
 }

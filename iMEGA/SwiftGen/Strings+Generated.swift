@@ -2916,6 +2916,10 @@ public enum Strings {
           /// Create album
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.createAlbum.title")
         }
+        public enum Empty {
+          /// Empty album
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.empty.title")
+        }
         public enum Favourites {
           /// Favourites
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.favourites.title")

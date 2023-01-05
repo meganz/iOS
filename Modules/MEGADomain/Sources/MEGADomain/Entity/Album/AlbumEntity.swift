@@ -27,4 +27,8 @@ extension AlbumEntity {
     public func update(name newName: String) -> AlbumEntity {
         AlbumEntity(id: self.id, name: newName, coverNode: self.coverNode, count: self.count, type: self.type)
     }
+    
+    public var systemAlbum: Bool {
+        type == .raw || type == .gif
+    }
 }

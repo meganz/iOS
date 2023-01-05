@@ -532,6 +532,8 @@
 "cameraUploads.albums.create.alert.placeholder"="New album";
 /* Used in add content album view. */
 "cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
