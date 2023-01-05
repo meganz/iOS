@@ -188,6 +188,29 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
     }
     
+    //MARK: - Backup
+    func testBackupNodeWithNoVersion() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.backup)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(0)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .download, .shareLink, .exportFile, .sendToChat, .copy]))
+    }
+    
+    func testBackupNodeWithVersions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.backup)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(3)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .download, .shareLink, .exportFile, .sendToChat, .copy]))
+    }
+    
     //MARK: - Rubbish Bin
     func testRubbishBinNodeRestorableFolder() {
         actions = NodeActionBuilder()
@@ -835,6 +858,18 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .exportFile, .revertVersion, .remove]))
     }
     
+    func testBackupNodeVersionChildFile() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeVersions)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setIsChildVersion(true)
+            .setIsBackupNode(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .exportFile, .copy, .remove]))
+    }
+    
     func testNodeVersionFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeVersions)
@@ -845,6 +880,16 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .exportFile, .remove]))
     }
     
+    func testBackupNodeVersionFile() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeVersions)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setIsBackupNode(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .exportFile]))
+    }
     
     // MARK: - Versions in Incoming Shared Items tests
     
