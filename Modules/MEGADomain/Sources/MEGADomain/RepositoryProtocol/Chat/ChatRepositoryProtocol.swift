@@ -5,7 +5,7 @@ public protocol ChatRepositoryProtocol {
     func isGuestAccount() -> Bool
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
-    func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>
+    func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never>
     func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never>
     func existsActiveCall() -> Bool
     func activeCall() -> CallEntity?

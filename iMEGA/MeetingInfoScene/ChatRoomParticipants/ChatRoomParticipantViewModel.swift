@@ -71,13 +71,13 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     
     private func listeningForChatStatusUpdate() {
         chatUseCase
-            .monitorChatStatusChange(forUserHandle: chatParticipantId)
+            .monitorChatStatusChange()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed status \(error)")
-            }, receiveValue: { [weak self] status in
-                guard let self = self else { return }
-                self.chatStatus = status.toChatStatus()
+            }, receiveValue: { [weak self] statusForUser in
+                guard let self, statusForUser.0 == self.chatParticipantId else { return }
+                self.chatStatus = statusForUser.1.toChatStatus()
             })
             .store(in: &subscriptions)
     }

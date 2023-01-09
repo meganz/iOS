@@ -79,8 +79,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
         monitorActiveCallChanges()
         
-        self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
-        self.listeningForChatStatusUpdate()
+        if !chatListItem.group {
+            self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
+            self.listeningForChatStatusUpdate()
+        }
 
         self.loadingChatRoomInfoTask = createLoadingChatRoomInfoTask()
         self.loadingChatRoomSearchStringTask = createLoadingChatRoomSearchStringTask()
@@ -346,13 +348,13 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func listeningForChatStatusUpdate() {
         chatUseCase
-            .monitorChatStatusChange(forUserHandle: chatListItem.peerHandle)
+            .monitorChatStatusChange()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed status \(error)")
-            }, receiveValue: { [weak self] status in
-                guard let self = self else { return }
-                self.chatStatus = status
+            }, receiveValue: { [weak self] statusForUser in
+                guard let self, statusForUser.0 == self.chatListItem.peerHandle else { return }
+                self.chatStatus = statusForUser.1
             })
             .store(in: &subscriptions)
     }

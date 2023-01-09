@@ -7,7 +7,7 @@ extension MainTabBarController {
         )
         .isFeatureFlagEnabled(for: .chatRoomsListingRevamp)
     }
-    
+
     @objc func chatViewController() -> UIViewController {
         if shouldShowNewChatRoomListingScreen {
             let router = ChatRoomsListRouter(tabBarController: self)
