@@ -26,15 +26,10 @@ struct AuthUseCase<T: AuthRepositoryProtocol, U: CredentialRepositoryProtocol>: 
     }
     
     func sessionId() -> String? {
-        credentialRepo.sessionId(service: Constants.keychainServiceName, account: Constants.keychainAccountName)
+        credentialRepo.sessionId()
     }
     
     func isLoggedIn() -> Bool {
         repo.isLoggedIn()
     }
-}
-
-fileprivate enum Constants {
-    static let keychainServiceName = "MEGA"
-    static let keychainAccountName = "sessionV3"
 }

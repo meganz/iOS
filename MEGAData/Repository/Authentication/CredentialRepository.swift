@@ -14,10 +14,12 @@ struct CredentialRepository: CredentialRepositoryProtocol {
         static let keychainEmailAccountName = "email"
         static let keychainNameAccountName = "name"
         static let keychainPasswordAccountName = "password"
+        static let keychainPasscodeServiceName = "demoServiceName"
+        static let keychainPasscodeAccountName = "demoPasscode"
     }
     
-    func sessionId(service: String, account: String) -> String? {
-        SAMKeychain.password(forService: service, account: account)
+    func sessionId() -> String? {
+        SAMKeychain.password(forService: Constants.keychainServiceName, account: Constants.keychainSessionAccountName)
     }
     
     func clearSession() {
@@ -34,5 +36,9 @@ struct CredentialRepository: CredentialRepositoryProtocol {
                                    account: Constants.keychainNameAccountName)
         SAMKeychain.deletePassword(forService: Constants.keychainServiceName,
                                    account: Constants.keychainPasswordAccountName)
+    }
+    
+    func isPasscodeEnabled() -> Bool {
+        SAMKeychain.password(forService: Constants.keychainPasscodeServiceName, account: Constants.keychainPasscodeAccountName) != nil
     }
 }

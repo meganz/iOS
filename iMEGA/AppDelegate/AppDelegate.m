@@ -407,15 +407,15 @@
             if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
                 [MEGALinkManager presentNode];
             }
-        } else if ([userActivity.activityType isEqualToString:@"INStartAudioCallIntent"] || [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"]) {
+        } else if ([userActivity.activityType isEqualToString:@"INStartCallIntent"]) {
             INInteraction *interaction = userActivity.interaction;
-            INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
-            INPerson *contact = startAudioCallIntent.contacts.firstObject;
+            INStartCallIntent *startCallIntent = (INStartCallIntent *)interaction.intent;
+            INPerson *contact = startCallIntent.contacts.firstObject;
             INPersonHandle *personHandle = contact.personHandle;
             
             if (personHandle.type == INPersonHandleTypeEmailAddress) {
                 self.email = personHandle.value;
-                self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"];
+                self.videoCall = startCallIntent.callCapability == INCallCapabilityVideoCall;
                 MEGALogDebug(@"Email %@", self.email);
                 uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
                 
@@ -475,7 +475,7 @@
             } if (personHandle.type == INPersonHandleTypeUnknown) {
                 uint64_t handle = [MEGASdk handleForBase64UserHandle:personHandle.value];
                 MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:handle];
-                self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"];
+                self.videoCall = startCallIntent.callCapability == INCallCapabilityVideoCall;
 
                 if (call && call.status == MEGAChatCallStatusInProgress) {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
