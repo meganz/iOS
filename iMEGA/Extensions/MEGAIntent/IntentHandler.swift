@@ -1,7 +1,8 @@
 import Intents
 import Firebase
 
-class IntentHandler: INExtension {
+final class IntentHandler: INExtension {
+    lazy var personProvider = IntentPersonProvider()
     
     override init() {
         super.init()

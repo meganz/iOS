@@ -63,7 +63,7 @@
     
     [self objcWrapper_configPhotosBannerView];
     
-    self.currentState = MEGACameraUploadsStateLoading;
+    self.currentState = MEGACameraUploadsStateCompleted;
     
     [self configureContextMenuManager];
     [self configPhotoContainerView];

@@ -27,6 +27,8 @@ public enum Strings {
     public static let nsPhotoLibraryAddUsageDescription = Strings.tr("InfoPlist", "NSPhotoLibraryAddUsageDescription")
     /// MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera Uploads is enabled.
     public static let nsPhotoLibraryUsageDescription = Strings.tr("InfoPlist", "NSPhotoLibraryUsageDescription")
+    /// You can use Siri to call your contacts.
+    public static let nsSiriUsageDescription = Strings.tr("InfoPlist", "NSSiriUsageDescription")
     /// Offline
     public static let quickActionOfflineString = Strings.tr("InfoPlist", "quickActionOfflineString")
     /// Search
