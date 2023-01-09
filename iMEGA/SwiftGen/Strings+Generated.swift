@@ -2908,8 +2908,12 @@ public enum Strings {
           public enum Alert {
             /// New album
             public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")
+            /// This album name is not allowed
+            public static let systemAlbumExists = Strings.tr("Localizable", "cameraUploads.albums.create.alert.systemAlbumExists")
             /// Enter album name
             public static let title = Strings.tr("Localizable", "cameraUploads.albums.create.alert.title")
+            /// An album with that name already exists
+            public static let userAlbumExists = Strings.tr("Localizable", "cameraUploads.albums.create.alert.userAlbumExists")
           }
         }
         public enum CreateAlbum {
