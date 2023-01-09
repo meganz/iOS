@@ -6,7 +6,7 @@ public protocol ChatUseCaseProtocol {
     func isGuestAccount() -> Bool
     func chatStatus() -> ChatStatusEntity
     func changeChatStatus(to status: ChatStatusEntity)
-    func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never>
+    func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never>
     func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never>
     func existsActiveCall() -> Bool
     func activeCall() -> CallEntity?
@@ -49,8 +49,8 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
         chatRepo.changeChatStatus(to: status)
     }
     
-    public func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never> {
-        chatRepo.monitorChatStatusChange(forUserHandle: userHandle)
+    public func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never> {
+        chatRepo.monitorChatStatusChange()
     }
     
     public func monitorChatListItemUpdate() -> AnyPublisher<[ChatListItemEntity], Never> {

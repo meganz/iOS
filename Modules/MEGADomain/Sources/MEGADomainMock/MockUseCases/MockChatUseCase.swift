@@ -9,7 +9,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var isCallActive: Bool
     public var isCallInProgress: Bool
     public var activeCallEntity: CallEntity?
-    public var statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never>
+    public var statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>
     public var chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never>
     public var chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never>
     public var chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus , Never>
@@ -28,7 +28,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         status: ChatStatusEntity = .offline,
         isCallActive: Bool = false,
         isCallInProgress: Bool = false,
-        statusChangePublisher: PassthroughSubject<ChatStatusEntity, Never> = PassthroughSubject<ChatStatusEntity, Never>(),
+        statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>(),
         chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  PassthroughSubject<[ChatListItemEntity], Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
         chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
@@ -65,7 +65,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.status = status
     }
     
-    public func monitorChatStatusChange(forUserHandle userHandle: HandleEntity) -> AnyPublisher<ChatStatusEntity, Never> {
+    public func monitorChatStatusChange() -> AnyPublisher<(HandleEntity, ChatStatusEntity), Never> {
         statusChangePublisher.eraseToAnyPublisher()
     }
     

@@ -21,7 +21,7 @@ struct UserStoreRepository: UserStoreRepositoryProtocol {
                 continuation.resume(returning: nil)
                 return
             }
-            context.perform {
+            context.performAndWait {
                 let displayName = store.fetchUser(withUserHandle: handle, context: context)?.displayName
                 continuation.resume(returning: displayName)
             }

@@ -10,7 +10,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     let meetingsListMock = [ChatListItemEntity(chatId: 11, title: "Meeting 1"), ChatListItemEntity(chatId: 14, title: "Meeting 2"), ChatListItemEntity(chatId: 51, title: "Meeting 3")]
     
     func test_remoteChatStatusChange() {
-        let chatUseCase = MockChatUseCase()
+        let userHandle: HandleEntity = 100
+        let chatUseCase = MockChatUseCase(myUserHandle: userHandle)
         let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase)
         viewModel.loadChatRooms()
         
@@ -24,7 +25,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             }
         
         let chatStatus = ChatStatusEntity.allCases.randomElement()!
-        chatUseCase.statusChangePublisher.send(chatStatus)
+        chatUseCase.statusChangePublisher.send((userHandle, chatStatus))
         
         waitForExpectations(timeout: 10)
 
