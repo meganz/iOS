@@ -3,11 +3,15 @@ import MEGASwiftUI
 
 struct PhotoLibraryPicker: View {
     @Environment(\.editMode) var editMode
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var selectedMode: PhotoLibraryViewMode
     
     var body: some View {
         pickerView()
             .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
+            .onChange(of: colorScheme) { _ in
+                configSegmentedControlAppearance()
+            }
     }
     
     init(selectedMode: Binding<PhotoLibraryViewMode>) {
@@ -46,7 +50,7 @@ struct PhotoLibraryPicker: View {
                  .foregroundColor: UIColor.black],
                 for: .normal
             )
-
+        
         UISegmentedControl
             .appearance()
             .backgroundColor = Colors.MediaConsumption.timelineYMDATabs.color
