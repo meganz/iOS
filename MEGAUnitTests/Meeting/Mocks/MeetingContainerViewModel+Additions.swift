@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 extension MeetingContainerViewModel {
     
@@ -10,7 +11,7 @@ extension MeetingContainerViewModel {
         chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
         userUseCase: UserUseCaseProtocol = MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
-        authUseCase: AuthUseCaseProtocol = MockAuthUseCase(isUserLoggedIn: true),
+        authUseCase: AuthUseCaseProtocol = MockAuthUseCase(),
         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         analyticsEventUseCase: AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         isTesting: Bool = true
