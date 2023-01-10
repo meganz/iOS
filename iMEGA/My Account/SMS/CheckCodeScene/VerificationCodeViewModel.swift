@@ -113,6 +113,8 @@ struct VerificationCodeViewModel: ViewModelType {
             return
         }
         
-        authUseCase.login(sessionId: sessionId, delegate: MEGALoginRequestDelegate())
+        Task {
+            try await authUseCase.login(sessionId: sessionId)
+        }
     }
 }
