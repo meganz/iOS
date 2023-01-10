@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct AuthRepository: AuthRepositoryProtocol {
     private let sdk: MEGASdk
@@ -11,8 +12,17 @@ struct AuthRepository: AuthRepositoryProtocol {
         sdk.logout()
     }
     
-    func login(sessionId: String, delegate: MEGARequestDelegate) {
-        sdk.fastLogin(withSession: sessionId, delegate: delegate)
+    func login(sessionId: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.fastLogin(withSession: sessionId, delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            })
+        }
     }
     
     func isLoggedIn() -> Bool {
