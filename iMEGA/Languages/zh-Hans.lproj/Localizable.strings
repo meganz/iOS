@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="创建相册";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="输入相册名称";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="新建相册";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="添加项目到";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="空的相册";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="过滤";
 /* Choose type headline within filter UI */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="单次引荐获得%@存储空间。\n有效期为365天。";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="从手机通讯录中选择联系人或输入多个电子邮件地址";
+"Select from phone contacts or enter multiple email addresses"="从设备通讯录中选择或者输入多个电子邮件地址。";
 /*  */
 "insertYourFriendsEmails"="请填写您好友的电子邮件地址：";
 /*  */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="您确定要取消注册吗？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="如果您的电子邮件地址拼写错误，请更改后点击“重新发送”。";
+"misspelledEmailAddress"="如果您的电子邮件地址拼写错误，请更正后点击“重新发送”。";
 /* A button to resend the email confirmation. */
 "resend"="重新发送";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="出于安全考虑，您的帐户已被暂时锁定。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]请验证您的电子邮件地址[/S]并按照MEGA邮件中的步骤解锁您的帐户。";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="请按照[S]验证电子邮件[/S]中的步骤解锁您的账户。";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="为什么我会看到这个？";
 /* Text to notify user an email has been sent */
@@ -3151,8 +3161,32 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="我们采用零知识加密保护您的数据。为了进一步确保安全性，我们要求您在访问共享文件夹之前您你接收信息的联系人进行验证。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="为了访问此共享文件夹，与您分享它的人应该也对您进行验证。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的凭证";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[未解密的文件夹]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@：已创建会议";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="查看全部";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="离开会议";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="聊天通知";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="共享的文件";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="管理聊天记录";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="启用加密密钥轮换";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="密钥轮换稍微安全一些，但不允许您创建聊天链接，并对新参与者隐藏过去的信息。";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="发送至聊天";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="分享聊天链接";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="查看更多";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="查看更少";

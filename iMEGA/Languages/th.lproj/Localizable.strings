@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="ไม่พบรายการค้นหา";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="ล้างข้อมูลในถังขยะ";
+"cloudDriveEmptyState_titleRubbishBin"="ถังขยะว่างเปล่า";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="สไลด์โชว์";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -521,9 +521,19 @@
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="รายการโปรด";
 /* Gif album title */
-"cameraUploads.albums.gif.title"="GIFs";
+"cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="สร้างอัลบั้ม";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="กรอกชื่ออัลบั้ม";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="อัลบั้มใหม่";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="เพิ่มรายการไปที่";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="อัลบั้มว่างเปล่า";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="ตัวกรอง";
 /* Choose type headline within filter UI */
@@ -583,7 +593,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="ขาออก";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="แชร์ด้วย %d ผู้ติดต่อ";
+"sharedWithXContacts"="แชร์อยู่กับผู้ติดต่อ %d ราย";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="สิทธิ์เปลี่ยนแปลงแล้ว";
 /* Message shown when a share has been left */
@@ -595,13 +605,13 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="ลบแชร์ออก";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย 1 ผู้ติดต่อ)";
+"removeOneShareOneContactMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์อยู่กับผู้ติดต่อ 1 ราย)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย %d ผู้ติดต่อ)";
+"removeOneShareMultipleContactsMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์อยู่กับผู้ติดต่อ %d ราย)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย %d ผู้ติดต่อ)";
+"removeMultipleSharesMultipleContactsMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์อยู่กับผู้ติดต่อ %d ราย)";
 /* Message shown when a share have been removed */
-"shareRemoved"="แชร์ได้ถูกลบออกอย่างถูกต้องแล้ว";
+"shareRemoved"="ลบการแชร์แล้ว";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="ลบการแชร์";
 /* Title of the view where you see with who you have shared a folder */
@@ -905,7 +915,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="อีเมลใหม่และอีเมลเก่าต้องไม่ตรงกัน";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="อีเมลไม่ตรงกัน";
+"emailsDoNotMatch"="ที่อยู่อีเมลไม่ตรงกัน";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="คุณได้ส่งคำขอลิงก์ยืนยันสำหรับที่อยู่อีเมลนั้นแล้ว";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="รับพื้นที่เก็บข้อมูล %@ ทุกครั้งเมื่อชวนเพื่อนสร้างรายได้\nมีอายุใช้งาน 365 วัน";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในโทรศัพท์หรือกรอกอีเมลได้หลายที่อยู่";
+"Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในอุปกรณ์หรือกรอกอีเมลได้หลายรายการ";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -1179,7 +1189,7 @@
 /* This is the placeholder text for GIPHY search */
 "Search GIPHY"="ค้นหาใน GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="ไม่พบ GIFs";
+"No GIFs found"="ไม่พบ GIF";
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="ข้อความนี้แสดงความรู้สึกถึงขีดจำกัดสูงสุด %d ครั้งแล้ว";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="คุณแน่ใจว่าต้องการที่จะยกเลิกการลงทะเบียนนี้";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและคลิก “ส่งใหม่”";
+"misspelledEmailAddress"="หากคุณสะกดที่อยู่อีเมลผิด แก้ไขให้ถูกต้องแล้วแตะ “ส่งซ้ำ”";
 /* A button to resend the email confirmation. */
 "resend"="ส่งใหม่";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1781,15 +1791,15 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="การหมุนเวียนคีย์เข้ารหัส";
+"Encrypted Key Rotation"="การสลับกุญแจเข้ารหัส";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="เปิดใช้งานการหมุนเวียนคีย์เข้ารหัส";
+"Enable Encrypted Key Rotation"="เปิดใช้งานการสลับกุญแจเข้ารหัส";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="รับลิงก์แชท";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การหมุนเวียนคีย์เข้ารหัสมีความปลอดภัยในระดับหนึ่ง แต่จะไม่อนุญาตให้คุณสร้างลิงก์แชท และผู้เข้าร่วมใหม่จะไม่เห็นข้อความที่ผ่านมา";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การสลับกุญแจเข้ารหัสมีความปลอดภัยในระดับหนึ่ง แต่จะไม่อนุญาตให้คุณสร้างลิงก์แชท และผู้เข้าร่วมใหม่จะไม่เห็นข้อความที่ผ่านมา";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="การหมุนเวียนคีย์เข้ารหัสถูกปิดใช้งานไว้สำหรับการสนทนาที่มีผู้เข้าร่วมมากกว่า 100 คน";
+"Key rotation is disabled for conversations with more than 100 participants."="การสลับกุญแจเข้ารหัสถูกปิดใช้งานไว้สำหรับการสนทนาที่มีผู้เข้าร่วมมากกว่า 100 คน";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="ในการสร้างลิงก์แชทคุณจะต้องตั้งชื่อกลุ่มก่อน";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1801,7 +1811,7 @@
 /* Users previewing a public chat */
 "Observers"="ผู้สังเกตการณ์";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งานการหมุนเวียนคีย์เข้ารหัส";
+"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งานการสลับกุญแจเข้ารหัส";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ ได้สร้างลิงก์แชทแล้ว";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="บัญชีถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]กรุณาตรวจสอบอีเมล[/S]และทำตามขั้นตอนในอีเมลของ MEGA เพื่อปลดล็อกบัญชีของคุณ";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="กรุณาทำตามขั้นตอนใน[S]อีเมลการตรวจสอบ[/S]เพื่อปลดล็อกบัญชีของคุณ";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="ทำไมฉันเห็นสิ่งนี้";
 /* Text to notify user an email has been sent */
@@ -2375,7 +2385,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="คัดลอกรหัสผ่านไปยังคลิปบอร์ดแล้ว";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="ระบบการเข้ารหัสแบบครบวงจรของเรา มีการใช้คีย์เฉพาะที่สร้างขึ้นโดยอัตโนมัติของไฟล์นี้ ลิงก์ที่มีคีย์นี้จะถูกสร้างขึ้นตามค่าเริ่มต้น แต่คุณสามารถส่งออกคีย์ถอดรหัสแบบแยกต่างหากเพื่อเพิ่มระดับความปลอดภัยได้";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="ระบบการเข้ารหัสจากต้นทางถึงปลายทางของเรา มีการใช้คีย์เฉพาะที่สร้างขึ้นให้กับไฟล์นี้โดยอัตโนมัติ ลิงก์ที่มีคีย์นี้จะถูกสร้างขึ้นตามค่าเริ่มต้น แต่คุณสามารถส่งออกคีย์ถอดรหัสแยกออกจากกันเพื่อเพิ่มระดับความปลอดภัยได้";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="ลบรหัสผ่าน";
 /* Text to indicate the user to reset/change the password of a link */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="หากต้องการเข้าถึงโฟลเดอร์ที่แชร์ บุคคลที่แชร์โฟลเดอร์กับคุณควรมีการตรวจสอบด้วย";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="ข้อมูลประจำตัวของคุณ";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[โฟลเดอร์ที่ไม่ได้ถอดรหัส]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: สร้างการประชุมแล้ว";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="ดูทั้งหมด";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="ออกจากการประชุม";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="แจ้งเตือนแชท";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="ไฟล์ที่ใช้ร่วมกัน";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="จัดการประวัติการแชท";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="เปิดใช้งานการสลับกุญแจเข้ารหัส";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="การสลับกุญแจจะเป็นการรักษาความปลอดภัยขึ้นอีกเล็กน้อย แต่จะไม่สามารถสร้างลิงก์สนทนาและซ่อนข้อความที่ผ่านมาจากผู้เข้าร่วมใหม่ได้";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="ส่งไปยังแชท";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="แชร์ลิงก์แชท";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="ดูเพิ่มเติม";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="แสดงน้อยลง";

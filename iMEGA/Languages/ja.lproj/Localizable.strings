@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="結果なし";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="ごみ箱を空にする";
+"cloudDriveEmptyState_titleRubbishBin"="ごみ箱は空です";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="スライドショー";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="アルバムの作成";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="アルバム名を入力";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="新規アルバム";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="以下に項目を追加";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="空のアルバム";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="絞り込み";
 /* Choose type headline within filter UI */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="各紹介者に対して%@ストレージ。\n365日有効。";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="電話の連絡先から選択するか、複数のメールアドレスを入力してください";
+"Select from phone contacts or enter multiple email addresses"="端末の連絡先から選択するか、複数のメールアドレスを入力してください";
 /*  */
 "insertYourFriendsEmails"="ご友人のメールアドレスを入力：";
 /*  */
@@ -1183,7 +1193,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="このメッセージは、反応の上限（%d）に達しました。";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="反応の上限(%d)に達しました。";
+"You have reached the maximum limit of %d reactions."="反応の上限（%d）に達しました。";
 /* Chat section header */
 "chat"="チャット";
 /* Empty Conversations section */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="登録を中止してもよろしいですか？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="メールアドレスのスペルを間違った場合、それを修正して「再送信」をクリックしてください。";
+"misspelledEmailAddress"="メールアドレスのスペルを間違った場合、それを修正して「再送信」をタップしてください。";
 /* A button to resend the email confirmation. */
 "resend"="再送信";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="あなたのアカウントは一時的に安全を確保するためにロックされました。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]メールアドレスを検証して[/S]、MEGAのメールの手順に従ってアカウントのロックを解除してください。";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]検証メール[/S]に記載されている手順に従って、アカウントのロックを解除してください。";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="これが表示されている理由は？";
 /* Text to notify user an email has been sent */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="共有フォルダにアクセスするには、あなたと共有した人もあなたを承認する必要があります。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="あなたの資格情報";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[未復号フォルダ]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@：ミーティングを作成しました";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="すべて表示";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="ミーティングを抜ける";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="チャット通知";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="共有ファイル";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="チャット履歴を管理する";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="暗号化キーローテーションを有効にする";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="キーローテーションは少し安全ですが、チャットリンクを作成することはできず、新しい参加者からの過去のメッセージを非表示にします。";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="チャットに送信";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="チャットリンクを共有";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="もっと見る";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="表示を減らす";

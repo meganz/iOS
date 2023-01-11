@@ -197,7 +197,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Koneksi internet tidak tersedia";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Folder Kosong";
+"emptyFolder"="Folder kosong";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Tidak ada berkas di Cloud Drive anda";
 /* Button title shown in empty views when you can 'Add files' */
@@ -267,7 +267,7 @@
 /* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="Tidak ada Transfer";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Tidak ada Unduhan";
+"transfersEmptyState_titleDownload"="Tidak ada unduhan";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Tidak ada Unggahan";
 /* Title of the Cloud Drive section */
@@ -319,7 +319,7 @@
 /* Error message shown when enabling geolocation failed */
 "chat.map.location.enableGeolocationFailedError"="Gagal mengaktifkan geolokasi. Kesalahan: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Klip Suara";
+"Voice Clip"="Klip suara";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="File Teks Baru";
 /* Hint text shown on the new text file alert. */
@@ -503,7 +503,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Cadangkan foto dan video anda secara otomatis ke Drive Cloud anda.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Aktifkan Unggahan Kamera";
+"enableCameraUploadsButton"="Aktifkan Unggahan kamera";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Unggahan Kamera teraktifkan";
 /* Message shown when the camera uploads have been completed */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIFs";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Masukkan nama album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Album baru";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -609,7 +619,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Tambah dari Kontak";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Tambah Kontak";
+"addContact"="Tambah kontak";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kontak Email";
 /* Button title to 'Add' the contact to your contacts list */
@@ -657,7 +667,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Pengaturan";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Unggahan Kamera";
+"cameraUploadsLabel"="Unggahan kamera";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat mencadangkan semua foto anda. Ketuk untuk mengubah izin.";
 /* Navigation title for Photo Controller */
@@ -673,7 +683,7 @@
 /* Title of Photo's All date tab */
 "media.photoLibrary.category.all.title"="Semua";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Tempat Sampah";
+"rubbishBinLabel"="Tempat sampah";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Lanjutan";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -719,15 +729,15 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Jika diaktifkan, foto akan diunggah.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Foto akan diunggah ke folder Unggah Kamera.";
+"Photos will be uploaded to Camera Uploads folder."="Foto akan diunggah ke folder Unggah kamera.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Foto dan video akan diunggah ke folder Unggah Kamera.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Foto dan video akan diunggah ke folder Unggah kamera.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Video akan diunggah ke folder Unggah Kamera.";
+"Videos will be uploaded to the Camera Uploads folder."="Video akan diunggah ke folder Unggah kamera.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Jika diaktifkan, video akan diunggah.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Opsi Unggah Kamera baru";
+"New Camera Upload!"="Opsi Unggah kamera baru";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang anda dapat memilih untuk mengonversi foto dan video HEIC/HEVC ke format JPEG/H.264 yang lebih luas kompatibel.";
 /* Title for an action to use most compatible formats */
@@ -901,11 +911,11 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Konfirmasi email baru";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Ubah Email";
+"Change Email"="Mengganti alamat email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Email baru dan lama harus cocok";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Email tidak cocok";
+"emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Anda telah meminta link konfirmasi untuk alamat email tersebut.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -923,7 +933,7 @@
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Passcode Sederhana";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Hapus Data Lokal";
+"eraseAllLocalDataLabel"="Hapus data lokal";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Anda akan keluar dan file offline anda akan dihapus setelah 10 upaya gagal";
 /* Button text to change the passcode type. */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@penyimpanan untuk setiap rujukan. \nBerlaku selama 365 hari.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Pilih dari kontak telepon atau masukkan beberapa alamat email";
+"Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
 "insertYourFriendsEmails"="Masukkan email teman anda:";
 /*  */
@@ -1043,7 +1053,7 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Akun anda telah ditangguhkan sementara karena kemungkinan penyalahgunaan. Harap verifikasi nomor telepon anda untuk membuka kunci akun anda.";
 /* Verify your account title */
-"Verify Your Account"="Verifikasi Akun Anda";
+"Verify Your Account"="Verifikasi akun anda";
 /* Add your phone number title */
 "Add Your Phone Number"="Tambahkan Nomor Telepon Anda";
 /* Choose Your Country title */
@@ -1059,7 +1069,7 @@
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Hapus Foto";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Ubah Foto";
+"Change Photo"="Ubah foto";
 /* Button that allows the user the add a photo, e.g avatar photo */
 "Add Photo"="Tambahkan Foto";
 /* Button title that allows the user change his name */
@@ -1067,7 +1077,7 @@
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Anda telah berhasil mengganti profil anda.";
 /* Hint text for the first name (Placeholder) */
-"firstName"="Nama Depan";
+"firstName"="Nama depan";
 /* Hint text for the last name (Placeholder) */
 "lastName"="Nama Belakang";
 /* Title for "Local" used space. */
@@ -1219,7 +1229,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Tingkatkan pengalaman MEGA chat. Isi URL akan diambil tanpa enkripsi end-to-end.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Suara dan Panggilan Suara";
+"voiceAndVideoCalls"="Panggilan video dan suara";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Gunakan Mobile Data";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1229,7 +1239,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "autoAway.footerDescription"="Tetapkan status sebagai Pergi setelah [X]tidak aktif.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Status Persistence";
+"statusPersistence"="Status persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
 "maintainMyChosenStatusAppearance"="Tetapkan tampilan status yang saya pilih bahkan saat saya tidak mempunyai perangkat yang tersambung.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
@@ -1245,7 +1255,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Kirim Pesan";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verifikasi Kredensial";
+"verifyCredentials"="Verifikasi kredensial";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Verify";
 /* Button title */
@@ -1275,7 +1285,7 @@
 /* start a chat/conversation */
 "startConversation"="Mulai Percakapan";
 /* Label title for a group chat */
-"groupChat"="Percakapan Grup";
+"groupChat"="Percakapan grup";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Namakan Grup";
 /* A button label. The button allows the user to leave the group conversation. */
@@ -1365,11 +1375,11 @@
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Permintaan kontak";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="Folder Bersama Baru";
+"newSharedFolder"="Folder bersama baru";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Apakah anda yakin ingin membatalkan pendaftaran?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, benarkan dan klik “Kirim Ulang”.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and tap on “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Kirim lagi";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1489,9 +1499,9 @@
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Mempersiapkan…";
 /* QR Code label, used in Settings as title. String as short as possible */
-"qrCode"="QR Code";
+"qrCode"="Kode QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
-"autoAccept"="Terima Otomatis";
+"autoAccept"="Terima otomatis";
 /* Footer that explains the way Auto-Accept works for QR codes */
 "autoAcceptFooter"="Kontak yang memindai Kode QR Anda akan secara otomatis ditambahkan ke daftar kontak Anda.";
 /* Action to reset the current valid QR code of the user */
@@ -1501,7 +1511,7 @@
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
 "My QR code"="Kode QR saya";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Pindai Kode";
+"scanCode"="Pindai kode";
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Sejajarkan kode QR untuk memindainya dengan kamera perangkat Anda";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
@@ -1561,7 +1571,7 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Jangan tampilkan lagi";
 /* Label for test password button and titles */
-"testPassword"="Uji Kata Sandi";
+"testPassword"="Uji kata sandi";
 /* Label for recovery key button */
 "backupRecoveryKey"="Backup Recovery Key";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1821,9 +1831,9 @@
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Tampilan Daftar";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Tampilan Gambar Kecil";
+"Thumbnail View"="Tampilan gambar kecil";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Tampilan Halaman";
+"Page View"="Tampilan halaman";
 /* There are no notifications to display. */
 "No notifications"="Tidak ada notifikasi";
 /* The header of a notification related to payments */
@@ -2041,7 +2051,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Anda tidak dapat menghapus %1$s sebagai kontak karena itu adalah bagian dari akun Bisnis anda.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Memerlukan Kode Sandi";
+"Require Passcode"="Memerlukan kode sandi";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Segera";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2093,7 +2103,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Pemberitahuan akan dibungkam hingga %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Pemberitahuan Obrolan";
+"Chat Notifications"="Pemberitahuan obrolan";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Jangan ganggu";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2107,7 +2117,7 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Setel nama panggilan";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Atur Nama Panggilan";
+"Edit Nickname"="Atur nama panggilan";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Hapus nama panggilan";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
@@ -2133,7 +2143,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Tidak ada foto atau video";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Lihat di Folder";
+"View in Folder"="Lihat di folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan akun yang benar.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Akun anda telah dikunci sementara untuk keselamatan anda.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Harap verifikasi alamat email anda[/S] dan ikuti langkah-langkah dalam email MEGA untuk membuka kunci akun anda.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Please follow the steps in the [S]verification email[/S] to unlock your account.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Mengapa saya melihat ini?";
 /* Text to notify user an email has been sent */
@@ -2189,7 +2199,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Hapus semua";
 /* Alert header for asking permission to resume transfers */
-"Resume Transfers?"="Lanjutkan Transfer?";
+"Resume Transfers?"="Lanjutkan transfer?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Kualitas gambar";
 /* Description of Automatic Image Quality option */
@@ -2243,7 +2253,7 @@
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Konfigurasikan urutan pengurutan dan tampilan default (Daftar atau Gambar Kecil).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Folder";
+"Per Folder"="Per folder";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="Sama untuk Semua";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2269,7 +2279,7 @@
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link file tidak tersedia";
 /* Header of block with all shared files in chat. */
-"Shared Files"="File Berbagi";
+"Shared Files"="File berbagi";
 /* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="Storage Penuh";
 /* Over Disk Quota title message that tell customer your data at risk. */
@@ -2389,7 +2399,7 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email sudah terkirim. Harap tunggu beberapa menit sebelum mencoba lagi.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Kelola Riwayat Obrolan";
+"Manage Chat History"="Kelola riwayat obrolan";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
 "History Clearing"="Kliring Sejarah";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
@@ -2423,15 +2433,15 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cari File Anda";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="FOLDER UPLOAD KAMERA MEGA";
+"MEGA CAMERA UPLOADS FOLDER"="Folder Unggahan kamera MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Pilih Folder";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Bermain";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah Anda yakin ingin memindahkan folder Unggahan Kamera ke Tong Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan Kamera.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah anda yakin ingin memindahkan folder Unggahan kamera ke Tong Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan kamera.";
 /* Text to indicate the action of uploading a file to the cloud drive */
-"Upload File"="Upload File";
+"Upload File"="Unggah File";
 /* Text title for shortcuts, ie in the widget */
 "Shortcuts"="Shortcut";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
@@ -2581,7 +2591,7 @@
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Memindahkan folder ini mengubah tujuan pencadangan. Pencadangan akan dimatikan demi keamanan. Apakah ini yang ingin anda lakukan? Pencadangan dapat diaktifkan kembali dengan Aplikasi Desktop MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="Pindahkan “%@” ke Tempat Sampah";
+"dialog.delete.backup.folder.warning.title"="Pindahkan “%@” ke Tempat sampah";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Anda menghapus folder cadangan anda. Ini akan menghapus semua cadangan yang telah anda atur. Apakah anda yakin ingin melakukan ini?";
 /* Delete the default backup folder warning message */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Kredensial Anda";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Undecrypted folder]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: created a meeting";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Leave meeting";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Pemberitahuan obrolan";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="File berbagi";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Kelola riwayat obrolan";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Kirim ke obrolan";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Lihat lebih banyak";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="See less";

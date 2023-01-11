@@ -101,11 +101,11 @@
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="請輸入有效的電子郵件地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="無效的email格式";
+"theEmailAddressFormatIsInvalid"="無效的電子郵件地址格式";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="請輸入有效的密碼";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Email";
+"emailPlaceholder"="電子郵件";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密碼";
 /* Account, Change Password view. Error shown when you type your current password. */
@@ -469,19 +469,19 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1個檔案已移到垃圾筒";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d 個檔案已被移動到垃圾桶";
+"filesMovedToRubbishBinMessage"="%d個檔案已移到垃圾筒";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="已將1個資料夾移至垃圾筒";
+"folderMovedToRubbishBinMessage"="已將1個資料夾移到垃圾筒";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="已將%d個資料夾移至垃圾筒";
+"foldersMovedToRubbishBinMessage"="已將%d個資料夾移到垃圾筒";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1個檔案與1個資料夾已移至垃圾筒";
+"fileFolderMovedToRubbishBinMessage"="1個檔案與1個資料夾已移到垃圾筒";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1個檔案與%d個資料夾已移至垃圾筒";
+"fileFoldersMovedToRubbishBinMessage"="1個檔案與%d個資料夾已移到垃圾筒";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d個檔案與1個資料夾已移至垃圾筒";
+"filesFolderMovedToRubbishBinMessage"="%d個檔案與1個資料夾已移到垃圾筒";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A]個檔案與[B]個資料夾已移至垃圾筒";
+"filesFoldersMovedToRubbishBinMessage"="[A]個檔案與[B]個資料夾已移到垃圾筒";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="權限錯誤";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="輸入相簿名稱";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="新相簿";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="篩選";
 /* Choose type headline within filter UI */
@@ -611,7 +621,7 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="新增聯絡人";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="聯絡人email";
+"contactEmail"="聯絡人電子郵件";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -801,7 +811,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="於MEGA上";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="空的垃圾筒";
+"emptyRubbishBin"="清空垃圾筒";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="所有垃圾筒中的項目將被刪除";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -905,7 +915,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新的和舊的電子郵件不能相同";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="您輸入的電子郵件不同";
+"emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="你已經為此電子郵件地址申請了確認連結。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="每推薦1個可獲得%@的儲存空間。\n有效期為365天。";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="選擇手機聯絡人或者輸入多個email";
+"Select from phone contacts or enter multiple email addresses"="從裝置上的聯絡人來選擇或輸入多個電子郵件地址。";
 /*  */
 "insertYourFriendsEmails"="填入您朋友的電子郵件：";
 /*  */
@@ -1183,7 +1193,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="此訊息已達到%d個回應的最大限制。";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="您已達到%d個回應的最大限制。";
+"You have reached the maximum limit of %d reactions."="您已達到%d個回應的上限。";
 /* Chat section header */
 "chat"="對話";
 /* Empty Conversations section */
@@ -1245,7 +1255,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="確認憑證";
+"verifyCredentials"="驗證憑證";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="驗證";
 /* Button title */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="您確定要中止註冊嗎？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="如果您寫錯了您的電子郵件地址，請於修正後點擊 “重新發送”。";
+"misspelledEmailAddress"="如果您填錯您的電子郵件地址，請修正然後按「重新發送」。";
 /* A button to resend the email confirmation. */
 "resend"="重新發送";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1695,7 +1705,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="您在雲端的照片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的必要功能，我們現已為您提供這項服務。立即建立您的帳戶。";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的必要功能，我們現已為您提供這項服務。請立即建立您的帳戶。";
 /* Button which triggers the initial setup */
 "Setup MEGA"="設定MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2061,7 +2071,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]暫停使用[/B]。您只能瀏覽您的資料。";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA無法存取您的資料。然而，您的商業帳戶管理員可以存取您的相機上傳。";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA無法存取您的資料。但是您的商業帳戶管理員可以存取您的相機上傳。";
 /*  */
 "Something went wrong"="出錯了";
 /* Title of the "Links" Shared Items. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="為了安全起見，您的帳戶已暫時被封鎖。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]請驗證您的電子郵件地址[/S]，並按照MEGA信件裡的步驟解鎖您的帳戶。";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="請按照[S]驗證電子郵件[/S]中的步驟解鎖您的帳戶。";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="為什麼我會看到這個？";
 /* Text to notify user an email has been sent */
@@ -2275,9 +2285,9 @@
 /* Over Disk Quota title message that tell customer your data at risk. */
 "Your Data is at Risk!"="您的資料正面臨風險！";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>我們已經透過email <b>%@</b>在<b>%@</b>通知您，但您的MEGA帳戶仍然有%@個檔案共使用<b>%@</b>，您需要升級至<b>%@</b>。</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>我們已經在<b>%@</b>透過發送電子郵件到<b>%@</b>聯繫您，但您的MEGA帳戶仍然有%@個檔案共使用了<b>%@</b>，您需要升級至<b>%@</b>。</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>我們已經透過email <b>%@</b>在<b>%@</b> 通知您，但您的MEGA帳戶仍然有%@個檔案共使用<b>%@</b>，您需要聯絡客服以取得客製化方案。</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>我們已經在<b>%@</b>透過發送電子郵件到<b>%@</b>聯繫您，但您的MEGA帳戶仍然有%@個檔案共使用了<b>%@</b>，您需要聯絡客服以取得客製化方案。</paragraph>";
 /* Over Disk Quota of number of days */
 "%d days"="%d天";
 /* Over Disk Quota of must act immediately to save your data */
@@ -2429,7 +2439,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="播放中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將照片上傳資料夾移至垃圾筒嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將照片上傳資料夾移到垃圾筒嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="上傳檔案";
 /* Text title for shortcuts, ie in the widget */
@@ -2561,7 +2571,7 @@
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="您的資料正面臨風險！";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>可惜的是您沒有在<b>%@</b>天內採取任何行動，即使我們有將提醒訊息發送到您的email<b>%@</b>，發送時間為<b>%@</b>。目前您仍然使用<b>%@</b>儲存空間，這已超出您的免費空間限制。請查看我們寄給您的電子郵件以了解更多訊息。</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>自從我們在<b>%@</b>發送電子郵件到<b>%@</b>之後，您並沒有在<b>%@</b>天內採取任何行動。目前您仍然使用了<b>%@</b>儲存空間，這已超出您的免費空間限制。請查看我們寄給您的電子郵件以了解更多訊息。</paragraph>";
 /* Over Disk Quota paywall final detail message. */
 "dialog.storage.paywall.final.detail"="<paragraph>可惜的是您尚未升級您的帳戶。如果現在不升級，您的資料將在明天被刪除。請查看您的電子郵件來獲得您需要採取什麼樣的行動的更多訊息。</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
@@ -2581,7 +2591,7 @@
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="移動此資料夾會更改備份目的地。為安全起見，備份將會停止。您確定要繼續嗎？備份可以透過MEGA桌面應用程式重新啟用。";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="將“%@”移至垃圾筒";
+"dialog.delete.backup.folder.warning.title"="將「%@」移到垃圾筒";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="您正在刪除您的備份資料夾。這將刪除您設定的所有備份。你確定要這麼做嗎？";
 /* Delete the default backup folder warning message */
@@ -2599,7 +2609,7 @@
 /* Add items to a backup folder placeholder for a textfield */
 "dialog.disable.backup.placeholder"="停用備份";
 /* Delete a backup folder action title */
-"dialog.delete.backup.action.title"="移至垃圾筒";
+"dialog.delete.backup.action.title"="移到垃圾筒";
 /* Add items to a backup folder action title */
 "dialog.add.items.backup.action.title"="新增";
 /* Backup action confirmation error message */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="若要存取共享資料夾，與您共享資料夾的人也會對您進行驗證。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的憑證";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[未解密資料夾]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@：已建立會議";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="離開會議";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="訊息通知";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="共享的檔案";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="管理對話記錄";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="發送至對話";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="顯示更多";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="顯示較少";

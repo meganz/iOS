@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Keine Treffer";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Papierkorb leeren";
+"cloudDriveEmptyState_titleRubbishBin"="Der Papierkorb ist leer";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Diashow";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIFs";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Albumnamen eingeben";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Neues Album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -905,7 +915,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Die neue E-Mail-Adresse muss sich von der jetzigen unterscheiden";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Die eingegebenen E-Mail-Adressen sind nicht identisch";
+"emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Sie haben einen Bestätigungslink für diese E-Mail-Adresse angefordert.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ Extraspeicherplatz für jeden geworbenen Neukunden. \n Gültig für 365 Tage.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Nutzer aus Ihren Kontakten auswählen oder E-Mail-Adresse(n) eingeben";
+"Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
 "insertYourFriendsEmails"="E-Mail-Adressen Ihrer Freunde:";
 /*  */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sind Sie sicher, dass Sie die Registrierung abbrechen wollen?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Wenn Sie Ihre E-Mail-Adresse falsch eingegeben haben, korrigieren Sie sie und klicken Sie auf „Erneut senden“.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and tap on “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Erneut senden";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Ihr Account wurde zu Ihrer eigenen Sicherheit temporär gesperrt.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="Zur Entsperrung Ihres Accounts [S]bestätigen Sie bitte Ihre E-Mail-Adresse[/S] und folgen Sie dann den Anweisungen in unserer E-Mail.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Zur Entsperrung Ihres Accounts befolgen Sie bitte die in der [S]Bestätigungs-E-Mail[/S] beschriebenen Schritte.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Details";
 /* Text to notify user an email has been sent */
@@ -2181,7 +2191,7 @@
 /* Label indicating transfer over quota. */
 "Transfer over quota"="Transferquota überschritten";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
-"Clear Selected"="Auswahl löschen";
+"Clear Selected"="Auswahl aufheben";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
 "Pause All"="Alle pausieren";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Damit Sie auf den freigegebenen Ordner zugreifen können, muss die freigebende Person Sie ebenfalls verifizieren.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Ihre Identitätsdaten";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Nicht entschlüsselter Ordner]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: hat ein meeting erstellt";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Leave meeting";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Chatbenachrichtigungen";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Freigegebene Dateien";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Chatverlauf verwalten";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="An Chat senden";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Mehr sehen";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Weniger anzeigen";

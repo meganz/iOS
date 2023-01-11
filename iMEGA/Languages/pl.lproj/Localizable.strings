@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Brak wyników";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Opróżnij kosz na śmieci";
+"cloudDriveEmptyState_titleRubbishBin"="Opróżnij Kosz";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Pokaz slajdów";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -269,7 +269,7 @@
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="Brak pobrań";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Brak plików";
+"transfersEmptyState_titleUpload"="Brak przesyłów";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Dysk";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -467,21 +467,21 @@
 /* Title for the action that allows you to replace a file. */
 "replace"="Zamień";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 plik przeniesiony do kosza";
+"fileMovedToRubbishBinMessage"="1 plik przeniesiony do Kosza";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d plików przeniesionych do kosza";
+"filesMovedToRubbishBinMessage"="%d plików przeniesionych do Kosza";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 katalog przeniesiony do kosza";
+"folderMovedToRubbishBinMessage"="1 katalog przeniesiony do Kosza";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d katalogów przeniesionych do kosza";
+"foldersMovedToRubbishBinMessage"="%d katalogów przeniesionych do Kosza";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 plik i jeden katalog przeniesione do kosza";
+"fileFolderMovedToRubbishBinMessage"="1 plik i jeden katalog przeniesione do Kosza";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 plik i %d katalogów przeniesione do kosza";
+"fileFoldersMovedToRubbishBinMessage"="1 plik i %d katalogów przeniesione do Kosza";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d plików i 1 katalog przeniesione do kosza";
+"filesFolderMovedToRubbishBinMessage"="%d plików i 1 katalog przeniesione do Kosza";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] plików i [B] katalogów przeniesiono do kosza";
+"filesFoldersMovedToRubbishBinMessage"="[A] plików i [B] katalogów przeniesiono do Kosza";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Błąd uprawnień";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -503,11 +503,11 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Automatyczne tworzenie kopii zapasowych zdjęć i filmów na dysku Cloud.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Włącz przesyłanie zdjęć z kamery";
+"enableCameraUploadsButton"="Włącz Przesyłanie z kamery";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Przesyłanie zdjęć z kamery odblokowane";
+"cameraUploadsEnabled"="Przesyłanie z kamery odblokowane";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Wgrywanie plików z kamery zakończone";
+"cameraUploadsComplete"="Przesyłanie z kamery zakończone";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Trwa przesyłanie, 1 plik oczekuje";
 /* Message shown while uploading files. Plural. */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIFy";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Utwórz album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Wprowadź nazwę albumu";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Nowy album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Dodaj elementy do";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Pusty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtr";
 /* Choose type headline within filter UI */
@@ -541,7 +551,7 @@
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cloudDrive"="Dysk w chmurze";
 /* Filter UI media location option */
-"cameraUploads.timeline.filter.location.cameraUploads"="Przesyłanie zdjęć z kamery";
+"cameraUploads.timeline.filter.location.cameraUploads"="Przesyłanie z kamery";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia Wi-Fi, 1 plik w toku";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -657,7 +667,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Ustawienia";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Przesyłanie zdjęć z kamery";
+"cameraUploadsLabel"="Przesyłanie z kamery";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ma ograniczony dostęp do biblioteki zdjęć i nie może wykonać kopii zapasowej wszystkich zdjęć. Stuknij, aby zmienić uprawnienia.";
 /* Navigation title for Photo Controller */
@@ -719,15 +729,15 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Po włączeniu zdjęcia zostaną przesłane.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Zdjęcia zostaną przesłane do katalogu Wgrane aparatu.";
+"Photos will be uploaded to Camera Uploads folder."="Zdjęcia zostaną przesłane do katalogu Przesłane z kamery.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Zdjęcia i filmy zostaną przesłane do katalogu Wgrane aparatu.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Zdjęcia i filmy zostaną przesłane do katalogu Przesłane z kamery.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Filmy zostaną przesłane do katalogu Wgrane aparatu.";
+"Videos will be uploaded to the Camera Uploads folder."="Filmy zostaną przesłane do katalogu Przesłane z kamery.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Po włączeniu filmy zostaną przesłane.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nowe opcje przesyłania z aparatu";
+"New Camera Upload!"="Nowe opcje Przesyłania z kamery";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Teraz możesz przekonwertować zdjęcia i filmy HEIC / HEVC na bardziej kompatybilne formaty JPEG / H.264.";
 /* Title for an action to use most compatible formats */
@@ -739,7 +749,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Pamięć urządzenia prawie pełna";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nie masz wystarczającej ilości miejsca na dalsze przesyłanie z kamery.  Zwolnij miejsce, usuwając niepotrzebne aplikacje, filmy lub muzykę. Możesz zarządzać swoją pamięcią w %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nie masz wystarczającej ilości miejsca na dalsze Przesyłanie z kamery.  Zwolnij miejsce, usuwając niepotrzebne aplikacje, filmy lub muzykę. Możesz zarządzać swoją pamięcią w %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Ustawienia > Ogólne > %@ Powierzchnia";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -905,7 +915,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Nowy i stary adres e-mail muszą być różne";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Adresy e-mail nie są jednakowe";
+"emailsDoNotMatch"="Adresy e-mail nie są zgodne";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Link potwierdzający został już wygenerowany dla podanego adresu e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -953,7 +963,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Pobierane";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Wgrywane";
+"uploads"="Przesyłanie";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Przesyłanie anulowane";
 /* Success message shown when all the transfers have been cancelled */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ pamięci masowej dla każdego poleconego. \nWażny przez 365 dni.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Wybierz z kontaktów telefonu lub wprowadź wiele adresów e-mail";
+"Select from phone contacts or enter multiple email addresses"="Wybierz z kontaktów urządzenia lub wprowadź wiele adresów e-mail.";
 /*  */
 "insertYourFriendsEmails"="Wpisz e-maile swoich znajomych:";
 /*  */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Czy na pewno chcesz przerwać proces rejestracji?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Jeżeli wprowadzony adres e-mail jest błędny, popraw go i naciśnij „Wyślij ponownie”.";
+"misspelledEmailAddress"="Jeśli źle wpisałeś swój adres e-mail, popraw go i stuknij w “Wyślij ponownie”.";
 /* A button to resend the email confirmation. */
 "resend"="Wyślin ponownie";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1495,7 +1505,7 @@
 /* Footer that explains the way Auto-Accept works for QR codes */
 "autoAcceptFooter"="Użytkownicy MEGA, którzy skanują Twój kod QR, zostaną automatycznie dodani do Twojej listy kontaktów.";
 /* Action to reset the current valid QR code of the user */
-"resetQrCode"="Zresetuj QR kod";
+"resetQrCode"="Zresetuj kod QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Poprzedni kod QR nie będzie aktywny.";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
@@ -1673,7 +1683,7 @@
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Aparat";
+"Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Zapisz w zdjęciach";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
@@ -1695,7 +1705,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Twoje zdjęcia w chmurze";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Przesyłanie z kamer to podstawowa funkcja każdego urządzenia mobilnego, a my jesteśmy objęci. Utwórz teraz swoje konto.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Przesyłanie z kamery to podstawowa funkcja każdego urządzenia mobilnego, a my jesteśmy objęci. Utwórz teraz swoje konto.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Skonfiguruj MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -2061,7 +2071,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Twoje konto jest obecnie [B]zawieszone[/B]. Możesz tylko przeglądać swoje dane.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nie ma dostępu do Państwa danych. Administrator konta biznesowego ma jednak dostęp do danych Camera Uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nie ma dostępu do Państwa danych. Administrator konta biznesowego ma jednak dostęp do danych Przesłane z kamery.";
 /*  */
 "Something went wrong"="Wystąpiły problemy";
 /* Title of the "Links" Shared Items. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Twoje konto zostało tymczasowo zablokowane dla twojego bezpieczeństwa.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Zweryfikuj swój adres e-mail[/S] i postępuj zgodnie z instrukcjami w e-mailu MEGA, aby odblokować konto.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Proszę postępować zgodnie z krokami zawartymi w [S]mailu weryfikacyjnym[/S], aby odblokować swoje konto.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Dlaczego to widzę?";
 /* Text to notify user an email has been sent */
@@ -2423,13 +2433,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Przeszukuj swoje pliki";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="KATALOG DO PRZESYŁANIA ZDJĘĆ";
+"MEGA CAMERA UPLOADS FOLDER"="Katalog MEGA do Przesyłania z kamery";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Wybierz katalog";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Odtwarzanie";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Czy na pewno chcesz przenieść katalog przesłane z aparatu do kosza na śmieci? Jeśli tak, nowy katalog zostanie automatycznie wygenerowany do przesyłania z aparatu.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Czy na pewno chcesz przenieść katalog przesłane z kamery do Kosza na śmieci? Jeśli tak, nowy katalog zostanie automatycznie wygenerowany do Przesyłania z kamery.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Wgrywanie pliku";
 /* Text title for shortcuts, ie in the widget */
@@ -2581,7 +2591,7 @@
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Przeniesienie tego katalogu powoduje zmianę miejsca docelowego kopii zapasowej. Kopia zapasowa zostanie wyłączona dla bezpieczeństwa. Czy to jest to, co chcesz zrobić? Kopie zapasowe mogą być ponownie włączone za pomocą aplikacji MEGA Desktop App.";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="Przenieś „%@” do kosza";
+"dialog.delete.backup.folder.warning.title"="Przenieś “%@” do Kosza";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Usuwasz katalog kopii zapasowych. Spowoduje to usunięcie wszystkich kopii zapasowych, które ustawiłeś. Czy na pewno chcesz to zrobić?";
 /* Delete the default backup folder warning message */
@@ -2599,7 +2609,7 @@
 /* Add items to a backup folder placeholder for a textfield */
 "dialog.disable.backup.placeholder"="zablokuj";
 /* Delete a backup folder action title */
-"dialog.delete.backup.action.title"="Przenieś do kosza";
+"dialog.delete.backup.action.title"="Przenieś do Kosza";
 /* Add items to a backup folder action title */
 "dialog.add.items.backup.action.title"="Dodaj";
 /* Backup action confirmation error message */
@@ -2977,7 +2987,7 @@
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersLeft"="%@ i %@ inni opuścili";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
-"general.menuAction.moveToRubbishBin"="Przenieś do kosza";
+"general.menuAction.moveToRubbishBin"="Przenieś do Kosza";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
 "general.menuAction.deletePermanently"="Usuń trwale";
 /* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
@@ -3145,14 +3155,38 @@
 /* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
 "sharedItems.contactVerification.title"="";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Chronimy Twoje dane za pomocą szyfrowania z zerową świadomością. Aby zapewnić dodatkowe bezpieczeństwo, prosimy o weryfikację kontaktów, którym udostępniasz informacje, zanim uzyskają one dostęp do udostępnionych katalogów.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+"sharedItems.contactVerification.section.myCredentials.message"="Aby zweryfikować kontakt, upewnij się, że dane uwierzytelniające, które widzisz powyżej, odpowiadają danym uwierzytelniającym ich konta. Możesz poprosić ich o udostępnienie swoich danych uwierzytelniających.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chronimy Twoje dane za pomocą szyfrowania z zerową świadomością. Aby zapewnić dodatkowe bezpieczeństwo, prosimy o weryfikację kontaktów, od których otrzymujesz informacje, zanim uzyskasz dostęp do katalogow współdzielonych.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Aby uzyskać dostęp do udostępnionego katalogu, osoba, która go udostępniła, również powinna Cię zweryfikować.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Twoje uprawnienia";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Katalog niezaszyfrowany]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: stworzył spotkanie";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="Zobacz wszystkie";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Opuść spotkanie";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Powiadomienia czatu";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Udostępnione pliki";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Zarządzaj historią czatów";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Włącz rotację klucza szyfrowania";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Rotacja kluczy jest nieco bezpieczniejsza, ale nie pozwala na tworzenie linków do czatu i ukrywa przeszłe wiadomości przed nowymi uczestnikami.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Wyślij na czat";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Udostępnij łącze do czatu";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Zobacz więcej";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Zobacz mniej";

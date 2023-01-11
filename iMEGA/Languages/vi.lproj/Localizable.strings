@@ -19,7 +19,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Đã lưu lại";
 /*  */
-"passcode"="Mã Số";
+"passcode"="Mật Mã";
 /* "Size" of the file or folder you are sharing */
 "size"="Kích cỡ";
 /* Quality title, used in changing the export quality of scaned doc */
@@ -197,7 +197,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Không có kết nối internet";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Thư Mục Rỗng";
+"emptyFolder"="Thư mục rỗng";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Ổ Mây không có tệp tin nào";
 /* Button title shown in empty views when you can 'Add files' */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Không Có Kết Quả";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Dọn thùng rác";
+"cloudDriveEmptyState_titleRubbishBin"="Dọn Thùng Rác";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Trình Chiếu";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -267,7 +267,7 @@
 /* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="Không Có Phiên Truyền Tải";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Không có Phiên Tải Xuống";
+"transfersEmptyState_titleDownload"="Không có phiên tải xuống";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Không có Phiên Tải Lên";
 /* Title of the Cloud Drive section */
@@ -319,7 +319,7 @@
 /* Error message shown when enabling geolocation failed */
 "chat.map.location.enableGeolocationFailedError"="Bật vị trí địa lý thất bại. Lỗi: %@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="Tin Nhắn Thoại";
+"Voice Clip"="Tin nhắn thoại";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Tệp Văn Bản Mới";
 /* Hint text shown on the new text file alert. */
@@ -469,19 +469,19 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 tệp tin được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d mục đã được chuyển vào Thùng Rác";
+"filesMovedToRubbishBinMessage"="%d tệp tin đã được chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
 "foldersMovedToRubbishBinMessage"="%d thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="Đã chuyển 1 tệp tin và 1 thư mục vào Thùng Rác";
+"fileFolderMovedToRubbishBinMessage"="1 tệp tin và 1 thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="Đã chuyển xong 1 tệp tin và %d thư mục vào Thùng Rác";
+"fileFoldersMovedToRubbishBinMessage"="1 tệp tin và %d thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="Đã chuyển xong %d tệp tin và 1 thư mục vào Thùng Rác";
+"filesFolderMovedToRubbishBinMessage"="%d tệp tin và 1 thư mục được chuyển vào Thùng Rác";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="Đã chuyển [A] tệp tin và [B] thư mục vào Thùng Rác";
+"filesFoldersMovedToRubbishBinMessage"="[A] tệp tin và [B] thư mục được chuyển vào Thùng Rác";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Lỗi quyền hạn";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -503,7 +503,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Bật tính năng Đăng Tải Camêra";
+"enableCameraUploadsButton"="Bật Đăng Tải Camêra";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Đăng Tải Camêra đang được bật";
 /* Message shown when the camera uploads have been completed */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Tạo album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Điền tên album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Album mới";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Thêm mục vào";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Album trống";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Lọc";
 /* Choose type headline within filter UI */
@@ -609,7 +619,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Lấy từ Danh Bạ Điện Thoại";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Thêm Tên Liên Lạc";
+"addContact"="Thêm tên liên lạc";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Email của người muốn thêm";
 /* Button title to 'Add' the contact to your contacts list */
@@ -719,11 +729,11 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Khi được bật, hình ảnh sẽ được cho phép tải lên.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh sẽ được tải lên vào thư mục Đăng Tải Camêra.";
+"Photos will be uploaded to Camera Uploads folder."="Hình ảnh sẽ được tải lên vào trong thư mục Đăng Tải Camêra.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Tất cả các hình ảnh và videos sẽ được tải lên vào thư mục Đăng Tải Camêra.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Hình ảnh và videos sẽ được tải lên vào trong thư mục Đăng Tải Camêra.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Tất cả các videos sẽ được tải lên vào thư mục Đăng Tải Camêra.";
+"Videos will be uploaded to the Camera Uploads folder."="Videos sẽ được tải lên vào trong thư mục Đăng Tải Camêra.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Khi được bật, videos sẽ được cho phép tải lên.";
 /* Title for new camera upload feature */
@@ -781,15 +791,15 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi Mật Khẩu";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi quên mật khẩu.";
+"exportMasterKeyFooter"="Xuất ra Chìa Khóa Phục Hồi và giữ chìa khóa này ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi quên mật khẩu.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Phục Hồi?";
+"whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Chìa Khóa Phục Hồi?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Mã Phục Hồi đã được lưu vào bảng nhớ tạm. Xin lưu giữ mã ở nơi an toàn.";
+"recoveryKeyCopiedToClipboard"="Chìa Khóa Phục Hồi đã được lưu vào bảng nhớ tạm. Xin lưu giữ chìa khóa ở nơi an toàn.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Đã xuất Mã Phục Hồi";
+"masterKeyExported"="Đã xuất ra Chìa Khóa Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Mã Phục Hồi đã được lưu vào mục Ngoại Tuyến với tên MAPHUCHOI-MEGA.txt. Ghi chú: Tệp tin sẽ bị xóa một bạn đăng xuất, xin lưu tệp tin vào một chỗ khác an toàn hơn.";
+"masterKeyExported_alertMessage"="Chìa Khóa Phục Hồi đã được lưu vào mục Ngoại Tuyến với tên CHIAKHOAPHUCHOI-MEGA.txt. Ghi chú: Tệp tin sẽ bị xóa khi bạn đăng xuất, xin lưu tệp tin vào một chỗ khác an toàn hơn.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Trong điện thoại";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -801,7 +811,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Dọn thùng rác";
+"emptyRubbishBin"="Thùng Rác Trống";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong Thùng Rác sẽ bị xóa";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -865,7 +875,7 @@
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Mật khẩu mới";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Xác Nhận Lại Mật Khẩu";
+"confirmPassword"="Xác nhận lại mật khẩu";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Mật khẩu đã được thay đổi.";
 /* An option to reset the password. */
@@ -875,13 +885,13 @@
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Đặt lại mật khẩu";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
-"pleaseEnterYourRecoveryKey"="Xin nhập Mã Phục Hồi";
+"pleaseEnterYourRecoveryKey"="Xin nhập Chìa Khóa Phục Hồi của bạn";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Mã Phục Hồi";
+"recoveryKey"="Chìa Khóa Phục Hồi";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Sai Mã Phục Hồi";
+"invalidRecoveryKey"="Chìa Khóa Phục Hồi không hợp lệ";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Mã Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin mật khẩu mới bạn muốn dùng.";
+"youRecoveryKeyIsGoingTo"="Chìa Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin nhập mật khẩu mới bạn muốn dùng.";
 /*  */
 "yourPasswordHasBeenReset"="Mật khẩu đã được đặt lại thành công. Bạn có thể đăng nhập vào tài khoản ngay bây giờ.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -889,7 +899,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Thay mới tài khoản";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Tôi biết rằng tôi sẽ bắt đầu lại một tài khoản mới, hoàn toàn trống và tôi biết rằng tôi sẽ mất mọi dữ liệu tôi đang có trong tài khoản hiện tại. Trong vòng 60 ngày nếu tôi tìm được Mã Phục Hồi hoặc mật khẩu, tôi sẽ lấy lại được dữ liệu.";
+"startingFreshAccount"="Tôi biết rằng tôi sẽ bắt đầu lại một tài khoản mới, hoàn toàn trống và tôi biết rằng tôi sẽ mất mọi dữ liệu tôi đang có trong tài khoản hiện tại. Trong vòng 60 ngày nếu tôi tìm được Chìa Khóa Phục Hồi hay mật khẩu, tôi sẽ lấy lại được dữ liệu.";
 /* Caption of the button to proceed */
 "startNewAccount"="Bắt đầu tài khoản mới";
 /*  */
@@ -905,7 +915,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Địa chỉ email mới và cũ không được trùng nhau";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Địa chỉ email vừa nhập không trùng khớp";
+"emailsDoNotMatch"="Địa chỉ email không trùng khớp";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Bạn đã yêu cầu gửi một đường liên kết xác nhận cho địa chỉ email này rồi.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -919,15 +929,15 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Đã đóng các phiên hoạt động";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Đổi Mã Số";
+"changePasscodeLabel"="Đổi Mật Mã";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Mã Số Đơn Giản";
+"simplePasscodeLabel"="Mật Mã Đơn Giản";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Xóa Dữ Liệu Được Lưu";
+"eraseAllLocalDataLabel"="Xóa dữ liệu được lưu";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="Tài khoản sẽ đăng xuất và tất cả tệp tin lưu về ngoại tuyến sẽ xóa khỏi máy sau 10 lần nhập sai mã";
 /* Button text to change the passcode type. */
-"Passcode Options"="Tùy Chọn Mã Số";
+"Passcode Options"="Tùy Chọn Mật Mã";
 /* Action text to change to 4-Digit Numeric passcode type. */
 "4-Digit Numeric Code"="Mã 4 Số";
 /* Action text to change to 6-Digit Numeric passcode type. */
@@ -975,13 +985,13 @@
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Cá Nhân";
 /* Title of the Achievements section */
-"achievementsTitle"="Phần Thưởng Thành Tích";
+"achievementsTitle"="Thành Tích";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Mời bạn bè";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ vào không gian lưu trữ cho mỗi lần mời. \nHạn dùng là 365 ngày.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Chọn vào sổ danh bạ hoặc điền vào các địa chỉ email";
+"Select from phone contacts or enter multiple email addresses"="Chọn từ sổ danh bạ của thiết bị hoặc điền vào các địa chỉ email.";
 /*  */
 "insertYourFriendsEmails"="Nhập địa chỉ email của bạn bè:";
 /*  */
@@ -1043,7 +1053,7 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Tài khoản của quý khách tạm thời bị khóa do xác định có thể bị lạm dụng. Xin xác thực số điện thoại để mở khóa tài khoản.";
 /* Verify your account title */
-"Verify Your Account"="Xác Thực Tài Khoản";
+"Verify Your Account"="Xác thực tài khoản";
 /* Add your phone number title */
 "Add Your Phone Number"="Thêm Số Điện Thoại";
 /* Choose Your Country title */
@@ -1059,7 +1069,7 @@
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Xóa Ảnh";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Đổi Ảnh";
+"Change Photo"="Đổi ảnh";
 /* Button that allows the user the add a photo, e.g avatar photo */
 "Add Photo"="Thêm Ảnh";
 /* Button title that allows the user change his name */
@@ -1219,7 +1229,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Tăng cường trải nghiệm MEGA chat. Nội dung được gửi dưới dạng URL sẽ được hiện thị không thông qua mã hóa.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Gọi Thoại và Video";
+"voiceAndVideoCalls"="Gọi thoại và video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Dùng Mạng Viễn Thông";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1229,7 +1239,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "autoAway.footerDescription"="Đặt trạng thái thành \"Vắng mặt\" sau [X] không có hoạt động.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Bảo Toàn Trạng Thái";
+"statusPersistence"="Bảo toàn trạng thái";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
 "maintainMyChosenStatusAppearance"="Giữ nguyên trạng thái ngay cả khi tôi không có thiết bị nào được kết nối tới chat.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
@@ -1245,7 +1255,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Gửi Tin Nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Kiểm Tra Chứng Thực";
+"verifyCredentials"="Xác thực chứng thực";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Xác thực";
 /* Button title */
@@ -1275,7 +1285,7 @@
 /* start a chat/conversation */
 "startConversation"="Bắt Đầu Cuộc Chát";
 /* Label title for a group chat */
-"groupChat"="Nhóm Chát";
+"groupChat"="Nhóm chát";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Đổi Tên Nhóm";
 /* A button label. The button allows the user to leave the group conversation. */
@@ -1365,11 +1375,11 @@
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Có lời mời thêm vào Sổ Liên Lạc";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="Nhận đuợc một Thư Mục Chia Sẻ mới";
+"newSharedFolder"="Nhận đuợc một thư mục chia sẻ mới";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Bạn có chắc muốn hủy bỏ việc đăng ký?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa cho chính xác rồi click nút “Gửi lại”.";
+"misspelledEmailAddress"="Nếu bạn đã điền sai địa chỉ email của mình, sửa cho chính xác rồi click nút “Gửi lại”.";
 /* A button to resend the email confirmation. */
 "resend"="Gửi lại";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1491,17 +1501,17 @@
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Mã QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
-"autoAccept"="Tự Động Thêm";
+"autoAccept"="Tự động thêm";
 /* Footer that explains the way Auto-Accept works for QR codes */
 "autoAcceptFooter"="Bất cứ ai có tài khoản MEGA quét mã ảnh QR này sẽ được tự động thêm vào danh sách tên liên lạc của bạn.";
 /* Action to reset the current valid QR code of the user */
-"resetQrCode"="Đổi Mã QR Mới";
+"resetQrCode"="Đổi mã qr mới";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Các mã QR cũ sẽ bị vô hiệu hóa.";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
 "My QR code"="Mã QR của TK";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Quét Mã";
+"scanCode"="Quét mã";
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="So thẳng hàng camêra với mã QR để tiến hành quét";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
@@ -1557,13 +1567,13 @@
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="Vì dạng thức thuật toán bảo mật của MEGA, mất Mã Phục Hồi và không có mật khẩu sẽ làm toàn bộ dữ liệu không thể lấy lại được. Xin hãy nhớ mật khẩu của chính mình.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Trước khi tiến hành việc đăng xuất, chúng tôi khuyên nên lưu lại Mã Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có mã sẽ không lấy lại được tài khoản.";
+"remindPasswordLogoutText"="Trước khi tiến hành đăng xuất, chúng tôi khuyên nên lưu lại Chìa Khóa Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có chìa khóa sẽ không lấy lại được tài khoản.";
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Không hiện nữa";
 /* Label for test password button and titles */
-"testPassword"="Kiểm Tra Mật Khẩu";
+"testPassword"="Kiểm tra mật khẩu";
 /* Label for recovery key button */
-"backupRecoveryKey"="Sao lưu Mã Phục Hồi";
+"backupRecoveryKey"="Sao lưu Chìa Khóa Phục Hồi";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Xin nhập thử mật khẩu ở dưới đây để kiểm tra rằng bạn không có quên mất khẩu cho tài khoản MEGA này. Bởi vì nếu quên, bạn sẽ mất quyền truy cập vào dữ liệu của mình. [A]Đọc thêm[/A]";
 /* Title text for the account confirmation. */
@@ -1571,7 +1581,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="Mật khẩu chính xác";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="Xuất Mã Phục Hồi";
+"exportRecoveryKey"="Xuất Chìa Khóa Phục Hồi";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="Tiến hành đăng xuất";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1629,7 +1639,7 @@
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Chuyển Cuộc Chát Khỏi Bảo Lưu";
 /* Title of button to archive chats. */
-"archiveChat"="Bảo Lưu Cuộc Chát";
+"archiveChat"="Bảo lưu cuộc chát";
 /* Title of flag of archived chats. */
 "archived"="Bảo lưu";
 /* Title of empty state view for archived chats. */
@@ -1651,15 +1661,15 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Xin lỗi, việc xác thực 2 yếu tố không thể kích hoạt được cho thiết bị của bạn. Xin mở App Store và cài đặt một app Lập Xác Thực.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Cần phải có một app lập xác thực để bật tính năng XT2B với MEGA. Bạn có thể tải và cài đặt Google Authenticator, Duo Mobile, Authy hoặc Microsoft Authenticator app về thiết bị của mình.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Cần phải có một app lập xác thực để bật tính năng 2FA với MEGA. Bạn có thể tải và cài đặt Google Authenticator, Duo Mobile, Authy hoặc Microsoft Authenticator app về thiết bị của mình.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Xác thực 2 yếu tố được bật";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Xin lưu lại Mã Phục Hồi ở nơi an toàn";
+"pleaseSaveYourRecoveryKey"="Xin lưu lại Chìa Khóa Phục Hồi ở nơi an toàn";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Mã Phục Hồi, và có chức năng XT2B được bật.";
+"twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Chìa Khóa Phục Hồi, và có chức năng 2FA được bật.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Xác thực 2 yếu tố đã tắt";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1695,7 +1705,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Hình Ảnh được gửi lên Ổ Mây";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng Tải Camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho mọi người dùng. Tạo tài khoản ngay.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng Tải Camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho người dùng. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Thiếp Lập MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1743,17 +1753,17 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Việc này sẽ xóa đi tất cả các lịch sử phiên bản cũ của tệp tin có trong tài khoản. Các phiên bản tệp tin được chia sẻ người khác cần phải được thực hiện từ phía chủ sở hữu các tệp tin đó.\n\nXin nhớ rằng đây chỉ xóa phiên bản chứ không phải tệp tin.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Đặt lịch dọn dẹp thùng rác";
+"Rubbish-Bin Cleaning Scheduler:"="Đặt lịch dọn dẹp Thùng Rác";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Dọn dữ liệu tồn đọng hơn";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Để có thời gian trữ rác lâu hơn [S]Nâng cấp lên Pro[/S]";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Thùng rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày và lâu nhất là 30 ngày.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày và lâu nhất là 30 ngày.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Thùng rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt Đặt lịch dọn dẹp thùng rác hoặc muốn gia hạn chờ thời gian giữ rác được lâu hơn, bạn cần phải đăng ký dùng hạng Pro.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt Đặt lịch dọn dẹp Thùng Rác hoặc muốn gia hạn chờ thời gian giữ rác được lâu hơn, bạn cần phải đăng ký dùng hạng Pro.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Thao tác này sẽ đăng xuất tài khoản ra khỏi tất cả các thiết bị đang sử dụng, ngoại trừ phiên hiện hành. Có chắc muốn tiến hành?";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1781,15 +1791,15 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Chưa thể lưu lại mục";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Luân Phiên Chìa Khóa Mã";
+"Encrypted Key Rotation"="Luân Phiên Chìa Khóa Mã";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Bật Luân Phiên Chìa Khóa Mã";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Lấy liên kết cuộc chát";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chát và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chát và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="Luân phiên chìa khóa mã không áp dụng được đối với các cuộc trò chuyện có hơn 100 thành viên.";
+"Key rotation is disabled for conversations with more than 100 participants."="Luân phiên chìa khóa mã không áp dụng được đối với các cuộc trò chuyện có hơn 100 thành viên.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Để tạo ra liên kết tới chát, đặt tên cho nhóm trước.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1821,9 +1831,9 @@
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Xem kiểu Danh Sách";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Xem kiểu Ảnh Nhỏ";
+"Thumbnail View"="Xem kiểu ảnh nhỏ";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Xem kiểu Trang Sách";
+"Page View"="Xem kiểu trang sách";
 /* There are no notifications to display. */
 "No notifications"="Không có thông báo mới";
 /* The header of a notification related to payments */
@@ -2031,7 +2041,7 @@
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="Gói Cước";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Bạn sẽ cần phải sử dụng Mã Phục Hồi này quên mất mật khẩu của mình,[B]không thì toàn bộ tệp tin và thư mục của bạn sẽ không thể truy cập được, ngay cả MEGA cũng sẽ không giúp được[/B].";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Bạn sẽ cần phải sử dụng Chìa Khóa Phục Hồi này khi quên mất mật khẩu của mình,[B]không thì toàn bộ tệp tin và thư mục của bạn sẽ không thể truy cập được, ngay cả MEGA cũng sẽ không giúp được[/B].";
 /*  */
 "Business"="Doanh Nghiệp";
 /*  */
@@ -2041,7 +2051,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Không thể xóa tên %1$s khỏi sổ liên lạc vì đây là nhân viên trong tài khoản Doanh Nghiệp này.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Yêu Cầu Mã Số";
+"Require Passcode"="Yêu cầu mật mã";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Ngay lập tức";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2061,7 +2071,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tài khoản của bạn hiện đang bị [B]đình chỉ[/B]. Bạn chỉ có khả năng xem duyệt dữ liệu của mình.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA không thể truy cập vào dữ liệu của bạn. Tuy nhiên, chủ điều hành tài khoản doanh nghiệp sẽ có quyền truy cập vào nội dung Đăng Tải Camêra của bạn.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA không thể truy cập vào dữ liệu của bạn. Tuy nhiên, chủ quản trị tài khoản doanh nghiệp sẽ có quyền truy cập vào nội dung Đăng Tải Camêra của bạn.";
 /*  */
 "Something went wrong"="Có vấn đề xảy ra";
 /* Title of the "Links" Shared Items. */
@@ -2093,9 +2103,9 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Tất cả các thông báo sẽ im lặng cho tới %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Âm Báo Chát";
+"Chat Notifications"="Âm báo chát";
 /* Chat settings: This text appears with the Do Not Disturb switch */
-"Do Not Disturb"="Không Làm Phiền";
+"Do Not Disturb"="Không làm phiền";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="Đã im lặng tất cả thông báo";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
@@ -2107,7 +2117,7 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Đặt biệt danh";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Sửa Nickname";
+"Edit Nickname"="Sửa nickname";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Xóa biệt danh";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
@@ -2133,7 +2143,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Không có hình ảnh hoặc video";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Đi vào Thư Mục chứa tệp này";
+"View in Folder"="Đi vào thư mục chứa tệp này";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Đường liên kết này không thuộc sở hữu của tài khoản hiện tại. Xin đăng nhập vào tài khoản phù hợp.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Tài khoản đã tạm thời bị khóa để đảm bảo an toàn.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Xin xác thực địa chỉ email[/S] và thực hiện các bước tiếp theo có trong email gửi từ MEGA để mở khóa tài khoản.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Xin làm theo hướng dẫn có trong [S]thư email xác thực[/S] để mở khóa tài khoản.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Tại sao tôi đang thấy cái này?";
 /* Text to notify user an email has been sent */
@@ -2189,7 +2199,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
 /* Alert header for asking permission to resume transfers */
-"Resume Transfers?"="Tiếp Tục Các Truyền Tải?";
+"Resume Transfers?"="Tiếp tục các truyền tải?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Chất Lượng Hình Ảnh";
 /* Description of Automatic Image Quality option */
@@ -2269,7 +2279,7 @@
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Đường liên kết này không còn tồn tại";
 /* Header of block with all shared files in chat. */
-"Shared Files"="Tệp Tin Đã Chia Sẻ";
+"Shared Files"="Tệp tin đã chia sẻ";
 /* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="Hết Không Gian Lưu Trữ";
 /* Over Disk Quota title message that tell customer your data at risk. */
@@ -2355,7 +2365,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="Đặt Mật Khẩu";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="Xuất chìa khóa giải mã và đường liên kết ra riêng.";
+"Export the link and decryption key separately."="Xuất đường liên kết và chìa khóa giải mã ra riêng rẽ.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Tìm hiểu thêm";
 /* Text indicating the date until a link will be valid */
@@ -2371,7 +2381,7 @@
 /* Message shown when some links have been copied to the Clipboard */
 "Links Copied to Clipboard"="Các Đường Liên Kết đã được ghi vào Bộ Nhớ";
 /* Message shown when the key has been copied to the Clipboard */
-"Key Copied to Clipboard"="Chìa Khóa đã được ghi vào Bộ Nhớ";
+"Key Copied to Clipboard"="Chìa Khóa Được Ghi vào Bảng Nhớ Tạm";
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Mật Khẩu đã được ghi vào Bộ Nhớ";
 /* Export links dialog -> Keys tip about links and keys. */
@@ -2389,7 +2399,7 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="Email đã được gửi đi rồi. Xin chờ vài phút trước khi gửi lại cái mới.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Quản Lý Lịch Sử Chát";
+"Manage Chat History"="Quản lý lịch sử chát";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
 "History Clearing"="Tự Dọn Lịch Sử";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
@@ -2423,13 +2433,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Tìm Tệp Tin";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="THƯ MỤC ĐĂNG TẢI CAMÊRA MEGA";
+"MEGA CAMERA UPLOADS FOLDER"="Thư mục Đăng Tải Camêra trên MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Chọn Thư Mục";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Đang phát";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn dời thư mục Đăng Tải Camêra vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Đăng Tải Camêra.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn chuyển thư mục Đăng Tải Camêra vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Đăng Tải Camêra.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Tải Lên Tệp Tin";
 /* Text title for shortcuts, ie in the widget */
@@ -2547,7 +2557,7 @@
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Chủ sở hữu)";
 /* Name for the recovery key file */
-"general.security.recoveryKeyFile"="MAPHUCHOI-MEGA";
+"general.security.recoveryKeyFile"="CHIAKHOAPHUCHOI-MEGA";
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="Địa chỉ email hiện tại";
 /* Title of Over Disk Quota dialog */
@@ -3145,14 +3155,38 @@
 /* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
 "sharedItems.contactVerification.title"="Xác thực liên lạc";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô nhận thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn chia sẻ thông tin trước khi họ được cấp quyền truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
 "sharedItems.contactVerification.section.myCredentials.message"="Để xác thực tên liên lạc, đảm bảo rằng chứng thực bạn thấy dưới đây trùng khớp với chứng thực tài khoản của họ. Bạn có thể hỏi người đó chia sẻ chứng thực cho bạn.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô nhận thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Để có thể truy cập thư mục này, người chia sẻ thư mục này cho bạn cũng cần phải xác thực bạn.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Chứng thực của bạn";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[thư mục chưa giải mã]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: đã tạo một cuộc họp";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="Xem tất cả";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Rời khỏi cuộc meeting";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Âm báo chát";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Tệp tin đã chia sẻ";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Quản lý lịch sử chát";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Bật luân phiên chìa khóa mã";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết chát và ẩn đi các tin nhắn cũ khỏi những người mới tham gia.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Gửi đến chát";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Chia sẻ liên kết chát";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Xem thêm";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Ẩn bớt";

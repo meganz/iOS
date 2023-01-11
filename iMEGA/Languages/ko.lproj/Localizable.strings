@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="결과 없음";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="휴지통 비우기";
+"cloudDriveEmptyState_titleRubbishBin"="휴지통 비어있음";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="슬라이드쇼";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="사진첩 만들기";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="사진첩 이름 입력";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="새 사진첩";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="필터";
 /* Choose type headline within filter UI */
@@ -901,7 +911,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="새 이메일 확인";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="이메일 변경";
+"Change Email"="이메일 주소 변경";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="새 이메일과 기존 이메일이 일치하지 않아야 합니다";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="추천한 가입자마다 %@의 용량. \n365일간 이용 가능.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="휴대 전화 연락처를 선택하거나 여러 이메일 주소를 입력하세요";
+"Select from phone contacts or enter multiple email addresses"="기기 연락처에서 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일을 입력하세요:";
 /*  */
@@ -1245,7 +1255,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="자격증명 인증";
+"verifyCredentials"="자격 증명 인증";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="인증";
 /* Button title */
@@ -1267,7 +1277,7 @@
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="현실에서 가장 확실한 방법은 직접 만나는 것입니다. 만약 증명된 OTR이나 PGP 같은 이미 증명된 다른 방법이 있다면, 그것을 사용해도 좋습니다.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"My credentials"="내 자격증명";
+"My credentials"="My credentials";
 /* Button to reset the password */
 "reset"="재설정";
 /* Button title */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="가입을 취소하시겠습니까?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="이메일 주소를 잘못 적었다면, 수정하고 “재발송”을 클릭하세요.";
+"misspelledEmailAddress"="당신의 이메일 주소를 잘못 입력하였다면, 수정하고 “재발송”을 탭하세요.";
 /* A button to resend the email confirmation. */
 "resend"="재발송";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1775,7 +1785,7 @@
 /* Text shown for switching from preview view to all media view. */
 "All Media"="모든 미디어";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="%@ 다운로드중";
+"Downloading %@"="Downloading %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="사진에 저장함";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="당신의 안전을 위해 계정을 일시적으로 잠갔습니다.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="계정을 잠금 해제하려면 [S]이메일을 인증[/S]하고 절차를 수행하세요.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="계정을 잠금 해제하려면 [S]인증 이메일[/S]의 과정을 따르세요.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="이게 왜 보여지나요?";
 /* Text to notify user an email has been sent */
@@ -3143,16 +3153,40 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="%@님 확인";
 /* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="";
+"sharedItems.contactVerification.title"="Contact verification";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 인증할 것을 요청합니다.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+"sharedItems.contactVerification.section.myCredentials.message"="연락처를 인증하려면, 위에 보이는 자격 증명이 연락처의 계정 자격 증명과 일치하는지 확인하세요. 연락처에게 자격 증명을 공유해달라고 요청하세요.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 인증할 것을 요청합니다.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="공유된 폴더에 접근하려면, 당신에게 공유해준 사람도 당신을 인증해야 합니다.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="당신의 자격 증명";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[해독 되지 않은 폴더]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: 회의 만듦";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="회의 떠나기";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="대화 알림";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="공유된 파일";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="대화 기록 관리";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="대화에 보내기";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="더 보기";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="적게 보기";
