@@ -8,8 +8,8 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     public var startMonitoringNodesUpdateCalled = 0
     public var stopMonitoringNodesUpdateCalled = 0
     
-    public static func sampleUserAlbum(name: String) -> AlbumEntity {
-        AlbumEntity(id: 4, name: name, coverNode: NodeEntity(handle: 4), count: 0, type: .user)
+    private var sampleUserAlbum: AlbumEntity {
+        AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
     }
     
     public init(cameraUploadNode: NodeEntity? = nil, albums: [AlbumEntity] = []) {
@@ -34,6 +34,6 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     }
     
     public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
-        MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
+        sampleUserAlbum.update(name: name ?? "")
     }
 }
