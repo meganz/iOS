@@ -18,9 +18,8 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
         var results: [SetEntity] = []
         
         for megaSet in megaSets {
-            let size = await albumContent(by: megaSet.handle).count
             var setEntity = megaSet.toSetEntity()
-            setEntity.size = size
+            setEntity.size = sdk.megaSetElementCount(megaSet.handle)
             
             results.append(setEntity)
         }

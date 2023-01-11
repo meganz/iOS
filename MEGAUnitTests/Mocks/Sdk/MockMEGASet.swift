@@ -10,7 +10,7 @@ final class MockMEGASet: MEGASet {
     private let setChangeType: MEGASetChangeType
     
     private var setModificationTime: Date?
-    
+    override var handle: UInt64 { setHandle }
     override var name: String? { setName }
     override var timestamp: Date { setModificationTime ?? Date() }
     

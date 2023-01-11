@@ -76,9 +76,9 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         var coverOfFavouritePhoto: NodeEntity?
         var coverOfGifPhoto: NodeEntity?
         var coverOfRawPhoto: NodeEntity?
-        var numOfFavouritePhotos = 0
-        var numOfGifPhotos = 0
-        var numOfRawPhotos = 0
+        var numOfFavouritePhotos: UInt = 0
+        var numOfGifPhotos: UInt = 0
+        var numOfRawPhotos: UInt = 0
         
         photos.forEach { photo in
             if photo.isFavourite {
