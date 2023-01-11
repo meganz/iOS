@@ -25,12 +25,10 @@ struct AlbumContentAdditionView: View {
     var navigationBar: some View {
         VStack(spacing: 0) {
             Text(viewModel.navigationTitle)
-                .lineLimit(1)
                 .font(.footnote)
                 .foregroundColor(.primary)
                 .padding(.bottom, 14)
                 .padding(.top, 18)
-                .padding(.horizontal, 30)
             
             HStack {
                 Button {

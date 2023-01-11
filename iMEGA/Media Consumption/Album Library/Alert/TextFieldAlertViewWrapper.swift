@@ -26,7 +26,7 @@ struct TextFieldAlertWrapper<Content: View>: UIViewControllerRepresentable {
             var alert = self.alert
             alert.action = {
                 self.isPresented = false
-                self.alert.action?($0)
+                self.alert.action($0)
             }
             context.coordinator.alertController = UIAlertController(alert: alert)
             uiViewController.present(context.coordinator.alertController!, animated: true)
