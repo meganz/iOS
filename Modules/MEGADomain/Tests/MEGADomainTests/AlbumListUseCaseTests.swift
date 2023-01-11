@@ -73,7 +73,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albums = await sut.loadAlbums()
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
-                                                 coverNode: favouriteRawPhotos.last, count: favouriteRawPhotos.count, type: .favourite))
+                                                 coverNode: favouriteRawPhotos.last, count: UInt(favouriteRawPhotos.count), type: .favourite))
         XCTAssertEqual(albums.last?.type, AlbumEntityType.raw)
     }
     
@@ -87,7 +87,7 @@ final class AlbumListUseCaseTests: XCTestCase {
             NodeEntity(name: "b.mp4", handle: 3, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date),
             expectedCoverNode
         ]
-        let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.isFavourite }.count
+        let expectedFavouritesCount = UInt((favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.isFavourite }.count)
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,

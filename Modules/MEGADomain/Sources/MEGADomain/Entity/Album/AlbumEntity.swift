@@ -11,10 +11,10 @@ public struct AlbumEntity: Identifiable, Hashable {
     public let id: HandleEntity
     public let name: String
     public let coverNode: NodeEntity?
-    public let count: Int
+    public let count: UInt
     public let type: AlbumEntityType
     
-    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: Int, type: AlbumEntityType) {
+    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: UInt, type: AlbumEntityType) {
         self.id = id
         self.name = name
         self.coverNode = coverNode

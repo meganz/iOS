@@ -4,7 +4,7 @@ import MEGASwiftUI
 import MEGADomain
 
 final class AlbumCellViewModel: ObservableObject {
-    @Published var numberOfNodes = 0
+    @Published var numberOfNodes: UInt = 0
     @Published var thumbnailContainer: any ImageContaining
     @Published var isLoading: Bool = false
     @Published var title: String = ""
