@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Nessun risultato";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Svuota il cestino";
+"cloudDriveEmptyState_titleRubbishBin"="Cestino vuoto";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Presentazione";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -503,7 +503,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "Automatically backup your photos and videos to the Cloud Drive."="Fai un backup in automatico delle tue foto e dei tuoi video nel tuo Cloud Drive.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Attiva i caricamenti da fotocamera";
+"enableCameraUploadsButton"="Attiva i Caricamenti da fotocamera";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Caricamenti da fotocamera attivati";
 /* Message shown when the camera uploads have been completed */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIFs";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Inserisci il nome dell'album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Nuovo album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -739,7 +749,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Spazio sul dispositivo quasi pieno";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Non hai abbastanza spazio per altri caricamenti da fotocamera. Libera un po' di spazio eliminando app non necessarie, video o musica. Puoi gestire il tuo spazio di archiviazione in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Non hai abbastanza spazio per altri Caricamenti da fotocamera. Libera un po' di spazio eliminando app non necessarie, video o musica. Puoi gestire il tuo spazio di archiviazione in %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Impostazioni > Generali > %@ Archiviazione";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -901,11 +911,11 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Conferma la nuova email";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Cambiare Email";
+"Change Email"="Cambiare indirizzo email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="La nuova e la vecchia email non devono combaciare";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Le email non combaciano";
+"emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Hai già richiesto un link di conferma per quell'indirizzo email.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ di spazio di archiviazione per ogni invito. \nValido per 365 giorni.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Seleziona dai contatti del telefono e inserisci più indirizzi email";
+"Select from phone contacts or enter multiple email addresses"="Seleziona contatti dal dispositivo o inserisci più indirizzi email.";
 /*  */
 "insertYourFriendsEmails"="Inserisci gli indirizzi email delle persone che vuoi invitare:";
 /*  */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sei sicuro di voler interrompere la registrazione?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Se hai scritto male il tuo indirizzo email, correggilo e clicca su “Invia di nuovo”.";
+"misspelledEmailAddress"="Se hai scritto male il tuo indirizzo email, correggilo e tocca su “Reinvia”.";
 /* A button to resend the email confirmation. */
 "resend"="Reinvia";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1501,7 +1511,7 @@
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
 "My QR code"="Il mio codice QR";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Scansiona QR Code";
+"scanCode"="Scansiona il codice QR";
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Inquadra il codice QR fa scansionare con la fotocamera del tuo dispositivo";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
@@ -2107,7 +2117,7 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Imposta un soprannome";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Modifica nickname";
+"Edit Nickname"="Modifica il soprannome";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Rimuovi il soprannome";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
@@ -2133,7 +2143,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Nessuna Foto o Video";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Guarda nella Cartella";
+"View in Folder"="Guarda nella cartella";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Il link non è relativo a questo account. Per favore, effettua l'accesso con l'account corretto.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Il tuo account è stato temporaneamente bloccato per la tua sicurezza.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Per favore, verifica la tua email[/S] e segui le istruzioni nell'email di MEGA per sbloccare il tuo account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Per favore, segui gli step nell'[S]email di verifica[/S] per sbloccare il tuo account.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Perché sto vedendo questo?";
 /* Text to notify user an email has been sent */
@@ -2423,7 +2433,7 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cerca i tuoi file";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="CARTELLA MEGA PER CARICAMENTI DA FOTOCAMERA";
+"MEGA CAMERA UPLOADS FOLDER"="Cartella MEGA per Caricamenti da fotocamera";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Seleziona la cartella";
 /* Section header of Audio Player playlist that contains playing track */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Per accedere alla cartella condivisa, la persona che la ha condivisa con te deve verificarti.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Le tue credenziali";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Cartella non decriptata]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: ha creato un meeting";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Leave meeting";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Notifiche della chat";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="File condivisi";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Gestisci la cronologia delle chat";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Invia alla chat";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Vedi di più";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Vedi meno";

@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Atenție";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Please give MEGA permission to access your Camera in Settings";
+"cameraPermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a accesa camera în Configurări";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA permission to access your Microphone in Settings";
+"microphonePermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a accesa microfonul în Configurări";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Please give MEGA permission to access your Photos in Settings";
+"photoLibraryPermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a accesa fotografiile în Configurări";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Contul tău a fost activat. Te rugăm să te autentifici.";
 /*  */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Niciun rezultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish bin";
+"cloudDriveEmptyState_titleRubbishBin"="Coș de gunoi gol";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Expunere de diapozitive";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -467,21 +467,21 @@
 /* Title for the action that allows you to replace a file. */
 "replace"="Înlocuiește";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 fișier mutat în coșul de gunoi";
+"fileMovedToRubbishBinMessage"="1 fișier mutat în Coșul de gunoi";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d fișiere mutate în coșul de gunoi";
+"filesMovedToRubbishBinMessage"="%d fișiere mutate în Coșul de gunoi";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder mutat în coșul de gunoi";
+"folderMovedToRubbishBinMessage"="1 folder mutat în Coșul de gunoi";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d foldere mutate în coșul de gunoi";
+"foldersMovedToRubbishBinMessage"="%d foldere mutate în Coșul de gunoi";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 fișier și 1 folder mutate în coșul de gunoi";
+"fileFolderMovedToRubbishBinMessage"="1 fișier și 1 folder mutate în Coșul de gunoi";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 fișier și %d foldere mutate în coșul de gunoi";
+"fileFoldersMovedToRubbishBinMessage"="1 fișier și %d foldere mutate în Coșul de gunoi";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d fișiere și 1 folder mutate în coșul de gunoi";
+"filesFolderMovedToRubbishBinMessage"="%d fișiere și 1 folder mutate în Coșul de gunoi";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] fișiere și [B] foldere mutate în coșul de gunoi";
+"filesFoldersMovedToRubbishBinMessage"="[A] fișiere și [B] foldere mutate în Coșul de gunoi";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Eroare privind permisiunile";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF-uri";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Enter album name";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="New album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrează";
 /* Choose type headline within filter UI */
@@ -801,9 +811,9 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Pe MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Empty Rubbish bin";
+"emptyRubbishBin"="Golește Coșul de gunoi";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Toate elementele din coșul de gunoi vor fi șterse";
+"emptyRubbishBinAlertTitle"="Toate elementele din Coșul de gunoi vor fi șterse";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Nu folosi HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -901,11 +911,11 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmă e-mailul nou";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Modifică e-mailul";
+"Change Email"="Modifică adresa de e-mail";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="E-mailurile nu coincid";
+"emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ spațiu de stocare pentru fiecare recomandare. \nValabili timp de 365 de zile.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Selectează din contactele de pe telefon sau introdu mai multe adrese de e-mail";
+"Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
 "insertYourFriendsEmails"="Inserează e-mailurile prietenilor:";
 /*  */
@@ -1183,7 +1193,7 @@
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="Acest mesaj a atins limita maximă de %d reacții.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
-"You have reached the maximum limit of %d reactions."="Ai atins limita maximă de %d reacții.";
+"You have reached the maximum limit of %d reactions."="Ai atins limita maximă de %d de reacții.";
 /* Chat section header */
 "chat"="Chat";
 /* Empty Conversations section */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sigur vrei să abandonezi înregistrarea?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Dacă ți-ai scris greșit adresa de e-mail, corecteaz-o și dă clic pe „Retrimite”.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and tap on “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="Retrimite";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2001,7 +2011,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Grant Access to Your Address Book";
+"Enable Access to Your Address Book"="Grant access to your address book";
 /* Detailed explanation of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Contul tău a fost blocat temporar pentru siguranța ta.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Te rugăm să-ți verifici adresa de e-mail[/S] și urmează pașii din e-mailul MEGA pentru a-ți debloca contul.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Please follow the steps in the [S]verification email[/S] to unlock your account.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="De ce văd asta?";
 /* Text to notify user an email has been sent */
@@ -2423,13 +2433,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Caută fișiere";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
+"MEGA CAMERA UPLOADS FOLDER"="Folder de încărcări cameră MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Selectează folderul";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Se redă";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera Uploads folder to the Rubbish Bin? If so, a new folder will be automatically generated for Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera uploads folder to the Rubbish bin? If so, a new folder will be automatically generated for Camera uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Încarcă fișierul";
 /* Text title for shortcuts, ie in the widget */
@@ -2451,7 +2461,7 @@
 /* Image title for the photo explorer */
 "home.images.title"="Imagini";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="No Images Found";
+"home.images.empty"="No images found";
 /* Title of Favourites explorer view card on Home */
 "home.favourites.title"="Favorite";
 /* Accessibility label for Home section in tabbar item */
@@ -2525,7 +2535,7 @@
 /* Second step to turn on notifications */
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow Notifications</b>";
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Deschide Configurări";
 /* Dialog title for the change launch tab screen */
@@ -2581,7 +2591,7 @@
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Moving this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
 /* Delete the default backup folder warning title. %@ is a folder */
-"dialog.delete.backup.folder.warning.title"="Mută „%@” în coșul de gunoi";
+"dialog.delete.backup.folder.warning.title"="Mută „%@” în Coșul de gunoi";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="You are deleting your backups folder. This will remove all the backups you have set. Are you sure you want to do this?";
 /* Delete the default backup folder warning message */
@@ -2599,7 +2609,7 @@
 /* Add items to a backup folder placeholder for a textfield */
 "dialog.disable.backup.placeholder"="dezactivează backupul";
 /* Delete a backup folder action title */
-"dialog.delete.backup.action.title"="Mută în coșul de gunoi";
+"dialog.delete.backup.action.title"="Mută în Coșul de gunoi";
 /* Add items to a backup folder action title */
 "dialog.add.items.backup.action.title"="Adaugă";
 /* Backup action confirmation error message */
@@ -2721,23 +2731,23 @@
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Bază de date";
 /* File extension: .aif and .aiff. Is not a commercial name, but a standard */
-"general.filetype.audioInterchange"="Audio Interchange";
+"general.filetype.audioInterchange"="Audio interchange";
 /* File extension: .ans. Commercial names should be stay on English */
-"general.filetype.ans"="ANSI Text File";
+"general.filetype.ans"="ANSI text file";
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Aplicație Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X App";
+"general.filetype.app"="macOS app";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="Text ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
-"general.filetype.asf"="Streaming Video";
+"general.filetype.asf"="Streaming video";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
-"general.filetype.asx"="Advanced Stream";
+"general.filetype.asx"="Advanced stream";
 /* File extension: .avi. Name of a multimedia container format */
-"general.filetype.avi"="A/V Interleave";
+"general.filetype.avi"="A/V interleave";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
-"general.filetype.bat"="DOS Batch";
+"general.filetype.bat"="DOS batch";
 /* File extension: .bay. Commercial names should be stay on English */
 "general.filetype.bay"="Imagine RAW Casio";
 /* File extension: .bmp. Commercial names should be stay on English */
@@ -2757,7 +2767,7 @@
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Comandă DOS";
 /* File extension: .css. Commercial names should be stay on English */
-"general.filetype.css"="CSS Style Sheet";
+"general.filetype.css"="CSS style sheet";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
 "general.filetype.dhtml"="HTML dinamic";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
@@ -2783,7 +2793,7 @@
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="Imagine GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
-"general.filetype.gpx"="GPS Exchange";
+"general.filetype.gpx"="GPS exchange";
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="Spreadsheet";
 /* File extension: .gz. Commercial names should be stay on English */
@@ -2823,9 +2833,9 @@
 /* File extension: .mp4. Commercial names should be stay on English */
 "general.filetype.mp4"="Videoclip MP4";
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
-"general.filetype.mpeg"="MPEG Movie";
+"general.filetype.mpeg"="MPEG movie";
 /* File extension: .msi. Commercial names should be stay on English */
-"general.filetype.msi"="MS Installer";
+"general.filetype.msi"="MS installer";
 /* File extensions: .txt and .odt. Commercial names should be stay on English */
 "general.filetype.textDocument"="Document text";
 /* File extension: .otf. Commercial names should be stay on English */
@@ -2873,7 +2883,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Fișier comprimat";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa Graphic";
+"general.filetype.tga"="Targa graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Imagine TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2895,7 +2905,7 @@
 /* Text show to highlight that you can choose a different option */
 "general.choose"="Selectează";
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
-"chat.joinCall"="Join Call";
+"chat.joinCall"="Join call";
 /* Description shown in chat screen if the user didn't allow access to photos */
 "chat.photos.allowPhotoAccessMessage"="To share photos and videos, grant MEGA access to your gallery";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
@@ -2937,13 +2947,13 @@
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Raportează o problemă";
 /* Title of the dialog button to discard a report. */
-"help.reportIssue.discardReport"="Discard Report";
+"help.reportIssue.discardReport"="Discard report";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describe"="Te rugăm să descrii clar problema întâmpinată. Cu cât oferi mai multe detalii, cu atât ne va fi mai ușor să o rezolvăm. Trimiterea ta va fi examinată de către echipa noastră de dezvoltare.";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
-"help.reportIssue.sendLogFile"="Send Log File";
+"help.reportIssue.sendLogFile"="Send log file";
 /* Title to indicate that the bug report is being uploaded to our support team. */
-"help.reportIssue.uploadingLogFile"="Uploading Log File";
+"help.reportIssue.uploadingLogFile"="Uploading log file";
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="Thanks for your feedback";
 /* Confirmation message shown when a bug report is successfully uploaded. */
@@ -2959,7 +2969,7 @@
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Unable to connect to the Internet. Please check your connection and try again.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
-"meetings.displayInMainView.title"="Display in Main View";
+"meetings.displayInMainView.title"="Display in main view";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Cotă de stocare depășită";
 /* Title of section Next on Audio Playlist */
@@ -2977,7 +2987,7 @@
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
-"general.menuAction.moveToRubbishBin"="Mută în coșul de gunoi";
+"general.menuAction.moveToRubbishBin"="Mută în Coșul de gunoi";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
 "general.menuAction.deletePermanently"="Șterge definitiv";
 /* Original quality option used on CU Videos and Chat's image and video uploads. Indicating that the media quality will be the same. */
@@ -3117,7 +3127,7 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="Planiifică o întâlnire";
+"meetings.startConversation.contextMenu.scheduleMeeting"="Planifică o întâlnire";
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Acreditările tale";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Undecrypted folder]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: created a meeting";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Leave meeting";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Notificări de chat";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Fișiere partajate";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Gestionează istoricul chatului";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Trimite în chat";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="See more";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="See less";

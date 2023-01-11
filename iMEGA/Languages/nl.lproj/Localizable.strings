@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Geen resultaten";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Prullenbak leegmaken";
+"cloudDriveEmptyState_titleRubbishBin"="Lege Prullenbak";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Diavoorstelling";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -267,7 +267,7 @@
 /* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="Geen overdrachten";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Geen Downloads";
+"transfersEmptyState_titleDownload"="Geen downloads";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Geen Uploads";
 /* Title of the Cloud Drive section */
@@ -469,7 +469,7 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 bestand verplaatst naar de Prullenbak";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d bestanden verplaatst naar de prullenbak";
+"filesMovedToRubbishBinMessage"="%d bestanden verplaatst naar de Prullenbak";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 map verplaatst naar de Prullenbak";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIFs";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Creëer album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Voer album naam in";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Nieuwe album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Items toevoegen naar";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Leeg album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -579,7 +589,7 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Gedeeld";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Inkomend";
+"incoming"="Binnenkomende";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Uitgaande";
 /* Text shown to explain with how many contacts you have shared a folder */
@@ -609,7 +619,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Toevoegen vanuit Contacten";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Contact Toevoegen";
+"addContact"="Contact toevoegen";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
 /* Button title to 'Add' the contact to your contacts list */
@@ -657,7 +667,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Instellingen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
-"cameraUploadsLabel"="Camera Uploads";
+"cameraUploadsLabel"="Camera uploads";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA heeft beperkte toegang tot uw fotobibliotheek en kan geen back-up van al uw foto's maken. Tik om machtigingen te wijzigen.";
 /* Navigation title for Photo Controller */
@@ -719,11 +729,11 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Wanneer ingeschakeld, worden foto's geüpload.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Foto's worden geüpload naar de Camera Uploads map.";
+"Photos will be uploaded to Camera Uploads folder."="Foto's worden geüpload naar de Camera uploads map.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Foto's en video's worden geüpload naar de Camera Uploads map.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Foto's en video's worden geüpload naar de Camera uploads map.";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Video's worden geüpload naar de Camera Uploads map.";
+"Videos will be uploaded to the Camera Uploads folder."="Video's worden geüpload naar de Camera uploads map.";
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Wanneer ingeschakeld, worden video's geüpload.";
 /* Title for new camera upload feature */
@@ -739,7 +749,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Apparaat Opslag Bijna Vol";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="U heeft geen genoeg Opslag voor verdere camera uploads. Maak ruimte vrij door het verwijderen van onnodige applicaties, video's of muziek. U kunt uw opslag beheren in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="U heeft geen genoeg Opslag voor verdere Camera uploads. Maak ruimte vrij door het verwijderen van onnodige applicaties, video's of muziek. U kunt uw opslag beheren in %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Instellingen>Algemeen> %@ Opslag";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -901,11 +911,11 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Bevestig nieuw e-mailadres";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Wijzig E-mailadres";
+"Change Email"="Wijzig e-mailadres";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Het nieuwe en het oude e-mailadres mogen niet hetzelfde zijn";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="E-mailadressen komen niet overeen";
+"emailsDoNotMatch"="Emailadressen komen niet overeen";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="U heeft al een bevestigingslink voor dat e-mailadres gevraagd.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -923,7 +933,7 @@
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Simpele Toegangscode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Lokale Gegevens Wissen";
+"eraseAllLocalDataLabel"="Lokale gegevens wissen";
 /* Footer text that explain what will happen if reach the max number of failed attempts */
 "failedAttempstSectionTitle"="U wordt uitgelogd en uw offline bestanden worden verwijderd na 10 mislukte pogingen";
 /* Button text to change the passcode type. */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ aan opslag voor elke verwijzing. \n Geldig voor 365 dagen.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Maak een keuze uit telefooncontacten of voer meerdere e-mailadressen in";
+"Select from phone contacts or enter multiple email addresses"="Selecteer vanuit apparaat contacten of voer meerdere e-mailadressen in.";
 /*  */
 "insertYourFriendsEmails"="Voer de e-mails van uw vrienden in:";
 /*  */
@@ -1043,7 +1053,7 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Uw account is tijdelijk geblokkeerd door potentieel misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.";
 /* Verify your account title */
-"Verify Your Account"="Verifieer Uw Account";
+"Verify Your Account"="Verifieer uw account";
 /* Add your phone number title */
 "Add Your Phone Number"="Uw Telefoonnummer Toevoegen";
 /* Choose Your Country title */
@@ -1059,7 +1069,7 @@
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Foto Verwijderen";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Foto Wijzigen";
+"Change Photo"="Foto wijzigen";
 /* Button that allows the user the add a photo, e.g avatar photo */
 "Add Photo"="Foto Toevoegen";
 /* Button title that allows the user change his name */
@@ -1219,7 +1229,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Verbeter de MEGA chat ervaring. URL inhoud wordt binnengehaald zonder end-to-end encryptie.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Spraak en Video Oproepen";
+"voiceAndVideoCalls"="Spraak en video oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Gebruik Mobiele Data";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1229,7 +1239,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "autoAway.footerDescription"="Zet status als Afwezig na [X] aan inactiviteit.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Volharding Status";
+"statusPersistence"="Volharding status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
 "maintainMyChosenStatusAppearance"="Houd mijn gekozen statusweergave in stand ook als ik geen verbonden apparaten heb.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
@@ -1245,7 +1255,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Bericht Versturen";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Bevestig Inloggegevens";
+"verifyCredentials"="Bevestig inloggegevens";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Bevestigen";
 /* Button title */
@@ -1365,11 +1375,11 @@
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Contact Verzoek";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="Nieuw Gedeelde Map";
+"newSharedFolder"="Nieuw gedeelde map";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Weet u zeker dat u de registratie wilt afbreken?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Als u uw e-mailadres verkeerd hebt gespeld, corrigeer deze en klik op “Opnieuw versturen”.";
+"misspelledEmailAddress"="Als u uw e-mailadres verkeerd heeft gespeld, corrigeer het en tip op “Opnieuw versturen”";
 /* A button to resend the email confirmation. */
 "resend"="Opnieuw versturen";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1489,19 +1499,19 @@
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Voorbereiden…";
 /* QR Code label, used in Settings as title. String as short as possible */
-"qrCode"="QR Code";
+"qrCode"="QR-code";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
-"autoAccept"="Automatisch-Accepteren";
+"autoAccept"="Automatisch-accepteren";
 /* Footer that explains the way Auto-Accept works for QR codes */
 "autoAcceptFooter"="MEGA gebruikers die uw QR-code scannen, worden automatisch toegevoegd aan uw lijst met contactpersonen.";
 /* Action to reset the current valid QR code of the user */
-"resetQrCode"="QR Code Resetten";
+"resetQrCode"="QR-code resetten";
 /* Footer that explains what would happen if the user resets his/her QR code */
-"resetQrCodeFooter"="Vorige QR codes zijn niet langer geldig.";
+"resetQrCodeFooter"="Vorige QR-codes zijn niet langer geldig.";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
-"My QR code"="Mijn QR code";
+"My QR code"="Mijn QR-code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Code Scannen";
+"scanCode"="Code scannen";
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Zet de QR-code klaar om het te scannen met de camera van uw apparaat";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
@@ -1561,7 +1571,7 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Laat niet opnieuw zien";
 /* Label for test password button and titles */
-"testPassword"="Wachtwoord Testen";
+"testPassword"="Wachtwoord testen";
 /* Label for recovery key button */
 "backupRecoveryKey"="Reservekopie Herstelsleutel Maken";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1629,7 +1639,7 @@
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Gesprek uit Archief halen";
 /* Title of button to archive chats. */
-"archiveChat"="Gearchiveerd Gesprek";
+"archiveChat"="Gearchiveerd gesprek";
 /* Title of flag of archived chats. */
 "archived"="Gearchiveerd";
 /* Title of empty state view for archived chats. */
@@ -1667,7 +1677,7 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Bent u uw Authenticatie apparaat verloren?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Afbeeldingen Opslaan in Foto's";
+"Save Images in Photos"="Afbeeldingen opslaan in Foto's";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Video's Opslaan in Foto's";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
@@ -1823,7 +1833,7 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Miniatuurweergave";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Pagina Weergave";
+"Page View"="Pagina weergave";
 /* There are no notifications to display. */
 "No notifications"="Geen meldingen";
 /* The header of a notification related to payments */
@@ -2041,7 +2051,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="U kunt %1$s niet verwijderen als contact omdat deze deel uitmaakt van uw Zakelijke-account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Toegangscode Vereist";
+"Require Passcode"="Toegangscode vereist";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Onmiddelijk";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2061,7 +2071,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Uw account is momenteel [B]geschorst[/B]. U kunt alleen door uw gegevens bladeren.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA heeft geen toegang tot uw gegevens. Uw zakelijke accountbeheerder heeft echter wel toegang tot uw camera-uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA heeft geen toegang tot uw gegevens. Uw zakelijke accountbeheerder heeft echter wel toegang tot uw Camera uploads.";
 /*  */
 "Something went wrong"="Er is iets fout gegaan";
 /* Title of the "Links" Shared Items. */
@@ -2095,7 +2105,7 @@
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Gesprekmeldingen";
 /* Chat settings: This text appears with the Do Not Disturb switch */
-"Do Not Disturb"="Niet Storen";
+"Do Not Disturb"="Niet storen";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Notifications muted"="Meldingen gedempt";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
@@ -2105,13 +2115,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inactief gesprek";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Bijnaam Instellen";
+"Set Nickname"="Bijnaam instellen";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Bijnaam Wijzigen";
+"Edit Nickname"="Bijnaam wijzigen";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Bijnaam Verwijderen";
+"Remove Nickname"="Bijnaam verwijderen";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias of Bijnaam";
+"Alias/ Nickname"="Alias of bijnaam";
 /* Business expired account Overdue payment page header. */
 "Payment overdue"="Betaling over tijd";
 /* Business account status */
@@ -2133,7 +2143,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Geen Foto's of Video's";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Weergeven in Map";
+"View in Folder"="Weergeven in map";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Deze link is niet gerelateerd aan dit account. Log in met het juiste account.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Uw account is tijdelijk geblokkeerd voor uw veiligheid.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Controleer uw e-mail [/S] en volg de stappen om uw account te ontgrendelen.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Volg de stappen in de [S]verificatie e-mail[/S]om uw account te ontgrendelen.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Waarom zie ik dit?";
 /* Text to notify user an email has been sent */
@@ -2189,7 +2199,7 @@
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Wis alles";
 /* Alert header for asking permission to resume transfers */
-"Resume Transfers?"="Overdrachten Hervatten?";
+"Resume Transfers?"="Overdrachten hervatten?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image Quality"="Afbeelding Kwaliteit";
 /* Description of Automatic Image Quality option */
@@ -2243,7 +2253,7 @@
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configureer de sorteervolgorde en de standaardweergave (Lijst of Miniatuur).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Map";
+"Per Folder"="Per map";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="Hetzelfde voor Alles";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2269,7 +2279,7 @@
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Bestandslink is onbeschikbaar";
 /* Header of block with all shared files in chat. */
-"Shared Files"="Gedeelde Bestanden";
+"Shared Files"="Gedeelde bestanden";
 /* Over Disk Quota Screen Navigation Bar Title */
 "Storage Full"="Opslag Vol";
 /* Over Disk Quota title message that tell customer your data at risk. */
@@ -2389,7 +2399,7 @@
 /* Error text shown when requesting email for email verification within 10 minutes */
 "Email already sent. Please wait a few minutes before trying again."="E-mail al verzonden. Wacht een paar minuten voordat u het opnieuw probeert.";
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
-"Manage Chat History"="Chatgeschiedenis Beheren";
+"Manage Chat History"="Chatgeschiedenis beheren";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
 "History Clearing"="Geschiedenis Wissen";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
@@ -2423,13 +2433,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Zoek Uw Bestanden";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
+"MEGA CAMERA UPLOADS FOLDER"="MEGA Camera uploads map";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Selecteer Map";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Spelen";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Weet u zeker dat u de Camera Uploads map naar de Prullenbak wilt verplaatsen? Zo ja, een nieuwe map wordt automatisch gegenereerd voor Camera Uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Weet u zeker dat u de Camera uploads map naar de Prullenbak wilt verplaatsen? Zo ja, een nieuwe map wordt automatisch gegenereerd voor Camera uploads.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Upload Bestand";
 /* Text title for shortcuts, ie in the widget */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Om toegang te krijgen tot de gedeelde map, moet de persoon die deze met u heeft gedeeld, u ook verifiëren.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Uw gegevens";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Ongecodeerde map]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: heeft een vergadering gecreëerd";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="Alles weergeven";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Verlaat vergadering";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Gesprekmeldingen";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Gedeelde bestanden";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Chatgeschiedenis beheren";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Sleutelrotatie van coderingssleutel inschakelen";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Sleutel rotatie is iets veiliger, maar u kunt geen link naar het gesprek creëren en nieuwe deelnemers kunnen geen berichten uit het verleden zien.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Versturen naar gesprek";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Chatlink delen";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Zie meer";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Minder weergeven";

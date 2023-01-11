@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIFs";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Create album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="أدخل اسم الألبوم";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="ألبوم جديد";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Add items to";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="فلتر";
 /* Choose type headline within filter UI */
@@ -901,11 +911,11 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="تأكيد البريد الإلكتروني الجديد";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="تغيير البريد الإلكتروني";
+"Change Email"="Change email address";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="يجب ألا يتطابق البريد الإلكتروني الجديد والقديم";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="البريد الالكتروني غير متطابق";
+"emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="لقد طلبت بالفعل رابط التأكيد لعنوان البريد الإلكتروني.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ من مساحة التخزين عن كل إحالة. \nصالحة لمدة 365 يوم.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الهاتف أو أدخل عناوين بريد إلكتروني متعددة";
+"Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
 "insertYourFriendsEmails"="أدخل عنوان البريد الإلكتروني الخاصة بأصدقائك:";
 /*  */
@@ -1369,7 +1379,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="هل أنت متأكد أنك تريد إلغاء التسجيل؟";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="إذا كنت قد أخطأت في كتابة عنوان البريد الإلكتروني الخاص بك، صححها وانقر فوق “إعادة إرسال”.";
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and tap on “Resend”.";
 /* A button to resend the email confirmation. */
 "resend"="إعادة إرسال";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="تم قفل حسابك مؤقتاً لضمان أمنك.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]يرجى التحقق من عنوان بريدك الإلكتروني[/S] واتبع الخطوات الواردة في بريد ميغا MEGA الإلكتروني لإلغاء قفل حسابك.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Please follow the steps in the [S]verification email[/S] to unlock your account.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="لماذا أرى هذا؟";
 /* Text to notify user an email has been sent */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="بيانات الاعتماد الخاصة بك";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Undecrypted folder]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: created a meeting";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="See all";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Leave meeting";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="إشعارات المحادثة";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="الملفات المشاركة";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="إدارة سجل المحادثات";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Enable encryption key rotation";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="إرسال الى محادثة";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Share chat link";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="شاهد المزيد";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="See less";

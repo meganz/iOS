@@ -27,7 +27,7 @@
 /*  */
 "folder"="Dossier";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="Il n’y a pas d’appareil photo";
+"noCamera"="Aucun appareil photo n’est accessible";
 /* Alert title to attract attention */
 "attention"="Attention";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
@@ -205,7 +205,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Aucun résultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Vider la Corbeille";
+"cloudDriveEmptyState_titleRubbishBin"="La Corbeile est vide";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Diaporama";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -505,9 +505,9 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activer les Téléversements de l’appareil photo";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Les téléversements de l’appareil photo sont activés";
+"cameraUploadsEnabled"="Les Téléversements de l’appareil photo sont activés";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Les téléversements de l’appareil photo sont terminés";
+"cameraUploadsComplete"="Les Téléversements de l’appareil photo sont terminés";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Téléversement en cours, 1 fichier en attente";
 /* Message shown while uploading files. Plural. */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Créer un album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Saisir le nom de l’album";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Nouvel album";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Ajouter des éléments à";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="L’album est vide";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrer";
 /* Choose type headline within filter UI */
@@ -739,7 +749,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="La mémoire de l’appareil est presque saturée";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Vous manquez d’espace de stockage pour d’autres téléversements de l’appareil photo. Libérez de l’espace en supprimant des applis, des vidéos ou de la musique inutilisées. Vous pouvez gérer votre espace de stockage dans %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Vous manquez d’espace de stockage pour d’autres Téléversements de l’appareil photo. Libérez de l’espace en supprimant des applis, des vidéos ou de la musique inutilisées. Vous pouvez gérer votre espace de stockage dans %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Réglages > Général > Stockage %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -1125,7 +1135,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="L’ACHAT A ÉCHOUÉ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans les réglages d’iOS";
+"appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans l’appli Réglages d’iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Le produit %@ est introuvable, veuillez contacter ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -1561,7 +1571,7 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Ne plus afficher";
 /* Label for test password button and titles */
-"testPassword"="Confirmer le mot de passe";
+"testPassword"="Tester le mot de passe";
 /* Label for recovery key button */
 "backupRecoveryKey"="Sauvegarder la Clé de récupération";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Votre compte a temporairement été verrouillé pour votre sécurité.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Veuillez confirmer votre adresse courriel[/S] et suivre les étapes du courriel de MEGA afin de déverrouiller votre compte.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Veuillez suivre les étapes du [S]courriel de confirmation[/S] afin de déverrouiller votre compte.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Pourquoi vois-je ceci ?";
 /* Text to notify user an email has been sent */
@@ -2423,7 +2433,7 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Cherchez dans vos fichiers";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
+"MEGA CAMERA UPLOADS FOLDER"="Dossier MEGA des Téléversements de l’appareil photo";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Sélectionner le dossier";
 /* Section header of Audio Player playlist that contains playing track */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pour accéder au dossier partagé, la personne qui l’a partagé avec vous devrait aussi vous confirmer.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Votre numéro d’identification";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[dossier non déchiffré]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@ : a créé une réunion";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="Afficher tous les participants";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Quitter la réunion";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Notifications de conversation";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Fichiers partagés";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Gérer l’historique de la conversation";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Activer la rotation de la clé de chiffrement";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="La rotation de la clé est un peu plus sécurisée, mais ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Envoyer vers une conversation";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Partager le lien de conversation";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Afficher davantage";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Afficher moins";

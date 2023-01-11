@@ -267,7 +267,7 @@
 /* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="No hay Transferencias";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No hay Descargas";
+"transfersEmptyState_titleDownload"="No hay descargas";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No hay Subidas";
 /* Title of the Cloud Drive section */
@@ -524,6 +524,16 @@
 "cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
+/* Create album title */
+"cameraUploads.albums.createAlbum.title"="Crear álbum";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.title"="Escribir el nombre del álbum";
+/* Used in create album popup. */
+"cameraUploads.albums.create.alert.placeholder"="Nuevo álbum";
+/* Used in add content album view. */
+"cameraUploads.albums.create.location"="Añadir elementos a";
+/* Used in empty album view. */
+"cameraUploads.albums.empty.title"="Álbum vacío";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -609,7 +619,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Añadir desde contactos";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Añadir Contacto";
+"addContact"="Añadir contacto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Correo electrónico del contacto";
 /* Button title to 'Add' the contact to your contacts list */
@@ -739,7 +749,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Almacenamiento del dispositivo casi lleno";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más Subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Ajustes > General > Almacenamiento %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -801,7 +811,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="En MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Papelera vacía";
+"emptyRubbishBin"="Vaciar Papelera";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Todos los elementos de la Papelera se eliminarán";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -901,11 +911,11 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar nuevo correo electrónico";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Cambiar correo electrónico";
+"Change Email"="Cambiar dirección de correo electrónico";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="El nuevo correo electrónico no puede coincidir con el antiguo";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="El correo electrónico no coincide";
+"emailsDoNotMatch"="Los correos no coinciden";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ya has solicitado un enlace de confirmación para esa dirección de correo electrónico.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -981,7 +991,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ de almacenamiento gratuito para cada invitación. \n Válido durante 365 días.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Seleccionar contactos telefónicos o añadir correos electrónicos";
+"Select from phone contacts or enter multiple email addresses"="Seleccionar contactos desde el dispositivo o añadir varios correos electrónicos.";
 /*  */
 "insertYourFriendsEmails"="Introduce los correos electrónicos de tus amigos:";
 /*  */
@@ -1179,7 +1189,7 @@
 /* This is the placeholder text for GIPHY search */
 "Search GIPHY"="Buscar GIPHY";
 /* Empty Gifs section */
-"No GIFs found"="No se han encontrado GIFs";
+"No GIFs found"="No se han encontrado GIF";
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "This message has reached the maximum limit of %d reactions."="Este mensaje ha alcanzado el límite máximo de %d reacciones.";
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
@@ -1743,7 +1753,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Estás a punto de eliminar el historial de versiones de todos los archivos. Las versiones compartidas contigo por otros contactos las tendrán que borrar ellos.\n\nTen en cuenta que los archivos actuales no serán eliminados.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Limpieza automática de la papelera";
+"Rubbish-Bin Cleaning Scheduler:"="Limpieza automática de la Papelera";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Eliminar archivos con más de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
@@ -2167,7 +2177,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Tu cuenta ha sido bloqueada temporalmente por seguridad.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="Para desbloquear tu cuenta [S]verifica tu dirección de correo electrónico[/S] siguiendo los pasos del correo de MEGA que te envíamos a tu bandeja de entrada.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Sigue los pasos que te enviamos en el [S]correo electrónico de verificación[/S] para desbloquear tu cuenta.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="¿Por qué estoy viendo esto?";
 /* Text to notify user an email has been sent */
@@ -2221,7 +2231,7 @@
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
 "Default Tab"="Pestaña predeterminada";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Preferencias de ordenado y vista";
+"Sorting And View Mode"="Preferencias de ordenación y vista";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ocultar actividad reciente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2241,13 +2251,13 @@
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
 "Configure default launch section."="Configurar la sección de inicio predeterminada.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configurar las preferencias de ordenado y de vista por defecto (lista o miniatura).";
+"Configure sorting order and the default view (List or Thumbnail)."="Configurar las preferencias de ordenación y de vista por defecto (lista o miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Por carpeta";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="Igual para todo";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"Sorting preference"="Preferencias de ordenado";
+"Sorting preference"="Preferencias de ordenación";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Preferencias del modo de vista";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
@@ -2423,13 +2433,13 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Buscar tus archivos";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="CARPETA DE LAS SÚBIDAS DE LA CAMARA";
+"MEGA CAMERA UPLOADS FOLDER"="Carpeta de las Súbidas de la camara de MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Seleccionar carpeta";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="En reproducción";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="¿Confirmas que quieres mover la carpeta Subidas de la cámara a la papelera? Si es así, se generará automáticamente una nueva carpeta Subidas de la cámara.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="¿Confirmas que quieres mover la carpeta Subidas de la cámara a la Papelera? Si es así, se generará automáticamente una nueva carpeta Subidas de la cámara.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Subir archivo";
 /* Text title for shortcuts, ie in the widget */
@@ -3101,7 +3111,7 @@
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Escanear";
 /* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
-"meetings.addContacts.zeroContactsAvailable.title"="No tienes Contactos";
+"meetings.addContacts.zeroContactsAvailable.title"="No tienes contactos";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.description"="Ya has añadido todos sus contactos a este chat. Si quieres añadir más participantes, primero invítalos a tu lista de contactos.";
 /* Text title showed when users share the contact link */
@@ -3154,5 +3164,29 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acceder a la carpeta compartida, la persona que la ha compartido contigo también debe verificar tus credenciales.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Tus credenciales";
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
+"sharedItems.tab.incoming.undecryptedFolderName"="[Carpeta no descifrada]";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: Created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: ha creado una reunión";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeAll"="Ver todo";
+/* Button title to leave the meeting in info view */
+"meetings.info.leaveMeeting"="Abandonar reunión";
+/* Title for chat notifications option in meeting info */
+"meetings.info.chatNotifications"="Notificaciones del chat";
+/* Title for shared files option in meeting info */
+"meetings.info.sharedFiles"="Archivos compartidos";
+/* Title for manage chat history option in meeting info */
+"meetings.info.manageChatHistory"="Gestionar historial del chat";
+/* Title for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.title"="Activar rotación de la clave de cifrado";
+/* Description for enable encryption key rotation option in meeting info */
+"meetings.info.keyRotation.description"="La rotación de la clave es ligeramente más segura, pero no podrás crear un enlace del chat y los nuevos participantes no verán los mensajes anteriores.";
+/* Title for a button to send a file to a chat */
+"meetings.info.shareOptions.sendToChat"="Enviar al chat";
+/* Title for share chat link option in meeting info */
+"meetings.info.shareChatLink"="Compartir enlace de chat";
+/* Button title to load more participants in meeting info view */
+"meetings.info.participants.seeMore"="Mostrar más";
+/* Button title to see less participants in meeting info view */
+"meetings.info.participants.seeLess"="Ver menos";
