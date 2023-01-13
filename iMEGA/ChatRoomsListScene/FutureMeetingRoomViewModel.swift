@@ -105,6 +105,11 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         objectWillChange.send()
     }
     
+    func showDetails() {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
+        router.showDetails(forChatId: scheduledMeeting.chatId, unreadMessagesCount: chatRoom.unreadCount)
+    }
+    
     //MARK: - Private methods.
     
     private func createFutureMeetingSearchStringTask() -> Task<Void, Never> {
