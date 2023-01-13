@@ -5,12 +5,14 @@ import MEGADomain
 final class MockSdk: MEGASdk {
     private var nodes: [MEGANode]
     private let rubbishNodes: [MEGANode]
+    private let syncDebrisNodes: [MEGANode]
     private let myContacts: MEGAUserList
     private let user: MEGAUser?
     private let email: String?
     private var statsEventType: Int?
     private var statsEventMessage: String?
     private let megaRootNode: MEGANode?
+    private let rubbishBinNode: MEGANode?
     private let megaSetElementCounts: [MEGAHandle: UInt]
     
     let sets: [MEGASet]
@@ -20,22 +22,26 @@ final class MockSdk: MEGASdk {
     
     init(nodes: [MEGANode] = [],
          rubbishNodes: [MEGANode] = [],
+         syncDebrisNodes: [MEGANode] = [],
          myContacts: MEGAUserList = MEGAUserList(),
          myUser: MEGAUser? = nil,
          myEmail: String? = nil,
          megaSets: [MEGASet] = [],
          megaSetElements: [MEGASetElement] = [],
          megaRootNode: MEGANode? = nil,
+         rubbishBinNode: MEGANode? = nil,
          megaSetElementCounts: [MEGAHandle: UInt] = [:]
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
+        self.syncDebrisNodes = syncDebrisNodes
         self.myContacts = myContacts
         user = myUser
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
         self.megaRootNode = megaRootNode
+        self.rubbishBinNode = rubbishBinNode
         self.megaSetElementCounts = megaSetElementCounts
         super.init()
     }
@@ -88,9 +94,16 @@ final class MockSdk: MEGASdk {
     }
     
     override var rootNode: MEGANode? { megaRootNode }
+    override var rubbishNode: MEGANode? { rubbishBinNode }
     
     override func nodeListSearch(for node: MEGANode, search searchString: String?, cancelToken: MEGACancelToken, recursive: Bool, orderType: MEGASortOrderType, nodeFormatType: MEGANodeFormatType, folderTargetType: MEGAFolderTargetType) -> MEGANodeList {
         MockNodeList(nodes: nodes)
+    }
+    
+    override func nodePath(for node: MEGANode) -> String? {
+        guard let mockNode = node as? MockNode else { return nil }
+        
+        return mockNode.nodePath
     }
     
     override func megaSetElementCount(_ sid: MEGAHandle) -> UInt {

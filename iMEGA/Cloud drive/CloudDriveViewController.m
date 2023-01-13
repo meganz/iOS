@@ -1005,15 +1005,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self showBrowserNavigationFor:self.selectedNodesArray action:BrowserActionCopy];
 }
 
-- (void)showCustomActionsForNode:(MEGANode *)node sender:(id)sender {
-    if (self.displayMode == DisplayModeBackup) {
-        [self showCustomActionsForBackupNode:node sender:sender];
-    } else {
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView isBackupNode:false sender:sender];
-        [self presentViewController:nodeActions animated:YES completion:nil];
-    }
-}
-
 - (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
     for (MEGANode *node in self.selectedNodesArray) {
         [node mnz_restore];
