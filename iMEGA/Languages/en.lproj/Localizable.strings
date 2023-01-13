@@ -3190,3 +3190,5 @@
 "meetings.info.participants.seeMore"="See more";
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="See less";
+/* Text description for chat privacy communication */
+"chat.introductionHeader.privacy.description"="MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:";

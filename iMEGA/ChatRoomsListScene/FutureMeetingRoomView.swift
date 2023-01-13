@@ -31,9 +31,9 @@ struct FutureMeetingRoomView: View {
                     .font(.caption)
             }
             
+            Spacer()
+
             if let unreadCount = viewModel.unreadChatCount, unreadCount != 0 {
-                Spacer()
-                
                 VStack(alignment: .trailing, spacing: 0) {
                     if let lastMessageTimestamp = viewModel.lastMessageTimestamp {
                         Text(lastMessageTimestamp)
@@ -56,7 +56,6 @@ struct FutureMeetingRoomView: View {
                     }
                 }
             }
-            
         }
         .frame(height: Constants.viewHeight)
         .padding(.trailing, 10)
@@ -74,6 +73,9 @@ struct FutureMeetingRoomView: View {
         }
         .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
             ActionSheet(title: Text(""), buttons: actionSheetButtons())
+        }
+        .onTapGesture {
+            viewModel.showDetails()
         }
     }
     
