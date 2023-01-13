@@ -3015,6 +3015,12 @@ public enum Strings {
           }
         }
       }
+      public enum IntroductionHeader {
+        public enum Privacy {
+          /// MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:
+          public static let description = Strings.tr("Localizable", "chat.introductionHeader.privacy.description")
+        }
+      }
       public enum Link {
         /// Link removed
         public static let linkRemoved = Strings.tr("Localizable", "chat.link.linkRemoved")

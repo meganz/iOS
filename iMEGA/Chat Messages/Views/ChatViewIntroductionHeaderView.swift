@@ -1,6 +1,7 @@
 
 import MessageKit
 import CoreGraphics
+import MEGADomain
 
 class ChatViewIntroductionHeaderView: MessageReusableView {
     @IBOutlet weak var mainStackView: UIStackView!
@@ -66,29 +67,50 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     }
     
     private func updateStatusView(for chatRoom: MEGAChatRoom) {
-        if let status = chatRoom.onlineStatus {
-            statusView.isHidden = (status == .invalid)
-            statusView.backgroundColor = UIColor.mnz_color(for: status)
+        if chatRoom.isOneToOne {
+            if let status = chatRoom.onlineStatus {
+                statusView.isHidden = (status == .invalid)
+                statusView.backgroundColor = UIColor.mnz_color(for: status)
+                
+                statusLabel.isHidden = (status == .invalid)
+                statusLabel.text = NSString.chatStatusString(status)
+            }
+        } else if chatRoom.isMeeting {
+            statusView.isHidden = true
+            guard let scheduledMeeting = MEGASdkManager.sharedMEGAChatSdk().scheduledMeetings(byChat: chatRoom.chatId).first?.toScheduledMeetingEntity() else {
+                statusLabel.isHidden = true
+                return
+            }
             
-            statusLabel.isHidden = (status == .invalid)
-            statusLabel.text = NSString.chatStatusString(status)
+            participantsLabel.text = scheduledMeeting.title
+            chattingWithTextLabel.isHidden = true
+            statusLabel.text = formattedDateForScheduleMeeting(scheduledMeeting)
         } else {
             statusView.isHidden = true
             statusLabel.isHidden = true
         }
     }
     
+    private func formattedDateForScheduleMeeting(_ scheduledMeeting: ScheduledMeetingEntity) -> String {
+        var dateFormatter = DateFormatter.timeShort()
+        let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+        let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
+        dateFormatter = DateFormatter.dateMedium()
+        let fullDate = dateFormatter.localisedString(from: scheduledMeeting.startDate)
+        return "\(fullDate) · \(start) - \(end)"
+    }
+    
     private func updateAppearance() {
         chattingWithTextLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         participantsLabel.font = UIFont.preferredFont(forTextStyle: .title2)
-        statusLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        statusLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         chattingWithTextLabel.textColor = UIColor.mnz_red(for: traitCollection)
         descriptionLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
         participantsLabel.textColor = UIColor.mnz_label()
-        statusLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        statusLabel.textColor = UIColor.label
 
         chattingWithTextLabel.text = Strings.Localizable.chattingWith
-        descriptionLabel.text = Strings.Localizable.chatIntroductionMessage
+        descriptionLabel.text = Strings.Localizable.Chat.IntroductionHeader.Privacy.description
         
         let confidentialityText = Strings.Localizable.confidentialityExplanation
         setAttributedText(with: confidentialityText, label: confidentialityTextLabel)
