@@ -45,7 +45,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             exportFile(from: node, sender: sender)
         case .copy:
             showBrowserNavigation(for: [node], action: .copy)
-        case .move:
+        case .move, .restoreBackup:
             showBrowserNavigation(for: [node], action: .move)
         case .info:
             showNodeInfo(node)
