@@ -114,4 +114,25 @@ extension CloudDriveViewController {
         }
         return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
     }
+    
+    @objc func showNodeActionsForNode(_ node: MEGANode, isIncoming: Bool, isBackupNode: Bool, sender: Any) {
+        let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: displayMode, isIncoming: isIncoming, isBackupNode: isBackupNode, sender: sender)
+        present(nodeActions, animated: true)
+    }
+    
+    @objc func showCustomActionsForNode(_ node: MEGANode, sender: Any) {
+        switch displayMode {
+        case .backup:
+            showCustomActionsForBackupNode(node, sender: sender)
+        case .rubbishBin:
+            Task { @MainActor in
+                let isSyncDebrisNode = await RubbishBinUseCase(rubbishBinRepository: RubbishBinRepository.newRepo).isSyncDebrisNode(node.toNodeEntity())
+                
+                showNodeActionsForNode(node, isIncoming: isIncomingShareChildView, isBackupNode: isSyncDebrisNode, sender: sender)
+            }
+            
+        default:
+            showNodeActionsForNode(node, isIncoming: isIncomingShareChildView, isBackupNode: false, sender: sender)
+        }
+    }
 }

@@ -560,7 +560,11 @@ final class NodeActionBuilder {
     
     private func nodeActionsForRubbishBin() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
-        
+
+        if isBackupNode {
+            nodeActions.append(.restoreBackupAction())
+        }
+
         nodeActions.append(.infoAction())
 
         if !isInVersionsView {
