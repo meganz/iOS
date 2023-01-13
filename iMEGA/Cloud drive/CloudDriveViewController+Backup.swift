@@ -61,9 +61,7 @@ extension CloudDriveViewController {
         Task { @MainActor in
             let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
             let isBackupNode = await myBackupsUseCase.isBackupNode(node.toNodeEntity())
-            
-            let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: displayMode, isBackupNode: isBackupNode, sender: sender)
-            present(nodeActions, animated: true)
+            showNodeActionsForNode(node, isIncoming: false, isBackupNode: isBackupNode, sender: sender)
         }
     }
     

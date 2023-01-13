@@ -277,6 +277,15 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .remove]))
     }
     
+    func testRubbishBin_BackupNode() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.rubbishBin)
+            .setAccessLevel(.accessOwner)
+            .setIsBackupNode(true)
+            .build()
+        XCTAssertTrue(isEqual(nodeActionTypes: [.restoreBackup, .info, .remove]))
+    }
+    
     //MARK: - Recent Items tests
     
     func testRecentNodeNoVersion() {
