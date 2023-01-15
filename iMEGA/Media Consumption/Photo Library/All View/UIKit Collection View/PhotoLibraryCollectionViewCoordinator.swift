@@ -144,7 +144,9 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 @available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        router.openPhotoBrowser(for: photoSections.photo(at: indexPath), allPhotos: photoSections.allPhotos)
+        guard let photo = photoSections.photo(at: indexPath) else { return }
+        
+        router.openPhotoBrowser(for: photo, allPhotos: photoSections.allPhotos)
     }
 }
 
