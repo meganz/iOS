@@ -17,6 +17,6 @@ final class AlbumContentAdditionViewModelTests: XCTestCase {
     }
     
     private func albumContentAdditionViewModel() -> AlbumContentAdditionViewModel {
-        AlbumContentAdditionViewModel(albumName: "item.name", locationName: "All Locations")
+        AlbumContentAdditionViewModel(albumName: "item.name", locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations)
     }
 }

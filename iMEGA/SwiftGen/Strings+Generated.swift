@@ -2906,12 +2906,18 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
         public enum Create {
           /// Add items to
-          public static let location = Strings.tr("Localizable", "cameraUploads.albums.create.location")
+          public static let addItemsTo = Strings.tr("Localizable", "cameraUploads.albums.create.addItemsTo")
           public enum Alert {
+            /// This album name is not allowed
+            public static let albumNameNotAllowed = Strings.tr("Localizable", "cameraUploads.albums.create.alert.albumNameNotAllowed")
+            /// Enter a different name
+            public static let enterDifferentName = Strings.tr("Localizable", "cameraUploads.albums.create.alert.enterDifferentName")
             /// New album
             public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")
             /// Enter album name
             public static let title = Strings.tr("Localizable", "cameraUploads.albums.create.alert.title")
+            /// An album with that name already exists
+            public static let userAlbumExists = Strings.tr("Localizable", "cameraUploads.albums.create.alert.userAlbumExists")
           }
         }
         public enum CreateAlbum {
@@ -2930,9 +2936,17 @@ public enum Strings {
           /// GIFs
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.gif.title")
         }
+        public enum MyAlbum {
+          /// My Albums
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.myAlbum.title")
+        }
         public enum Raw {
           /// RAW
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.raw.title")
+        }
+        public enum SharedAlbum {
+          /// Shared Albums
+          public static let title = Strings.tr("Localizable", "cameraUploads.albums.sharedAlbum.title")
         }
       }
       public enum Timeline {

@@ -4,7 +4,7 @@ public final class AlbumContentAdditionViewModel: ObservableObject {
     private let albumName: String
     public let locationName: String
     public var navigationTitle: String {
-        "\(Strings.Localizable.CameraUploads.Albums.Create.location) \(albumName)"
+        "\(Strings.Localizable.CameraUploads.Albums.Create.addItemsTo) \"" + "\(albumName)" + "\""
     }
     
     @Published public var dismiss = false
