@@ -3,8 +3,6 @@ import SwiftUI
 struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
     @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
-    @State var alertViewModel: TextFieldAlertViewModel
-    
     var router: AlbumListViewRouting
     
     var body: some View {
@@ -28,7 +26,7 @@ struct AlbumListView: View {
             }
             .padding(.horizontal, 6)
         }
-        .alert(isPresented: $viewModel.showCreateAlbumAlert, alertViewModel)
+        .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel)
         .overlay(viewModel.shouldLoad ? ProgressView()
             .scaleEffect(1.5) : nil)
         .fullScreenCover(item: $viewModel.album) {
@@ -36,7 +34,7 @@ struct AlbumListView: View {
                 .ignoresSafeArea()
         }
         .sheet(item: $viewModel.newlyAddedAlbum, content: { item in
-            AlbumContentAdditionView(viewModel: AlbumContentAdditionViewModel(albumName: item.name, locationName: "All Locations"))
+            AlbumContentAdditionView(viewModel: AlbumContentAdditionViewModel(albumName: item.name, locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations))
         })
         .padding([.top, .bottom], 10)
         .onAppear {
