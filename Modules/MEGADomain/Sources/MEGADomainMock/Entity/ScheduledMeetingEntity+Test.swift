@@ -16,7 +16,7 @@ public extension ScheduledMeetingEntity {
         title: String = "",
         description: String = "",
         attributes: String = "",
-        overrides: String = "",
+        overrides: Date = Date(),
         isTesting: Bool = true
     ) {
         self.init(
