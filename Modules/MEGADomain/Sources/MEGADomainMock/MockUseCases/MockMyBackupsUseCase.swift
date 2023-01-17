@@ -4,17 +4,15 @@ import Foundation
 public struct MockMyBackupsUseCase: MyBackupsUseCaseProtocol {
     private let isMyBackupsNode: Bool
     private var containsABackupNode: Bool
-    private var isMyBackupsRootNodeChild: Bool
     private var isMyBackupsRootNode: Bool
     private var nodeSize: UInt64
     private var isMyBackupsDeviceFolder: Bool
     private var isMyBackupsRootNodeEmpty: Bool
     private var isInMyBackups: Bool
     
-    public init(isMyBackupsNode: Bool = false, containsABackupNode: Bool = false, isMyBackupsRootNodeChild: Bool = false, isMyBackupsRootNode: Bool = false, nodeSize: UInt64 = 0, isMyBackupsDeviceFolder: Bool = false, isMyBackupsRootNodeEmpty: Bool = false, isInMyBackups: Bool = false) {
+    public init(isMyBackupsNode: Bool = false, containsABackupNode: Bool = false, isMyBackupsRootNode: Bool = false, nodeSize: UInt64 = 0, isMyBackupsDeviceFolder: Bool = false, isMyBackupsRootNodeEmpty: Bool = false, isInMyBackups: Bool = false) {
         self.isMyBackupsNode = isMyBackupsNode
         self.containsABackupNode = containsABackupNode
-        self.isMyBackupsRootNodeChild = isMyBackupsRootNodeChild
         self.isMyBackupsRootNode = isMyBackupsRootNode
         self.nodeSize = nodeSize
         self.isMyBackupsDeviceFolder = isMyBackupsDeviceFolder
@@ -32,10 +30,6 @@ public struct MockMyBackupsUseCase: MyBackupsUseCaseProtocol {
     
     public func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool {
         isMyBackupsNode
-    }
-    
-    public func isMyBackupsNodeChild(_ node: MEGADomain.NodeEntity) async -> Bool {
-        isMyBackupsRootNodeChild
     }
     
     public func isBackupDeviceFolder(_ node: MEGADomain.NodeEntity) -> Bool {

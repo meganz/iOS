@@ -7,11 +7,11 @@ extension CloudDriveViewController {
         let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
         let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
         let parentNodeEntity = parentNode.toNodeEntity()
-        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isMyBackupsNode = await myBackupsUseCase.isMyBackupsRootNode(parentNodeEntity)
         var isMyBackupsChild = false
         if !isMyBackupsNode {
-            isMyBackupsChild = await myBackupsUseCase.isMyBackupsNodeChild(parentNodeEntity)
+            isMyBackupsChild = await myBackupsUseCase.isBackupNode(parentNodeEntity)
         }
        
         return CMConfigEntity(menuType: .menu(type: .display),
@@ -59,7 +59,7 @@ extension CloudDriveViewController {
     
     @objc func showCustomActionsForBackupNode(_ node: MEGANode, sender: Any) {
         Task { @MainActor in
-            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             let isBackupNode = await myBackupsUseCase.isBackupNode(node.toNodeEntity())
             showNodeActionsForNode(node, isIncoming: false, isBackupNode: isBackupNode, sender: sender)
         }
@@ -69,7 +69,7 @@ extension CloudDriveViewController {
         Task { @MainActor in
             guard let parentNode else { return }
             
-            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             let isBackupNode = await myBackupsUseCase.isBackupNode(node.toNodeEntity())
             let shareType: MEGAShareType = isBackupNode ? .accessRead : MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
             

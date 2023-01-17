@@ -7,6 +7,10 @@ struct MyBackupsRepository: MyBackupsRepositoryProtocol {
         MyBackupsRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }
     
+    private enum Constants {
+        static let myBackupsNodePath = "//in/My backups"
+    }
+    
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
@@ -18,6 +22,14 @@ struct MyBackupsRepository: MyBackupsRepositoryProtocol {
         } catch {
             return true
         }
+    }
+    
+    func isBackupNode(_ node: NodeEntity) async -> Bool {
+        await Task.detached { () -> Bool in
+            guard let megaNode = node.toMEGANode(in: sdk),
+                  let path = sdk.nodePath(for: megaNode) else { return false }
+            return path.hasPrefix(Constants.myBackupsNodePath)
+        }.value
     }
     
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {
