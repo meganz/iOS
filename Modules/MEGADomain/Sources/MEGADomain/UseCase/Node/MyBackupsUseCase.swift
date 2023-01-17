@@ -2,7 +2,6 @@ public protocol MyBackupsUseCaseProtocol {
     func containsABackupNode(_ nodes: [NodeEntity]) async -> Bool
     func isBackupNode(_ node: NodeEntity) async -> Bool
     func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool
-    func isMyBackupsNodeChild(_ node: NodeEntity) async -> Bool
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool
     func isMyBackupsRootNodeEmpty() async -> Bool
     func isMyBackupsRootNode(_ node: NodeEntity) async -> Bool
@@ -10,15 +9,13 @@ public protocol MyBackupsUseCaseProtocol {
     func myBackupsRootNode() async throws -> NodeEntity
 }
 
-public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepositoryProtocol, V: NodeValidationRepositoryProtocol>: MyBackupsUseCaseProtocol {
+public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepositoryProtocol>: MyBackupsUseCaseProtocol {
     private let myBackupsRepository: T
     private let nodeRepository: U
-    private let nodeValidationRepository: V
     
-    public init(myBackupsRepository: T, nodeRepository: U, nodeValidationRepository: V) {
+    public init(myBackupsRepository: T, nodeRepository: U) {
         self.myBackupsRepository = myBackupsRepository
         self.nodeRepository = nodeRepository
-        self.nodeValidationRepository = nodeValidationRepository
     }
     
     public func containsABackupNode(_ nodes: [NodeEntity]) async -> Bool {
@@ -34,31 +31,12 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
     }
     
     public func isBackupNode(_ node: NodeEntity) async -> Bool {
-        return await withTaskGroup(of: Bool.self) { group -> Bool in
-            group.addTask {
-                return await isMyBackupsRootNode(node)
-            }
-            
-            group.addTask {
-                return await isMyBackupsNodeChild(node)
-            }
-            
-            return await group.contains(true)
-        }
+        await myBackupsRepository.isBackupNode(node)
     }
     
     public func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool {
         guard let node = nodeRepository.nodeForHandle(nodeHandle) else { return false }
         return await isBackupNode(node)
-    }
-    
-    public func isMyBackupsNodeChild(_ node: NodeEntity) async -> Bool {
-        do {
-            let myBackupsNode = try await myBackupsRootNode()
-            return await nodeValidationRepository.isNode(node, descendantOf: myBackupsNode)
-        } catch {
-            return false
-        }
     }
     
     public func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {

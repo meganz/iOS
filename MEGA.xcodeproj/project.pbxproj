@@ -9011,6 +9011,13 @@
 			path = SortOrder;
 			sourceTree = "<group>";
 		};
+		946FBE1C297007CF0080FDC3 /* RubbishBin */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RubbishBin;
+			sourceTree = "<group>";
+		};
 		9D3563C228B54AD700CB3365 /* Delete Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -11354,6 +11361,7 @@
 				C46050552727FC3B00D67A44 /* Backups */,
 				C473CB962758130A000E633B /* Camera Uploads */,
 				C4D6FAAE276BB9E500773333 /* MyChatFiles */,
+				946FBE1C297007CF0080FDC3 /* RubbishBin */,
 			);
 			path = NodeAccess;
 			sourceTree = "<group>";

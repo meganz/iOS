@@ -5,10 +5,12 @@ public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
     public static let newRepo = MockMyBackupsRepository()
     private let currentBackupNode: NodeEntity
     private let isBackupRootNodeEmpty: Bool
+    private let isBackupNode: Bool
     
-    public init(currentBackupNode: NodeEntity = NodeEntity(name: "backup"), isBackupRootNodeEmpty: Bool = false) {
+    public init(currentBackupNode: NodeEntity = NodeEntity(name: "backup"), isBackupRootNodeEmpty: Bool = false, isBackupNode: Bool = false) {
         self.currentBackupNode = currentBackupNode
         self.isBackupRootNodeEmpty = isBackupRootNodeEmpty
+        self.isBackupNode = isBackupNode
     }
     
     public func isBackupRootNodeEmpty() async -> Bool {
@@ -26,5 +28,9 @@ public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
     
     public func myBackupRootNode() async throws -> NodeEntity {
         currentBackupNode
+    }
+    
+    public func isBackupNode(_ node: NodeEntity) async -> Bool {
+        isBackupNode
     }
 }

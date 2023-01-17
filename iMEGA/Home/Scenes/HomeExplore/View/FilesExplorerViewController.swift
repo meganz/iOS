@@ -43,7 +43,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         Task {
             guard let navigationController = navigationController else { return }
             
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
             
             let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
