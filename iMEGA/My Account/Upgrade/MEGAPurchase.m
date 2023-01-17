@@ -22,11 +22,18 @@
     return storeManagerSharedInstance;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self != nil) {
+        self.purchaseDelegateMutableArray = NSMutableArray.new;
+        self.restoreDelegateMutableArray = NSMutableArray.new;
+        self.pricingsDelegateMutableArray = NSMutableArray.new;
+    }
+    return self;
+}
+
 - (void)requestPricing {
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
-    self.purchaseDelegateMutableArray = NSMutableArray.new;
-    self.restoreDelegateMutableArray = NSMutableArray.new;
-    self.pricingsDelegateMutableArray = NSMutableArray.new;
 }
 
 - (void)requestProducts {
