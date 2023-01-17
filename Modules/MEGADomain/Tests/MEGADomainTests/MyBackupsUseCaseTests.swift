@@ -13,7 +13,7 @@ final class MyBackupsUseCaseTests: XCTestCase {
     
     func testMyBackups_IsMyBackupsNode() async {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
-        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: MockNodeValidationRepository.newRepo)
+        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         
         let isMyBackupsRootNode = await sut.isMyBackupsRootNode(backupNodeEntity)
         XCTAssertTrue(isMyBackupsRootNode)
@@ -22,20 +22,9 @@ final class MyBackupsUseCaseTests: XCTestCase {
         XCTAssertFalse(isNotMyBackupsRootNode)
     }
     
-    func testMyBackups_ContainsMyBackupsRootNode() async {
-        let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
-        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: MockNodeValidationRepository.newRepo)
-        var nodes = mockNodes
-        let containsABackupNode_false = await sut.containsABackupNode(nodes)
-        XCTAssertFalse(containsABackupNode_false)
-        nodes.append(backupNodeEntity)
-        let containsABackupNode_True = await sut.containsABackupNode(nodes)
-        XCTAssertTrue(containsABackupNode_True)
-    }
-    
     func testMyBackups_BackupFolderSize() async {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
-        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: MockNodeValidationRepository.newRepo)
+        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         
         let backupSize = await sut.myBackupsRootNodeSize()
         
@@ -44,7 +33,7 @@ final class MyBackupsUseCaseTests: XCTestCase {
     
     func testMyBackups_IsBackupDeviceFolder() {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
-        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: MockNodeValidationRepository.newRepo)
+        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         let deviceFolderNode = NodeEntity(parentHandle: backupNodeEntity.handle, deviceId: "device")
         
         XCTAssertTrue(sut.isBackupDeviceFolder(deviceFolderNode))
@@ -52,22 +41,21 @@ final class MyBackupsUseCaseTests: XCTestCase {
     
     func testMyBackups_IsBackupRootNodeEmpty() async throws {
         let myBackupsRepo_BackupEmpty = MockMyBackupsRepository(currentBackupNode: backupNodeEntity, isBackupRootNodeEmpty: true)
-        let sut_backupEmpty = MyBackupsUseCase(myBackupsRepository: myBackupsRepo_BackupEmpty, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: MockNodeValidationRepository.newRepo)
+        let sut_backupEmpty = MyBackupsUseCase(myBackupsRepository: myBackupsRepo_BackupEmpty, nodeRepository: MockNodeRepository.newRepo)
         
         let isBackupRootNodeEmpty = await sut_backupEmpty.isMyBackupsRootNodeEmpty()
         XCTAssertTrue(isBackupRootNodeEmpty)
         
         let myBackupsRepo_BackupNotEmpty = MockMyBackupsRepository(currentBackupNode: backupNodeEntity, isBackupRootNodeEmpty: false)
-        let sut_backupNotEmpty = MyBackupsUseCase(myBackupsRepository: myBackupsRepo_BackupNotEmpty, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: MockNodeValidationRepository.newRepo)
+        let sut_backupNotEmpty = MyBackupsUseCase(myBackupsRepository: myBackupsRepo_BackupNotEmpty, nodeRepository: MockNodeRepository.newRepo)
         
         let isBackupRootNodeNotEmpty = await sut_backupNotEmpty.isMyBackupsRootNodeEmpty()
         XCTAssertFalse(isBackupRootNodeNotEmpty)
     }
     
     func testMyBackups_IsInBackups() async {
-        let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
-        let nodeValidationRepo = MockNodeValidationRepository(isNodeDescendant: true)
-        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo, nodeValidationRepository: nodeValidationRepo)
+        let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity, isBackupNode: true)
+        let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         
         let isBackupNode = await sut.isBackupNode(NodeEntity())
         XCTAssertTrue(isBackupNode)

@@ -10,7 +10,7 @@ extension ContactsViewController {
         }
         
         Task {
-            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             
             if await myBackupsUseCase.containsABackupNode(nodes.toNodeEntities()) {
                 shareNodes(withLevel: .accessRead)
