@@ -19,6 +19,16 @@ class MEGAButton: UIButton, DynamicTypeComponentProtocol {
         observeContentSizeUpdates()
     }
     
+    init(textStyle: String, weight: String) {
+        super.init(frame: .zero)
+
+        self.textStyle = textStyle
+        self.weight = weight
+        
+        observeContentSizeUpdates()
+        applyFontSizes()
+    }
+    
     deinit {
         removeObserver()
     }

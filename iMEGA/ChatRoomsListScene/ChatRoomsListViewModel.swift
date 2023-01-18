@@ -143,9 +143,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             self.isConnectedToNetwork = isConnectedToNetwork
         }
         
-        if let activeCall = chatUseCase.activeCall() {
-            updateActiveCall(activeCall)
-        }
+        updateActiveCall(chatUseCase.activeCall())
         
         listenToChatListUpdate()
         monitorChatConnectionStatusUpdate()
@@ -494,8 +492,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func updateActiveCall(_ call: CallEntity) {
-        if call.status == .inProgress {
+    private func updateActiveCall(_ call: CallEntity?) {
+        if let call, call.status == .inProgress {
             activeCallViewModel = ActiveCallViewModel(
                 call: call,
                 router: router,

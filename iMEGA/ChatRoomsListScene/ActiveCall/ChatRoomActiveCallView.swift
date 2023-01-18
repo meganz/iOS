@@ -9,14 +9,15 @@ struct ChatRoomActiveCallView: View {
         HStack {
             Spacer()
             Text(viewModel.message)
-                .font(.subheadline)
+                .font(.caption)
+                .bold()
                 .foregroundColor(.white)
             Image(uiImage: viewModel.muted)
             Image(uiImage: viewModel.video)
             Spacer()
         }
         .padding(8)
-        .frame(maxHeight: 40)
+        .frame(maxHeight: 44)
         .background(backgroundColor(isReconnecting: viewModel.isReconnecting))
         .onTapGesture {
             viewModel.activeCallViewTapped()
