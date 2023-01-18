@@ -56,6 +56,30 @@ import MEGADomain
         }
     }
     
+    func startCallNoRinging(chatId: ChatIdEntity, scheduledId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
+        self.chatOnlineListener = ChatOnlineListener(
+            chatId: chatId,
+            sdk: chatSdk
+        ) { [weak self] chatId in
+            guard let self else { return }
+            self.chatOnlineListener = nil
+            MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            
+            self.configureAudioSessionForStartCall(chatId: chatId)
+            self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
+                if error.type == .MEGAChatErrorTypeOk {
+                    self.notifyStartCallToCallKit(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
+                }
+                delegate.completion(error)
+            }
+            guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
+            self.chatSdk.setChatVideoInDevices("Front Camera")
+            
+            self.chatSdk.startChatCallNoRinging(chatId, scheduledId: scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
+        }
+    }
+    
     @objc func answerCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatAnswerCallRequestDelegate) {
         let group = DispatchGroup()
         

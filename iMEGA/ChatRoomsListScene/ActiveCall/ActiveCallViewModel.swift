@@ -5,7 +5,8 @@ final class ActiveCallViewModel: ObservableObject {
     private var call: CallEntity
     private let router: ChatRoomsListRouting
     private let activeCallUseCase: ActiveCallUseCaseProtocol
-    
+    private var chatRoomUseCase: ChatRoomUseCaseProtocol
+
     @Published private(set) var muted: UIImage?
     @Published private(set) var video: UIImage?
     @Published private(set) var isReconnecting: Bool
@@ -21,11 +22,13 @@ final class ActiveCallViewModel: ObservableObject {
 
     init(call: CallEntity,
          router: ChatRoomsListRouting,
-         activeCallUseCase: ActiveCallUseCaseProtocol
+         activeCallUseCase: ActiveCallUseCaseProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol
     ) {
         self.call = call
         self.router = router
         self.activeCallUseCase = activeCallUseCase
+        self.chatRoomUseCase = chatRoomUseCase
         self.isReconnecting = call.status == .connecting
         self.muted = call.hasLocalAudio ? nil : UIImage(asset: Asset.Images.Chat.Calls.userMutedBanner)
         self.video = call.hasLocalVideo ? UIImage(asset: Asset.Images.Chat.Calls.callSlotsBanner) : nil
@@ -79,6 +82,7 @@ final class ActiveCallViewModel: ObservableObject {
     }
     
     func activeCallViewTapped() {
-        router.joinActiveCall(call)
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+        router.openCallView(for: call, in: chatRoom)
     }
 }

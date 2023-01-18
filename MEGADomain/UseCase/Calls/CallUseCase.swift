@@ -6,6 +6,7 @@ protocol CallUseCaseProtocol {
     func call(for chatId: HandleEntity) -> CallEntity?
     func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func createActiveSessions()
     func hangCall(for callId: HandleEntity)
@@ -82,6 +83,10 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
     
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         repository.startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+    }
+    
+    func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+        repository.startCallNoRinging(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
     }
     
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {

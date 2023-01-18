@@ -69,7 +69,7 @@ public enum Strings {
     public static func removedAPublicLinkForTheChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ removed a public link for the chat.", String(describing: p1))
     }
-    /// %@ storage full
+    /// %@ Storage Full
     public static func storageFull(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ Storage Full", String(describing: p1))
     }
@@ -4161,6 +4161,20 @@ public enum Strings {
         public static let failed = Strings.tr("Localizable", "meetings.reconnecting.failed")
         /// Reconnecting
         public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
+      }
+      public enum Scheduled {
+        public enum ButtonOverlay {
+          /// Join meeting
+          public static let joinMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.joinMeeting")
+          /// Start meeting
+          public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.startMeeting")
+        }
+        public enum ContextMenu {
+          /// Join
+          public static let joinMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.joinMeeting")
+          /// Start
+          public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
+        }
       }
       public enum Sharelink {
         /// Meeting link could not be generated. Please try again.
