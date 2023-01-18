@@ -10,10 +10,11 @@ final class ActiveCallViewModelTests: XCTestCase {
     func testAction_joinCallViewTapped() {
         let router = MockChatRoomsListRouter()
         let call = CallEntity()
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: MockActiveCallUseCase())
+        let mockChatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: MockChatRoom().toChatRoomEntity())
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: MockActiveCallUseCase(), chatRoomUseCase: mockChatRoomUseCase)
         viewModel.activeCallViewTapped()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
-            XCTAssert(router.joinActiveCall_calledTimes == 1)
+            XCTAssert(router.openCallView_calledTimes == 1)
         } else {
             XCTFail()
         }
@@ -23,7 +24,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let activeCallUseCase = MockActiveCallUseCase()
         let call = CallEntity(callId: 100)
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase)
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase, chatRoomUseCase: MockChatRoomUseCase())
         
         let expectation = expectation(description: "Awaiting publisher")
         
@@ -45,7 +46,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let activeCallUseCase = MockActiveCallUseCase()
         let call = CallEntity(callId: 100)
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase)
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase, chatRoomUseCase: MockChatRoomUseCase())
         
         let expectation = expectation(description: "Awaiting publisher")
         
@@ -67,7 +68,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let activeCallUseCase = MockActiveCallUseCase()
         let call = CallEntity(callId: 100)
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase)
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase, chatRoomUseCase: MockChatRoomUseCase())
         
         let expectation = expectation(description: "Awaiting publisher")
         
@@ -89,7 +90,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let activeCallUseCase = MockActiveCallUseCase()
         let call = CallEntity(callId: 100)
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase)
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase, chatRoomUseCase: MockChatRoomUseCase())
         
         let expectation = expectation(description: "Awaiting publisher")
         
@@ -111,7 +112,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let activeCallUseCase = MockActiveCallUseCase()
         let call = CallEntity()
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase)
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase, chatRoomUseCase: MockChatRoomUseCase())
         
         let expectation = expectation(description: "Awaiting publisher")
         
@@ -133,7 +134,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let activeCallUseCase = MockActiveCallUseCase()
         let call = CallEntity()
-        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase)
+        let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: activeCallUseCase, chatRoomUseCase: MockChatRoomUseCase())
         
         let expectation = expectation(description: "Awaiting publisher")
         

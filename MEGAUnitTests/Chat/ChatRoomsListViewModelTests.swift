@@ -106,7 +106,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
 
 final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
-    var joinActiveCall_calledTimes = 0
+    var openCallView_calledTimes = 0
     var presentStartConversation_calledTimes = 0
     var presentMeetingAlreayExists_calledTimes = 0
     var presentCreateMeeting_calledTimes = 0
@@ -122,6 +122,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showContactDetailsInfo_calledTimes = 0
     var showArchivedChatRooms_calledTimes = 0
     var openChatRoom_calledTimes = 0
+    var showCallError_calledTimes = 0
     
     var navigationController: UINavigationController?
     
@@ -181,11 +182,15 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showArchivedChatRooms_calledTimes += 1
     }
     
-    func joinActiveCall(_ call: MEGADomain.CallEntity) {
-        joinActiveCall_calledTimes += 1
-    }
-    
     func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int) {
         openChatRoom_calledTimes += 1
+    }
+    
+    func openCallView(for call: MEGADomain.CallEntity, in chatRoom: MEGADomain.ChatRoomEntity) {
+        openCallView_calledTimes += 1
+    }
+    
+    func showCallError(_ message: String) {
+        showCallError_calledTimes += 1
     }
 }

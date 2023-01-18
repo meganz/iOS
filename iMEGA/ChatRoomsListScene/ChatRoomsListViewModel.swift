@@ -35,7 +35,8 @@ protocol ChatRoomsListRouting {
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
     func showArchivedChatRooms()
-    func joinActiveCall(_ call: CallEntity)
+    func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity)
+    func showCallError(_ message: String)
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
@@ -397,6 +398,8 @@ final class ChatRoomsListViewModel: ObservableObject {
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
             userUseCase: UserUseCase(repo: .live),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             chatNotificationControl: chatNotificationControl
         )
     }
@@ -496,7 +499,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             activeCallViewModel = ActiveCallViewModel(
                 call: call,
                 router: router,
-                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
+                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+                chatRoomUseCase: chatRoomUseCase
             )
         } else {
             activeCallViewModel = nil
