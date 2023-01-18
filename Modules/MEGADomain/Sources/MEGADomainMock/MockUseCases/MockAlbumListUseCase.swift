@@ -4,6 +4,7 @@ import MEGADomain
 public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     private let cameraUploadNode: NodeEntity?
     private let albums: [AlbumEntity]
+    private let createdUserAlbums: [String: AlbumEntity]
     
     public var startMonitoringNodesUpdateCalled = 0
     public var stopMonitoringNodesUpdateCalled = 0
@@ -12,17 +13,22 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
         AlbumEntity(id: 4, name: name, coverNode: NodeEntity(handle: 4), count: 0, type: .user)
     }
     
-    public init(cameraUploadNode: NodeEntity? = nil, albums: [AlbumEntity] = []) {
+    public init(cameraUploadNode: NodeEntity? = nil, albums: [AlbumEntity] = [], createdUserAlbums: [String: AlbumEntity] = [:]) {
         self.cameraUploadNode = cameraUploadNode
         self.albums = albums
+        self.createdUserAlbums = createdUserAlbums
     }
     
     public func loadCameraUploadNode() async throws -> NodeEntity? {
         cameraUploadNode
     }
     
-    public func loadAlbums() async -> [AlbumEntity] {
-        albums
+    public func systemAlbums() async throws -> [AlbumEntity] {
+        albums.filter { $0.type != .user }
+    }
+    
+    public func userAlbums() async -> [AlbumEntity] {
+        albums.filter { $0.type == .user }
     }
     
     public func startMonitoringNodesUpdate(callback: @escaping () -> Void) {
@@ -34,6 +40,6 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     }
     
     public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
-        MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
+        createdUserAlbums[name ?? ""] ?? MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
     }
 }

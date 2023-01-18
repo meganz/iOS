@@ -13,19 +13,21 @@ public struct AlbumEntity: Identifiable, Hashable {
     public let coverNode: NodeEntity?
     public let count: UInt
     public let type: AlbumEntityType
+    public let modificationTime: Date?
     
-    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: UInt, type: AlbumEntityType) {
+    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: UInt, type: AlbumEntityType, modificationTime: Date? = nil) {
         self.id = id
         self.name = name
         self.coverNode = coverNode
         self.count = count
         self.type = type
+        self.modificationTime = modificationTime
     }
 }
 
 extension AlbumEntity {
     public func update(name newName: String) -> AlbumEntity {
-        AlbumEntity(id: self.id, name: newName, coverNode: self.coverNode, count: self.count, type: self.type)
+        AlbumEntity(id: self.id, name: newName, coverNode: self.coverNode, count: self.count, type: self.type, modificationTime: self.modificationTime)
     }
     
     public var systemAlbum: Bool {

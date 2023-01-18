@@ -2,7 +2,8 @@ import Foundation
 
 public protocol AlbumListUseCaseProtocol {
     func loadCameraUploadNode() async throws -> NodeEntity?
-    func loadAlbums() async -> [AlbumEntity]
+    func systemAlbums() async throws -> [AlbumEntity]
+    func userAlbums() async -> [AlbumEntity]
     func startMonitoringNodesUpdate(callback: @escaping () -> Void)
     func stopMonitoringNodesUpdate()
     func createUserAlbum(with name: String?) async throws -> AlbumEntity
@@ -34,12 +35,6 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         return try await albumRepository.loadCameraUploadNode()
     }
     
-    public func loadAlbums() async -> [AlbumEntity] {
-        async let userAlbums = loadUserAlbums()
-        async let systemAlbums = try? loadSystemAlbums()
-        return await (systemAlbums ?? []) + userAlbums
-    }
-    
     public func startMonitoringNodesUpdate(callback: @escaping () -> Void) {
         self.callback = callback
         fileSearchRepository.startMonitoringNodesUpdate(callback: onNodesUpdate)
@@ -50,12 +45,35 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         fileSearchRepository.stopMonitoringNodesUpdate()
     }
     
-    // MARK: - Private
-    
-    private func loadSystemAlbums() async throws -> [AlbumEntity] {
+    public func systemAlbums() async throws -> [AlbumEntity] {
         let allPhotos = try await allSortedThumbnailPhotosAndVideos()
         return await createSystemAlbums(allPhotos)
     }
+    
+    public func userAlbums() async -> [AlbumEntity] {
+        let albums = await userAlbumRepository.albums()
+        let albumCovers = await albumCovers(albums)
+        return albums
+            .map { AlbumEntity(id: $0.handle,
+                               name: $0.name,
+                               coverNode: albumCovers[$0.coverId],
+                               count: $0.size,
+                               type: .user,
+                               modificationTime: $0.modificationTime)
+            }
+    }
+    
+    public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
+        let setEntity = try await userAlbumRepository.createAlbum(name)
+        return AlbumEntity(id: setEntity.handle,
+                           name: setEntity.name,
+                           coverNode: nil,
+                           count: 0,
+                           type: .user,
+                           modificationTime: setEntity.modificationTime)
+    }
+    
+    // MARK: - Private
     
     private func allSortedThumbnailPhotosAndVideos() async throws -> [NodeEntity] {
         async let allPhotos = try await fileSearchRepository.allPhotos()
@@ -108,26 +126,29 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
         return albums
     }
     
+    private func albumCovers(_ albums: [SetEntity]) async -> [HandleEntity: NodeEntity] {
+        return await withTaskGroup(of: (HandleEntity, NodeEntity?).self) { taskGroup -> [HandleEntity: NodeEntity] in
+            albums.forEach { setEntity in
+                taskGroup.addTask { [weak self] in
+                    guard let albumContents = await self?.userAlbumRepository.albumContent(by: setEntity.handle),
+                          let albumCoverSetElement = albumContents.first(where: {
+                              $0.handle == setEntity.coverId
+                          }) else {
+                        return (setEntity.coverId, nil)
+                    }
+                    let albumCover = await self?.fileSearchRepository.fetchNode(by: albumCoverSetElement.nodeId)
+                    return (setEntity.coverId, albumCover)
+                }
+            }
+            return await taskGroup.reduce(into: [HandleEntity: NodeEntity](), {
+                if let albumCoverNode = $1.1 {
+                    $0[$1.0] = albumCoverNode
+                }
+            })
+        }
+    }
+    
     private func onNodesUpdate(_ nodes: [NodeEntity]) {
         callback?()
-    }
-    
-    public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
-        let setEntity = try await userAlbumRepository.createAlbum(name)
-        return AlbumEntity(id: setEntity.handle,
-                           name: setEntity.name,
-                           coverNode: nil,
-                           count: 0,
-                           type: .user)
-    }
-    
-    private func loadUserAlbums() async -> [AlbumEntity] {
-        await userAlbumRepository.albums()
-            .map({ AlbumEntity(id: $0.handle,
-                               name: $0.name,
-                               coverNode: fileSearchRepository.fetchNode(by: $0.coverId),
-                               count: $0.size,
-                               type: .user)
-            })
     }
 }

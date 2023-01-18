@@ -58,7 +58,7 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
         }
     }
     
-    func fetchNode(by id: HandleEntity) -> NodeEntity? {
+    func fetchNode(by id: HandleEntity) async -> NodeEntity? {
         sdk.node(forHandle: id)?.toNodeEntity()
     }
 }
