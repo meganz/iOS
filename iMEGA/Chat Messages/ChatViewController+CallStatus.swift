@@ -3,15 +3,12 @@ import Combine
 import MEGADomain
 
 extension ChatViewController {
-    var joinCallString: String {
-        return Strings.Localizable.Chat.joinCall
-    }
-    
     func checkIfChatHasActiveCall() {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId),
               call.status != .destroyed,
               call.status != .terminatingUserParticipation else {
-            joinCallCleanup()
+            tapToReturnToCallCleanup()
+            startOrJoinCallCleanup(callInProgress: false)
             return
         }
         
@@ -22,37 +19,69 @@ extension ChatViewController {
         initDuration = TimeInterval(call.duration)
         if !(timer?.isValid ?? false) {
             let startTime = Date().timeIntervalSince1970
-            updateJoinCallLabel(withStartTime: startTime)
+            updateTapToReturnToCallLabel(withStartTime: startTime)
             
             timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
                 guard let self = self, self.chatCall?.status != .connecting else { return }
-                self.updateJoinCallLabel(withStartTime: startTime)
+                self.updateTapToReturnToCallLabel(withStartTime: startTime)
             }
             
             RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
         }
     }
     
-    private func showJoinCall(withTitle title: String) {
-        let spacePadding = "   "
-        joinCallButton.setTitle(spacePadding + title + spacePadding, for: .normal)
-        joinCallButton.isHidden = false
+     func showStartOrJoinCallButton() {
+         if chatRoom.isMeeting {
+             startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.joinMeeting + spacePadding, for: .normal)
+         } else {
+             startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Chat.joinCall + spacePadding, for: .normal)
+         }
+         
+        startOrJoinCallButton.isHidden = false
     }
     
-    private func updateJoinCallLabel(withStartTime startTime: TimeInterval) {
+    private func showTapToReturnToCall(withTitle title: String) {
+        tapToReturnToCallButton.setTitle(title, for: .normal)
+        tapToReturnToCallButton.isHidden = false
+    }
+    
+    private func updateTapToReturnToCallLabel(withStartTime startTime: TimeInterval) {
         guard let initDuration = initDuration else { return }
         
         let time = Date().timeIntervalSince1970 - startTime + initDuration
         let title = Strings.Localizable.touchToReturnToCall(NSString.mnz_string(fromTimeInterval: time))
-        showJoinCall(withTitle: title)
+        showTapToReturnToCall(withTitle: title)
     }
     
-    private func joinCallCleanup() {
+    internal func tapToReturnToCallCleanup() {
         timer?.invalidate()
-        joinCallButton.isHidden = true
+        tapToReturnToCallButton.isHidden = true
+    }
+    
+    internal func startOrJoinCallCleanup(callInProgress: Bool) {
+        timer?.invalidate()
+        if chatRoom.isMeeting && chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty && !callInProgress {
+            startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.startMeeting + spacePadding, for: .normal)
+            startOrJoinCallButton.isHidden = false
+        } else {
+            startOrJoinCallButton.isHidden = true
+        }
     }
         
     @objc func didTapJoinCall() {
+        guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall ||
+                MEGASdkManager.sharedMEGAChatSdk().isCallActive(forChatRoomId: chatRoom.chatId) else {
+            MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
+                guard let self = self else { return }
+                self.endActiveCallAndJoinCurrentChatroomCall()
+            }
+            return
+        }
+        
+        joinCall()
+    }
+    
+    @objc func didTapToReturnToCall() {
         guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall ||
                 MEGASdkManager.sharedMEGAChatSdk().isCallActive(forChatRoomId: chatRoom.chatId) else {
             MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
@@ -177,21 +206,25 @@ extension ChatViewController {
         chatCall = call
 
         guard MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId) == .online else {
-            joinCallCleanup()
+            tapToReturnToCallCleanup()
+            startOrJoinCallCleanup(callInProgress: false)
             return
         }
 
         switch call.status {
         case .initial, .joining, .userNoPresent:
-            joinCallCleanup()
-            showJoinCall(withTitle: joinCallString)
+            startOrJoinCallCleanup(callInProgress: false)
+            tapToReturnToCallCleanup()
+            showStartOrJoinCallButton()
         case .inProgress:
+            startOrJoinCallCleanup(callInProgress: true)
             initTimerForCall(call)
             showCallEndTimerIfNeeded(call: call.toCallEntity())
         case .connecting:
-            showJoinCall(withTitle: Strings.Localizable.reconnecting)
+            showTapToReturnToCall(withTitle: Strings.Localizable.reconnecting)
         case .destroyed, .terminatingUserParticipation, .undefined:
-            joinCallCleanup()
+            startOrJoinCallCleanup(callInProgress: false)
+            tapToReturnToCallCleanup()
         default:
             return
         }

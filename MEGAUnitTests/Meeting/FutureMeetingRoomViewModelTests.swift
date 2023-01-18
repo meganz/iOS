@@ -5,6 +5,11 @@ import MEGADomainMock
 
 final class FutureMeetingRoomViewModelTests: XCTestCase {
     
+    private let router = MockChatRoomsListRouter()
+    private let chatUseCase = MockChatUseCase()
+    private let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatId: 100))
+    private let callUseCase = MockCallUseCase(call: CallEntity(chatId: 100, callId: 1))
+    
     func testComputedProperty_title() {
         let title = "Meeting Title"
         let scheduledMeeting = ScheduledMeetingEntity(title: title)
@@ -121,4 +126,69 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.lastMessageTimestamp == DateFormatter.fromTemplate("ddyyMM").localisedString(from: pastDate))
     }
     
+    func testStartOrJoinCallActionTapped_startCall() {
+        chatUseCase.isCallActive = false
+        callUseCase.callCompletion = .success(callUseCase.call)
+        
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        viewModel.startOrJoinCall()
+        
+        XCTAssertTrue(router.openCallView_calledTimes == 1)
+    }
+    
+    func testStartOrJoinCallActionTapped_startCallError() {
+        chatUseCase.isCallActive = false
+        callUseCase.callCompletion = .failure(.generic)
+        
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        viewModel.startOrJoinCall()
+        
+        XCTAssertTrue(router.showCallError_calledTimes == 1)
+    }
+    
+    func testStartOrJoinCallActionTapped_startCallTooManyParticipants() {
+        chatUseCase.isCallActive = false
+        callUseCase.callCompletion = .failure(.tooManyParticipants)
+        
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        viewModel.startOrJoinCall()
+        
+        XCTAssertTrue(router.showCallError_calledTimes == 1)
+    }
+    
+    func testStartOrJoinCallActionTapped_joinCall() {
+        chatUseCase.isCallActive = true
+        callUseCase.callCompletion = .success(callUseCase.call)
+        
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        viewModel.startOrJoinCall()
+        
+        XCTAssertTrue(router.openCallView_calledTimes == 1)
+    }
+    
+    func testStartOrJoinCallActionTapped_joinCallError() {
+        chatUseCase.isCallActive = true
+        callUseCase.callCompletion = .failure(.generic)
+        
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        viewModel.startOrJoinCall()
+        
+        XCTAssertTrue(router.showCallError_calledTimes == 1)
+    }
+    
+    func testStartOrJoinCallActionTapped_joinCallTooManyParticipants() {
+        chatUseCase.isCallActive = true
+        callUseCase.callCompletion = .failure(.tooManyParticipants)
+        
+        let viewModel = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        viewModel.startOrJoinCall()
+        
+        XCTAssertTrue(router.showCallError_calledTimes == 1)
+    }
 }

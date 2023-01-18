@@ -5,11 +5,13 @@ import Combine
 import MEGADomain
 
 class ChatViewController: MessagesViewController {
+    let spacePadding = "   "
 
     // MARK: - Properties
     let sdk = MEGASdkManager.sharedMEGASdk()
     let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
-    
+    let chatUseCase = ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
+    let callUseCase = CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
     @objc private(set) var chatRoom: MEGAChatRoom
     
     var chatCall: MEGAChatCall?
@@ -84,13 +86,21 @@ class ChatViewController: MessagesViewController {
     var timer: Timer?
     var initDuration: TimeInterval?
 
-    lazy var joinCallButton: UIButton = {
+    lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
         button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
         button.layer.cornerRadius = 20
-        button.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
+        button.backgroundColor = #colorLiteral(red: 0.1725490196, green: 0.1725490196, blue: 0.1803921569, alpha: 1)
+        return button
+    }()
+    
+    lazy var tapToReturnToCallButton: UIButton = {
+        let button = MEGAButton(textStyle: "caption1", weight: "bold")
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
+        button.backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
         return button
     }()
     
@@ -204,7 +214,8 @@ class ChatViewController: MessagesViewController {
         update()
         
         messagesCollectionView.allowsMultipleSelection = true
-        configureJoinCallButton()
+        configureStartOrJoinCallButton()
+        configureTapToReturnToCallButton()
         configurePreviewerButton()
         addObservers()
         addChatBottomInfoScreenToView()
@@ -688,21 +699,34 @@ class ChatViewController: MessagesViewController {
         maintainPositionOnKeyboardFrameChanged = true
     }
     
-    private func configureJoinCallButton() {
-        joinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
-        view.addSubview(joinCallButton)
+    private func configureTapToReturnToCallButton() {
+        tapToReturnToCallButton.addTarget(self, action: #selector(didTapToReturnToCall), for: .touchUpInside)
+        view.addSubview(tapToReturnToCallButton)
         
-        joinCallButton.translatesAutoresizingMaskIntoConstraints = false
+        tapToReturnToCallButton.translatesAutoresizingMaskIntoConstraints = false
         [
-            joinCallButton.heightAnchor.constraint(equalToConstant: 40.0),
-            joinCallButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -30),
-            joinCallButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            joinCallButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150.0)
+            tapToReturnToCallButton.heightAnchor.constraint(equalToConstant: 44.0),
+            tapToReturnToCallButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tapToReturnToCallButton.widthAnchor.constraint(equalTo: view.widthAnchor)
         ].activate()
         
-        joinCallButton.isHidden = true
+        tapToReturnToCallCleanup()
     }
     
+    private func configureStartOrJoinCallButton() {
+        startOrJoinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
+        view.addSubview(startOrJoinCallButton)
+        
+        startOrJoinCallButton.translatesAutoresizingMaskIntoConstraints = false
+        [
+            startOrJoinCallButton.heightAnchor.constraint(equalToConstant: 40.0),
+            startOrJoinCallButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            startOrJoinCallButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startOrJoinCallButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150.0)
+        ].activate()
+        
+        startOrJoinCallCleanup(callInProgress: false)
+    }
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
@@ -986,29 +1010,45 @@ class ChatViewController: MessagesViewController {
         setEditing(false, animated: true)
     }
     
+    private func callRequestCompletion(isVideoEnabled: Bool, errorType: MEGAChatErrorType) {
+        self.shouldDisableAudioVideoCalling = false
+        self.updateRightBarButtons()
+        
+        if errorType == .MEGAChatErrorTypeOk {
+            self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: false)
+        } else {
+            MEGALogError("Cannot answer call")
+        }
+    }
+    
+    private func startMeetingNoRinging(videoCall: Bool) {
+        guard let scheduledMeeting = chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else {
+            MEGALogError("Failed to fetch scheduled meeting to start no ringing call")
+            return
+        }
+        
+        preapareAudioForCall()
+        callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
+            guard let self else { return }
+            self.shouldDisableAudioVideoCalling = false
+            self.updateRightBarButtons()
+            switch result {
+            case .success(_):
+                self.startMeetingUI(isVideoEnabled: videoCall,
+                                    isSpeakerEnabled: self.chatRoom.isMeeting || videoCall)
+            case .failure(_):
+                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
+            }
+        }
+    }
+    
     private func startOutGoingCall(isVideoEnabled: Bool) {
         let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
-            self?.shouldDisableAudioVideoCalling = false
-            self?.updateRightBarButtons()
-            
-            guard let self = self, error.type == .MEGAChatErrorTypeOk else {
-                MEGALogDebug("Cannot start a call")
-                return
-            }
-            
-            self.startMeetingUI(isVideoEnabled: isVideoEnabled,
-                                isSpeakerEnabled: self.chatRoom.isMeeting || isVideoEnabled)
+            guard let self = self else { return }
+            self.callRequestCompletion(isVideoEnabled: isVideoEnabled, errorType: error.type)
         }
         
-        shouldDisableAudioVideoCalling = true
-        updateRightBarButtons()
-        
-        audioSessionUC.configureCallAudioSession()
-        if chatRoom.isMeeting {
-            audioSessionUC.enableLoudSpeaker()
-        } else {
-            audioSessionUC.disableLoudSpeaker()
-        }
+        preapareAudioForCall()
         CallActionManager.shared.startCall(chatId:chatRoom.chatId,
                                            enableVideo:isVideoEnabled,
                                            enableAudio:!chatRoom.isMeeting,
@@ -1016,24 +1056,12 @@ class ChatViewController: MessagesViewController {
     }
     
     private func answerCall(isVideoEnabled: Bool) {
-        let delegate = MEGAChatAnswerCallRequestDelegate { error in
-            self.shouldDisableAudioVideoCalling = false
-            self.updateRightBarButtons()
-
-            if error.type == .MEGAChatErrorTypeOk {
-                self.startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: false)
-            }
+        let delegate = MEGAChatAnswerCallRequestDelegate { [weak self] error in
+            guard let self = self else { return }
+            self.callRequestCompletion(isVideoEnabled: isVideoEnabled, errorType: error.type)
         }
         
-        shouldDisableAudioVideoCalling = true
-        updateRightBarButtons()
-        
-        audioSessionUC.configureCallAudioSession()
-        if chatRoom.isMeeting {
-            audioSessionUC.enableLoudSpeaker()
-        } else {
-            audioSessionUC.disableLoudSpeaker()
-        }
+        preapareAudioForCall()
         CallActionManager.shared.answerCall(chatId:chatRoom.chatId,
                                             enableVideo:isVideoEnabled,
                                             enableAudio:!chatRoom.isMeeting,
@@ -1064,9 +1092,25 @@ class ChatViewController: MessagesViewController {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
 
+    private func preapareAudioForCall() {
+        shouldDisableAudioVideoCalling = true
+        updateRightBarButtons()
+        
+        audioSessionUC.configureCallAudioSession()
+        if chatRoom.isMeeting {
+            audioSessionUC.enableLoudSpeaker()
+        } else {
+            audioSessionUC.disableLoudSpeaker()
+        }
+    }
+    
     func openCallViewWithVideo(videoCall: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
-            startOutGoingCall(isVideoEnabled: videoCall)
+            if chatRoom.isMeeting && chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty {
+                startMeetingNoRinging(videoCall: videoCall)
+            } else {
+                startOutGoingCall(isVideoEnabled: videoCall)
+            }
             return
         }
         
