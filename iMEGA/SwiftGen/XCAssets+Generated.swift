@@ -542,6 +542,12 @@ internal enum Asset {
         internal static let sharedFilesInfo = ImageAsset(name: "sharedFilesInfo")
       }
       internal static let infoMeetings = ImageAsset(name: "InfoMeetings")
+      internal enum Scheduled {
+        internal enum ContextMenu {
+          internal static let joinMeeting2 = ImageAsset(name: "joinMeeting2")
+          internal static let startMeeting = ImageAsset(name: "startMeeting")
+        }
+      }
       internal static let shareWhite = ImageAsset(name: "ShareWhite")
       internal static let addContactMeetings = ImageAsset(name: "addContactMeetings")
       internal static let addContactWhite = ImageAsset(name: "addContactWhite")

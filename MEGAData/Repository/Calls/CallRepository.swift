@@ -66,26 +66,15 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     }
     
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        let delegate = MEGAChatStartCallRequestDelegate { [weak self] (error) in
-            if error.type == .MEGAChatErrorTypeOk {
-                guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
-                    completion(.failure(.generic))
-                    return
-                }
-                self?.call = call.toCallEntity()
-                self?.callId = call.callId
-                completion(.success(call.toCallEntity()))
-            } else {
-                switch error.type {
-                case .MEGAChatErrorTooMany:
-                    completion(.failure(.tooManyParticipants))
-                default:
-                    completion(.failure(.generic))
-                }
-            }
-        }
+        let delegate = createStartMeetingRequestDelegate(for: chatId, completion: completion)
         
         callActionManager.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+    }
+    
+    func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+        let delegate = createStartMeetingRequestDelegate(for: scheduledMeeting.chatId, completion: completion)
+        
+        callActionManager.startCallNoRinging(chatId: scheduledMeeting.chatId, scheduledId: scheduledMeeting.scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
@@ -155,6 +144,27 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
 
         return callUpdateListener
+    }
+    
+    private func createStartMeetingRequestDelegate(for chatId: ChatIdEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) -> MEGAChatStartCallRequestDelegate {
+        return MEGAChatStartCallRequestDelegate { [weak self] (error) in
+            if error.type == .MEGAChatErrorTypeOk {
+                guard let call = self?.chatSdk.chatCall(forChatId: chatId) else {
+                    completion(.failure(.generic))
+                    return
+                }
+                self?.call = call.toCallEntity()
+                self?.callId = call.callId
+                completion(.success(call.toCallEntity()))
+            } else {
+                switch error.type {
+                case .MEGAChatErrorTooMany:
+                    completion(.failure(.tooManyParticipants))
+                default:
+                    completion(.failure(.generic))
+                }
+            }
+        }
     }
 }
 

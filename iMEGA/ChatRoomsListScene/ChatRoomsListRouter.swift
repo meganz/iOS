@@ -225,15 +225,19 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
     }
     
-    func joinActiveCall(_ call: CallEntity) {
-        guard let navigationController, let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: call.chatId) else {
+    func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity) {
+        guard let navigationController else {
             return
         }
         
         let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
         MeetingContainerRouter(presenter: navigationController,
-                               chatRoom: chatRoom.toChatRoomEntity(),
+                               chatRoom: chatRoom,
                                call: call,
                                isSpeakerEnabled: isSpeakerEnabled).start()
+    }
+    
+    func showCallError(_ message: String) {
+        SVProgressHUD.showError(withStatus: message)
     }
 }

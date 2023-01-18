@@ -755,7 +755,7 @@
 /* Title for custom settings */
 "Custom Settings"="Custom settings";
 /* Title to show when device local storage is full */
-"%@ Storage Full"="%@ storage full";
+"%@ Storage Full"="%@ Storage Full";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Device storage almost full";
 /* Detail for local storage full situation */
@@ -3202,3 +3202,11 @@
 "meetings.info.participants.seeLess"="See less";
 /* Text description for chat privacy communication */
 "chat.introductionHeader.privacy.description"="MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:";
+/* Button title to start an scheduled meeting before the start date */
+"meetings.scheduled.buttonOverlay.startMeeting"="Start meeting";
+/* Button title to join an scheduled meeting */
+"meetings.scheduled.buttonOverlay.joinMeeting"="Join meeting";
+/* Button title to start an scheduled meeting before the start date from context menu */
+"meetings.scheduled.contextMenu.startMeeting"="Start";
+/* Button title to join an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.joinMeeting"="Join";

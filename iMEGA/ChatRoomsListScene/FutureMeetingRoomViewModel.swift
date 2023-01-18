@@ -7,6 +7,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private var chatNotificationControl: ChatNotificationControl
+    private let callUseCase: CallUseCaseProtocol
+    private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
@@ -54,12 +56,16 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
+         callUseCase: CallUseCaseProtocol,
+         audioSessionUseCase: AudioSessionUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
+        self.callUseCase = callUseCase
+        self.audioSessionUseCase = audioSessionUseCase
         self.chatNotificationControl = chatNotificationControl
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
 
@@ -78,10 +84,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         }
         
         self.futureMeetingSearchStringTask = createFutureMeetingSearchStringTask()
-        self.contextMenuOptions = constructContextMenuOptions()
         
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: scheduledMeeting.chatId)
         monitorActiveCallChanges()
+        self.contextMenuOptions = constructContextMenuOptions()
     }
     
     func contains(searchText: String) -> Bool {
@@ -146,6 +152,12 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
 
         options += [
             ChatRoomContextMenuOption(
+                title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
+                imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting.name,
+                action: { [weak self] in
+                    self?.startOrJoinMeetingTapped()
+                }),
+            ChatRoomContextMenuOption(
                 title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
                 imageName: Asset.Images.Chat.mutedChat.name,
                 action: { [weak self] in
@@ -192,8 +204,75 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
             .sink { [weak self] call in
                 guard let self, call.chatId == self.scheduledMeeting.chatId else { return }
                 self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
+                self.contextMenuOptions = self.constructContextMenuOptions()
             }
             .store(in: &subscriptions)
+    }
+    
+    private func startOrJoinMeetingTapped() {
+        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { [weak self] granted in
+            guard granted else {
+                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                return
+            }
+            
+            self?.startOrJoinCall()
+        }
+    }
+    
+    private func startOrJoinCall() {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else {
+            MEGALogError("Not able to fetch chat room for start or join call")
+            return
+        }
+        
+        if existsInProgressCallInChatRoom {
+            joinCall(in: chatRoom)
+        } else {
+            startMeetingCallNoRinging(in: chatRoom)
+        }
+    }
+    
+    private func joinCall(in chatRoom: ChatRoomEntity) {
+        guard let call = callUseCase.call(for: scheduledMeeting.chatId) else { return }
+        if call.status == .userNoPresent {
+            callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true) { [weak self] result in
+                switch result {
+                case .success(_):
+                    self?.prepareAndShowCallUI(for: call, in: chatRoom)
+                case .failure(let error):
+                    switch error {
+                    case .tooManyParticipants:
+                        self?.router.showCallError(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+                    default:
+                        MEGALogError("Not able to join scheduled meeting call")
+                    }
+                }
+            }
+        } else {
+            prepareAndShowCallUI(for: call, in: chatRoom)
+        }
+    }
+    
+    private func startMeetingCallNoRinging(in chatRoom: ChatRoomEntity) {
+        callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: false, enableAudio: true) { [weak self] result in
+            switch result {
+            case .success(let call):
+                self?.prepareAndShowCallUI(for: call, in: chatRoom)
+            case .failure(let error):
+                switch error {
+                case .tooManyParticipants:
+                    self?.router.showCallError(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+                default:
+                    MEGALogError("Not able to start scheduled meeting call")
+                }
+            }
+        }
+    }
+    
+    private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {
+        audioSessionUseCase.enableLoudSpeaker()
+        router.openCallView(for: call, in: chatRoom)
     }
 }
 
