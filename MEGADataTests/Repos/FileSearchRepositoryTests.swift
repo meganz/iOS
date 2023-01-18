@@ -41,6 +41,14 @@ final class FileSearchRepositoryTests: XCTestCase {
         XCTAssertFalse(sdk.hasGlobalDelegate)
     }
     
+    func testFetchNodeForHandle_onRetrieval_shouldMapToNodeEnity() async {
+        let handle = HandleEntity(25)
+        let mockNode = await MockNode(handle: handle)
+        let repo = FileSearchRepository(sdk: MockSdk(nodes: [mockNode]))
+        let result = await repo.fetchNode(by: handle)
+        XCTAssertEqual(result, mockNode.toNodeEntity())
+    }
+    
     // MARK: Private
     
     private func photoNodes() -> [MockNode] {

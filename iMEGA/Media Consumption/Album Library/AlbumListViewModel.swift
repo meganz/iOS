@@ -56,11 +56,14 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
-                albums.append(newAlbum)
-                albums.sort(by: { $0.name < $1.name })
+                if let insertIndex = albums.firstIndex(where: { $0.type == .user && (newAlbum.modificationTime ?? .distantPast) > ($0.modificationTime ?? .distantPast) }) {
+                    albums.insert(newAlbum, at: insertIndex)
+                }  else {
+                    albums.append(newAlbum)
+                }
                 newlyAddedAlbum = newAlbum
             } catch {
-                MEGALogError("Error creating album: \(error.localizedDescription)")
+                MEGALogError("Error creating user album: \(error.localizedDescription)")
             }
             shouldLoad = false
         }
@@ -70,13 +73,24 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @MainActor
     private func loadAllAlbums() {
         albumLoadingTask = Task {
-            albums = await usecase.loadAlbums().map({ album in
+            async let systemAlbums = systemAlbums()
+            async let userAlbums = userAlbums()
+            albums = await systemAlbums + userAlbums
+            shouldLoad = false
+        }
+    }
+    
+    private func systemAlbums() async -> [AlbumEntity] {
+        do {
+            return try await usecase.systemAlbums().map({ album in
                 if let localizedAlbumName = localisedName(forAlbumType: album.type) {
                     return album.update(name: localizedAlbumName)
                 }
                 return album
             })
-            shouldLoad = false
+        } catch {
+            MEGALogError("Error loading system albums: \(error.localizedDescription)")
+            return []
         }
     }
     
@@ -93,6 +107,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
     }
     
+    private func userAlbums() async -> [AlbumEntity] {
+        var userAlbums = await usecase.userAlbums()
+        userAlbums.sort { ($0.modificationTime ?? .distantPast) > ($1.modificationTime ?? .distantPast) }
+        return userAlbums
+    }
+    
+
     func newAlbumName() -> String {
         var newAlbumName = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder
         let count = self.albums.filter({ $0.name.hasPrefix(newAlbumName) }).count

@@ -29,7 +29,7 @@ final public class MockFileSearchRepository: NSObject, FileSearchRepositoryProto
         self.callback = nil
     }
     
-    public func fetchNode(by id: HandleEntity) -> NodeEntity? {
+    public func fetchNode(by id: HandleEntity) async -> NodeEntity? {
         (photoNodes + videoNodes).first { node in
             node.handle == id
         }
