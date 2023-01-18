@@ -153,7 +153,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         options += [
             ChatRoomContextMenuOption(
                 title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
-                imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting.name,
+                imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name,
                 action: { [weak self] in
                     self?.startOrJoinMeetingTapped()
                 }),
@@ -220,7 +220,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func startOrJoinCall() {
+    func startOrJoinCall() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else {
             MEGALogError("Not able to fetch chat room for start or join call")
             return
@@ -245,6 +245,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                     case .tooManyParticipants:
                         self?.router.showCallError(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
                     default:
+                        self?.router.showCallError(Strings.Localizable.somethingWentWrong)
                         MEGALogError("Not able to join scheduled meeting call")
                     }
                 }
@@ -264,6 +265,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 case .tooManyParticipants:
                     self?.router.showCallError(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
                 default:
+                    self?.router.showCallError(Strings.Localizable.somethingWentWrong)
                     MEGALogError("Not able to start scheduled meeting call")
                 }
             }
