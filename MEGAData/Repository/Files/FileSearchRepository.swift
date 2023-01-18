@@ -6,8 +6,6 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
     }
     
     private let sdk: MEGASdk
-    
-    private var cancelToken: MEGACancelToken?
     private var callback: (([NodeEntity]) -> Void)?
     
     init(sdk: MEGASdk) {
@@ -36,18 +34,14 @@ final class FileSearchRepository: NSObject, FileSearchRepositoryProtocol {
     private func rootNodeSearch(for nodeFormatType: MEGANodeFormatType) async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else { continuation.resume(throwing: FileSearchResultErrorEntity.generic); return }
-            
-            cancelToken = MEGACancelToken()
-            
-            guard let cancelToken, let rootNode = sdk.rootNode
-            else {
+            guard let rootNode = sdk.rootNode else {
                 return continuation.resume(throwing: FileSearchResultErrorEntity.noDataAvailable)
             }
             
             let nodeList = sdk.nodeListSearch(
                 for: rootNode,
                 search: "",
-                cancelToken: cancelToken,
+                cancelToken: MEGACancelToken(),
                 recursive: true,
                 orderType: .modificationDesc,
                 nodeFormatType: nodeFormatType,
