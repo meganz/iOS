@@ -1,23 +1,30 @@
 import MEGADomain
 import Foundation
 
-public final class MockUserAlbumRepository: UserAlbumRepositoryProtocol {
-    var node: NodeEntity?
+public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
+    private let node: NodeEntity?
+    private let albums: [SetEntity]
+    private let albumContent: [HandleEntity: [SetElementEntity]]
     
-    init(node: NodeEntity) {
+    public init(node: NodeEntity? = nil,
+                albums: [SetEntity] = [],
+                albumContent: [HandleEntity: [SetElementEntity]] = [:]
+    ) {
         self.node = node
+        self.albums = albums
+        self.albumContent = albumContent
     }
     
     public static var newRepo: MockUserAlbumRepository {
-        MockUserAlbumRepository(node: NodeEntity(handle: 1))
+        MockUserAlbumRepository()
     }
     
     public func albums() async -> [SetEntity] {
-        []
+        albums
     }
     
     public func albumContent(by id: HandleEntity) async -> [SetElementEntity] {
-        []
+        albumContent[id] ?? []
     }
     
     public func createAlbum(_ name: String?) async throws -> SetEntity {
