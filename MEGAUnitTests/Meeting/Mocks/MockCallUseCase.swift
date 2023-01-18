@@ -46,6 +46,10 @@ final class MockCallUseCase: CallUseCaseProtocol {
         completion(callCompletion)
     }
     
+    func startCallNoRinging(for scheduledMeeting: MEGADomain.ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<MEGADomain.CallEntity, MEGADomain.CallErrorEntity>) -> Void) {
+        completion(callCompletion)
+    }
+    
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }
