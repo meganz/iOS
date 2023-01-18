@@ -1059,6 +1059,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     BOOL shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
 
     [self updateParentNodeIfNeeded:nodeList];
+    
+    [self updateControllersStackIfNeeded:nodeList];
 
     if (shouldProcessOnNodesUpdate) {
         if (self.nodes.size.unsignedIntegerValue == 0) {
