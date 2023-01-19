@@ -4,7 +4,7 @@ final class BadgeButton: UIButton {
 
     // MARK: - Subviews
 
-    private var badgeLabel: UILabel?
+    private var badgeLabel: PaddingLabel?
 
     // MARK: - Initialization
 
@@ -22,13 +22,16 @@ final class BadgeButton: UIButton {
 
     func setBadgeText(_ text: String?) {
         accessibilityLabel = Strings.Localizable.myAccount
-        guard let text = text, !text.isEmpty else {
+        guard let text, !text.isEmpty else {
             badgeLabel?.isHidden = true
             accessibilityValue = nil
             return
         }
         badgeLabel?.isHidden = false
         badgeLabel?.text = text
+        badgeLabel?.font = UIFont.boldSystemFont(ofSize: 12.0)
+        badgeLabel?.edgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        badgeLabel?.layer.cornerRadius = 10
         accessibilityValue = Strings.Localizable.notifications
     }
 
@@ -37,13 +40,13 @@ final class BadgeButton: UIButton {
     private func layoutBadgeLabel(_ badgeLabel: UILabel) {
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            badgeLabel.widthAnchor.constraint(equalToConstant: 20),
-            badgeLabel.heightAnchor.constraint(equalTo: badgeLabel.widthAnchor)
+            badgeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 20),
+            badgeLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 
     private func setupBadgeLabel(with trait: UITraitCollection) -> UILabel {
-        let badgeLabel = UILabel()
+        let badgeLabel = PaddingLabel()
         layoutBadgeLabel(badgeLabel)
 
         let labelStyler = trait.theme.labelStyleFactory.styler(of: .badge)
