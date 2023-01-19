@@ -2983,6 +2983,10 @@ public enum Strings {
           }
         }
       }
+      public enum VideoUploads {
+        /// Video Uploads
+        public static let title = Strings.tr("Localizable", "cameraUploads.videoUploads.title")
+      }
       public enum Warning {
         /// ⚠ MEGA has limited access to your photo library and cannot backup all of your photos. Tap to change permissions.
         public static let limitedAccessToPhotoMessage = Strings.tr("Localizable", "cameraUploads.warning.limitedAccessToPhotoMessage")
