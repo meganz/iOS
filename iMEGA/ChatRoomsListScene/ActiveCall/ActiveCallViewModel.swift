@@ -77,7 +77,7 @@ final class ActiveCallViewModel: ObservableObject {
         if !isReconnecting {
             let interval = interval + TimeInterval(call.duration)
             guard let durationString = interval.timeDisplayString() else { return }
-            message = Strings.Localizable.touchToReturnToCall(durationString)
+            message = Strings.Localizable.Chat.CallInProgress.tapToReturnToCall(durationString)
         }
     }
     
