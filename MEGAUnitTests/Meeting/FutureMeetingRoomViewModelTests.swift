@@ -33,15 +33,15 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     
     func testComputedProperty_unreadChatsCount() {
         let unreadMessagesCount = 10
-        let chatListItem = ChatListItemEntity(unreadCount: unreadMessagesCount)
-        let chatUseCase = MockChatUseCase(items: [chatListItem])
-        let viewModel = FutureMeetingRoomViewModel(chatUseCase: chatUseCase)
-        XCTAssertTrue(viewModel.unreadChatCount == unreadMessagesCount)
+        let chatRoomEntity = ChatRoomEntity(unreadCount: unreadMessagesCount)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
+        let viewModel = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+        XCTAssertTrue(viewModel.unreadCountString == "\(unreadMessagesCount)")
     }
     
     func testComputedProperty_noUnreadChatsCount() {
         let viewModel = FutureMeetingRoomViewModel()
-        XCTAssertTrue(viewModel.unreadChatCount == nil)
+        XCTAssertTrue(viewModel.unreadCountString.isEmpty)
     }
     
     func testComputedProperty_noLastMessageTimestampAvailable() {

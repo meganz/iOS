@@ -25,9 +25,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         return "\(start) - \(end)"
     }
     
-    var unreadChatCount: Int? {
-        chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)?.unreadCount
-    }
+    var shouldShowUnreadCount = false
+    var unreadCountString = ""
     
     var lastMessageTimestamp: String? {
         let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
@@ -79,6 +78,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 chatUseCase: chatUseCase,
                 userUseCase: userUseCase
             )
+            self.shouldShowUnreadCount = chatRoomEntity.unreadCount != 0
+            self.unreadCountString = chatRoomEntity.unreadCount > 0 ? "\(chatRoomEntity.unreadCount)" : "\(-chatRoomEntity.unreadCount)+"
         } else {
             self.chatRoomAvatarViewModel = nil
         }
