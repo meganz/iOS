@@ -22,10 +22,14 @@ extension UIAlertController {
         func actionFor(textField: UITextField, within alert: UIAlertController, viewModel: TextFieldAlertViewModel) -> UIAction {
             UIAction(handler: { _ in
                 var isEnabled = true
-                if let errorItem = viewModel.validator?(textField.text?.trim) {
+                if let errorItem = viewModel.validator?(textField.text) {
                     alert.title = errorItem.title
-                    alert.message = errorItem.description
-                    textField.textColor = UIColor.mnz_redError()
+                    if errorItem.description.isNotEmpty {
+                        alert.message = errorItem.description
+                        textField.textColor = UIColor.mnz_redError()
+                    } else {
+                        alert.message = nil
+                    }
                     isEnabled = false
                 } else {
                     alert.title = viewModel.title

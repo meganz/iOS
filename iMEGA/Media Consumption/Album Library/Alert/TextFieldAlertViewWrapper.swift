@@ -38,7 +38,7 @@ struct TextFieldAlertWrapper<Content: View>: UIViewControllerRepresentable {
 }
 
 extension View {
-    public func alert(isPresented: Binding<Bool>, _ alert: TextFieldAlertViewModel) -> some View {
+    func alert(isPresented: Binding<Bool>, _ alert: TextFieldAlertViewModel) -> some View {
         TextFieldAlertWrapper(isPresented: isPresented, alert: alert, content: self)
     }
 }
