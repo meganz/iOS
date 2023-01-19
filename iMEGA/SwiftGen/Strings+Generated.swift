@@ -2115,10 +2115,6 @@ public enum Strings {
     public static let totalSizeTakenUpByFileVersions = Strings.tr("Localizable", "Total size taken up by file versions:")
     /// Total size
     public static let totalSize = Strings.tr("Localizable", "totalSize")
-    /// Touch to return to call %@
-    public static func touchToReturnToCall(_ p1: Any) -> String {
-      return Strings.tr("Localizable", "Touch to return to call %@", String(describing: p1))
-    }
     /// Transfer
     public static let transfer = Strings.tr("Localizable", "Transfer")
     /// Transfer failed:
@@ -2984,7 +2980,7 @@ public enum Strings {
         }
       }
       public enum VideoUploads {
-        /// Video Uploads
+        /// Video uploads
         public static let title = Strings.tr("Localizable", "cameraUploads.videoUploads.title")
       }
       public enum Warning {
@@ -3021,6 +3017,12 @@ public enum Strings {
           public static func minute(_ p1: Int) -> String {
             return Strings.tr("Localizable", "chat.autoAway.label.minute", p1)
           }
+        }
+      }
+      public enum CallInProgress {
+        /// Tap to return to call %@
+        public static func tapToReturnToCall(_ p1: Any) -> String {
+          return Strings.tr("Localizable", "chat.callInProgress.tapToReturnToCall", String(describing: p1))
         }
       }
       public enum Chats {

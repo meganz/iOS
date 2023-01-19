@@ -33,7 +33,7 @@ struct FutureMeetingRoomView: View {
             
             Spacer()
 
-            if let unreadCount = viewModel.unreadChatCount, unreadCount != 0 {
+            if viewModel.shouldShowUnreadCount || viewModel.existsInProgressCallInChatRoom {
                 VStack(alignment: .trailing, spacing: 0) {
                     if let lastMessageTimestamp = viewModel.lastMessageTimestamp {
                         Text(lastMessageTimestamp)
@@ -47,12 +47,14 @@ struct FutureMeetingRoomView: View {
                                 .frame(width: 21, height: 21)
                         }
                         
-                        Text(unreadCount > 0 ? "\(unreadCount)" : "\(-unreadCount)+")
-                            .font(.caption2)
-                            .foregroundColor(.white)
-                            .padding(4)
-                            .background(Color.red)
-                            .clipShape(Circle())
+                        if viewModel.shouldShowUnreadCount {
+                            Text(viewModel.unreadCountString)
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                                .padding(4)
+                                .background(Color.red)
+                                .clipShape(Circle())
+                        }
                     }
                 }
             }

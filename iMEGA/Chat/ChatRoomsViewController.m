@@ -857,7 +857,7 @@
 - (void)updateDuration {
     if (!self.isReconnecting) {
         NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]];
+        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"chat.callInProgress.tapToReturnToCall", @"Message shown in a chat room for a call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]];
         self.topBannerLabel.text = title;
         
         [self manageCallIndicators];
