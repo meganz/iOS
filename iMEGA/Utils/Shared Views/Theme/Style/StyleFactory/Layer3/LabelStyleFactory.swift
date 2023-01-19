@@ -107,16 +107,14 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
     private func badgeStyler() -> LabelStyler {
         let textColorStyler = colorFactory.independent(.bright).asTextColorStyle
         let backgroundColorStyler = colorFactory.independent(.warning).asBackgroundColorStyle
-        let captionTextStyler = textStyleFactory.textStyle(of: .captionSemibold)
         let cornerStyler = cornerStyleFactory.cornerStyle(of: .ten)
         let paragraphStyler = paragraphStyleFactory.paragraphStyle(of: .centered)
         return { label in
-            captionTextStyler
-                .applied(on: textColorStyler
+            textColorStyler
                     .applied(on: backgroundColorStyler
                         .applied(on: cornerStyler
                             .applied(on: paragraphStyler
-                                .applied(on: label)))))
+                                .applied(on: label))))
         }
     }
 

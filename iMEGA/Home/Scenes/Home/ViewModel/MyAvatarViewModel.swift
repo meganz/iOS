@@ -191,7 +191,11 @@ extension MyAvatarViewModel: MyAvatarViewModelType {
     }
 
     private var notificationNumber: String {
-        userAlertCount + incomingContactRequestCount > 0 ? "\(userAlertCount + incomingContactRequestCount)" : ""
+        let totalNumber = userAlertCount + incomingContactRequestCount
+        if totalNumber > 99 {
+            return "99+"
+        }
+        return totalNumber > 0 ? "\(totalNumber)" : ""
     }
 
     struct MyAvatarOutputViewModel: MyAvatarViewModelOutputs {
