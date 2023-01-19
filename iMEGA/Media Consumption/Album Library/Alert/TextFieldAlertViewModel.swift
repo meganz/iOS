@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TextFieldAlertViewModel {
+struct TextFieldAlertViewModel {
     let textString: String = ""
     let title: String
     let placeholderText: String
@@ -10,7 +10,7 @@ public struct TextFieldAlertViewModel {
     var validator: ((String?) -> TextFieldAlertError?)?
 }
 
-public struct TextFieldAlertError {
+struct TextFieldAlertError {
     let title: String
     let description: String
 }

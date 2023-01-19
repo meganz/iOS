@@ -150,6 +150,21 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNil(sut.validateAlbum(name: ""))
     }
     
+    func testValidateAlbum_whenAlbumNameIsSpaces_returnsError() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        XCTAssertNotNil(sut.validateAlbum(name: "      "))
+    }
+    
+    func testValidateAlbum_whenAlbumNameIsValidButWithWhiteSpaces_returnsNil() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        XCTAssertNil(sut.validateAlbum(name: "  userAlbum    "))
+    }
+    
+    func testValidateAlbum_whenAlbumNameIsValid_returnsNil() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        XCTAssertNil(sut.validateAlbum(name: "userAlbum"))
+    }
+    
     func testValidateAlbum_whenAlbumNameContainsInvalidChars_returnsErrorMessage() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
         XCTAssertNotNil(sut.validateAlbum(name: "userAlbum:/;"))
