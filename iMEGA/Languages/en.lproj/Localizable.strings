@@ -540,6 +540,8 @@
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="This album name is not allowed";
 /* Used in create album popup album name validation*/
 "cameraUploads.albums.create.alert.enterDifferentName"="Enter a different name";
+/* Used in create album popup album name validation*/
+"cameraUploads.albums.create.alert.enterNewName"="Enter new name";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Add items to";
 /* Used in empty album view. */

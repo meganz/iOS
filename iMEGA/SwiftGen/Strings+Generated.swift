@@ -2912,6 +2912,8 @@ public enum Strings {
             public static let albumNameNotAllowed = Strings.tr("Localizable", "cameraUploads.albums.create.alert.albumNameNotAllowed")
             /// Enter a different name
             public static let enterDifferentName = Strings.tr("Localizable", "cameraUploads.albums.create.alert.enterDifferentName")
+            /// Enter new name
+            public static let enterNewName = Strings.tr("Localizable", "cameraUploads.albums.create.alert.enterNewName")
             /// New album
             public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")
             /// Enter album name
