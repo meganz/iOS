@@ -31,6 +31,10 @@ extension ChatViewController {
     }
     
      func showStartOrJoinCallButton() {
+         guard !chatRoom.isArchived else {
+             return
+         }
+         
          if chatRoom.isMeeting {
              startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.joinMeeting + spacePadding, for: .normal)
          } else {
@@ -49,7 +53,7 @@ extension ChatViewController {
         guard let initDuration = initDuration else { return }
         
         let time = Date().timeIntervalSince1970 - startTime + initDuration
-        let title = Strings.Localizable.touchToReturnToCall(NSString.mnz_string(fromTimeInterval: time))
+        let title = Strings.Localizable.Chat.CallInProgress.tapToReturnToCall(NSString.mnz_string(fromTimeInterval: time))
         showTapToReturnToCall(withTitle: title)
     }
     
@@ -60,7 +64,7 @@ extension ChatViewController {
     
     internal func startOrJoinCallCleanup(callInProgress: Bool) {
         timer?.invalidate()
-        if chatRoom.isMeeting && chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty && !callInProgress {
+        if !chatRoom.isArchived && chatRoom.isMeeting && chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty && !callInProgress {
             startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.startMeeting + spacePadding, for: .normal)
             startOrJoinCallButton.isHidden = false
         } else {

@@ -1788,8 +1788,6 @@
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
 /* Message shown in a chat room when there is an active call */
 "There is an active call. Tap to join."="There is an active call. Tap to join.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="Tap to return to call";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -3214,3 +3212,5 @@
 "meetings.scheduled.contextMenu.startMeeting"="Start";
 /* Button title to join an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.joinMeeting"="Join";
+/* Message shown in a chat room for a call in progress displaying the duration of the call */
+"chat.callInProgress.tapToReturnToCall"="Tap to return to call %@";
