@@ -236,7 +236,7 @@
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQy-tK-wrG">
                                                             <rect key="frame" x="104.5" y="45" width="16" height="16"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9L-sP-xFg" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9L-sP-xFg" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                                     <rect key="frame" x="4" y="2" width="8" height="12"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                                     <nil key="textColor"/>
@@ -250,14 +250,9 @@
                                                             <constraints>
                                                                 <constraint firstItem="k9L-sP-xFg" firstAttribute="top" secondItem="kQy-tK-wrG" secondAttribute="top" constant="2" id="IrO-aq-zpX"/>
                                                                 <constraint firstItem="k9L-sP-xFg" firstAttribute="centerX" secondItem="kQy-tK-wrG" secondAttribute="centerX" id="J3Z-0i-kl0"/>
-                                                                <constraint firstAttribute="width" secondItem="kQy-tK-wrG" secondAttribute="height" multiplier="1:1" id="Ke7-yR-W4E"/>
+                                                                <constraint firstItem="k9L-sP-xFg" firstAttribute="leading" secondItem="kQy-tK-wrG" secondAttribute="leading" constant="4" id="arN-3b-xCV"/>
                                                                 <constraint firstItem="k9L-sP-xFg" firstAttribute="centerY" secondItem="kQy-tK-wrG" secondAttribute="centerY" id="pju-3a-i81"/>
                                                             </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="8"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="751" text="asds dsd asdsa dsass asds ds adsads ds ds ads as adsds ds ds asd ads" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64P-Jn-H5s">
                                                             <rect key="frame" x="134.5" y="22" width="242" height="62"/>

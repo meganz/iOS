@@ -42,6 +42,27 @@ extension MyAccountHallTableViewCell {
             transferUsedLabel.textColor = .systemGreen
         }
     }
+    
+    @objc func layoutPendingView() {
+        let pendingViewHeight = calculatePendingViewHeight()
+        
+        NSLayoutConstraint.activate([
+            pendingView.heightAnchor.constraint(equalToConstant: calculatePendingViewHeight()),
+            pendingView.widthAnchor.constraint(greaterThanOrEqualToConstant: pendingViewHeight)
+        ])
+        
+        pendingView.layer.cornerRadius = pendingViewHeight / 2
+    }
+    
+    private func calculatePendingViewHeight() -> CGFloat {
+        let verticalPadding: CGFloat = 4
+        let calculateNotLabel = MEGALabel()
+        calculateNotLabel.apply(style: .caption2, weight: .medium)
+        calculateNotLabel.text = "1"
+        
+        let fitSize = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
+        return CGSize(width: fitSize.width, height: calculateNotLabel.sizeThatFits(fitSize).height).height + verticalPadding
+    }
 }
 
 struct MyAccountHallCellData {
