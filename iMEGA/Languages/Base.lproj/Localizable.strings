@@ -564,6 +564,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="Cloud drive";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Camera uploads";
+/* Video Uploads title */
+"cameraUploads.videoUploads.title"="Video uploads";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */

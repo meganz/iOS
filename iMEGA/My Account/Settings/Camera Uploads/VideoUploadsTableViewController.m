@@ -42,6 +42,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     self.videoQualityLabel.text = NSLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
     [self configVideoFormatTexts];
     
+    [self updateNavigationTitle];
     [self updateAppearance];
 }
 
