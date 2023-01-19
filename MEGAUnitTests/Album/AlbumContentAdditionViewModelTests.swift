@@ -1,5 +1,5 @@
 import XCTest
-import MEGA
+@testable import MEGA
 
 final class AlbumContentAdditionViewModelTests: XCTestCase {
     func testOnDone_dismissSetToTrue() {

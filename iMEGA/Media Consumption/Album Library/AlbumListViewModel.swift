@@ -25,7 +25,8 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         self.usecase = usecase
         self.alertViewModel = alertViewModel
         super.init()
-        self.alertViewModel.action = { newAlbumName in
+        self.alertViewModel.action = { [weak self] newAlbumName in
+            guard let self = self else { return }
             Task { await self.createUserAlbum(with: newAlbumName) }
         }
         self.alertViewModel.validator = validateAlbum
@@ -124,9 +125,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     func validateAlbum(name: String?) -> TextFieldAlertError? {
-        guard let name = name else { return nil }
+        guard let name = name, name.isNotEmpty else { return nil }
+        guard let name = name.trim, name.isNotEmpty else {
+            return TextFieldAlertError(title: alertViewModel.title, description: "")
+        }
+        
         if name.mnz_containsInvalidChars() {
-            return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
+            return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
         }
         if isReservedAlbumName(name: name) {
            return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.albumNameNotAllowed, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
