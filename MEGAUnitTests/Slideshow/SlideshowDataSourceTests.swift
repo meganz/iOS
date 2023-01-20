@@ -31,24 +31,27 @@ class SlideShowDataSourceTests: XCTestCase {
     
     private func makeSlideShowDataSource() throws -> SlideShowDataSource {
         let thumbnailUrl = try XCTUnwrap(saveImage(try emptyImage(with: CGSize(width: 10, height: 10)), name: "1.png"))
+        let downloadUrl = try XCTUnwrap(URL(string: "placeholder"))
         
         return SlideShowDataSource(
             currentPhoto: try XCTUnwrap(nodeEntities.first),
             nodeEntities: nodeEntities,
             thumbnailUseCase: MockThumbnailUseCase(
                 cachedThumbnails: [ThumbnailEntity(url: thumbnailUrl, type: .preview)],
+                generatedCachingThumbnail: ThumbnailEntity(url: thumbnailUrl, type: .preview),
                 loadPreviewResult: .success(ThumbnailEntity(url: thumbnailUrl, type: .preview))
             ),
-            mediaUseCase: MediaUseCase(),
-            fileExistenceUseCase: FileExistUseCase(fileSystemRepository: MockFileSystemRepository.newRepo),
+            fileDownloadUseCase: MockFileDownloadUseCase(url: downloadUrl),
+            mediaUseCase: MockMediaUseCase(),
+            fileExistenceUseCase: MockFileExistUseCase(fileExist: false),
             advanceNumberOfPhotosToLoad: 20,
             numberOfUnusedPhotosBuffer: 20
         )
     }
     
-    func testLoadSelectedPhotoPreview_whenCurrentPhotoProvided_shouldReturnTrue() async throws {
+    func testLoadSelectedPhotoPreview_whenCurrentPhotoProvided_shouldReturnFalse() async throws {
         let sut = try makeSlideShowDataSource()
-        XCTAssertTrue(sut.loadSelectedPhotoPreview())
+        XCTAssertFalse(sut.loadSelectedPhotoPreview())
     }
     
     func testStartInitialDownload_withoutCurrentPhoto_numberOfPhotosShouldBe20() async throws {
@@ -79,24 +82,24 @@ class SlideShowDataSourceTests: XCTestCase {
         await sut.thumbnailLoadingTask?.value
         XCTAssertTrue(sut.photos.count == 40)
     }
-
+    
     func testProcessData_reloadUnusedPhoto_firstPhotoInPhotosShouldBeNotNil() async throws {
         let sut = try makeSlideShowDataSource()
-
+        
         sut.startInitialDownload(false)
         await sut.thumbnailLoadingTask?.value
         
         sut.processData(basedOnCurrentSlideNumber: 20, andOldSlideNumber: 19)
         XCTAssertNil(sut.photos[0].image)
-
+        
         sut.processData(basedOnCurrentSlideNumber: 19, andOldSlideNumber: 20)
         await sut.thumbnailLoadingTask?.value
         XCTAssertNotNil(sut.photos[0].image)
     }
-
+    
     func testProcessData_removeUnusedPhotos_firstPhotoInPhotosShouldBeNil() async throws {
         let sut = try makeSlideShowDataSource()
-
+        
         sut.startInitialDownload(false)
         await sut.thumbnailLoadingTask?.value
         

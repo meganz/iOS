@@ -19,6 +19,7 @@ class SlideshowViewModelTests: XCTestCase {
                 currentPhoto: try XCTUnwrap(nodeEntities.first),
                 nodeEntities: nodeEntities,
                 thumbnailUseCase: MockThumbnailUseCase(),
+                fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: MockFileCacheRepository.newRepo, fileSystemRepository: MockFileSystemRepository.newRepo, downloadFileRepository: MockDownloadFileRepository.newRepo),
                 mediaUseCase: MediaUseCase(),
                 fileExistenceUseCase: FileExistUseCase(fileSystemRepository: MockFileSystemRepository.newRepo),
                 advanceNumberOfPhotosToLoad: 20,
