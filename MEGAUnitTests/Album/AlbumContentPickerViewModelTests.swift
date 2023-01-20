@@ -3,7 +3,7 @@ import MEGADomain
 import MEGADomainMock
 @testable import MEGA
 
-final class AlbumContentAdditionViewModelTests: XCTestCase {
+final class AlbumContentPickerViewModelTests: XCTestCase {
     @MainActor
     func testOnDone_whenNoImagesSelected_shouldDismissTheScreen() async throws {
         let sut = try albumContentAdditionViewModel()
@@ -65,7 +65,7 @@ final class AlbumContentAdditionViewModelTests: XCTestCase {
     func testLoadPhotos_whenAddContentToAlbumScreenHasShown_shouldReturnPhotos() async throws {
         let sut = try albumContentAdditionViewModel()
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos.count, 4)
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos.count, 5)
     }
     
     @MainActor
@@ -106,7 +106,8 @@ final class AlbumContentAdditionViewModelTests: XCTestCase {
         let node2 = MockNode(handle: 2, name: "TestImage2.png", nodeType: .file, parentHandle: 1, modificationTime: try "2022-08-18T22:01:04Z".date, hasThumbnail: true)
         let node3 = MockNode(handle: 3, name: "TestImage1.png", nodeType: .file, parentHandle: 4, modificationTime: try "2022-08-18T22:01:04Z".date, hasThumbnail: true)
         let node4 = MockNode(handle: 4, name: "TestImage2.png", nodeType: .file, parentHandle: 5, modificationTime: try "2022-08-18T22:01:04Z".date, hasThumbnail: true)
+        let node5 = MockNode(handle: 5, name: "TestVideo.mp4", nodeType: .file, parentHandle: 6, modificationTime: try "2022-08-18T22:01:04Z".date, hasThumbnail: true)
         
-        return [node1, node2, node3, node4]
+        return [node1, node2, node3, node4, node5]
     }
 }
