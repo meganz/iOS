@@ -2898,13 +2898,13 @@ public enum Strings {
     }
     public enum CameraUploads {
       public enum Albums {
+        /// Plural format key: "%#@count@"
+        public static func addedItemTo(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.addedItemTo", p1)
+        }
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
         public enum Create {
-          /// Added [X] items to "[A]"
-          public static let addedItemsTo = Strings.tr("Localizable", "cameraUploads.albums.create.addedItemsTo")
-          /// Added 1 item to "[A]"
-          public static let addedOneItemTo = Strings.tr("Localizable", "cameraUploads.albums.create.addedOneItemTo")
           /// Add items to
           public static let addItemsTo = Strings.tr("Localizable", "cameraUploads.albums.create.addItemsTo")
           public enum Alert {
