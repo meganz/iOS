@@ -29,7 +29,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     var initialPhotoDownloadCallback: (() -> ())?
     private let fileExistenceUseCase: FileExistUseCaseProtocol
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private let mediaUseCase: MediaUseCase
+    private let fileDownloadUseCase: FileDownloadUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
     private let advanceNumberOfPhotosToLoad: Int
     private let numberOfUnusedPhotosBuffer: Int
     private var sortByShuffleOrder = false
@@ -48,7 +49,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         currentPhoto: NodeEntity?,
         nodeEntities: [NodeEntity],
         thumbnailUseCase: ThumbnailUseCaseProtocol,
-        mediaUseCase: MediaUseCase,
+        fileDownloadUseCase: FileDownloadUseCaseProtocol,
+        mediaUseCase: MediaUseCaseProtocol,
         fileExistenceUseCase: FileExistUseCaseProtocol,
         advanceNumberOfPhotosToLoad: Int,
         numberOfUnusedPhotosBuffer: Int
@@ -60,17 +62,26 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         self.advanceNumberOfPhotosToLoad = advanceNumberOfPhotosToLoad
         self.numberOfUnusedPhotosBuffer = numberOfUnusedPhotosBuffer
         self.fileExistenceUseCase = fileExistenceUseCase
+        self.fileDownloadUseCase = fileDownloadUseCase
     }
     
     func loadSelectedPhotoPreview() -> Bool {
-        guard let node = currentPhoto,
-              let pathForPreviewOrOriginal = thumbnailUseCase.cachedPreviewOrOriginalPath(for: node)
-        else {
+        guard let node = currentPhoto else {
             return false
         }
         
-        if let entity = slideShowMediaEntity(for: node, with: mediaUseCase.isGifImage(node.name) ? thumbnailUseCase.generateCachingURL(for: node, type: .original).path : pathForPreviewOrOriginal) {
-            photos.append(entity)
+        if mediaUseCase.isGifImage(node.name) {
+            if let url = fileDownloadUseCase.cachedOriginalPath(node), let gifMediaEntity = slideShowMediaEntity(for: node, with: url.path) {
+                photos.append(gifMediaEntity)
+            } else {
+                return false
+            }
+        } else {
+            if let pathForPreviewOrOriginal = thumbnailUseCase.cachedPreviewOrOriginalPath(for: node), let entity = slideShowMediaEntity(for: node, with: pathForPreviewOrOriginal) {
+                photos.append(entity)
+            } else {
+                return false
+            }
         }
         return true
     }
@@ -173,28 +184,45 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     }
     
     private func loadMediaEntity(forNode node: NodeEntity) async -> SlideShowMediaEntity? {
-        async let photo = try? thumbnailUseCase.loadThumbnail(for: node, type: mediaUseCase.isGifImage(node.name) ? .original : .preview)
-        if let photoPath = await photo?.url.path {
-            return slideShowMediaEntity(for: node, with: photoPath)
+        if mediaUseCase.isGifImage(node.name) {
+            return await downloadGifNode(nodeEntity: node)
+        } else {
+            async let photo = try? thumbnailUseCase.loadThumbnail(for: node, type: .preview)
+            if let photoPath = await photo?.url.path {
+                return slideShowMediaEntity(for: node, with: photoPath)
+            }
+        }
+        return nil
+    }
+    
+    private func downloadGifNode(nodeEntity: NodeEntity) async -> SlideShowMediaEntity? {
+        do {
+            let url = try await fileDownloadUseCase.downloadNode(nodeEntity)
+            return slideShowMediaEntity(for: nodeEntity, with: url.path)
+        } catch {
+            MEGALogError(error.localizedDescription)
         }
         return nil
     }
     
     private func slideShowMediaEntity(for node: NodeEntity, with filePath: String) -> SlideShowMediaEntity? {
-        if mediaUseCase.isGifImage(node.name),
-            let url = getFileUrl(for: node, having: filePath),
-            let data = try? Data(contentsOf: url),
-            let image = UIImage(data: data) {
-            return SlideShowMediaEntity(image: image, node: node, fileUrl: url)
+        if mediaUseCase.isGifImage(node.name) {
+            if let url = fileURL(for: node, having: filePath),
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                return SlideShowMediaEntity(image: image, node: node, fileUrl: url)
+            }
+        } else {
+            if let image = UIImage(contentsOfFile: filePath) {
+                return SlideShowMediaEntity(image: image, node: node, fileUrl: nil)
+            }
         }
-        if let image = UIImage(contentsOfFile: filePath) {
-            return SlideShowMediaEntity(image: image, node: node, fileUrl: nil)
-        }
+        
         return nil
     }
     
-    func getFileUrl(for node: NodeEntity, having path: String) -> URL? {
-        let fileUrl = URL(fileURLWithPath: path.append(pathComponent: node.name))
+    func fileURL(for node: NodeEntity, having path: String) -> URL? {
+        let fileUrl = URL(fileURLWithPath: path)
         if fileExistenceUseCase.fileExists(at: fileUrl) {
             return fileUrl
         }
