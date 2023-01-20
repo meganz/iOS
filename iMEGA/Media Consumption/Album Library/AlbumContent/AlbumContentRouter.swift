@@ -3,9 +3,11 @@ import MEGADomain
 
 struct AlbumContentRouter: Routing {
     private let album: AlbumEntity
+    private let messageForNewAlbum: String?
     
-    init(album: AlbumEntity) {
+    init(album: AlbumEntity, messageForNewAlbum: String?) {
         self.album = album
+        self.messageForNewAlbum = messageForNewAlbum
     }
     
     func build() -> UIViewController {
@@ -18,11 +20,13 @@ struct AlbumContentRouter: Routing {
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: MediaUseCase(),
-            fileSearchRepo: FileSearchRepository.newRepo
+            fileSearchRepo: FileSearchRepository.newRepo,
+            userAlbumRepo: UserAlbumRepository.newRepo
         )
         
         let viewModel = AlbumContentViewModel(
             album: album,
+            messageForNewAlbum: self.messageForNewAlbum,
             albumContentsUseCase: albumContentsUseCase,
             router: self)
         return AlbumContentViewController(viewModel: viewModel)

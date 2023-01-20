@@ -7,6 +7,7 @@ public protocol AlbumListUseCaseProtocol {
     func startMonitoringNodesUpdate(callback: @escaping () -> Void)
     func stopMonitoringNodesUpdate()
     func createUserAlbum(with name: String?) async throws -> AlbumEntity
+    func hasNoPhotosAndVideos() async -> Bool
 }
 
 public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRepositoryProtocol, V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol>:
@@ -146,6 +147,15 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
                 }
             })
         }
+    }
+    
+    public func hasNoPhotosAndVideos() async -> Bool {
+        async let allPhotos = try await fileSearchRepository.allPhotos()
+        async let allVideos = try await fileSearchRepository.allVideos()
+        let allPhotosAndVideos = try? await [allPhotos, allVideos]
+            .flatMap { $0 }
+            .filter { $0.hasThumbnail }
+        return allPhotosAndVideos?.isEmpty ?? true
     }
     
     private func onNodesUpdate(_ nodes: [NodeEntity]) {

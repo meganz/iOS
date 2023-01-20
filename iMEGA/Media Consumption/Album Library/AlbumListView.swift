@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGADomain
 
 struct AlbumListView: View {
     @StateObject var viewModel: AlbumListViewModel
@@ -18,6 +19,7 @@ struct AlbumListView: View {
                     ForEach(viewModel.albums, id: \.self) { album in
                         router.cell(album: album)
                             .onTapGesture(count: 1)  {
+                                viewModel.albumCreationAlertMsg = nil
                                 viewModel.album = album
                             }
                             .clipped()
@@ -30,11 +32,11 @@ struct AlbumListView: View {
         .overlay(viewModel.shouldLoad ? ProgressView()
             .scaleEffect(1.5) : nil)
         .fullScreenCover(item: $viewModel.album) {
-            router.albumContainer(album: $0)
+            router.albumContainer(album: $0, messageForNewAlbum: viewModel.albumCreationAlertMsg)
                 .ignoresSafeArea()
         }
         .sheet(item: $viewModel.newlyAddedAlbum, content: { item in
-            AlbumContentAdditionView(viewModel: AlbumContentAdditionViewModel(albumName: item.name, locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations))
+            albumContentAdditionView(item)
         })
         .padding([.top, .bottom], 10)
         .onAppear {
@@ -44,5 +46,19 @@ struct AlbumListView: View {
             viewModel.cancelLoading()
         }
         .progressViewStyle(.circular)
+    }
+    
+    @ViewBuilder
+    private func albumContentAdditionView(_ album: AlbumEntity) -> some View {
+        AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
+            album: album,
+            locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations,
+            photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: SDKFilesSearchRepository.newRepo),
+            mediaUseCase: MediaUseCase(),
+            albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: UserAlbumRepository.newRepo),
+            completionHandler: { msg, album in
+                viewModel.onAlbumContentAdded(msg, album)
+            })
+        )
     }
 }

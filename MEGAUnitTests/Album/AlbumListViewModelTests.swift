@@ -190,6 +190,21 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.validateAlbum(name: newSysAlbum.name))
     }
     
+    @MainActor
+    func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+
+        let sampleAlbum = AlbumEntity(id: 1, name: "hello", coverNode: nil, count: 0, type: .user)
+        let successMsg = "Album content added successfully"
+        
+        sut.onAlbumContentAdded(successMsg, sampleAlbum)
+        await sut.albumLoadingTask?.value
+        
+        XCTAssertEqual(sut.album, sampleAlbum)
+        XCTAssertEqual(sut.albumCreationAlertMsg, successMsg)
+        XCTAssert(sut.album?.count == 0)
+    }
+    
     func testValidateAlbum_withSystemAlbumNames_returnsErrorMessage() {
         let reservedNames = [Strings.Localizable.CameraUploads.Albums.Favourites.title,
                              Strings.Localizable.CameraUploads.Albums.Gif.title,

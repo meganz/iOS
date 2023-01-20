@@ -155,4 +155,20 @@ final class AlbumListUseCaseTests: XCTestCase {
         XCTAssertEqual(result.name, "Custom Album")
         XCTAssertNotNil(result.modificationTime)
     }
+    
+    func testHasNoPhotosAndVideos_whenCreatingAlbumInFreshNewAccount_shouldReturnEmpty() async throws {
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
+            fileSearchRepository: MockFileSearchRepository(
+                photoNodes: [
+                    NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
+                    NodeEntity(name: "1.png", handle: 1, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date)
+                ]
+            ),
+            mediaUseCase: MockMediaUseCase())
+        
+        let hasNoPhotosAndVideos = await sut.hasNoPhotosAndVideos()
+        XCTAssertTrue(hasNoPhotosAndVideos)
+    }
 }
