@@ -2918,7 +2918,7 @@ public enum Strings {
             public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")
             /// Enter album name
             public static let title = Strings.tr("Localizable", "cameraUploads.albums.create.alert.title")
-            /// An album with that name already exists
+            /// An album with this name already appears
             public static let userAlbumExists = Strings.tr("Localizable", "cameraUploads.albums.create.alert.userAlbumExists")
           }
         }
