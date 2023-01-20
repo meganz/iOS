@@ -13,6 +13,7 @@ public struct ChatListItemEntity {
     public let preview: Bool
     public let active: Bool
     public let deleted: Bool
+    public let meeting: Bool
     
     public let peerHandle: HandleEntity
     
@@ -42,7 +43,7 @@ public struct ChatListItemEntity {
         case delete
     }
     
-    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity) {
+    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, meeting: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity) {
         self.chatId = chatId
         self.title = title
         self.changeType = changeType
@@ -54,6 +55,7 @@ public struct ChatListItemEntity {
         self.preview = preview
         self.active = active
         self.deleted = deleted
+        self.meeting = meeting
         self.peerHandle = peerHandle
         self.lastMessage = lastMessage
         self.lastMessageId = lastMessageId
