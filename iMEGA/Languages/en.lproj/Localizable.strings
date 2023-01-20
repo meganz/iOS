@@ -535,7 +535,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="New album";
 /* Used in create album popup user album name validation*/
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with that name already exists";
+"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already appears";
 /* Used in create album popup system album name validation*/
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="This album name is not allowed";
 /* Used in create album popup album name validation*/
