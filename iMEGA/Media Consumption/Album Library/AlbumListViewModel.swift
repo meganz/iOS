@@ -9,6 +9,8 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var albums = [AlbumEntity]()
     @Published var showCreateAlbumAlert = false
     @Published var newlyAddedAlbum: AlbumEntity?
+    
+    var albumCreationAlertMsg: String?
     var columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 10),
         count: 3
@@ -57,12 +59,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
+  
                 if let insertIndex = albums.firstIndex(where: { $0.type == .user && (newAlbum.modificationTime ?? .distantPast) > ($0.modificationTime ?? .distantPast) }) {
                     albums.insert(newAlbum, at: insertIndex)
                 }  else {
                     albums.append(newAlbum)
                 }
-                newlyAddedAlbum = newAlbum
+                newlyAddedAlbum = await usecase.hasNoPhotosAndVideos() ? nil : newAlbum
             } catch {
                 MEGALogError("Error creating user album: \(error.localizedDescription)")
             }
@@ -140,6 +143,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.userAlbumExists, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
         }
         return nil
+    }
+    
+    @MainActor
+    func onAlbumContentAdded(_ msg: String, _ album: AlbumEntity) {
+        self.album = album
+        albumCreationAlertMsg = msg
+        loadAlbums()
     }
     
     private func isReservedAlbumName(name: String) -> Bool {

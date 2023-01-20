@@ -10,6 +10,7 @@ final class AlbumContentViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case showAlbum(nodes: [NodeEntity])
         case dismissAlbum
+        case showHud(String)
     }
     
     private var albumContentsUseCase: AlbumContentsUseCaseProtocol
@@ -20,6 +21,7 @@ final class AlbumContentViewModel: ViewModelType {
     private var updateSubscription: AnyCancellable?
     
     let albumName: String
+    var messageForNewAlbum: String?
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -27,10 +29,12 @@ final class AlbumContentViewModel: ViewModelType {
     
     init(
         album: AlbumEntity,
+        messageForNewAlbum: String? = nil,
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
         router: AlbumContentRouter
     ) {
         self.album = album
+        self.messageForNewAlbum = messageForNewAlbum
         self.albumContentsUseCase = albumContentsUseCase
         self.router = router
         self.albumName = album.name
@@ -43,6 +47,7 @@ final class AlbumContentViewModel: ViewModelType {
     func dispatch(_ action: AlbumContentAction) {
         switch action {
         case .onViewReady:
+            showNewlyAddedAlbumHud()
             loadingTask = Task {
                 await loadNodes()
             }
@@ -69,7 +74,7 @@ final class AlbumContentViewModel: ViewModelType {
                 }
             }
             
-            nodes.isEmpty && album.systemAlbum ? invokeCommand?(.dismissAlbum): invokeCommand?(.showAlbum(nodes: nodes))
+            nodes.isEmpty && ( album.type == .raw || album.type == .gif ) ? invokeCommand?(.dismissAlbum) : invokeCommand?(.showAlbum(nodes: nodes))
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
@@ -85,6 +90,13 @@ final class AlbumContentViewModel: ViewModelType {
     private func setupSubscription() {
         updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
             self?.reloadAlbum()
+        }
+    }
+    
+    private func showNewlyAddedAlbumHud() {
+        if let message = messageForNewAlbum {
+            invokeCommand?(.showHud(message))
+            messageForNewAlbum = nil
         }
     }
     

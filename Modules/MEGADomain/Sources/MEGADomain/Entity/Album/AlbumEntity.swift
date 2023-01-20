@@ -31,6 +31,6 @@ extension AlbumEntity {
     }
     
     public var systemAlbum: Bool {
-        type == .raw || type == .gif
+        type == .raw || type == .gif || type == .favourite
     }
 }
