@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct AlbumContentAdditionView: View {
-    @StateObject var viewModel: AlbumContentAdditionViewModel
+struct AlbumContentPickerView: View {
+    @StateObject var viewModel: AlbumContentPickerViewModel
+    
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) private var presentationMode
     
@@ -10,11 +11,18 @@ struct AlbumContentAdditionView: View {
             Color(backGroundColor)
             VStack(spacing: 0) {
                 navigationBar
+                
+                PhotoLibraryContentView(
+                    viewModel: viewModel.photoLibraryContentViewModel,
+                    router: PhotoLibraryContentViewRouter(),
+                    onFilterUpdate: nil
+                )
+                
                 Spacer()
                 footer
             }
         }
-        .onChange(of: viewModel.dismiss, perform: { newValue in
+        .onChange(of: viewModel.isDismiss, perform: { newValue in
             if newValue {
                 presentationMode.wrappedValue.dismiss()
             }
@@ -60,7 +68,6 @@ struct AlbumContentAdditionView: View {
     
     var footer: some View {
         VStack(spacing: 0) {
-            Spacer()
             HStack {
                 Spacer()
                 Button {

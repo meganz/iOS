@@ -9,7 +9,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif)
     
     
-    private lazy var router = AlbumContentRouter(album: albumEntity)
+    private lazy var router = AlbumContentRouter(album: albumEntity, messageForNewAlbum: nil)
     
     func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbum() throws {
         let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
@@ -27,16 +27,12 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample1.gif", handle: 2, modificationTime: try "2022-08-19T20:01:04Z".date),
                              NodeEntity(name: "sample2.gif", handle: 1, modificationTime: try "2022-08-19T20:01:04Z".date)]
         
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
-                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes.reversed()),
-                                        router: router)
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes.reversed()), router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: expectedNodes)])
     }
     
     func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() throws {
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
-                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
-                                        router: router)
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: [])])
     }
     
@@ -45,6 +41,17 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
                                         router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
+    }
+    
+    func testDispatchViewReady_onNewlyCreatedAlbum_messageForNewAlbumWillBeNil() throws {
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        messageForNewAlbum: "Hey there",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        router: router)
+        
+        XCTAssertNotNil(sut.messageForNewAlbum)
+        sut.dispatch(.onViewReady)
+        XCTAssertNil(sut.messageForNewAlbum)
     }
     
     func testSubscription_onAlbumContentUpdated_shouldShowAlbumWithNewNodes() throws {
@@ -62,6 +69,8 @@ final class AlbumContentViewModelTests: XCTestCase {
                 exp.fulfill()
             case .dismissAlbum:
                 XCTFail()
+            case .showHud:
+                XCTFail()
             }
         }
         updatePublisher.send()
@@ -70,9 +79,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     func testIsFavouriteAlbum_isEqualToAlbumEntityType() {
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
-                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
-                                        router: router)
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
         XCTAssertTrue(sut.isFavouriteAlbum)
     }
 }

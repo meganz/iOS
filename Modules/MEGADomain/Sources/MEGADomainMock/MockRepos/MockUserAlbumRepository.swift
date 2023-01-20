@@ -40,7 +40,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
-        AlbumElementsResultEntity(success: 1, failure: 0)
+        AlbumElementsResultEntity(success: UInt(nodes.count), failure: 0)
     }
     
     public func updateAlbumElementName(albumId: HandleEntity, elementId: HandleEntity, name: String) async throws -> String {
