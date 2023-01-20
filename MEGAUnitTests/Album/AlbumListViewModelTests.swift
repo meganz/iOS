@@ -140,6 +140,17 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " \("(1)")")
     }
     
+    func testNewAlbumNamePlaceholderText_whenAlbumContainsNewAlbum_shouldReturnCounterSuffix() async {
+        let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
+        let useCase = MockAlbumListUseCase(albums: [newAlbum])
+        let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
+        await sut.loadAlbums()
+        await sut.albumLoadingTask?.value
+        sut.showCreateAlbumAlert = true
+        
+        XCTAssertEqual(sut.alertViewModel.placeholderText, "New album (1)")
+    }
+    
     func testValidateAlbum_whenAlbumNameIsNil_returnsNil() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
         XCTAssertNil(sut.validateAlbum(name: nil))
