@@ -8,7 +8,6 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let megaSetCounts: [MEGAHandle: UInt] = Dictionary(uniqueKeysWithValues: megaSets.map {
             ($0.handle, UInt.random(in: 0...100))
         })
-        let megaSetElements = sampleSetElements()
         let sdk = MockSdk(megaSets:megaSets, megaSetElementCounts: megaSetCounts)
         let repo = UserAlbumRepository(sdk: sdk)
         
