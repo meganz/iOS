@@ -1404,7 +1404,7 @@
 		9D7E603F28DD79F200055875 /* SlideShowOptionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E603E28DD79F200055875 /* SlideShowOptionBuilder.swift */; };
 		9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E604028DD7E0100055875 /* SlideShowOptionViewModelTests.swift */; };
 		9D94AF6C296532EE00C7FBAA /* AlbumContentPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6B296532EE00C7FBAA /* AlbumContentPickerViewModel.swift */; };
-		9D94AF7029653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6F29653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift */; };
+		9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */; };
 		9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC1B622951589E00562475 /* NodeInfoRepository.swift */; };
 		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
 		9DD2E84B29555880000983A3 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */; };
@@ -3891,7 +3891,7 @@
 		9D7E603E28DD79F200055875 /* SlideShowOptionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilder.swift; sourceTree = "<group>"; };
 		9D7E604028DD7E0100055875 /* SlideShowOptionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionViewModelTests.swift; sourceTree = "<group>"; };
 		9D94AF6B296532EE00C7FBAA /* AlbumContentPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPickerViewModel.swift; sourceTree = "<group>"; };
-		9D94AF6F29653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentAdditionViewModelTests.swift; sourceTree = "<group>"; };
+		9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPickerViewModelTests.swift; sourceTree = "<group>"; };
 		9DAC1B622951589E00562475 /* NodeInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
@@ -5856,7 +5856,7 @@
 				328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */,
 				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
 				3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */,
-				9D94AF6F29653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift */,
+				9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -14327,7 +14327,7 @@
 				B6E18AEF29372FA300EDFC10 /* PhotoLibraryCollectionViewScrollTrackerTests.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
-				9D94AF7029653F8500C7FBAA /* AlbumContentAdditionViewModelTests.swift in Sources */,
+				9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				83B5E88A27F71BC70073C870 /* MockPhotosLibraryRepository.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
