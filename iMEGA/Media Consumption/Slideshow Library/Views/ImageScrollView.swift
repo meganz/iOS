@@ -122,9 +122,6 @@ final class ImageScrollView: UIScrollView {
             topSuperView = topSuperView?.superview
         }
         topSuperView?.layoutIfNeeded()
-        DispatchQueue.main.async {
-            self.refresh()
-        }
     }
     
     func display(image: UIImage, gifImageFileUrl: URL? = nil) {
@@ -217,12 +214,6 @@ final class ImageScrollView: UIScrollView {
         zoomRect.origin.x    = center.x - (zoomRect.size.width  / 2.0)
         zoomRect.origin.y    = center.y - (zoomRect.size.height / 2.0)
         return zoomRect
-    }
-    
-    func refresh() {
-        if let image = zoomView?.image {
-            display(image: image)
-        }
     }
     
     @objc func changeOrientationNotification() {
