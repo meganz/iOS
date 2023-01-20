@@ -5,18 +5,20 @@ public protocol AlbumContentsUseCaseProtocol {
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
 }
 
-public final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositoryProtocol, U: MediaUseCaseProtocol, V: FileSearchRepositoryProtocol>: AlbumContentsUseCaseProtocol {
-    private var albumContentsRepo: T
-    private let mediaUseCase: U
-    private let fileSearchRepo: V
+public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
+    private var albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
+    private let fileSearchRepo: FileSearchRepositoryProtocol
+    private let userAlbumRepo: UserAlbumRepositoryProtocol
     
     public let updatePublisher: AnyPublisher<Void, Never>
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    public init(albumContentsRepo: T, mediaUseCase: U, fileSearchRepo: V) {
+    public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol, mediaUseCase: MediaUseCaseProtocol, fileSearchRepo: FileSearchRepositoryProtocol, userAlbumRepo: UserAlbumRepositoryProtocol) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
+        self.userAlbumRepo = userAlbumRepo
         
         updatePublisher = AnyPublisher(updateSubject)
         
@@ -28,26 +30,45 @@ public final class AlbumContentsUseCase <T: AlbumContentsUpdateNotifierRepositor
     // MARK: Protocols
     
     public func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
-        async let allPhotos = try await fileSearchRepo.allPhotos()
-        if (album.type == .favourite) {
-            async let allVideos = try fileSearchRepo.allVideos()
-            return try await [allPhotos, allVideos]
-                .flatMap { $0 }
-                .filter { $0.hasThumbnail && $0.isFavourite }
+        if album.systemAlbum {
+            return try await filter(forAlbum: album)
         } else {
-            return filter(photos: try await allPhotos, forAlbum: album)
+            return await userAlbumContent(by: album.id)
         }
     }
     
     // MARK: Private
     
-    private func filter(photos: [NodeEntity], forAlbum album: AlbumEntity) -> [NodeEntity] {
+    private func filter(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
+        async let photos = try await fileSearchRepo.allPhotos()
         var nodes = [NodeEntity]()
-        if album.type == .raw {
-            nodes = photos.filter { $0.hasThumbnail && mediaUseCase.isRawImage($0.name) }
+        
+        if album.type == .favourite {
+            async let videos = try fileSearchRepo.allVideos()
+            nodes = try await [photos, videos]
+                .flatMap { $0 }
+                .filter { $0.hasThumbnail && $0.isFavourite }
+        } else if album.type == .raw {
+            nodes = try await photos.filter { $0.hasThumbnail && mediaUseCase.isRawImage($0.name) }
         } else if album.type == .gif {
-            nodes = photos.filter { $0.hasThumbnail && mediaUseCase.isGifImage($0.name) }
+            nodes = try await photos.filter { $0.hasThumbnail && mediaUseCase.isGifImage($0.name) }
         }
+        
         return nodes
+    }
+    
+    private func userAlbumContent(by id: HandleEntity) async -> [NodeEntity] {
+        await withTaskGroup(of: NodeEntity?.self) { group in
+            let nodeIds = await userAlbumRepo.albumContent(by: id).map { $0.nodeId }
+            nodeIds.forEach { handle in
+                group.addTask { [weak self] in
+                    await self?.fileSearchRepo.fetchNode(by: handle)
+                }
+            }
+            
+            return await group.reduce(into: [NodeEntity](), {
+                if let node = $1 { $0.append(node) }
+            })
+        }
     }
 }

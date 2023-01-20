@@ -2901,6 +2901,10 @@ public enum Strings {
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
         public enum Create {
+          /// Added [X] items to "[A]"
+          public static let addedItemsTo = Strings.tr("Localizable", "cameraUploads.albums.create.addedItemsTo")
+          /// Added 1 item to "[A]"
+          public static let addedOneItemTo = Strings.tr("Localizable", "cameraUploads.albums.create.addedOneItemTo")
           /// Add items to
           public static let addItemsTo = Strings.tr("Localizable", "cameraUploads.albums.create.addItemsTo")
           public enum Alert {

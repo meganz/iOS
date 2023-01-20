@@ -42,4 +42,8 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
         createdUserAlbums[name ?? ""] ?? MockAlbumListUseCase.sampleUserAlbum(name: name ?? "Custom Name")
     }
+    
+    public func hasNoPhotosAndVideos() async -> Bool {
+        false
+    }
 }
