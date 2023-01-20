@@ -7,8 +7,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var album: AlbumEntity?
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
-    @Published var showCreateAlbumAlert = false
     @Published var newlyAddedAlbum: AlbumEntity?
+
+    @Published var showCreateAlbumAlert = false {
+        willSet {
+            self.alertViewModel.placeholderText = newAlbumName()
+        }
+    }
     
     var albumCreationAlertMsg: String?
     var columns: [GridItem] = Array(
