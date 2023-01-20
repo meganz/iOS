@@ -21,6 +21,7 @@ fileprivate extension ChatListItemEntity {
             preview: chatListItem.isPreview,
             active: chatListItem.isActive,
             deleted: chatListItem.isDeleted,
+            meeting: chatListItem.isMeeting,
             peerHandle: chatListItem.peerHandle,
             lastMessage: chatListItem.lastMessage,
             lastMessageId: chatListItem.lastMessageId,

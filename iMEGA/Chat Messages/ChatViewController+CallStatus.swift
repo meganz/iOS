@@ -64,7 +64,7 @@ extension ChatViewController {
     
     internal func startOrJoinCallCleanup(callInProgress: Bool) {
         timer?.invalidate()
-        if !chatRoom.isArchived && chatRoom.isMeeting && chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty && !callInProgress {
+        if !chatRoom.isArchived && chatRoom.isMeeting && !callInProgress {
             startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.startMeeting + spacePadding, for: .normal)
             startOrJoinCallButton.isHidden = false
         } else {

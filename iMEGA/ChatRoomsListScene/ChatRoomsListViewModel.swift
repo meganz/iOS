@@ -371,6 +371,8 @@ final class ChatRoomsListViewModel: ObservableObject {
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
             userUseCase: UserUseCase(repo: .live),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             chatNotificationControl: chatNotificationControl
         )
     }
