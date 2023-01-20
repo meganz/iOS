@@ -544,10 +544,6 @@
 "cameraUploads.albums.create.alert.enterNewName"="Enter new name.";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Add items to";
-/* [A] will be replaced by the album name */
-"cameraUploads.albums.create.addedOneItemTo"="Added 1 item to \"[A]\"";
-/* [X] is plural and will be replaced by the total number of items and [A] will be replaced by the album name */
-"cameraUploads.albums.create.addedItemsTo"="Added [X] items to \"[A]\"";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
