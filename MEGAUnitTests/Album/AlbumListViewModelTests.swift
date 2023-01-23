@@ -229,6 +229,21 @@ final class AlbumListViewModelTests: XCTestCase {
         }
     }
     
+    func testColumns_createFeatureFlagIsOffThatThreeColumsReturn() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(),
+                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
+        let result = sut.columns(horizontalSizeClass: .regular)
+        XCTAssertEqual(result.count, 3)
+    }
+    
+    func testColumns_sizeConfigurationsChangesReturnCorrectColumnsWhenCreateAlbumFeatureIsTurnedOn() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(),
+                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        XCTAssertEqual(sut.columns(horizontalSizeClass: .compact).count, 3)
+        XCTAssertEqual(sut.columns(horizontalSizeClass: nil).count, 3)
+        XCTAssertEqual(sut.columns(horizontalSizeClass: .regular).count, 5)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                    placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
