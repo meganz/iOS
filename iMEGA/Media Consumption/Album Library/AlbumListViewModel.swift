@@ -14,29 +14,43 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             self.alertViewModel.placeholderText = newAlbumName()
         }
     }
-    
+   
     var albumCreationAlertMsg: String?
-    var columns: [GridItem] = Array(
-        repeating: .init(.flexible(), spacing: 10),
-        count: 3
-    )
     var albumLoadingTask: Task<Void, Never>?
     var isCreateAlbumFeatureFlagEnabled: Bool {
-        FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum)
+        featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     }
     
     private let usecase: AlbumListUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
+    private let featureFlagProvider: FeatureFlagProviderProtocol
     
-    init(usecase: AlbumListUseCaseProtocol, alertViewModel: TextFieldAlertViewModel) {
+    init(usecase: AlbumListUseCaseProtocol,
+         alertViewModel: TextFieldAlertViewModel,
+         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.usecase = usecase
         self.alertViewModel = alertViewModel
+        self.featureFlagProvider = featureFlagProvider
         super.init()
         self.alertViewModel.action = { [weak self] newAlbumName in
             guard let self = self else { return }
             Task { await self.createUserAlbum(with: newAlbumName) }
         }
         self.alertViewModel.validator = validateAlbum
+    }
+    
+    func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
+        guard isCreateAlbumFeatureFlagEnabled,
+              let horizontalSizeClass else {
+            return Array(
+                repeating: .init(.flexible(), spacing: 10),
+                count: 3
+            )
+        }
+        return Array(
+            repeating: .init(.flexible(), spacing: 10),
+            count: horizontalSizeClass == .compact ? 3 : 5
+        )
     }
     
     @MainActor
