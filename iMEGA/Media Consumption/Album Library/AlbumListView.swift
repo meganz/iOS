@@ -2,6 +2,7 @@ import SwiftUI
 import MEGADomain
 
 struct AlbumListView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @StateObject var viewModel: AlbumListViewModel
     @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
     var router: AlbumListViewRouting
@@ -9,7 +10,7 @@ struct AlbumListView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
-                LazyVGrid(columns: viewModel.columns, spacing: 10) {
+                LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 10) {
                     if viewModel.isCreateAlbumFeatureFlagEnabled {
                         CreateAlbumCell(viewModel: createAlbumCellViewModel)
                             .onTapGesture {
