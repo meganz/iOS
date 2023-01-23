@@ -1027,6 +1027,10 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startMeetingNoRinging(videoCall: Bool) {
+        guard !shouldDisableAudioVideoCall else {
+            return
+        }
+        
         guard let scheduledMeeting = chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else {
             MEGALogError("Failed to fetch scheduled meeting to start no ringing call")
             return
@@ -1048,6 +1052,10 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startOutGoingCall(isVideoEnabled: Bool) {
+        guard !shouldDisableAudioVideoCall else {
+            return
+        }
+
         let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
             guard let self = self else { return }
             self.callRequestCompletion(isVideoEnabled: isVideoEnabled, errorType: error.type)
