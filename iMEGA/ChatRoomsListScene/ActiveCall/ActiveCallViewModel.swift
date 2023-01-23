@@ -59,6 +59,7 @@ final class ActiveCallViewModel: ObservableObject {
             }
             .store(in: &subscriptions)
 
+        updateDuration(interval: 0)
         initTimer()
     }
     
