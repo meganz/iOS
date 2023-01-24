@@ -33,11 +33,8 @@ git submodule update --init --recursive
 ```
 
 #### Download 3rdparty packages
-1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/tVEmQZqZ#geMefj40h0Aq6WlmJCC8iu2CiPexxhP-ZtMXSybPm1I
+1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/AENVGYjC#HhUgIOBY69zVZZtOa4e6vdySpHefnUo4GcoQYElmEo4
 2. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
-
-#### Apple silicon Macs specific
-1. Right click Xcode icon and choose `Get Info`, and then tick `Open using Rosetta`, which can help us solve incompatible issues.
 
 #### Open and Run the project
 5. Open `iMEGA.xcworkspace`.
