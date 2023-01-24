@@ -15,6 +15,7 @@ public struct ScheduledMeetingEntity {
     public let description: String
     public let attributes: String
     public let overrides: Date
+    public let rules: ScheduledMeetingRulesEntity
     
     public init(
         cancelled: Bool,
@@ -30,7 +31,8 @@ public struct ScheduledMeetingEntity {
         title: String,
         description: String,
         attributes: String,
-        overrides: Date
+        overrides: Date,
+        rules: ScheduledMeetingRulesEntity
     ) {
         self.cancelled = cancelled
         self.new = new
@@ -46,5 +48,6 @@ public struct ScheduledMeetingEntity {
         self.description = description
         self.attributes = attributes
         self.overrides = overrides
+        self.rules = rules
     }
 }

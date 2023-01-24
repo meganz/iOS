@@ -128,6 +128,13 @@
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
+        case MEGAUserAlertTypeScheduledMeetingNew:
+        case MEGAUserAlertTypeScheduledMeetingUpdated:
+        case MEGAUserAlertTypeScheduledMeetingDeleted:
+            typeLabel.text = NSLocalizedString(@"inapp.notifications.meetings.header", @"The header of a notification that is related to scheduled meetings");
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+            break;
+            
         default:
             typeLabel.text = nil;
             break;
@@ -161,6 +168,21 @@
                 } else {
                     headingLabel.text = userAlert.email;
                 }
+            } else {
+                headingLabel.hidden = YES;
+                headingLabel.text = nil;
+            }
+            break;
+        }
+            
+        case MEGAUserAlertTypeScheduledMeetingNew:
+        case MEGAUserAlertTypeScheduledMeetingUpdated:
+        case MEGAUserAlertTypeScheduledMeetingDeleted: {
+            MEGAChatScheduledMeeting *scheduledMeeting = [self scheduledMeetingWithScheduleMeetingId:userAlert.scheduledMeetingId
+                                                                                              chatId:userAlert.nodeHandle];
+            if(scheduledMeeting) {
+                headingLabel.hidden = NO;
+                headingLabel.text = scheduledMeeting.title;
             } else {
                 headingLabel.hidden = YES;
                 headingLabel.text = nil;
@@ -337,6 +359,14 @@
             contentLabel.attributedText = [self contentForTakedownReinstatedNodeWithHandle:userAlert.nodeHandle nodeFont:boldFont];
             break;
             
+        case MEGAUserAlertTypeScheduledMeetingNew:
+            contentLabel.attributedText = [self contentForNewScheduledMeetingWithAlert:userAlert];
+            break;
+            
+        case MEGAUserAlertTypeScheduledMeetingUpdated:
+            contentLabel.attributedText = [self contentForUpdatedScheduledMeetingWithAlert:userAlert];
+            break;
+            
         default:
             contentLabel.text = userAlert.title;
             break;
@@ -385,7 +415,6 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     MEGAUserAlert *userAlert = [self.userAlertsArray objectAtIndex:indexPath.row];
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
     UINavigationController *navigationController = self.navigationController;
     
     switch (userAlert.type) {
@@ -433,6 +462,7 @@
         case MEGAUserAlertTypeRemovedSharesNodes:
         case MEGAUserAlertTypeTakedown:
         case MEGAUserAlertTypeTakedownReinstated: {
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
             if (node) {
                 [node navigateToParentAndPresent];
             }
@@ -445,6 +475,12 @@
             [UpgradeAccountRouter.new pushUpgradeTVCWithNavigationController:self.navigationController];
             break;
         }
+            
+        case MEGAUserAlertTypeScheduledMeetingNew:
+        case MEGAUserAlertTypeScheduledMeetingDeleted:
+        case MEGAUserAlertTypeScheduledMeetingUpdated:
+            [self openChatRoomForUserAlert:userAlert];
+            break;
             
         default:
             break;
