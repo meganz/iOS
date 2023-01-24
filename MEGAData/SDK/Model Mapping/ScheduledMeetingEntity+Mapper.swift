@@ -22,7 +22,8 @@ fileprivate extension ScheduledMeetingEntity {
             title: scheduledMeeting.title,
             description: scheduledMeeting.description,
             attributes: scheduledMeeting.attributes,
-            overrides: Date(timeIntervalSince1970: TimeInterval(scheduledMeeting.overrides))
+            overrides: Date(timeIntervalSince1970: TimeInterval(scheduledMeeting.overrides)),
+            rules: ScheduledMeetingRulesEntity(with: scheduledMeeting.rules)
         )
     }
 }
