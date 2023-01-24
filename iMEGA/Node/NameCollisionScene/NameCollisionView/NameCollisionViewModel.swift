@@ -20,7 +20,6 @@ final class NameCollisionViewModel: ObservableObject {
     private var collision: NameCollisionEntity?
     private var loadingTask: Task<Void, Never>?
     private let isFolderLink: Bool
-    private var applyToAllAction: NameCollisionActionType = .cancel
 
     var collisionType: NameCollisionType
     
@@ -67,7 +66,7 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     func onViewAppeared() {
-        loadNextCollision()
+        loadNextUnresolvedCollision()
     }
     
     func checkNameCollisions() {
@@ -81,9 +80,92 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     func selectedAction(_ action: NameCollisionActionType) {
-        applyToAllAction = action
-        
+        if applyToAllEnabled {
+            if action == .merge {
+                applyMergeActionToAllFolderCollisions()
+            } else {
+                switch collisionType {
+                case .upload:
+                    applyToAllUploadCollisions(action)
+                case .copy, .move:
+                    applyToAllMoveOrCopyCollisions(action)
+                }
+            }
+            loadNextUnresolvedCollision()
+        } else {
+           applySingleAction(action)
+        }
+    }
+    
+    func actionsForCurrentDuplicatedItem() -> [NameCollisionAction] {
+        var actions = [NameCollisionAction]()
+        if duplicatedItem.isFile {
+            if isVersioningEnabled && collisionType == .upload {
+                actions.append(NameCollisionAction(actionType: .update, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            } else {
+                actions.append(NameCollisionAction(actionType: .replace, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            }
+            actions.append(NameCollisionAction(actionType: .rename, name: duplicatedItem.rename, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            actions.append(NameCollisionAction(actionType: .cancel, name: duplicatedItem.name, size: duplicatedItem.collisionFileSize, date: duplicatedItem.collisionFileDate, isFile: duplicatedItem.isFile, imageUrl: thumbnailCollisionUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+        } else {
+            actions.append(NameCollisionAction(actionType: .merge, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            actions.append(NameCollisionAction(actionType: .cancel, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
+        }
+        return actions
+    }
+    
+    func calculateRemainingCollisions() {
+        remainingCollisionsCount = collisions.filter { $0.collisionAction == nil && $0.collisionNodeHandle != nil }.count
+    }
+    
+    //MARK: - Private
+    
+    private func applyMergeActionToAllFolderCollisions() {
+        for i in 0..<collisions.count {
+            var collision = collisions[i]
+            if !collision.isFile {
+                collision.collisionAction = .merge
+            }
+            collisions[i] = collision
+        }
+        applyToAllEnabled = false
+        loadNextUnresolvedCollision()
+        calculateRemainingCollisions()
+    }
+    
+    private func applyToAllUploadCollisions(_ action: NameCollisionActionType) {
+        for i in 0..<collisions.count {
+            var collision = collisions[i]
+            collision.collisionAction = action
+            if action == .rename {
+                transfers?.forEach({ transfer in
+                    transfer.name = nameCollisionUseCase.renameNode(named: collision.name as NSString, inParent: collision.parentHandle)
+                })
+            }
+            collisions[i] = collision
+        }
+        if action == .cancel {
+            transfers?.removeAll()
+        }
+    }
+    
+    private func applyToAllMoveOrCopyCollisions(_ action: NameCollisionActionType) {
+        for i in 0..<collisions.count {
+            var collision = collisions[i]
+            collision.collisionAction = action
+            if action == .rename {
+                collision.renamed = nameCollisionUseCase.renameNode(named: collision.name as NSString, inParent: collision.parentHandle)
+            }
+            collisions[i] = collision
+        }
+        if action == .cancel {
+            nodes?.removeAll()
+        }
+    }
+    
+    private func applySingleAction(_ action: NameCollisionActionType) {
         guard var collision = collision, let index = collisions.firstIndex(of: collision) else {
+            router.dismiss()
             return
         }
         collision.collisionAction = action
@@ -120,33 +202,11 @@ final class NameCollisionViewModel: ObservableObject {
         }
         
         collisions[index] = collision
-        loadNextCollision()
+        loadNextUnresolvedCollision()
         calculateRemainingCollisions()
-    } 
-    
-    func actionsForCurrentDuplicatedItem() -> [NameCollisionAction] {
-        var actions = [NameCollisionAction]()
-        if duplicatedItem.isFile {
-            if isVersioningEnabled && collisionType == .upload {
-                actions.append(NameCollisionAction(actionType: .update, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
-            } else {
-                actions.append(NameCollisionAction(actionType: .replace, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
-            }
-            actions.append(NameCollisionAction(actionType: .rename, name: duplicatedItem.rename, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
-            actions.append(NameCollisionAction(actionType: .cancel, name: duplicatedItem.name, size: duplicatedItem.collisionFileSize, date: duplicatedItem.collisionFileDate, isFile: duplicatedItem.isFile, imageUrl: thumbnailCollisionUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
-        } else {
-            actions.append(NameCollisionAction(actionType: .merge, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
-            actions.append(NameCollisionAction(actionType: .cancel, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
-        }
-        return actions
     }
-    
-    func calculateRemainingCollisions() {
-        remainingCollisionsCount = collisions.filter { $0.collisionAction == nil && $0.collisionNodeHandle != nil }.count
-    }
-    
-    //MARK: - Private
-    private func loadNextCollision() {
+
+    private func loadNextUnresolvedCollision() {
         guard let collision = collisions.first(where: { $0.collisionAction == nil && $0.collisionNodeHandle != nil }) else {
             if collisions.contains(where: { $0.collisionAction != .cancel || $0.collisionNodeHandle == nil }) {
                 processCollisions()
@@ -163,21 +223,7 @@ final class NameCollisionViewModel: ObservableObject {
         }
         
         self.duplicatedItem = duplicatedItem
-        
-        if applyToAllEnabled {
-            if applyToAllAction == .merge {
-                if !collision.isFile {
-                    selectedAction(applyToAllAction)
-                } else {
-                    applyToAllEnabled = false
-                    loadThumbnails()
-                }
-            } else {
-                selectedAction(applyToAllAction)
-            }
-        } else {
-            loadThumbnails()
-        }
+        loadThumbnails()
     }
     
     private func processCollisions() {
@@ -261,17 +307,11 @@ final class NameCollisionViewModel: ObservableObject {
                 }
                 switch collisionType {
                 case .upload:
-                    guard let fileUrl = collision.fileUrl, let collisionHandle = collision.collisionNodeHandle else { return }
+                    guard let fileUrl = collision.fileUrl else { return }
                     thumbnailUrl = fileUrl
-                    loadingTask = Task {
-                        thumbnailCollisionUrl = await loadNodeThumbnail(for: collisionHandle)
-                    }
+                    loadThumbnails(forFirstItem: nil, collisionHandle: collision.collisionNodeHandle)
                 case .move, .copy:
-                    guard let handle = collision.nodeHandle, let collisionHandle = collision.collisionNodeHandle else { return }
-                    loadingTask = Task {
-                        thumbnailUrl = await loadNodeThumbnail(for: handle)
-                        thumbnailCollisionUrl = await loadNodeThumbnail(for: collisionHandle)
-                    }
+                    loadThumbnails(forFirstItem: collision.nodeHandle, collisionHandle: collision.collisionNodeHandle)
                 }
             }
         }
@@ -281,10 +321,19 @@ final class NameCollisionViewModel: ObservableObject {
         loadingTask?.cancel()
     }
     
-    @MainActor
-    private func loadNodeThumbnail(for handle: HandleEntity) async -> URL? {
-        guard let node = nameCollisionUseCase.node(for: handle) else { return nil }
-        guard let url = try? await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail).url else { return nil }
-        return url
+    private func loadThumbnails(forFirstItem handle: HandleEntity?, collisionHandle: HandleEntity?) {
+        loadingTask = Task { @MainActor in
+            if let handle {
+                guard let node = nameCollisionUseCase.node(for: handle) else { return }
+                guard let url = try? await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail).url else { return }
+                thumbnailUrl = url
+            }
+            
+            if let collisionHandle {
+                guard let node = nameCollisionUseCase.node(for: collisionHandle) else { return }
+                guard let url = try? await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail).url else { return }
+                thumbnailCollisionUrl = url
+            }
+        }
     }
 }
