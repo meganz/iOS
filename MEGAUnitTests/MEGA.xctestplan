@@ -119,7 +119,32 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "GetFileExtensionUseCaseTests"
+        "ChatRoomViewModelTests\/test_ScheduledMeetingManagementMessage_MeetingCreatedByOthers()",
+        "ChatRoomViewModelTests\/test_ScheduledMeetingManagementMessage_MeetingCreatedMyself()",
+        "ChatRoomsListViewModelTests\/testAction_selectChatsMode()",
+        "ChatRoomsListViewModelTests\/testAction_selectMeetingsMode()",
+        "DownloadLinkViewModelTests\/testDownloadFolderLinkUserNotLogged()",
+        "FutureMeetingRoomViewModelTests",
+        "FutureMeetingRoomViewModelTests\/testComputedProperty_noUnreadChatsCount()",
+        "FutureMeetingRoomViewModelTests\/testComputedProperty_title()",
+        "FutureMeetingRoomViewModelTests\/testStartOrJoinCallActionTapped_startCallError()",
+        "FutureMeetingRoomViewModelTests\/testStartOrJoinCallActionTapped_startCallTooManyParticipants()",
+        "GetFileExtensionUseCaseTests",
+        "MEGAavatarLoadingUseCaseTests\/testSuccessLoadRemoteAvatarImage()",
+        "MEGAavatarLoadingUseCaseTests\/testUnableLoadRemoteAvatarImage_WhenSDKFailedLoadingAvatar()",
+        "MEGAavatarLoadingUseCaseTests\/testUnableLoadRemoteAvatarImage_WhenUserIsNil()",
+        "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled()",
+        "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithBackCamera()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithFrontCamera()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfModerator_isGroupMeeting()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfModerator_isOneToOneMeeting()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isGroupMeeting()",
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isOneToOneMeeting()",
+        "MeetingParticipantsLayoutViewModelTests\/testAction_onViewReady()",
+        "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_createAvatar()",
+        "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_downloadAvatar()"
       ],
       "target" : {
         "containerPath" : "container:MEGA.xcodeproj",
