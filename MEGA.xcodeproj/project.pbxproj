@@ -725,15 +725,8 @@
 		7794AEEC231E6C610039C1D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229101EDD82E2007DB542 /* UIKit.framework */; };
 		7794AEED231E6C8C0039C1D2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
 		7794AEEF231E6CE10039C1D2 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
-		7794AEF1231E6D3E0039C1D2 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
-		7794AEF2231E6D680039C1D2 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
-		7794AEF3231E6D870039C1D2 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		7794AEF4231E6DA70039C1D2 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		7794AEF5231E6DCA0039C1D2 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
 		7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
-		7794AEF7231E75650039C1D2 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
 		7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
-		7794AEFA231E76270039C1D2 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		7794AEFC231E76900039C1D2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
 		7794AF0F231E7D340039C1D2 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
@@ -748,11 +741,6 @@
 		7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7795677821C80D36002B6227 /* Onboarding.storyboard */; };
 		7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677C21C81C6E002B6227 /* OnboardingView.m */; };
 		7795677F21C83130002B6227 /* OnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7795677E21C83130002B6227 /* OnboardingView.xib */; };
-		77AEB94323CDBC550047CEBF /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
-		77AEB94423CDBC550047CEBF /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
-		77AEB94523CDBC560047CEBF /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
-		77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
-		77AEB94723CDBC560047CEBF /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
 		77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */; };
 		77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */; };
 		77B3AE212163BD2B008E889A /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
@@ -785,26 +773,6 @@
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
 		77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
-		77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
-		77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
-		77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
-		77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
-		77FD20052359A5A7004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
-		77FD200C2359E2C6004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
-		77FD200D2359E2D2004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
-		77FD200E2359E2D5004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
-		77FD200F2359E395004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
-		77FD20102359E398004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
-		77FD20112359E39B004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
-		77FD20122359E3CA004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
-		77FD20132359E3CE004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
-		77FD20142359E3D2004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
-		77FD20152359E3FA004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
-		77FD20162359E3FE004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
-		77FD20172359E402004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
-		77FD20182359E42B004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
-		77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
-		77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C268025DFC78D00E9B56E /* FavouriteNodesRepository.swift */; };
 		830C26CD25DFDD3000E9B56E /* RecentNodesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C26CC25DFDD3000E9B56E /* RecentNodesRepository.swift */; };
@@ -952,16 +920,6 @@
 		835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */; };
 		835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A824455A4900C160D0 /* libMEGASDK.a */; };
 		835EE3B32582430700D8E3B8 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
-		835EE3BC2582445D00D8E3B8 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		835EE3BE2582445D00D8E3B8 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
-		835EE3C7258244D100D8E3B8 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		835EE3C82582450E00D8E3B8 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		835EE3D12582479D00D8E3B8 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
-		835EE3DA2582483D00D8E3B8 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
-		835EE3E3258248F400D8E3B8 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
-		835EE3E4258248F400D8E3B8 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
-		835EE3E5258248F400D8E3B8 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
-		835EE3E6258248F400D8E3B8 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
 		835EE3EF2582494F00D8E3B8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		835EE3F82582498500D8E3B8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		835EE401258249D900D8E3B8 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
@@ -969,8 +927,6 @@
 		835EE4132582513700D8E3B8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCBC2476C4CE002FCD98 /* CoreServices.framework */; };
 		835EE41C2582515F00D8E3B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
 		835EE425258251A600D8E3B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
-		835EE42E2582524800D8E3B8 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
-		835EE42F2582524900D8E3B8 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
 		835EE4382582562300D8E3B8 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		835EE4392582562C00D8E3B8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		835EE43B2582564300D8E3B8 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
@@ -1360,10 +1316,6 @@
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C231F0E464C000331E6 /* libKarere.a */; };
 		94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C241F0E464C000331E6 /* libMEGASDK.a */; };
-		94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
-		94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6D28B9405C00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
@@ -1462,14 +1414,6 @@
 		A828E689286B31B6004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E688286B31B6004CED9E /* FirebaseCrashlytics */; };
 		A828E68B286B31F9004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68A286B31F9004CED9E /* FirebaseCrashlytics */; };
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
-		A82A38D0200D32BD00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
-		A82A38D1200D32CA00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
-		A82A38D2200D32D500883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
-		A82A38D3200D32EB00883533 /* libzen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38CF200D32BC00883533 /* libzen.a */; };
-		A82A38D5200D331700883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A82A5CAC292E6AEE00EF700A /* MEGAData */; };
 		A82D5CE226BC083500E73D27 /* PreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */; };
 		A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */; };
@@ -1482,6 +1426,36 @@
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
+		A836B9F628D46C090083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
+		A836B9F728D46C090083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
+		A836B9F828D46C090083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
+		A836B9F928D46C090083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
+		A836B9FA28D46C090083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
+		A836B9FB28D46C190083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
+		A836B9FC28D46C190083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
+		A836B9FD28D46C190083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
+		A836B9FE28D46C190083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
+		A836B9FF28D46C190083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
+		A836BA0028D46C250083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
+		A836BA0128D46C250083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
+		A836BA0228D46C250083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
+		A836BA0328D46C250083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
+		A836BA0428D46C250083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
+		A836BA0528D46C310083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
+		A836BA0628D46C310083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
+		A836BA0728D46C310083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
+		A836BA0828D46C310083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
+		A836BA0928D46C310083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
+		A836BA0A28D46C440083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
+		A836BA0B28D46C440083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
+		A836BA0C28D46C440083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
+		A836BA0D28D46C440083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
+		A836BA0E28D46C440083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
+		A836BA0F28D46C550083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
+		A836BA1028D46C550083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
+		A836BA1128D46C550083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
+		A836BA1228D46C550083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
+		A836BA1328D46C550083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A8399FA5296D908E0062B6BC /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		A8399FA6296D90AE0062B6BC /* MEGAError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88024F8CB490089376A /* MEGAError+Mapper.swift */; };
@@ -1518,18 +1492,6 @@
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
-		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
-		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
-		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
-		A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
-		A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
-		A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
-		A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
-		A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
-		A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
 		A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
 		A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
 		A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
@@ -1565,9 +1527,6 @@
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
-		A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
-		A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
-		A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
 		A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
 		A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
@@ -1575,6 +1534,12 @@
 		A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
 		A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
+		A8C2AD2528D0D4F600F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
+		A8C2AD2628D0D4F900F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
+		A8C2AD2728D0D4FE00F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
+		A8C2AD2828D0D50100F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
+		A8C2AD2928D0D50500F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
+		A8C2AD2A28D0D50E00F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
 		A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */; };
 		A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
@@ -1583,6 +1548,42 @@
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
+		A8D09CFC28CF9E270045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
+		A8D09CFD28CF9E300045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
+		A8D09CFE28CF9E520045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
+		A8D09CFF28CF9E710045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
+		A8D09D0028CF9E980045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
+		A8D09D0128CF9EF50045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
+		A8D09D0328CF9F7C0045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
+		A8D09D0428CF9F980045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
+		A8D09D0528CF9FB10045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
+		A8D09D0628CF9FC70045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
+		A8D09D0728CFA0130045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
+		A8D09D0828CFA0730045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
+		A8D09D0A28CFA1100045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A8D09D0B28CFA13A0045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A8D09D0C28CFA1540045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A8D09D0D28CFA15E0045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A8D09D0E28CFA1680045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A8D09D0F28CFA1980045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A8D09D1928CFA36F0045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
+		A8D09D1A28CFA3770045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
+		A8D09D1B28CFA37E0045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
+		A8D09D1C28CFA3830045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
+		A8D09D1D28CFA3900045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
+		A8D09D1E28CFA39C0045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
+		A8D09D2028CFA4880045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
+		A8D09D2128CFA4920045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
+		A8D09D2228CFA4A80045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
+		A8D09D2328CFA4AE0045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
+		A8D09D2428CFA4C70045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
+		A8D09D2528CFA5160045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
+		A8D09D2D28CFADB80045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
+		A8D09D2E28CFADC00045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
+		A8D09D2F28CFADC80045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
+		A8D09D3028CFADCC0045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
+		A8D09D3128CFADD00045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
+		A8D09D3228CFADD80045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
 		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
@@ -1617,7 +1618,6 @@
 		A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */; };
 		A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F71FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m */; };
-		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B51977C62942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */; };
@@ -3944,6 +3944,11 @@
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
 		A82F364728EF31CE00093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift; sourceTree = "<group>"; };
+		A836B9F128D46C080083039B /* libwebrtc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebrtc.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebrtc.xcframework; sourceTree = "<group>"; };
+		A836B9F228D46C080083039B /* libnative_api.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_api.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_api.xcframework; sourceTree = "<group>"; };
+		A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideoframebuffer_objc.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.xcframework; sourceTree = "<group>"; };
+		A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideocapture_objc.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideocapture_objc.xcframework; sourceTree = "<group>"; };
+		A836B9F528D46C090083039B /* libnative_video.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_video.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_video.xcframework; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAHandleList+Mapper.swift"; sourceTree = "<group>"; };
@@ -4028,6 +4033,13 @@
 		A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1322D71C470030CE1B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterGroupNameTextFieldDelegate.swift; sourceTree = "<group>"; };
+		A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcurl.xcframework; sourceTree = "<group>"; };
+		A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libuv.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libuv.xcframework; sourceTree = "<group>"; };
+		A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libsodium.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libsodium.xcframework; sourceTree = "<group>"; };
+		A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebsockets.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.xcframework; sourceTree = "<group>"; };
+		A8D09D1828CFA36F0045BF15 /* libzen.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libzen.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.xcframework; sourceTree = "<group>"; };
+		A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libmediainfo.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.xcframework; sourceTree = "<group>"; };
+		A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcryptopp.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.xcframework; sourceTree = "<group>"; };
 		A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountExpiredViewController.swift; sourceTree = "<group>"; };
 		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
@@ -4955,6 +4967,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A836B9F628D46C090083039B /* libwebrtc.xcframework in Frameworks */,
+				A836B9F728D46C090083039B /* libnative_api.xcframework in Frameworks */,
+				A836B9F828D46C090083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A836B9F928D46C090083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A836B9FA28D46C090083039B /* libnative_video.xcframework in Frameworks */,
+				A8C2AD2A28D0D50E00F656C9 /* libwebsockets.xcframework in Frameworks */,
+				A8D09D3228CFADD80045BF15 /* libcryptopp.xcframework in Frameworks */,
+				A8D09D2528CFA5160045BF15 /* libmediainfo.xcframework in Frameworks */,
+				A8D09D1E28CFA39C0045BF15 /* libzen.xcframework in Frameworks */,
+				A8D09D0F28CFA1980045BF15 /* libsodium.xcframework in Frameworks */,
+				A8D09D0828CFA0730045BF15 /* libuv.xcframework in Frameworks */,
+				A8D09D0128CF9EF50045BF15 /* libcurl.xcframework in Frameworks */,
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
@@ -4972,18 +4996,10 @@
 				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
 				2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */,
 				2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */,
-				77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
 				BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */,
-				77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */,
-				77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */,
-				77FD20052359A5A7004FB892 /* libnative_video.a in Frameworks */,
-				77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */,
 				A811DCC02476C4F7002FCD98 /* CoreServices.framework in Frameworks */,
-				A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */,
-				A82A38D0200D32BD00883533 /* libzen.a in Frameworks */,
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
-				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
 				A863223F29091456004FED9B /* Settings in Frameworks */,
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
@@ -4993,18 +5009,14 @@
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
-				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
 				A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
 				BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
-				A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */,
-				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
-				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
@@ -5020,18 +5032,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7794AEF1231E6D3E0039C1D2 /* libcryptopp.a in Frameworks */,
-				77AEB94523CDBC560047CEBF /* libvideocapture_objc.a in Frameworks */,
-				7794AEF7231E75650039C1D2 /* libcurl.a in Frameworks */,
+				A836BA0A28D46C440083039B /* libnative_api.xcframework in Frameworks */,
+				A836BA0B28D46C440083039B /* libnative_video.xcframework in Frameworks */,
+				A836BA0C28D46C440083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A836BA0D28D46C440083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A836BA0E28D46C440083039B /* libwebrtc.xcframework in Frameworks */,
+				A8C2AD2628D0D4F900F656C9 /* libwebsockets.xcframework in Frameworks */,
+				A8D09D2E28CFADC00045BF15 /* libcryptopp.xcframework in Frameworks */,
+				A8D09D2228CFA4A80045BF15 /* libmediainfo.xcframework in Frameworks */,
+				A8D09D1B28CFA37E0045BF15 /* libzen.xcframework in Frameworks */,
+				A8D09D0B28CFA13A0045BF15 /* libsodium.xcframework in Frameworks */,
+				A8D09D0428CF9F980045BF15 /* libuv.xcframework in Frameworks */,
+				A8D09D0028CF9E980045BF15 /* libcurl.xcframework in Frameworks */,
 				7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */,
-				7794AEF4231E6DA70039C1D2 /* libmediainfo.a in Frameworks */,
 				B63D341C2898A9E90059DE66 /* MEGASwift in Frameworks */,
 				7794AEE6231E65570039C1D2 /* libMEGASDK.a in Frameworks */,
-				7794AEF3231E6D870039C1D2 /* libsodium.a in Frameworks */,
-				7794AEF2231E6D680039C1D2 /* libuv.a in Frameworks */,
 				A811DCBB2476C4BC002FCD98 /* MetalKit.framework in Frameworks */,
-				7794AEFA231E76270039C1D2 /* libwebsockets.a in Frameworks */,
-				7794AEF5231E6DCA0039C1D2 /* libzen.a in Frameworks */,
 				7794AEE9231E6BF90039C1D2 /* AudioToolbox.framework in Frameworks */,
 				7794AEED231E6C8C0039C1D2 /* AVFoundation.framework in Frameworks */,
 				7794AEFC231E76900039C1D2 /* CoreMedia.framework in Frameworks */,
@@ -5041,19 +5057,15 @@
 				7794AF10231E7D4E0039C1D2 /* Metal.framework in Frameworks */,
 				7794AF15231E7EF00039C1D2 /* QuartzCore.framework in Frameworks */,
 				7794AF21232100F30039C1D2 /* Security.framework in Frameworks */,
-				77AEB94423CDBC550047CEBF /* libnative_video.a in Frameworks */,
 				7794AEEC231E6C610039C1D2 /* UIKit.framework in Frameworks */,
-				77AEB94723CDBC560047CEBF /* libwebrtc.a in Frameworks */,
 				7794AF11231E7D7B0039C1D2 /* VideoToolbox.framework in Frameworks */,
 				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
 				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
 				7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */,
-				77AEB94323CDBC550047CEBF /* libnative_api.a in Frameworks */,
 				BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */,
 				A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */,
 				B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */,
 				7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */,
-				77AEB94623CDBC560047CEBF /* libvideoframebuffer_objc.a in Frameworks */,
 				7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */,
 				A811DCBF2476C4EB002FCD98 /* CoreServices.framework in Frameworks */,
 			);
@@ -5063,6 +5075,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A836BA0F28D46C550083039B /* libnative_api.xcframework in Frameworks */,
+				A836BA1028D46C550083039B /* libnative_video.xcframework in Frameworks */,
+				A836BA1128D46C550083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A836BA1228D46C550083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A836BA1328D46C550083039B /* libwebrtc.xcframework in Frameworks */,
+				A8C2AD2528D0D4F600F656C9 /* libwebsockets.xcframework in Frameworks */,
+				A8D09D2D28CFADB80045BF15 /* libcryptopp.xcframework in Frameworks */,
+				A8D09D2028CFA4880045BF15 /* libmediainfo.xcframework in Frameworks */,
+				A8D09D1C28CFA3830045BF15 /* libzen.xcframework in Frameworks */,
+				A8D09D0E28CFA1680045BF15 /* libsodium.xcframework in Frameworks */,
+				A8D09D0628CF9FC70045BF15 /* libuv.xcframework in Frameworks */,
+				A8D09CFD28CF9E300045BF15 /* libcurl.xcframework in Frameworks */,
 				835EE45125825FFE00D8E3B8 /* libKarere.a in Frameworks */,
 				835EE3F82582498500D8E3B8 /* libresolv.tbd in Frameworks */,
 				835EE3EF2582494F00D8E3B8 /* libz.tbd in Frameworks */,
@@ -5081,21 +5105,9 @@
 				835EE43E2582566D00D8E3B8 /* AudioToolbox.framework in Frameworks */,
 				835EE43F2582567700D8E3B8 /* MetalKit.framework in Frameworks */,
 				835EE40A2582511200D8E3B8 /* libsqlite3.tbd in Frameworks */,
-				835EE42E2582524800D8E3B8 /* libuv.a in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
-				835EE42F2582524900D8E3B8 /* libwebrtc.a in Frameworks */,
 				B63D341E2898AE3B0059DE66 /* MEGASwift in Frameworks */,
-				835EE3E3258248F400D8E3B8 /* libvideoframebuffer_objc.a in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
-				835EE3E4258248F400D8E3B8 /* libvideocapture_objc.a in Frameworks */,
-				835EE3E5258248F400D8E3B8 /* libnative_video.a in Frameworks */,
-				835EE3E6258248F400D8E3B8 /* libnative_api.a in Frameworks */,
-				835EE3DA2582483D00D8E3B8 /* libwebsockets.a in Frameworks */,
-				835EE3D12582479D00D8E3B8 /* libzen.a in Frameworks */,
-				835EE3C82582450E00D8E3B8 /* libsodium.a in Frameworks */,
-				835EE3C7258244D100D8E3B8 /* libmediainfo.a in Frameworks */,
-				835EE3BC2582445D00D8E3B8 /* libcurl.a in Frameworks */,
-				835EE3BE2582445D00D8E3B8 /* libcryptopp.a in Frameworks */,
 				835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */,
 				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
 				83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */,
@@ -5116,11 +5128,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */,
-				77FD20152359E3FA004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
-				77FD20142359E3D2004FB892 /* libvideocapture_objc.a in Frameworks */,
-				77FD200F2359E395004FB892 /* libnative_api.a in Frameworks */,
-				77FD200C2359E2C6004FB892 /* libwebrtc.a in Frameworks */,
+				A836B9FB28D46C190083039B /* libnative_api.xcframework in Frameworks */,
+				A836B9FC28D46C190083039B /* libnative_video.xcframework in Frameworks */,
+				A836B9FD28D46C190083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A836B9FE28D46C190083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A836B9FF28D46C190083039B /* libwebrtc.xcframework in Frameworks */,
+				A8C2AD2928D0D50500F656C9 /* libwebsockets.xcframework in Frameworks */,
+				A8D09D3128CFADD00045BF15 /* libcryptopp.xcframework in Frameworks */,
+				A8D09D2428CFA4C70045BF15 /* libmediainfo.xcframework in Frameworks */,
+				A8D09D1D28CFA3900045BF15 /* libzen.xcframework in Frameworks */,
+				A8D09D0C28CFA1540045BF15 /* libsodium.xcframework in Frameworks */,
+				A8D09D0528CF9FB10045BF15 /* libuv.xcframework in Frameworks */,
+				A8D09CFE28CF9E520045BF15 /* libcurl.xcframework in Frameworks */,
 				5B09ABB522A9501C007342EF /* CoreTelephony.framework in Frameworks */,
 				BFA275E527ED316A00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */,
@@ -5129,15 +5148,12 @@
 				5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */,
 				A811DCC42476C557002FCD98 /* Photos.framework in Frameworks */,
 				BF1CEA3A27FA755C00C1A2E5 /* GKContactImage in Frameworks */,
-				A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */,
-				A82A38D1200D32CA00883533 /* libzen.a in Frameworks */,
 				BF1164C627F6A81600E5C5A4 /* PureLayout in Frameworks */,
 				A8C262A71FA0B60B006172CE /* Metal.framework in Frameworks */,
 				A811DCC12476C507002FCD98 /* CoreServices.framework in Frameworks */,
 				A8C262A41FA0B5CD006172CE /* CoreVideo.framework in Frameworks */,
 				A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */,
-				A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */,
 				A811DCC32476C53A002FCD98 /* MetalKit.framework in Frameworks */,
 				835294592954AF58000E4D5A /* MEGAUIKit in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
@@ -5160,13 +5176,9 @@
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
 				A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */,
-				A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */,
-				A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
-				A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */,
 				943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */,
 				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
-				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				A828E68B286B31F9004CED9E /* FirebaseCrashlytics in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
 			);
@@ -5176,32 +5188,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A836BA0028D46C250083039B /* libnative_api.xcframework in Frameworks */,
+				A836BA0128D46C250083039B /* libnative_video.xcframework in Frameworks */,
+				A836BA0228D46C250083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A836BA0328D46C250083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A836BA0428D46C250083039B /* libwebrtc.xcframework in Frameworks */,
+				A8C2AD2828D0D50100F656C9 /* libwebsockets.xcframework in Frameworks */,
+				A8D09D3028CFADCC0045BF15 /* libcryptopp.xcframework in Frameworks */,
+				A8D09D2128CFA4920045BF15 /* libmediainfo.xcframework in Frameworks */,
+				A8D09D1928CFA36F0045BF15 /* libzen.xcframework in Frameworks */,
+				A8D09D0A28CFA1100045BF15 /* libsodium.xcframework in Frameworks */,
+				A8D09D0328CF9F7C0045BF15 /* libuv.xcframework in Frameworks */,
+				A8D09CFC28CF9E270045BF15 /* libcurl.xcframework in Frameworks */,
 				BF0CB93C2803AF3500C21F11 /* SAMKeychain in Frameworks */,
-				77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */,
-				77FD20162359E3FE004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
-				77FD20132359E3CE004FB892 /* libvideocapture_objc.a in Frameworks */,
-				77FD20102359E398004FB892 /* libnative_api.a in Frameworks */,
-				77FD200D2359E2D2004FB892 /* libwebrtc.a in Frameworks */,
-				A82A38D5200D331700883533 /* libmediainfo.a in Frameworks */,
-				A82A38D2200D32D500883533 /* libzen.a in Frameworks */,
 				A8C2629E1FA0B56E006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */,
 				A811DCB92476C472002FCD98 /* MetalKit.framework in Frameworks */,
-				A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */,
 				A811DCBD2476C4CE002FCD98 /* CoreServices.framework in Frameworks */,
 				A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
 				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
 				A828E689286B31B6004CED9E /* FirebaseCrashlytics in Frameworks */,
-				A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */,
-				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
 				942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */,
 				942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */,
 				942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */,
-				A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
-				A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5210,24 +5222,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77FD20182359E42B004FB892 /* libnative_video.a in Frameworks */,
+				A836BA0528D46C310083039B /* libnative_api.xcframework in Frameworks */,
+				A836BA0628D46C310083039B /* libnative_video.xcframework in Frameworks */,
+				A836BA0728D46C310083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A836BA0828D46C310083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A836BA0928D46C310083039B /* libwebrtc.xcframework in Frameworks */,
+				A8C2AD2728D0D4FE00F656C9 /* libwebsockets.xcframework in Frameworks */,
+				A8D09D2F28CFADC80045BF15 /* libcryptopp.xcframework in Frameworks */,
+				A8D09D2328CFA4AE0045BF15 /* libmediainfo.xcframework in Frameworks */,
+				A8D09D1A28CFA3770045BF15 /* libzen.xcframework in Frameworks */,
+				A8D09D0D28CFA15E0045BF15 /* libsodium.xcframework in Frameworks */,
+				A8D09D0728CFA0130045BF15 /* libuv.xcframework in Frameworks */,
+				A8D09CFF28CF9E710045BF15 /* libcurl.xcframework in Frameworks */,
 				BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				B63995442898D03400EA88F1 /* MEGASwiftUI in Frameworks */,
 				B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */,
-				77FD20172359E402004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
-				77FD20122359E3CA004FB892 /* libvideocapture_objc.a in Frameworks */,
-				77FD20112359E39B004FB892 /* libnative_api.a in Frameworks */,
-				77FD200E2359E2D5004FB892 /* libwebrtc.a in Frameworks */,
 				BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */,
-				A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */,
-				A82A38D3200D32EB00883533 /* libzen.a in Frameworks */,
 				A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */,
-				A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */,
-				94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */,
 				A811DCC22476C51C002FCD98 /* Photos.framework in Frameworks */,
-				94B28C481F0E4865000331E6 /* libcryptopp.a in Frameworks */,
-				94B28C491F0E4865000331E6 /* libsodium.a in Frameworks */,
-				94B28C4B1F0E4865000331E6 /* libuv.a in Frameworks */,
 				94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */,
 				94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */,
 				943F8B331EF286C000AFD89F /* AVFoundation.framework in Frameworks */,
@@ -6203,6 +6215,18 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A836B9F228D46C080083039B /* libnative_api.xcframework */,
+				A836B9F528D46C090083039B /* libnative_video.xcframework */,
+				A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */,
+				A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */,
+				A836B9F128D46C080083039B /* libwebrtc.xcframework */,
+				A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */,
+				A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */,
+				A8D09D1828CFA36F0045BF15 /* libzen.xcframework */,
+				A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */,
+				A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */,
+				A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */,
+				A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */,
 				A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */,
 				8334512B258B98E00052DB3C /* YYCategories.framework */,
 				2FA6DA61243E919D007A8E81 /* Accelerate.framework */,
