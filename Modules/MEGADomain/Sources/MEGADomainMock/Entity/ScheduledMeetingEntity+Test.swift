@@ -17,6 +17,7 @@ public extension ScheduledMeetingEntity {
         description: String = "",
         attributes: String = "",
         overrides: Date = Date(),
+        rules: ScheduledMeetingRulesEntity = ScheduledMeetingRulesEntity(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -33,7 +34,9 @@ public extension ScheduledMeetingEntity {
             title: title,
             description: description,
             attributes: attributes,
-            overrides: overrides)
+            overrides: overrides,
+            rules: rules
+        )
     }
     
 }

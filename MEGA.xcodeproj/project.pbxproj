@@ -2154,6 +2154,7 @@
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */; };
 		BF782D81269BA8610001D169 /* RecentActionBucketEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */; };
+		BF7D2FB329669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D2FB229669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
 		BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */; };
@@ -2326,6 +2327,7 @@
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
 		BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */; };
+		BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */; };
 		BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */; };
 		BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */; };
 		BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */; };
@@ -4565,6 +4567,7 @@
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageLoadErrorEntity.swift; sourceTree = "<group>"; };
 		BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecentActionBucketEntity+Mapper.swift"; sourceTree = "<group>"; };
+		BF7D2FB229669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
 		BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+MEGANode.swift"; sourceTree = "<group>"; };
 		BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKTransferListenerRepository.swift; sourceTree = "<group>"; };
@@ -4728,6 +4731,7 @@
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
 		BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserInviteUseCase.swift; sourceTree = "<group>"; };
+		BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Meetings.swift"; sourceTree = "<group>"; };
 		BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepository.swift; sourceTree = "<group>"; };
 		BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
@@ -7866,6 +7870,7 @@
 				7759700D219EC2D700B31671 /* NotificationTableViewCell.h */,
 				7759700E219EC2D700B31671 /* NotificationTableViewCell.m */,
 				B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */,
+				BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -9904,6 +9909,7 @@
 				BF66DFBD2613CC4500066F35 /* ChatRoomEntity+Mapper.swift */,
 				BF0A426B28A21C9A0071F923 /* ChatRoomEntity+Peer.swift */,
 				BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */,
+				BF7D2FB229669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift */,
 				BF66E036261420A000066F35 /* CallEntity+Mapper.swift */,
 				BF66E04A2614269000066F35 /* ChatSessionEntity+Mapper.swift */,
 				B6FD64F22689E87F00988A17 /* SortOrderEntity+Mapper.swift */,
@@ -12526,6 +12532,7 @@
 				8358332C29487F2900394F1A /* ChatRoomParticipantPrivilege.swift in Sources */,
 				329110FC288E39FC001324EA /* PhotoLibraryFilterTypeView.swift in Sources */,
 				C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */,
+				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				9D3563DC28B5523F00CB3365 /* SettingViewRouter.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
@@ -12783,6 +12790,7 @@
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				B6A305EE278BBEDC00E78205 /* PhotoAutoScrollViewModel.swift in Sources */,
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
+				BF7D2FB329669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
