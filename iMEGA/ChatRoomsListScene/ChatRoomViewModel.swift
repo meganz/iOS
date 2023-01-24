@@ -221,7 +221,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
-        if chatListItem.meeting {
+        if chatListItem.meeting && chatUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).isNotEmpty {
             options.append(
                 ChatRoomContextMenuOption(
                     title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
