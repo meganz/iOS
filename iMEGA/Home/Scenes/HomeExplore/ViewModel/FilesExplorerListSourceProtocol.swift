@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol FilesExplorerListSourceDelegate: UIViewController {
     func showMoreOptions(forNode node: MEGANode, sender: UIView)
@@ -60,7 +61,7 @@ extension FilesExplorerListSourceProtocol {
     }
     
     func onTransferCompleted(forNode node: MEGANode) {}
-
+    
     func toggleSelection(at indexPath: IndexPath) {
         guard let nodes = nodes else { return }
         let node = nodes[indexPath.row]

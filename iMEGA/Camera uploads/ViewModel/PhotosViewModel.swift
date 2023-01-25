@@ -3,7 +3,7 @@ import MEGADomain
 
 @MainActor
 final class PhotosViewModel: NSObject {
-    @objc var mediaNodesArray: [MEGANode] = [MEGANode]() {
+    var mediaNodes: [NodeEntity] = [NodeEntity]() {
         didSet {
             photoUpdatePublisher.updatePhotoLibrary()
         }
@@ -68,7 +68,7 @@ final class PhotosViewModel: NSObject {
     
     func loadPhotos() async {
         do {
-            mediaNodesArray = try await loadFilteredPhotos()
+            mediaNodes = try await loadFilteredPhotos()
         } catch {
             MEGALogError("[Photos] - error when to load photos \(error)")
         }
@@ -86,9 +86,9 @@ final class PhotosViewModel: NSObject {
     }
     
     // MARK: - Private
-    private func loadFilteredPhotos() async throws -> [MEGANode] {
+    private func loadFilteredPhotos() async throws -> [NodeEntity] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
-        var nodes: [MEGANode]
+        var nodes: [NodeEntity]
         
         switch filterOptions {
         case .allVisualFiles, .allImages, .allVideos:
@@ -109,11 +109,11 @@ final class PhotosViewModel: NSObject {
         nodeList: MEGANodeList,
         container: PhotoLibraryContainerEntity
     ) -> Bool {
-        let cameraUploadNodesModified = shouldProcessOnNodesUpdate(with: nodeList,
-                                                                   childNodes: mediaNodesArray,
+        let cameraUploadNodesModified = shouldProcessOnNodeEntitiesUpdate(with: nodeList,
+                                                                   childNodes: mediaNodes,
                                                                    parentNode: container.cameraUploadNode)
-        let mediaUploadNodesModified = shouldProcessOnNodesUpdate(with: nodeList,
-                                                                  childNodes: mediaNodesArray,
+        let mediaUploadNodesModified = shouldProcessOnNodeEntitiesUpdate(with: nodeList,
+                                                                  childNodes: mediaNodes,
                                                                   parentNode:  container.mediaUploadNode)
         return cameraUploadNodesModified || mediaUploadNodesModified
     }

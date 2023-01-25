@@ -4,11 +4,11 @@ import MEGADomainMock
 
 final class AlbumListUseCaseTests: XCTestCase {
     private let photos = [
-            NodeEntity(name: "1.raw", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true),
-            NodeEntity(name: "3.cr2", handle: 3, hasThumbnail: false),
-            NodeEntity(name: "4.dng", handle: 4, hasThumbnail: false),
-            NodeEntity(name: "5.gif", handle: 5, hasThumbnail: true)]
+        NodeEntity(name: "1.raw", handle: 1, hasThumbnail: true),
+        NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true),
+        NodeEntity(name: "3.cr2", handle: 3, hasThumbnail: false),
+        NodeEntity(name: "4.dng", handle: 4, hasThumbnail: false),
+        NodeEntity(name: "5.gif", handle: 5, hasThumbnail: true)]
     
     private let emptyFavouritesAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "", coverNode: nil, count: 0, type: .favourite)
     
@@ -16,7 +16,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository.newRepo,
+            fileSearchRepository: MockFilesSearchRepository.newRepo,
             mediaUseCase: MockMediaUseCase())
         let rootNode = try await sut.loadCameraUploadNode()
         XCTAssertNotNil(rootNode)
@@ -26,7 +26,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(photoNodes: photos),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isRawImage: true))
         let albums = try await sut.systemAlbums()
         XCTAssert(albums.count == 2)
@@ -38,7 +38,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(photoNodes: photos),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isGifImage: true))
         let albums = try await sut.systemAlbums()
         XCTAssert(albums.count == 2)
@@ -53,7 +53,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(photoNodes: favouriteGifPhotos),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteGifPhotos),
             mediaUseCase: MockMediaUseCase(isGifImage: true))
         let albums = try await sut.systemAlbums()
         XCTAssertTrue(albums.count == 2)
@@ -68,7 +68,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(photoNodes: favouriteRawPhotos),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteRawPhotos),
             mediaUseCase: MockMediaUseCase(isRawImage: true))
         let albums = try await sut.systemAlbums()
         XCTAssertTrue(albums.count == 2)
@@ -91,7 +91,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase())
         let albums = try await sut.systemAlbums()
         XCTAssertTrue(albums.count == 1)
@@ -109,11 +109,11 @@ final class AlbumListUseCaseTests: XCTestCase {
                       modificationTime: Date(), name: "Album 1"),
         ]
         let expectedAlbumContents = [albumId:
-            [SetElementEntity(handle: albumSetCoverId, order: 2, nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")]]
+                                        [SetElementEntity(handle: albumSetCoverId, order: 2, nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")]]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumContent: expectedAlbumContents),
-            fileSearchRepository: MockFileSearchRepository(photoNodes: [expectedAlbumCover]),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
             mediaUseCase: MockMediaUseCase())
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
@@ -129,7 +129,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
-            fileSearchRepository: MockFileSearchRepository(),
+            fileSearchRepository: MockFilesSearchRepository(),
             mediaUseCase: MockMediaUseCase())
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
@@ -149,7 +149,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase())
         let result = try await sut.createUserAlbum(with: "Custom Album")
         XCTAssertEqual(result.name, "Custom Album")
@@ -160,7 +160,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFileSearchRepository(
+            fileSearchRepository: MockFilesSearchRepository(
                 photoNodes: [
                     NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
                     NodeEntity(name: "1.png", handle: 1, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date)

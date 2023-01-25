@@ -1,18 +1,19 @@
+import MEGADomain
 
 protocol FilesSearchUseCaseProtocol {
     func search(string: String?,
-                inNode node: MEGANode?,
-                sortOrderType: MEGASortOrderType,
+                inNode node: NodeEntity?,
+                sortOrderType: SortOrderEntity,
                 cancelPreviousSearchIfNeeded: Bool,
-                completionBlock: @escaping ([MEGANode]?, Bool) -> Void)
-    func onNodesUpdate(with nodesUpdateHandler: @escaping ([MEGANode]) -> Void)
+                completionBlock: @escaping ([NodeEntity]?, Bool) -> Void)
+    func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void)
 }
 
 final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     private let repo: FilesSearchRepositoryProtocol
     private let explorerType: ExplorerTypeEntity
     private let nodesUpdateListenerRepo: SDKNodesUpdateListenerRepository
-    private var nodesUpdateHandler: (([MEGANode]) -> Void)?
+    private var nodesUpdateHandler: (([NodeEntity]) -> Void)?
     
     init(repo: FilesSearchRepositoryProtocol,
          explorerType: ExplorerTypeEntity,
@@ -25,25 +26,24 @@ final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     }
     
     func search(string: String?,
-                inNode node: MEGANode?,
-                sortOrderType: MEGASortOrderType,
+                inNode node: NodeEntity?,
+                sortOrderType: SortOrderEntity,
                 cancelPreviousSearchIfNeeded: Bool,
-                completionBlock: @escaping ([MEGANode]?, Bool) -> Void) {
-        let formatType = repo.megaNodeFormatType(from: explorerType)
+                completionBlock: @escaping ([NodeEntity]?, Bool) -> Void) {
+        let formatType = explorerType.toNodeFormatEntity()
         
         if cancelPreviousSearchIfNeeded {
             repo.cancelSearch()
         }
         
         repo.search(string: string,
-                    inNode: node,
+                    parent: node,
                     sortOrderType: sortOrderType,
                     formatType: formatType,
-                    completionBlock: completionBlock)
-        
+                    completion: completionBlock)
     }
     
-    func onNodesUpdate(with nodesUpdateHandler: @escaping ([MEGANode]) -> Void) {
+    func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void) {
         self.nodesUpdateHandler = nodesUpdateHandler
     }
     
@@ -52,7 +52,7 @@ final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     private func addNodesUpdateHandler() {
         self.nodesUpdateListenerRepo.onUpdateHandler = { [weak self] nodes in
             guard let self = self else { return }
-            self.nodesUpdateHandler?(nodes)
+            self.nodesUpdateHandler?(nodes.toNodeEntities())
         }
     }
 }

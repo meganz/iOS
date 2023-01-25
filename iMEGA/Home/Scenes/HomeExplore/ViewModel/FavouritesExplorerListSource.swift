@@ -1,3 +1,4 @@
+import MEGADomain
 
 final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
     // MARK:- Private variables

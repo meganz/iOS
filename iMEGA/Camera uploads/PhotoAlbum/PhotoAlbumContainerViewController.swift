@@ -91,7 +91,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
         if let photoViewController = photoViewController {
             let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photoViewController)
             let photoLibraryRepository = PhotoLibraryRepository.newRepo
-            let fileSearchRepository = SDKFilesSearchRepository.newRepo
+            let fileSearchRepository = FilesSearchRepository.newRepo
             let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,

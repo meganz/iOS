@@ -17,7 +17,7 @@ struct FilesExplorerRouter {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let transferListenerRepo = SDKTransferListenerRepository(sdk: sdk)
-        let fileSearchRepo = SDKFilesSearchRepository(sdk: sdk)
+        let fileSearchRepo = FilesSearchRepository(sdk: sdk)
         let clipboardOperationRepo = SDKNodeClipboardOperationRepository(sdk: sdk)
         let useCase = FilesSearchUseCase(repo: fileSearchRepo,
                                          explorerType: explorerType,

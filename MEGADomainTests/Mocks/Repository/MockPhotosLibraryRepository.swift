@@ -1,25 +1,26 @@
 @testable import MEGA
+import MEGADomain
 
 struct MockPhotosLibraryRepository: PhotoLibraryRepositoryProtocol {
     static var newRepo: MockPhotosLibraryRepository {
         MockPhotosLibraryRepository()
     }
     
-    var cloudDriveNode: MEGANode?
-    var cameraUploadNode: MEGANode?
-    var mediaUploadNode: MEGANode?
+    var cloudDriveNode: NodeEntity?
+    var cameraUploadNode: NodeEntity?
+    var mediaUploadNode: NodeEntity?
     
-    var nodesInCloudDriveOnly: [MEGANode] = []
-    var nodesInCameraUpload: [MEGANode] = []
-    var nodesInMediaUpload: [MEGANode] = []
+    var nodesInCloudDriveOnly: [NodeEntity] = []
+    var nodesInCameraUpload: [NodeEntity] = []
+    var nodesInMediaUpload: [NodeEntity] = []
     
-    var videoNodes: [MEGANode] = []
+    var videoNodes: [NodeEntity] = []
     
-    func node(in source: PhotoSourceEntity) async throws -> MEGANode? {
+    func photoSourceNode(for source: PhotoSourceEntity) async throws -> NodeEntity? {
         source == .camera ? cameraUploadNode : mediaUploadNode
     }
     
-    func nodes(inParent parentNode: MEGANode?) -> [MEGANode] {
+    func visualMediaNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
         if parentNode == cloudDriveNode {
             return nodesInCloudDriveOnly
         } else if parentNode == cameraUploadNode {
@@ -29,7 +30,7 @@ struct MockPhotosLibraryRepository: PhotoLibraryRepositoryProtocol {
         }
     }
     
-    func videoNodes(inParent parentNode: MEGANode?) -> [MEGANode] {
+    func videoNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
         videoNodes
     }
 }

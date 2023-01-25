@@ -1,7 +1,7 @@
 import MEGADomain
 
 protocol PhotoLibraryRepositoryProtocol: RepositoryProtocol {
-    func node(in source: PhotoSourceEntity) async throws -> MEGANode?
-    func nodes(inParent parentNode: MEGANode?) -> [MEGANode]
-    func videoNodes(inParent parentNode: MEGANode?) -> [MEGANode]
+    func photoSourceNode(for source: PhotoSourceEntity) async throws -> NodeEntity?
+    func visualMediaNodes(inParent parentNode: NodeEntity?) -> [NodeEntity]
+    func videoNodes(inParent parentNode: NodeEntity?) -> [NodeEntity]
 }

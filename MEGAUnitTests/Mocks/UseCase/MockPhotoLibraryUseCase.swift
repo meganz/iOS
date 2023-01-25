@@ -1,11 +1,12 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
-    private let allPhotos: [MEGANode]
-    private let allPhotosFromCloudDriveOnly: [MEGANode]
-    private let allPhotosFromCameraUpload: [MEGANode]
+    private let allPhotos: [NodeEntity]
+    private let allPhotosFromCloudDriveOnly: [NodeEntity]
+    private let allPhotosFromCameraUpload: [NodeEntity]
     
-    init(allPhotos: [MEGANode], allPhotosFromCloudDriveOnly: [MEGANode], allPhotosFromCameraUpload: [MEGANode]) {
+    init(allPhotos: [NodeEntity], allPhotosFromCloudDriveOnly: [NodeEntity], allPhotosFromCameraUpload: [NodeEntity]) {
         self.allPhotos = allPhotos
         self.allPhotosFromCloudDriveOnly = allPhotosFromCloudDriveOnly
         self.allPhotosFromCameraUpload = allPhotosFromCameraUpload
@@ -15,19 +16,19 @@ final class MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
         PhotoLibraryContainerEntity(cameraUploadNode: nil, mediaUploadNode: nil)
     }
     
-    func cameraUploadPhotos() async throws -> [MEGANode] {
+    func cameraUploadPhotos() async throws -> [NodeEntity] {
         []
     }
     
-    func allPhotos() async throws -> [MEGANode] {
+    func allPhotos() async throws -> [NodeEntity] {
         allPhotos
     }
     
-    func allPhotosFromCloudDriveOnly() async throws -> [MEGANode] {
+    func allPhotosFromCloudDriveOnly() async throws -> [NodeEntity] {
         allPhotosFromCloudDriveOnly
     }
     
-    func allPhotosFromCameraUpload() async throws -> [MEGANode] {
+    func allPhotosFromCameraUpload() async throws -> [NodeEntity] {
         allPhotosFromCameraUpload
     }
 }

@@ -202,7 +202,7 @@
     }
     
     if (!CameraUploadManager.isCameraUploadEnabled) {
-        if (self.viewModel.mediaNodesArray.count == 0) {
+        if ([self.viewModel hasNoPhotos]) {
             self.currentState = MEGACameraUploadsStateEmpty;
         } else {
             self.currentState = MEGACameraUploadsStateDisabled;
@@ -311,7 +311,7 @@
             self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             break;
         case MEGACameraUploadsStateNoInternetConnection:
-            if (self.viewModel.mediaNodesArray.count == 0) {
+            if ([self.viewModel hasNoPhotos]) {
                 self.stateView.hidden = YES;
             } else {
                 self.stateLabel.text = NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
@@ -348,7 +348,7 @@
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
-        if (self.viewModel.mediaNodesArray.count == 0) {
+        if ([self.viewModel hasNoPhotos]) {
             [self.photosCollectionView reloadEmptyDataSet];
         }
         [self setupNavigationBarButtons];

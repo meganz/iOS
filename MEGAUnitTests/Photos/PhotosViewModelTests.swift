@@ -15,7 +15,6 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: allPhotos,
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
-        
         sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, mediaUseCase: MockMediaUseCase())
     }
     
@@ -40,23 +39,23 @@ final class PhotosViewModelTests: XCTestCase {
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedPhotos)
+        XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
     func testLoadingPhotos_withImagesAllLocations_shouldReturnTrue() async throws {
-        let expectedImages = sampleNodesForAllLocations().filter({ $0.name?.mnz_isImagePathExtension == true })
+        let expectedImages = sampleNodesForAllLocations().filter({ $0.name.mnz_isImagePathExtension == true })
         sut.filterType = .images
-        sut.filterLocation = . allLocations
+        sut.filterLocation = .allLocations
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedImages)
+        XCTAssertEqual(sut.mediaNodes, expectedImages)
     }
     
     func testLoadingVideos_withImagesAllLocations_shouldReturnTrue() async throws {
-        let expectedVideos = sampleNodesForAllLocations().filter({ $0.name?.mnz_isVideoPathExtension == true })
+        let expectedVideos = sampleNodesForAllLocations().filter({ $0.name.mnz_isVideoPathExtension == true })
         sut.filterType = .videos
         sut.filterLocation = . allLocations
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedVideos)
+        XCTAssertEqual(sut.mediaNodes, expectedVideos)
     }
     
     // MARK: - Cloud Drive only test cases
@@ -66,23 +65,23 @@ final class PhotosViewModelTests: XCTestCase {
         sut.filterType = .allMedia
         sut.filterLocation = .cloudDrive
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedPhotos)
+        XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
     func testLoadingPhotos_withImagesFromCloudDrive_shouldReturnTrue() async throws {
-        let expectedImages = sampleNodesForCloudDriveOnly().filter({ $0.name?.mnz_isImagePathExtension == true })
+        let expectedImages = sampleNodesForCloudDriveOnly().filter({ $0.name.mnz_isImagePathExtension == true })
         sut.filterType = .images
         sut.filterLocation = .cloudDrive
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedImages)
+        XCTAssertEqual(sut.mediaNodes, expectedImages)
     }
     
     func testLoadingPhotos_withVideosFromCloudDrive_shouldReturnTrue() async throws {
-        let expectedVideos = sampleNodesForCloudDriveOnly().filter({ $0.name?.mnz_isVideoPathExtension == true })
+        let expectedVideos = sampleNodesForCloudDriveOnly().filter({ $0.name.mnz_isVideoPathExtension == true })
         sut.filterType = .videos
         sut.filterLocation = .cloudDrive
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedVideos)
+        XCTAssertEqual(sut.mediaNodes, expectedVideos)
     }
     
     // MARK: - Camera Uploads test cases
@@ -92,54 +91,54 @@ final class PhotosViewModelTests: XCTestCase {
         sut.filterType = .allMedia
         sut.filterLocation = .cameraUploads
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedPhotos)
+        XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
     func testLoadingPhotos_withImagesFromCameraUploads_shouldReturnTrue() async throws {
-        let expectedImages = sampleNodesForCameraUploads().filter({ $0.name?.mnz_isImagePathExtension == true })
+        let expectedImages = sampleNodesForCameraUploads().filter({ $0.name.mnz_isImagePathExtension == true })
         sut.filterType = .images
         sut.filterLocation = .cameraUploads
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedImages)
+        XCTAssertEqual(sut.mediaNodes, expectedImages)
     }
     
     func testLoadingPhotos_withVideosFromCameraUploads_shouldReturnTrue() async throws {
-        let expectedVideos = sampleNodesForCameraUploads().filter({ $0.name?.mnz_isVideoPathExtension == true })
+        let expectedVideos = sampleNodesForCameraUploads().filter({ $0.name.mnz_isVideoPathExtension == true })
         sut.filterType = .videos
         sut.filterLocation = .cameraUploads
         await sut.loadPhotos()
-        XCTAssertEqual(sut.mediaNodesArray, expectedVideos)
+        XCTAssertEqual(sut.mediaNodes, expectedVideos)
     }
     
-    private func sampleNodesForAllLocations() ->[MEGANode] {
-        let node1 = MockNode(handle: 1, name: "TestImage1.png", nodeType: .file, parentHandle: 0, hasThumbnail: true)
-        let node2 = MockNode(handle: 2, name: "TestImage2.png", nodeType: .file, parentHandle: 1, hasThumbnail: true)
-        let node3 = MockNode(handle: 3, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 2, hasThumbnail: true)
-        let node4 = MockNode(handle: 4, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 3, hasThumbnail: true)
-        let node5 = MockNode(handle: 5, name: "TestImage1.png", nodeType: .file, parentHandle: 4, hasThumbnail: true)
-        let node6 = MockNode(handle: 6, name: "TestImage2.png", nodeType: .file, parentHandle: 5, hasThumbnail: true)
-        let node7 = MockNode(handle: 7, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 6, hasThumbnail: true)
-        let node8 = MockNode(handle: 8, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 7, hasThumbnail: true)
+    private func sampleNodesForAllLocations() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true)
+        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
+        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 2, hasThumbnail: true)
+        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 3, hasThumbnail: true)
+        let node5 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:5, parentHandle: 4, hasThumbnail: true)
+        let node6 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:6, parentHandle: 5, hasThumbnail: true)
+        let node7 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:7, parentHandle: 6, hasThumbnail: true)
+        let node8 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:8, parentHandle: 7, hasThumbnail: true)
         
         return [node1, node2, node3, node4, node5, node6, node7, node8]
     }
     
-    private func sampleNodesForCloudDriveOnly() ->[MEGANode] {
-        let node1 = MockNode(handle: 1, name: "TestImage1.png", nodeType: .file, parentHandle: 0, hasThumbnail: true)
-        let node2 = MockNode(handle: 2, name: "TestImage2.png", nodeType: .file, parentHandle: 1, hasThumbnail: true)
-        let node3 = MockNode(handle: 3, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 2, hasThumbnail: true)
-        let node4 = MockNode(handle: 4, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 3, hasThumbnail: true)
+    private func sampleNodesForCloudDriveOnly() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true)
+        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
+        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 1, hasThumbnail: true)
+        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 1, hasThumbnail: true)
         
         return [node1, node2, node3, node4]
     }
     
-    private func sampleNodesForCameraUploads() ->[MEGANode] {
-        let node5 = MockNode(handle: 5, name: "TestImage1.png", nodeType: .file, parentHandle: 4, hasThumbnail: true)
-        let node6 = MockNode(handle: 6, name: "TestImage2.png", nodeType: .file, parentHandle: 5, hasThumbnail: true)
-        let node7 = MockNode(handle: 7, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 6, hasThumbnail: true)
-        let node8 = MockNode(handle: 8, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 7, hasThumbnail: true)
+    private func sampleNodesForCameraUploads() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true)
+        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
+        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 1, hasThumbnail: true)
+        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 1, hasThumbnail: true)
         
-        return [node5, node6, node7, node8]
+        return [node1, node2, node3, node4]
     }
     
     private func photosViewModelForFeatureFlag(provider: FeatureFlagProviderProtocol) -> PhotosViewModel {

@@ -8,13 +8,13 @@ public protocol AlbumContentsUseCaseProtocol {
 public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private var albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol
     private let mediaUseCase: MediaUseCaseProtocol
-    private let fileSearchRepo: FileSearchRepositoryProtocol
+    private let fileSearchRepo: FilesSearchRepositoryProtocol
     private let userAlbumRepo: UserAlbumRepositoryProtocol
     
     public let updatePublisher: AnyPublisher<Void, Never>
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol, mediaUseCase: MediaUseCaseProtocol, fileSearchRepo: FileSearchRepositoryProtocol, userAlbumRepo: UserAlbumRepositoryProtocol) {
+    public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol, mediaUseCase: MediaUseCaseProtocol, fileSearchRepo: FilesSearchRepositoryProtocol, userAlbumRepo: UserAlbumRepositoryProtocol) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
@@ -62,7 +62,7 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             let nodeIds = await userAlbumRepo.albumContent(by: id).map { $0.nodeId }
             nodeIds.forEach { handle in
                 group.addTask { [weak self] in
-                    await self?.fileSearchRepo.fetchNode(by: handle)
+                    await self?.fileSearchRepo.node(by: handle)
                 }
             }
             

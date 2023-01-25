@@ -2,13 +2,7 @@ import Foundation
 import MEGADomain
 
 actor PhotoLibraryMapper {
-    func buildPhotoLibrary(with nodes: [PhotoLibraryNodeProtocol], withSortType type: SortOrderType) -> PhotoLibrary {
-        if let nodes = nodes as? [MEGANode] {
-            return nodes.toPhotoLibrary(withSortType: type)
-        } else if let nodes = nodes as? [NodeEntity] {
-            return nodes.toPhotoLibrary(withSortType: type)
-        }
-        
-        return PhotoLibrary()
+    func buildPhotoLibrary(with nodes: [NodeEntity], withSortType type: SortOrderType) -> PhotoLibrary {
+        nodes.toPhotoLibrary(withSortType: type)
     }
 }

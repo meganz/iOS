@@ -159,12 +159,14 @@ final class FilesExplorerViewModel {
         
         useCase?.search(string: text,
                        inNode: nil,
-                       sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).megaSortOrderType,
+                       sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                        cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
             DispatchQueue.main.async {
                 guard let self = self, !isCancelled else { return }
-                self.updateListenerForFilesDownload(withNodes: nodes)
-                self.invokeCommand?(.reloadNodes(nodes: nodes, searchText: text))
+                
+                let megaNodes = nodes?.toMEGANodes(in: MEGASdkManager.sharedMEGASdk())
+                self.updateListenerForFilesDownload(withNodes: megaNodes)
+                self.invokeCommand?(.reloadNodes(nodes: megaNodes, searchText: text))
             }
         }
     }
