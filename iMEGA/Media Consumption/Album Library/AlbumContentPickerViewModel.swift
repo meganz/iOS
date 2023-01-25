@@ -86,7 +86,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
         photosLoadingTask = Task(priority: .userInitiated) {
             do {
                 let nodes = try await photoLibraryUseCase.allPhotos()
-                    .filter { $0.hasThumbnail() }
+                    .filter { $0.hasThumbnail }
                 
                 photoLibraryContentViewModel.library = nodes.toPhotoLibrary(withSortType: .newest)
                 photoLibraryContentViewModel.selection.editMode = .active

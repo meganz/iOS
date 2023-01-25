@@ -1,31 +1,29 @@
 import XCTest
+import MEGADomain
+import MEGADomainMock
 @testable import MEGA
 
 final class PhotoLibraryUseCaseTests: XCTestCase {
     
-    var cloudDriveNode: MockNode {
-        MockNode(handle: 1, name: "Cloud Drive", nodeType: .folder, parentHandle: 0)
+    var cloudDriveNode: NodeEntity {
+        NodeEntity(nodeType: .folder, name:"Cloud Drive", handle: 1, parentHandle: 0)
     }
     
-    var cameraUploadNode: MockNode {
-        MockNode(handle: 2, name: "Camera Upload", nodeType: .folder, parentHandle: 1)
+    var cameraUploadNode: NodeEntity {
+        NodeEntity(nodeType: .folder, name:"Camera Upload", handle: 2, parentHandle: 1)
     }
     
-    var mediaUploadNode: MockNode {
-        MockNode(handle: 3, name: "Media Upload", nodeType: .folder, parentHandle: 1)
+    var mediaUploadNode: NodeEntity {
+        NodeEntity(nodeType: .folder, name:"Media Upload", handle: 3, parentHandle: 1)
     }
     
     // MARK: - Test cases
     
     func testAllPhotos_withCloudDrive_shouldReturnTrue() async throws {
-        let photosRepo = MockPhotosLibraryRepository.newRepo
-        let fileSearchRepo = MockFilesSearchRepository.newRepo
-        
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
-        fileSearchRepo.videoNodes = videoNodes
-        fileSearchRepo.imageNodes = imageNodes
-        
+        let photosRepo = MockPhotosLibraryRepository.newRepo
+        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
         let expectedCount = videoNodes.count + imageNodes.count
         
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo)
@@ -62,14 +60,12 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     
     func testAllPhotos_withCloudDriveOnly_shouldReturnTrue() async throws {
         var photosRepo = MockPhotosLibraryRepository.newRepo
-        let fileSearchRepo = MockFilesSearchRepository.newRepo
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
+        let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
         
         photosRepo.cameraUploadNode = cameraUploadNode
         photosRepo.mediaUploadNode = mediaUploadNode
-        fileSearchRepo.videoNodes = videoNodes
-        fileSearchRepo.imageNodes = imageNodes
         
         let expectedCount = 4
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo)
@@ -84,38 +80,38 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     
     // MARK: - Private
     
-    private func sampleImageNodesForCloudDrive() ->[MEGANode] {
-        let node1 = MockNode(handle: 4, name: "TestImage1.png", nodeType: .file, parentHandle: 1)
-        let node2 = MockNode(handle: 5, name: "TestImage2.png", nodeType: .file, parentHandle: 1)
-        let node3 = MockNode(handle: 6, name: "TestImage3.png", nodeType: .file, parentHandle: 2)
-        let node4 = MockNode(handle: 7, name: "TestImage4.png", nodeType: .file, parentHandle: 3)
+    private func sampleImageNodesForCloudDrive() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:4, parentHandle: 1)
+        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:5, parentHandle: 1)
+        let node3 = NodeEntity(nodeType:.file, name:"TestImage3.png", handle:6, parentHandle: 2)
+        let node4 = NodeEntity(nodeType:.file, name:"TestImage4.png", handle:7, parentHandle: 3)
         
         return [node1, node2, node3, node4]
     }
     
-    private func sampleVideoNodesForCloudDrive() ->[MEGANode] {
-        let node1 = MockNode(handle: 4, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 1)
-        let node2 = MockNode(handle: 5, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 1)
-        let node3 = MockNode(handle: 6, name: "TestVideo3.mp4", nodeType: .file, parentHandle: 2)
-        let node4 = MockNode(handle: 7, name: "TestVideo4.mp4", nodeType: .file, parentHandle: 3)
+    private func sampleVideoNodesForCloudDrive() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:4, parentHandle: 1)
+        let node2 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:5, parentHandle: 1)
+        let node3 = NodeEntity(nodeType:.file, name:"TestVideo3.mp4", handle:6, parentHandle: 2)
+        let node4 = NodeEntity(nodeType:.file, name:"TestVideo4.mp4", handle:7, parentHandle: 3)
         
         return [node1, node2, node3, node4]
     }
     
-    private func samplePhotoNodesFromCameraUpload() ->[MEGANode] {
-        let node1 = MockNode(handle: 4, name: "TestImage1.png", nodeType: .file, parentHandle: 2)
-        let node2 = MockNode(handle: 5, name: "TestImage2.png", nodeType: .file, parentHandle: 2)
-        let node3 = MockNode(handle: 6, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 2)
-        let node4 = MockNode(handle: 7, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 2)
+    private func samplePhotoNodesFromCameraUpload() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:4, parentHandle: 2)
+        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:5, parentHandle: 2)
+        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:6, parentHandle: 2)
+        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:7, parentHandle: 2)
         
         return [node1, node2, node3, node4]
     }
     
-    private func samplePhotoNodesFromMediaUpload() ->[MEGANode] {
-        let node1 = MockNode(handle: 4, name: "TestImage1.png", nodeType: .file, parentHandle: 3)
-        let node2 = MockNode(handle: 5, name: "TestImage2.png", nodeType: .file, parentHandle: 3)
-        let node3 = MockNode(handle: 6, name: "TestVideo1.mp4", nodeType: .file, parentHandle: 3)
-        let node4 = MockNode(handle: 7, name: "TestVideo2.mp4", nodeType: .file, parentHandle: 3)
+    private func samplePhotoNodesFromMediaUpload() ->[NodeEntity] {
+        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:4, parentHandle: 3)
+        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:5, parentHandle: 3)
+        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:6, parentHandle: 3)
+        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:7, parentHandle: 3)
         
         return [node1, node2, node3, node4]
     }

@@ -1,5 +1,6 @@
+import Foundation
 
-enum ExplorerTypeEntity {
+public enum ExplorerTypeEntity {
     case audio
     case video
     case document

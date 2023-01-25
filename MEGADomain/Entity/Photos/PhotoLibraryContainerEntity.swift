@@ -1,4 +1,6 @@
+import MEGADomain
+
 struct PhotoLibraryContainerEntity {
-    let cameraUploadNode: MEGANode?
-    let mediaUploadNode: MEGANode?
+    let cameraUploadNode: NodeEntity?
+    let mediaUploadNode: NodeEntity?
 }

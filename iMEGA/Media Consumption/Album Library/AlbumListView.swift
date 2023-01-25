@@ -54,7 +54,7 @@ struct AlbumListView: View {
         AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
             album: album,
             locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations,
-            photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: SDKFilesSearchRepository.newRepo),
+            photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: FilesSearchRepository.newRepo),
             mediaUseCase: MediaUseCase(),
             albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: UserAlbumRepository.newRepo),
             completionHandler: { msg, album in

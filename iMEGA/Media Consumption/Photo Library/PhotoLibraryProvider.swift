@@ -1,12 +1,13 @@
 import Foundation
 import SwiftUI
+import MEGADomain
 
 @MainActor
 protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
     func configPhotoLibraryView(in container: UIView, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?)
-    func updatePhotoLibrary<T: PhotoLibraryNodeProtocol>(by nodes: [T], withSortType type: SortOrderType)
+    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderType)
     func hideNavigationEditBarButton(_ hide: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
@@ -55,7 +56,7 @@ extension PhotoLibraryProvider {
         navigationItem.title = message
     }
     
-    func updatePhotoLibrary<T:PhotoLibraryNodeProtocol>(by nodes: [T], withSortType type: SortOrderType = .newest) {
+    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderType = .newest) {
         guard let host = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }) else {
             return
         }
@@ -72,7 +73,7 @@ extension PhotoLibraryProvider {
     
     // MARK: - Private
     
-    private func load(by nodes: [PhotoLibraryNodeProtocol], withSortType type: SortOrderType) async -> PhotoLibrary {
+    private func load(by nodes: [NodeEntity], withSortType type: SortOrderType) async -> PhotoLibrary {
         let mapper = PhotoLibraryMapper()
         let lib = await mapper.buildPhotoLibrary(with: nodes, withSortType: type)
         

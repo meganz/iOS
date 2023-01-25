@@ -10,7 +10,7 @@ public protocol AlbumListUseCaseProtocol {
     func hasNoPhotosAndVideos() async -> Bool
 }
 
-public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRepositoryProtocol, V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol>:
+public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRepositoryProtocol, V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol>:
     AlbumListUseCaseProtocol {
     
     private let albumRepository: T
@@ -137,7 +137,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FileSearchRep
                           }) else {
                         return (setEntity.coverId, nil)
                     }
-                    let albumCover = await self?.fileSearchRepository.fetchNode(by: albumCoverSetElement.nodeId)
+                    let albumCover = await self?.fileSearchRepository.node(by: albumCoverSetElement.nodeId)
                     return (setEntity.coverId, albumCover)
                 }
             }

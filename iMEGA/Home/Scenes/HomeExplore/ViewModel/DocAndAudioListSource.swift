@@ -1,8 +1,6 @@
+import MEGADomain
 
 final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
-    
-    // MARK:- Private variables.
-
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
     var explorerType: ExplorerTypeEntity

@@ -22,7 +22,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name)),
-            fileSearchRepo: MockFileSearchRepository(photoNodes: nodes),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: nodes),
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
         let nodesForGifAlbum = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif))
@@ -43,7 +43,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name)),
-            fileSearchRepo: MockFileSearchRepository(photoNodes: nodes),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: nodes),
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
         let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
@@ -57,7 +57,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: MockMediaUseCase(isGifImage: true),
-            fileSearchRepo: MockFileSearchRepository(photoNodes: [
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: [
                 expectedPhotoNode,
                 NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true),
                 NodeEntity(name: "sample3.gif", handle: 2, hasThumbnail: false)
@@ -93,7 +93,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: MockMediaUseCase(isGifImage: true),
-            fileSearchRepo: MockFileSearchRepository(photoNodes: [node1, node2]),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: [node1, node2]),
             userAlbumRepo: userAlbumRepo
         )
         

@@ -20,7 +20,7 @@ struct AlbumContentRouter: Routing {
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: MediaUseCase(),
-            fileSearchRepo: FileSearchRepository.newRepo,
+            fileSearchRepo: FilesSearchRepository.newRepo,
             userAlbumRepo: UserAlbumRepository.newRepo
         )
         

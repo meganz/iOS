@@ -1,4 +1,4 @@
-
+import MEGADomain
 
 final class VideoExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
     var explorerType: ExplorerTypeEntity

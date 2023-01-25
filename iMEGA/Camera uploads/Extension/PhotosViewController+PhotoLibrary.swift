@@ -11,7 +11,7 @@ extension PhotosViewController: PhotoLibraryProvider {
     }
     
     @objc func objcWrapper_updatePhotoLibrary() {
-        updatePhotoLibrary(by: viewModel.mediaNodesArray, withSortType: viewModel.cameraUploadExplorerSortOrderType)
+        updatePhotoLibrary(by: viewModel.mediaNodes, withSortType: viewModel.cameraUploadExplorerSortOrderType)
     }
     
     @objc func createPhotoLibraryContentViewModel() -> PhotoLibraryContentViewModel {
