@@ -69,7 +69,7 @@ public enum Strings {
     public static func removedAPublicLinkForTheChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ removed a public link for the chat.", String(describing: p1))
     }
-    /// %@ Storage Full
+    /// %@ storage full
     public static func storageFull(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ Storage Full", String(describing: p1))
     }
@@ -2912,13 +2912,13 @@ public enum Strings {
             public static let albumNameNotAllowed = Strings.tr("Localizable", "cameraUploads.albums.create.alert.albumNameNotAllowed")
             /// Enter a different name.
             public static let enterDifferentName = Strings.tr("Localizable", "cameraUploads.albums.create.alert.enterDifferentName")
-            /// Enter new name.
+            /// Enter a new name.
             public static let enterNewName = Strings.tr("Localizable", "cameraUploads.albums.create.alert.enterNewName")
             /// New album
             public static let placeholder = Strings.tr("Localizable", "cameraUploads.albums.create.alert.placeholder")
             /// Enter album name
             public static let title = Strings.tr("Localizable", "cameraUploads.albums.create.alert.title")
-            /// An album with this name already appears
+            /// An album with this name already exists.
             public static let userAlbumExists = Strings.tr("Localizable", "cameraUploads.albums.create.alert.userAlbumExists")
           }
         }
@@ -2939,7 +2939,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.gif.title")
         }
         public enum MyAlbum {
-          /// My Albums
+          /// My albums
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.myAlbum.title")
         }
         public enum Raw {
@@ -2947,7 +2947,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.raw.title")
         }
         public enum SharedAlbum {
-          /// Shared Albums
+          /// Shared albums
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.sharedAlbum.title")
         }
       }
@@ -3909,7 +3909,7 @@ public enum Strings {
               }
             }
             public enum TitleUpdate {
-              /// [B]%@ updated[/B] the meeting name from "%@" to [B]"%@"[/B]
+              /// [B]%@ updated[/B] the meeting name from ”%@” to [B]”%@”[/B]
               /// %@
               public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
                 return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.titleUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
@@ -4462,7 +4462,7 @@ public enum Strings {
               }
             }
             public enum TitleUpdate {
-              /// [B]%@ updated[/B] the meeting name from "%@" to [B]"%@"[/B]
+              /// [B]%@ updated[/B] the meeting name from ”%@” to [B]”%@”[/B]
               public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
                 return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.titleUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
               }
@@ -4624,7 +4624,7 @@ public enum Strings {
           }
           public enum Week {
             public enum Five {
-              /// fifth
+              /// Fifth
               public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.week.Five.title")
             }
             public enum Four {

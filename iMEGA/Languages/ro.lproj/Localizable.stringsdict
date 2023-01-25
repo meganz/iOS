@@ -675,9 +675,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d de ore</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -691,9 +693,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
         <string>%d minute</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d de minute</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>
@@ -707,9 +711,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>hour</string>
+        <string>oră</string>
+        <key>few</key>
+        <string>ore</string>
         <key>other</key>
-        <string>hours</string>
+        <string>de ore</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
@@ -723,9 +729,27 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
+        <string>minut</string>
+        <key>few</key>
         <string>minute</string>
         <key>other</key>
-        <string>minutes</string>
+        <string>de minute</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addedItemTo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added %d item to “[A]”</string>
+        <key>other</key>
+        <string>Added %d items to “[A]”</string>
       </dict>
     </dict>
   </dict>

@@ -101,6 +101,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     private func successMessage(forAlbumName name: String, withNumberOfItmes num: UInt) -> String {
-        Strings.Localizable.CameraUploads.Albums.addedItemTo(Int(num)).replacingOccurrences(of: "[A]", with: "\"\(name)\"")
+        Strings.Localizable.CameraUploads.Albums.addedItemTo(Int(num)).replacingOccurrences(of: "[A]", with: "\(name)")
     }
 }
