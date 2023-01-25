@@ -10,7 +10,7 @@ def injectEnvironments(Closure body) {
 }
 
 pipeline {
-    agent { label 'mac-jenkins-slave-ios-disable-rosetta' }
+    agent { label 'mac-jenkins-slave-ios' }
     options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
@@ -189,7 +189,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'main app - Run unit tes and generate code coveraget') {
                     injectEnvironments({
-                        sh "arch -x86_64 bundle exec fastlane run_tests_app"
+                        sh "bundle exec fastlane run_tests_app"
                         sh "bundle exec fastlane code_coverage_main_app"
                     })
                 }
