@@ -28,7 +28,9 @@
     self.pendingView.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.pendingLabel.textColor = UIColor.whiteColor;
     
-    [self layoutPendingView];
+    if (self.pendingView != nil) {
+        [self layoutPendingView];
+    }
 }
 
 @end
