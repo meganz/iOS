@@ -30,19 +30,20 @@ final class BadgeButton: UIButton {
         badgeLabel?.isHidden = false
         badgeLabel?.text = text
         badgeLabel?.font = UIFont.boldSystemFont(ofSize: 12.0)
-        badgeLabel?.edgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        badgeLabel?.edgeInsets = UIEdgeInsets(top: 4, left: 2, bottom: 4, right: 2)
         badgeLabel?.layer.cornerRadius = 10
         accessibilityValue = Strings.Localizable.notifications
+        
+        if let badgeLabel {
+            badgeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: calculateWidthThatFits(label: badgeLabel)).isActive = true
+        }
     }
 
     // MARK: - Privates
 
     private func layoutBadgeLabel(_ badgeLabel: UILabel) {
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            badgeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 20),
-            badgeLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
+        badgeLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
 
     private func setupBadgeLabel(with trait: UITraitCollection) -> UILabel {
@@ -71,5 +72,12 @@ final class BadgeButton: UIButton {
             badgeLabel.topAnchor.constraint(equalTo: topAnchor),
             badgeLabel.centerXAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+    
+    private func calculateWidthThatFits(label: UILabel) -> CGFloat {
+        let minimumWidth: CGFloat = 20
+        let fitSize = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
+        let fitWidth = label.sizeThatFits(fitSize).width
+        return fitWidth > minimumWidth ? fitWidth : minimumWidth
     }
 }
