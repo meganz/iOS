@@ -576,5 +576,21 @@
         <string>นาที</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.addedItemTo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Added %d item to “[A]”</string>
+        <key>other</key>
+        <string>Added %d items to “[A]”</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
