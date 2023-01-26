@@ -660,7 +660,6 @@
 		6DB6D4292924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */; };
-		6DD04A36292B037300B7E797 /* MockSdk+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A35292B037300B7E797 /* MockSdk+Album.swift */; };
 		6DD04A38292B07CF00B7E797 /* MockMEGASet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */; };
 		6DD04A3A292B28C000B7E797 /* MockMEGASetElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */; };
 		6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
@@ -3323,7 +3322,6 @@
 		6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetElementEntity+Mapper.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlbumRepositoryTests.swift; sourceTree = "<group>"; };
-		6DD04A35292B037300B7E797 /* MockSdk+Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockSdk+Album.swift"; sourceTree = "<group>"; };
 		6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGASet.swift; sourceTree = "<group>"; };
 		6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGASetElement.swift; sourceTree = "<group>"; };
 		6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -7795,14 +7793,6 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		6D47D518292C4FB3007BB225 /* Album */ = {
-			isa = PBXGroup;
-			children = (
-				6DD04A35292B037300B7E797 /* MockSdk+Album.swift */,
-			);
-			path = Album;
-			sourceTree = "<group>";
-		};
 		6D60256228F8945D00FF9767 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -9717,7 +9707,6 @@
 		B64A71CC287BA1D70085087D /* Sdk */ = {
 			isa = PBXGroup;
 			children = (
-				6D47D518292C4FB3007BB225 /* Album */,
 				B64A71D6287BBB250085087D /* MockSdk.swift */,
 				B64A71CD287BA1ED0085087D /* MockNodeList.swift */,
 				B64A71D4287BBAEB0085087D /* MockNode.swift */,
@@ -14238,7 +14227,6 @@
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */,
 				B6A6E1A1287BCF7C00179806 /* MockRecentActionBucket.swift in Sources */,
-				6DD04A36292B037300B7E797 /* MockSdk+Album.swift in Sources */,
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
 				B6A6E1A3287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift in Sources */,
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
