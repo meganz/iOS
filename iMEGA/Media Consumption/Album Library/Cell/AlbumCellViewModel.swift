@@ -23,11 +23,18 @@ final class AlbumCellViewModel: ObservableObject {
         
         title = album.name
         numberOfNodes = album.count
-        thumbnailContainer = ImageContainer(image: Image(Asset.Images.Album.placeholder.name), type: .placeholder)
+        
+        if let coverNode = album.coverNode,
+           let container = thumbnailUseCase.cachedThumbnailContainer(for: coverNode, type: .thumbnail) {
+            thumbnailContainer = container
+        } else {
+            thumbnailContainer = ImageContainer(image: Image(Asset.Images.Album.placeholder.name), type: .placeholder)
+        }
     }
     
-    func loadAlbumInfo() {
-        guard let coverNode = album.coverNode else {
+    func loadAlbumThumbnail() {
+        guard let coverNode = album.coverNode,
+              thumbnailContainer.type == .placeholder else {
             return
         }
         if !isLoading {
