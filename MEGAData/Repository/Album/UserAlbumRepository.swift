@@ -19,7 +19,7 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
         
         for megaSet in megaSets {
             var setEntity = megaSet.toSetEntity()
-            setEntity.size = sdk.megaSetElementCount(megaSet.handle)
+            setEntity.size = sdk.megaSetElementCount(megaSet.handle, includeElementsInRubbishBin: true)
             
             results.append(setEntity)
         }
@@ -28,7 +28,7 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     func albumContent(by id: HandleEntity) async -> [SetElementEntity] {
-        let megaSetElements = sdk.megaSetElements(bySid: id)
+        let megaSetElements = sdk.megaSetElements(bySid: id, includeElementsInRubbishBin: true)
         let elements = megaSetElements.toSetElementsEntities()
         
         return elements
