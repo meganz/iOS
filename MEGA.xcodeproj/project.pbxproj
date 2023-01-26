@@ -532,7 +532,6 @@
 		5D568209252FEA9F00FE7F9C /* SortingOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D568208252FEA9F00FE7F9C /* SortingOrder.swift */; };
 		5D56820B252FEC9800FE7F9C /* Reader+GroupingSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56820A252FEC9800FE7F9C /* Reader+GroupingSorting.swift */; };
 		5D5DE4F82511F88900F2B4FD /* SearchFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5DE4F72511F88900F2B4FD /* SearchFileUseCase.swift */; };
-		5D60927E255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60927D255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift */; };
 		5D609288255BA0AE005FA3E4 /* NodeFavouriteActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D609287255BA0AE005FA3E4 /* NodeFavouriteActionRepository.swift */; };
 		5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60928F255BC2B6005FA3E4 /* SDKError.swift */; };
 		5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D609297255D5D40005FA3E4 /* NodeLabelActionRepository.swift */; };
@@ -3202,7 +3201,6 @@
 		5D568208252FEA9F00FE7F9C /* SortingOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrder.swift; sourceTree = "<group>"; };
 		5D56820A252FEC9800FE7F9C /* Reader+GroupingSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reader+GroupingSorting.swift"; sourceTree = "<group>"; };
 		5D5DE4F72511F88900F2B4FD /* SearchFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFileUseCase.swift; sourceTree = "<group>"; };
-		5D60927D255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeFavouriteActionUseCase.swift; sourceTree = "<group>"; };
 		5D609287255BA0AE005FA3E4 /* NodeFavouriteActionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeFavouriteActionRepository.swift; sourceTree = "<group>"; };
 		5D60928F255BC2B6005FA3E4 /* SDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKError.swift; sourceTree = "<group>"; };
 		5D609297255D5D40005FA3E4 /* NodeLabelActionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeLabelActionRepository.swift; sourceTree = "<group>"; };
@@ -5282,6 +5280,7 @@
 		0D213E8C263A611500B43723 /* Node */ = {
 			isa = PBXGroup;
 			children = (
+				5D609287255BA0AE005FA3E4 /* NodeFavouriteActionRepository.swift */,
 				943092F32913E26D0092B99A /* NodeActionsRepository.swift */,
 				943092F6291438200092B99A /* NodeDataRepository.swift */,
 				0D213E8D263A613500B43723 /* NodeRepository.swift */,
@@ -7416,7 +7415,6 @@
 				B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */,
 				BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */,
 				BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */,
-				5D60927D255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift */,
 				5D6092A5255D609F005FA3E4 /* NodeLabelActionUseCase.swift */,
 				6D6FCBFD297F2AC60051EB4A /* FilesSearchUseCase.swift */,
 			);
@@ -7609,7 +7607,6 @@
 			children = (
 				5D4244D12512005500EE544D /* NodeSearchRepository.swift */,
 				5D94D701251368FB00B103EC /* SDKNodeClient.swift */,
-				5D609287255BA0AE005FA3E4 /* NodeFavouriteActionRepository.swift */,
 				5D609297255D5D40005FA3E4 /* NodeLabelActionRepository.swift */,
 			);
 			path = Node;
@@ -13163,7 +13160,6 @@
 				836826B5292F7CBB00A0AB5F /* ChatRoomLinkView.swift in Sources */,
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				BF66DFE22613E7BE00066F35 /* MeetingParticipantTableViewCell.swift in Sources */,
-				5D60927E255B9FB8005FA3E4 /* NodeFavouriteActionUseCase.swift in Sources */,
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */,
 				C46D2A80270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift in Sources */,

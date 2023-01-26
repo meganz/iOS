@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 protocol AlbumToolbarProvider {
     var isToolbarShown: Bool { get }
@@ -176,10 +177,14 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         
         selectedNodes.forEach { node in
             if node.isFavourite {
-                favoriteUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { _ in }
+                Task {
+                    try await favoriteUseCase.unFavourite(node: node.toNodeEntity())
+                }
             }
             else {
-                favoriteUseCase.addNodeToFavourite(nodeHandle: node.handle) { _ in }
+                Task {
+                    try await favoriteUseCase.favourite(node: node.toNodeEntity())
+                }
             }
         }
         

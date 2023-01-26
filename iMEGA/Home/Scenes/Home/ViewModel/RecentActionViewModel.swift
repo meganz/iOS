@@ -52,33 +52,17 @@ final class HomeRecentActionViewModel:
     }
 
     func toggleFavourite(of node: MEGANode) {
-        let isFavourite = nodeFavouriteActionUseCase.isNodeFavourite(nodeHandle: node.handle)
-
-        switch isFavourite {
-        case .failure:
-            break
-        case .success(let isFavourite):
-            if isFavourite {
-                nodeFavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
-                    switch result {
-                    case .success():
-                        QuickAccessWidgetManager().deleteFavouriteItem(for: node)
-                    case .failure(_):
-                        break
-                    }
-                }
-            } else {
-                nodeFavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
-                    switch result {
-                    case .success():
-                        QuickAccessWidgetManager().insertFavouriteItem(for: node)
-                    case .failure(_):
-                        break
-                    }
-                }
+        if node.isFavourite {
+            Task {
+                try await nodeFavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
+                QuickAccessWidgetManager().deleteFavouriteItem(for: node)
+            }
+        } else {
+            Task {
+                try await nodeFavouriteActionUseCase.favourite(node: node.toNodeEntity())
+                QuickAccessWidgetManager().insertFavouriteItem(for: node)
             }
         }
-
     }
 
     // MARK: - HomeRecentActionViewModelOutputs
