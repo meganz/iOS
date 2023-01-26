@@ -24,7 +24,7 @@ struct AlbumCell: View {
             }
         }
         .onAppear {
-            viewModel.loadAlbumInfo()
+            viewModel.loadAlbumThumbnail()
         }
         .onDisappear {
             viewModel.cancelLoading()
