@@ -191,22 +191,14 @@ final class NodeActionViewControllerGenericDelegate:
     private func favourite(_ node: MEGANode) {
         let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         if node.isFavourite {
-            nodefavouriteActionUseCase.removeNodeFromFavourite(nodeHandle: node.handle) { (result) in
-                switch result {
-                case .success():
-                    QuickAccessWidgetManager().deleteFavouriteItem(for: node)
-                case .failure(_):
-                    break
-                }
+            Task {
+                try await nodefavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
+                QuickAccessWidgetManager().deleteFavouriteItem(for: node)
             }
         } else {
-            nodefavouriteActionUseCase.addNodeToFavourite(nodeHandle: node.handle) { (result) in
-                switch result {
-                case .success():
-                    QuickAccessWidgetManager().insertFavouriteItem(for: node)
-                case .failure(_):
-                    break
-                }
+            Task {
+                try await nodefavouriteActionUseCase.favourite(node: node.toNodeEntity())
+                QuickAccessWidgetManager().insertFavouriteItem(for: node)
             }
         }
     }
