@@ -55,6 +55,10 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         viewModel.dispatch(.onViewReady)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        viewModel.dispatch(.onViewDidAppear)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -114,6 +118,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         case .dismissAlbum:
             dismiss(animated: true)
         case .showHud(let msg):
+            SVProgressHUD.dismiss(withDelay: 3)
             SVProgressHUD.showSuccess(withStatus: msg)
         }
     }

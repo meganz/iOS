@@ -4,6 +4,7 @@ import MEGADomain
 
 enum AlbumContentAction: ActionType {
     case onViewReady
+    case onViewDidAppear
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -47,10 +48,11 @@ final class AlbumContentViewModel: ViewModelType {
     func dispatch(_ action: AlbumContentAction) {
         switch action {
         case .onViewReady:
-            showNewlyAddedAlbumHud()
             loadingTask = Task {
                 await loadNodes()
             }
+        case .onViewDidAppear:
+            showNewlyAddedAlbumHud()
         }
     }
     
@@ -94,10 +96,9 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func showNewlyAddedAlbumHud() {
-        if let message = messageForNewAlbum {
-            invokeCommand?(.showHud(message))
-            messageForNewAlbum = nil
-        }
+        guard let message = messageForNewAlbum else { return }
+        invokeCommand?(.showHud(message))
+        messageForNewAlbum = nil
     }
     
     var isFavouriteAlbum: Bool {

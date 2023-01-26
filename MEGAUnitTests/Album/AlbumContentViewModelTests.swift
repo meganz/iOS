@@ -50,7 +50,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         router: router)
         
         XCTAssertNotNil(sut.messageForNewAlbum)
-        sut.dispatch(.onViewReady)
+        test(viewModel: sut, action: .onViewDidAppear, expectedCommands: [.showHud("Hey there")])
         XCTAssertNil(sut.messageForNewAlbum)
     }
     
