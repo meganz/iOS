@@ -217,8 +217,9 @@ final class ImageScrollView: UIScrollView {
     }
     
     @objc func changeOrientationNotification() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.configureImageForSize(self.imageSize)
+            self.adjustFrameToCenter()
         }
     }
 }
