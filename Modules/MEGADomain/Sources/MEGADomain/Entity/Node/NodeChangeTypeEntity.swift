@@ -1,4 +1,4 @@
-public struct ChangeTypeEntity: OptionSet {
+public struct ChangeTypeEntity: OptionSet, Sendable {
     public let rawValue: UInt
     
     public init(rawValue: UInt) {

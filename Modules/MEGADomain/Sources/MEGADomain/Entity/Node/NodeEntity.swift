@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NodeEntity {
+public struct NodeEntity: Sendable {
     // MARK: - Types
     public let changeTypes: ChangeTypeEntity
     public let nodeType: NodeTypeEntity?

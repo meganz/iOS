@@ -1,5 +1,5 @@
 
-public enum ChatRoomPrivilegeEntity {
+public enum ChatRoomPrivilegeEntity: Sendable {
     case unknown
     case removed
     case readOnly

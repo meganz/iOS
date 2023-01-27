@@ -1,12 +1,12 @@
 
-public struct ChatRoomEntity {
-    public enum ChatType {
+public struct ChatRoomEntity: Sendable {
+    public enum ChatType: Sendable {
         case oneToOne
         case group
         case meeting
     }
     
-    public enum ChangeType {
+    public enum ChangeType: Sendable {
         case noChange
         case status
         case unreadCount
@@ -26,7 +26,7 @@ public struct ChatRoomEntity {
         case waitingRoom
     }
     
-    public struct Peer {
+    public struct Peer: Sendable {
         public let handle: HandleEntity
         public let privilege: ChatRoomPrivilegeEntity
         
