@@ -1,18 +1,18 @@
 import SwiftUI
 
-public enum ImageType {
+public enum ImageType: Sendable {
     case placeholder
     case thumbnail
     case preview
     case original
 }
 
-public protocol ImageContaining: Equatable {
+public protocol ImageContaining: Equatable, Sendable {
     var image: Image { get }
     var type: ImageType { get }
 }
 
-public struct ImageContainer: ImageContaining {
+public struct ImageContainer: ImageContaining, @unchecked Sendable {
     public let image: Image
     public let type: ImageType
     
@@ -30,7 +30,7 @@ public struct ImageContainer: ImageContaining {
     }
 }
 
-public struct URLImageContainer: ImageContaining {
+public struct URLImageContainer: ImageContaining, @unchecked Sendable {
     public let imageURL: URL
     public let image: Image
     public let type: ImageType

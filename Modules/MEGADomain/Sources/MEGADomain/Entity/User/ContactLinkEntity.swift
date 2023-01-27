@@ -1,5 +1,5 @@
 
-public struct ContactLinkEntity {
+public struct ContactLinkEntity: Sendable {
     public let email: String?
     public let name: String?
     

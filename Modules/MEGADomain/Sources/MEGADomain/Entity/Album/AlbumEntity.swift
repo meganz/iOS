@@ -1,13 +1,13 @@
 import Foundation
 
-public enum AlbumEntityType {
+public enum AlbumEntityType: Sendable {
     case favourite
     case raw
     case gif
     case user
 }
 
-public struct AlbumEntity: Identifiable, Hashable {
+public struct AlbumEntity: Identifiable, Hashable, Sendable {
     public let id: HandleEntity
     public let name: String
     public let coverNode: NodeEntity?

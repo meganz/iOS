@@ -1,12 +1,12 @@
 import Foundation
 
-public enum ThumbnailTypeEntity {
+public enum ThumbnailTypeEntity: Sendable {
     case thumbnail
     case preview
     case original
 }
 
-public struct ThumbnailEntity {
+public struct ThumbnailEntity: Sendable {
     public let url: URL
     public let type: ThumbnailTypeEntity
     

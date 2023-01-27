@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AlbumElementsResultEntity {
+public struct AlbumElementsResultEntity: Sendable {
     public let success: UInt
     public let failure: UInt
     
