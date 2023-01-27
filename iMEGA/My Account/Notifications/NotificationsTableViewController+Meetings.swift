@@ -130,9 +130,13 @@ extension NotificationsTableViewController {
         email: String,
         localizedString: (Any, Any) -> String
     ) -> NSAttributedString? {
-        var dateString = DateFormatter.fromTemplate("E, d MMM, yyyy • h:mm").localisedString(from: scheduledMeeting.startDate)
-        dateString += " - "
-        dateString += DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
+        let dateString = DateFormatter.fromTemplate("E, d MMM").localisedString(from: scheduledMeeting.startDate)
+        + ", "
+        + DateFormatter.fromTemplate("yyyy").localisedString(from: scheduledMeeting.startDate)
+        + " • "
+        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.startDate)
+        + " - "
+        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
         
         return createAttributedStringWithOneBoldTag(content: localizedString(email, dateString))
     }
@@ -176,20 +180,32 @@ extension NotificationsTableViewController {
             return nil
         }
         
-        let startDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: scheduledMeeting.startDate)
+        let startDateString = dateString(for: scheduledMeeting.startDate)
         
         let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.startDate)
         let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
         
-        let endDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: endDate) + " • " + startTimeString + " - " + endTimeString
+        let endDateString = dateString(for: endDate)
+        + " • "
+        + startTimeString
+        + " - "
+        + endTimeString
         
         return (startDateString, endDateString)
     }
     
     private func dateString(for scheduledMeeting: ScheduledMeetingEntity) -> String {
-        return DateFormatter.fromTemplate("d MMM, yyyy • h:mm").localisedString(from: scheduledMeeting.startDate)
+        dateString(for: scheduledMeeting.startDate)
+        + " • "
+        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.startDate)
         + " - "
         + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
+    }
+    
+    private func dateString(for date: Date) -> String {
+        DateFormatter.fromTemplate("d MMM").localisedString(from: date)
+        + ", "
+        + DateFormatter.fromTemplate("yyyy").localisedString(from: date)
     }
     
     private func contentForDailyNewScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
@@ -345,8 +361,8 @@ extension NotificationsTableViewController {
             }
         } else {
             if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.last,
-               let specificWeekDay = monthWeekDayList.first?.first {
+               let specificWeek = monthWeekDayList.first?.first,
+               let specificWeekDay = monthWeekDayList.first?.last {
                 
                 if scheduledMeeting.rules.interval > 1 {
                     content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Forever.New.description(
@@ -402,9 +418,9 @@ extension NotificationsTableViewController {
             return nil
         }
         
-        var dateString = DateFormatter.fromTemplate("E, d MMM, yyyy • h:mm").localisedString(from: scheduledMeeting.startDate)
-        dateString += " - "
-        dateString += DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
+        var scheduleMeetingDateString = DateFormatter.fromTemplate("E").localisedString(from: scheduledMeeting.startDate)
+        + ", "
+        + dateString(for: scheduledMeeting)
         
         let previousTitle = oldTitle ?? ""
         let updatedTitle = newTitle ?? scheduledMeeting.title
@@ -413,7 +429,7 @@ extension NotificationsTableViewController {
         if isReccurring {
             content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.TitleUpdate.description(email, previousTitle, updatedTitle)
         } else {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TitleUpdate.description(email, previousTitle, updatedTitle, dateString)
+            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TitleUpdate.description(email, previousTitle, updatedTitle, scheduleMeetingDateString)
         }
         
        return createAttributedStringWithTwoBoldTags(content: content)
@@ -846,12 +862,18 @@ extension NotificationsTableViewController {
         let startDate = (startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate
         let endDate = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
 
-        let startDateString = DateFormatter.fromTemplate("E, d MMM, yyyy").localisedString(from: startDate)
+        let startDateString = DateFormatter.fromTemplate("E").localisedString(from: startDate)
+        + ", "
+        + dateString(for: startDate)
+        
         let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
         let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endDate)
 
         if let startDateOriginal, startDateUpdated != nil {
-            let startDateOriginalString = DateFormatter.fromTemplate("E, d MMM, yyyy").localisedString(from: startDateOriginal)
+            let startDateOriginalString = DateFormatter.fromTemplate("E").localisedString(from: startDateOriginal)
+            + ", "
+            + dateString(for: startDateOriginal)
+            
             if startDateString != startDateOriginalString {
                 let content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DayChanged.description(
                     alert.email ?? "",
@@ -891,8 +913,8 @@ extension NotificationsTableViewController {
         let endTime = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
         let endDate = scheduledMeeting.rules.until ?? endTime
 
-        let startDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: startDate)
-        let endDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: endDate)
+        let startDateString = dateString(for: startDate)
+        let endDateString = dateString(for: endDate)
 
         let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
         let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endTime)
@@ -954,8 +976,8 @@ extension NotificationsTableViewController {
         let endTime = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
         let endDate = scheduledMeeting.rules.until ?? endTime
 
-        let startDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: startDate)
-        let endDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: endDate)
+        let startDateString = dateString(for: startDate)
+        let endDateString = dateString(for: endDate)
 
         let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
         let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endTime)
@@ -1167,8 +1189,8 @@ extension NotificationsTableViewController {
         let endTime = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
         let endDate = scheduledMeeting.rules.until ?? endTime
 
-        let startDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: startDate)
-        let endDateString = DateFormatter.fromTemplate("d MMM, yyyy").localisedString(from: endDate)
+        let startDateString = dateString(for: startDate)
+        let endDateString = dateString(for: endDate)
 
         let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
         let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endTime)
