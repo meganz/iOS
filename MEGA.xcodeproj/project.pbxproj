@@ -224,7 +224,6 @@
 		3296053E288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */; };
 		3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */; };
 		3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */; };
-		3299F070291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F06F291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift */; };
 		32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A9DECD28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift */; };
 		32B0722928A4E0B5002BAE34 /* SlideShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */; };
 		32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */; };
@@ -648,7 +647,6 @@
 		6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */; };
 		6D6FCBF2297E14ED0051EB4A /* NodeFormatEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6FCBF1297E14ED0051EB4A /* NodeFormatEntity+Mapper.swift */; };
 		6D6FCBF4297E2B360051EB4A /* ExplorerTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6FCBF3297E2B360051EB4A /* ExplorerTypeEntity+Mapper.swift */; };
-		6D6FCBFE297F2AC60051EB4A /* FilesSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6FCBFD297F2AC60051EB4A /* FilesSearchUseCase.swift */; };
 		6D854F79290E0145006CEC20 /* MediaDiscoveryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D854F78290E0145006CEC20 /* MediaDiscoveryRepository.swift */; };
 		6D854F7C290E5A78006CEC20 /* MediaDiscoveryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D854F7A290E58B4006CEC20 /* MediaDiscoveryRepositoryTests.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */; };
@@ -2835,7 +2833,6 @@
 		3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterViewModelTest.swift; sourceTree = "<group>"; };
 		3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewModelTests.swift; sourceTree = "<group>"; };
 		3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellViewModelTests.swift; sourceTree = "<group>"; };
-		3299F06F291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
 		32A9DECD28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoBrowserDataProvider.swift; sourceTree = "<group>"; };
 		32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowViewModel.swift; sourceTree = "<group>"; };
 		32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowPlaybackStatus.swift; sourceTree = "<group>"; };
@@ -3311,7 +3308,6 @@
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D6FCBF1297E14ED0051EB4A /* NodeFormatEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeFormatEntity+Mapper.swift"; sourceTree = "<group>"; };
 		6D6FCBF3297E2B360051EB4A /* ExplorerTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExplorerTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
-		6D6FCBFD297F2AC60051EB4A /* FilesSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesSearchUseCase.swift; sourceTree = "<group>"; };
 		6D854F78290E0145006CEC20 /* MediaDiscoveryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryRepository.swift; sourceTree = "<group>"; };
 		6D854F7A290E58B4006CEC20 /* MediaDiscoveryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryRepositoryTests.swift; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+FilterAndSort.swift"; sourceTree = "<group>"; };
@@ -7416,7 +7412,6 @@
 				BFEA015B256B4E8A00646606 /* FilesDownloadUseCase.swift */,
 				BFEAFF7B2565D57300646606 /* NodeClipboardOperationUseCase.swift */,
 				5D6092A5255D609F005FA3E4 /* NodeLabelActionUseCase.swift */,
-				6D6FCBFD297F2AC60051EB4A /* FilesSearchUseCase.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -9714,7 +9709,6 @@
 				B6A6E1A0287BCF7C00179806 /* MockRecentActionBucket.swift */,
 				B6A6E1A4287BD8DB00179806 /* MockRequest.swift */,
 				9449939228BD41CC001AE14B /* MockFolderSdk.swift */,
-				3299F06F291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift */,
 			);
 			path = Sdk;
 			sourceTree = "<group>";
@@ -12569,7 +12563,6 @@
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
-				6D6FCBFE297F2AC60051EB4A /* FilesSearchUseCase.swift in Sources */,
 				BF5E34062559E2C10055395E /* FilesExplorerContainerListViewState.swift in Sources */,
 				5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */,
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
@@ -14254,7 +14247,6 @@
 				B6C1681028B8719800BEA824 /* PhotoLibraryYearViewModelTests.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */,
-				3299F070291B57430071FB77 /* MockSDKNodesUpdateListenerRepository.swift in Sources */,
 				6D854F7C290E5A78006CEC20 /* MediaDiscoveryRepositoryTests.swift in Sources */,
 				6D0CA0ED2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift in Sources */,
 				B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */,

@@ -1,6 +1,5 @@
 import MEGADomain
 
-
 public struct MockNodeUpdateRepository: NodeUpdateRepositoryProtocol {
     public static let newRepo = MockNodeUpdateRepository()
     

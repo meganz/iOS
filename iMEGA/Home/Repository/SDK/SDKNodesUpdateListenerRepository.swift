@@ -1,10 +1,9 @@
-protocol SDKNodesUpdateListenerProtocol {
-    var onUpdateHandler: (([MEGANode]) -> Void)? { get set }
-}
+import MEGADomain
 
-final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate, SDKNodesUpdateListenerProtocol {
+final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate, NodesUpdateListenerProtocol {
+    var onNodesUpdateHandler: (([NodeEntity]) -> Void)?
+    
     private let sdk: MEGASdk
-    var onUpdateHandler: (([MEGANode]) -> Void)?
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
@@ -16,8 +15,8 @@ final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate, SDKN
         sdk.remove(self)
     }
     
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let updatedNodes = nodeList?.toNodeArray() else { return }
-        onUpdateHandler?(updatedNodes)
+    func onNodesUpdateHandler(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let updatedNodes = nodeList?.toNodeEntities() else { return }
+        onNodesUpdateHandler?(updatedNodes)
     }
 }

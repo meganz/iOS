@@ -4,6 +4,8 @@ import MEGADomain
 final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryProtocol {
     public static let newRepo = MockFilesSearchRepository()
     
+    public var hasCancelSearchCalled = false
+    
     private let photoNodes: [NodeEntity]
     private let videoNodes: [NodeEntity]
     
@@ -57,5 +59,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         }
     }
     
-    public func cancelSearch() {}
+    public func cancelSearch() {
+        hasCancelSearchCalled = true
+    }
 }
