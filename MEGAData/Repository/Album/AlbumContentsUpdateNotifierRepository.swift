@@ -4,17 +4,17 @@ final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRe
     var onAlbumReload: (() -> Void)?
     
     private let sdk: MEGASdk
-    private var nodesUpdateListenerRepo: SDKNodesUpdateListenerProtocol
+    private var nodesUpdateListenerRepo: NodesUpdateListenerProtocol
     
     init(
         sdk: MEGASdk,
-        nodesUpdateListenerRepo: SDKNodesUpdateListenerProtocol
+        nodesUpdateListenerRepo: NodesUpdateListenerProtocol
     ) {
         self.sdk = sdk
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         
-        self.nodesUpdateListenerRepo.onUpdateHandler = { [weak self] nodes in
-            self?.checkAlbumForReload(nodes)
+        self.nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
+            self?.checkAlbumForReload(nodes.toMEGANodes(in: sdk))
         }
     }
     
