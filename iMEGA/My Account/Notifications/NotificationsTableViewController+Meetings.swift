@@ -40,7 +40,8 @@ extension NotificationsTableViewController {
                 return contentForOneOffCancelledScheduledMeeting(scheduledMeetingEntity, email: alert.email)
             }
         } else if checkIfMultipleFieldsHaveChangedForScheduledMeeting(in: alert)
-            || alert.hasScheduledMeetingChangeType(.timeZone) {
+                    || alert.hasScheduledMeetingChangeType(.timeZone)
+                    || alert.hasScheduledMeetingChangeType(.rules) {
             if scheduledMeetingEntity.rules.frequency == .invalid {
                 return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
             } else if scheduledMeetingEntity.rules.frequency == .daily {
@@ -81,8 +82,6 @@ extension NotificationsTableViewController {
             } else if scheduledMeetingEntity.rules.frequency == .monthly {
                 return contentForMonthlyScheduledMeetingWithDateFieldChanged(for: alert)
             }
-        } else if alert.hasScheduledMeetingChangeType(.rules) {
-            return NSAttributedString(string: alert.title)
         }
         
         return NSAttributedString(string: alert.title)
