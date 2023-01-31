@@ -11,6 +11,7 @@ extension ChatRoomsListViewModel {
         networkMonitorUseCase: NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         userUseCase: UserUseCaseProtocol = MockUserUseCase(),
         chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
@@ -23,6 +24,7 @@ extension ChatRoomsListViewModel {
             contactsUseCase: contactsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             userUseCase: userUseCase,
+            scheduledMeetingUseCase: scheduledMeetingUseCase,
             notificationCenter: notificationCenter,
             chatType: chatType,
             chatViewMode: chatViewMode

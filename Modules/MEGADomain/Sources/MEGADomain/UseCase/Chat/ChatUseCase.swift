@@ -11,8 +11,6 @@ public protocol ChatUseCaseProtocol {
     func existsActiveCall() -> Bool
     func activeCall() -> CallEntity?
     func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]?
-    func scheduledMeetings() -> [ScheduledMeetingEntity]
-    func scheduledMeetingsByChat(chatId: HandleEntity) -> [ScheduledMeetingEntity]
     func isCallInProgress(for chatRoomId: HandleEntity) -> Bool
     func myFullName() -> String?
     func archivedChatListCount() -> UInt
@@ -67,14 +65,6 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]? {
         chatRepo.chatsList(ofType: type)?.sorted(by: { $0.lastMessageDate.compare($1.lastMessageDate) == .orderedDescending })
-    }
-    
-    public func scheduledMeetings() -> [ScheduledMeetingEntity] {
-        chatRepo.scheduledMeetings()
-    }
-    
-    public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
-        chatRepo.scheduledMeetingsByChat(chatId: chatId)
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {

@@ -46,6 +46,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let contactsUseCase: ContactsUseCaseProtocol
     private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
     private let userUseCase: UserUseCaseProtocol
+    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
@@ -110,6 +111,7 @@ final class ChatRoomsListViewModel: ObservableObject {
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
          userUseCase: UserUseCaseProtocol,
+         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats
@@ -119,6 +121,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.contactsUseCase = contactsUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
+        self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.userUseCase = userUseCase
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
@@ -197,9 +200,15 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func fetchFutureScheduledMeetings() {
-        let scheduledMeetings = chatUseCase.scheduledMeetings()
+        let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetings()
         let sortedScheduledMeetings = scheduledMeetings.sorted { $0.startDate < $1.startDate}
-        let futureScheduledMeetings = sortedScheduledMeetings.filter { $0.endDate >= Date() }
+        let futureScheduledMeetings = sortedScheduledMeetings.filter {
+            if $0.rules.frequency == .invalid {
+                return $0.endDate >= Date()
+            } else {
+                return true
+            }
+        }
         populateFutureMeetings(futureScheduledMeetings)
     }
     
@@ -372,7 +381,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             ),
             userUseCase: UserUseCase(repo: .live),
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
-            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl
         )
     }
@@ -400,6 +409,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             userUseCase: UserUseCase(repo: .live),
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
+            scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl
         )
     }

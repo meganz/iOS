@@ -12,6 +12,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private let userUseCase: UserUseCaseProtocol
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
+    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
 
     private let router: ChatRoomsListRouting
     private var chatNotificationControl: ChatNotificationControl
@@ -51,6 +52,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
          userUseCase: UserUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
+         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
@@ -60,6 +62,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.userUseCase = userUseCase
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
+        self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatNotificationControl = chatNotificationControl
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
@@ -221,7 +224,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
-        if chatListItem.meeting && chatUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).isNotEmpty {
+        if chatListItem.meeting && scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).isNotEmpty {
             options.append(
                 ChatRoomContextMenuOption(
                     title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
@@ -329,7 +332,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func showChatRoomInfo() {
         if chatListItem.group {
-            if let scheduledMeeting = chatUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
+            if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
                 router.showMeetingInfo(for: scheduledMeeting)
             } else {
                 guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
@@ -732,7 +735,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         if let call = callUseCase.call(for: chatRoom.chatId), call.status != .userNoPresent {
             prepareAndShowCallUI(for: call, in: chatRoom)
         } else {
-            if let scheduledMeeting = chatUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
+            if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
                 startMeetingCallNoRinging(for: scheduledMeeting, in: chatRoom)
             } else {
                 startCall(in: chatRoom)

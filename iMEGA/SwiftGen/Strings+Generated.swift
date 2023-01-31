@@ -5003,8 +5003,26 @@ public enum Strings {
         public enum ContextMenu {
           /// Join
           public static let joinMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.joinMeeting")
+          /// Occurrences
+          public static let occurrences = Strings.tr("Localizable", "meetings.scheduled.contextMenu.occurrences")
           /// Start
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
+        }
+        public enum Recurring {
+          public enum Frequency {
+            /// Occurs daily
+            public static let daily = Strings.tr("Localizable", "meetings.scheduled.recurring.frequency.daily")
+            /// Occurs monthly
+            public static let monthly = Strings.tr("Localizable", "meetings.scheduled.recurring.frequency.monthly")
+            /// Occurs weekly
+            public static let weekly = Strings.tr("Localizable", "meetings.scheduled.recurring.frequency.weekly")
+          }
+          public enum Occurrences {
+            public enum List {
+              /// See more occurrences
+              public static let seeMoreOccurrences = Strings.tr("Localizable", "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences")
+            }
+          }
         }
       }
       public enum Sharelink {

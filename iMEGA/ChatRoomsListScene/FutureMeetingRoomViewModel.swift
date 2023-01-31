@@ -9,6 +9,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private var chatNotificationControl: ChatNotificationControl
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
+    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
@@ -57,6 +58,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
          userUseCase: UserUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
+         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
@@ -65,6 +67,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         self.chatUseCase = chatUseCase
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
+        self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatNotificationControl = chatNotificationControl
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
 
@@ -148,16 +151,26 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
+
+        options.append(ChatRoomContextMenuOption(
+            title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
+            imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name,
+            action: { [weak self] in
+                self?.startOrJoinMeetingTapped()
+            }))
+
+        if scheduledMeeting.rules.frequency != .invalid {
+            options.append(ChatRoomContextMenuOption(
+                title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
+                imageName: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.name,
+                action: { [weak self] in
+                    
+                }))
+        }
         
         let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
 
         options += [
-            ChatRoomContextMenuOption(
-                title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
-                imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name,
-                action: { [weak self] in
-                    self?.startOrJoinMeetingTapped()
-                }),
             ChatRoomContextMenuOption(
                 title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
                 imageName: Asset.Images.Chat.mutedChat.name,
