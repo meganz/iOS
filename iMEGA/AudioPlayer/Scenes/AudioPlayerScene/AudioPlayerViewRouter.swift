@@ -79,20 +79,18 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     func showAction(for node: MEGANode, sender: Any) {
-        Task {
-            let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
-            let nodeActionViewController = await NodeActionViewController(
-                    node: node,
-                    delegate: self,
-                    displayMode: displayMode,
-                    isInVersionsView: isPlayingFromVersionView(),
-                    isBackupNode: isBackupNode,
-                    sender: sender)
-            
-            await baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
-        }
+        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let nodeActionViewController = NodeActionViewController(
+            node: node,
+            delegate: self,
+            displayMode: displayMode,
+            isInVersionsView: isPlayingFromVersionView(),
+            isBackupNode: isBackupNode,
+            sender: sender)
+        
+        baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
     private func isPlayingFromVersionView() -> Bool {

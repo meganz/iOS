@@ -14,8 +14,7 @@ final class BackupNodesValidator {
         self.nodes = nodes
     }
     
-    @MainActor
-    private func presentWarningAlert(title: String, message: String, completion: @MainActor @escaping () -> Void) {
+    private func presentWarningAlert(title: String, message: String, completion: @escaping () -> Void) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -29,17 +28,9 @@ final class BackupNodesValidator {
         presenter.present(alert, animated: true, completion: nil)
     }
     
-    private func sharedBackupNodes() async -> [NodeEntity] {
-        await withTaskGroup(of: NodeEntity?.self) { group -> [NodeEntity] in
-            nodes.forEach { node in
-                group.addTask {
-                    await self.myBackupsUseCase.isBackupNode(node) ? node : nil
-                }
-            }
-            
-            return await group.reduce(into: [NodeEntity](), {
-                if let node = $1 { $0.append(node) }
-            })
+    private func sharedBackupNodes() -> [NodeEntity] {
+        nodes.filter {
+            myBackupsUseCase.isBackupNode($0)
         }
     }
 
@@ -61,25 +52,23 @@ final class BackupNodesValidator {
         SVProgressHUD.dismiss()
     }
     
-    func showWarningAlertIfNeeded(completion: @MainActor @escaping () -> Void) {
-        Task {
-            showProgressHUDIfNeeded()
-            let backupNodes = await sharedBackupNodes()
-            hideProgressHUDIfNeeded()
-            
-            if backupNodes == nodes {
-                await presentWarningAlert(title: Strings.Localizable.permissions,
-                                          message: Strings.Localizable.Mybackups.Share.Folder.Warning.message(nodes.count)) {
-                    completion()
-                }
-            } else if backupNodes.isNotEmpty {
-                await presentWarningAlert(title: Strings.Localizable.permissions,
-                                          message: Strings.Localizable.Dialog.Share.Backup.Non.Backup.Folders.Warning.message) {
-                    completion()
-                }
-            } else {
-                await completion()
+    func showWarningAlertIfNeeded(completion: @escaping () -> Void) {
+        showProgressHUDIfNeeded()
+        let backupNodes = sharedBackupNodes()
+        hideProgressHUDIfNeeded()
+        
+        if backupNodes == nodes {
+            presentWarningAlert(title: Strings.Localizable.permissions,
+                                message: Strings.Localizable.Mybackups.Share.Folder.Warning.message(nodes.count)) {
+                completion()
             }
+        } else if backupNodes.isNotEmpty {
+            presentWarningAlert(title: Strings.Localizable.permissions,
+                                message: Strings.Localizable.Dialog.Share.Backup.Non.Backup.Folders.Warning.message) {
+                completion()
+            }
+        } else {
+            completion()
         }
     }
 }

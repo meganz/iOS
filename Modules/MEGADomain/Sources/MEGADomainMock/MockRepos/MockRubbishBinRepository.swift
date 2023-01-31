@@ -13,15 +13,15 @@ public struct MockRubbishBinRepository: RubbishBinRepositoryProtocol {
         syncDebrisNode == node
     }
     
-    public func isSyncDebrisChild(_ node: NodeEntity) async -> Bool {
+    public func isSyncDebrisChild(_ node: NodeEntity) -> Bool {
         syncDebrisChildNodes?.contains(node) ?? false
     }
     
-    public func isSyncDebrisNode(_ node: MEGADomain.NodeEntity) async -> Bool {
+    public func isSyncDebrisNode(_ node: MEGADomain.NodeEntity) -> Bool {
         if isSyncDebrisRootNode(node) {
             return true
         } else {
-            return await isSyncDebrisChild(node)
+            return isSyncDebrisChild(node)
         }
     }
 }

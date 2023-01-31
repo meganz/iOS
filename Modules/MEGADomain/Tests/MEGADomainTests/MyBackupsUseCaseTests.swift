@@ -53,11 +53,11 @@ final class MyBackupsUseCaseTests: XCTestCase {
         XCTAssertFalse(isBackupRootNodeNotEmpty)
     }
     
-    func testMyBackups_IsInBackups() async {
+    func testMyBackups_IsInBackups() {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity, isBackupNode: true)
         let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         
-        let isBackupNode = await sut.isBackupNode(NodeEntity())
+        let isBackupNode = sut.isBackupNode(NodeEntity())
         XCTAssertTrue(isBackupNode)
     }
 }

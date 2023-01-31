@@ -78,12 +78,10 @@ class ChatSharedItemsViewController: UIViewController {
             return
         }
         
-        Task {
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
-            let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: .chatSharedFiles, isBackupNode: isBackupNode, sender: sender)
-            present(nodeActions, animated: true, completion: nil)
-        }
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: .chatSharedFiles, isBackupNode: isBackupNode, sender: sender)
+        present(nodeActions, animated: true, completion: nil)
     }
     
     @objc private func selectTapped() {

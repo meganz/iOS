@@ -321,21 +321,17 @@
     }
     
     DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModePreviewDocument;
-    
-    [MyBackupsOCWrapper.alloc.init isBackupNode:self.node completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NodeActionViewController *nodeActions = [NodeActionViewController.alloc
-                                                     initWithNode:self.node
-                                                     delegate:self
-                                                     isLink:self.isLink
-                                                     isPageView:self.collectionView.hidden
-                                                     displayMode:displayMode
-                                                     isInVersionsView:[self isPreviewingVersion]
-                                                     isBackupNode:isBackupNode
-                                                     sender:sender];
-            [self presentViewController:nodeActions animated:YES completion:nil];
-        });
-    }];
+    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.node];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc
+                                             initWithNode:self.node
+                                             delegate:self
+                                             isLink:self.isLink
+                                             isPageView:self.collectionView.hidden
+                                             displayMode:displayMode
+                                             isInVersionsView:[self isPreviewingVersion]
+                                             isBackupNode:isBackupNode
+                                             sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)importAction:(id)sender {

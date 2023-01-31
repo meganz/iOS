@@ -73,7 +73,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.uploadTransfersQueued = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
     self.transfersUseCaseHelper = [[TransferUseCaseHelper alloc] init];
@@ -86,7 +86,7 @@ static TransfersWidgetViewController* instance = nil;
     
     self.editBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") style:UIBarButtonItemStylePlain target:self action:@selector(switchEdit)];
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
-
+    
     [self.inProgressButton setTitle:NSLocalizedString(@"In Progress", @"Title of one of the filters in the Transfers section. In this case In Progress transfers") forState:UIControlStateNormal];
     [self.completedButton setTitle:NSLocalizedString(@"Completed",@"Title of one of the filters in the Transfers section. In this case Completed transfers") forState:UIControlStateNormal];
     [self.clearAllButton setTitle:self.tableView.isEditing ? NSLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : NSLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
@@ -94,7 +94,7 @@ static TransfersWidgetViewController* instance = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
-
+    
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
@@ -109,7 +109,7 @@ static TransfersWidgetViewController* instance = nil;
     [super viewWillAppear:animated];
     
     self.navigationItem.title = NSLocalizedString(@"transfers", @"Transfers");
-        
+    
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -117,7 +117,7 @@ static TransfersWidgetViewController* instance = nil;
     } else {
         self.transfersPaused = NO;
     }
-
+    
     self.progressView.hidden = YES;
     [self reloadView];
     
@@ -193,7 +193,7 @@ static TransfersWidgetViewController* instance = nil;
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGATransferOverQuotaNotification object:nil];
-
+    
     [MEGASdkManager.sharedMEGASdk removeMEGATransferDelegate:self];
     [MEGASdkManager.sharedMEGASdkFolder removeMEGATransferDelegate:self];
 }
@@ -208,52 +208,45 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)showCustomActionsForTransfer:(MEGATransfer *)transfer sender:(UIView *)sender {
     MEGANode *node = transfer.node;
-
+    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    
     switch (transfer.state) {
         case MEGATransferStateComplete:
         {
-            [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isIncoming:NO isBackupNode:isBackupNode sender:sender];
-                    actionController.transfer = transfer;
-                    if ([[UIDevice currentDevice] iPadDevice]) {
-                        actionController.modalPresentationStyle = UIModalPresentationPopover;
-                        actionController.popoverPresentationController.delegate = actionController;
-                        actionController.popoverPresentationController.sourceView = sender;
-                        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-                    } else {
-                        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-                    }
-                    [self presentViewController:actionController animated:YES completion:nil];
-                });
-            }];
+            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:transfer.publicNode ? DisplayModePublicLinkTransfers : DisplayModeTransfers isIncoming:NO isBackupNode:isBackupNode sender:sender];
+            actionController.transfer = transfer;
+            if ([[UIDevice currentDevice] iPadDevice]) {
+                actionController.modalPresentationStyle = UIModalPresentationPopover;
+                actionController.popoverPresentationController.delegate = actionController;
+                actionController.popoverPresentationController.sourceView = sender;
+                actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+            } else {
+                actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            }
+            [self presentViewController:actionController animated:YES completion:nil];
         }
             break;
             
         default:
         {
-            [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isIncoming:NO isBackupNode:isBackupNode sender:sender];
-                    actionController.transfer = transfer;
-                    
-                    if ([[UIDevice currentDevice] iPadDevice]) {
-                        actionController.modalPresentationStyle = UIModalPresentationPopover;
-                        actionController.popoverPresentationController.delegate = actionController;
-                        actionController.popoverPresentationController.sourceView = sender;
-                        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-                    } else {
-                        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-                    }
-                    
-                    [self presentViewController:actionController animated:YES completion:nil];
-                });
-            }];
+            TransferActionViewController *actionController = [TransferActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeTransfersFailed isIncoming:NO isBackupNode:isBackupNode sender:sender];
+            actionController.transfer = transfer;
+            
+            if ([[UIDevice currentDevice] iPadDevice]) {
+                actionController.modalPresentationStyle = UIModalPresentationPopover;
+                actionController.popoverPresentationController.delegate = actionController;
+                actionController.popoverPresentationController.sourceView = sender;
+                actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+            } else {
+                actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            }
+            
+            [self presentViewController:actionController animated:YES completion:nil];
         }
             
             break;
     }
-
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -296,7 +289,7 @@ static TransfersWidgetViewController* instance = nil;
             };
             
             return cell;
-
+            
         } else {
             TransferTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
             [cell configureCellForTransfer:transfer delegate:self];
@@ -367,7 +360,7 @@ static TransfersWidgetViewController* instance = nil;
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             [self showCustomActionsForTransfer:transfer sender:cell];
         }
-
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -740,7 +733,7 @@ static TransfersWidgetViewController* instance = nil;
         default:
             break;
     }
-
+    
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
@@ -786,7 +779,7 @@ static TransfersWidgetViewController* instance = nil;
 #pragma mark - DZNEmptyDataSetSource
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:@"" buttonTitle:@""];    
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:@"" buttonTitle:@""];
     return emptyStateView;
 }
 
@@ -806,7 +799,7 @@ static TransfersWidgetViewController* instance = nil;
             text = NSLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
             break;
     }
-  
+    
     return text;
 }
 
@@ -886,7 +879,7 @@ static TransfersWidgetViewController* instance = nil;
             
     }
     [self.transfers addObject:transfer];
-
+    
     if (transfer.type == MEGATransferTypeUpload) {
         [self reloadView];
     } else if (transfer.type == MEGATransferTypeDownload) {
@@ -957,7 +950,7 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     switch (action) {
-
+            
         case MegaNodeActionTypeShareLink:
         case MegaNodeActionTypeManageLink: {
             if (MEGAReachabilityManager.isReachableHUDIfNot && node != nil) {
@@ -967,7 +960,7 @@ static TransfersWidgetViewController* instance = nil;
             break;
         }
         case MegaNodeActionTypeViewInFolder: {
-
+            
             if (transfer.type == MEGATransferTypeUpload) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
                 if (parentNode.isFolder) {
@@ -978,12 +971,12 @@ static TransfersWidgetViewController* instance = nil;
             if (transfer.type == MEGATransferTypeDownload) {
                 [self openOfflineFolderWithPath:transfer.parentPath];
             }
-
+            
             break;
-
+            
         }
         case MegaNodeActionTypeRetry: {
-
+            
             [MEGASdkManager.sharedMEGASdk retryTransfer:transfer];
             [self removeFromCompletedTransfers:transfer];
             [self.tableView reloadData];
@@ -1032,7 +1025,7 @@ static TransfersWidgetViewController* instance = nil;
     [self.tableView setEditing:isEditing animated:YES];
     [self.editBarButtonItem setTitle:self.tableView.isEditing ? NSLocalizedString(@"done", @"") : NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
     [self updateRightBarButtonItems];
-
+    
     [self reloadView];
 }
 

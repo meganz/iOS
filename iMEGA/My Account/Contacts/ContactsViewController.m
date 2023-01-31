@@ -1715,13 +1715,10 @@
                     }
                     
                     self.userTapped = user;
-                    [MyBackupsOCWrapper.alloc.init isBackupNode:self.node completionHandler:^(BOOL isBackupNode) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (!isBackupNode) {
-                                [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
-                            }
-                        });
-                    }];
+                    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.node];
+                    if (!isBackupNode) {
+                        [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
+                    }
                 }
             } else {
                 if (!tableView.isEditing) {

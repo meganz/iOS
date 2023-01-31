@@ -18,30 +18,26 @@ public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
         self.nodeValidationRepository = nodeValidationRepository
     }
     
-    public func isSyncDebrisNode(_ node: NodeEntity) async -> Bool {
-        guard let syncDebrisNodes = await syncDebrisNodes(), syncDebrisNodes.isNotEmpty else { return false }
+    public func isSyncDebrisNode(_ node: NodeEntity) -> Bool {
+        guard let syncDebrisNodes = syncDebrisNodes(), syncDebrisNodes.isNotEmpty else { return false }
         
-        return await isSyncDebrisChild(node)
+        return isSyncDebrisChild(node)
     }
     
-    private func isSyncDebrisChild(_ node: NodeEntity) async -> Bool {
-        await Task.detached { () -> Bool in
-            guard let megaNode = node.toMEGANode(in: sdk),
-                  let path = sdk.nodePath(for: megaNode) else { return false }
-            
-            return path.hasPrefix(Constants.syncDebrisNodePath)
-        }.value
+    private func isSyncDebrisChild(_ node: NodeEntity) -> Bool {
+        guard let megaNode = node.toMEGANode(in: sdk),
+              let path = sdk.nodePath(for: megaNode) else { return false }
+        
+        return path.hasPrefix(Constants.syncDebrisNodePath)
     }
     
-    private func syncDebrisNodes() async -> [NodeEntity]? {
-        await Task.detached {
-            guard let rubbishNode = sdk.rubbishNode else { return nil }
-            
-            return sdk.children(forParent: rubbishNode)
-                .toNodeArray()
-                .filter {
-                    $0.name == Constants.syncDebrisFolderName && $0.isFolder()
-                }.toNodeEntities()
-        }.value
+    private func syncDebrisNodes() -> [NodeEntity]? {
+        guard let rubbishNode = sdk.rubbishNode else { return nil }
+        
+        return sdk.children(forParent: rubbishNode)
+            .toNodeArray()
+            .filter {
+                $0.name == Constants.syncDebrisFolderName && $0.isFolder()
+            }.toNodeEntities()
     }
 }

@@ -578,12 +578,9 @@
     }
     
     if (self.parentNode.name) {
-        [MyBackupsOCWrapper.alloc.init isBackupNode:self.parentNode completionHandler:^(BOOL isBackupNode) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isBackupNode:isBackupNode sender:sender];
-                [self presentViewController:nodeActions animated:YES completion:nil];
-            });
-        }];
+        BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isBackupNode:isBackupNode sender:sender];
+        [self presentViewController:nodeActions animated:YES completion:nil];
     }
 }
 
@@ -722,12 +719,9 @@
 #pragma mark - Public
 
 - (void)showActionsForNode:(MEGANode *)node from:(UIButton *)sender {
-    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
-            [self presentViewController:nodeActions animated:YES completion:nil];
-        });
-    }];
+    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
     
 - (void)didSelectNode:(MEGANode *)node {

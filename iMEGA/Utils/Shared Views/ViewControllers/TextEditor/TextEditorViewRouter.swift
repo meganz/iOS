@@ -130,13 +130,11 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             return
         }
         
-        Task{
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
-            let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
-            let nodeActionViewController = await NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, sender: button)
-            await baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
-        }
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
+        let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, sender: button)
+        baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool) {
