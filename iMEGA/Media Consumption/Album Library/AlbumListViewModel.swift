@@ -17,6 +17,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
    
     var albumCreationAlertMsg: String?
     var albumLoadingTask: Task<Void, Never>?
+    var createAlbumTask: Task<Void, Never>?
     var isCreateAlbumFeatureFlagEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     }
@@ -64,6 +65,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     func cancelLoading() {
         usecase.stopMonitoringNodesUpdate()
         albumLoadingTask?.cancel()
+        createAlbumTask?.cancel()
     }
     
     @MainActor
@@ -75,7 +77,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
         
         shouldLoad = true
-        Task {
+        createAlbumTask = Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
   
