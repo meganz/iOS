@@ -3,24 +3,24 @@ import MEGADomain
 import MEGADomainMock
 
 final class RubbishBinUseCaseTests: XCTestCase {
-    func testRubbishBin_existsSyncDebris() async {
+    func testRubbishBin_existsSyncDebris() {
         let syncDebrisNode = NodeEntity(name: "SyncDebris")
         let sut_exists = RubbishBinUseCase(rubbishBinRepository: MockRubbishBinRepository(syncDebrisNode: syncDebrisNode))
         let sut_not_exists = RubbishBinUseCase(rubbishBinRepository: MockRubbishBinRepository())
         
-        let isSyncDebrisRootNode = await sut_exists.isSyncDebrisNode(syncDebrisNode)
+        let isSyncDebrisRootNode = sut_exists.isSyncDebrisNode(syncDebrisNode)
         XCTAssertTrue(isSyncDebrisRootNode)
-        let isNotSyncDebrisRootNode = await sut_not_exists.isSyncDebrisNode(NodeEntity())
+        let isNotSyncDebrisRootNode = sut_not_exists.isSyncDebrisNode(NodeEntity())
         XCTAssertFalse(isNotSyncDebrisRootNode)
     }
     
-    func testRubbishBin_isSyncDebrisChild() async {
+    func testRubbishBin_isSyncDebrisChild() {
         let syncDebrisChild = NodeEntity(name: "childNode1", handle: 1)
         let sut = RubbishBinUseCase(rubbishBinRepository:
                                             MockRubbishBinRepository(syncDebrisChildNodes:[syncDebrisChild]))
-        let isSyncDebrisChild = await sut.isSyncDebrisNode(syncDebrisChild)
+        let isSyncDebrisChild = sut.isSyncDebrisNode(syncDebrisChild)
         XCTAssertTrue(isSyncDebrisChild)
-        let isNotSyncDebrisChild = await sut.isSyncDebrisNode(NodeEntity())
+        let isNotSyncDebrisChild = sut.isSyncDebrisNode(NodeEntity())
         XCTAssertFalse(isNotSyncDebrisChild)
     }
 }

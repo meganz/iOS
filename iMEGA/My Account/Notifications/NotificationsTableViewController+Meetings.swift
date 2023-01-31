@@ -418,7 +418,7 @@ extension NotificationsTableViewController {
             return nil
         }
         
-        var scheduleMeetingDateString = DateFormatter.fromTemplate("E").localisedString(from: scheduledMeeting.startDate)
+        let scheduleMeetingDateString = DateFormatter.fromTemplate("E").localisedString(from: scheduledMeeting.startDate)
         + ", "
         + dateString(for: scheduledMeeting)
         

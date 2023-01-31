@@ -75,7 +75,7 @@ class ExplorerBaseViewController: UIViewController {
         
         toolbar.items = explorerToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
     }
-
+    
     // MARK:- Toolbar Button actions
     private func didPressedFavouriteBarButton(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
@@ -102,9 +102,9 @@ class ExplorerBaseViewController: UIViewController {
     fileprivate func downloadBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
-                  return
-              }
-
+            return
+        }
+        
         let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
         endEditingMode()
@@ -113,8 +113,8 @@ class ExplorerBaseViewController: UIViewController {
     fileprivate func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
-                  return
-              }
+            return
+        }
         
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             CopyrightWarningViewController.presentGetLinkViewController(
@@ -129,8 +129,8 @@ class ExplorerBaseViewController: UIViewController {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty,
               let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode else {
-                  return
-              }
+            return
+        }
         
         let moveRequestDelegate = MEGAMoveRequestDelegate(
             toMoveToTheRubbishBinWithFiles: UInt(selectedNodes.count),
@@ -159,8 +159,8 @@ class ExplorerBaseViewController: UIViewController {
               !selectedNodes.isEmpty,
               let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
               let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
-                  return
-              }
+            return
+        }
         
         browserVC.selectedNodesArray = selectedNodes
         browserVC.browserAction = action
@@ -174,12 +174,10 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        Task {
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            let containsABackupNode = await myBackupsUC.containsABackupNode(selectedNodes.toNodeEntities())
-            let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsABackupNode: containsABackupNode, sender: button)
-            present(nodeActionsViewController, animated: true, completion: nil)
-        }
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let containsABackupNode = myBackupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsABackupNode: containsABackupNode, sender: button)
+        present(nodeActionsViewController, animated: true, completion: nil)
     }
     
     fileprivate func didPressedExportFile(_ button: UIBarButtonItem) {
@@ -251,7 +249,7 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         handleNodesAction(action: action, nodes: [node], sender: sender)
     }
-
+    
     private func handleNodesAction(action: MegaNodeActionType, nodes: [MEGANode], sender: Any) {
         guard let sender = sender as? UIBarButtonItem else { return }
         switch action {

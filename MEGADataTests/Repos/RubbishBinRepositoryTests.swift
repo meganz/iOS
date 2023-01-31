@@ -32,7 +32,7 @@ final class RubbishBinRepositoryTests: XCTestCase {
         let areSyncDebrisNodes = await withTaskGroup(of: Bool.self) { group -> Bool in
             syncDebrisNodes.forEach { node in
                 group.addTask {
-                    let isSyncDebrisNode = await self.repo.isSyncDebrisNode(node.toNodeEntity())
+                    let isSyncDebrisNode = self.repo.isSyncDebrisNode(node.toNodeEntity())
                     return isSyncDebrisNode
                 }
             }
@@ -42,7 +42,7 @@ final class RubbishBinRepositoryTests: XCTestCase {
         
         XCTAssertTrue(areSyncDebrisNodes)
         
-        let isNotSyncDebrisNode = await repo.isSyncDebrisNode(rubbishBinChildNode.toNodeEntity())
+        let isNotSyncDebrisNode = repo.isSyncDebrisNode(rubbishBinChildNode.toNodeEntity())
         XCTAssertFalse(isNotSyncDebrisNode)
     }
 }

@@ -1,4 +1,4 @@
 
 public protocol RubbishBinRepositoryProtocol {
-    func isSyncDebrisNode(_ node: NodeEntity) async -> Bool
+    func isSyncDebrisNode(_ node: NodeEntity) -> Bool
 }

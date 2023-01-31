@@ -20,15 +20,15 @@ public struct MockMyBackupsUseCase: MyBackupsUseCaseProtocol {
         self.isInMyBackups = isInMyBackups
     }
     
-    public func containsABackupNode(_ nodes: [MEGADomain.NodeEntity]) async -> Bool {
+    public func hasBackupNode(in nodes: [MEGADomain.NodeEntity]) -> Bool {
         containsABackupNode
     }
     
-    public func isBackupNode(_ node: MEGADomain.NodeEntity) async -> Bool {
+    public func isBackupNode(_ node: MEGADomain.NodeEntity) -> Bool {
         isMyBackupsNode
     }
     
-    public func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool {
+    public func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool {
         isMyBackupsNode
     }
     

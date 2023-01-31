@@ -656,11 +656,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
                 
             case DisplayModeBackup: {
-                [MyBackupsOCWrapper.alloc.init isMyBackupsRootNode:self.parentNode completionHandler:^(BOOL isMyBackupsRootNode) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        self.navigationItem.title = isMyBackupsRootNode ? NSLocalizedString(@"backups.title", @"Title of the backups section") :  [self.parentNode name];
-                    });
-                }];
+                BOOL isMyBackupsRootNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
+                self.navigationItem.title = isMyBackupsRootNode ? NSLocalizedString(@"backups.title", @"Title of the backups section") :  [self.parentNode name];
             }
                 break;
                 

@@ -24,12 +24,10 @@ struct MyBackupsRepository: MyBackupsRepositoryProtocol {
         }
     }
     
-    func isBackupNode(_ node: NodeEntity) async -> Bool {
-        await Task.detached { () -> Bool in
-            guard let megaNode = node.toMEGANode(in: sdk),
-                  let path = sdk.nodePath(for: megaNode) else { return false }
-            return path.hasPrefix(Constants.myBackupsNodePath)
-        }.value
+    func isBackupNode(_ node: NodeEntity) -> Bool {
+        guard let megaNode = node.toMEGANode(in: sdk),
+              let path = sdk.nodePath(for: megaNode) else { return false }
+        return path.hasPrefix(Constants.myBackupsNodePath)
     }
     
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {

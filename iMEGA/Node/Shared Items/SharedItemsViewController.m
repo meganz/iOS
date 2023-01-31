@@ -708,13 +708,9 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
-            [self presentViewController:nodeActions animated:YES completion:nil];
-        });
-    }];
+    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
@@ -967,16 +963,13 @@
             if (isVerifyContacts) {
                 [self showContactVerificationView];
             } else {
-                [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                        cloudDriveVC.isFromSharedItem = YES;
-                        [cloudDriveVC setParentNode:node];
-                        [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
-                        
-                        [self.navigationController pushViewController:cloudDriveVC animated:YES];
-                    });
-                }];
+                BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                cloudDriveVC.isFromSharedItem = YES;
+                [cloudDriveVC setParentNode:node];
+                [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
+                
+                [self.navigationController pushViewController:cloudDriveVC animated:YES];
             }
             break;
         }
@@ -1260,13 +1253,9 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
-    [MyBackupsOCWrapper.alloc.init isBackupNode:node completionHandler:^(BOOL isBackupNode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
-            [self presentViewController:nodeActions animated:YES completion:nil];
-        });
-    }];
+    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 #pragma mark - NodeInfoViewControllerDelegate

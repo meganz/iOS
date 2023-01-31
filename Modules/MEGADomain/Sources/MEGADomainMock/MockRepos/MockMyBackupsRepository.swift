@@ -30,7 +30,7 @@ public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
         currentBackupNode
     }
     
-    public func isBackupNode(_ node: NodeEntity) async -> Bool {
+    public func isBackupNode(_ node: NodeEntity) -> Bool {
         isBackupNode
     }
 }

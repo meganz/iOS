@@ -16,21 +16,19 @@ final class HomeSearchResultRouter {
         self.navigationController = navigationController
         self.nodeActionViewControllerDelegate = nodeActionViewControllerDelegate
     }
-
+    
     func didTapMoreAction(on node: HandleEntity, button: UIButton) {
-        Task {
-            let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            let isBackupNode = await myBackupsUC.isBackupNodeHandle(node)
-            guard let nodeActionViewController = await NodeActionViewController(
-                node: node,
-                delegate: nodeActionViewControllerDelegate,
-                displayMode: .cloudDrive,
-                isIncoming: false,
-                isBackupNode: isBackupNode,
-                sender: button
-            ) else { return }
-            await navigationController?.present(nodeActionViewController, animated: true, completion: nil)
-        }
+        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = myBackupsUC.isBackupNodeHandle(node)
+        guard let nodeActionViewController = NodeActionViewController(
+            node: node,
+            delegate: nodeActionViewControllerDelegate,
+            displayMode: .cloudDrive,
+            isIncoming: false,
+            isBackupNode: isBackupNode,
+            sender: button
+        ) else { return }
+        navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 
     func didTapNode(_ nodeHandle: HandleEntity) {

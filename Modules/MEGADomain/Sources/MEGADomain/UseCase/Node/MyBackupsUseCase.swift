@@ -1,7 +1,7 @@
 public protocol MyBackupsUseCaseProtocol {
-    func containsABackupNode(_ nodes: [NodeEntity]) async -> Bool
-    func isBackupNode(_ node: NodeEntity) async -> Bool
-    func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool
+    func hasBackupNode(in nodes: [NodeEntity]) async -> Bool
+    func isBackupNode(_ node: NodeEntity) -> Bool
+    func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool
     func isMyBackupsRootNodeEmpty() async -> Bool
     func isMyBackupsRootNode(_ node: NodeEntity) async -> Bool
@@ -18,25 +18,19 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
         self.nodeRepository = nodeRepository
     }
     
-    public func containsABackupNode(_ nodes: [NodeEntity]) async -> Bool {
-        await withTaskGroup(of: Bool.self) { group -> Bool in
-            nodes.forEach { node in
-                group.addTask {
-                    await isBackupNode(node)
-                }
-            }
-            
-            return await group.contains(true)
+    public func hasBackupNode(in nodes: [NodeEntity]) -> Bool {
+        nodes.contains {
+            myBackupsRepository.isBackupNode($0)
         }
     }
     
-    public func isBackupNode(_ node: NodeEntity) async -> Bool {
-        await myBackupsRepository.isBackupNode(node)
+    public func isBackupNode(_ node: NodeEntity) -> Bool {
+        myBackupsRepository.isBackupNode(node)
     }
     
-    public func isBackupNodeHandle(_ nodeHandle: HandleEntity) async -> Bool {
+    public func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool {
         guard let node = nodeRepository.nodeForHandle(nodeHandle) else { return false }
-        return await isBackupNode(node)
+        return isBackupNode(node)
     }
     
     public func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {

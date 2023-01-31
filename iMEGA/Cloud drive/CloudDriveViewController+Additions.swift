@@ -125,12 +125,8 @@ extension CloudDriveViewController {
         case .backup:
             showCustomActionsForBackupNode(node, sender: sender)
         case .rubbishBin:
-            Task { @MainActor in
-                let isSyncDebrisNode = await RubbishBinUseCase(rubbishBinRepository: RubbishBinRepository.newRepo).isSyncDebrisNode(node.toNodeEntity())
-                
-                showNodeActionsForNode(node, isIncoming: isIncomingShareChildView, isBackupNode: isSyncDebrisNode, sender: sender)
-            }
-            
+            let isSyncDebrisNode = RubbishBinUseCase(rubbishBinRepository: RubbishBinRepository.newRepo).isSyncDebrisNode(node.toNodeEntity())
+            showNodeActionsForNode(node, isIncoming: isIncomingShareChildView, isBackupNode: isSyncDebrisNode, sender: sender)
         default:
             showNodeActionsForNode(node, isIncoming: isIncomingShareChildView, isBackupNode: false, sender: sender)
         }

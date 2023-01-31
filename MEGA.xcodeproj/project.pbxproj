@@ -1833,6 +1833,9 @@
 		B6873AE425A6C7DD00BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */; };
 		B6873AF725A6C86100BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */; };
 		B6880C2728C495750089D2A2 /* PhotoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */; };
+		B6880DAC298394390072AF7D /* MEGASdk+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */; };
+		B6880DAD298394390072AF7D /* MEGASdk+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */; };
+		B6880DAE298394390072AF7D /* MEGASdk+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */; };
 		B688C014293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688C013293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift */; };
 		B688C03129412B4A00976CE9 /* PhotoChronologicalCategory_nodeEntity_refreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688C03029412B4A00976CE9 /* PhotoChronologicalCategory_nodeEntity_refreshTests.swift */; };
 		B688C03329413DA400976CE9 /* PhotoChronologicalCategory_photoMonthSection_refreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B688C03229413DA300976CE9 /* PhotoChronologicalCategory_photoMonthSection_refreshTests.swift */; };
@@ -4271,6 +4274,7 @@
 		B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellViewModelTests.swift; sourceTree = "<group>"; };
+		B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+Sendable.swift"; sourceTree = "<group>"; };
 		B688C013293ED95200976CE9 /* PhotoCellVideoDurationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellVideoDurationViewModelTests.swift; sourceTree = "<group>"; };
 		B688C03029412B4A00976CE9 /* PhotoChronologicalCategory_nodeEntity_refreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoChronologicalCategory_nodeEntity_refreshTests.swift; sourceTree = "<group>"; };
 		B688C03229413DA300976CE9 /* PhotoChronologicalCategory_photoMonthSection_refreshTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoChronologicalCategory_photoMonthSection_refreshTests.swift; sourceTree = "<group>"; };
@@ -9583,6 +9587,7 @@
 				B6790E05256B81C600154F6D /* MEGANode+Additions.swift */,
 				BF08A9F425CA12A0009DE3D2 /* MEGANode+FilePath.swift */,
 				B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */,
+				B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -13026,6 +13031,7 @@
 				2F26B3322578467E00486C40 /* PasteImagePreviewRouter.swift in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
 				B6F853442794C97300028D51 /* PhotoSelectionAdapter.swift in Sources */,
+				B6880DAC298394390072AF7D /* MEGASdk+Sendable.swift in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
 				836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */,
@@ -13874,6 +13880,7 @@
 				5BE689932417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */,
 				B5925B8A279119E400170CD6 /* Colors+Generated.swift in Sources */,
+				B6880DAD298394390072AF7D /* MEGASdk+Sendable.swift in Sources */,
 				B695B603264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
@@ -14052,6 +14059,7 @@
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,
 				77D7E853243719E0005D2795 /* MEGAFunctions.swift in Sources */,
 				5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */,
+				B6880DAE298394390072AF7D /* MEGASdk+Sendable.swift in Sources */,
 				0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
 				5B79E88F26E6973A0070D782 /* EmptyStateType.swift in Sources */,

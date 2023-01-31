@@ -18,10 +18,10 @@ final class RecentNodeRouter {
         case node
     }
 
-    private func presentAction(for node: MEGANode, in navigationController: UINavigationController?) async {
+    private func presentAction(for node: MEGANode, in navigationController: UINavigationController?) {
         let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = await myBackupsUC.isBackupNode(node.toNodeEntity())
-        let nodeActionViewController = await NodeActionViewController(
+        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let nodeActionViewController = NodeActionViewController(
             node: node,
             delegate: self,
             displayMode: .recents,
@@ -29,7 +29,8 @@ final class RecentNodeRouter {
             isBackupNode: isBackupNode,
             sender: self
         )
-        await navigationController?.present(nodeActionViewController, animated: true, completion: nil)
+        
+        navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 
     // MARK: - Routing
@@ -37,10 +38,8 @@ final class RecentNodeRouter {
     func didTap(_ source: RecentNodeSource, object: Any?) {
         switch source {
         case .nodeActions(let node):
-            Task {
-                completionAction = (object as! (MEGANode, MegaNodeActionType) -> Void)
-                await presentAction(for: node, in: navigationController)
-            }
+            completionAction = (object as! (MEGANode, MegaNodeActionType) -> Void)
+            presentAction(for: node, in: navigationController)
         case .node:
             break
         }

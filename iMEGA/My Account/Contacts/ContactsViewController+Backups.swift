@@ -9,14 +9,12 @@ extension ContactsViewController {
             searchController.isActive = false
         }
         
-        Task {
-            let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            
-            if await myBackupsUseCase.containsABackupNode(nodes.toNodeEntities()) {
-                shareNodes(withLevel: .accessRead)
-            } else {
-                selectPermissions(fromButton: shareFolderWithBarButtonItem)
-            }
+        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        
+        if myBackupsUseCase.hasBackupNode(in: nodes.toNodeEntities()) {
+            shareNodes(withLevel: .accessRead)
+        } else {
+            selectPermissions(fromButton: shareFolderWithBarButtonItem)
         }
     }
     

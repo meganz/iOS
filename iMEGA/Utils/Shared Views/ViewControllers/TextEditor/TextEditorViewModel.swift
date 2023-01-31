@@ -96,12 +96,10 @@ final class TextEditorViewModel: ViewModelType {
     func dispatch(_ action: TextEditorViewAction) {
         switch action {
         case .setUpView:
-            Task { @MainActor in
-                if let nodeEntity {
-                    isBackupNode = await myBackupsUseCase.isBackupNode(nodeEntity)
-                }
-                setupView(shallUpdateContent: true)
+            if let nodeEntity {
+                isBackupNode = myBackupsUseCase.isBackupNode(nodeEntity)
             }
+            setupView(shallUpdateContent: true)
         case .saveText(let content):
             saveText(content: content)
         case .renameFile:
