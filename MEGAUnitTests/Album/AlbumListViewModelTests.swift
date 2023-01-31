@@ -7,6 +7,7 @@ import MEGADomain
 final class AlbumListViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
+    @MainActor
     func testLoadAlbums_onAlbumsLoaded_systemAlbumsTitlesAreUpdatedAndAlbumsAreSortedCorrectly() async throws {
         let favouriteAlbum = AlbumEntity(id: 1, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
@@ -25,25 +26,18 @@ final class AlbumListViewModelTests: XCTestCase {
                                                     userAlbum1, userAlbum2, userAlbum3, userAlbum4, userAlbum5])
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
         
-        let exp = expectation(description: "albums titles are updated when retrieved")
-        sut.$albums
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [
-                    favouriteAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Favourites.title),
-                    gifAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Gif.title),
-                    rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title),
-                    userAlbum4,
-                    userAlbum5,
-                    userAlbum2,
-                    userAlbum1,
-                    userAlbum3,
-                ])
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        XCTAssertEqual(sut.albums, [
+            favouriteAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Favourites.title),
+            gifAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Gif.title),
+            rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title),
+            userAlbum4,
+            userAlbum5,
+            userAlbum2,
+            userAlbum1,
+            userAlbum3,
+        ])
     }
     
     func testLoadAlbums_onAlbumsLoadedFinsihed_shouldLoadSetToFalse() async throws {
@@ -93,33 +87,23 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testCreateUserAlbum_shouldCreateUserAlbumAndInsertBeforeOlderUserAlbums() throws {
-        let firstAlbumName = "First Created Album"
-        let secondAlbumName = "Second Created Album"
-        let firstCreatedUserAlbum = AlbumEntity(id: 1, name: firstAlbumName, coverNode: nil, count: 0, type: .user, modificationTime: try "2023-01-16T10:01:04Z".date)
-        let secondCreatedUserAlbum = AlbumEntity(id: 1, name: secondAlbumName, coverNode: nil, count: 0, type: .user, modificationTime: try "2023-01-16T11:01:04Z".date)
-        let createdAlbums = [firstAlbumName: firstCreatedUserAlbum,
-                            secondAlbumName: secondCreatedUserAlbum]
-        let useCase = MockAlbumListUseCase(createdUserAlbums: createdAlbums)
+    func testCreateUserAlbum_shouldCreateUserAlbumAndInsertBeforeOlderUserAlbums() async throws {
+        let newAlbumName = "New Album"
+        let existingUserAlbum = AlbumEntity(id: 1, name: "User Album", coverNode: nil,
+                                    count: 0, type: .user, modificationTime: try "2023-01-16T10:01:04Z".date)
+        let newUserAlbum = AlbumEntity(id: 1, name: newAlbumName, coverNode: nil,
+                                       count: 0, type: .user, modificationTime: try "2023-01-16T11:01:04Z".date)
+        let useCase = MockAlbumListUseCase(albums: [existingUserAlbum],
+                                           createdUserAlbums: [newAlbumName: newUserAlbum])
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
         
-        let exp = expectation(description: "albums loaded")
-        exp.expectedFulfillmentCount = 2
-        var result = [[AlbumEntity]]()
-        sut.$albums
-            .dropFirst()
-            .sink {
-                result.append($0)
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        sut.createUserAlbum(with: firstAlbumName)
-        sut.createUserAlbum(with: secondAlbumName)
+        sut.loadAlbums()
+        await sut.albumLoadingTask?.value
+        XCTAssertEqual(sut.albums, [existingUserAlbum])
         
-        wait(for: [exp], timeout: 2.0)
-        XCTAssertEqual(result, [
-            [firstCreatedUserAlbum],
-            [secondCreatedUserAlbum, firstCreatedUserAlbum]
-        ])
+        sut.createUserAlbum(with: newAlbumName)
+        await sut.createAlbumTask?.value
+        XCTAssertEqual(sut.albums, [newUserAlbum, existingUserAlbum])
     }
     
     func testNewAlbumName_whenAlbumContainsNoNewAlbum() async {
