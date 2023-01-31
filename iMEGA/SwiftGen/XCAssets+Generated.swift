@@ -545,6 +545,7 @@ internal enum Asset {
       internal enum Scheduled {
         internal enum ContextMenu {
           internal static let joinMeeting2 = ImageAsset(name: "joinMeeting2")
+          internal static let occurrences = ImageAsset(name: "occurrences")
           internal static let startMeeting2 = ImageAsset(name: "startMeeting2")
         }
       }

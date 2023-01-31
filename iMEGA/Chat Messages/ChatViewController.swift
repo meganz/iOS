@@ -10,7 +10,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Properties
     let sdk = MEGASdkManager.sharedMEGASdk()
     let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
-    let chatUseCase = ChatUseCase(chatRepo: ChatRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
+    let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
     let callUseCase = CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
     @objc private(set) var chatRoom: MEGAChatRoom
     
@@ -1031,7 +1031,7 @@ class ChatViewController: MessagesViewController {
             return
         }
         
-        guard let scheduledMeeting = chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else {
+        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else {
             MEGALogError("Failed to fetch scheduled meeting to start no ringing call")
             return
         }
@@ -1119,7 +1119,7 @@ class ChatViewController: MessagesViewController {
     
     func openCallViewWithVideo(videoCall: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
-            if chatRoom.isMeeting && chatUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty {
+            if chatRoom.isMeeting && scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty {
                 startMeetingNoRinging(videoCall: videoCall)
             } else {
                 startOutGoingCall(isVideoEnabled: videoCall)
