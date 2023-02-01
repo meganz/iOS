@@ -12,6 +12,7 @@ extension ChatRoomViewModel {
         userUseCase: UserUseCaseProtocol = MockUserUseCase(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
+        scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         notificationCenter: NotificationCenter = .default,
         isTesting: Bool = true
@@ -25,6 +26,7 @@ extension ChatRoomViewModel {
             userUseCase: userUseCase,
             callUseCase: callUseCase,
             audioSessionUseCase: audioSessionUseCase,
+            scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl
         )
     }

@@ -79,6 +79,7 @@ internal enum Colors {
     }
     internal enum Gray {
       internal static let _04040F = ColorAsset(name: "04040F")
+      internal static let _1D1D1D = ColorAsset(name: "1D1D1D")
       internal static let _333333 = ColorAsset(name: "333333")
       internal static let _363638 = ColorAsset(name: "363638")
       internal static let _3A3A3C = ColorAsset(name: "3A3A3C")

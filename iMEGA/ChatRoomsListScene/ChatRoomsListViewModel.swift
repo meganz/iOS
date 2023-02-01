@@ -33,6 +33,7 @@ protocol ChatRoomsListRouting {
     )
     func showGroupChatInfo(forChatId chatId: HandleEntity)
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
+    func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
     func showArchivedChatRooms()
     func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity)
@@ -206,6 +207,9 @@ final class ChatRoomsListViewModel: ObservableObject {
             if $0.rules.frequency == .invalid {
                 return $0.endDate >= Date()
             } else {
+                guard let until = $0.rules.until, until >= Date() else {
+                    return false
+                }
                 return true
             }
         }
@@ -237,9 +241,9 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.futureMeetings = meetings.reduce([FutureMeetingSection]()) { partialResult, meeting in
             let key: String
             if Calendar.current.isDateInToday(meeting.startDate) {
-                key = "Today"
+                key = Strings.Localizable.today
             } else {
-                key = dateFormatter.string(from: meeting.startDate)
+                key = dateFormatter.localisedString(from: meeting.startDate)
             }
             
             var result = partialResult
