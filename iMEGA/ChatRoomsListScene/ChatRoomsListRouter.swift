@@ -207,6 +207,14 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         MeetingInfoRouter(presenter: navigationController, scheduledMeeting: scheduledMeeting).start()
     }
     
+    func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity) {
+        guard let navigationController else {
+            return
+        }
+        
+        ScheduledMeetingOccurrencesRouter(presenter: navigationController, scheduledMeeting: scheduledMeeting).start()
+    }
+    
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String) {
         guard let contactDetailsViewController = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
             return

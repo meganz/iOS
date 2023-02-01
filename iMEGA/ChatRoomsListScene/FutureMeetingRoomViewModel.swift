@@ -164,7 +164,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
                 imageName: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.name,
                 action: { [weak self] in
-                    
+                    self?.showOccurrences()
                 }))
         }
         
@@ -289,6 +289,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private func prepareAndShowCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity) {
         audioSessionUseCase.enableLoudSpeaker()
         router.openCallView(for: call, in: chatRoom)
+    }
+    
+    private func showOccurrences() {
+        router.showMeetingOccurrences(for: scheduledMeeting)
     }
 }
 
