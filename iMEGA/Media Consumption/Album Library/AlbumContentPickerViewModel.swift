@@ -31,7 +31,8 @@ final class AlbumContentPickerViewModel: ObservableObject {
         self.albumContentModificationUseCase = albumContentModificationUseCase
         self.completionHandler = completionHandler
         
-        photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
+        photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
+                                                                    contentMode: .album)
         
         navigationTitle = normalNavigationTitle
         loadPhotos()
@@ -67,6 +68,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     func onFilter() {
+        photoLibraryContentViewModel.showFilter.toggle()
     }
     
     func onCancel() {

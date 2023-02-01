@@ -28,6 +28,11 @@ class PhotosFilterOptionsTest: XCTestCase {
         XCTAssert(sut == .videos)
     }
     
+    func testPhotosFilterOption_contentModeAlbum_shouldAlwaysReturnAllMedia() {
+        let sut = PhotoLibraryFilterViewModel(contentMode: .album)
+        XCTAssertEqual(sut.filterOption(for: .videos), .allMedia)
+    }
+    
     func testPhotosFilterOption_forAllMediaType_shouldReturnAllMediaOption() throws {
         let sut = PhotoLibraryFilterViewModel().filterOption(for: .allMedia)
         XCTAssert(sut == .allMedia)
@@ -71,5 +76,48 @@ class PhotosFilterOptionsTest: XCTestCase {
     func testPhotosFilterOption_forCameraUpload_shouldReturnCameraUpload() throws {
         let sut = PhotoLibraryFilterViewModel().filterOption(for: .cameraUploads)
         XCTAssert(sut == .cameraUploads)
+    }
+    
+    func testShouldShowMediaTypeFilter_initDefaultContentMode_shouldReturnTrue() {
+        let sut = PhotoLibraryFilterViewModel()
+        XCTAssertTrue(sut.shouldShowMediaTypeFilter)
+    }
+    
+    func testShouldShowMediaTypeFilter_initAlbumContentMode_shouldReturnFalse() {
+        let sut = PhotoLibraryFilterViewModel(contentMode: .album)
+        XCTAssertFalse(sut.shouldShowMediaTypeFilter)
+    }
+    
+    func testInitializeLastSelection_onViewAppearAgain_clearsFilterAppliedFlagAndSetLastSelectionToCurrentSelection() {
+        let sut = PhotoLibraryFilterViewModel()
+        sut.isFilterApplied = true
+        sut.selectedMediaType = .videos
+        sut.selectedLocation = .cameraUploads
+        sut.initializeLastSelection()
+        XCTAssertFalse(sut.isFilterApplied)
+        XCTAssertEqual(sut.lastSelectedLocation, sut.selectedLocation)
+        XCTAssertEqual(sut.lastSelectedMediaType, sut.selectedMediaType)
+    }
+    
+    func testRestoreLastSelectionIfNeeded_filterNotApplied_shouldChangeFilterSelections() {
+        let sut = PhotoLibraryFilterViewModel()
+        sut.initializeLastSelection()
+        sut.selectedMediaType = .videos
+        sut.selectedLocation = .cameraUploads
+        sut.isFilterApplied = false
+        sut.restoreLastSelectionIfNeeded()
+        XCTAssertEqual(sut.selectedMediaType, .allMedia)
+        XCTAssertEqual(sut.selectedLocation, .allLocations)
+    }
+    
+    func testRestoreLastSelectionIfNeeded_filterApplied_shouldNotChangeFilterSelections() {
+        let sut = PhotoLibraryFilterViewModel()
+        sut.initializeLastSelection()
+        sut.selectedMediaType = .images
+        sut.selectedLocation = .cloudDrive
+        sut.isFilterApplied = true
+        sut.restoreLastSelectionIfNeeded()
+        XCTAssertEqual(sut.selectedMediaType, .images)
+        XCTAssertEqual(sut.selectedLocation, .cloudDrive)
     }
 }
