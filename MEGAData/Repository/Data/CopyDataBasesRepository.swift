@@ -96,7 +96,6 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                     MEGALogError("Failed copy items from group to application support with error: \(error)");
                     completion(.failure(.fileManager))
                 }
-                completion(.success(()))
             case .failure(_):
                 completion(.failure(.fileManager))
             }
