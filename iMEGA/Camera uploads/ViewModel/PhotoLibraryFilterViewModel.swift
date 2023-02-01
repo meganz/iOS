@@ -4,21 +4,30 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     @Published var selectedMediaType = PhotosFilterType.allMedia
     @Published var selectedLocation = PhotosFilterLocation.allLocations
     
+    var isFilterApplied = false
     var lastSelectedMediaType = PhotosFilterType.allMedia
     var lastSelectedLocation = PhotosFilterLocation.allLocations
+   
+    private let contentMode: PhotoLibraryContentMode
     
-    private var featureFlagProvider: FeatureFlagProviderProtocol
+    init(contentMode: PhotoLibraryContentMode = .library) {
+        self.contentMode = contentMode
+    }
     
-    init(featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
-        self.featureFlagProvider = featureFlagProvider
+    var shouldShowMediaTypeFilter: Bool {
+        contentMode != .album
     }
     
     func initializeLastSelection() {
+        isFilterApplied = false
         lastSelectedMediaType = selectedMediaType
         lastSelectedLocation = selectedLocation
     }
     
-    func restoreLastSelection() {
+    func restoreLastSelectionIfNeeded() {
+        guard !isFilterApplied else {
+            return
+        }
         selectedMediaType = lastSelectedMediaType
         selectedLocation = lastSelectedLocation
     }
@@ -34,6 +43,9 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     }
     
     func filterOption(for type: PhotosFilterType) -> PhotosFilterOptions {
+        guard shouldShowMediaTypeFilter else {
+            return .allMedia
+        }
         var option: PhotosFilterOptions
         switch type {
         case .images: option = .images

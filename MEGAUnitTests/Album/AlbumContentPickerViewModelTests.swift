@@ -3,8 +3,8 @@ import MEGADomain
 import MEGADomainMock
 @testable import MEGA
 
+@MainActor
 final class AlbumContentPickerViewModelTests: XCTestCase {
-    @MainActor
     func testOnDone_whenNoImagesSelected_shouldDismissTheScreen() async throws {
         let sut = try albumContentAdditionViewModel()
         await sut.photosLoadingTask?.value
@@ -12,7 +12,6 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isDismiss)
     }
     
-    @MainActor
     func testOnDone_whenSomeImagesSelected_shouldDismissTheScreenAndReturnTheAlbumAndPluralSuccessMsg() async throws {
         let exp = XCTestExpectation(description: "Adding content to album should be successful")
         
@@ -33,7 +32,6 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
-    @MainActor
     func testOnDone_whenOneImageSelected_shouldDismissTheScreenAndReturnTheAlbumAndSingularSuccessMsg() async throws {
         let exp = XCTestExpectation(description: "Adding content to album should be successful")
         
@@ -53,7 +51,6 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
-    @MainActor
     func testOnCancel_dismissSetToTrue() throws {
         let viewModel = try albumContentAdditionViewModel()
         XCTAssertFalse(viewModel.isDismiss)
@@ -61,14 +58,12 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.isDismiss)
     }
     
-    @MainActor
     func testLoadPhotos_whenAddContentToAlbumScreenHasShown_shouldReturnPhotos() async throws {
         let sut = try albumContentAdditionViewModel()
         await sut.photosLoadingTask?.value
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos.count, 5)
     }
     
-    @MainActor
     func testNavigationTitle_whenAddedContent_shouldReturnThreeDifferentResults() throws {
         let sut = try albumContentAdditionViewModel()
         let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
@@ -84,9 +79,15 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.navigationTitle, "2 items selected")
     }
     
+    func testOnFilter_shouldSetShowFilter() throws {
+        let sut = try albumContentAdditionViewModel()
+        XCTAssertFalse(sut.photoLibraryContentViewModel.showFilter)
+        sut.onFilter()
+        XCTAssertTrue(sut.photoLibraryContentViewModel.showFilter)
+    }
     
-    @MainActor
-    private func albumContentAdditionViewModel(resultEntity: AlbumElementsResultEntity? = nil, completionHandler: @escaping ((String, AlbumEntity) -> Void) = {_, _ in }) throws -> AlbumContentPickerViewModel {
+    private func albumContentAdditionViewModel(resultEntity: AlbumElementsResultEntity? = nil,
+                                               completionHandler: @escaping ((String, AlbumEntity) -> Void) = {_, _ in }) throws -> AlbumContentPickerViewModel {
         let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
         return AlbumContentPickerViewModel(album: album,
                                            locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations,
@@ -100,7 +101,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                            completionHandler: completionHandler )
     }
     
-    private func samplePhotoNodes() throws ->[NodeEntity] {
+    private func samplePhotoNodes() throws -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:01:04Z".date)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:02:04Z".date)
         let node3 = NodeEntity(nodeType:.file, name:"TestImage3.png", handle:3, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:03:04Z".date)

@@ -6,7 +6,6 @@ struct PhotoLibraryContentView: View {
     let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
     
     @State private var editMode: EditMode = .inactive
-    @StateObject private var filterViewModel = PhotoLibraryFilterViewModel()
     
     var body: some View {
         Group {
@@ -32,12 +31,9 @@ struct PhotoLibraryContentView: View {
             }
         }
         .sheet(isPresented: $viewModel.showFilter){
-            PhotoLibraryFilterView(
-                viewModel,
-                filterViewModel: filterViewModel,
-                forScreen: PhotosFilterOptionKeys.cameraUploadTimeline,
-                onFilterUpdate: onFilterUpdate
-            )
+            PhotoLibraryFilterView(viewModel: viewModel.filterViewModel,
+                                   isPresented: $viewModel.showFilter,
+                                   onFilterUpdate: onFilterUpdate)
         }
     }
     

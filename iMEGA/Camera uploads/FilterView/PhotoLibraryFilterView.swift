@@ -1,28 +1,15 @@
 import SwiftUI
 
 struct PhotoLibraryFilterView: View {
-    @ObservedObject var viewModel: PhotoLibraryContentViewModel
-    @ObservedObject var filterViewModel: PhotoLibraryFilterViewModel
-    private let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
-    private let screen: String
-    
-    init(
-        _ viewModel: PhotoLibraryContentViewModel,
-        filterViewModel: PhotoLibraryFilterViewModel,
-        forScreen screen: String,
-        onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
-    ) {
-        self.viewModel = viewModel
-        self.filterViewModel = filterViewModel
-        self.screen = screen
-        self.onFilterUpdate = onFilterUpdate
-    }
+    @ObservedObject var viewModel: PhotoLibraryFilterViewModel
+    @Binding var isPresented: Bool
+    let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
     
     var btnCancel: some View {
         Button {
-            viewModel.showFilter.toggle()
+            isPresented.toggle()
         } label: {
-            Text(filterViewModel.cancelTitle)
+            Text(viewModel.cancelTitle)
                 .font(Font.system(size: 17, weight: .regular, design: Font.Design.default))
                 .foregroundColor(Color(Colors.Photos.filterNormalTextForeground.color))
         }
@@ -30,19 +17,19 @@ struct PhotoLibraryFilterView: View {
     
     private func onDone() {
         onFilterUpdate?(
-            filterViewModel.filterOption(for: filterViewModel.selectedMediaType),
-            filterViewModel.filterOption(for: filterViewModel.selectedLocation)
+            viewModel.filterOption(for: viewModel.selectedMediaType),
+            viewModel.filterOption(for: viewModel.selectedLocation)
         )
         
-        viewModel.filterApplied = true
-        viewModel.showFilter.toggle()
+        viewModel.isFilterApplied = true
+        isPresented.toggle()
     }
     
     var btnDone: some View {
         Button {
             onDone()
         } label: {
-            Text(filterViewModel.doneTitle)
+            Text(viewModel.doneTitle)
                 .font(Font.system(size: 17, weight: .semibold, design: Font.Design.default))
                 .foregroundColor(Color(Colors.Photos.filterNormalTextForeground.color))
         }
@@ -52,35 +39,38 @@ struct PhotoLibraryFilterView: View {
         HStack {
             btnCancel
             Spacer()
-            Text(filterViewModel.filterTitle)
+            Text(viewModel.filterTitle)
                 .bold()
             Spacer()
             btnDone
         }
     }
     
+    @ViewBuilder
     func typeView(_ geo: GeometryProxy) -> some View {
-        VStack {
-            PhotoLibraryFilterViewHeadline(filterViewModel.chooseTypeTitle)
-            ForEach(filterViewModel.filterTypeMatrixRepresentation(forScreenWidth: geo.size.width, fontSize: 15, horizontalPadding: 15), id: \.self) { row in
-                HStack {
-                    ForEach(row, id: \.self) { type in
-                        PhotoLibraryFilterTypeView(type: type, filterViewModel: filterViewModel)
+        if viewModel.shouldShowMediaTypeFilter {
+            VStack {
+                PhotoLibraryFilterViewHeadline(viewModel.chooseTypeTitle)
+                ForEach(viewModel.filterTypeMatrixRepresentation(forScreenWidth: geo.size.width, fontSize: 15, horizontalPadding: 15), id: \.self) { row in
+                    HStack {
+                        ForEach(row, id: \.self) { type in
+                            PhotoLibraryFilterTypeView(type: type, filterViewModel: viewModel)
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .lineLimit(1)
                 }
-                .lineLimit(1)
             }
         }
     }
     
     var locationView: some View {
         VStack (spacing: 8){
-            PhotoLibraryFilterViewHeadline(filterViewModel.showItemsFromTitle)
+            PhotoLibraryFilterViewHeadline(viewModel.showItemsFromTitle)
             VStack (spacing: 2) {
                 ForEach(PhotosFilterLocation.allCases, id: \.self) { location in
                     if location != PhotosFilterLocation.allCases.first { Divider() }
-                    PhotoLibraryFilterLocationView(location: location, filterViewModel: filterViewModel)
+                    PhotoLibraryFilterLocationView(location: location, filterViewModel: viewModel)
                 }
             }
             .background(Color(Colors.Photos.filterLocationItemBackground.color))
@@ -105,13 +95,10 @@ struct PhotoLibraryFilterView: View {
         .background(Color(Colors.Photos.filterBackground.color))
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
-            viewModel.filterApplied = false
-            filterViewModel.initializeLastSelection()
+            viewModel.initializeLastSelection()
         }
         .onDisappear {
-            if !viewModel.filterApplied {
-                filterViewModel.restoreLastSelection()
-            }
+            viewModel.restoreLastSelectionIfNeeded()
         }
     }
 }
