@@ -53,11 +53,10 @@ struct AlbumListView: View {
     private func albumContentAdditionView(_ album: AlbumEntity) -> some View {
         AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
             album: album,
-            locationName: Strings.Localizable.CameraUploads.Timeline.Filter.Location.allLocations,
             photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: FilesSearchRepository.newRepo),
             mediaUseCase: MediaUseCase(),
             albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: UserAlbumRepository.newRepo),
-            completionHandler: { msg, album in
+            completion: { msg, album in
                 viewModel.onAlbumContentAdded(msg, album)
             })
         )

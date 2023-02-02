@@ -3,17 +3,16 @@ import MEGADomain
 import Combine
 
 final class AlbumContentPickerViewModel: ObservableObject {
-    let locationName: String
    
     private let album: AlbumEntity
-    private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
-    private var mediaUseCase: MediaUseCaseProtocol
-    private var albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
-    private var completionHandler: (String, AlbumEntity) -> Void
-    private var cancellableSink: Cancellable?
+    private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
+    private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
+    private let completion: (String, AlbumEntity) -> Void
+    private var subscriptions = Set<AnyCancellable>()
     var photosLoadingTask: Task<Void, Never>?
     
-    
+    @Published var photoSourceLocation: PhotosFilterLocation = .allLocations
     @Published var navigationTitle: String = ""
     @Published var isDismiss = false
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
@@ -23,25 +22,24 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     @MainActor
-    init(album: AlbumEntity, locationName: String, photoLibraryUseCase: PhotoLibraryUseCaseProtocol, mediaUseCase: MediaUseCaseProtocol, albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol, completionHandler: @escaping (String, AlbumEntity) -> Void) {
+    init(album: AlbumEntity,
+         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
+         mediaUseCase: MediaUseCaseProtocol,
+         albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
+         completion: @escaping (String, AlbumEntity) -> Void) {
         self.album = album
-        self.locationName = locationName
         self.photoLibraryUseCase = photoLibraryUseCase
         self.mediaUseCase = mediaUseCase
         self.albumContentModificationUseCase = albumContentModificationUseCase
-        self.completionHandler = completionHandler
-        
+        self.completion = completion
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .album)
-        
         navigationTitle = normalNavigationTitle
-        loadPhotos()
-        initSubscription()
+        setupSubscriptions()
     }
     
     deinit {
         photosLoadingTask?.cancel()
-        cancellableSink = nil
     }
     
     @MainActor
@@ -57,7 +55,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
                 let result = try await albumContentModificationUseCase.addPhotosToAlbum(by: album.id, nodes: nodes)
                 if result.success > 0 {
                     let successMsg = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
-                    completionHandler(successMsg, album)
+                    completion(successMsg, album)
                 }
             } catch {
                 MEGALogError("Error occurred when adding photos to an album. \(error.localizedDescription)")
@@ -76,27 +74,56 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     // MARK: - Private
-    private func initSubscription() {
-        cancellableSink = photoLibraryContentViewModel.selection.$photos.sink { [weak self] photos in
-            guard let self = self else { return }
-            self.navigationTitle = photos.isEmpty ? self.normalNavigationTitle : self.navigationTitle(forNumberOfItems: photos.count)
-        }
+    private func setupSubscriptions() {
+        photoLibraryContentViewModel.selection.$photos
+            .compactMap { [weak self] photos in
+                guard let self = self else { return nil }
+                return photos.isEmpty ? self.normalNavigationTitle : self.navigationTitle(forNumberOfItems: photos.count)
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$navigationTitle)
+        
+        photoLibraryContentViewModel.filterViewModel.$appliedFilterLocation
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$photoSourceLocation)
+        
+        $photoSourceLocation
+            .removeDuplicates()
+            .sink { [weak self] _ in
+                self?.loadPhotos()
+            }
+            .store(in: &subscriptions)
     }
     
-    @MainActor
     private func loadPhotos() {
         photosLoadingTask = Task(priority: .userInitiated) {
             do {
-                let nodes = try await photoLibraryUseCase.allPhotos()
+                let nodes = try await nodes(forPhotoLocation: photoSourceLocation)
                     .filter { $0.hasThumbnail }
-                
-                photoLibraryContentViewModel.library = nodes.toPhotoLibrary(withSortType: .newest)
-                photoLibraryContentViewModel.selection.editMode = .active
+                await updatePhotoLibraryContent(nodes: nodes)
             } catch {
                 MEGALogError("Error occurred when loading photos. \(error.localizedDescription)")
             }
         }
     }
+    
+    @MainActor
+    private func updatePhotoLibraryContent(nodes: [NodeEntity]) {
+        photoLibraryContentViewModel.library = nodes.toPhotoLibrary(withSortType: .newest)
+        photoLibraryContentViewModel.selection.editMode = .active
+    }
+    
+    private func nodes(forPhotoLocation location: PhotosFilterLocation) async throws -> [NodeEntity] {
+            switch location {
+            case .allLocations:
+                return try await photoLibraryUseCase.allPhotos()
+            case .cloudDrive:
+                return try await photoLibraryUseCase.allPhotosFromCloudDriveOnly()
+            case .cameraUploads:
+                return try await photoLibraryUseCase.allPhotosFromCameraUpload()
+            }
+        }
     
     private func navigationTitle(forNumberOfItems num: Int) -> String {
         num == 1 ? Strings.Localizable.oneItemSelected(1): Strings.Localizable.itemsSelected(num)

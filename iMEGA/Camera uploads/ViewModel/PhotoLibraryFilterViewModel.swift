@@ -3,10 +3,8 @@ import Combine
 final class PhotoLibraryFilterViewModel: ObservableObject {
     @Published var selectedMediaType = PhotosFilterType.allMedia
     @Published var selectedLocation = PhotosFilterLocation.allLocations
-    
-    var isFilterApplied = false
-    var lastSelectedMediaType = PhotosFilterType.allMedia
-    var lastSelectedLocation = PhotosFilterLocation.allLocations
+    @Published var appliedMediaTypeFilter = PhotosFilterType.allMedia
+    @Published var appliedFilterLocation = PhotosFilterLocation.allLocations
    
     private let contentMode: PhotoLibraryContentMode
     
@@ -18,18 +16,13 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
         contentMode != .album
     }
     
-    func initializeLastSelection() {
-        isFilterApplied = false
-        lastSelectedMediaType = selectedMediaType
-        lastSelectedLocation = selectedLocation
-    }
-    
-    func restoreLastSelectionIfNeeded() {
-        guard !isFilterApplied else {
-            return
+    func setSelectedFiltersToAppliedFiltersIfRequired() {
+        if selectedMediaType != appliedMediaTypeFilter {
+            selectedMediaType = appliedMediaTypeFilter
         }
-        selectedMediaType = lastSelectedMediaType
-        selectedLocation = lastSelectedLocation
+        if selectedLocation != appliedFilterLocation {
+            selectedLocation = appliedFilterLocation
+        }
     }
     
     func filterType(for option: PhotosFilterOptions) -> PhotosFilterType {
@@ -105,6 +98,15 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
         default: option = .allLocations
         }
         return option
+    }
+    
+    func applyFilters() {
+        if selectedMediaType != appliedMediaTypeFilter {
+            appliedMediaTypeFilter = selectedMediaType
+        }
+        if selectedLocation != appliedFilterLocation {
+            appliedFilterLocation = selectedLocation
+        }
     }
     
     // MARK: - Localization
