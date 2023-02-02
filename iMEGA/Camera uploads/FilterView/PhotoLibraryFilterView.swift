@@ -21,7 +21,7 @@ struct PhotoLibraryFilterView: View {
             viewModel.filterOption(for: viewModel.selectedLocation)
         )
         
-        viewModel.isFilterApplied = true
+        viewModel.applyFilters()
         isPresented.toggle()
     }
     
@@ -95,10 +95,7 @@ struct PhotoLibraryFilterView: View {
         .background(Color(Colors.Photos.filterBackground.color))
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
-            viewModel.initializeLastSelection()
-        }
-        .onDisappear {
-            viewModel.restoreLastSelectionIfNeeded()
+            viewModel.setSelectedFiltersToAppliedFiltersIfRequired()
         }
     }
 }

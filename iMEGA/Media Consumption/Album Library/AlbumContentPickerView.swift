@@ -49,7 +49,7 @@ struct AlbumContentPickerView: View {
                         .foregroundColor(textColor)
                 }.padding(10)
                 
-                Text(viewModel.locationName)
+                Text(viewModel.photoSourceLocation.localization)
                     .font(.headline)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)
