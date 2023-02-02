@@ -138,6 +138,21 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
+    func testCreateContextMenu_onAlbumContentPage_shouldReturnFourMenuItems() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        sortType: SortOrderEntity.modificationDesc,
+                                                                        isAlbum: true))
+        
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+        
+        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
+                            CMElementTypeEntity.sort(actionType: .modificationDesc),
+                            CMElementTypeEntity.sort(actionType: .modificationAsc),
+                            CMElementTypeEntity.display(actionType: .filter)]
+        
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
     func testCreateContextMenu_UploadAdd() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .uploadAdd),
                                                                         showMediaDiscovery: true))

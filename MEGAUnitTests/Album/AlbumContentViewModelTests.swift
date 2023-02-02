@@ -82,4 +82,26 @@ final class AlbumContentViewModelTests: XCTestCase {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
         XCTAssertTrue(sut.isFavouriteAlbum)
     }
+    
+    func testIsSystemAlbum_whenAlbumTypeIsFavouriteRawAndGif_shouldReturnTrueForSystemAlbumsAndFalseForUserAlbums() {
+        let sut1 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        XCTAssertTrue(sut1.isSystemAlbum)
+        
+        let sut2 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        XCTAssertTrue(sut2.isSystemAlbum)
+        
+        let sut3 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        XCTAssertTrue(sut3.isSystemAlbum)
+        
+        let sut4 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Hey there", coverNode: NodeEntity(handle: 1), count: 2, type: .user), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        XCTAssertFalse(sut4.isSystemAlbum)
+    }
+    
+    func testIsUserAlbum_whenAlbumTypeIsUser_shouldReturnTrueForUserAlbums() {
+        let sut1 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        XCTAssertFalse(sut1.isUserAlbum)
+        
+        let sut2 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Hey there", coverNode: NodeEntity(handle: 1), count: 2, type: .user), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        XCTAssertTrue(sut2.isUserAlbum)
+    }
 }

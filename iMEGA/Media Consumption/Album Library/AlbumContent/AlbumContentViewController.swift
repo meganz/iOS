@@ -4,7 +4,7 @@ import MEGAUIKit
 import MEGADomain
 
 final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
-    private let viewModel: AlbumContentViewModel
+    let viewModel: AlbumContentViewModel
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
@@ -28,6 +28,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     
     private lazy var emptyView = EmptyStateView.create(for: viewModel.isFavouriteAlbum ? .favourites: .album)
     
+    var contextMenuManager: ContextMenuManager?
+    
     // MARK: - Init
     
     init(viewModel: AlbumContentViewModel) {
@@ -47,6 +49,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         
         configPhotoLibraryView(in: view)
         setupPhotoLibrarySubscriptions()
+        contextMenuManager = contextMenuManagerConfiguration()
         
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
@@ -91,7 +94,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         configureToolbarButtons(albumType: viewModel.isFavouriteAlbum ? .favourite : .normal)
     }
     
-    private func startEditingMode() {
+    func startEditingMode() {
         setEditing(true, animated: true)
         enablePhotoLibraryEditMode(isEditing)
         updateNavigationTitle(withSelectedPhotoCount: 0)
@@ -151,19 +154,6 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         }
     }
     
-    private func configureRightBarButton() {
-        if isEditing {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .cancel,
-                target: self,
-                action: #selector(cancelButtonPressed(_:))
-            )
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
-        } else {
-            navigationItem.rightBarButtonItem = rightBarButtonItem
-        }
-    }
-    
     private func showEmptyView() {
         view.addSubview(emptyView)
         
@@ -182,7 +172,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         dismiss(animated: true)
     }
     
-    @objc private func cancelButtonPressed(_ barButtonItem: UIBarButtonItem) {
+    @objc func cancelButtonPressed(_ barButtonItem: UIBarButtonItem) {
         endEditingMode()
     }
     

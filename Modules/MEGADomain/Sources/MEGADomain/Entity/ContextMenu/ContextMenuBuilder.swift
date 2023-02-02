@@ -17,6 +17,7 @@ public final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
+    private var isAlbum: Bool = false
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
@@ -123,6 +124,11 @@ public final class ContextMenuBuilder {
     
     public func setIsCameraUploadExplorer(_ isCameraUploadExplorer: Bool) -> ContextMenuBuilder {
         self.isCameraUploadExplorer = isCameraUploadExplorer
+        return self
+    }
+    
+    public func setIsAlbum(_ isAlbum: Bool) -> ContextMenuBuilder {
+        self.isAlbum = isAlbum
         return self
     }
     
@@ -303,6 +309,8 @@ public final class ContextMenuBuilder {
                     
             if isCameraUploadExplorer {
                 sortMenuActions = [sortNewest, sortOldest]
+            } else if isAlbum {
+                sortMenuActions = [sortNewest, sortOldest]
             } else if !isSharedItems {
                 sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])
                 if !isOfflineFolder {
@@ -340,6 +348,8 @@ public final class ContextMenuBuilder {
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }
+        } else if isAlbum {
+            displayActionsMenuChildren = [selectMenu(), sortMenu(), filterMenu()]
         } else {
             let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
             displayActionsMenuChildren.append(contentsOf: menu)

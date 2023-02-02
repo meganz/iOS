@@ -18,6 +18,7 @@ import Foundation
 ///     - isAudiosExplorer: Indicates whether or not it is the home audios explorer
 ///     - isVideosExplorer: Indicates whether or not it is the home videos explorer
 ///     - isCameraUploadExplorer: Indicates whether or not it is the camera upload explorer
+///     - isAlbum: Indicates whether or not it is the album
 ///     - isFilterEnabled: Indicates whether or not if the filter is enabled
 ///     - isDoNotDisturbEnabled: Indicates wether or not the notifications are disabled
 ///     - isMyBackupsNode: Indicates if the current node is the MyBackups root node
@@ -53,6 +54,7 @@ public struct CMConfigEntity {
     public var isAudiosExplorer: Bool
     public var isVideosExplorer: Bool
     public var isCameraUploadExplorer: Bool
+    public var isAlbum: Bool
     public var isFilterEnabled: Bool
     public var isDoNotDisturbEnabled: Bool
     public var isMyBackupsNode: Bool
@@ -70,7 +72,7 @@ public struct CMConfigEntity {
     public var shouldJoiningMeeting: Bool
     public var shouldScheduleMeeting: Bool
     
-    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isMyBackupsNode: Bool = false, isMyBackupsChild: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
+    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, isAlbum: Bool = false, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isMyBackupsNode: Bool = false, isMyBackupsChild: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
         self.menuType = menuType
         self.viewMode = viewMode
         self.accessLevel = accessLevel
@@ -89,6 +91,7 @@ public struct CMConfigEntity {
         self.isAudiosExplorer = isAudiosExplorer
         self.isVideosExplorer = isVideosExplorer
         self.isCameraUploadExplorer = isCameraUploadExplorer
+        self.isAlbum = isAlbum
         self.isFilterEnabled = isFilterEnabled
         self.isDoNotDisturbEnabled = isDoNotDisturbEnabled
         self.isMyBackupsNode = isMyBackupsNode

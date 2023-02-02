@@ -2,11 +2,19 @@ import Foundation
 
 extension AlbumContentViewController: PhotoLibraryProvider {
     func hideNavigationEditBarButton(_ hide: Bool) {
-        navigationItem.rightBarButtonItem = hide ? nil : rightBarButtonItem
+        if hide {
+            navigationItem.rightBarButtonItem = nil
+        } else {
+            configureRightBarButton()
+        }
     }
     
     func showNavigationRightBarButton(_ show: Bool) {
-        navigationItem.rightBarButtonItem = show ? rightBarButtonItem : nil
+        if show {
+            configureRightBarButton()
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
     
     func setupPhotoLibrarySubscriptions() {
