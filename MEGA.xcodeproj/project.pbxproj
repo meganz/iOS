@@ -1472,8 +1472,21 @@
 		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
 		A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
 		A84683052939FBD500FACCA1 /* AppConfigurationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */; };
+		A848369B29840811009DFC63 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
+		A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */; };
+		A84F4A90298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */; };
+		A84F4A91298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */; };
+		A84F4A92298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */; };
+		A84F4A93298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */; };
+		A84F4A94298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */; };
+		A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
+		A84F4A97298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
+		A84F4A98298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
+		A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
+		A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
+		A84F4A9B298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C62032F6E70033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
@@ -3973,8 +3986,11 @@
 		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
 		A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Mapper.swift"; sourceTree = "<group>"; };
 		A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationRepository.swift; sourceTree = "<group>"; };
+		A848369A2983FF1E009DFC63 /* MEGAPickerFileProvider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAPickerFileProvider-Bridging-Header.h"; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
+		A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SharedInstance.swift"; sourceTree = "<group>"; };
+		A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatSdk+SharedInstance.swift"; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -6201,10 +6217,7 @@
 				418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */,
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
 				7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */,
-				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
-				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
-				B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */,
-				B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */,
+				A8C81E2A29841C9500C794E9 /* MEGASDK */,
 				7747B2D5208623550011814E /* Network */,
 				12E7FEED28723AD6001E4A08 /* PageStayTimeTracker.swift */,
 				0D30D86125BFA14A00C26367 /* Tab.swift */,
@@ -8999,6 +9012,7 @@
 				942255031EDC04060074C51A /* Info.plist */,
 				942254ED1EDC03150074C51A /* Supporting Files */,
 				942ED2B01EDEE58100C9908D /* MEGAPickerFileProvider-PrefixHeader.pch */,
+				A848369A2983FF1E009DFC63 /* MEGAPickerFileProvider-Bridging-Header.h */,
 			);
 			path = MEGAPickerFileProvider;
 			sourceTree = "<group>";
@@ -9481,6 +9495,19 @@
 				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
 			);
 			path = Audios;
+			sourceTree = "<group>";
+		};
+		A8C81E2A29841C9500C794E9 /* MEGASDK */ = {
+			isa = PBXGroup;
+			children = (
+				B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */,
+				B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */,
+				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
+				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
+				A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstance.swift */,
+				A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */,
+			);
+			path = MEGASDK;
 			sourceTree = "<group>";
 		};
 		A8C93C0A22D718030030CE1B /* Profile */ = {
@@ -12566,6 +12593,7 @@
 				BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
+				A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,
 				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
@@ -12994,6 +13022,7 @@
 				12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
+				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				B65D17D5289A226A00D5AD33 /* UINavigationViewController+Additions.swift in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				5D6D0F4F252702C2002A777D /* UserSDKEntity.swift in Sources */,
@@ -13803,6 +13832,7 @@
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				774941E22410EAEF00FC5CB6 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
+				A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				77FCB86523FD718A009E8032 /* NSString+MNZCategory.m in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
@@ -13820,6 +13850,7 @@
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
 				BF22BFB8268ACFAF00460DB3 /* TransferRecordDTO.swift in Sources */,
 				774941E62416552600FC5CB6 /* MEGALogger.m in Sources */,
+				A84F4A93298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
 				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
@@ -13849,6 +13880,7 @@
 				836924D72582728100658F6C /* MEGAGenericRequestDelegate.m in Sources */,
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
 				83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
+				A84F4A9B298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				8375B74325EFC77500B70F6B /* RecentsQuickAccessWidgetViewModel.swift in Sources */,
 				836813532587C0B800596BBD /* QuickAccessItemModel.swift in Sources */,
 				830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */,
@@ -13874,6 +13906,7 @@
 				8375B75425EFC77D00B70F6B /* RecentsQuickAccessWidget.swift in Sources */,
 				8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */,
 				83C1B49225A8C14800814074 /* SectionDetail.swift in Sources */,
+				A84F4A94298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				835EE45A2582607D00D8E3B8 /* MEGAConstants.m in Sources */,
 				83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */,
@@ -13949,6 +13982,7 @@
 				B695B603264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
+				A84F4A90298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				94C85E6D28B9405C00007A38 /* NodeAssetsManager.swift in Sources */,
 				B64A71AE287943B90085087D /* NodeEntity+Mapper.swift in Sources */,
 				B604890F223C4F7A00BA91F9 /* MEGACoreDataStack.m in Sources */,
@@ -14020,6 +14054,7 @@
 				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
 				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
 				C482B7C7271EFCA00074CFC4 /* MVVM-R.swift in Sources */,
+				A84F4A97298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				B695B606264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
@@ -14044,8 +14079,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A84F4A98298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */,
 				B60D527625F8888F003E9829 /* UIDevice+MNZCategory.m in Sources */,
+				A848369B29840811009DFC63 /* MEGAFunctions.swift in Sources */,
 				B5300AF32754A098001E516B /* Strings+Generated.swift in Sources */,
 				B6451650223201A2001680BC /* MEGAConstants.m in Sources */,
 				77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */,
@@ -14053,6 +14090,7 @@
 				942255041EDC04080074C51A /* FileProvider.m in Sources */,
 				B5925B8B279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				0DE3037826B25AA100E4A66B /* FileProviderItem.swift in Sources */,
+				A84F4A91298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */,
 				7747B2DA208625B60011814E /* Reachability.m in Sources */,
 			);
@@ -14142,6 +14180,7 @@
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
+				A84F4A92298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
@@ -14189,6 +14228,7 @@
 				5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				C4EACA9F2772559F00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
+				A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				8335C63E282E7A8400509479 /* NameCollisionViewModel.swift in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
@@ -14907,6 +14947,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGANotifications";
@@ -14970,6 +15011,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGANotifications";
@@ -15199,6 +15241,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"MNZ_PICKERFILEPROVIDER_EXTENSION=1",
+				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15223,6 +15270,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
@@ -15272,6 +15320,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
@@ -15886,6 +15935,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
@@ -16006,6 +16056,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGANotifications";
