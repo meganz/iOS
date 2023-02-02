@@ -16,7 +16,6 @@
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdk+MNZCategory.h"
-#import "MEGATransferList+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
