@@ -9,15 +9,15 @@ struct TransfersRepository: TransfersRepositoryProtocol {
     }
     
     func transfers() -> [TransferEntity] {
-        sdk.transfers.mnz_transfersArrayFromTranferList().map { $0.toTransferEntity() }
+        sdk.transfers.toTransferEntities()
     }
     
     func downloadTransfers() -> [TransferEntity] {
-        sdk.downloadTransfers.mnz_transfersArrayFromTranferList().map { $0.toTransferEntity() }
+        sdk.downloadTransfers.toTransferEntities()
     }
     
     func uploadTransfers() -> [TransferEntity] {
-        sdk.uploadTransfers.mnz_transfersArrayFromTranferList().map { $0.toTransferEntity() }
+        sdk.uploadTransfers.toTransferEntities()
     }
     
     func completedTransfers() -> [TransferEntity] {

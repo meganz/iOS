@@ -564,7 +564,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
 
     private func reloadTransferData() {
-        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk().transfers.mnz_transfersArrayFromTranferList(), allTransfers.isNotEmpty else {
+        let allTransfers = MEGASdkManager.sharedMEGASdk().transfers.toTransfers()
+        guard allTransfers.isNotEmpty else {
             return
         }
         chatViewController?.checkTransferPauseStatus()

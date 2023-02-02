@@ -17,7 +17,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGATransfer+MNZCategory.h"
-#import "MEGATransferList+MNZCategory.h"
 #import "MEGAStore.h"
 #import "TransfersWidgetSelected.h"
 #import "UITableView+MNZCategory.h"
