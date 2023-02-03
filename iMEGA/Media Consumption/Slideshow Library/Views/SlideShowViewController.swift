@@ -84,7 +84,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.reloadData()
+        reload()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) { [weak self] in
             self?.updateSlideInView()
@@ -120,9 +120,10 @@ final class SlideShowViewController: UIViewController, ViewType {
         self.viewModel?.invokeCommand = { [weak self] command in
             DispatchQueue.main.async { self?.executeCommand(command) }
         }
-        reload()
+        
         hideLoader()
         if viewModel.photos.isNotEmpty {
+            reload()
             playSlideShow()
         }
     }
@@ -248,7 +249,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func reload() {
-        collectionView.reloadData()
+        collectionView?.reloadData()
     }
 }
 
