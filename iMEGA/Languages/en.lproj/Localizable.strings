@@ -3448,3 +3448,7 @@
 "meetings.scheduled.recurring.frequency.monthly"="Occurs monthly";
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="See more occurrences";
+/* In app notification description when an occurence is cancelled in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B]%@ cancelled[/B] the occurrence scheduled for:\n%@, %@ from %@ to %@";
+/* In app notification description when an occurence is updated in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B]%@ updated[/B] an occurrence to:\n%@, %@ from %@ to %@";

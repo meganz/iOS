@@ -5,14 +5,17 @@ extension NotificationsTableViewController {
     
     // MARK: - Interface methods
     
-    @objc func contentForNewScheduledMeeting(withAlert alert: MEGAUserAlert) -> NSAttributedString? {
+    @objc func contentForNewScheduledMeeting(withAlert alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
         guard let scheduledMeeting = scheduledMeeting(
             withScheduleMeetingId: alert.scheduledMeetingId,
             chatId: alert.nodeHandle
         )?.toScheduledMeetingEntity() else {
             return nil
         }
-        if scheduledMeeting.rules.frequency == .invalid {
+        
+        if alert.pendingContactRequestHandle != MEGAInvalidHandle {
+            return occurrenceContent(for: alert, indexPath: indexPath)
+        } else if scheduledMeeting.rules.frequency == .invalid {
             return contentForOneOffNewScheduledMeeting(scheduledMeeting, email: alert.email)
         } else if scheduledMeeting.rules.frequency == .daily {
             return contentForDailyNewScheduledMeeting(scheduledMeeting, email: alert.email)
@@ -22,10 +25,10 @@ extension NotificationsTableViewController {
             return contentForMonthlyNewScheduledMeeting(scheduledMeeting, email: alert.email)
         }
         
-        return NSAttributedString(string: "Unhandled New meeting")
+        return NSAttributedString(string: alert.title)
     }
     
-    @objc func contentForUpdatedScheduledMeeting(withAlert alert: MEGAUserAlert) -> NSAttributedString? {
+    @objc func contentForUpdatedScheduledMeeting(withAlert alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
         guard let scheduledMeetingEntity = scheduledMeeting(
             withScheduleMeetingId: alert.scheduledMeetingId,
             chatId: alert.nodeHandle
@@ -33,7 +36,9 @@ extension NotificationsTableViewController {
             return nil
         }
         
-        if alert.hasScheduledMeetingChangeType(.cancelled) {
+        if alert.pendingContactRequestHandle != MEGAInvalidHandle {
+            return occurrenceContent(for: alert, indexPath: indexPath)
+        } else if alert.hasScheduledMeetingChangeType(.cancelled) {
             if alert.hasScheduledMeetingChangeType(.rules) {
                 return contentForRecurringCancelledScheduledMeeting(withEmail: alert.email)
             } else {
@@ -101,6 +106,37 @@ extension NotificationsTableViewController {
     }
     
     // MARK: Private methods
+    
+    private func occurrenceContent(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
+        if let notification = scheduleMeetingOccurrenceNotificationList.filter({ $0.alert.identifier == alert.identifier }).first {
+            if let message = notification.message {
+                return createAttributedStringWithOneBoldTag(content: message)
+            } else {
+                Task {
+                    do {
+                        try await notification.loadMessage()
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    } catch {
+                        MEGALogDebug("unable to load message for alert \(alert.title ?? "")")
+                    }
+                }
+            }
+        } else {
+            let notification = ScheduleMeetingOccurrenceNotification(alert: alert)
+            scheduleMeetingOccurrenceNotificationList.append(notification)
+
+            Task {
+                do {
+                    try await notification.loadMessage()
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                } catch {
+                    MEGALogDebug("unable to load message for alert \(alert.title ?? "")")
+                }
+            }
+        }
+        
+        return nil
+    }
     
     private func contentForOneOffNewScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
         return contentForScheduledMeetingWithTwoPlaceholders(
