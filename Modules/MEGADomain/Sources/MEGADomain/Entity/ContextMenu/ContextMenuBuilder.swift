@@ -3,6 +3,7 @@ public final class ContextMenuBuilder {
     private var accessLevel: ShareAccessLevelEntity = .unknown
     private var viewMode: ViewModePreferenceEntity = .list
     private var sortType: SortOrderEntity = .defaultAsc
+    private var filterType: FilterEntity = .allMedia
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
     private var isOfflineFolder: Bool = false
@@ -17,7 +18,7 @@ public final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
-    private var isAlbum: Bool = false
+    private var isUserAlbum: Bool = false
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
@@ -54,6 +55,11 @@ public final class ContextMenuBuilder {
     
     public func setSortType(_ sortType: SortOrderEntity?) -> ContextMenuBuilder {
         self.sortType = sortType ?? .defaultAsc
+        return self
+    }
+    
+    public func setFilterType(_ filterType: FilterEntity?) -> ContextMenuBuilder {
+        self.filterType = filterType ?? .allMedia
         return self
     }
     
@@ -127,8 +133,8 @@ public final class ContextMenuBuilder {
         return self
     }
     
-    public func setIsAlbum(_ isAlbum: Bool) -> ContextMenuBuilder {
-        self.isAlbum = isAlbum
+    public func setIsUserAlbum(_ isUserAlbum: Bool) -> ContextMenuBuilder {
+        self.isUserAlbum = isUserAlbum
         return self
     }
     
@@ -243,6 +249,10 @@ public final class ContextMenuBuilder {
         sortType
     }
     
+    func currentFilterType() -> FilterEntity {
+        filterType
+    }
+    
     func currentChatStatus() -> ChatStatusEntity {
         chatStatus
     }
@@ -309,7 +319,7 @@ public final class ContextMenuBuilder {
                     
             if isCameraUploadExplorer {
                 sortMenuActions = [sortNewest, sortOldest]
-            } else if isAlbum {
+            } else if isUserAlbum {
                 sortMenuActions = [sortNewest, sortOldest]
             } else if !isSharedItems {
                 sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])
@@ -327,9 +337,14 @@ public final class ContextMenuBuilder {
     }
     
     private func filterMenu() -> CMEntity {
-        CMEntity(displayInline: true,
-                 children: [filter]
-        )
+        if isUserAlbum {
+            return CMEntity(type: .display(actionType: .filter),
+                            currentFilterType: filterType,
+                            children: [filterAllMedia, filterImages, filterVideos])
+        } else {
+            return CMEntity(displayInline: true,
+                     children: [filter])
+        }
     }
     
     private func displayMenu() -> CMEntity {
@@ -348,7 +363,7 @@ public final class ContextMenuBuilder {
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }
-        } else if isAlbum {
+        } else if isUserAlbum {
             displayActionsMenuChildren = [selectMenu(), sortMenu(), filterMenu()]
         } else {
             let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]

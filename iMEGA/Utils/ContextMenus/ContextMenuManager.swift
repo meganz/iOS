@@ -34,6 +34,10 @@ protocol MeetingContextMenuDelegate: AnyObject {
     func meetingContextMenu(didSelect action: MeetingActionEntity)
 }
 
+protocol FilterMenuDelegate: AnyObject {
+    func filterMenu(didSelect filterType: FilterType)
+}
+
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: DisplayMenuDelegate?
     weak var quickActionsMenuDelegate: QuickActionsMenuDelegate?
@@ -42,6 +46,7 @@ final class ContextMenuManager: NSObject {
     weak var chatMenuDelegate: ChatMenuDelegate?
     weak var qrMenuDelegate: QRMenuDelegate?
     weak var meetingContextMenuDelegate: MeetingContextMenuDelegate?
+    weak var filterMenuDelegate: FilterMenuDelegate?
     
     private let createContextMenuUC: CreateContextMenuUseCaseProtocol
     
@@ -52,6 +57,7 @@ final class ContextMenuManager: NSObject {
          chatMenuDelegate: ChatMenuDelegate? = nil,
          qrMenuDelegate: QRMenuDelegate? = nil,
          meetingContextMenuDelegate: MeetingContextMenuDelegate? = nil,
+         filterMenuDelegate: FilterMenuDelegate? = nil,
          createContextMenuUseCase: CreateContextMenuUseCaseProtocol) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
@@ -60,6 +66,7 @@ final class ContextMenuManager: NSObject {
         self.chatMenuDelegate = chatMenuDelegate
         self.qrMenuDelegate = qrMenuDelegate
         self.meetingContextMenuDelegate = meetingContextMenuDelegate
+        self.filterMenuDelegate = filterMenuDelegate
         self.createContextMenuUC = createContextMenuUseCase
     }
     
@@ -82,6 +89,9 @@ final class ContextMenuManager: NSObject {
                                              action == .thumbnailView)
         case .sort(let option):
             displayMenuDelegate?.sortMenu(didSelect: option.toSortOrderType())
+            
+        case .filter(let entity):
+            filterMenuDelegate?.filterMenu(didSelect: entity.toFilterType())
             
         case .quickActions(let action):
             quickActionsMenuDelegate?.quickActionsMenu(didSelect: action,

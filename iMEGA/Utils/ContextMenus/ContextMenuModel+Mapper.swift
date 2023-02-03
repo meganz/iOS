@@ -15,7 +15,8 @@ extension CMEntity {
                          children: toContextMenuModels(children),
                          currentChatStatus: currentChatStatus?.toChatStatus().localizedIdentifier,
                          currentSortType: currentSortType?.toSortOrderType().localizedString,
-                         dndRemainingTime: dndRemainingTime)
+                         dndRemainingTime: dndRemainingTime,
+                         currentFilterType: currentFilterType?.toFilterType().localizedString)
                          
     }
     
@@ -44,6 +45,8 @@ extension ContextMenuModel {
             return dataForQuickAction(action: action)
         case .sort(let sortType):
             return dataForSortType(sortType: sortType)
+        case .filter(let filterType):
+            return dataForFilterType(filterType: filterType)
         case .rubbishBin(let action):
             return dataForRubbishBinAction(action: action)
         case .meeting(let action):
@@ -122,7 +125,7 @@ extension ContextMenuModel {
         case .clearRubbishBin:
             return ContextMenuDataModel(identifier: "clearRubbishBin", title: Strings.Localizable.emptyRubbishBin, image: Asset.Images.NodeActions.rubbishBin.image)
         case .filter:
-            return ContextMenuDataModel(identifier: "filter", title: Strings.Localizable.filter, image: Asset.Images.ActionSheetIcons.filter.image)
+            return ContextMenuDataModel(identifier: "filter", title: Strings.Localizable.filter, subtitle: currentFilterType, image: Asset.Images.ActionSheetIcons.filter.image)
         }
     }
 
@@ -144,6 +147,19 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "labelAsc", title: Strings.Localizable.CloudDrive.Sort.label, image: Asset.Images.ActionSheetIcons.SortBy.sortLabel.image)
         case .favouriteAsc:
             return ContextMenuDataModel(identifier: "favouriteAsc", title: Strings.Localizable.favourite, image: Asset.Images.ActionSheetIcons.SortBy.sortFavourite.image)
+        default:
+            return nil
+        }
+    }
+    
+    private func dataForFilterType(filterType: FilterEntity) -> ContextMenuDataModel? {
+        switch filterType {
+        case .allMedia:
+            return ContextMenuDataModel(identifier: "allMedias", title: Strings.Localizable.CameraUploads.Timeline.Filter.MediaType.allMedia)
+        case .images:
+            return ContextMenuDataModel(identifier: "images", title: Strings.Localizable.CameraUploads.Timeline.Filter.MediaType.images)
+        case .videos:
+            return ContextMenuDataModel(identifier: "videos", title: Strings.Localizable.CameraUploads.Timeline.Filter.MediaType.videos)
         default:
             return nil
         }

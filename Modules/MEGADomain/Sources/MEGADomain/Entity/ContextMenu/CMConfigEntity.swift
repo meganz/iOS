@@ -7,6 +7,7 @@ import Foundation
 ///     - viewMode: The current view mode (List, Thumbnail)
 ///     - accessLevel: The access level type for the current folder
 ///     - sortType: The selected sort type for this folder
+///     - filterType: The selected filter type for this album
 ///     - isRubbishBinFolder: Indicates whether or not it is the RubbishBin folder
 ///     - isRestorable: Indicates if the current node is restorable
 ///     - isOfflineFolder: Indicates whether or not it is the Offline folder
@@ -18,7 +19,7 @@ import Foundation
 ///     - isAudiosExplorer: Indicates whether or not it is the home audios explorer
 ///     - isVideosExplorer: Indicates whether or not it is the home videos explorer
 ///     - isCameraUploadExplorer: Indicates whether or not it is the camera upload explorer
-///     - isAlbum: Indicates whether or not it is the album
+///     - isUserAlbum: Indicates whether or not it is the user album
 ///     - isFilterEnabled: Indicates whether or not if the filter is enabled
 ///     - isDoNotDisturbEnabled: Indicates wether or not the notifications are disabled
 ///     - isMyBackupsNode: Indicates if the current node is the MyBackups root node
@@ -40,6 +41,7 @@ public struct CMConfigEntity {
     public var viewMode: ViewModePreferenceEntity?
     public var accessLevel: ShareAccessLevelEntity?
     public var sortType: SortOrderEntity?
+    public var filterType: FilterEntity?
     public var isAFolder: Bool
     public var isRubbishBinFolder: Bool
     public var isViewInFolder: Bool
@@ -54,7 +56,7 @@ public struct CMConfigEntity {
     public var isAudiosExplorer: Bool
     public var isVideosExplorer: Bool
     public var isCameraUploadExplorer: Bool
-    public var isAlbum: Bool
+    public var isUserAlbum: Bool
     public var isFilterEnabled: Bool
     public var isDoNotDisturbEnabled: Bool
     public var isMyBackupsNode: Bool
@@ -72,11 +74,12 @@ public struct CMConfigEntity {
     public var shouldJoiningMeeting: Bool
     public var shouldScheduleMeeting: Bool
     
-    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, isAlbum: Bool = false, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isMyBackupsNode: Bool = false, isMyBackupsChild: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
+    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, isUserAlbum: Bool = false, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isMyBackupsNode: Bool = false, isMyBackupsChild: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
         self.menuType = menuType
         self.viewMode = viewMode
         self.accessLevel = accessLevel
         self.sortType = sortType
+        self.filterType = filterType
         self.isAFolder = isAFolder
         self.isRubbishBinFolder = isRubbishBinFolder
         self.isViewInFolder = isViewInFolder
@@ -91,7 +94,7 @@ public struct CMConfigEntity {
         self.isAudiosExplorer = isAudiosExplorer
         self.isVideosExplorer = isVideosExplorer
         self.isCameraUploadExplorer = isCameraUploadExplorer
-        self.isAlbum = isAlbum
+        self.isUserAlbum = isUserAlbum
         self.isFilterEnabled = isFilterEnabled
         self.isDoNotDisturbEnabled = isDoNotDisturbEnabled
         self.isMyBackupsNode = isMyBackupsNode
