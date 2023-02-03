@@ -76,7 +76,7 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         }
     }
     
-    func fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase) async -> [NodeEntity] {
+    func fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase) -> [NodeEntity] {
         allPhotoEntities.filter { mediaUseCase.isImage($0.name) }
     }
     

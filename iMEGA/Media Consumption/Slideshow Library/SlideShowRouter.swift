@@ -11,8 +11,8 @@ struct SlideShowRouter: Routing {
         self.presenter = presenter
     }
     
-    private func configSlideShowViewModel() async -> SlideShowViewModel {
-        let photoEntities = await dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase())
+    private func configSlideShowViewModel() -> SlideShowViewModel {
+        let photoEntities = dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase())
         
         var preferenceRepo: PreferenceRepository
         if let slideshowUserDefaults = UserDefaults(suiteName: "slideshow") {
@@ -44,10 +44,8 @@ struct SlideShowRouter: Routing {
     func build() -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)
         let slideShowVC = storyboard.instantiateInitialViewController() as! SlideShowViewController
-        Task {
-            let vm = await configSlideShowViewModel()
-            await slideShowVC.update(viewModel: vm)
-        }
+        let vm = configSlideShowViewModel()
+        slideShowVC.update(viewModel: vm)
         return slideShowVC
     }
     

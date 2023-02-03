@@ -4,10 +4,10 @@ import MEGADomainMock
 import MEGADomain
 @testable import MEGA
 
+@MainActor
 final class AlbumListViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
-    @MainActor
     func testLoadAlbums_onAlbumsLoaded_systemAlbumsTitlesAreUpdatedAndAlbumsAreSortedCorrectly() async throws {
         let favouriteAlbum = AlbumEntity(id: 1, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
@@ -51,7 +51,7 @@ final class AlbumListViewModelTests: XCTestCase {
                 exp.fulfill()
             }.store(in: &subscriptions)
         
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
         wait(for: [exp], timeout: 2.0)
     }
@@ -61,13 +61,12 @@ final class AlbumListViewModelTests: XCTestCase {
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
         XCTAssertTrue(useCase.startMonitoringNodesUpdateCalled == 0)
         XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 0)
-        await sut.loadAlbums()
+        sut.loadAlbums()
         XCTAssertTrue(useCase.startMonitoringNodesUpdateCalled == 1)
         sut.cancelLoading()
         XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 1)
     }
     
-    @MainActor
     func testCreateUserAlbum_shouldCreateUserAlbum() {
         let exp = expectation(description: "should load album at first after creating")
         let useCase = MockAlbumListUseCase()
@@ -86,7 +85,6 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.albums.last?.count, 0)
     }
     
-    @MainActor
     func testCreateUserAlbum_shouldCreateUserAlbumAndInsertBeforeOlderUserAlbums() async throws {
         let newAlbumName = "New Album"
         let existingUserAlbum = AlbumEntity(id: 1, name: "User Album", coverNode: nil,
@@ -109,7 +107,7 @@ final class AlbumListViewModelTests: XCTestCase {
     func testNewAlbumName_whenAlbumContainsNoNewAlbum() async {
         let useCase = MockAlbumListUseCase()
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
     }
@@ -118,7 +116,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
         let useCase = MockAlbumListUseCase(albums: [newAlbum])
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.albums.count, 1)
         XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " \("(1)")")
@@ -128,7 +126,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
         let useCase = MockAlbumListUseCase(albums: [newAlbum])
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
         sut.showCreateAlbumAlert = true
         
@@ -137,55 +135,54 @@ final class AlbumListViewModelTests: XCTestCase {
     
     func testValidateAlbum_whenAlbumNameIsNil_returnsNil() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
-        XCTAssertNil(sut.validateAlbum(name: nil))
+        XCTAssertNil(sut.alertViewModel.validator?(nil))
     }
     
     func testValidateAlbum_whenAlbumNameIsEmpty_returnsNil() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
-        XCTAssertNil(sut.validateAlbum(name: ""))
+        XCTAssertNil(sut.alertViewModel.validator?(""))
     }
     
     func testValidateAlbum_whenAlbumNameIsSpaces_returnsError() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
-        XCTAssertNotNil(sut.validateAlbum(name: "      "))
+        XCTAssertNotNil(sut.alertViewModel.validator?("      "))
     }
     
     func testValidateAlbum_whenAlbumNameIsValidButWithWhiteSpaces_returnsNil() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
-        XCTAssertNil(sut.validateAlbum(name: "  userAlbum    "))
+        XCTAssertNil(sut.alertViewModel.validator?("  userAlbum    "))
     }
     
     func testValidateAlbum_whenAlbumNameIsValid_returnsNil() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
-        XCTAssertNil(sut.validateAlbum(name: "userAlbum"))
+        XCTAssertNil(sut.alertViewModel.validator?("userAlbum"))
     }
     
     func testValidateAlbum_whenAlbumNameContainsInvalidChars_returnsErrorMessage() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
-        XCTAssertNotNil(sut.validateAlbum(name: "userAlbum:/;"))
+        XCTAssertNotNil(sut.alertViewModel.validator?("userAlbum:/;"))
     }
     
     func testValidateAlbum_whenAlbumNameIsSameAsExistingUserAlbum_returnsErrorMessage() async {
         let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: "userAlbum")
         let useCase = MockAlbumListUseCase(albums: [newAlbum])
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.albums.count, 1)
-        XCTAssertNotNil(sut.validateAlbum(name: newAlbum.name))
+        XCTAssertNotNil(sut.alertViewModel.validator?(newAlbum.name))
     }
     
     func testValidateAlbum_whenAlbumNameIsSameAsExistingSystemAlbum_returnsErrorMessage() async {
         let newSysAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: Strings.Localizable.CameraUploads.Albums.Favourites.title, coverNode: NodeEntity(handle: AlbumIdEntity.favourite.rawValue), count: 0, type: .favourite)
         let useCase = MockAlbumListUseCase(albums: [newSysAlbum])
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
-        await sut.loadAlbums()
+        sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.albums.count, 1)
-        XCTAssertNotNil(sut.validateAlbum(name: newSysAlbum.name))
+        XCTAssertNotNil(sut.alertViewModel.validator?(newSysAlbum.name))
     }
     
-    @MainActor
     func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
 
@@ -209,7 +206,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let useCase = MockAlbumListUseCase()
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
         reservedNames.forEach { name in
-            XCTAssertNotNil(sut.validateAlbum(name: name))
+            XCTAssertNotNil(sut.alertViewModel.validator?(name))
         }
     }
     
