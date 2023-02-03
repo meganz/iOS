@@ -50,10 +50,6 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .display(actionType: .mediaDiscovery))
     }
     
-    var filter: CMActionEntity {
-        CMActionEntity(type: .display(actionType: .filter))
-    }
-    
     //MARK: - Sort Actions
     
     var sortNameAscending: CMActionEntity {
@@ -94,6 +90,26 @@ extension ContextMenuBuilder {
     var sortFavourite: CMActionEntity {
         CMActionEntity(type: .sort(actionType: .favouriteAsc),
                        state: currentSortType() == .favouriteAsc ? .on : .off)
+    }
+    
+    //MARK: - Filter Actions
+    var filter: CMActionEntity {
+        CMActionEntity(type: .display(actionType: .filter))
+    }
+    
+    var filterAllMedia: CMActionEntity {
+        CMActionEntity(type: .filter(actionType: .allMedia),
+                       state: currentFilterType() == .allMedia ? .on : .off)
+    }
+    
+    var filterImages: CMActionEntity {
+        CMActionEntity(type: .filter(actionType: .images),
+                       state: currentFilterType() == .images ? .on : .off)
+    }
+    
+    var filterVideos: CMActionEntity {
+        CMActionEntity(type: .filter(actionType: .videos),
+                       state: currentFilterType() == .videos ? .on : .off)
     }
     
     //MARK: - Quick Folder Actions

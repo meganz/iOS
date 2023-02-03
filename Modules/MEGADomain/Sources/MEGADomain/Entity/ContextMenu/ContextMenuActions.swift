@@ -19,6 +19,7 @@ public enum CMElementTypeEntity: Equatable {
     case display(actionType: DisplayActionEntity)
     case quickActions(actionType: QuickActionEntity)
     case sort(actionType: SortOrderEntity)
+    case filter(actionType: FilterEntity)
     case rubbishBin(actionType: RubbishBinActionEntity)
     case chat(actionType: ChatActionEntity)
     case chatStatus(actionType: ChatStatusEntity)

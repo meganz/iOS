@@ -138,17 +138,19 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
-    func testCreateContextMenu_onAlbumContentPage_shouldReturnFourMenuItems() throws {
+    func testCreateContextMenu_onAlbumContentPage_shouldReturnSixMenuItems() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
-                                                                        isAlbum: true))
+                                                                        isUserAlbum: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
         menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
                             CMElementTypeEntity.sort(actionType: .modificationDesc),
                             CMElementTypeEntity.sort(actionType: .modificationAsc),
-                            CMElementTypeEntity.display(actionType: .filter)]
+                            CMElementTypeEntity.filter(actionType: .allMedia),
+                            CMElementTypeEntity.filter(actionType: .images),
+                            CMElementTypeEntity.filter(actionType: .videos)]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }

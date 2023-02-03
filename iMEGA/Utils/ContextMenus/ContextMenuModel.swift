@@ -15,6 +15,7 @@ struct ContextMenuModel {
     var currentChatStatus: String?
     var currentSortType: String?
     var dndRemainingTime: String?
+    var currentFilterType: String?
     
     lazy var data: ContextMenuDataModel? = {
         guard let cmData = dataFor(type: type) else { return nil }

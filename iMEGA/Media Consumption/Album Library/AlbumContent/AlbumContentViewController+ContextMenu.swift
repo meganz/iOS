@@ -7,14 +7,16 @@ extension AlbumContentViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         return CMConfigEntity(
             menuType: .menu(type: .display),
-            sortType: SortOrderEntity.modificationDesc,
-            isAlbum: true
+            sortType: .modificationDesc,
+            filterType: .allMedia,
+            isUserAlbum: true
         )
     }
     
     func contextMenuManagerConfiguration() -> ContextMenuManager {
         ContextMenuManager(
             displayMenuDelegate: self,
+            filterMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
     }
@@ -50,3 +52,9 @@ extension AlbumContentViewController: DisplayMenuDelegate {
     
     func sortMenu(didSelect sortType: SortOrderType) { }
 }
+
+// MARK: - FilterMenuDelegate
+extension AlbumContentViewController: FilterMenuDelegate {
+    func filterMenu(didSelect filterType: FilterType) { }
+}
+

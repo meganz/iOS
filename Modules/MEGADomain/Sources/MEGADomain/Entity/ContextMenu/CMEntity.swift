@@ -10,6 +10,7 @@ public enum CMOptions {
 ///     - displayInline: An option indicating the entity children is displayed inline with its parent entity instead of displaying as a submenu.
 ///     - currentChatStatus: Chat status obtained at the time the menu is created.
 ///     - currentSortType: Sorting type for the current context. It will be different depending on where the current menu is displayed.
+///     - currentFilterType: Filter type for the current context. It will be different depending on where the current menu is displayed.
 ///     - dndRemainingTime: If DND is activated, it will contain the remaining time in the indicated language.
 ///     - children: List of CMElements that compone the entity. Each CMElement can be CMActionEntity representing an action or another CMEntity representing a Menu.
 ///
@@ -18,17 +19,20 @@ public final class CMEntity: CMElement {
     public var children: [CMElement]
     public var currentChatStatus: ChatStatusEntity?
     public var currentSortType: SortOrderEntity?
+    public var currentFilterType: FilterEntity?
     public var dndRemainingTime: String?
     
     public init(type: CMElementTypeEntity = .unknown,
                 displayInline: Bool = false,
                 currentChatStatus: ChatStatusEntity? = nil,
                 currentSortType: SortOrderEntity? = nil,
+                currentFilterType: FilterEntity? = nil,
                 dndRemainingTime: String? = nil,
                 children: [CMElement]) {
         self.displayInline = displayInline
         self.currentChatStatus = currentChatStatus
         self.currentSortType = currentSortType
+        self.currentFilterType = currentFilterType
         self.dndRemainingTime = dndRemainingTime
         self.children = children
         super.init(type: type)
