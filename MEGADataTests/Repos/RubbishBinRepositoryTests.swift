@@ -29,18 +29,9 @@ final class RubbishBinRepositoryTests: XCTestCase {
     }
     
     func test_isSyncDebrisNode() async throws {
-        let areSyncDebrisNodes = await withTaskGroup(of: Bool.self) { group -> Bool in
-            syncDebrisNodes.forEach { node in
-                group.addTask {
-                    let isSyncDebrisNode = self.repo.isSyncDebrisNode(node.toNodeEntity())
-                    return isSyncDebrisNode
-                }
-            }
-            
-            return await group.first { $0 == false } == nil
-        }
-        
-        XCTAssertTrue(areSyncDebrisNodes)
+        XCTAssertTrue(syncDebrisNodes.allSatisfy {
+            self.repo.isSyncDebrisNode($0.toNodeEntity())
+        })
         
         let isNotSyncDebrisNode = repo.isSyncDebrisNode(rubbishBinChildNode.toNodeEntity())
         XCTAssertFalse(isNotSyncDebrisNode)

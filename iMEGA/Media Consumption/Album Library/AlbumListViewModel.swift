@@ -2,6 +2,7 @@ import Combine
 import SwiftUI
 import MEGADomain
 
+@MainActor
 final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var cameraUploadNode: NodeEntity?
     @Published var album: AlbumEntity?
@@ -34,10 +35,26 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         self.featureFlagProvider = featureFlagProvider
         super.init()
         self.alertViewModel.action = { [weak self] newAlbumName in
-            guard let self = self else { return }
-            Task { await self.createUserAlbum(with: newAlbumName) }
+            self?.createUserAlbum(with: newAlbumName)
         }
-        self.alertViewModel.validator = validateAlbum
+        
+        self.alertViewModel.validator = { name in
+            guard let name = name, name.isNotEmpty else { return nil }
+            guard let name = name.trim, name.isNotEmpty else {
+                return TextFieldAlertError(title: alertViewModel.title, description: "")
+            }
+            
+            if name.mnz_containsInvalidChars() {
+                return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
+            }
+            if self.isReservedAlbumName(name: name) {
+                return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.albumNameNotAllowed, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
+            }
+            if self.albums.first(where: { $0.name == name }) != nil {
+                return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.userAlbumExists, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
+            }
+            return nil
+        }
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -54,7 +71,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         )
     }
     
-    @MainActor
     func loadAlbums() {
         loadAllAlbums()
         usecase.startMonitoringNodesUpdate { [weak self] in
@@ -68,7 +84,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         createAlbumTask?.cancel()
     }
     
-    @MainActor
     func createUserAlbum(with name: String?) {
         guard let name = name else { return }
         guard name.isNotEmpty else {
@@ -95,7 +110,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     // MARK: - Private
-    @MainActor
     private func loadAllAlbums() {
         albumLoadingTask = Task {
             async let systemAlbums = systemAlbums()
@@ -148,25 +162,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         return newAlbumName
     }
     
-    func validateAlbum(name: String?) -> TextFieldAlertError? {
-        guard let name = name, name.isNotEmpty else { return nil }
-        guard let name = name.trim, name.isNotEmpty else {
-            return TextFieldAlertError(title: alertViewModel.title, description: "")
-        }
-        
-        if name.mnz_containsInvalidChars() {
-            return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
-        }
-        if isReservedAlbumName(name: name) {
-           return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.albumNameNotAllowed, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
-        }
-        if self.albums.first(where: { $0.name == name }) != nil {
-            return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.userAlbumExists, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
-        }
-        return nil
-    }
-    
-    @MainActor
     func onAlbumContentAdded(_ msg: String, _ album: AlbumEntity) {
         self.album = album
         albumCreationAlertMsg = msg

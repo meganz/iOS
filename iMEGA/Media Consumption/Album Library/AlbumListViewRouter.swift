@@ -20,6 +20,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return AlbumContainerWrapper(album: album, messageForNewAlbum: messageForNewAlbum)
     }
     
+    @MainActor
     func build() -> UIViewController {
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(

@@ -187,8 +187,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         if mediaUseCase.isGifImage(node.name) {
             return await downloadGifNode(nodeEntity: node)
         } else {
-            async let photo = try? thumbnailUseCase.loadThumbnail(for: node, type: .preview)
-            if let photoPath = await photo?.url.path {
+            let photo = try? await thumbnailUseCase.loadThumbnail(for: node, type: .preview)
+            if let photoPath = photo?.url.path {
                 return slideShowMediaEntity(for: node, with: photoPath)
             }
         }
