@@ -29,6 +29,10 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
             }
     }
     
+    public func scheduledMeeting(for scheduledMeetingId: ChatIdEntity, chatId: ChatIdEntity) -> ScheduledMeetingEntity? {
+        chatSDK.scheduledMeeting(chatId, scheduledId: scheduledMeetingId).toScheduledMeetingEntity()
+    }
+    
     public func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity] {
         try Task.checkCancellation()
         return try await withCheckedThrowingContinuation { continuation in

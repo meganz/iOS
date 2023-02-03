@@ -198,7 +198,7 @@
     }
 }
 
-- (void)configureContentLabel:(UILabel *)contentLabel forAlert:(MEGAUserAlert *)userAlert {
+- (void)configureContentLabel:(UILabel *)contentLabel forAlert:(MEGAUserAlert *)userAlert indexPath:(NSIndexPath *)indexPath {
     UIFont *boldFont = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightBold];
     
     switch (userAlert.type) {
@@ -360,11 +360,11 @@
             break;
             
         case MEGAUserAlertTypeScheduledMeetingNew:
-            contentLabel.attributedText = [self contentForNewScheduledMeetingWithAlert:userAlert];
+            contentLabel.attributedText = [self contentForNewScheduledMeetingWithAlert:userAlert indexPath:indexPath];
             break;
             
         case MEGAUserAlertTypeScheduledMeetingUpdated:
-            contentLabel.attributedText = [self contentForUpdatedScheduledMeetingWithAlert:userAlert];
+            contentLabel.attributedText = [self contentForUpdatedScheduledMeetingWithAlert:userAlert indexPath:indexPath];
             break;
             
         default:
@@ -402,7 +402,7 @@
         cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
-    [self configureContentLabel:cell.contentLabel forAlert:userAlert];
+    [self configureContentLabel:cell.contentLabel forAlert:userAlert indexPath:indexPath];
     cell.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.dateLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[userAlert timestampAtIndex:0]]];
     
