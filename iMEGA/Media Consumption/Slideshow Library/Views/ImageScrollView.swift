@@ -134,6 +134,8 @@ final class ImageScrollView: UIScrollView {
         }
         configureAfterDisplay()
         configureImageForSize(image.size)
+        adjustFrameToCenter()
+        setNeedsDisplay()
     }
     
     private func configureAfterDisplay() {
@@ -216,10 +218,15 @@ final class ImageScrollView: UIScrollView {
         return zoomRect
     }
     
+    private func updateUIForOrientationChange() {
+        adjustFrameToCenter()
+        configureImageForSize(imageSize)
+        setNeedsDisplay()
+    }
+    
     @objc func changeOrientationNotification() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.configureImageForSize(self.imageSize)
-            self.adjustFrameToCenter()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.updateUIForOrientationChange()
         }
     }
 }
