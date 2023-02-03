@@ -26,7 +26,7 @@ pipeline {
             steps {
                 gitlabCommitStatus(name: 'Bundle install') {
                     injectEnvironments({
-                        sh "bundle update json && bundle install"
+                        sh "bundle install"
                     })
                 }
             }
