@@ -18,7 +18,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
     
     private var normalNavigationTitle: String {
-        "\(Strings.Localizable.CameraUploads.Albums.Create.addItemsTo) \"\(album.name)\""
+        Strings.Localizable.CameraUploads.Albums.Create.addItemsTo("\"\(album.name)\"")
     }
     
     @MainActor

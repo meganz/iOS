@@ -542,8 +542,8 @@
 "cameraUploads.albums.create.alert.enterDifferentName"="Enter a different name.";
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="Enter a new name.";
-/* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to";
+/* Used in add content album view. The %@ placeholder replaced by the folder name*/
+"cameraUploads.albums.create.addItemsTo"="Add items to %@";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */

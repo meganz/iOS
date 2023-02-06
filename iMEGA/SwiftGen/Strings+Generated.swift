@@ -2905,8 +2905,10 @@ public enum Strings {
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
         public enum Create {
-          /// Add items to
-          public static let addItemsTo = Strings.tr("Localizable", "cameraUploads.albums.create.addItemsTo")
+          /// Add items to %@
+          public static func addItemsTo(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "cameraUploads.albums.create.addItemsTo", String(describing: p1))
+          }
           public enum Alert {
             /// This album name is not allowed
             public static let albumNameNotAllowed = Strings.tr("Localizable", "cameraUploads.albums.create.alert.albumNameNotAllowed")
