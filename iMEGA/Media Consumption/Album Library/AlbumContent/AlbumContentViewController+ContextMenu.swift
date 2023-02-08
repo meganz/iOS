@@ -4,12 +4,13 @@ import MEGAUIKit
 import MEGADomain
 
 extension AlbumContentViewController {
-    private func contextMenuConfiguration() -> CMConfigEntity? {
+    private func contextMenuConfiguration(_ filterEnabled: Bool = true) -> CMConfigEntity? {
         return CMConfigEntity(
             menuType: .menu(type: .display),
             sortType: .modificationDesc,
             filterType: .allMedia,
-            isUserAlbum: true
+            isAlbum: true,
+            isFilterEnabled: filterEnabled
         )
     }
     
@@ -21,8 +22,9 @@ extension AlbumContentViewController {
         )
     }
 
-    private func makeContextMenuBarButton() -> UIBarButtonItem? {
-        guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
+    private func makeContextMenuBarButton(filterEnabled: Bool = true) -> UIBarButtonItem? {
+        guard  let config = contextMenuConfiguration(filterEnabled),
+               let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
         return UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, menu: menu)
     }
     
@@ -34,10 +36,12 @@ extension AlbumContentViewController {
                 action: #selector(cancelButtonPressed(_:))
             )
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
-        } else if viewModel.isUserAlbum {
-            navigationItem.rightBarButtonItem = makeContextMenuBarButton()
         } else {
-            navigationItem.rightBarButtonItem = rightBarButtonItem
+            if FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu) {
+                navigationItem.rightBarButtonItem = makeContextMenuBarButton(filterEnabled: viewModel.isFilterEnabled)
+            } else {
+                navigationItem.rightBarButtonItem = rightBarButtonItem
+            }
         }
     }
 }

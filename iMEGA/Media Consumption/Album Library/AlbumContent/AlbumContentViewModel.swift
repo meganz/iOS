@@ -105,11 +105,7 @@ final class AlbumContentViewModel: ViewModelType {
         album.type == .favourite
     }
     
-    var isSystemAlbum: Bool {
-        album.systemAlbum
-    }
-    
-    var isUserAlbum: Bool {
-        album.type == .user
+    var isFilterEnabled: Bool {
+        album.type == .user || isFavouriteAlbum
     }
 }
