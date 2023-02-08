@@ -47,18 +47,7 @@ final class MeetingInfoViewModel: ObservableObject {
         scheduledMeeting.title
     }
     
-    var subtitle: String {
-        if scheduledMeeting.endDate < Date(), let chatRoom {
-            return Strings.Localizable.Meetings.Panel.participantsCount(chatRoom.peers.count + 1)
-        } else {
-            var dateFormatter = DateFormatter.timeShort()
-            let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
-            let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
-            dateFormatter = DateFormatter.dateMedium()
-            let fullDate = dateFormatter.localisedString(from: scheduledMeeting.startDate)
-            return "\(fullDate) · \(start) - \(end)"
-        }
-    }
+    @Published var subtitle: String = ""
     
     var description: String {
         scheduledMeeting.description
@@ -95,7 +84,7 @@ final class MeetingInfoViewModel: ObservableObject {
         } else {
             self.chatRoomAvatarViewModel = nil
         }
-
+        self.subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
         initSubscriptions()
         fetchInitialValues()
     }
@@ -110,7 +99,7 @@ final class MeetingInfoViewModel: ObservableObject {
         if chatRoom.ownPrivilege == .moderator {
             chatRoomLinkViewModel = chatRoomLinkViewModel(for: chatRoom)
         } else {
-            Task {
+            Task { @MainActor in
                 do {
                     _ = try await chatLinkUseCase.queryChatLink(for: chatRoom)
                     chatRoomLinkViewModel = chatRoomLinkViewModel(for: chatRoom)
