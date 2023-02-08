@@ -5010,6 +5010,10 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
       }
       public enum Scheduled {
+        /// %@, %@ from %@ to %@
+        public static func oneOff(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+          return Strings.tr("Localizable", "meetings.scheduled.oneOff", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
+        }
         public enum ButtonOverlay {
           /// Join meeting
           public static let joinMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.joinMeeting")
@@ -5025,6 +5029,16 @@ public enum Strings {
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
         }
         public enum Recurring {
+          public enum Daily {
+            /// Everyday, effective %@ from %@ to %@
+            public static func forever(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever", String(describing: p1), String(describing: p2), String(describing: p3))
+            }
+            /// Everyday, effective %@ until %@ from %@ to %@
+            public static func until(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
+            }
+          }
           public enum Frequency {
             /// Occurs daily
             public static let daily = Strings.tr("Localizable", "meetings.scheduled.recurring.frequency.daily")
@@ -5033,10 +5047,358 @@ public enum Strings {
             /// Occurs weekly
             public static let weekly = Strings.tr("Localizable", "meetings.scheduled.recurring.frequency.weekly")
           }
+          public enum Monthly {
+            public enum OrdinalDay {
+              public enum Forever {
+                public enum Friday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourt(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third", p1)
+                  }
+                }
+                public enum Monday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third", p1)
+                  }
+                }
+                public enum Saturday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourt(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third", p1)
+                  }
+                }
+                public enum Sunday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourt(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third", p1)
+                  }
+                }
+                public enum Thursday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourt(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third", p1)
+                  }
+                }
+                public enum Tuesday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourt(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", p1)
+                  }
+                }
+                public enum Wednesday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourt(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third", p1)
+                  }
+                }
+              }
+              public enum Until {
+                public enum Friday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third", p1)
+                  }
+                }
+                public enum Monday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third", p1)
+                  }
+                }
+                public enum Saturday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third", p1)
+                  }
+                }
+                public enum Sunday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third", p1)
+                  }
+                }
+                public enum Thursday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third", p1)
+                  }
+                }
+                public enum Tuesday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", p1)
+                  }
+                }
+                public enum Wednesday {
+                  /// Plural format key: "%#@interval@"
+                  public static func fifth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func first(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func second(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second", p1)
+                  }
+                  /// Plural format key: "%#@interval@"
+                  public static func third(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third", p1)
+                  }
+                }
+              }
+            }
+            public enum SingleDay {
+              /// Plural format key: "%#@interval@"
+              public static func forever(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.singleDay.forever", p1)
+              }
+              /// Plural format key: "%#@interval@"
+              public static func until(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.singleDay.until", p1)
+              }
+            }
+          }
           public enum Occurrences {
             public enum List {
               /// See more occurrences
               public static let seeMoreOccurrences = Strings.tr("Localizable", "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences")
+            }
+          }
+          public enum Weekly {
+            public enum OneDay {
+              /// Plural format key: "%#@interval@"
+              public static func forever(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.recurring.weekly.oneDay.forever", p1)
+              }
+              /// Plural format key: "%#@interval@"
+              public static func until(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.recurring.weekly.oneDay.until", p1)
+              }
+            }
+            public enum SeveralDays {
+              /// Plural format key: "%#@interval@"
+              public static func forever(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.recurring.weekly.severalDays.forever", p1)
+              }
+              /// Plural format key: "%#@interval@"
+              public static func until(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.recurring.weekly.severalDays.until", p1)
+              }
             }
           }
         }

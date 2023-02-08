@@ -50,4 +50,60 @@ public struct ScheduledMeetingEntity {
         self.overrides = overrides
         self.rules = rules
     }
+    
+    public var weekday: Weekday? {
+        switch self.rules.monthWeekDayList?.first?[1] {
+        case 1:
+            return .monday
+        case 2:
+            return .tuesday
+        case 3:
+            return .wednesday
+        case 4:
+            return .thursday
+        case 5:
+            return .friday
+        case 6:
+            return .saturday
+        case 7:
+            return .sunday
+        default:
+            return nil
+        }
+    }
+    
+    public var weekOfMonth: WeekOfMonth? {
+        switch self.rules.monthWeekDayList?.first?[0] {
+        case 1:
+            return .first
+        case 2:
+            return .second
+        case 3:
+            return .third
+        case 4:
+            return .fourth
+        case 5:
+            return .fifth
+        default:
+            return nil
+        }
+    }
+    
+    public enum Weekday {
+        case monday
+        case tuesday
+        case wednesday
+        case thursday
+        case friday
+        case saturday
+        case sunday
+    }
+    
+    public enum WeekOfMonth {
+        case first
+        case second
+        case third
+        case fourth
+        case fifth
+    }
 }

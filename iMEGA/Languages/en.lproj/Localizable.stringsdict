@@ -1,678 +1,1893 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>nameCollision.applyToAll</key>
     <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Apply to the duplicate</string>
-        <key>other</key>
-        <string>Apply to all %d duplicates</string>
-      </dict>
+        <key>nameCollision.applyToAll</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@count@</string>
+            <key>count</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Apply to the duplicate</string>
+                <key>other</key>
+                <string>Apply to all %d duplicates</string>
+            </dict>
+        </dict>
+        <key>chat.manageHistory.clearing.custom.option.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>hour</string>
+                <key>other</key>
+                <string>hours</string>
+            </dict>
+        </dict>
+        <key>chat.manageHistory.clearing.custom.option.day</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@day@</string>
+            <key>day</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>day</string>
+                <key>other</key>
+                <string>days</string>
+            </dict>
+        </dict>
+        <key>chat.manageHistory.clearing.custom.option.week</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@week@</string>
+            <key>week</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>week</string>
+                <key>other</key>
+                <string>weeks</string>
+            </dict>
+        </dict>
+        <key>chat.manageHistory.clearing.custom.option.month</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@month@</string>
+            <key>month</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>month</string>
+                <key>other</key>
+                <string>months</string>
+            </dict>
+        </dict>
+        <key>chat.manageHistory.clearing.custom.option.year</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@year@</string>
+            <key>year</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>year</string>
+                <key>other</key>
+                <string>years</string>
+            </dict>
+        </dict>
+        <key>general.format.retentionPeriod.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>1 hour</string>
+                <key>other</key>
+                <string>%d hours</string>
+            </dict>
+        </dict>
+        <key>general.format.retentionPeriod.day</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@day@</string>
+            <key>day</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>1 day</string>
+                <key>other</key>
+                <string>%d days</string>
+            </dict>
+        </dict>
+        <key>general.format.retentionPeriod.week</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@week@</string>
+            <key>week</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>1 week</string>
+                <key>other</key>
+                <string>%d weeks</string>
+            </dict>
+        </dict>
+        <key>general.format.retentionPeriod.month</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@month@</string>
+            <key>month</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>1 month</string>
+                <key>other</key>
+                <string>%d months</string>
+            </dict>
+        </dict>
+        <key>general.format.retentionPeriod.year</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@year@</string>
+            <key>year</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>1 year</string>
+                <key>other</key>
+                <string>%d years</string>
+            </dict>
+        </dict>
+        <key>general.format.count.file</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@file@</string>
+            <key>file</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d file</string>
+                <key>other</key>
+                <string>%d files</string>
+            </dict>
+        </dict>
+        <key>general.format.count.folder</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@folder@</string>
+            <key>folder</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d folder</string>
+                <key>other</key>
+                <string>%d folders</string>
+            </dict>
+        </dict>
+        <key>general.format.count.folderAndFile.folder</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@folder@</string>
+            <key>folder</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d folder</string>
+                <key>other</key>
+                <string>%d folders</string>
+            </dict>
+        </dict>
+        <key>general.format.count.folderAndFile.file</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@file@</string>
+            <key>file</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>• %d file</string>
+                <key>other</key>
+                <string>• %d files</string>
+            </dict>
+        </dict>
+        <key>general.format.rubbishBin.days</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@days@</string>
+            <key>days</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>day</string>
+                <key>other</key>
+                <string>days</string>
+            </dict>
+        </dict>
+        <key>recents.section.thumbnail.count.image</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@image@</string>
+            <key>image</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d image</string>
+                <key>other</key>
+                <string>%d images</string>
+            </dict>
+        </dict>
+        <key>recents.section.thumbnail.count.video</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@video@</string>
+            <key>video</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d video</string>
+                <key>other</key>
+                <string>%d videos</string>
+            </dict>
+        </dict>
+        <key>recents.section.thumbnail.count.imageAndVideo.image</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@image@</string>
+            <key>image</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d image</string>
+                <key>other</key>
+                <string>%d images</string>
+            </dict>
+        </dict>
+        <key>recents.section.thumbnail.count.imageAndVideo.video</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@video@</string>
+            <key>video</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>and %d video</string>
+                <key>other</key>
+                <string>and %d videos</string>
+            </dict>
+        </dict>
+        <key>media.photo.browser.indexOfTotalFiles</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@total@</string>
+            <key>total</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>[A] of %d file</string>
+                <key>other</key>
+                <string>[A] of %d files</string>
+            </dict>
+        </dict>
+        <key>extensions.share.destination.section.files</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@file@</string>
+            <key>file</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d file</string>
+                <key>other</key>
+                <string>%d files</string>
+            </dict>
+        </dict>
+        <key>general.menuAction.removeLink.title</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@link@</string>
+            <key>link</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Remove link</string>
+                <key>other</key>
+                <string>Remove links</string>
+            </dict>
+        </dict>
+        <key>general.menuAction.removeLink.message.success</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@link@</string>
+            <key>link</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Link removed</string>
+                <key>other</key>
+                <string>Links removed</string>
+            </dict>
+        </dict>
+        <key>general.menuAction.shareFolder.title</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@folder@</string>
+            <key>folder</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Share folder</string>
+                <key>other</key>
+                <string>Share folders</string>
+            </dict>
+        </dict>
+        <key>general.menuAction.shareLink.title</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@link@</string>
+            <key>link</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Share link</string>
+                <key>other</key>
+                <string>Share links</string>
+            </dict>
+        </dict>
+        <key>general.menuAction.manageLink.title</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@link@</string>
+            <key>link</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Manage link</string>
+                <key>other</key>
+                <string>Manage links</string>
+            </dict>
+        </dict>
+        <key>general.menuAction.exportFile.title</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@file@</string>
+            <key>file</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Export file</string>
+                <key>other</key>
+                <string>Export files</string>
+            </dict>
+        </dict>
+        <key>call.duration.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@second@</string>
+            <key>second</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d second</string>
+                <key>other</key>
+                <string>%d seconds</string>
+            </dict>
+        </dict>
+        <key>call.duration.minute</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minute@</string>
+            <key>minute</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d minute</string>
+                <key>other</key>
+                <string>%d minutes</string>
+            </dict>
+        </dict>
+        <key>call.duration.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d hour</string>
+                <key>other</key>
+                <string>%d hours</string>
+            </dict>
+        </dict>
+        <key>call.duration.hourAndMinute.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d hour</string>
+                <key>other</key>
+                <string>%d hours</string>
+            </dict>
+        </dict>
+        <key>call.duration.hourAndMinute.minute</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minute@</string>
+            <key>minute</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>, %d minute</string>
+                <key>other</key>
+                <string>, %d minutes</string>
+            </dict>
+        </dict>
+        <key>dnd.duration.minute</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minute@</string>
+            <key>minute</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d minute</string>
+                <key>other</key>
+                <string>%d minutes</string>
+            </dict>
+        </dict>
+        <key>dnd.duration.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d hour</string>
+                <key>other</key>
+                <string>%d hours</string>
+            </dict>
+        </dict>
+        <key>chat.status.duration.minute</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minute@</string>
+            <key>minute</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d minute</string>
+                <key>other</key>
+                <string>%d minutes</string>
+            </dict>
+        </dict>
+        <key>mybackups.share.folder.warning.message</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@share@</string>
+            <key>share</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.</string>
+                <key>other</key>
+                <string>These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.</string>
+            </dict>
+        </dict>
+        <key>chat.autoAway.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d hour</string>
+                <key>other</key>
+                <string>%d hours</string>
+            </dict>
+        </dict>
+        <key>chat.autoAway.minute</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minute@</string>
+            <key>minute</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>%d minute</string>
+                <key>other</key>
+                <string>%d minutes</string>
+            </dict>
+        </dict>
+        <key>chat.autoAway.label.hour</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@hour@</string>
+            <key>hour</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>hour</string>
+                <key>other</key>
+                <string>hours</string>
+            </dict>
+        </dict>
+        <key>chat.autoAway.label.minute</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@minute@</string>
+            <key>minute</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>minute</string>
+                <key>other</key>
+                <string>minutes</string>
+            </dict>
+        </dict>
+        <key>cameraUploads.albums.addedItemTo</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@count@</string>
+            <key>count</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Added %d item to "[A]"</string>
+                <key>other</key>
+                <string>Added %d items to "[A]"</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>[WeekDay], every week, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>[WeekDay], every %d weeks, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>[WeekDay], every week, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>[WeekDay], every %d weeks, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>[WeekDaysList] and [LastWeekDay], every week, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>[WeekDaysList] and [LastWeekDay], every %d weeks, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>[WeekDaysList] and [LastWeekDay], every week, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>[WeekDaysList] and [LastWeekDay], every %d weeks, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Day [MonthDay] of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Day [MonthDay] of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Day [MonthDay] of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Day [MonthDay] of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Monday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Monday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Monday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Monday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Monday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Monday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Monday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Monday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Monday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Monday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Monday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Monday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Monday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Monday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Monday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Monday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Monday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Monday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Monday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Monday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Tuesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Tuesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Tuesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Tuesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Tuesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Tuesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Tuesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Tuesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Tuesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Tuesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Tuesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Tuesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Tuesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Tuesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Tuesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Tuesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Tuesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Tuesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Tuesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Tuesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Wednesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Wednesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Wednesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Wednesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Wednesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Wednesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Wednesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Wednesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Wednesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Wednesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Wednesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Wednesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Wednesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Wednesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Wednesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Wednesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Wednesday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Wednesday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Wednesday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Wednesday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Thursday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Thursday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Thursday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Thursday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Thursday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Thursday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Thursday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Thursday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Thursday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Thursday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Thursday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Thursday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Thursday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Thursday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Thursday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Thursday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Thursday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Thursday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Thursday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Thursday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Friday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Friday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Friday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Friday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Friday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Friday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Friday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Friday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Friday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Friday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Friday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Friday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Friday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Friday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Friday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Friday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Friday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Friday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Friday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Friday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Saturday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Saturday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string><key>one</key>
+                <string>First Saturday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Saturday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Saturday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Saturday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Saturday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Saturday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Saturday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Saturday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Saturday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Saturday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Saturday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Saturday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Saturday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Saturday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Saturday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Saturday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Saturday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Saturday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Sunday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Sunday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>First Sunday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>First Sunday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Sunday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Sunday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Second Sunday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Second Sunday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Sunday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Sunday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Third Sunday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Third Sunday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Sunday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Sunday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fourth Sunday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fourth Sunday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Sunday of every month, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Sunday of every %d months, effective [StartDate] until [UntilDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
+        <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@interval@</string>
+            <key>interval</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Fifth Sunday of every month, effective [StartDate] from [StartTime] to [EndTime]</string>
+                <key>other</key>
+                <string>Fifth Sunday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
+            </dict>
+        </dict>
     </dict>
-    <key>chat.manageHistory.clearing.custom.option.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>hour</string>
-        <key>other</key>
-        <string>hours</string>
-      </dict>
-    </dict>
-    <key>chat.manageHistory.clearing.custom.option.day</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@day@</string>
-      <key>day</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>day</string>
-        <key>other</key>
-        <string>days</string>
-      </dict>
-    </dict>
-    <key>chat.manageHistory.clearing.custom.option.week</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@week@</string>
-      <key>week</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>week</string>
-        <key>other</key>
-        <string>weeks</string>
-      </dict>
-    </dict>
-    <key>chat.manageHistory.clearing.custom.option.month</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@month@</string>
-      <key>month</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>month</string>
-        <key>other</key>
-        <string>months</string>
-      </dict>
-    </dict>
-    <key>chat.manageHistory.clearing.custom.option.year</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@year@</string>
-      <key>year</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>year</string>
-        <key>other</key>
-        <string>years</string>
-      </dict>
-    </dict>
-    <key>general.format.retentionPeriod.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>1 hour</string>
-        <key>other</key>
-        <string>%d hours</string>
-      </dict>
-    </dict>
-    <key>general.format.retentionPeriod.day</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@day@</string>
-      <key>day</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>1 day</string>
-        <key>other</key>
-        <string>%d days</string>
-      </dict>
-    </dict>
-    <key>general.format.retentionPeriod.week</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@week@</string>
-      <key>week</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>1 week</string>
-        <key>other</key>
-        <string>%d weeks</string>
-      </dict>
-    </dict>
-    <key>general.format.retentionPeriod.month</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@month@</string>
-      <key>month</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>1 month</string>
-        <key>other</key>
-        <string>%d months</string>
-      </dict>
-    </dict>
-    <key>general.format.retentionPeriod.year</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@year@</string>
-      <key>year</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>1 year</string>
-        <key>other</key>
-        <string>%d years</string>
-      </dict>
-    </dict>
-    <key>general.format.count.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@file@</string>
-      <key>file</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d file</string>
-        <key>other</key>
-        <string>%d files</string>
-      </dict>
-    </dict>
-    <key>general.format.count.folder</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folder@</string>
-      <key>folder</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d folder</string>
-        <key>other</key>
-        <string>%d folders</string>
-      </dict>
-    </dict>
-    <key>general.format.count.folderAndFile.folder</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folder@</string>
-      <key>folder</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d folder</string>
-        <key>other</key>
-        <string>%d folders</string>
-      </dict>
-    </dict>
-    <key>general.format.count.folderAndFile.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@file@</string>
-      <key>file</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>• %d file</string>
-        <key>other</key>
-        <string>• %d files</string>
-      </dict>
-    </dict>
-    <key>general.format.rubbishBin.days</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@days@</string>
-      <key>days</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>day</string>
-        <key>other</key>
-        <string>days</string>
-      </dict>
-    </dict>
-    <key>recents.section.thumbnail.count.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@image@</string>
-      <key>image</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d image</string>
-        <key>other</key>
-        <string>%d images</string>
-      </dict>
-    </dict>
-    <key>recents.section.thumbnail.count.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@video@</string>
-      <key>video</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d video</string>
-        <key>other</key>
-        <string>%d videos</string>
-      </dict>
-    </dict>
-    <key>recents.section.thumbnail.count.imageAndVideo.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@image@</string>
-      <key>image</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d image</string>
-        <key>other</key>
-        <string>%d images</string>
-      </dict>
-    </dict>
-    <key>recents.section.thumbnail.count.imageAndVideo.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@video@</string>
-      <key>video</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>and %d video</string>
-        <key>other</key>
-        <string>and %d videos</string>
-      </dict>
-    </dict>
-    <key>media.photo.browser.indexOfTotalFiles</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@total@</string>
-      <key>total</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>[A] of %d file</string>
-        <key>other</key>
-        <string>[A] of %d files</string>
-      </dict>
-    </dict>
-    <key>extensions.share.destination.section.files</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@file@</string>
-      <key>file</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d file</string>
-        <key>other</key>
-        <string>%d files</string>
-      </dict>
-    </dict>
-    <key>general.menuAction.removeLink.title</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@link@</string>
-      <key>link</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Remove link</string>
-        <key>other</key>
-        <string>Remove links</string>
-      </dict>
-    </dict>
-    <key>general.menuAction.removeLink.message.success</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@link@</string>
-      <key>link</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Link removed</string>
-        <key>other</key>
-        <string>Links removed</string>
-      </dict>
-    </dict>
-    <key>general.menuAction.shareFolder.title</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@folder@</string>
-      <key>folder</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Share folder</string>
-        <key>other</key>
-        <string>Share folders</string>
-      </dict>
-    </dict>
-    <key>general.menuAction.shareLink.title</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@link@</string>
-      <key>link</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Share link</string>
-        <key>other</key>
-        <string>Share links</string>
-      </dict>
-    </dict>
-    <key>general.menuAction.manageLink.title</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@link@</string>
-      <key>link</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Manage link</string>
-        <key>other</key>
-        <string>Manage links</string>
-      </dict>
-    </dict>
-    <key>general.menuAction.exportFile.title</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@file@</string>
-      <key>file</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Export file</string>
-        <key>other</key>
-        <string>Export files</string>
-      </dict>
-    </dict>
-    <key>call.duration.second</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@second@</string>
-      <key>second</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d second</string>
-        <key>other</key>
-        <string>%d seconds</string>
-      </dict>
-    </dict>
-    <key>call.duration.minute</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@minute@</string>
-      <key>minute</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d minute</string>
-        <key>other</key>
-        <string>%d minutes</string>
-      </dict>
-    </dict>
-    <key>call.duration.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d hour</string>
-        <key>other</key>
-        <string>%d hours</string>
-      </dict>
-    </dict>
-    <key>call.duration.hourAndMinute.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d hour</string>
-        <key>other</key>
-        <string>%d hours</string>
-      </dict>
-    </dict>
-    <key>call.duration.hourAndMinute.minute</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@minute@</string>
-      <key>minute</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>, %d minute</string>
-        <key>other</key>
-        <string>, %d minutes</string>
-      </dict>
-    </dict>
-    <key>dnd.duration.minute</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@minute@</string>
-      <key>minute</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d minute</string>
-        <key>other</key>
-        <string>%d minutes</string>
-      </dict>
-    </dict>
-    <key>dnd.duration.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d hour</string>
-        <key>other</key>
-        <string>%d hours</string>
-      </dict>
-    </dict>
-    <key>chat.status.duration.minute</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@minute@</string>
-      <key>minute</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d minute</string>
-        <key>other</key>
-        <string>%d minutes</string>
-      </dict>
-    </dict>
-    <key>mybackups.share.folder.warning.message</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@share@</string>
-      <key>share</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.</string>
-        <key>other</key>
-        <string>These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.</string>
-      </dict>
-    </dict>
-    <key>chat.autoAway.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d hour</string>
-        <key>other</key>
-        <string>%d hours</string>
-      </dict>
-    </dict>
-    <key>chat.autoAway.minute</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@minute@</string>
-      <key>minute</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>%d minute</string>
-        <key>other</key>
-        <string>%d minutes</string>
-      </dict>
-    </dict>
-    <key>chat.autoAway.label.hour</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@hour@</string>
-      <key>hour</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>hour</string>
-        <key>other</key>
-        <string>hours</string>
-      </dict>
-    </dict>
-    <key>chat.autoAway.label.minute</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@minute@</string>
-      <key>minute</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>minute</string>
-        <key>other</key>
-        <string>minutes</string>
-      </dict>
-    </dict>
-    <key>cameraUploads.albums.addedItemTo</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Added %d item to "[A]"</string>
-        <key>other</key>
-        <string>Added %d items to "[A]"</string>
-      </dict>
-    </dict>
-  </dict>
 </plist>
