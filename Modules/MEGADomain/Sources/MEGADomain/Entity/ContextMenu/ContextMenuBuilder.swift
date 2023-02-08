@@ -18,7 +18,7 @@ public final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
-    private var isUserAlbum: Bool = false
+    private var isAlbum: Bool = false
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
@@ -133,8 +133,8 @@ public final class ContextMenuBuilder {
         return self
     }
     
-    public func setIsUserAlbum(_ isUserAlbum: Bool) -> ContextMenuBuilder {
-        self.isUserAlbum = isUserAlbum
+    public func setIsAlbum(_ isAlbum: Bool) -> ContextMenuBuilder {
+        self.isAlbum = isAlbum
         return self
     }
     
@@ -317,9 +317,7 @@ public final class ContextMenuBuilder {
         } else {
             var sortMenuActions = [sortNameAscending, sortNameDescending]
                     
-            if isCameraUploadExplorer {
-                sortMenuActions = [sortNewest, sortOldest]
-            } else if isUserAlbum {
+            if isCameraUploadExplorer || isAlbum {
                 sortMenuActions = [sortNewest, sortOldest]
             } else if !isSharedItems {
                 sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])
@@ -337,7 +335,7 @@ public final class ContextMenuBuilder {
     }
     
     private func filterMenu() -> CMEntity {
-        if isUserAlbum {
+        if isAlbum {
             return CMEntity(type: .display(actionType: .filter),
                             currentFilterType: filterType,
                             children: [filterAllMedia, filterImages, filterVideos])
@@ -363,8 +361,11 @@ public final class ContextMenuBuilder {
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }
-        } else if isUserAlbum {
-            displayActionsMenuChildren = [selectMenu(), sortMenu(), filterMenu()]
+        } else if isAlbum {
+            displayActionsMenuChildren = [selectMenu(), sortMenu()]
+            if isFilterEnabled {
+                displayActionsMenuChildren.append(filterMenu())
+            }
         } else {
             let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
             displayActionsMenuChildren.append(contentsOf: menu)

@@ -24,7 +24,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .setIsAudiosExplorer(config.isAudiosExplorer)
                         .setIsVideosExplorer(config.isVideosExplorer)
                         .setIsCameraUploadExplorer(config.isCameraUploadExplorer)
-                        .setIsUserAlbum(config.isUserAlbum)
+                        .setIsAlbum(config.isAlbum)
                         .setIsFilterEnabled(config.isFilterEnabled)
                         .setIsHome(config.isHome)
                         .setShowMediaDiscovery(config.showMediaDiscovery)
