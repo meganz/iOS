@@ -12,10 +12,11 @@ final class AlbumContentPickerViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     var photosLoadingTask: Task<Void, Never>?
     
-    @Published var photoSourceLocation: PhotosFilterLocation = .allLocations
+    @Published private(set) var photoSourceLocation: PhotosFilterLocation = .allLocations
     @Published var navigationTitle: String = ""
     @Published var isDismiss = false
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
+    @Published var shouldRemoveFilter = true
     
     private var normalNavigationTitle: String {
         Strings.Localizable.CameraUploads.Albums.Create.addItemsTo(album.name)
@@ -84,24 +85,24 @@ final class AlbumContentPickerViewModel: ObservableObject {
             .assign(to: &$navigationTitle)
         
         photoLibraryContentViewModel.filterViewModel.$appliedFilterLocation
-            .dropFirst()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$photoSourceLocation)
-        
-        $photoSourceLocation
             .removeDuplicates()
-            .sink { [weak self] _ in
-                self?.loadPhotos()
+            .sink { [weak self] appliedPhotoFilterLocation in
+                self?.loadPhotos(forPhotoLocation: appliedPhotoFilterLocation)
             }
             .store(in: &subscriptions)
     }
     
-    private func loadPhotos() {
-        photosLoadingTask = Task(priority: .userInitiated) {
+    private func loadPhotos(forPhotoLocation filterLocation: PhotosFilterLocation) {
+        photosLoadingTask = Task(priority: .userInitiated) { [photoLibraryUseCase] in
             do {
-                let nodes = try await nodes(forPhotoLocation: photoSourceLocation)
-                    .filter { $0.hasThumbnail }
-                await updatePhotoLibraryContent(nodes: nodes)
+                async let cloudDrive = await photoLibraryUseCase.allPhotosFromCloudDriveOnly()
+                async let cameraUpload = await photoLibraryUseCase.allPhotosFromCameraUpload()
+                let (cloudDrivePhotos, cameraUploadPhotos) = try await (cloudDrive, cameraUpload)
+                await hideFilter(cloudDrivePhotos.isEmpty || cameraUploadPhotos.isEmpty)
+                await updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
+                                                          isCloudDriveEmpty: cloudDrivePhotos.isEmpty,
+                                                          isCameraUploadsEmpty: cameraUploadPhotos.isEmpty)
+                await updatePhotoLibraryContent(cloudDrivePhotos: cloudDrivePhotos, cameraUploadPhotos: cameraUploadPhotos)
             } catch {
                 MEGALogError("Error occurred when loading photos. \(error.localizedDescription)")
             }
@@ -109,21 +110,47 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     @MainActor
-    private func updatePhotoLibraryContent(nodes: [NodeEntity]) {
-        photoLibraryContentViewModel.library = nodes.toPhotoLibrary(withSortType: .newest)
+    private func updatePhotoLibraryContent(cloudDrivePhotos: [NodeEntity], cameraUploadPhotos: [NodeEntity]) {
+        let filteredPhotos = photoNodes(for: photoSourceLocation, from: cloudDrivePhotos, and: cameraUploadPhotos)
+            .filter { $0.hasThumbnail }
+        photoLibraryContentViewModel.library = filteredPhotos.toPhotoLibrary(withSortType: .newest)
         photoLibraryContentViewModel.selection.editMode = .active
     }
     
-    private func nodes(forPhotoLocation location: PhotosFilterLocation) async throws -> [NodeEntity] {
-            switch location {
-            case .allLocations:
-                return try await photoLibraryUseCase.allPhotos()
-            case .cloudDrive:
-                return try await photoLibraryUseCase.allPhotosFromCloudDriveOnly()
-            case .cameraUploads:
-                return try await photoLibraryUseCase.allPhotosFromCameraUpload()
-            }
+    @MainActor
+    private func hideFilter(_ shouldHideFilter: Bool) {
+        guard self.shouldRemoveFilter != shouldHideFilter else {
+            return
         }
+        self.shouldRemoveFilter = shouldHideFilter
+    }
+    
+    @MainActor
+    private func updatePhotoSourceLocationIfRequired(filterLocation: PhotosFilterLocation, isCloudDriveEmpty: Bool,
+                                                     isCameraUploadsEmpty: Bool) {
+        var selectedFilterLocation = filterLocation
+        if isCloudDriveEmpty {
+            selectedFilterLocation = .cameraUploads
+        } else if isCameraUploadsEmpty {
+            selectedFilterLocation = .cloudDrive
+        }
+        guard self.photoSourceLocation != selectedFilterLocation else {
+            return
+        }
+        self.photoSourceLocation = selectedFilterLocation
+    }
+    
+    private func photoNodes(for location: PhotosFilterLocation, from cloudDrivePhotos: [NodeEntity],
+                       and cameraUploadPhotos: [NodeEntity]) -> [NodeEntity] {
+        switch location {
+        case .allLocations:
+            return cloudDrivePhotos + cameraUploadPhotos
+        case .cloudDrive:
+            return cloudDrivePhotos
+        case .cameraUploads:
+            return cameraUploadPhotos
+        }
+    }
     
     private func navigationTitle(forNumberOfItems num: Int) -> String {
         num == 1 ? Strings.Localizable.oneItemSelected(1): Strings.Localizable.itemsSelected(num)

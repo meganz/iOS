@@ -1,6 +1,6 @@
 import MEGADomain
 
-final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol {
+final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
     
     static var newRepo: FilesSearchRepository {
         FilesSearchRepository(sdk: MEGASdkManager.sharedMEGASdk())

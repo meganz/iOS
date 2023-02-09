@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol FilesSearchRepositoryProtocol: RepositoryProtocol {
+public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     func allPhotos() async throws -> [NodeEntity]
     func allVideos() async throws -> [NodeEntity]
     func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
