@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "selectedLight@3x.png",
+      "filename" : "checkboxSelected.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "checkboxSelected-dark.pdf",
       "idiom" : "universal"
     }
   ],
