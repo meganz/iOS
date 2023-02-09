@@ -36,7 +36,7 @@
     self.tableView.emptyDataSetSource = self;
     
     self.navigationItem.title = NSLocalizedString(@"notifications", nil);
-    self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
+    [self fetchAlerts];
     [self logUserAlertsStatus:self.userAlertsArray];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -375,11 +375,24 @@
 
 - (void)internetConnectionChanged {
     if ([MEGAReachabilityManager isReachable]) {
-        self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
+        [self fetchAlerts];
     } else {
         self.userAlertsArray = @[];
     }
     [self.tableView reloadData];
+}
+
+- (void)fetchAlerts {
+    NSArray<MEGAUserAlert *> *alerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
+    
+    NSMutableArray *filteredAlerts = [NSMutableArray array];
+    for(MEGAUserAlert *alert in alerts) {
+        if (alert.type != MEGAUserAlertTypeScheduledMeetingDeleted) {
+            [filteredAlerts addObject:alert];
+        }
+    }
+    
+    self.userAlertsArray = [filteredAlerts copy];
 }
 
 #pragma mark - UITableViewDataSource
@@ -543,7 +556,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    self.userAlertsArray = api.userAlertList.mnz_relevantUserAlertsArray;
+    [self fetchAlerts];
     [self.tableView reloadData];
 }
 

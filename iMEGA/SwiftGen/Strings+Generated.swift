@@ -4156,18 +4156,14 @@ public enum Strings {
               }
             }
             public enum OccurrenceCancelled {
-              /// [B]%@ cancelled[/B] the occurrence scheduled for:
-              /// %@, %@ from %@ to %@
-              public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-              }
+              /// [B][Email] cancelled[/B] the occurrence scheduled for:
+              /// [WeekDay], [Date] from [StartTime] to [EndTime]
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description")
             }
             public enum OccurrenceUpdated {
-              /// [B]%@ updated[/B] an occurrence to:
-              /// %@, %@ from %@ to %@
-              public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-              }
+              /// [B][Email] updated[/B] an occurrence to:
+              /// [WeekDay], [Date] from [StartTime] to [EndTime]
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description")
             }
             public enum SpecificMonth {
               public enum SpecificDay {
