@@ -11,6 +11,8 @@ fileprivate extension ScheduledMeetingOccurrenceEntity {
         self.init(
             cancelled: scheduledMeetingOccurrence.isCancelled,
             scheduledId: scheduledMeetingOccurrence.scheduledId,
+            parentScheduledId: scheduledMeetingOccurrence.parentScheduledId,
+            overrides: scheduledMeetingOccurrence.overrides,
             timezone: scheduledMeetingOccurrence.timezone,
             startDate: Date(timeIntervalSince1970: TimeInterval(scheduledMeetingOccurrence.startDateTime)), endDate: Date(timeIntervalSince1970: TimeInterval(scheduledMeetingOccurrence.endDateTime))
         )

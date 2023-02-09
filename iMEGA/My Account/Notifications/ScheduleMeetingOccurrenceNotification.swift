@@ -43,7 +43,11 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
         } else {
             let occurrences = try await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(chatId: alert.nodeHandle)
                             
-            if let occurrence = occurrences.filter({ $0.scheduledId == alert.scheduledMeetingId }).first {
+            if let occurrence = occurrences.filter({
+                $0.scheduledId == alert.scheduledMeetingId
+                && $0.parentScheduledId == alert.pendingContactRequestHandle
+                && $0.overrides == alert.number(at: 0)
+            }).first {
                 if occurrence.cancelled {
                     message = occurrenceCancelledMessage(
                         withStartDate: occurrence.startDate,
@@ -80,14 +84,16 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     private func occurrenceMessage(
         withStartDate startDate: Date,
         endDate: Date,
-        localizedString: (_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String
+        localizedString: String
     ) -> String {
-        localizedString(
-            alert.email ?? "",
-            DateFormatter.fromTemplate("E").localisedString(from: startDate),
-            DateFormatter.dateMedium().localisedString(from: startDate),
-            DateFormatter.timeShort().localisedString(from: startDate),
-            DateFormatter.timeShort().localisedString(from: endDate)
-        )
+        var string = localizedString
+        
+        string = string.replacingOccurrences(of: "[Email]", with: alert.email ?? "")
+        string = string.replacingOccurrences(of: "[WeekDay]", with: DateFormatter.fromTemplate("E").localisedString(from: startDate))
+        string = string.replacingOccurrences(of: "[Date]", with: DateFormatter.dateMedium().localisedString(from: startDate))
+        string = string.replacingOccurrences(of: "[StartTime]", with: DateFormatter.timeShort().localisedString(from: startDate))
+        string = string.replacingOccurrences(of: "[EndTime]", with:  DateFormatter.timeShort().localisedString(from: endDate))
+        
+        return string
     }
 }
