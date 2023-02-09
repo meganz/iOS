@@ -20,7 +20,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         
         let resultEntity = AlbumElementsResultEntity(success: 2, failure: 0)
         let sut = makeAlbumContentPickerViewModel(resultEntity: resultEntity, completion: { msg, album in
-            XCTAssertEqual(msg, "Added 2 items to \"\(album.name)\"")
+            XCTAssertEqual(msg, "Added 2 items to “\(album.name)”")
             XCTAssertNotNil(album)
             exp.fulfill()
         })
@@ -40,7 +40,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         
         let resultEntity = AlbumElementsResultEntity(success: 1, failure: 0)
         let sut = makeAlbumContentPickerViewModel(resultEntity: resultEntity, completion: { msg, album in
-            XCTAssertEqual(msg, "Added 1 item to \"\(album.name)\"")
+            XCTAssertEqual(msg, "Added 1 item to “\(album.name)”")
             XCTAssertNotNil(album)
             exp.fulfill()
         })
@@ -76,7 +76,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
         let node2 = NodeEntity(name: "b.png", handle: HandleEntity(2))
         
-        let normalNavTitle = "Add items to \"Custom Name\""
+        let normalNavTitle = "Add items to “Custom Name”"
         XCTAssertEqual(sut.navigationTitle, normalNavTitle)
         
         let exp = expectation(description: "title updates when selection changes")

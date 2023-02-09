@@ -542,8 +542,8 @@
 "cameraUploads.albums.create.alert.enterDifferentName"="Enter a different name.";
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="Enter a new name.";
-/* Used in add content album view. The %@ placeholder replaced by the folder name*/
-"cameraUploads.albums.create.addItemsTo"="Add items to %@";
+/* Used in add content album view. */
+"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -809,7 +809,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery key?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="The Recovery key has been copied to the clipboard. Please store it in a safe place.";
+"recoveryKeyCopiedToClipboard"="Recovery key copied to clipboard. Save it to a safe place where you can easily access later.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Recovery key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -961,7 +961,7 @@
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Help centre";
+"helpCentreLabel"="Help Centre";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join beta";
 /* Title to rate the app */
@@ -1357,7 +1357,7 @@
 /*  */
 "fromCloudDrive"="From Cloud drive";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Send contact";
+"sendContact"="Send contacts";
 /*  */
 "done"="Done";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1693,7 +1693,7 @@
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
 "Save Images in Photos"="Save images in Photos";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Save videos in photos";
+"Save Videos in Photos"="Save videos in Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */

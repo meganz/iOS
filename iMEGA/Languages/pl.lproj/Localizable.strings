@@ -535,15 +535,15 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="Nowy album";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
+"cameraUploads.albums.create.alert.userAlbumExists"="Album o tej nazwie już istnieje.";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="Ta nazwa albumu jest niedozwolona";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterDifferentName"="Enter a different name.";
+"cameraUploads.albums.create.alert.enterDifferentName"="Wprowadź inną nazwę.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Enter a new name.";
+"cameraUploads.albums.create.alert.enterNewName"="Wprowadź nową nazwę.";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Dodaj elementy do";
+"cameraUploads.albums.create.addItemsTo"="Dodaj elementy do “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Pusty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -565,7 +565,7 @@
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Przesyłanie z kamery";
 /* Video Uploads title */
-"cameraUploads.videoUploads.title"="Video uploads";
+"cameraUploads.videoUploads.title"="Przesyłanie filmów";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia Wi-Fi, 1 plik w toku";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -809,7 +809,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Do czego służy klucz?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Klucz zapasowy został skopiowany do schowka. Przechowuj go w bezpiecznym miejscu.";
+"recoveryKeyCopiedToClipboard"="Klucz odzyskiwania skopiowany do schowka. Zapisz go w bezpiecznym miejscu, do którego będziesz miał łatwy dostęp później.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Klucz zapasowy został wyeksportowany";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1357,7 +1357,7 @@
 /*  */
 "fromCloudDrive"="Z dysku";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Wyślij kontakt";
+"sendContact"="Wyślij kontakty";
 /*  */
 "done"="Zakończ";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1691,15 +1691,15 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Zgubiłeś swoje urządzenie?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Zapisz obrazy w zdjęciach";
+"Save Images in Photos"="Zapisz obrazy w Zdjęciach";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Zapisz wideo w zdjęciach";
+"Save Videos in Photos"="Zapisz wideo w Zdjęciach";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Zapisz w zdjęciach";
+"Save in Photos"="Zapisz w Zdjęciach";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
 /* Title of the Spotlight Search section */
@@ -1793,7 +1793,7 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Zapisz w Zdjęciach";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Zapisywanie do zdjęć…";
+"Saving to Photos…"="Zapisywanie do Zdjęć…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="Wszystkie media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -3213,7 +3213,7 @@
 /* Button title to join an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.joinMeeting"="Dołącz";
 /* Message shown in a chat room for a call in progress displaying the duration of the call */
-"chat.callInProgress.tapToReturnToCall"="Tap to return to call %@";
+"chat.callInProgress.tapToReturnToCall"="Kliknij, aby powrócić do połączenia %@";
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Spotkania";
 /* In app notification description for one off new meeting invitation */
@@ -3335,9 +3335,9 @@
 /* In app notification description when description field is updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
 "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.descriptionFieldUpdate.description"="";
 /* In app notification description when description field is updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.descriptionFieldUpdate.description"="[B]%@ updated[/B] the recurring meeting description\nDay %@ of every month, effective %@";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.descriptionFieldUpdate.description"="[B]%@ zaktualizował [/B]opis cyklicznego spotkania \n dzień %@ każdego miesiąca, zaczynając od %@";
 /* In app notification description when description field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.descriptionFieldUpdate.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective %@";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.descriptionFieldUpdate.description"="[B]%@ zaktualizował [/B]opis cyklicznego spotkania \n %@%@każdego miesiąca, zaczynając od %@";
 /* In app notification description text representing the meeting is scheduled during week one */
 "inapp.notifications.scheduledMeetings.week.one.title"="";
 /* In app notification description text representing the meeting is scheduled during week two */
@@ -3363,78 +3363,98 @@
 /* In app notification description text representing the meeting repeats every saturday */
 "inapp.notifications.scheduledMeetings.weekDay.sat.title"="Sob";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B]%@ updated[/B] the meeting date\n[B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B]%@ zaktualizował[/B] datę spotkania\n[B]%@[/B] %@";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B]%@ updated[/B] the meeting time\n%@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B]%@ zaktualizował[/B] czas spotkania\n%@ [B]%@[/B]";
 /* In app notification description when date field is updated for daily recurring meeting. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEveryday, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.daily.forever.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nCodzinnie, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time field is updated for daily recurring meeting. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEveryday, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.daily.forever.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCodziennie, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date field is updated for daily recurring meeting. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEveryday, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.daily.ending.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nCodziennie, zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time field is updated for daily recurring meeting. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEveryday, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.daily.ending.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCodziennie, zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date field is updated for single day of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery week on %@, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nCo tydzień w %@, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time Field is updated for single day of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery week on %@, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCo tydzień w %@, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for multiple days of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery week on %@ and %@, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nCo tydzień w %@ i %@, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time Field is updated for multiple days of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery week on %@ and %@, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nKażdego tygodnia w %@ i %@, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for single day of specific week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery %@ weeks on %@, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.dayChanged.description"="[B]%@ zaktualizował [/B] datę cyklicznego spotkania\nCo %@ tygodnie w %@, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time Field is updated for single day of specific week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery %@ weeks on %@, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCo %@ tygodnie w %@, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for multiple days of specific week  - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery %@ weeks on %@ and %@, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nCo %@ tygodnie w %@ i %@, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time Field is updated for multiple days of specific week  - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery %@ weeks on %@ and %@, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCo %@ tygodnie w %@ i %@, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery week on %@, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nKażdego tygodnia w %@, zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery week on %@, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nKażdego tygodnia w %@, zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery week on %@ and %@, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nKażdego tygodnia w %@ i %@, zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery week on %@ and %@, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nKażdego tygodnia w %@ i %@, zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for single day of specific week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery %@ weeks on %@, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nCo %@ tygodnie w %@, zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time Field is updated for single day of specific week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery %@ weeks on %@, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCo %@ tygodnie w %@, zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date Field is updated for single day of specific week  - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nEvery %@ weeks on %@ and %@, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.dayChanged.description"="[B]%@ zaktualizował [/B] datę cyklicznego spotkania\nCo %@ tygodnie w %@ i %@, zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time Field is updated for single day of specific week  - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nEvery %@ weeks on %@ and %@, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nCo %@ tygodnie w %@ i %@, zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nDay %@ of every %@ months, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nDzień %@ każdego %@ miesiąca, zaczynając od[B]%@ do %@[/B] %@";
 /* In app notification description when time field is updated for recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nDay %@ of every %@ months, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nDzień %@ każdego %@ miesiąca, zaczynają od %@ do %@ [B]%@[/B]";
 /* In app notification description n when date field is updated for recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\n%@ %@ of every %@ months effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\n%@ %@ każdego %@ miesiąca zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description n when time field is updated for recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\n%@ %@ of every %@ months effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\n%@ %@ każdego %@ miesiąca zaczynając od%@ do %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nDay %@ of every month, effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nDzień %@ każdego miesiąca, zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time field is updated for recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nDay %@ of every month, effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nDzień %@ każdego miesiąca, zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\n%@ %@ of every month effective [B]%@ until %@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\n%@ %@ każdego miesiąca zaczynając od [B]%@ do %@[/B] %@";
 /* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\n%@ %@ of every month effective %@ until %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\n%@ %@ każdego miesiąca zaczynając od %@ do %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nDay %@ of every %@ months, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nDzień %@ każdego %@ miesiąca, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time field is updated for recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nDay %@ of every %@ months, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nDzień %@ każdego %@ miesiąca, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\n%@ %@ of every %@ months effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\n%@ %@ każdego %@ miesiąca zaczynając od [B]%@[/B] %@";
 /* In app notification description when time field is updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\n%@ %@ of every %@ months effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\n%@ %@ każdego %@ miesiąca zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting date\nDay %@ of every month, effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.dayChanged.description"="[B]%@ zaktualizował[/B] datę cyklicznego spotkania\nDzień %@ każdego miesiąca, zaczynając od [B]%@[/B] %@";
 /* In app notification description when time field is updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting time\nDay %@ of every month, effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.timeChanged.description"="[B]%@ zaktualizował[/B] czas cyklicznego spotkania\nDzień %@ każdego miesiąca, zaczynając od %@ [B]%@[/B]";
 /* In app notification description when date field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective [B]%@[/B] %@";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description"="[B]%@ zaktualizował[/B] opis cyklicznego spotkania\n%@ %@ każdego miesiąca zaczynając od [B]%@[/B] %@";
 /* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective %@ [B]%@[/B]";
+"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description"="[B]%@ zaktualizował[/B] opis cyklicznego spotkania\n%@ %@ każdego miesiąca, zaczynając od %@ [B]%@[/B]";
+/* Button title to show list of occurrences of an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.occurrences"="Występowanie";
+/* Label to indicate the daily recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.daily"="";
+/* Label to indicate the weekly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.weekly"="";
+/* Label to indicate the monthly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.monthly"="";
+/* Button label to indicate that more occurencies can be loaded in the list */
+"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="";
+/* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
+"meetings.scheduled.oneOff"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
+"meetings.scheduled.recurring.daily.forever"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
+"meetings.scheduled.recurring.daily.until"="";
+/* In app notification description when an occurence is cancelled in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="";
+/* In app notification description when an occurence is updated in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="";

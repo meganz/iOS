@@ -35,7 +35,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Пожалуйста, откройте MEGA доступ к микрофону в «Настройках»";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Пожалуйста, откройте MEGA доступ к «Фотографиям» в «Настройках»";
+"photoLibraryPermissions"="Пожалуйста, откройте MEGA доступ к «Фото» в «Настройках»";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Ваш аккаунт активирован. Пожалуйста, авторизируйтесь.";
 /*  */
@@ -535,7 +535,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="Новый альбом";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
+"cameraUploads.albums.create.alert.userAlbumExists"="Альбом с таким названием уже существует.";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="Недопустимое название альбома";
 /* Used in create album popup album name validation */
@@ -543,7 +543,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="Введите новое название";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Добавление элементов в";
+"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Альбом пуст";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -685,7 +685,7 @@
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
 "cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA имеет ограниченный доступ к вашей библиотеке фотографий и не может создавать резервные копии всех ваших фотографий. Нажмите, чтобы изменить разрешения.";
 /* Navigation title for Photo Controller */
-"photo.navigation.title"="Фотографии";
+"photo.navigation.title"="Фото";
 /* Photo view is empty */
 "photo.empty.title"="Фотографии не найдены";
 /* Title of Photo's Years tab */
@@ -713,9 +713,9 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"general.cookiePolicy"="Политика использования файлов cookie";
+"general.cookiePolicy"="Политика использования куки-файлов";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
-"general.cookieSettings"="Настройки куки";
+"general.cookieSettings"="Настройки куки-файлов";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия использования";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -809,7 +809,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Ключ восстановления скопирован в буфер обмена. Пожалуйста, храните его в надёжном месте.";
+"recoveryKeyCopiedToClipboard"="Ключ восстановления скопирован в буфер обмена. Сохраните его в безопасном месте, откуда вы сможете легко получить его позже.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Ключ восстановления импортирован";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1357,7 +1357,7 @@
 /*  */
 "fromCloudDrive"="Из облачного диска";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Отправить контакт";
+"sendContact"="Добавить контакты";
 /*  */
 "done"="Готово";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1449,7 +1449,7 @@
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
 "Circular linkage detected"="Обнаружена циклическая ссылка";
 /* Label to show that an error related with an denied access occurs during a SDK operation. */
-"Access denied"="Доступ запрещен";
+"Access denied"="Доступ запрещён";
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */
 "Already exists"="Уже существует";
 /* Label to show that an error related with an Incomplete SDK operation. */
@@ -1731,7 +1731,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Разрешить доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, откройте MEGA доступ к «Фотографиям» для обмена фото и видео.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, откройте MEGA доступ к «Фото» для обмена фото и видео.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1791,9 +1791,9 @@
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="Коснитесь, чтобы вернуться";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Сохранять в фото";
+"Save to Photos"="Сохранять в «Фото»";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Сохранение в фото…";
+"Saving to Photos…"="Сохранение в «Фото»…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="Все медиа";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
@@ -1843,11 +1843,11 @@
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Список";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Эскизы";
+"Thumbnail View"="Значки";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
 "Page View"="Вид страницы";
 /* There are no notifications to display. */
-"No notifications"="Нет оповещений";
+"No notifications"="Нет уведомлений";
 /* The header of a notification related to payments */
 "Payment info"="Платёжная информация";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
@@ -3438,3 +3438,23 @@
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective [B]%@[/B] %@";
 /* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective %@ [B]%@[/B]";
+/* Button title to show list of occurrences of an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.occurrences"="";
+/* Label to indicate the daily recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.daily"="";
+/* Label to indicate the weekly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.weekly"="";
+/* Label to indicate the monthly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.monthly"="";
+/* Button label to indicate that more occurencies can be loaded in the list */
+"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="";
+/* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
+"meetings.scheduled.oneOff"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
+"meetings.scheduled.recurring.daily.forever"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
+"meetings.scheduled.recurring.daily.until"="";
+/* In app notification description when an occurence is cancelled in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="";
+/* In app notification description when an occurence is updated in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="";

@@ -947,7 +947,7 @@ public enum Strings {
     public static let groups = Strings.tr("Localizable", "Groups")
     /// Help
     public static let help = Strings.tr("Localizable", "help")
-    /// Help centre
+    /// Help Centre
     public static let helpCentreLabel = Strings.tr("Localizable", "helpCentreLabel")
     /// History clearing
     public static let historyClearing = Strings.tr("Localizable", "History Clearing")
@@ -1613,7 +1613,7 @@ public enum Strings {
     public static let recording = Strings.tr("Localizable", "Recording...")
     /// Recovery key
     public static let recoveryKey = Strings.tr("Localizable", "recoveryKey")
-    /// The Recovery key has been copied to the clipboard. Please store it in a safe place.
+    /// Recovery key copied to clipboard. Save it to a safe place where you can easily access later.
     public static let recoveryKeyCopiedToClipboard = Strings.tr("Localizable", "recoveryKeyCopiedToClipboard")
     /// This recovery link has expired, please try again.
     public static let recoveryLinkHasExpired = Strings.tr("Localizable", "recoveryLinkHasExpired")
@@ -1793,7 +1793,7 @@ public enum Strings {
     public static let saveSettings = Strings.tr("Localizable", "Save Settings")
     /// Save to Photos
     public static let saveToPhotos = Strings.tr("Localizable", "Save to Photos")
-    /// Save videos in photos
+    /// Save videos in Photos
     public static let saveVideosInPhotos = Strings.tr("Localizable", "Save Videos in Photos")
     /// Save 16%
     public static let save17 = Strings.tr("Localizable", "save17")
@@ -1867,7 +1867,7 @@ public enum Strings {
     public static let sendSmallerSizeImagesThroughCellularNetworksAndOriginalSizeImagesThroughWifi = Strings.tr("Localizable", "Send smaller size images through cellular networks and original size images through wifi")
     /// Send this location
     public static let sendThisLocation = Strings.tr("Localizable", "Send This Location")
-    /// Send contact
+    /// Send contacts
     public static let sendContact = Strings.tr("Localizable", "sendContact")
     /// Send feedback
     public static let sendFeedbackLabel = Strings.tr("Localizable", "sendFeedbackLabel")
@@ -2905,7 +2905,7 @@ public enum Strings {
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
         public enum Create {
-          /// Add items to %@
+          /// Add items to “%@”
           public static func addItemsTo(_ p1: Any) -> String {
             return Strings.tr("Localizable", "cameraUploads.albums.create.addItemsTo", String(describing: p1))
           }
