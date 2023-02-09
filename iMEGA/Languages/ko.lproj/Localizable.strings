@@ -543,7 +543,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="새 이름을 입력하세요.";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="다음에 항목 추가";
+"cameraUploads.albums.create.addItemsTo"="“%@”에 항목 추가";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="빈 사진첩";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -677,7 +677,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="읽기와 쓰기";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="완전 접근";
+"fullAccess"="전체 권한";
 /* Title of the Settings section */
 "settingsTitle"="설정";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -809,7 +809,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="복구 키가 클립보드로 복사되었습니다. 안전한 곳에 보관하세요.";
+"recoveryKeyCopiedToClipboard"="복구 키가 클립보드에 복사되었습니다. 나중에 쉽게 접근할 수 있는 안전한 곳에 저장하세요.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="복구 키 내보내짐";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1447,7 +1447,7 @@
 /* Label to show that an error related with a resource Not found occurs during a SDK operation. */
 "Not found"="발견되지 않음";
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
-"Circular linkage detected"="순환 연결 감지";
+"Circular linkage detected"="순환 연결 감지됨";
 /* Label to show that an error related with an denied access occurs during a SDK operation. */
 "Access denied"="접근이 거부됨";
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */
@@ -3177,7 +3177,7 @@
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="당신의 자격 증명";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
-"sharedItems.tab.incoming.undecryptedFolderName"="[해독 되지 않은 폴더]";
+"sharedItems.tab.incoming.undecryptedFolderName"="[복호화 되지 않은 폴더]";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: 회의 만듦";
 /* Button title to load more participants in meeting info view */
@@ -3215,7 +3215,7 @@
 /* Message shown in a chat room for a call in progress displaying the duration of the call */
 "chat.callInProgress.tapToReturnToCall"="%@ 통화로 돌아가려면 탭하세요";
 /* In App notification for meetings */
-"inapp.notifications.meetings.header"="Meetings";
+"inapp.notifications.meetings.header"="회의";
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B]%@ invited[/B] you to a meeting scheduled for:\n%@";
 /* In app notification description for one off cancelled meeting */
@@ -3339,15 +3339,15 @@
 /* In app notification description when description field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.descriptionFieldUpdate.description"="[B]%@ 님[/B]이 반복 회의 설명을 수정하였습니다\n매월 %@ %@에 %@ 동안";
 /* In app notification description text representing the meeting is scheduled during week one */
-"inapp.notifications.scheduledMeetings.week.one.title"="첫번째";
+"inapp.notifications.scheduledMeetings.week.one.title"="First";
 /* In app notification description text representing the meeting is scheduled during week two */
-"inapp.notifications.scheduledMeetings.week.two.title"="두번째";
+"inapp.notifications.scheduledMeetings.week.two.title"="Second";
 /* In app notification description text representing the meeting is scheduled during week three */
-"inapp.notifications.scheduledMeetings.week.three.title"="세번째";
+"inapp.notifications.scheduledMeetings.week.three.title"="Third";
 /* In app notification description text representing the meeting is scheduled during week four */
-"inapp.notifications.scheduledMeetings.week.Four.title"="네번째";
+"inapp.notifications.scheduledMeetings.week.Four.title"="Fourth";
 /* In app notification description text representing the meeting is scheduled during week five */
-"inapp.notifications.scheduledMeetings.week.Five.title"="다섯번째";
+"inapp.notifications.scheduledMeetings.week.Five.title"="Fifth";
 /* In app notification description text representing the meeting repeats every sunday */
 "inapp.notifications.scheduledMeetings.weekDay.sun.title"="일";
 /* In app notification description text representing the meeting repeats every monday */
@@ -3438,3 +3438,23 @@
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description"="[B]%@ 님[/B]이 반복 회의 설명을 수정하였습니다\n매월 %@ %@ [B]%@[/B] 동안 %@";
 /* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description"="[B]%@ 님[/B]이 반복 회의 설명을 수정하였습니다\n매월 %@ %@ %@ 동안 [B]%@[/B]";
+/* Button title to show list of occurrences of an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.occurrences"="Occurrences";
+/* Label to indicate the daily recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.daily"="Occurs daily";
+/* Label to indicate the weekly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.weekly"="Occurs weekly";
+/* Label to indicate the monthly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.monthly"="Occurs monthly";
+/* Button label to indicate that more occurencies can be loaded in the list */
+"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="See more occurrences";
+/* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
+"meetings.scheduled.oneOff"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
+"meetings.scheduled.recurring.daily.forever"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
+"meetings.scheduled.recurring.daily.until"="";
+/* In app notification description when an occurence is cancelled in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B]%@ cancelled[/B] the occurrence scheduled for:\n%@, %@ from %@ to %@";
+/* In app notification description when an occurence is updated in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B]%@ updated[/B] an occurrence to:\n%@, %@ from %@ to %@";

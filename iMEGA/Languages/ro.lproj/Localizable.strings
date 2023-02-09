@@ -531,9 +531,9 @@
 /* Create album title */
 "cameraUploads.albums.createAlbum.title"="Create album";
 /* Used in create album popup. */
-"cameraUploads.albums.create.alert.title"="Enter album name";
+"cameraUploads.albums.create.alert.title"="Introdu numele albumului";
 /* Used in create album popup. */
-"cameraUploads.albums.create.alert.placeholder"="New album";
+"cameraUploads.albums.create.alert.placeholder"="Album nou";
 /* Used in create album popup user album name validation */
 "cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
 /* Used in create album popup system album name validation */
@@ -543,7 +543,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="Enter a new name.";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to";
+"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Empty album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -809,7 +809,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Cheia de recuperare a fost copiată în clipboard. Te rugăm să o stochezi într-un loc sigur.";
+"recoveryKeyCopiedToClipboard"="Cheie de recuperare copiată în clipboard. Salveaz-o într-un loc sigur unde o poți accesa cu ușurință mai târziu.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Cheie de recuperare exportată";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1267,7 +1267,7 @@
 /*  */
 "notifications"="Notificări";
 /* Title to perform the action of sending a message to a contact. */
-"sendMessage"="Trimite mesaj";
+"sendMessage"="Trimite un mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verifică acreditările";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
@@ -1357,7 +1357,7 @@
 /*  */
 "fromCloudDrive"="Din unitatea cloud";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Trimite un contact";
+"sendContact"="Trimite contacte";
 /*  */
 "done"="Gata";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1449,7 +1449,7 @@
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
 "Circular linkage detected"="Legătură circulară detectată";
 /* Label to show that an error related with an denied access occurs during a SDK operation. */
-"Access denied"="Acces interzis";
+"Access denied"="Acces refuzat";
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */
 "Already exists"="Există deja";
 /* Label to show that an error related with an Incomplete SDK operation. */
@@ -1691,15 +1691,15 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Ți-ai pierdut dispozitivul pentru autentificare?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Salvează imagini în Fotografii";
+"Save Images in Photos"="Salvează imagini în Poze";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Salvează videoclipuri în Fotografii";
+"Save Videos in Photos"="Salvează videoclipuri în Poze";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imaginile sau videoclipurile descărcate vor fi stocate în biblioteca media a dispozitivului în locul secțiunii Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Cameră";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Salvează în Fotografii";
+"Save in Photos"="Salvează în Poze";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a dispozitivului.";
 /* Title of the Spotlight Search section */
@@ -1767,7 +1767,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Ești pe cale să ștergi istoricul versiunilor tuturor fișierelor. Orice versiune a vreunui fișier partajat ție de la un contact trebuie să fie șters de către acesta\n\nTe rugăm să reții că fișierele actuale nu vor fi șterse.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Rubbish bin emptying scheduler";
+"Rubbish-Bin Cleaning Scheduler:"="Planificator de golire a Coșului de gunoi";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
@@ -2079,7 +2079,7 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Cont dezactivat";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Contul tău Business a fost dezactivat din cauza unei plăți nereușite. Nu vei putea accesa datele stocate în contul tău. Pentru a efectua o plată și a-ți reactiva abonamentul, autentifică-te în MEGA printr-un browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2387,7 +2387,7 @@
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="Copiază toate";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opțiuni precum Trimite separat cheia de decriptare, Setează dată de expirare sau Parole sunt disponibile numai pentru elemente individuale.";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opțiuni precum Trimite separat cheia de decriptare, Setează dată de expirare sau Setează parolă sunt disponibile numai pentru elemente individuale.";
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Link copiat în clipboard";
 /* Message shown when some links have been copied to the Clipboard */
@@ -2605,7 +2605,7 @@
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="Mută „%@” în Coșul de gunoi";
 /* Delete the default backup folder warning message */
-"dialog.delete.root.backup.folder.warning.message"="You are deleting your backups folder. This will remove all the backups you have set. Are you sure you want to do this?";
+"dialog.delete.root.backup.folder.warning.message"="Ștergi folderul de backupuri. Acest lucru va elimina toate backupurile pe care le-ai setat. Sigur vrei să faci acest lucru?";
 /* Delete the default backup folder warning message */
 "dialog.delete.backup.folder.warning.message"="Are you sure you want to delete your backup folder and disable backup you set?";
 /* Add new items to a backup folder warning title. %@ is a folder */
@@ -2725,7 +2725,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Vizitează AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
+"account.delete.subscription.webClient"="Acesta este ultimul pas pentru a-ți șterge contul. Atât contul, cât și abonamentul vor fi șterse și vei pierde definitiv toate datele stocate în unitatea cloud. Te rugăm să introduci parola mai jos.";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un alt apel în curs. Te rugăm să închei apelul actual înainte de a efectua altul.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2963,7 +2963,7 @@
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describe"="Te rugăm să descrii clar problema întâmpinată. Cu cât oferi mai multe detalii, cu atât ne va fi mai ușor să o rezolvăm. Trimiterea ta va fi examinată de către echipa noastră de dezvoltare.";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
-"help.reportIssue.sendLogFile"="Send log file";
+"help.reportIssue.sendLogFile"="Trimite fișierul log";
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Uploading log file";
 /* Confirmation title shown when a bug report is successfully uploaded. */
@@ -3137,7 +3137,7 @@
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
 "notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down.";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
-"meetings.addContacts.allowNonHost.message"="Allow non-hosts to add participants";
+"meetings.addContacts.allowNonHost.message"="Permite non-gazdelor să adauge participanți";
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Planifică o întâlnire";
 /* Error message when trying to login and the account is blocked due to copyright violation */
@@ -3177,7 +3177,7 @@
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Acreditările tale";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
-"sharedItems.tab.incoming.undecryptedFolderName"="[Undecrypted folder]";
+"sharedItems.tab.incoming.undecryptedFolderName"="[folder nedecriptat]";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: created a meeting";
 /* Button title to load more participants in meeting info view */
@@ -3199,9 +3199,9 @@
 /* Title for share chat link option in meeting info */
 "meetings.info.shareChatLink"="Share chat link";
 /* Button title to load more participants in meeting info view */
-"meetings.info.participants.seeMore"="See more";
+"meetings.info.participants.seeMore"="Vezi mai mulți";
 /* Button title to see less participants in meeting info view */
-"meetings.info.participants.seeLess"="See less";
+"meetings.info.participants.seeLess"="Vezi mai puțini";
 /* Text description for chat privacy communication */
 "chat.introductionHeader.privacy.description"="MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:";
 /* Button title to start an scheduled meeting before the start date */
@@ -3438,3 +3438,23 @@
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective [B]%@[/B] %@";
 /* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
 "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description"="[B]%@ updated[/B] the recurring meeting description\n%@ %@ of every month effective %@ [B]%@[/B]";
+/* Button title to show list of occurrences of an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.occurrences"="";
+/* Label to indicate the daily recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.daily"="";
+/* Label to indicate the weekly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.weekly"="";
+/* Label to indicate the monthly recurrence of an scheduled meeting */
+"meetings.scheduled.recurring.frequency.monthly"="";
+/* Button label to indicate that more occurencies can be loaded in the list */
+"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="";
+/* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
+"meetings.scheduled.oneOff"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
+"meetings.scheduled.recurring.daily.forever"="";
+/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
+"meetings.scheduled.recurring.daily.until"="";
+/* In app notification description when an occurence is cancelled in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="";
+/* In app notification description when an occurence is updated in a reccurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="";
