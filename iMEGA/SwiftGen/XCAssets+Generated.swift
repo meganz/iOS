@@ -519,7 +519,6 @@ internal enum Asset {
       internal static let decryptionKeyIllustration = ImageAsset(name: "decryptionKeyIllustration")
     }
     internal enum Login {
-      internal static let checkBox = ImageAsset(name: "checkBox")
       internal static let checkBoxSelected = ImageAsset(name: "checkBoxSelected")
       internal static let checkBoxUnselected = ImageAsset(name: "checkBoxUnselected")
       internal static let iconLinkWKey = ImageAsset(name: "icon-link-w-key")
