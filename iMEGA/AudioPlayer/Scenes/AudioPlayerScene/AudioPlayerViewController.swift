@@ -350,15 +350,15 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func shareBarButtonPressed(_ button: UIBarButtonItem) {
-        viewModel.dispatch(.share)
+        viewModel.dispatch(.share(sender: button))
     }
     
     private func importAction() {
         viewModel.dispatch(.import)
     }
     
-    private func shareAction() {
-        viewModel.dispatch(.share)
+    private func shareAction(sender: UIBarButtonItem) {
+        viewModel.dispatch(.share(sender: sender))
     }
     
     @objc private func closeButtonAction() {

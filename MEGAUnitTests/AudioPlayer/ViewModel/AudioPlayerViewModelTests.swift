@@ -96,7 +96,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .`import`, expectedCommands: [])
         XCTAssertEqual(router.importNode_calledTimes, 1)
         
-        test(viewModel: viewModel, action: .share, expectedCommands: [])
+        test(viewModel: viewModel, action: .share(sender: nil), expectedCommands: [])
         XCTAssertEqual(router.share_calledTimes, 1)
         
         test(viewModel: viewModel, action: .sendToChat, expectedCommands: [])

@@ -70,8 +70,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         fileLinkActionViewControllerDelegate?.importNode(node)
     }
     
-    func share() {
-        fileLinkActionViewControllerDelegate?.shareLink()
+    func share(sender: UIBarButtonItem?) {
+        fileLinkActionViewControllerDelegate?.shareLink(sender: sender)
     }
     
     func sendToChat() {

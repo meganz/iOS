@@ -18,7 +18,7 @@ enum AudioPlayerAction: ActionType {
     case initMiniPlayer
     case `import`
     case sendToChat
-    case share
+    case share(sender: UIBarButtonItem?)
     case dismiss
     case refreshRepeatStatus
     case refreshShuffleStatus
@@ -32,7 +32,7 @@ protocol AudioPlayerViewRouting: Routing {
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool)
     func showMiniPlayer(file: String, shouldReload: Bool)
     func importNode(_ node: MEGANode)
-    func share()
+    func share(sender: UIBarButtonItem?)
     func sendToChat()
     func showAction(for node: MEGANode, sender: Any)
 }
@@ -340,8 +340,8 @@ final class AudioPlayerViewModel: ViewModelType {
             }
         case .sendToChat:
             router.sendToChat()
-        case .share:
-            router.share()
+        case .share(let sender):
+            router.share(sender: sender)
         case .dismiss:
             router.dismiss()
         case .refreshRepeatStatus:
