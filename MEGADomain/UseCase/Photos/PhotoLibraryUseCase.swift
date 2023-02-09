@@ -1,7 +1,7 @@
 import Combine
 import MEGADomain
 
-protocol PhotoLibraryUseCaseProtocol {
+protocol PhotoLibraryUseCaseProtocol: Sendable {
     /// Load CameraUpload and MediaUpload node
     /// - Returns: PhotoLibraryContainerEntity, which contains CameraUpload and MediaUpload node itself
     func photoLibraryContainer() async -> PhotoLibraryContainerEntity

@@ -1,6 +1,6 @@
 import MEGADomain
 
-struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol {
+struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
     static var newRepo: PhotoLibraryRepository {
         PhotoLibraryRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }

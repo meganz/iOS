@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryProtocol {
+final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
     public static let newRepo = MockFilesSearchRepository()
     
     public var hasCancelSearchCalled = false

@@ -62,10 +62,11 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     }
     
     func testLoadPhotos_initLoadPhotos_shouldUpdateContentLibraryAndSortToNewest() async throws {
-        let photos = try makeSamplePhotoNodes()
-        let sut = makeAlbumContentPickerViewModel(allPhotos: photos)
+        let cloudPhotos = try makeSamplePhotoNodes()
+        let cameraUploadPhotos = [NodeEntity(name: "TestVideo.mp4", handle: 6, hasThumbnail: true, modificationTime: try "2023-01-01T22:05:04Z".date)]
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: cloudPhotos, allPhotosFromCameraUpload: cameraUploadPhotos)
         await sut.photosLoadingTask?.value
-        let expectedPhotos = photos.filter { $0.hasThumbnail }
+        let expectedPhotos = (cloudPhotos + cameraUploadPhotos).filter { $0.hasThumbnail }
             .toPhotoLibrary(withSortType: .newest)
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
@@ -109,55 +110,117 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(sut.photoLibraryContentViewModel.showFilter)
     }
     
-    func testContentLocation_onFilterUpdate_changes() {
-        let sut = makeAlbumContentPickerViewModel()
+    func testPhotoSourceLocation_onContentLoadForAllLocations_shouldChangeToCloudDriveIfOnlyCloudDriveItemsLoaded() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
-        let exp = expectation(description: "content location updates when filter updates")
-        exp.expectedFulfillmentCount = 2
-        var result = [PhotosFilterLocation]()
+        await sut.photosLoadingTask?.value
+        XCTAssertEqual(sut.photoSourceLocation, .cloudDrive)
+    }
+    
+    func testPhotoSourceLocation_onContentLoadForAllLocations_shouldChangeToCameraUploadIfOnlyCameraUploadItemsLoaded() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCameraUpload: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        await sut.photosLoadingTask?.value
+        XCTAssertEqual(sut.photoSourceLocation, .cameraUploads)
+    }
+    
+    func testPhotoSourceLocation_onContentLoadForAllLocations_shouldNotChangeIfCloudDriveAndCameraUploadItemsLoaded() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+                                                  allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        await sut.photosLoadingTask?.value
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+    }
+    
+    func testPhotoSourceLocation_onContentLoad_shouldNotChangeSourceLocationIfItsTheSame() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+                                                  allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        await sut.photosLoadingTask?.value
+        let exp = expectation(description: "Should not change if the same")
+        exp.isInverted = true
         sut.$photoSourceLocation
             .dropFirst()
-            .sink {
-                result.append($0)
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
         
-        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .cameraUploads
-        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .cloudDrive
-        
+        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .allLocations
+        await sut.photosLoadingTask?.value
         wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(result, [.cameraUploads, .cloudDrive])
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
     }
     
     func testContentLibrary_onContentLocationCloudDrive_shouldDisplaySortedCloudDrivePhotos() async throws {
-        let photos = try makeSamplePhotoNodes()
-        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: photos)
-        await sut.photosLoadingTask?.value
-        XCTAssertTrue(sut.photoLibraryContentViewModel.library.allPhotos.isEmpty)
-        
-        sut.photoSourceLocation = .cloudDrive
+        let cloudDrivePhotos = try makeSamplePhotoNodes()
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: cloudDrivePhotos, allPhotosFromCameraUpload: [])
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
         await sut.photosLoadingTask?.value
         
-        let expectedPhotos = photos.filter { $0.hasThumbnail }
+        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .cloudDrive
+        await sut.photosLoadingTask?.value
+        
+        let expectedPhotos = cloudDrivePhotos.filter { $0.hasThumbnail }
             .toPhotoLibrary(withSortType: .newest)
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
+        XCTAssertEqual(sut.photoSourceLocation, .cloudDrive)
     }
     
     func testContentLibrary_onContentCameraUpload_shouldDisplaySortedCameraUploadPhotos() async throws {
-        let photos = try makeSamplePhotoNodes()
-        let sut = makeAlbumContentPickerViewModel(allPhotosFromCameraUpload: photos)
-        await sut.photosLoadingTask?.value
-        XCTAssertTrue(sut.photoLibraryContentViewModel.library.allPhotos.isEmpty)
-        
-        sut.photoSourceLocation = .cameraUploads
+        let cameraUploadPhotos = try makeSamplePhotoNodes()
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [], allPhotosFromCameraUpload: cameraUploadPhotos)
+        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
         await sut.photosLoadingTask?.value
         
-        let expectedPhotos = photos.filter { $0.hasThumbnail }
+        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .cameraUploads
+        await sut.photosLoadingTask?.value
+        
+        let expectedPhotos = cameraUploadPhotos.filter { $0.hasThumbnail }
             .toPhotoLibrary(withSortType: .newest)
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
+        XCTAssertEqual(sut.photoSourceLocation, .cameraUploads)
+    }
+    
+    func testShouldRemoveFilter_onPhotoRetrieval_shouldNotHideFilterIfCloudDriveAndCameraUploadContainsPhotos() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+                                                  allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
+        XCTAssertTrue(sut.shouldRemoveFilter)
+        await sut.photosLoadingTask?.value
+        XCTAssertFalse(sut.shouldRemoveFilter)
+    }
+    
+    func testShouldRemoveFilter_onPhotoRetrieval_shouldHideFilterIfCloudDriveOnlyContainsPhotos() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
+        XCTAssertTrue(sut.shouldRemoveFilter)
+        await sut.photosLoadingTask?.value
+        XCTAssertTrue(sut.shouldRemoveFilter)
+    }
+    
+    func testShouldRemoveFilter_onPhotoRetrieval_shouldHideFilterIfCameraUploadsOnlyContainsPhotos() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCameraUpload: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
+        XCTAssertTrue(sut.shouldRemoveFilter)
+        await sut.photosLoadingTask?.value
+        XCTAssertTrue(sut.shouldRemoveFilter)
+    }
+    
+    func testShouldRemoveFilter_onPhotoRetrieval_shouldNotPublishAgainIfTheSame() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCameraUpload: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
+        
+        let exp = expectation(description: "Should not hide again")
+        exp.isInverted = true
+        sut.$shouldRemoveFilter
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        await sut.photosLoadingTask?.value
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertTrue(sut.shouldRemoveFilter)
     }
     
     private func makeAlbumContentPickerViewModel(resultEntity: AlbumElementsResultEntity? = nil,

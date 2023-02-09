@@ -66,19 +66,23 @@ struct AlbumContentPickerView: View {
         }
     }
     
+    @ViewBuilder
     var footer: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Spacer()
-                Button {
-                    viewModel.onFilter()
-                } label: {
-                    Text(Strings.Localizable.filter)
-                        .font(.body)
-                        .foregroundColor(textColor)
-                }.padding(20)
+        if !viewModel.shouldRemoveFilter {
+            VStack(spacing: 0) {
+                HStack {
+                    Spacer()
+                    Button {
+                        viewModel.onFilter()
+                    } label: {
+                        Text(Strings.Localizable.filter)
+                            .font(.body)
+                            .foregroundColor(textColor)
+                    }.padding(20)
+                }
             }
-        }.padding(.bottom, 20)
+            .padding(.bottom, 20)
+        }
     }
     
     private var backGroundColor: UIColor {
