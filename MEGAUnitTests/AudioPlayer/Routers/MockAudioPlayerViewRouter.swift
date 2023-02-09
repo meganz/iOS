@@ -30,7 +30,7 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
         importNode_calledTimes += 1
     }
     
-    func share() {
+    func share(sender: UIBarButtonItem?) {
         share_calledTimes += 1
     }
     

@@ -33,8 +33,10 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         }
     }
     
-    func shareLink() {
-        viewController?.present(UIActivityViewController(activityItems: [link], applicationActivities: nil), animated: true, completion: nil)
+    func shareLink(sender: UIBarButtonItem?) {
+        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.barButtonItem = sender
+        viewController?.present(activityViewController, animated: true, completion: nil)
     }
     
     private func saveToPhotos(node: MEGANode) {
@@ -56,7 +58,7 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         case .download: download(node: node)
         case .import: importNode(node)
         case .sendToChat: sendToChat()
-        case .shareLink: shareLink()
+        case .shareLink: shareLink(sender: sender as? UIBarButtonItem)
         case .saveToPhotos: saveToPhotos(node: node)
         default:
             break
