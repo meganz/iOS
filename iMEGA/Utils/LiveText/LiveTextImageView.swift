@@ -1,4 +1,4 @@
-import VisionKit
+@preconcurrency import VisionKit
 
 @available(iOS 16.0, *)
 final class LiveTextImageView: UIImageView {
