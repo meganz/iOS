@@ -7,23 +7,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
     
     private let rootNode = MockNode(handle: 0, name: "root")
     
-    func testAllPhotos_onFileSearchNodeList_shouldReturnPhotos() async throws {
-        let nodes = photoNodes()
-        let sdk = MockSdk(nodes: nodes, megaRootNode: rootNode)
-        let repo = FilesSearchRepository(sdk: sdk)
-        let photos = try await repo.allPhotos()
-        XCTAssertEqual(photos, nodes.toNodeEntities())
-    }
-    
-    func testAllVideos_onFileSearchNodeList_shouldReturnVideos() async throws {
-        let nodes = videoNodes()
-        let sdk = MockSdk(nodes: nodes, megaRootNode: rootNode)
-        let repo = FilesSearchRepository(sdk: sdk)
-        let videos = try await repo.allVideos()
-        XCTAssertEqual(videos, nodes.toNodeEntities())
-    }
-    
-    func testStartMonitoring_onAlbumScreen_shouldSetCallBack() throws {
+    func testStartMonitoring_onAlbumScreen_shouldSetCallBack() {
         let sdk = MockSdk()
         let repo = FilesSearchRepository(sdk: sdk)
         
@@ -32,7 +16,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
         XCTAssertTrue(sdk.hasGlobalDelegate)
     }
     
-    func testStopMonitoring_onAlbumScreen_shouldSetCallBackToNil() throws {
+    func testStopMonitoring_onAlbumScreen_shouldSetCallBackToNil() {
         let sdk = MockSdk()
         let repo = FilesSearchRepository(sdk: sdk)
         

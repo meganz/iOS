@@ -21,8 +21,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let gifNodes = nodes.filter { $0.name.contains(".gif") }
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name)),
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: nodes),
+            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name), allPhotos: nodes),
+            fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
         let nodesForGifAlbum = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif))
@@ -42,8 +42,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let rawImageNodes = nodes.filter { $0.name.contains(".raw") }
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name)),
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: nodes),
+            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name), allPhotos: nodes),
+            fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
         let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
@@ -56,16 +56,16 @@ final class AlbumContentUseCaseTests: XCTestCase {
         
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(isGifImage: true),
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: [
+            mediaUseCase: MockMediaUseCase(isGifImage: true, allPhotos: [
                 expectedPhotoNode,
                 NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true),
                 NodeEntity(name: "sample3.gif", handle: 2, hasThumbnail: false)
-            ], videoNodes: [
+            ], allVideos: [
                 NodeEntity(name: "test-2.mp4", handle: 2, hasThumbnail: true),
                 expectedVideoNode,
                 NodeEntity(name: "test-3.mp4", handle: 2, hasThumbnail: false)
             ]),
+            fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
         let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "Fav", coverNode: NodeEntity(handle: 2), count: 1, type: .favourite))

@@ -235,7 +235,6 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                 allPhotos: allPhotos,
                                                 allPhotosFromCloudDriveOnly: allPhotosFromCloudDriveOnly,
                                                 allPhotosFromCameraUpload: allPhotosFromCameraUpload),
-                                           mediaUseCase: MockMediaUseCase(isStringImage: true),
                                            albumContentModificationUseCase: MockAlbumContentModificationUseCase(resultEntity: resultEntity),
                                            completion: completion )
     }

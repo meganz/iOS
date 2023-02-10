@@ -10,10 +10,17 @@ public protocol MediaUseCaseProtocol {
     func isRawImage(_ name: FileNameEntity) -> Bool
     func isGifImage(_ name: FileNameEntity) -> Bool
     func isMultimedia(_ name: FileNameEntity) -> Bool
+    
+    func allPhotos() async throws -> [NodeEntity]
+    func allVideos() async throws -> [NodeEntity]
 }
 
 public struct MediaUseCase: MediaUseCaseProtocol {
-    public init () {}
+    private let fileSearchRepo: FilesSearchRepositoryProtocol
+    
+    public init(fileSearchRepo: FilesSearchRepositoryProtocol) {
+        self.fileSearchRepo = fileSearchRepo
+    }
     
     public func isVideo(for url: URL) -> Bool {
         VideoFileExtensionEntity().videoSupportedExtensions.contains(url.pathExtension.lowercased())
@@ -44,5 +51,19 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     
     public func isMultimedia(_ name: FileNameEntity) -> Bool {
         isImage(name) || isVideo(name)
+    }
+    
+    public func allPhotos() async throws -> [NodeEntity] {
+        try await fileSearchRepo.search(string: "",
+                                        parent: nil,
+                                        sortOrderType: .defaultDesc,
+                                        formatType: .photo)
+    }
+    
+    public func allVideos() async throws -> [NodeEntity] {
+        try await fileSearchRepo.search(string: "",
+                                        parent: nil,
+                                        sortOrderType: .defaultDesc,
+                                        formatType: .video)
     }
 }

@@ -54,7 +54,6 @@ struct AlbumListView: View {
         AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
             album: album,
             photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: FilesSearchRepository.newRepo),
-            mediaUseCase: MediaUseCase(),
             albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: UserAlbumRepository.newRepo),
             completion: { msg, album in
                 viewModel.onAlbumContentAdded(msg, album)

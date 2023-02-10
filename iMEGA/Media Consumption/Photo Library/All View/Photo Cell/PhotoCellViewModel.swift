@@ -47,7 +47,7 @@ final class PhotoCellViewModel: ObservableObject {
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
          thumbnailUseCase: ThumbnailUseCaseProtocol,
-         mediaUseCase: MediaUseCaseProtocol = MediaUseCase()) {
+         mediaUseCase: MediaUseCaseProtocol) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase

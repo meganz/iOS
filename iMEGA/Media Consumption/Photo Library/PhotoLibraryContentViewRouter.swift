@@ -44,7 +44,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+                mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo)
             )
         )
     }

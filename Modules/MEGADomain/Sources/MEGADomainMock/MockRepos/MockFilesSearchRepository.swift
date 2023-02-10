@@ -16,14 +16,6 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         self.videoNodes = videoNodes
     }
     
-    public func allPhotos() async throws -> [NodeEntity] {
-        photoNodes
-    }
-    
-    public func allVideos() async throws -> [NodeEntity] {
-        videoNodes
-    }
-    
     public func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
         self.callback = callback
     }
@@ -31,7 +23,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     public func stopMonitoringNodesUpdate() {
         self.callback = nil
     }
-    
+
     public func node(by id: HandleEntity) async -> NodeEntity? {
         (photoNodes + videoNodes).first { node in
             node.handle == id

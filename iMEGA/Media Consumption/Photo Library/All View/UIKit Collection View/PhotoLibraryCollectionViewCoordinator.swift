@@ -42,7 +42,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             let viewModel = PhotoCellViewModel(
                 photo: photo,
                 viewModel: representer.viewModel,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+                mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo)
             )
             cell.viewModel = viewModel
             

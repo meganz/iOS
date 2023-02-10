@@ -20,7 +20,7 @@ class SlideshowViewModelTests: XCTestCase {
                 nodeEntities: nodeEntities,
                 thumbnailUseCase: MockThumbnailUseCase(),
                 fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: MockFileCacheRepository.newRepo, fileSystemRepository: MockFileSystemRepository.newRepo, downloadFileRepository: MockDownloadFileRepository.newRepo),
-                mediaUseCase: MediaUseCase(),
+                mediaUseCase: MockMediaUseCase(),
                 fileExistenceUseCase: FileExistUseCase(fileSystemRepository: MockFileSystemRepository.newRepo),
                 advanceNumberOfPhotosToLoad: 20,
                 numberOfUnusedPhotosBuffer: 20

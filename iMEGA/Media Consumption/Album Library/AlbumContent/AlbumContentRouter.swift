@@ -17,10 +17,11 @@ struct AlbumContentRouter: Routing {
             sdk: sdk,
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
+        let filesSearchRepo = FilesSearchRepository.newRepo
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MediaUseCase(),
-            fileSearchRepo: FilesSearchRepository.newRepo,
+            mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
+            fileSearchRepo: filesSearchRepo,
             userAlbumRepo: UserAlbumRepository.newRepo
         )
         

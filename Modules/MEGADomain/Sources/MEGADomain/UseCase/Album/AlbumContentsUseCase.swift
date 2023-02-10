@@ -14,7 +14,10 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     public let updatePublisher: AnyPublisher<Void, Never>
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol, mediaUseCase: MediaUseCaseProtocol, fileSearchRepo: FilesSearchRepositoryProtocol, userAlbumRepo: UserAlbumRepositoryProtocol) {
+    public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol,
+                mediaUseCase: MediaUseCaseProtocol,
+                fileSearchRepo: FilesSearchRepositoryProtocol,
+                userAlbumRepo: UserAlbumRepositoryProtocol) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
@@ -40,11 +43,11 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     // MARK: Private
     
     private func filter(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
-        async let photos = try await fileSearchRepo.allPhotos()
+        async let photos = try await mediaUseCase.allPhotos()
         var nodes = [NodeEntity]()
         
         if album.type == .favourite {
-            async let videos = try fileSearchRepo.allVideos()
+            async let videos = try mediaUseCase.allVideos()
             nodes = try await [photos, videos]
                 .flatMap { $0 }
                 .filter { $0.hasThumbnail && $0.isFavourite }

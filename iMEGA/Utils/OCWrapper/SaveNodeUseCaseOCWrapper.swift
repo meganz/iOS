@@ -6,7 +6,7 @@ import MEGADomain
         fileCacheRepository: FileCacheRepository.newRepo,
         nodeRepository: NodeRepository.newRepo,
         photosLibraryRepository: PhotosLibraryRepository.newRepo,
-        mediaUseCase: MediaUseCase(),
+        mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
         preferenceUseCase: PreferenceUseCase.default,
         transferRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()))
     

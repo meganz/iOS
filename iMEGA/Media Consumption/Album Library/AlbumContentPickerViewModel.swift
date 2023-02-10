@@ -6,7 +6,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
    
     private let album: AlbumEntity
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
     private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
     private let completion: (String, AlbumEntity) -> Void
     private var subscriptions = Set<AnyCancellable>()
@@ -25,12 +24,10 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @MainActor
     init(album: AlbumEntity,
          photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-         mediaUseCase: MediaUseCaseProtocol,
          albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
          completion: @escaping (String, AlbumEntity) -> Void) {
         self.album = album
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.mediaUseCase = mediaUseCase
         self.albumContentModificationUseCase = albumContentModificationUseCase
         self.completion = completion
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),

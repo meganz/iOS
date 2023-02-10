@@ -76,9 +76,23 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
     
     // MARK: - Private
     
+    private func allPhotos() async throws -> [NodeEntity] {
+        try await fileSearchRepository.search(string: "",
+                                              parent: nil,
+                                              sortOrderType: .defaultDesc,
+                                              formatType: .photo)
+    }
+    
+    private func allVideos() async throws -> [NodeEntity] {
+        try await fileSearchRepository.search(string: "",
+                                              parent: nil,
+                                              sortOrderType: .defaultDesc,
+                                              formatType: .video)
+    }
+    
     private func allSortedThumbnailPhotosAndVideos() async throws -> [NodeEntity] {
-        async let allPhotos = try await fileSearchRepository.allPhotos()
-        async let allVideos = try await fileSearchRepository.allVideos()
+        async let allPhotos = try await allPhotos()
+        async let allVideos = try await allVideos()
         var allThumbnailPhotosAndVideos = try await [allPhotos, allVideos]
             .flatMap { $0 }
             .filter { $0.hasThumbnail }
@@ -150,8 +164,8 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
     }
     
     public func hasNoPhotosAndVideos() async -> Bool {
-        async let allPhotos = try await fileSearchRepository.allPhotos()
-        async let allVideos = try await fileSearchRepository.allVideos()
+        async let allPhotos = try await allPhotos()
+        async let allVideos = try await allVideos()
         let allPhotosAndVideos = try? await [allPhotos, allVideos]
             .flatMap { $0 }
             .filter { $0.hasThumbnail }
