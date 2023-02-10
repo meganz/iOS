@@ -207,6 +207,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         MeetingInfoRouter(presenter: navigationController, scheduledMeeting: scheduledMeeting).start()
     }
     
+    @MainActor
     func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity) {
         guard let navigationController else {
             return

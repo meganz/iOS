@@ -20,4 +20,8 @@ struct MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity] {
         scheduledMeetingsOccurrences
     }
+    
+    func scheduledMeetingOccurrencesByChat(chatId: MEGADomain.ChatIdEntity, since: Date) async throws -> [MEGADomain.ScheduledMeetingOccurrenceEntity] {
+        scheduledMeetingsOccurrences
+    }
 }

@@ -6,7 +6,7 @@ struct ScheduledMeetingOccurrencesView: View {
     
     var body: some View {
         List {
-            ForEach(viewModel.diplayOccurrences) { occurrence in
+            ForEach(viewModel.displayOccurrences) { occurrence in
                 if #available(iOS 15.0, *) {
                     OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: viewModel.chatRoomAvatarViewModel)
                         .listRowSeparator(.hidden)
@@ -14,14 +14,16 @@ struct ScheduledMeetingOccurrencesView: View {
                     OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: viewModel.chatRoomAvatarViewModel)
                 }
             }
-            if #available(iOS 15.0, *) {
-                SeeMoreOccurrencesView {
-                    viewModel.seeMoreTapped()
-                }
-                .listRowSeparator(.hidden)
-            } else {
-                SeeMoreOccurrencesView {
-                    viewModel.seeMoreTapped()
+            if viewModel.seeMoreOccurrencesVisible {
+                if #available(iOS 15.0, *) {
+                    SeeMoreOccurrencesView {
+                        viewModel.seeMoreTapped()
+                    }
+                    .listRowSeparator(.hidden)
+                } else {
+                    SeeMoreOccurrencesView {
+                        viewModel.seeMoreTapped()
+                    }
                 }
             }
         }
