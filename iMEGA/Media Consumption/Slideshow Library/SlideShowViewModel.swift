@@ -47,9 +47,9 @@ final class SlideShowViewModel: ViewModelType {
         configuration.timeIntervalForSlideInSeconds.value
     }
     
-    var currentSlideNumber = 0 {
+    var currentSlideIndex = 0 {
         didSet {
-            dataSource.processData(basedOnCurrentSlideNumber: currentSlideNumber, andOldSlideNumber: oldValue)
+            dataSource.processData(basedOnCurrentSlideIndex: currentSlideIndex, andOldSlideIndex: oldValue)
         }
     }
     
@@ -94,7 +94,7 @@ final class SlideShowViewModel: ViewModelType {
     func restartSlideShow() {
         invokeCommand?(.showLoader)
         dataSource.initialPhotoDownloadCallback = { [weak self] in
-            self?.currentSlideNumber = 0
+            self?.currentSlideIndex = 0
             self?.invokeCommand?(.restart)
         }
         dataSource.resetData()

@@ -84,7 +84,7 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(slideShowViewModel.playbackStatus == .playing)
         slideShowViewModel.dispatch(.pause)
         XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
-        XCTAssertTrue(slideShowViewModel.currentSlideNumber == 0)
+        XCTAssertTrue(slideShowViewModel.currentSlideIndex == 0)
         XCTAssertTrue(slideShowViewModel.timeIntervalForSlideInSeconds == 4)
         XCTAssertTrue(slideShowViewModel.configuration.isRepeat == false)
         
@@ -121,9 +121,9 @@ class SlideshowViewModelTests: XCTestCase {
             XCTAssertTrue(command == .showLoader)
         }
 
-        sut.currentSlideNumber = 1
+        sut.currentSlideIndex = 1
         sut.restartSlideShow()
-        XCTAssertTrue(sut.currentSlideNumber == 0)
+        XCTAssertTrue(sut.currentSlideIndex == 0)
 
         wait(for: [expectation], timeout: 1.0)
     }
