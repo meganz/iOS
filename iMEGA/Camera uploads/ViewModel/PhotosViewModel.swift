@@ -12,7 +12,6 @@ final class PhotosViewModel: NSObject {
     private var featureFlagProvider: FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
-    private var mediaUseCase: MediaUseCaseProtocol
     
     var cameraUploadExplorerSortOrderType: SortOrderType = .newest {
         didSet {
@@ -38,12 +37,10 @@ final class PhotosViewModel: NSObject {
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-        mediaUseCase: MediaUseCaseProtocol,
         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.mediaUseCase = mediaUseCase
         self.featureFlagProvider = featureFlagProvider
         super.init()
         cameraUploadExplorerSortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)

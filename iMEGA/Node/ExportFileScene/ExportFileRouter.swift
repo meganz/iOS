@@ -38,7 +38,8 @@ final class ExportFileRouter: ExportFileViewRouting {
             fileSystemRepository: FileSystemRepository.newRepo,
             exportChatMessagesRepository: ExportChatMessagesRepository.newRepo,
             importNodeRepository: ImportNodeRepository.newRepo,
-            megaHandleRepository: MEGAHandleRepository.newRepo)
+            megaHandleRepository: MEGAHandleRepository.newRepo,
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
         
         return ExportFileViewModel(router: self,
                                    analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),

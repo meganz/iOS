@@ -12,7 +12,7 @@ struct SlideShowRouter: Routing {
     }
     
     private func configSlideShowViewModel() -> SlideShowViewModel {
-        let photoEntities = dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase())
+        let photoEntities = dataProvider.fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
         
         var preferenceRepo: PreferenceRepository
         if let slideshowUserDefaults = UserDefaults(suiteName: "slideshow") {
@@ -34,7 +34,7 @@ struct SlideShowRouter: Routing {
             fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: FileCacheRepository.newRepo,
                                                      fileSystemRepository: FileSystemRepository.newRepo,
                                                      downloadFileRepository: DownloadFileRepository.newRepo),
-            mediaUseCase: MediaUseCase(),
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             fileExistenceUseCase: FileExistUseCase(fileSystemRepository: FileSystemRepository.newRepo),
             advanceNumberOfPhotosToLoad: 20,
             numberOfUnusedPhotosBuffer: 20

@@ -33,9 +33,9 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
                 nodeRepository: nodeRepository,
                 nodeDataRepository: NodeDataRepository.newRepo,
                 fileCacheRepository: FileCacheRepository.newRepo,
-                mediaUseCase: MediaUseCase(),
+                mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
                 preferenceRepository: PreferenceRepository.newRepo),
-            mediaUseCase: MediaUseCase(),
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
             transfers: transfers,
             transferType: transferType)

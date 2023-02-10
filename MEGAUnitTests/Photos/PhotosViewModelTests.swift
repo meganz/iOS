@@ -15,7 +15,7 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: allPhotos,
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
-        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, mediaUseCase: MockMediaUseCase())
+        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
     }
     
     func testLoadSortOrderType() throws {
@@ -148,7 +148,6 @@ final class PhotosViewModelTests: XCTestCase {
                                               allPhotosFromCameraUpload: [])
         return PhotosViewModel(photoUpdatePublisher: publisher,
                                photoLibraryUseCase: usecase,
-                               mediaUseCase: MockMediaUseCase(),
                                featureFlagProvider: provider)
     }
 }

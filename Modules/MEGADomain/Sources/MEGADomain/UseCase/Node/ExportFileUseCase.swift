@@ -41,7 +41,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
                 exportChatMessagesRepository: W,
                 importNodeRepository: X,
                 megaHandleRepository: Z,
-                mediaUseCase: M = MediaUseCase()) {
+                mediaUseCase: M) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileCacheRepository = fileCacheRepository

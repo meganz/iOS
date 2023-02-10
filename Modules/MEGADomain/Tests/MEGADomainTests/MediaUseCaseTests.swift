@@ -1,8 +1,9 @@
 import XCTest
 import MEGADomain
+import MEGADomainMock
 
 final class MediaUseCaseTests: XCTestCase {
-    let sut = MediaUseCase()
+    let sut = MediaUseCase(fileSearchRepo: MockFilesSearchRepository.newRepo)
     
     func testIsImage() {
         for fileExtension in ImageFileExtensionEntity().imagesSupportedExtensions {
@@ -77,5 +78,42 @@ final class MediaUseCaseTests: XCTestCase {
     func testIsGifImage_whenFilteringPhotos_shouldReturnFalse() {
         let name = "image.jpg"
         XCTAssertFalse(sut.isGifImage(name))
+    }
+    
+    func testAllPhotos_shouldReturnAllPhotos() async throws {
+        let photos = photoNodes()
+        let repo = MockFilesSearchRepository(photoNodes: photos)
+        let sut = MediaUseCase(fileSearchRepo: repo)
+        
+        let result = try await sut.allPhotos()
+        
+        XCTAssertEqual(photos, result)
+    }
+    
+    func testAllVideos_shouldReturnAllVideos() async throws {
+        let videos = videoNodes()
+        let repo = MockFilesSearchRepository(videoNodes: videos)
+        let sut = MediaUseCase(fileSearchRepo: repo)
+        
+        let result = try await sut.allVideos()
+        
+        XCTAssertEqual(videos, result)
+    }
+    
+    // MARK: - Private
+    
+    private func photoNodes() -> [NodeEntity] {
+        [NodeEntity(name:"1.raw", handle:1),
+         NodeEntity(name:"2.nef", handle:2),
+         NodeEntity(name:"3.cr2", handle:3),
+         NodeEntity(name:"4.dng", handle:4),
+         NodeEntity(name:"5.gif", handle:5)
+        ]
+    }
+    
+    private func videoNodes() -> [NodeEntity] {
+        [NodeEntity(name:"1.mp4", handle:1),
+         NodeEntity(name:"2.mov", handle:2)
+        ]
     }
 }
