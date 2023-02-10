@@ -29,14 +29,14 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     }
     
     func startInitialDownload(_ initialPhotoDownloaded: Bool) {
-        processData(basedOnCurrentSlideNumber: 0, andOldSlideNumber: 0)
+        processData(basedOnCurrentSlideIndex: 0, andOldSlideIndex: 0)
     }
     
     func loadSelectedPhotoPreview() -> Bool {
         true
     }
     
-    func processData(basedOnCurrentSlideNumber currentSlideNumber: Int, andOldSlideNumber oldSlideNumber: Int) {
+    func processData(basedOnCurrentSlideIndex currentSlideIndex: Int, andOldSlideIndex oldSlideIndex: Int) {
         nodeEntities.forEach { node in
             photos.append(SlideShowMediaEntity(image: nil, node: node, fileUrl: nil))
         }

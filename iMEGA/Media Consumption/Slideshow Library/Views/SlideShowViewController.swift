@@ -154,8 +154,8 @@ final class SlideShowViewController: UIViewController, ViewType {
             self.collectionView.backgroundColor = UIColor.black
             self.view.backgroundColor = .black
             cell?.resetZoomScale()
-            if viewModel.currentSlideNumber >= viewModel.photos.count {
-                viewModel.currentSlideNumber = -1
+            if viewModel.currentSlideIndex >= viewModel.photos.count - 1 {
+                viewModel.currentSlideIndex = -1
                 self.changeImage()
             }
         }
@@ -191,21 +191,21 @@ final class SlideShowViewController: UIViewController, ViewType {
         guard let viewModel = viewModel else { return }
         hideLoader()
         reload()
-        collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideNumber, section: 0), at: .left, animated: false)
+        collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideIndex, section: 0), at: .left, animated: false)
         play()
     }
     
     @objc private func changeImage() {
         guard let viewModel = viewModel else { return }
         
-        let slideNumber = viewModel.currentSlideNumber + 1
+        let slideNumber = viewModel.currentSlideIndex + 1
         
         if slideNumber < viewModel.photos.count {
-            viewModel.currentSlideNumber = slideNumber
+            viewModel.currentSlideIndex = slideNumber
             hideLoader()
             updateSlideInView()
         } else if viewModel.configuration.isRepeat {
-            viewModel.currentSlideNumber = 0
+            viewModel.currentSlideIndex = 0
             hideLoader()
             updateSlideInView()
         } else if slideNumber >= viewModel.numberOfSlideShowContents {
@@ -219,7 +219,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func updateSlideInView() {
         guard let viewModel = viewModel else { return }
         
-        let index = IndexPath(item: viewModel.currentSlideNumber, section: 0)
+        let index = IndexPath(item: viewModel.currentSlideIndex, section: 0)
         if collectionView.isValid(indexPath: index) {
             collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
         }
@@ -286,8 +286,8 @@ extension SlideShowViewController: UIScrollViewDelegate {
         let visibleIndexPath = collectionView.indexPathForItem(at: visiblePoint)
         
         if let viewModel = viewModel, let visibleIndexPath = visibleIndexPath,
-            viewModel.currentSlideNumber != visibleIndexPath.row {
-            viewModel.currentSlideNumber = visibleIndexPath.row
+            viewModel.currentSlideIndex != visibleIndexPath.row {
+            viewModel.currentSlideIndex = visibleIndexPath.row
         }
         
         if viewModel?.playbackStatus == .playing {

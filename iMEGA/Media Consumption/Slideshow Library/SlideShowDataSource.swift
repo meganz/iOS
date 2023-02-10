@@ -9,7 +9,7 @@ protocol SlideShowDataSourceProtocol {
     func resetData()
     func loadSelectedPhotoPreview() -> Bool
     func startInitialDownload(_ initialPhotoDownloaded: Bool)
-    func processData(basedOnCurrentSlideNumber currentSlideNumber: Int, andOldSlideNumber oldSlideNumber: Int)
+    func processData(basedOnCurrentSlideIndex currentSlideIndex: Int, andOldSlideIndex oldSlideIndex: Int)
     func sortNodes(byOrder order: SlideShowPlayingOrderEntity)
 }
 
@@ -101,16 +101,16 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         }
     }
     
-    func processData(basedOnCurrentSlideNumber currentSlideNumber: Int, andOldSlideNumber oldSlideNumber: Int) {
-        if shouldLoadMorePhotos(currentSlideNumber) {
+    func processData(basedOnCurrentSlideIndex currentSlideIndex: Int, andOldSlideIndex oldSlideIndex: Int) {
+        if shouldLoadMorePhotos(currentSlideIndex) {
             loadNextSetOfPhotosPreview(advanceNumberOfPhotosToLoad, withInitialPhoto: false)
         }
         
-        if oldSlideNumber > currentSlideNumber {
-            reloadUnusedPhotos(currentSlideNumber)
+        if oldSlideIndex > currentSlideIndex {
+            reloadUnusedPhotos(currentSlideIndex)
         }
-        else if currentSlideNumber > oldSlideNumber {
-            removeUnusedPhotos(currentSlideNumber)
+        else if currentSlideIndex > oldSlideIndex {
+            removeUnusedPhotos(currentSlideIndex)
         }
     }
     
