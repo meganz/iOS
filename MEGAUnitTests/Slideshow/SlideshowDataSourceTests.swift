@@ -78,7 +78,7 @@ class SlideShowDataSourceTests: XCTestCase {
         sut.startInitialDownload(false)
         await sut.thumbnailLoadingTask?.value
         
-        sut.processData(basedOnCurrentSlideNumber: 11, andOldSlideNumber: 10)
+        sut.processData(basedOnCurrentSlideIndex: 11, andOldSlideIndex: 10)
         await sut.thumbnailLoadingTask?.value
         XCTAssertTrue(sut.photos.count == 40)
     }
@@ -89,10 +89,10 @@ class SlideShowDataSourceTests: XCTestCase {
         sut.startInitialDownload(false)
         await sut.thumbnailLoadingTask?.value
         
-        sut.processData(basedOnCurrentSlideNumber: 20, andOldSlideNumber: 19)
+        sut.processData(basedOnCurrentSlideIndex: 20, andOldSlideIndex: 19)
         XCTAssertNil(sut.photos[0].image)
         
-        sut.processData(basedOnCurrentSlideNumber: 19, andOldSlideNumber: 20)
+        sut.processData(basedOnCurrentSlideIndex: 19, andOldSlideIndex: 20)
         await sut.thumbnailLoadingTask?.value
         XCTAssertNotNil(sut.photos[0].image)
     }
@@ -103,7 +103,7 @@ class SlideShowDataSourceTests: XCTestCase {
         sut.startInitialDownload(false)
         await sut.thumbnailLoadingTask?.value
         
-        sut.processData(basedOnCurrentSlideNumber: 20, andOldSlideNumber: 19)
+        sut.processData(basedOnCurrentSlideIndex: 20, andOldSlideIndex: 19)
         XCTAssertNil(sut.photos[0].image)
     }
 }
