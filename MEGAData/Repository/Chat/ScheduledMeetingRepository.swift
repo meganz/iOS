@@ -54,4 +54,29 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 })
         }
     }
+    
+    public func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity, since: Date) async throws -> [ScheduledMeetingOccurrenceEntity] {
+        return try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            chatSDK
+                .fetchScheduledMeetingOccurrences(byChat: chatId, since: UInt64(since.timeIntervalSince1970), delegate: MEGAChatGenericRequestDelegate { request, error in
+                    guard Task.isCancelled == false else {
+                        continuation.resume(throwing: CancellationError())
+                        return
+                    }
+
+                    guard error.type == .MEGAChatErrorTypeOk else {
+                        continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
+                        return
+                    }
+                    
+                    let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
+                    
+                    continuation.resume(returning: occurrences)
+                })
+        }
+    }
 }

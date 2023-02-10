@@ -207,10 +207,11 @@ final class ChatRoomsListViewModel: ObservableObject {
             if $0.rules.frequency == .invalid {
                 return $0.endDate >= Date()
             } else {
-                guard let until = $0.rules.until, until >= Date() else {
-                    return false
+                if let until = $0.rules.until  {
+                    return until >= Date()
+                } else {
+                    return true
                 }
-                return true
             }
         }
         populateFutureMeetings(futureScheduledMeetings)

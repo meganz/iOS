@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ScheduledMeetingOccurrenceEntity {
+public struct ScheduledMeetingOccurrenceEntity: Hashable {
     public let cancelled: Bool
     public let scheduledId: ChatIdEntity
     public let parentScheduledId: ChatIdEntity
