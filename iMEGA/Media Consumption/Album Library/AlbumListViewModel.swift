@@ -158,6 +158,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         let names = Set(albums.filter { $0.name.hasPrefix(newAlbumName) }.map { $0.name })
         
         guard names.count > 0 else { return newAlbumName }
+        guard names.contains(newAlbumName) else { return newAlbumName }
         
         for i in 1...names.count {
             let newName = "\(newAlbumName) (\(i))"
