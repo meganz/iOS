@@ -18,7 +18,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
                                         router: router)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: expectedNodes)])
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
     
     func testDispatchViewReady_onLoadedNodesSuccessfully_shouldSortAndThenReturnNodesForFavouritesAlbum() throws {
@@ -27,13 +27,13 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample1.gif", handle: 2, modificationTime: try "2022-08-19T20:01:04Z".date),
                              NodeEntity(name: "sample2.gif", handle: 1, modificationTime: try "2022-08-19T20:01:04Z".date)]
         
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes.reversed()), router: router)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: expectedNodes)])
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes), router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
     
     func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() throws {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbum(nodes: [])])
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
     }
     
     func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() throws {
@@ -64,8 +64,9 @@ final class AlbumContentViewModelTests: XCTestCase {
         let exp = expectation(description: "show album nodes after update publisher triggered")
         sut.invokeCommand = { command in
             switch command {
-            case .showAlbum(let nodes):
+            case .showAlbumPhotos(let nodes, let sortOrder):
                 XCTAssertEqual(nodes, expectedNodes)
+                XCTAssertEqual(sortOrder, .newest)
                 exp.fulfill()
             case .dismissAlbum:
                 XCTFail()
@@ -83,17 +84,122 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isFavouriteAlbum)
     }
     
-    func testIsFilterEnabled_whenAlbumTypeIsUserAndFavourite_shouldReturnTrueForFavouriteAndUserAlbum() {
-        let sut1 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
-        XCTAssertTrue(sut1.isFilterEnabled)
+    func testContextMenuConfiguration_onFavouriteAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
+                                        messageForNewAlbum: "Test",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        router: router)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertTrue(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
+                                        messageForNewAlbum: "Test",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        router: router)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
         
-        let sut2 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
-        XCTAssertTrue(sut2.isFilterEnabled)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
         
-        let sut3 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
-        XCTAssertFalse(sut3.isFilterEnabled)
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertTrue(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testContextMenuConfiguration_onRawAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
+        let expectedNodes = [NodeEntity(name: "sample1.raw", handle: 1)]
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw),
+                                        messageForNewAlbum: "Test",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        router: router)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
         
-        let sut4 = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
-        XCTAssertFalse(sut4.isFilterEnabled)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
+        
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testContextMenuConfiguration_onGifAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif),
+                                        messageForNewAlbum: "Test",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        router: router)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
+        
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testDispatchChangeSortOrder_onSortOrderTheSame_shouldDoNothing() {
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        messageForNewAlbum: "New Album",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        router: router)
+        XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
+        let exp = expectation(description: "should not call any commands")
+        exp.isInverted = true
+        sut.invokeCommand = { _ in
+            exp.fulfill()
+        }
+        sut.dispatch(.changeSortOrder(.newest))
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
+    }
+    
+    func testDispatchChangeSortOrder_onSortOrderDifferent_shouldShowAlbumWithNewSortedValue() {
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        messageForNewAlbum: "New Album",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        router: router)
+        XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
+        let expectedSortOrder = SortOrderType.oldest
+        test(viewModel: sut, action: .changeSortOrder(expectedSortOrder),
+             expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: expectedSortOrder)])
+        XCTAssertEqual(sut.contextMenuConfiguration.sortType, expectedSortOrder.toSortOrderEntity())
+    }
+    
+    func DispatchChangeSortOrder_onSortOrderDifferentWithLoadedContents_shouldShowAlbumWithNewSortedValueAndExistingAlbumContents() {
+        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
+                             NodeEntity(name: "sample2.gif", handle: 2)]
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        messageForNewAlbum: "New Album",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        router: router)
+        XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
+        
+        let exp = expectation(description: "should show album twice with different sort orders")
+        exp.expectedFulfillmentCount = 2
+        let expectedSortOrderAfterChange = SortOrderType.oldest
+        var expectedSortOrder = [SortOrderType.newest, expectedSortOrderAfterChange]
+        
+        sut.invokeCommand = { command in
+            switch command {
+            case .showAlbumPhotos(let nodes, let sortOrder):
+                XCTAssertEqual(nodes, expectedNodes)
+                XCTAssertEqual(sortOrder, expectedSortOrder.first)
+                expectedSortOrder.removeFirst()
+                exp.fulfill()
+            default:
+                XCTFail("Unexpected command returned")
+            }
+        }
+        sut.dispatch(.onViewReady)
+        sut.dispatch(.changeSortOrder(expectedSortOrderAfterChange))
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sut.contextMenuConfiguration.sortType, expectedSortOrderAfterChange.toSortOrderEntity())
+        XCTAssertTrue(expectedSortOrder.isEmpty)
     }
 }

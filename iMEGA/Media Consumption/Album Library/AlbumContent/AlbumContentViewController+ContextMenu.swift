@@ -4,16 +4,6 @@ import MEGAUIKit
 import MEGADomain
 
 extension AlbumContentViewController {
-    private func contextMenuConfiguration(_ filterEnabled: Bool = true) -> CMConfigEntity? {
-        return CMConfigEntity(
-            menuType: .menu(type: .display),
-            sortType: .modificationDesc,
-            filterType: .allMedia,
-            isAlbum: true,
-            isFilterEnabled: filterEnabled
-        )
-    }
-    
     func contextMenuManagerConfiguration() -> ContextMenuManager {
         ContextMenuManager(
             displayMenuDelegate: self,
@@ -22,9 +12,8 @@ extension AlbumContentViewController {
         )
     }
 
-    private func makeContextMenuBarButton(filterEnabled: Bool = true) -> UIBarButtonItem? {
-        guard  let config = contextMenuConfiguration(filterEnabled),
-               let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
+    private func makeContextMenuBarButton() -> UIBarButtonItem? {
+        guard let menu = contextMenuManager?.contextMenu(with: viewModel.contextMenuConfiguration) else { return nil }
         return UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, menu: menu)
     }
     
@@ -38,7 +27,7 @@ extension AlbumContentViewController {
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
         } else {
             if FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu) {
-                navigationItem.rightBarButtonItem = makeContextMenuBarButton(filterEnabled: viewModel.isFilterEnabled)
+                navigationItem.rightBarButtonItem = makeContextMenuBarButton()
             } else {
                 navigationItem.rightBarButtonItem = rightBarButtonItem
             }
@@ -54,7 +43,9 @@ extension AlbumContentViewController: DisplayMenuDelegate {
         }
     }
     
-    func sortMenu(didSelect sortType: SortOrderType) { }
+    func sortMenu(didSelect sortType: SortOrderType) {
+        viewModel.dispatch(.changeSortOrder(sortType))
+    }
 }
 
 // MARK: - FilterMenuDelegate
