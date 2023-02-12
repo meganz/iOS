@@ -362,7 +362,10 @@ public final class ContextMenuBuilder {
                 displayActionsMenuChildren.append(filterMenu())
             }
         } else if isAlbum {
-            displayActionsMenuChildren = [selectMenu(), sortMenu()]
+            displayActionsMenuChildren = [selectMenu()]
+            if !isEmptyState {
+                displayActionsMenuChildren.append(sortMenu())
+            }
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }

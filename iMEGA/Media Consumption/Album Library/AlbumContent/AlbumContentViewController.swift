@@ -109,8 +109,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     
     func executeCommand(_ command: AlbumContentViewModel.Command) {
         switch command {
-        case .showAlbum(let nodes):
-            updatePhotoLibrary(by: nodes)
+        case .showAlbumPhotos(let nodes, let sortOrder):
+            updatePhotoLibrary(by: nodes, withSortType: sortOrder)
             
             if nodes.isEmpty {
                 showEmptyView()

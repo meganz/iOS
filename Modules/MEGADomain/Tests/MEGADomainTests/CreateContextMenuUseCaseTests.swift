@@ -138,11 +138,12 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
-    func testCreateContextMenu_onAlbumContentPage_shouldReturnSixMenuItems() throws {
+    func testCreateContextMenu_withAlbumConfigurationFilterEnabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         isAlbum: true,
-                                                                        isFilterEnabled: true))
+                                                                        isFilterEnabled: true,
+                                                                        isEmptyState: false))
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
@@ -153,40 +154,37 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                             CMElementTypeEntity.filter(actionType: .images),
                             CMElementTypeEntity.filter(actionType: .videos)]
         
-        XCTAssertTrue(menuActions == menuActionsArray)
+        XCTAssertEqual(menuActions, menuActionsArray)
     }
     
-    func testCreateContextMenu_onFavouriteAlbumContentPage_shouldReturnSixMenuItems() throws {
+    func testCreateContextMenu_withAlbumConfigurationFilterDisabledAndInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         isAlbum: true,
-                                                                        isFilterEnabled: true))
+                                                                        isFilterEnabled: false,
+                                                                        isEmptyState: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                            CMElementTypeEntity.sort(actionType: .modificationDesc),
-                            CMElementTypeEntity.sort(actionType: .modificationAsc),
-                            CMElementTypeEntity.filter(actionType: .allMedia),
-                            CMElementTypeEntity.filter(actionType: .images),
-                            CMElementTypeEntity.filter(actionType: .videos)]
+        menuActionsArray = [CMElementTypeEntity.display(actionType: .select)]
         
-        XCTAssertTrue(menuActions == menuActionsArray)
+        XCTAssertEqual(menuActions, menuActionsArray)
     }
     
-    func testCreateContextMenu_onGifAndRawAlbumContentPage_shouldReturnThreeMenuItems() throws {
+    func testCreateContextMenu_onAlbumContentPageFilterDisabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         isAlbum: true,
-                                                                        isFilterEnabled: false))
-        
+                                                                        isFilterEnabled: false,
+                                                                        isEmptyState: false))
+
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
-        
+
         menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
                             CMElementTypeEntity.sort(actionType: .modificationDesc),
                             CMElementTypeEntity.sort(actionType: .modificationAsc)]
-        
-        XCTAssertTrue(menuActions == menuActionsArray)
+
+        XCTAssertEqual(menuActions, menuActionsArray)
     }
     
     func testCreateContextMenu_UploadAdd() throws {

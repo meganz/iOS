@@ -5,11 +5,12 @@ import MEGADomain
 enum AlbumContentAction: ActionType {
     case onViewReady
     case onViewDidAppear
+    case changeSortOrder(SortOrderType)
 }
 
 final class AlbumContentViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case showAlbum(nodes: [NodeEntity])
+        case showAlbumPhotos(photos: [NodeEntity], sortOrder: SortOrderType)
         case dismissAlbum
         case showHud(String)
     }
@@ -18,8 +19,9 @@ final class AlbumContentViewModel: ViewModelType {
     private let album: AlbumEntity
     private let router: AlbumContentRouter
     private var loadingTask: Task<Void, Never>?
-    
+    private var photos = [NodeEntity]()
     private var updateSubscription: AnyCancellable?
+    private var selectedSortOrder: SortOrderType = .newest
     
     let albumName: String
     var messageForNewAlbum: String?
@@ -53,10 +55,26 @@ final class AlbumContentViewModel: ViewModelType {
             }
         case .onViewDidAppear:
             showNewlyAddedAlbumHud()
+        case .changeSortOrder(let sortOrder):
+            updateSortOrder(sortOrder)
         }
     }
     
     // MARK: - Internal
+    var isFavouriteAlbum: Bool {
+        album.type == .favourite
+    }
+    
+    var contextMenuConfiguration: CMConfigEntity {
+        return CMConfigEntity(
+            menuType: .menu(type: .display),
+            sortType: selectedSortOrder.toSortOrderEntity(),
+            filterType: .allMedia,
+            isAlbum: true,
+            isFilterEnabled: isFilterEnabled,
+            isEmptyState: photos.isEmpty
+        )
+    }
     
     func cancelLoading() {
         loadingTask?.cancel()
@@ -66,20 +84,15 @@ final class AlbumContentViewModel: ViewModelType {
     @MainActor
     private func loadNodes() async {
         do {
-            var nodes = try await albumContentsUseCase.nodes(forAlbum: album)
-            if album.type == .favourite {
-                nodes.sort {
-                    if $0.modificationTime == $1.modificationTime {
-                        return $0.handle > $1.handle
-                    }
-                    return $0.modificationTime > $1.modificationTime
-                }
-            }
-            
-            nodes.isEmpty && ( album.type == .raw || album.type == .gif ) ? invokeCommand?(.dismissAlbum) : invokeCommand?(.showAlbum(nodes: nodes))
+            photos = try await albumContentsUseCase.nodes(forAlbum: album)
+            shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : invokeCommand?(.showAlbumPhotos(photos: photos, sortOrder: selectedSortOrder))
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
+    }
+    
+    private var shouldDismissAlbum: Bool {
+        photos.isEmpty && (album.type == .raw || album.type == .gif)
     }
     
     private func reloadAlbum() {
@@ -101,11 +114,16 @@ final class AlbumContentViewModel: ViewModelType {
         messageForNewAlbum = nil
     }
     
-    var isFavouriteAlbum: Bool {
-        album.type == .favourite
+    private func updateSortOrder(_ sortOrder: SortOrderType) {
+        guard sortOrder != selectedSortOrder else { return }
+        selectedSortOrder = sortOrder
+        invokeCommand?(.showAlbumPhotos(photos: photos, sortOrder: selectedSortOrder))
     }
     
-    var isFilterEnabled: Bool {
-        album.type == .user || isFavouriteAlbum
+    private var isFilterEnabled: Bool {
+        guard photos.isNotEmpty else {
+            return false
+        }
+        return album.type == .user || isFavouriteAlbum
     }
 }
