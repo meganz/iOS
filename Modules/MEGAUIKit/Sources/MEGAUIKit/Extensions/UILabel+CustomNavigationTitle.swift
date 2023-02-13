@@ -6,6 +6,8 @@ public extension UILabel {
         label.numberOfLines = (subtitle != nil) ? 2 : 1
         label.lineBreakMode = .byClipping
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
         
         let attributedTitleString = NSMutableAttributedString(string: title, attributes: [
             NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline),
