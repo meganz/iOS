@@ -18,9 +18,10 @@ struct AlbumContentRouter: Routing {
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
         let filesSearchRepo = FilesSearchRepository.newRepo
+        let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
+            mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: UserAlbumRepository.newRepo
         )
@@ -29,6 +30,7 @@ struct AlbumContentRouter: Routing {
             album: album,
             messageForNewAlbum: self.messageForNewAlbum,
             albumContentsUseCase: albumContentsUseCase,
+            mediaUseCase: mediaUseCase,
             router: self)
         return AlbumContentViewController(viewModel: viewModel)
     }
