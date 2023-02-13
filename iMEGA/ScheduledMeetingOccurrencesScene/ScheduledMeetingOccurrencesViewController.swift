@@ -17,7 +17,17 @@ final class ScheduledMeetingOccurrencesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubview()
+        updateTitle()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        updateTitle()
+    }
+    
+    private func updateTitle() {
         navigationItem.titleView = UILabel().customNavigationBarLabel(title: viewModel.title, subtitle: viewModel.subtitle)
+        navigationItem.titleView?.sizeToFit()
     }
     
     private func configureSubview() {

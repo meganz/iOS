@@ -263,14 +263,14 @@ struct ScheduledMeetingDateBuilder {
                     switch weekOfMonth {
                     case .first:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -278,14 +278,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .second:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -293,14 +293,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .third:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -308,14 +308,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fourth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -323,14 +323,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fifth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -341,14 +341,14 @@ struct ScheduledMeetingDateBuilder {
                     switch weekOfMonth {
                     case .first:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -356,14 +356,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .second:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -371,14 +371,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .third:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -386,14 +386,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fourth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -401,14 +401,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fifth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -419,14 +419,14 @@ struct ScheduledMeetingDateBuilder {
                     switch weekOfMonth {
                     case .first:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -434,14 +434,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .second:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -449,14 +449,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .third:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -464,14 +464,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fourth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -479,14 +479,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fifth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -497,14 +497,14 @@ struct ScheduledMeetingDateBuilder {
                     switch weekOfMonth {
                     case .first:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -512,14 +512,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .second:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -527,14 +527,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .third:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -542,14 +542,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fourth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -557,14 +557,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fifth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -575,14 +575,14 @@ struct ScheduledMeetingDateBuilder {
                     switch weekOfMonth {
                     case .first:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -590,14 +590,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .second:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -605,14 +605,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .third:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -620,14 +620,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fourth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
@@ -635,14 +635,14 @@ struct ScheduledMeetingDateBuilder {
                         }
                     case .fifth:
                         if let until = scheduledMeeting.rules.until {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[UntilDate]", with: dateFormatter.localisedString(from: until))
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)
                                 .replacingOccurrences(of: "[EndTime]", with: endTime)
                         } else {
-                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
+                            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth", comment: "")
                             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                                 .replacingOccurrences(of: "[StartDate]", with: startDate)
                                 .replacingOccurrences(of: "[StartTime]", with: startTime)

@@ -15,6 +15,8 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     @Published private(set) var secondaryAvatar: UIImage?
     @Published var seeMoreOccurrencesVisible: Bool = true
 
+    private let maxOccurrencesBatchCount = 20
+    
     init(scheduledMeeting: ScheduledMeetingEntity,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
          chatRoomAvatarViewModel: ChatRoomAvatarViewModel?) {
@@ -60,12 +62,9 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     }
     
     private func populateOccurrences(_ newOccurrences: inout [ScheduledMeetingOccurrenceEntity]) {
-        if let firstOccurence = newOccurrences.first, occurrences.contains(firstOccurence) {
-            newOccurrences.remove(object: firstOccurence)
-            if newOccurrences.count == 0 {
-                DispatchQueue.main.async {
-                    self.seeMoreOccurrencesVisible = false
-                }
+        if newOccurrences.count < maxOccurrencesBatchCount {
+            DispatchQueue.main.async {
+                self.seeMoreOccurrencesVisible = false
             }
         }
         occurrences.append(contentsOf: newOccurrences)
