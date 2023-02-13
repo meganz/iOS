@@ -50,6 +50,8 @@ extension AlbumContentViewController: DisplayMenuDelegate {
 
 // MARK: - FilterMenuDelegate
 extension AlbumContentViewController: FilterMenuDelegate {
-    func filterMenu(didSelect filterType: FilterType) { }
+    func filterMenu(didSelect filterType: FilterType) {
+        viewModel.dispatch(.changeFilter(filterType))
+    }
 }
 

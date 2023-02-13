@@ -11,12 +11,13 @@ final class AlbumContentViewModelTests: XCTestCase {
     
     private lazy var router = AlbumContentRouter(album: albumEntity, messageForNewAlbum: nil)
     
-    func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbum() throws {
+    func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbum() {
         let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
                              NodeEntity(name: "sample2.gif", handle: 2)]
         
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
@@ -27,26 +28,34 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample1.gif", handle: 2, modificationTime: try "2022-08-19T20:01:04Z".date),
                              NodeEntity(name: "sample2.gif", handle: 1, modificationTime: try "2022-08-19T20:01:04Z".date)]
         
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes), router: router)
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(),
+                                        router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
     
-    func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() throws {
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+    func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() {
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
+                                        router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
     }
     
-    func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() throws {
+    func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
     }
     
-    func testDispatchViewReady_onNewlyCreatedAlbum_messageForNewAlbumWillBeNil() throws {
+    func testDispatchViewReady_onNewlyCreatedAlbum_messageForNewAlbumWillBeNil() {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         messageForNewAlbum: "Hey there",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         
         XCTAssertNotNil(sut.messageForNewAlbum)
@@ -60,6 +69,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let useCase = MockAlbumContentUseCase(nodes: expectedNodes, updatePublisher: updatePublisher.eraseToAnyPublisher())
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: useCase,
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         let exp = expectation(description: "show album nodes after update publisher triggered")
         sut.invokeCommand = { command in
@@ -80,15 +90,22 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     func testIsFavouriteAlbum_isEqualToAlbumEntityType() {
-        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite), albumContentsUseCase: MockAlbumContentUseCase(nodes: []), router: router)
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
+                                        router: router)
         XCTAssertTrue(sut.isFavouriteAlbum)
     }
     
     func testContextMenuConfiguration_onFavouriteAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+        let imageName = "sample1.gif"
+        let videoName = "sample2.mp4"
+        let expectedNodes = [NodeEntity(name: imageName, handle: 1),
+                             NodeEntity(name: videoName, handle: 2)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
                                         messageForNewAlbum: "Test",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(imageFileNames: [imageName], videoFileNames: [videoName]),
                                         router: router)
         XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
@@ -97,11 +114,39 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
     }
     
-    func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+    func testContextMenuConfiguration_onOnlyImagesLoaded_shouldShowImagesAndHideFilter() {
+        let images = [NodeEntity(name: "test.jpg", handle: 1)]
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: images),
+                                        mediaUseCase: MockMediaUseCase(isStringImage: true),
+                                        router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: images, sortOrder: .newest)])
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testContextMenuConfiguration_onOnlyVideosLoaded_shouldShowVideosAndHideFilter() {
+        let videos = [NodeEntity(name: "test.mp4", handle: 1)]
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: videos),
+                                        mediaUseCase: MockMediaUseCase(isStringVideo: true),
+                                        router: router)
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: videos, sortOrder: .newest)])
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldShowFilterAndNotInEmptyState() {
+        let imageName = "sample1.gif"
+        let videoName = "sample2.mp4"
+        let expectedNodes = [NodeEntity(name: imageName, handle: 1),
+                             NodeEntity(name: videoName, handle: 2)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         messageForNewAlbum: "Test",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(imageFileNames: [imageName], videoFileNames: [videoName]),
                                         router: router)
         XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
         
@@ -113,10 +158,14 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     func testContextMenuConfiguration_onRawAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let expectedNodes = [NodeEntity(name: "sample1.raw", handle: 1)]
+        let imageName = "sample1.gif"
+        let videoName = "sample2.mp4"
+        let expectedNodes = [NodeEntity(name: imageName, handle: 1),
+                             NodeEntity(name: videoName, handle: 2)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw),
                                         messageForNewAlbum: "Test",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(imageFileNames: [imageName], videoFileNames: [videoName]),
                                         router: router)
         XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
         
@@ -128,10 +177,14 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     func testContextMenuConfiguration_onGifAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
+        let imageName = "sample1.gif"
+        let videoName = "sample2.mp4"
+        let expectedNodes = [NodeEntity(name: imageName, handle: 1),
+                             NodeEntity(name: videoName, handle: 2)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif),
                                         messageForNewAlbum: "Test",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(imageFileNames: [imageName], videoFileNames: [videoName]),
                                         router: router)
         XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
         
@@ -142,10 +195,53 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
     }
     
+    func testContextMenuConfiguration_onImagesOnlyLoadedForUserAlbum_shouldNotEnableFilter() {
+        let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
+        let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
+            NodeEntity(name: name, handle: UInt64(index + 1))
+        }
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
+                                        messageForNewAlbum: "Test",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedImages),
+                                        mediaUseCase: MockMediaUseCase(imageFileNames: imageNames),
+                                        router: router)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedImages, sortOrder: .newest)])
+        
+        test(viewModel: sut, action: .changeFilter(.images), expectedCommands: [.showAlbumPhotos(photos: expectedImages, sortOrder: .newest)])
+        
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
+    func testContextMenuConfiguration_onVideosOnlyLoadedForUserAlbum_shouldNotEnableFilter() {
+        let videoNames: [FileNameEntity] = ["video1.mp4", "video2.avi", "video3.mov"]
+        let expectedVideos = videoNames.enumerated().map { (index: Int, name: String) in
+            NodeEntity(name: name, handle: UInt64(index + 1))
+        }
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
+                                        messageForNewAlbum: "Test",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedVideos),
+                                        mediaUseCase: MockMediaUseCase(videoFileNames: videoNames),
+                                        router: router)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedVideos, sortOrder: .newest)])
+        
+        test(viewModel: sut, action: .changeFilter(.videos), expectedCommands: [.showAlbumPhotos(photos: expectedVideos, sortOrder: .newest)])
+        
+        XCTAssertTrue(sut.contextMenuConfiguration.isAlbum)
+        XCTAssertFalse(sut.contextMenuConfiguration.isFilterEnabled)
+        XCTAssertFalse(sut.contextMenuConfiguration.isEmptyState)
+    }
+    
     func testDispatchChangeSortOrder_onSortOrderTheSame_shouldDoNothing() {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         messageForNewAlbum: "New Album",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
         let exp = expectation(description: "should not call any commands")
@@ -162,6 +258,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         messageForNewAlbum: "New Album",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
         let expectedSortOrder = SortOrderType.oldest
@@ -176,6 +273,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         messageForNewAlbum: "New Album",
                                         albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes),
+                                        mediaUseCase: MockMediaUseCase(),
                                         router: router)
         XCTAssertEqual(sut.contextMenuConfiguration.sortType, .modificationDesc)
         
@@ -201,5 +299,58 @@ final class AlbumContentViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         XCTAssertEqual(sut.contextMenuConfiguration.sortType, expectedSortOrderAfterChange.toSortOrderEntity())
         XCTAssertTrue(expectedSortOrder.isEmpty)
+    }
+    
+    func testDispatchChangeFilter_onFilterTheSame_shouldDoNothing() {
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        messageForNewAlbum: "New Album",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: []),
+                                        mediaUseCase: MockMediaUseCase(),
+                                        router: router)
+        XCTAssertEqual(sut.contextMenuConfiguration.filterType, .allMedia)
+        let exp = expectation(description: "should not call any commands")
+        exp.isInverted = true
+        sut.invokeCommand = { _ in
+            exp.fulfill()
+        }
+        sut.dispatch(.changeFilter(.allMedia))
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sut.contextMenuConfiguration.filterType, .allMedia)
+    }
+    
+    func testDispatchChangeFilter_onPhotosLoaded_shouldReturnCorrectNodesForFilterTypeAndSetCorrectMenuConfiguration() {
+        let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
+        let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
+            NodeEntity(name: name, handle: UInt64(index + 1))
+        }
+        let videoNames: [FileNameEntity] = ["video1.mp4", "video2.avi", "video3.mov"]
+        let expectedVideo = videoNames.enumerated().map { (index: Int, name: String) in
+            NodeEntity(name: name, handle: UInt64(index + imageNames.count + 1))
+        }
+        let allMedia = expectedImages + expectedVideo
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        messageForNewAlbum: "New Album",
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: allMedia),
+                                        mediaUseCase: MockMediaUseCase(imageFileNames: imageNames, videoFileNames: videoNames),
+                                        router: router)
+        XCTAssertEqual(sut.contextMenuConfiguration.filterType, .allMedia)
+        
+        test(viewModel: sut, action: .onViewReady,
+             expectedCommands: [.showAlbumPhotos(photos: allMedia, sortOrder: .newest)])
+        
+        test(viewModel: sut, action: .changeFilter(.images),
+             expectedCommands: [.showAlbumPhotos(photos: expectedImages, sortOrder: .newest)],
+             timeout: 0.25)
+        XCTAssertEqual(sut.contextMenuConfiguration.filterType, .images)
+        
+        test(viewModel: sut, action: .changeFilter(.videos),
+             expectedCommands: [.showAlbumPhotos(photos: expectedVideo, sortOrder: .newest)],
+             timeout: 0.25)
+        XCTAssertEqual(sut.contextMenuConfiguration.filterType, .videos)
+        
+        test(viewModel: sut, action: .changeFilter(.allMedia),
+             expectedCommands: [.showAlbumPhotos(photos: allMedia, sortOrder: .newest)],
+             timeout: 0.25)
+        XCTAssertEqual(sut.contextMenuConfiguration.filterType, .allMedia)
     }
 }

@@ -6,6 +6,7 @@ enum AlbumContentAction: ActionType {
     case onViewReady
     case onViewDidAppear
     case changeSortOrder(SortOrderType)
+    case changeFilter(FilterType)
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -15,13 +16,15 @@ final class AlbumContentViewModel: ViewModelType {
         case showHud(String)
     }
     
-    private var albumContentsUseCase: AlbumContentsUseCaseProtocol
+    private let albumContentsUseCase: AlbumContentsUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
     private let album: AlbumEntity
     private let router: AlbumContentRouter
     private var loadingTask: Task<Void, Never>?
     private var photos = [NodeEntity]()
     private var updateSubscription: AnyCancellable?
     private var selectedSortOrder: SortOrderType = .newest
+    private var selectedFilter: FilterType = .allMedia
     
     let albumName: String
     var messageForNewAlbum: String?
@@ -34,11 +37,13 @@ final class AlbumContentViewModel: ViewModelType {
         album: AlbumEntity,
         messageForNewAlbum: String? = nil,
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
+        mediaUseCase: MediaUseCaseProtocol,
         router: AlbumContentRouter
     ) {
         self.album = album
         self.messageForNewAlbum = messageForNewAlbum
         self.albumContentsUseCase = albumContentsUseCase
+        self.mediaUseCase = mediaUseCase
         self.router = router
         self.albumName = album.name
         
@@ -57,6 +62,8 @@ final class AlbumContentViewModel: ViewModelType {
             showNewlyAddedAlbumHud()
         case .changeSortOrder(let sortOrder):
             updateSortOrder(sortOrder)
+        case .changeFilter(let filter):
+            updateFilter(filter)
         }
     }
     
@@ -69,7 +76,7 @@ final class AlbumContentViewModel: ViewModelType {
         return CMConfigEntity(
             menuType: .menu(type: .display),
             sortType: selectedSortOrder.toSortOrderEntity(),
-            filterType: .allMedia,
+            filterType: selectedFilter.toFilterEntity(),
             isAlbum: true,
             isFilterEnabled: isFilterEnabled,
             isEmptyState: photos.isEmpty
@@ -81,16 +88,49 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     // MARK: Private
+    private var isFilterEnabled: Bool {
+        guard photos.isNotEmpty,
+              album.type != .gif,
+              album.type != .raw else {
+            return false
+        }
+        switch selectedFilter {
+        case .images:
+            return photos.contains(where: { mediaUseCase.isVideo($0.name) })
+        case .videos:
+            return photos.contains(where: { mediaUseCase.isImage($0.name) })
+        default:
+            let containsImage = photos.contains(where: { mediaUseCase.isImage($0.name) })
+            let containsVideo = photos.contains(where: { mediaUseCase.isVideo($0.name) })
+            return containsImage && containsVideo
+        }
+    }
+    
+    private var filteredPhotos: [NodeEntity] {
+        switch selectedFilter {
+        case .images:
+            return photos.filter { mediaUseCase.isImage($0.name) }
+        case .videos:
+            return photos.filter { mediaUseCase.isVideo($0.name) }
+        default:
+            return photos
+        }
+    }
+    
     @MainActor
     private func loadNodes() async {
         do {
             photos = try await albumContentsUseCase.nodes(forAlbum: album)
-            shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : invokeCommand?(.showAlbumPhotos(photos: photos, sortOrder: selectedSortOrder))
+            shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
     }
     
+    private func showAlbumPhotos() {
+        invokeCommand?(.showAlbumPhotos(photos: filteredPhotos, sortOrder: selectedSortOrder))
+    }
+        
     private var shouldDismissAlbum: Bool {
         photos.isEmpty && (album.type == .raw || album.type == .gif)
     }
@@ -117,13 +157,12 @@ final class AlbumContentViewModel: ViewModelType {
     private func updateSortOrder(_ sortOrder: SortOrderType) {
         guard sortOrder != selectedSortOrder else { return }
         selectedSortOrder = sortOrder
-        invokeCommand?(.showAlbumPhotos(photos: photos, sortOrder: selectedSortOrder))
+        showAlbumPhotos()
     }
     
-    private var isFilterEnabled: Bool {
-        guard photos.isNotEmpty else {
-            return false
-        }
-        return album.type == .user || isFavouriteAlbum
+    private func updateFilter(_ filter: FilterType) {
+        guard filter != selectedFilter else { return }
+        selectedFilter = filter
+        showAlbumPhotos()
     }
 }
