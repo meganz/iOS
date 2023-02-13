@@ -409,6 +409,10 @@ public final class ContextMenuBuilder {
     
     //MARK: - Rubbish Bin Children Context Actions grouping functions
     private func rubbishBinChildFolderMenu() -> CMEntity {
+        CMEntity(displayInline: true, children: [selectMenu(), viewTypeMenu(), sortMenu(), rubbishBinChildQuickActionsMenu()])
+    }
+    
+    private func rubbishBinChildQuickActionsMenu() -> CMEntity {
         var rubbishBinActions = [CMActionEntity]()
         
         if isRestorable {
@@ -424,7 +428,7 @@ public final class ContextMenuBuilder {
             rubbishBinActions.append(remove)
         }
         
-        return CMEntity(children: rubbishBinActions)
+        return CMEntity(displayInline: true, children: rubbishBinActions)
     }
     
     //MARK: - Chat Context Actions

@@ -11,6 +11,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
            displayMode == .rubbishBin,
            parentNode.handle != MEGASdkManager.sharedMEGASdk().rubbishNode?.handle {
             return CMConfigEntity(menuType: .menu(type: .rubbishBin),
+                                  viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                                  sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
