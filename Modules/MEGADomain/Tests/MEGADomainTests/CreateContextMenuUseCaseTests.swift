@@ -38,18 +38,19 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                         sortType: .defaultAsc,
                                                                         showMediaDiscovery: true))
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                                  CMElementTypeEntity.display(actionType: .mediaDiscovery),
-                                  CMElementTypeEntity.display(actionType: .thumbnailView),
-                                  CMElementTypeEntity.display(actionType: .listView),
-                                  CMElementTypeEntity.sort(actionType: .defaultAsc),
-                                  CMElementTypeEntity.sort(actionType: .defaultDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeAsc),
-                                  CMElementTypeEntity.sort(actionType: .modificationDesc),
-                                  CMElementTypeEntity.sort(actionType: .modificationAsc),
-                                  CMElementTypeEntity.sort(actionType: .labelAsc),
-                                  CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        menuActionsArray = [.display(actionType: .select),
+                            .display(actionType: .mediaDiscovery),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -59,18 +60,19 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                         isRubbishBinFolder: true,
                                                                         isRestorable: true))
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                                  CMElementTypeEntity.display(actionType: .thumbnailView),
-                                  CMElementTypeEntity.display(actionType: .listView),
-                                  CMElementTypeEntity.sort(actionType: .defaultAsc),
-                                  CMElementTypeEntity.sort(actionType: .defaultDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeAsc),
-                                  CMElementTypeEntity.sort(actionType: .modificationDesc),
-                                  CMElementTypeEntity.sort(actionType: .modificationAsc),
-                                  CMElementTypeEntity.sort(actionType: .labelAsc),
-                                  CMElementTypeEntity.sort(actionType: .favouriteAsc),
-                                  CMElementTypeEntity.display(actionType: .clearRubbishBin)]
+        menuActionsArray = [.display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc),
+                            .display(actionType: .clearRubbishBin)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -80,9 +82,10 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                         sortType: .defaultAsc,
                                                                         isSharedItems: true))
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                                  CMElementTypeEntity.sort(actionType: .defaultAsc),
-                                  CMElementTypeEntity.sort(actionType: .defaultDesc)]
+        menuActionsArray = [.display(actionType: .select),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -95,17 +98,18 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                            CMElementTypeEntity.display(actionType: .thumbnailView),
-                            CMElementTypeEntity.display(actionType: .listView),
-                            CMElementTypeEntity.sort(actionType: .defaultAsc),
-                            CMElementTypeEntity.sort(actionType: .defaultDesc),
-                            CMElementTypeEntity.sort(actionType: .sizeDesc),
-                            CMElementTypeEntity.sort(actionType: .sizeAsc),
-                            CMElementTypeEntity.sort(actionType: .modificationDesc),
-                            CMElementTypeEntity.sort(actionType: .modificationAsc),
-                            CMElementTypeEntity.sort(actionType: .labelAsc),
-                            CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        menuActionsArray = [.display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -118,22 +122,23 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
-        menuActionsArray = [CMElementTypeEntity.quickActions(actionType: .info),
-                            CMElementTypeEntity.quickActions(actionType: .download),
-                            CMElementTypeEntity.quickActions(actionType: .shareLink),
-                            CMElementTypeEntity.quickActions(actionType: .shareFolder),
-                            CMElementTypeEntity.quickActions(actionType: .copy),
-                            CMElementTypeEntity.display(actionType: .select),
-                            CMElementTypeEntity.display(actionType: .thumbnailView),
-                            CMElementTypeEntity.display(actionType: .listView),
-                            CMElementTypeEntity.sort(actionType: .defaultAsc),
-                            CMElementTypeEntity.sort(actionType: .defaultDesc),
-                            CMElementTypeEntity.sort(actionType: .sizeDesc),
-                            CMElementTypeEntity.sort(actionType: .sizeAsc),
-                            CMElementTypeEntity.sort(actionType: .modificationDesc),
-                            CMElementTypeEntity.sort(actionType: .modificationAsc),
-                            CMElementTypeEntity.sort(actionType: .labelAsc),
-                            CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        menuActionsArray = [.quickActions(actionType: .info),
+                            .quickActions(actionType: .download),
+                            .quickActions(actionType: .shareLink),
+                            .quickActions(actionType: .shareFolder),
+                            .quickActions(actionType: .copy),
+                            .display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -147,12 +152,13 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                            CMElementTypeEntity.sort(actionType: .modificationDesc),
-                            CMElementTypeEntity.sort(actionType: .modificationAsc),
-                            CMElementTypeEntity.filter(actionType: .allMedia),
-                            CMElementTypeEntity.filter(actionType: .images),
-                            CMElementTypeEntity.filter(actionType: .videos)]
+        menuActionsArray = [.display(actionType: .select),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .filter(actionType: .allMedia),
+                            .filter(actionType: .images),
+                            .filter(actionType: .videos)
+        ]
         
         XCTAssertEqual(menuActions, menuActionsArray)
     }
@@ -166,7 +172,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select)]
+        menuActionsArray = [.display(actionType: .select)]
         
         XCTAssertEqual(menuActions, menuActionsArray)
     }
@@ -180,9 +186,10 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
 
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
 
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                            CMElementTypeEntity.sort(actionType: .modificationDesc),
-                            CMElementTypeEntity.sort(actionType: .modificationAsc)]
+        menuActionsArray = [.display(actionType: .select),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc)
+        ]
 
         XCTAssertEqual(menuActions, menuActionsArray)
     }
@@ -192,12 +199,13 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                         showMediaDiscovery: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
-        menuActionsArray = [CMElementTypeEntity.uploadAdd(actionType: .chooseFromPhotos),
-                                  CMElementTypeEntity.uploadAdd(actionType: .capture),
-                                  CMElementTypeEntity.uploadAdd(actionType: .importFrom),
-                                  CMElementTypeEntity.uploadAdd(actionType: .scanDocument),
-                                  CMElementTypeEntity.uploadAdd(actionType: .newFolder),
-                                  CMElementTypeEntity.uploadAdd(actionType: .newTextFile)]
+        menuActionsArray = [.uploadAdd(actionType: .chooseFromPhotos),
+                            .uploadAdd(actionType: .capture),
+                            .uploadAdd(actionType: .importFrom),
+                            .uploadAdd(actionType: .scanDocument),
+                            .uploadAdd(actionType: .newFolder),
+                            .uploadAdd(actionType: .newTextFile)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -207,9 +215,9 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                         isDocumentExplorer: true))
         
         let menActions = decomposeMenuIntoActions(menu: cmUploadAddEntity)
-        menuActionsArray = [CMElementTypeEntity.uploadAdd(actionType: .newTextFile),
-                                  CMElementTypeEntity.uploadAdd(actionType: .scanDocument),
-                                  CMElementTypeEntity.uploadAdd(actionType: .importFrom)]
+        menuActionsArray = [.uploadAdd(actionType: .newTextFile),
+                                  .uploadAdd(actionType: .scanDocument),
+                                  .uploadAdd(actionType: .importFrom)]
         
         XCTAssertTrue(menActions == menuActionsArray)
         
@@ -219,17 +227,18 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                                isDocumentExplorer: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmDisplayEntity)
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                                  CMElementTypeEntity.display(actionType: .thumbnailView),
-                                  CMElementTypeEntity.display(actionType: .listView),
-                                  CMElementTypeEntity.sort(actionType: .defaultAsc),
-                                  CMElementTypeEntity.sort(actionType: .defaultDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeAsc),
-                                  CMElementTypeEntity.sort(actionType: .modificationDesc),
-                                  CMElementTypeEntity.sort(actionType: .modificationAsc),
-                                  CMElementTypeEntity.sort(actionType: .labelAsc),
-                                  CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        menuActionsArray = [.display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -241,15 +250,16 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                                isAudiosExplorer: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmDisplayEntity)
-        menuActionsArray = [CMElementTypeEntity.display(actionType: .select),
-                                  CMElementTypeEntity.sort(actionType: .defaultAsc),
-                                  CMElementTypeEntity.sort(actionType: .defaultDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeAsc),
-                                  CMElementTypeEntity.sort(actionType: .modificationDesc),
-                                  CMElementTypeEntity.sort(actionType: .modificationAsc),
-                                  CMElementTypeEntity.sort(actionType: .labelAsc),
-                                  CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        menuActionsArray = [.display(actionType: .select),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -261,14 +271,15 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                                isVideosExplorer: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmDisplayEntity)
-        menuActionsArray = [CMElementTypeEntity.sort(actionType: .defaultAsc),
-                                  CMElementTypeEntity.sort(actionType: .defaultDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeDesc),
-                                  CMElementTypeEntity.sort(actionType: .sizeAsc),
-                                  CMElementTypeEntity.sort(actionType: .modificationDesc),
-                                  CMElementTypeEntity.sort(actionType: .modificationAsc),
-                                  CMElementTypeEntity.sort(actionType: .labelAsc),
-                                  CMElementTypeEntity.sort(actionType: .favouriteAsc)]
+        menuActionsArray = [.sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -280,16 +291,17 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                             chatStatus: .online))
         
         let menuActions = decomposeMenuIntoActions(menu: cmChatEntity)
-        menuActionsArray = [CMElementTypeEntity.chatStatus(actionType: .offline),
-                            CMElementTypeEntity.chatStatus(actionType: .away),
-                            CMElementTypeEntity.chatStatus(actionType: .online),
-                            CMElementTypeEntity.chatStatus(actionType: .busy),
-                            CMElementTypeEntity.chatDoNotDisturbDisabled(actionType: .off),
-                            CMElementTypeEntity.chatDoNotDisturbEnabled(optionType: .thirtyMinutes),
-                            CMElementTypeEntity.chatDoNotDisturbEnabled(optionType: .oneHour),
-                            CMElementTypeEntity.chatDoNotDisturbEnabled(optionType: .sixHours),
-                            CMElementTypeEntity.chatDoNotDisturbEnabled(optionType: .twentyFourHours),
-                            CMElementTypeEntity.chatDoNotDisturbEnabled(optionType: .morningEightAM)]
+        menuActionsArray = [.chatStatus(actionType: .offline),
+                            .chatStatus(actionType: .away),
+                            .chatStatus(actionType: .online),
+                            .chatStatus(actionType: .busy),
+                            .chatDoNotDisturbDisabled(actionType: .off),
+                            .chatDoNotDisturbEnabled(optionType: .thirtyMinutes),
+                            .chatDoNotDisturbEnabled(optionType: .oneHour),
+                            .chatDoNotDisturbEnabled(optionType: .sixHours),
+                            .chatDoNotDisturbEnabled(optionType: .twentyFourHours),
+                            .chatDoNotDisturbEnabled(optionType: .morningEightAM)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -298,8 +310,9 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         let cmMettingEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .meeting)))
         
         let menuActions = decomposeMenuIntoActions(menu: cmMettingEntity)
-        menuActionsArray = [CMElementTypeEntity.meeting(actionType: .startMeeting),
-                            CMElementTypeEntity.meeting(actionType: .joinMeeting)]
+        menuActionsArray = [.meeting(actionType: .startMeeting),
+                            .meeting(actionType: .joinMeeting)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
@@ -309,9 +322,37 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                                isShareAvailable: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmMettingEntity)
-        menuActionsArray = [CMElementTypeEntity.qr(actionType: .share),
-                            CMElementTypeEntity.qr(actionType: .settings),
-                            CMElementTypeEntity.qr(actionType: .resetQR)]
+        menuActionsArray = [.qr(actionType: .share),
+                            .qr(actionType: .settings),
+                            .qr(actionType: .resetQR)
+        ]
+        
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
+    func testCreateContextMenu_RubbishBinChild() throws {
+        let cmRubbishBinChildEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .rubbishBin),
+                                                                                       viewMode: .list,
+                                                                                       sortType: .defaultAsc,
+                                                                                       isRubbishBinFolder: true,
+                                                                                       isRestorable: true))
+        
+        let menuActions = decomposeMenuIntoActions(menu: cmRubbishBinChildEntity)
+        menuActionsArray = [.display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc),
+                            .rubbishBin(actionType: .restore),
+                            .rubbishBin(actionType: .info),
+                            .rubbishBin(actionType: .remove)
+        ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
