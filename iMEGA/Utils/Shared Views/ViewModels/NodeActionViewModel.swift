@@ -2,9 +2,9 @@ import Foundation
 import MEGADomain
 
 struct NodeActionViewModel {
-    private var nodeActionUseCase: NodeActionUseCaseProtocol
+    private var nodeUseCase: NodeUseCaseProtocol
     
-    init(nodeActionUseCase: NodeActionUseCaseProtocol) {
-        self.nodeActionUseCase = nodeActionUseCase
+    init(nodeUseCase: NodeUseCaseProtocol) {
+        self.nodeUseCase = nodeUseCase
     }
 }

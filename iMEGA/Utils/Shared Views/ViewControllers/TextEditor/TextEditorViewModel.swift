@@ -65,7 +65,7 @@ final class TextEditorViewModel: ViewModelType {
     private var nodeEntity: NodeEntity?
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
-    private var nodeActionUseCase: NodeActionUseCaseProtocol
+    private var nodeUseCase: NodeUseCaseProtocol
     private var myBackupsUseCase: MyBackupsUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
@@ -77,7 +77,7 @@ final class TextEditorViewModel: ViewModelType {
         textEditorMode: TextEditorMode,
         uploadFileUseCase: UploadFileUseCaseProtocol,
         downloadNodeUseCase: DownloadNodeUseCaseProtocol,
-        nodeActionUseCase: NodeActionUseCaseProtocol,
+        nodeUseCase: NodeUseCaseProtocol,
         myBackupsUseCase: MyBackupsUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil
@@ -87,7 +87,7 @@ final class TextEditorViewModel: ViewModelType {
         self.textEditorMode = textEditorMode
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadNodeUseCase = downloadNodeUseCase
-        self.nodeActionUseCase = nodeActionUseCase
+        self.nodeUseCase = nodeUseCase
         self.myBackupsUseCase = myBackupsUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
@@ -134,7 +134,7 @@ final class TextEditorViewModel: ViewModelType {
     private func setupView(shallUpdateContent:Bool) {
         var isNodeInRubbishBin = false
         if let nodeHandle = nodeEntity?.handle {
-            isNodeInRubbishBin = nodeActionUseCase.isInRubbishBin(nodeHandle: nodeHandle)
+            isNodeInRubbishBin = nodeUseCase.isInRubbishBin(nodeHandle: nodeHandle)
         }
         
         if textEditorMode == .load {
@@ -334,7 +334,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func nodeAccessLevel() -> NodeAccessTypeEntity {
-        isBackupNode ? .read : nodeActionUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
+        isBackupNode ? .read : nodeUseCase.nodeAccessLevel(nodeHandle: nodeEntity?.handle ?? .invalid)
     }
     
     private func uploadTo(_ parentHandle: HandleEntity) {

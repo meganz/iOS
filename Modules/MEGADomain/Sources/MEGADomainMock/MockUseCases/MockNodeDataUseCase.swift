@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockNodeActionUseCase: NodeActionUseCaseProtocol {
+public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let nodeAccessLevelVariable: NodeAccessTypeEntity
     private let labelString: String
     private let filesAndFolders: (Int, Int)

@@ -12,7 +12,7 @@ import MEGADomain
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    private let viewModel = NodeActionViewModel(nodeActionUseCase: NodeActionUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo))
+    private let viewModel = NodeActionViewModel(nodeUseCase: NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo))
     
     var sender: Any
     var delegate: NodeActionViewControllerDelegate

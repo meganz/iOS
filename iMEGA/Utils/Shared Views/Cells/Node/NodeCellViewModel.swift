@@ -27,15 +27,15 @@ final class NodeCellViewModel: ViewModelType {
     
     private let nodeOpener: NodeOpener
     private var nodeModel: NodeEntity
-    private var nodeActionUseCase: NodeActionUseCaseProtocol
+    private var nodeUseCase: NodeUseCaseProtocol
     private var nodeThumbnailUseCase: ThumbnailUseCaseProtocol
     private var accountUseCase: AccountUseCaseProtocol
     private var loadingTask: Task<Void, Never>?
     
-    init(nodeOpener: NodeOpener, nodeModel: NodeEntity, nodeActionUseCase: NodeActionUseCaseProtocol, nodeThumbnailUseCase: ThumbnailUseCaseProtocol, accountUseCase: AccountUseCaseProtocol) {
+    init(nodeOpener: NodeOpener, nodeModel: NodeEntity, nodeUseCase: NodeUseCaseProtocol, nodeThumbnailUseCase: ThumbnailUseCaseProtocol, accountUseCase: AccountUseCaseProtocol) {
         self.nodeOpener = nodeOpener
         self.nodeModel = nodeModel
-        self.nodeActionUseCase = nodeActionUseCase
+        self.nodeUseCase = nodeUseCase
         self.nodeThumbnailUseCase = nodeThumbnailUseCase
         self.accountUseCase = accountUseCase
     }
@@ -74,7 +74,7 @@ final class NodeCellViewModel: ViewModelType {
         invokeCommand?(.hideLabel(isLabelUnknown))
         
         if !isLabelUnknown {
-            let labelString = nodeActionUseCase.labelString(label: nodeModel.label)
+            let labelString = nodeUseCase.labelString(label: nodeModel.label)
             invokeCommand?(.setLabel(labelString))
         }
     }
@@ -99,7 +99,7 @@ final class NodeCellViewModel: ViewModelType {
     }
     
     func getFilesAndFolders() -> String {
-        let numberOfFilesAndFolders = nodeActionUseCase.getFilesAndFolders(nodeHandle: nodeModel.handle)
+        let numberOfFilesAndFolders = nodeUseCase.getFilesAndFolders(nodeHandle: nodeModel.handle)
         let numberOfFiles = numberOfFilesAndFolders.0
         let numberOfFolders = numberOfFilesAndFolders.1
         let numberOfFilesAndFoldersString = NSString.mnz_string(byFiles: numberOfFiles, andFolders: numberOfFolders)
@@ -107,12 +107,12 @@ final class NodeCellViewModel: ViewModelType {
     }
     
     private func hasVersions() {
-        let hasVersions = nodeActionUseCase.hasVersions(nodeHandle: nodeModel.handle)
+        let hasVersions = nodeUseCase.hasVersions(nodeHandle: nodeModel.handle)
         invokeCommand?(.setVersions(hasVersions))
     }
     
     private func isDownloaded() {
-        let isDownloaded = nodeModel.isFile && nodeActionUseCase.isDownloaded(nodeHandle: nodeModel.handle)
+        let isDownloaded = nodeModel.isFile && nodeUseCase.isDownloaded(nodeHandle: nodeModel.handle)
         invokeCommand?(.setDownloaded(isDownloaded))
     }
     
