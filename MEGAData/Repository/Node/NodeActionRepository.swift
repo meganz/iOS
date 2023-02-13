@@ -1,82 +1,239 @@
+import MEGADomain
+
 struct NodeActionRepository: NodeActionRepositoryProtocol {
-    private let sdk: MEGASdk
-    private let nodeHandle: MEGAHandle?
-    
     static var newRepo: NodeActionRepository {
-        NodeActionRepository(sdk: MEGASdkManager.sharedMEGASdk(), nodeHandle: nil)
+        NodeActionRepository(sdk: MEGASdk.shared)
     }
     
-    init(sdk: MEGASdk, nodeHandle: MEGAHandle?) {
+    private let sdk: MEGASdk
+    
+    init(sdk: MEGASdk) {
         self.sdk = sdk
-        self.nodeHandle = nodeHandle
     }
     
-    func nodeAccessLevel() -> NodeAccessTypeEntity {
-        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
-            return .unknown
+    func fetchnodes() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.fetchNodes(with: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure:
+                    continuation.resume(throwing: FetchnodesErrorEntity.generic)
+                }
+            })
         }
-        return NodeAccessTypeEntity(shareAccess: sdk.accessLevel(for: node)) ?? .unknown
     }
     
-    func labelString(label: NodeLabelTypeEntity) -> String {
-        let nodeLabel = MEGANodeLabel(nodeLabelTypeEntity: label) ?? .unknown
-        return MEGANode.string(for: nodeLabel) ?? "" + "Small"
-    }
-    
-    func getFilesAndFolders() -> (childFileCount: Int, childFolderCount: Int) {
-        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
-            return (0, 0)
+    func createFolder(name: String, parent: NodeEntity) async throws -> NodeEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            guard let parentNode = sdk.node(forHandle: parent.handle) else {
+                continuation.resume(throwing: CreateFolderErrorEntity.generic)
+                return
+            }
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.createFolder(withName: name, parent: parentNode, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success (let request):
+                    guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                        continuation.resume(throwing: CreateFolderErrorEntity.generic)
+                        return
+                    }
+                    continuation.resume(returning: node.toNodeEntity())
+                case .failure (let error):
+                    if error.type == .apiEBusinessPastDue {
+                        continuation.resume(throwing: CreateFolderErrorEntity.businessExpired)
+                    } else {
+                        continuation.resume(throwing: CreateFolderErrorEntity.generic)
+                    }
+                }
+            })
         }
-        
-        let numberOfFiles = sdk.numberChildFiles(forParent: node)
-        let numberOfFolders = sdk.numberChildFolders(forParent: node)
-        
-        return (numberOfFiles, numberOfFolders)
     }
     
-    func hasVersions() -> Bool {
-        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
-            return false
+    func rename(node: NodeEntity, name: String) async throws -> NodeEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            guard let megaNode = sdk.node(forHandle: node.handle) else {
+                continuation.resume(throwing: RenameNodeErrorEntity.generic)
+                return
+            }
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.renameNode(megaNode, newName: name, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success (let request):
+                    guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                        continuation.resume(throwing: RenameNodeErrorEntity.generic)
+                        return
+                    }
+                    continuation.resume(returning: node.toNodeEntity())
+                case .failure (let error):
+                    if error.type == .apiEBusinessPastDue {
+                        continuation.resume(throwing: RenameNodeErrorEntity.businessExpired)
+                    } else {
+                        continuation.resume(throwing: RenameNodeErrorEntity.generic)
+                    }
+                }
+            })
         }
-        
-        return sdk.hasVersions(for: node)
     }
     
-    func isDownloaded() -> Bool {
-        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
-            return false
+    func trash(node: NodeEntity) async throws -> NodeEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            guard let node = sdk.node(forHandle: node.handle),
+                  let rubbishBinNode = sdk.rubbishNode else {
+                continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                return
+            }
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.move(node, newParent: rubbishBinNode, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success (let request):
+                    guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                        continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                        return
+                    }
+                    continuation.resume(returning: node.toNodeEntity())
+                case .failure (let error):
+                    if error.type == .apiEBusinessPastDue {
+                        continuation.resume(throwing: MoveNodeErrorEntity.businessExpired)
+                    } else {
+                        continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                    }
+                }
+            })
         }
-        
-        return (MEGAStore.shareInstance().offlineNode(with: node) != nil)
     }
     
-    func isInRubbishBin() -> Bool {
-        guard let nodeHandle = nodeHandle, let node = sdk.node(forHandle: nodeHandle) else {
-            return false
+    func untrash(node: NodeEntity) async throws -> NodeEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            guard let node = sdk.node(forHandle: node.handle),
+                  sdk.isNode(inRubbish: node) == true,
+                  let restoreNode = sdk.node(forHandle: node.restoreHandle),
+                  sdk.isNode(inRubbish: restoreNode) == false else {
+                continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                return
+            }
+            
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.move(node, newParent: restoreNode, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success (let request):
+                    guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                        continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                        return
+                    }
+                    continuation.resume(returning: node.toNodeEntity())
+                case .failure (let error):
+                    if error.type == .apiEBusinessPastDue {
+                        continuation.resume(throwing: MoveNodeErrorEntity.businessExpired)
+                    } else {
+                        continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                    }
+                }
+            })
         }
-        
-        return sdk.isNode(inRubbish: node)
     }
     
-    func images(for parentNode: NodeEntity) -> [NodeEntity] {
-        guard let parent = parentNode.toMEGANode(in: sdk) else { return [] }
-        
-        return images(forParentNode: parent)
+    func delete(node: NodeEntity) async throws {
+        guard let node = sdk.node(forHandle: node.handle),
+              sdk.isNode(inRubbish: node) == true else {
+            throw RemoveNodeErrorEntity.generic
+        }
+        return try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.remove(node, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure (let error):
+                    if error.type == .apiEMasterOnly {
+                        continuation.resume(throwing: RemoveNodeErrorEntity.masterOnly)
+                    } else {
+                        continuation.resume(throwing: RemoveNodeErrorEntity.generic)
+                    }
+                }
+            })
+        }
     }
     
-    func images(for parentHandle: MEGAHandle) -> [NodeEntity] {
-        guard let parent = sdk.node(forHandle: parentHandle) else { return [] }
-        
-        return images(forParentNode: parent)
-    }
-    
-    // MARK: - Private
-    
-    private func images(forParentNode node: MEGANode) -> [NodeEntity] {
-        let nodeList = sdk.children(forParent: node)
-        let mediaNodes = (nodeList.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
-        let imageNodes = mediaNodes.filter({ $0.name?.mnz_isImagePathExtension == true })
-        
-        return imageNodes.toNodeEntities()
+    func move(node: NodeEntity, toParent: NodeEntity) async throws -> NodeEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            guard let node = sdk.node(forHandle: node.handle),
+                  let parent = sdk.node(forHandle: toParent.handle) else {
+                continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                return
+            }
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.move(node, newParent: parent, delegate: RequestDelegate { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .success (let request):
+                    guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                        continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                        return
+                    }
+                    continuation.resume(returning: node.toNodeEntity())
+                case .failure (let error):
+                    if error.type == .apiEBusinessPastDue {
+                        continuation.resume(throwing: MoveNodeErrorEntity.businessExpired)
+                    } else {
+                        continuation.resume(throwing: MoveNodeErrorEntity.generic)
+                    }
+                }
+            })
+        }
     }
 }
