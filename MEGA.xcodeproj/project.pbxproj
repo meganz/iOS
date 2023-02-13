@@ -1398,6 +1398,7 @@
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A818872929963DB300323889 /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BA146B29927784004389FE /* NodeActionRepository.swift */; };
+		A8188732299645E500323889 /* TransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8A5A42990F964008518BE /* TransferRepository.swift */; };
 		A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */; };
 		A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81971E326FDBE82007DC7B1 /* FileVersioningViewModelTests.swift */; };
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
@@ -1544,6 +1545,7 @@
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
 		A8AB7AED28F0616800D610EC /* AnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */; };
 		A8ABA36E292FA40000487D3A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A8ABA36D292FA40000487D3A /* MEGAData */; };
+		A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */; };
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
 		A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51ADB27F3534F0030F1EA /* Haptica */; };
 		A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51AE827F3565E0030F1EA /* WSTagsField */; };
@@ -4057,6 +4059,7 @@
 		A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompressingLogFileManager+additions.swift"; sourceTree = "<group>"; };
 		A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGALoginRequestDelegate.h; path = API/Requests/MEGALoginRequestDelegate.h; sourceTree = "<group>"; };
 		A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGALoginRequestDelegate.m; path = API/Requests/MEGALoginRequestDelegate.m; sourceTree = "<group>"; };
+		A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRepositoryTests.swift; sourceTree = "<group>"; };
 		A8B354D221354680002018A9 /* MEGAChatNotificationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatNotificationDelegate.h; sourceTree = "<group>"; };
 		A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatNotificationDelegate.m; sourceTree = "<group>"; };
 		A8BA146B29927784004389FE /* NodeActionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionRepository.swift; sourceTree = "<group>"; };
@@ -4085,6 +4088,7 @@
 		A8D09D1828CFA36F0045BF15 /* libzen.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libzen.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.xcframework; sourceTree = "<group>"; };
 		A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libmediainfo.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.xcframework; sourceTree = "<group>"; };
 		A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcryptopp.xcframework; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.xcframework; sourceTree = "<group>"; };
+		A8D8A5A42990F964008518BE /* TransferRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRepository.swift; sourceTree = "<group>"; };
 		A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountExpiredViewController.swift; sourceTree = "<group>"; };
 		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
 		A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGATransferList+Mapper.swift"; sourceTree = "<group>"; };
@@ -5382,6 +5386,7 @@
 				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
 				0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */,
 				83A49E7C270476A300FD0D85 /* TransfersRepository.swift */,
+				A8D8A5A42990F964008518BE /* TransferRepository.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -5397,6 +5402,7 @@
 				6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */,
 				0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */,
 				94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */,
+				A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */,
 			);
 			path = Repos;
 			sourceTree = "<group>";
@@ -13012,6 +13018,7 @@
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
 				5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */,
 				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
+				A8188732299645E500323889 /* TransferRepository.swift in Sources */,
 				5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */,
 				8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */,
 				A8E5E52B282A913F007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */,
@@ -14429,6 +14436,7 @@
 				BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */,
 				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
+				A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */,
 				B6880C2728C495750089D2A2 /* PhotoCellViewModelTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
