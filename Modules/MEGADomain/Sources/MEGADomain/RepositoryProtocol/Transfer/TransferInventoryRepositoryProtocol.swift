@@ -1,5 +1,5 @@
 
-public protocol TransfersRepositoryProtocol {
+public protocol TransferInventoryRepositoryProtocol {
     func transfers() -> [TransferEntity]
     func downloadTransfers() -> [TransferEntity]
     func uploadTransfers() -> [TransferEntity]

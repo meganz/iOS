@@ -41,8 +41,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     
-    private let transfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
-    private let sharedFolderTransfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)
+    private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
+    private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)
 
     @objc func animate(progress: CGFloat, duration: TimeInterval) {
         guard let progressLayer = progressLayer else {
@@ -164,9 +164,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
         
         transfers.removeAll()
-        transfers = transfersUseCase.transfers(filteringUserTransfers: true) + sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
+        transfers = transferInventoryUseCase.transfers(filteringUserTransfers: true) + sharedFolderTransferInventoryUseCase.transfers(filteringUserTransfers: true)
         
-        if let failedTransfer = transfersUseCase.completedTransfers(filteringUserTransfers: true).first(where: { (transfer) -> Bool in
+        if let failedTransfer = transferInventoryUseCase.completedTransfers(filteringUserTransfers: true).first(where: { (transfer) -> Bool in
             return transfer.state != .complete && transfer.state != .cancelled
         }) {
             if let lastErrorExtended = failedTransfer.lastErrorExtended {
@@ -200,7 +200,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
                 stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
             }
         } else {
-            let completedTransfers = transfersUseCase.completedTransfers(filteringUserTransfers: true)
+            let completedTransfers = transferInventoryUseCase.completedTransfers(filteringUserTransfers: true)
             if (completedTransfers.count) > 0 {
                 progress = 1
                 self.isHidden = false
@@ -320,7 +320,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         }
         
         
-        guard transfer.path?.hasPrefix(transfersUseCase.documentsDirectory().path) ?? false ||
+        guard transfer.path?.hasPrefix(transferInventoryUseCase.documentsDirectory().path) ?? false ||
                 transfer.type == .upload ||
                 isExportFile || isSaveToPhotos else {
                     return

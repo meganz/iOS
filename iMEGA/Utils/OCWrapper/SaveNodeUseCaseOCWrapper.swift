@@ -8,7 +8,7 @@ import MEGADomain
         photosLibraryRepository: PhotosLibraryRepository.newRepo,
         mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
         preferenceUseCase: PreferenceUseCase.default,
-        transferRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()))
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
         saveNodeUseCase.saveNode(from:transfer.toTransferEntity()) { result in
