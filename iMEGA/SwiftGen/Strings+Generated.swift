@@ -37,8 +37,6 @@ public enum Strings {
     public static let quickActionUploadString = Strings.tr("InfoPlist", "quickActionUploadString")
   }
   public enum Localizable {
-    /// %1 and [A]%2 more[/A]
-    public static let _1AndA2MoreA = Strings.tr("Localizable", "%1 and [A]%2 more[/A]")
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
     /// %1$d items
@@ -3834,6 +3832,10 @@ public enum Strings {
         public static func modifiedByLabel(_ p1: Any) -> String {
           return Strings.tr("Localizable", "home.recent.modifiedByLabel", String(describing: p1))
         }
+        /// %1$s and %2$s more
+        public static func multipleFileTitle(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+          return Strings.tr("Localizable", "home.recent.multipleFileTitle", p1, p2)
+        }
       }
     }
     public enum InAppPurchase {
@@ -5655,6 +5657,12 @@ public enum Strings {
         public enum Incoming {
           /// [Undecrypted folder]
           public static let undecryptedFolderName = Strings.tr("Localizable", "sharedItems.tab.incoming.undecryptedFolderName")
+        }
+        public enum Recents {
+          /// Plural format key: "%#@count@"
+          public static func undecryptedFileName(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "sharedItems.tab.recents.undecryptedFileName", p1)
+          }
         }
       }
     }
