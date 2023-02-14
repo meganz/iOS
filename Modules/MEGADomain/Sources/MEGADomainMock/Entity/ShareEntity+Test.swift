@@ -7,7 +7,8 @@ public extension ShareEntity {
          accessLevel: ShareAccessLevelEntity = .unknown,
          createdDate: Date = Date(),
          isPending: Bool = false,
+         isVerified: Bool = false,
          isTesting: Bool = true) {
-        self.init(sharedUserEmail: sharedUserEmail, nodeHandle: nodeHandle, accessLevel: accessLevel, createdDate: createdDate, isPending: isPending)
+        self.init(sharedUserEmail: sharedUserEmail, nodeHandle: nodeHandle, accessLevel: accessLevel, createdDate: createdDate, isPending: isPending, isVerified: isVerified)
     }
 }

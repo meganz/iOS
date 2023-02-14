@@ -25,7 +25,8 @@ extension MEGAShare {
                     nodeHandle: nodeHandle,
                     accessLevel: access.toShareAccessLevelEntity(),
                     createdDate: timestamp,
-                    isPending: isPending)
+                    isPending: isPending,
+                    isVerified: isVerified)
     }
 }
 
