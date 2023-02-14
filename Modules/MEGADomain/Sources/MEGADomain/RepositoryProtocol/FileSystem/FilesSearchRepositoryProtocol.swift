@@ -7,12 +7,14 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity,
                 completion: @escaping ([NodeEntity]?, Bool) -> Void)
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity) async throws -> [NodeEntity]
     

@@ -159,6 +159,7 @@ final class FilesExplorerViewModel {
         
         useCase?.search(string: text,
                        parent: nil,
+                       supportCancel: true,
                        sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                        cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
             DispatchQueue.main.async {

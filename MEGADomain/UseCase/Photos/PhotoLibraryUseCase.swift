@@ -83,10 +83,12 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
     private func loadAllPhotos() async throws -> [NodeEntity] {
         let photosFromCloudDrive = try? await searchRepository.search(string: "",
                                                                       parent: nil,
+                                                                      supportCancel: false,
                                                                       sortOrderType: .defaultDesc,
                                                                       formatType: .photo)
         let videosFromCloudDrive = try? await searchRepository.search(string: "",
                                                                       parent: nil,
+                                                                      supportCancel: false,
                                                                       sortOrderType: .defaultDesc,
                                                                       formatType: .video)
         

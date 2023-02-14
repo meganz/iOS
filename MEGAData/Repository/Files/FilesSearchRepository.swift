@@ -8,7 +8,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     private let sdk: MEGASdk
     private var callback: (([NodeEntity]) -> Void)?
-    private var cancelToken: MEGACancelToken?
+    private var cancelToken = MEGACancelToken()
     
     private lazy var searchOperationQueue: OperationQueue = {
         let operationQueue = OperationQueue()
@@ -33,6 +33,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity,
                 completion: @escaping ([NodeEntity]?, Bool) -> Void) {
@@ -42,6 +43,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         
         addSearchOperation(string: string,
                            parent: parent,
+                           supportCancel: supportCancel,
                            sortOrderType: sortOrderType,
                            formatType: formatType) { nodes, fail in
             let nodes = nodes?.toNodeEntities()
@@ -51,10 +53,15 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation({ continuation in
-            search(string: string, parent: node, sortOrderType: sortOrderType, formatType: formatType) {
+            search(string: string,
+                   parent: node,
+                   supportCancel: supportCancel,
+                   sortOrderType: sortOrderType,
+                   formatType: formatType) {
                 guard Task.isCancelled == false else { continuation.resume(throwing: FileSearchResultErrorEntity.cancelled); return }
                 
                 continuation.resume(with: $0)
@@ -69,7 +76,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     func cancelSearch() {
         guard searchOperationQueue.operationCount > 0 else { return }
         
-        cancelToken?.cancel()
+        cancelToken.cancel()
         searchOperationQueue.cancelAllOperations()
     }
     
@@ -77,6 +84,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     private func search(string: String?,
                         parent node: NodeEntity?,
+                        supportCancel: Bool,
                         sortOrderType: SortOrderEntity,
                         formatType: NodeFormatEntity,
                         completion: @escaping (Result<[NodeEntity], Error>) -> Void) {
@@ -86,6 +94,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         
         addSearchOperation(string: string,
                            parent: parent,
+                           supportCancel: supportCancel,
                            sortOrderType: sortOrderType,
                            formatType: formatType) { nodes, fail in
             let nodes = nodes?.toNodeEntities()
@@ -95,20 +104,19 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     private func addSearchOperation(string: String?,
                                     parent: MEGANode,
+                                    supportCancel: Bool,
                                     sortOrderType: SortOrderEntity,
                                     formatType: NodeFormatEntity,
                                     completion: @escaping ([MEGANode]?, Bool) -> Void) {
         cancelToken = MEGACancelToken()
         
-        if let cancelToken {
-            let searchOperation = SearchOperation(parentNode: parent,
-                                                  text: string ?? "",
-                                                  cancelToken: cancelToken,
-                                                  sortOrderType: sortOrderType.toMEGASortOrderType(),
-                                                  nodeFormatType: formatType.toMEGANodeFormatType(),
-                                                  completion: completion)
-            searchOperationQueue.addOperation(searchOperation)
-        }
+        let searchOperation = SearchOperation(parentNode: parent,
+                                              text: string ?? "",
+                                              cancelToken: supportCancel ? cancelToken : MEGACancelToken(),
+                                              sortOrderType: sortOrderType.toMEGASortOrderType(),
+                                              nodeFormatType: formatType.toMEGANodeFormatType(),
+                                              completion: completion)
+        searchOperationQueue.addOperation(searchOperation)
     }
 }
 

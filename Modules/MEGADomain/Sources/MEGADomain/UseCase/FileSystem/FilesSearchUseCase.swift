@@ -1,6 +1,7 @@
 public protocol FilesSearchUseCaseProtocol {
     func search(string: String?,
                 parent node: NodeEntity?,
+                supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 cancelPreviousSearchIfNeeded: Bool,
                 completion: @escaping ([NodeEntity]?, Bool) -> Void)
@@ -25,6 +26,7 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     
     public func search(string: String?,
                 parent node: NodeEntity?,
+                supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 cancelPreviousSearchIfNeeded: Bool,
                 completion: @escaping ([NodeEntity]?, Bool) -> Void) {
@@ -34,6 +36,7 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         
         repo.search(string: string,
                     parent: node,
+                    supportCancel: supportCancel,
                     sortOrderType: sortOrderType,
                     formatType: nodeFormat,
                     completion: completion)
