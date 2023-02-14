@@ -80,9 +80,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-#ifdef DEBUG
+#if defined(DEBUG) || defined(QA_CONFIG)
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setCatchException:false];
+    [self configSharedSecureFingerprintFlag];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
