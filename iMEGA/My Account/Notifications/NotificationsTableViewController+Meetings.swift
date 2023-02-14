@@ -16,13 +16,11 @@ extension NotificationsTableViewController {
         if alert.pendingContactRequestHandle != MEGAInvalidHandle {
             return occurrenceContent(for: alert, indexPath: indexPath)
         } else if scheduledMeeting.rules.frequency == .invalid {
-            return contentForOneOffNewScheduledMeeting(scheduledMeeting, email: alert.email)
-        } else if scheduledMeeting.rules.frequency == .daily {
-            return contentForDailyNewScheduledMeeting(scheduledMeeting, email: alert.email)
-        } else if scheduledMeeting.rules.frequency == .weekly {
-            return contentForWeeklyNewScheduledMeeting(scheduledMeeting, email: alert.email)
-        } else if scheduledMeeting.rules.frequency == .monthly {
-            return contentForMonthlyNewScheduledMeeting(scheduledMeeting, email: alert.email)
+            return contentForOneOffNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email)
+        } else if scheduledMeeting.rules.frequency == .daily
+                    || scheduledMeeting.rules.frequency == .weekly
+                    || scheduledMeeting.rules.frequency == .monthly {
+            return contentForRecurringNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email)
         }
         
         return NSAttributedString(string: alert.title)
@@ -42,19 +40,25 @@ extension NotificationsTableViewController {
             if alert.hasScheduledMeetingChangeType(.rules) {
                 return contentForRecurringCancelledScheduledMeeting(withEmail: alert.email)
             } else {
-                return contentForOneOffCancelledScheduledMeeting(scheduledMeetingEntity, email: alert.email)
+                return contentForOneOffCancelledScheduledMeeting(scheduledMeetingEntity, chatId: alert.nodeHandle, email: alert.email)
             }
         } else if checkIfMultipleFieldsHaveChangedForScheduledMeeting(in: alert)
                     || alert.hasScheduledMeetingChangeType(.timeZone)
                     || alert.hasScheduledMeetingChangeType(.rules) {
             if scheduledMeetingEntity.rules.frequency == .invalid {
-                return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
-            } else if scheduledMeetingEntity.rules.frequency == .daily {
-                return contentForDailyScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
-            } else if scheduledMeetingEntity.rules.frequency == .weekly {
-                return contentForWeeklyScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
-            } else if scheduledMeetingEntity.rules.frequency == .monthly {
-                return contentForMonthlyScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
+                return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(
+                    scheduledMeeting: scheduledMeetingEntity,
+                    chatId: alert.nodeHandle,
+                    email: alert.email
+                )
+            } else if scheduledMeetingEntity.rules.frequency == .daily
+                        || scheduledMeetingEntity.rules.frequency == .weekly
+                        || scheduledMeetingEntity.rules.frequency == .monthly {
+                return contentForRecurringScheduledMeetingWithMultipleFieldsChanged(
+                    scheduledMeeting: scheduledMeetingEntity,
+                    chatId: alert.nodeHandle,
+                    email: alert.email
+                )
             }
             
         }  else if alert.hasScheduledMeetingChangeType(.title) {
@@ -69,23 +73,25 @@ extension NotificationsTableViewController {
             )
         } else if alert.hasScheduledMeetingChangeType(.description) {
             if scheduledMeetingEntity.rules.frequency == .invalid {
-                return contentForOneOffScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
-            } else if scheduledMeetingEntity.rules.frequency == .daily {
-                return contentForDailyScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
-            } else if scheduledMeetingEntity.rules.frequency == .weekly {
-                return contentForWeeklyScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
-            } else if scheduledMeetingEntity.rules.frequency == .monthly {
-                return contentForMonthlyScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: scheduledMeetingEntity, email: alert.email)
+                return contentForOneOffScheduledMeetingWithDescriptionFieldChanged(
+                    scheduledMeeting: scheduledMeetingEntity,
+                    chatId: alert.nodeHandle,
+                    email: alert.email)
+            } else if scheduledMeetingEntity.rules.frequency == .daily
+                        || scheduledMeetingEntity.rules.frequency == .weekly
+                        || scheduledMeetingEntity.rules.frequency == .monthly {
+                return contentForRecurringScheduledMeetingWithDescriptionFieldChanged(
+                    scheduledMeeting: scheduledMeetingEntity,
+                    chatId: alert.nodeHandle,
+                    email: alert.email)
             }
         } else if alert.hasScheduledMeetingChangeType(.startDate) || alert.hasScheduledMeetingChangeType(.endDate) {
             if scheduledMeetingEntity.rules.frequency == .invalid {
                 return contentForOneOffScheduledMeetingWithDateFieldChanged(for: alert)
-            } else if scheduledMeetingEntity.rules.frequency == .daily {
-                return contentForDailyScheduledMeetingWithDateFieldChanged(for: alert)
-            } else if scheduledMeetingEntity.rules.frequency == .weekly {
-                return contentForWeeklyScheduledMeetingWithDateFieldChanged(for: alert)
-            } else if scheduledMeetingEntity.rules.frequency == .monthly {
-                return contentForMonthlyScheduledMeetingWithDateFieldChanged(for: alert)
+            } else if scheduledMeetingEntity.rules.frequency == .daily
+                        || scheduledMeetingEntity.rules.frequency == .weekly
+                        || scheduledMeetingEntity.rules.frequency == .monthly {
+                return contentForRecurringScheduledMeetingWithDateFieldChanged(for: alert)
             }
         }
         
@@ -105,76 +111,7 @@ extension NotificationsTableViewController {
         mainTabBarController.openChatRoom(chatId: alert.nodeHandle)
     }
     
-    // MARK: Private methods
-    
-    private func occurrenceContent(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
-        if let notification = scheduleMeetingOccurrenceNotificationList.filter({ $0.alert.identifier == alert.identifier }).first {
-            if let message = notification.message {
-                return createAttributedStringWithOneBoldTag(content: message)
-            } else {
-                Task {
-                    do {
-                        try await notification.loadMessage()
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                    } catch {
-                        MEGALogDebug("unable to load message for alert \(alert.title ?? "")")
-                    }
-                }
-            }
-        } else {
-            let notification = ScheduleMeetingOccurrenceNotification(alert: alert)
-            scheduleMeetingOccurrenceNotificationList.append(notification)
-
-            Task {
-                do {
-                    try await notification.loadMessage()
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                } catch {
-                    MEGALogDebug("unable to load message for alert \(alert.title ?? "")")
-                }
-            }
-        }
-        
-        return nil
-    }
-    
-    private func contentForOneOffNewScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        return contentForScheduledMeetingWithTwoPlaceholders(
-            scheduledMeeting,
-            email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.New.description
-        )
-    }
-    
-    private func contentForOneOffCancelledScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        return contentForScheduledMeetingWithTwoPlaceholders(
-            scheduledMeeting,
-            email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.Cancelled.description
-        )
-    }
-    
-    private func contentForRecurringCancelledScheduledMeeting(withEmail email: String) -> NSAttributedString? {
-        createAttributedStringWithOneBoldTag(
-            content: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Cancelled.description(email)
-        )
-    }
-    
-    private func contentForScheduledMeetingWithTwoPlaceholders(
-        _ scheduledMeeting: ScheduledMeetingEntity,
-        email: String,
-        localizedString: (Any, Any) -> String
-    ) -> NSAttributedString? {
-        let dateString = DateFormatter.fromTemplate("E, d MMM").localisedString(from: scheduledMeeting.startDate)
-        + ", "
-        + DateFormatter.fromTemplate("yyyy").localisedString(from: scheduledMeeting.startDate)
-        + " • "
-        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.startDate)
-        + " - "
-        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
-        
-        return createAttributedStringWithOneBoldTag(content: localizedString(email, dateString))
-    }
+    // MARK: - Private methods
     
     private func createAttributedStringWithOneBoldTag(content: String) -> NSAttributedString? {
         let attributedContent = NSMutableAttributedString(string: content, attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1)])
@@ -210,233 +147,35 @@ extension NotificationsTableViewController {
         return attributedContent
     }
     
-    private func startAndEndDateString(for scheduledMeeting: ScheduledMeetingEntity) -> (startDateString: String, endDateString: String)? {
-        guard let endDate = scheduledMeeting.rules.until else {
-            return nil
-        }
-        
-        let startDateString = dateString(for: scheduledMeeting.startDate)
-        
-        let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.startDate)
-        let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
-        
-        let endDateString = dateString(for: endDate)
-        + " • "
-        + startTimeString
-        + " - "
-        + endTimeString
-        
-        return (startDateString, endDateString)
-    }
-    
-    private func dateString(for scheduledMeeting: ScheduledMeetingEntity) -> String {
-        dateString(for: scheduledMeeting.startDate)
-        + " • "
-        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.startDate)
-        + " - "
-        + DateFormatter.fromTemplate("h:mm").localisedString(from: scheduledMeeting.endDate)
-    }
-    
-    private func dateString(for date: Date) -> String {
-        DateFormatter.fromTemplate("d MMM").localisedString(from: date)
-        + ", "
-        + DateFormatter.fromTemplate("yyyy").localisedString(from: date)
-    }
-    
-    private func contentForDailyNewScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        let content: String
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Ending.New.description(email, dateStrings.startDateString, dateStrings.endDateString)
-        } else {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Forever.New.description(email, dateString(for: scheduledMeeting))
-        }
-        
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForWeeklyNewScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        var content: String?
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                let weekName = stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? ""
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Single.New.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekName,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Single.New.description(
-                            email,
-                            weekName,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
+    private func occurrenceContent(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
+        if let notification = scheduleMeetingOccurrenceNotificationList.filter({ $0.alert.identifier == alert.identifier }).first {
+            if let message = notification.message {
+                return createAttributedStringWithOneBoldTag(content: message)
+            } else {
+                Task {
+                    do {
+                        try await notification.loadMessage()
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    } catch {
+                        MEGALogDebug("unable to load message for alert \(alert.title ?? "")")
                     }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Multiple.New.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Multiple.New.description(
-                            email,
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    }
-                    
                 }
             }
         } else {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Single.New.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                            dateString(for: scheduledMeeting)
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Single.New.description(
-                            email,
-                            stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                            dateString(for: scheduledMeeting)
-                        )
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Multiple.New.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateString(for: scheduledMeeting)
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Multiple.New.description(
-                            email,
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateString(for: scheduledMeeting)
-                        )
-                    }
-                }
-            }
-            
-        }
-        
-        guard let content else { return nil }
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForMonthlyNewScheduledMeeting(_ scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        var content: String?
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.first,
-               let specificWeekDay = monthWeekDayList.first?.last {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Ending.New.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        "\(scheduledMeeting.rules.interval)",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Ending.New.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Ending.New.description(
-                        email,
-                        "\(day)",
-                        scheduledMeeting.rules.interval,
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                    
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Ending.New.description(
-                        email,
-                        "\(day)",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                }
-            }
-        } else {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.first,
-               let specificWeekDay = monthWeekDayList.first?.last {
-                
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Forever.New.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        "\(scheduledMeeting.rules.interval)",
-                        dateString(for: scheduledMeeting)
-                    )
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Forever.New.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        dateString(for: scheduledMeeting)
-                    )
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Forever.New.description(
-                        email,
-                        "\(day)",
-                        scheduledMeeting.rules.interval,
-                        dateString(for: scheduledMeeting)
-                    )
-                    
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Forever.New.description(
-                        email,
-                        "\(day)",
-                        dateString(for: scheduledMeeting)
-                    )
+            let notification = ScheduleMeetingOccurrenceNotification(alert: alert)
+            scheduleMeetingOccurrenceNotificationList.append(notification)
+
+            Task {
+                do {
+                    try await notification.loadMessage()
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                } catch {
+                    MEGALogDebug("unable to load message for alert \(alert.title ?? "")")
                 }
             }
         }
         
-        guard let content else { return nil }
-        return createAttributedStringWithOneBoldTag(content: content)
+        return nil
     }
     
     private func contentForScheduledMeetingTitleUpdate(
@@ -452,965 +191,43 @@ extension NotificationsTableViewController {
         )?.toScheduledMeetingEntity() else {
             return nil
         }
-        
-        let scheduleMeetingDateString = DateFormatter.fromTemplate("E").localisedString(from: scheduledMeeting.startDate)
-        + ", "
-        + dateString(for: scheduledMeeting)
-        
-        let previousTitle = oldTitle ?? ""
-        let updatedTitle = newTitle ?? scheduledMeeting.title
-        let content: String
-        
-        if isReccurring {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.TitleUpdate.description(email, previousTitle, updatedTitle)
-        } else {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TitleUpdate.description(email, previousTitle, updatedTitle, scheduleMeetingDateString)
+                
+        var content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.TitleUpdate.description
+            .replacingOccurrences(of: "[Email]", with: email)
+            .replacingOccurrences(of: "[PreviousTitle]", with: oldTitle ?? "")
+            .replacingOccurrences(of: "[UpdatedTitle]", with: newTitle ?? scheduledMeeting.title)
+
+        if !isReccurring, let dateInfo = dateInfo(for: scheduledMeeting, chatId: chatId, removingFormatter: .all) {
+            content += "\n" + dateInfo
         }
         
        return createAttributedStringWithTwoBoldTags(content: content)
     }
     
-    func contentForOneOffScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        return contentForScheduledMeetingWithTwoPlaceholders(
-            scheduledMeeting,
-            email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.MulitpleFieldsUpdate.description
+    private func dateInfo(
+        for scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        removingFormatter formatter: ScheduledMeetingDateBuilder.Formatter,
+        startDate: Date? = nil,
+        endDate: Date? = nil,
+        startTime: Date? = nil,
+        endTime: Date? = nil
+    ) -> String? {
+        let chatRoomUseCase = ChatRoomUseCase(
+            chatRoomRepo: ChatRoomRepository.sharedRepo,
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())
         )
-    }
-    
-    private func contentForDailyScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        let content: String
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Ending.MulitpleFieldsUpdate.description(email, dateStrings.startDateString, dateStrings.endDateString)
-        } else {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Forever.MulitpleFieldsUpdate.description(email, dateString(for: scheduledMeeting))
-        }
         
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForWeeklyScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        var content: String?
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                let weekName = stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? ""
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Single.MulitpleFieldsUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekName,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Single.MulitpleFieldsUpdate.description(
-                            email,
-                            weekName,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Multiple.MulitpleFieldsUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Multiple.MulitpleFieldsUpdate.description(
-                            email,
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    }
-                    
-                }
-            }
-        } else {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Single.MulitpleFieldsUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                            dateString(for: scheduledMeeting)
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Single.MulitpleFieldsUpdate.description(
-                            email,
-                            stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                            dateString(for: scheduledMeeting)
-                        )
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Multiple.MulitpleFieldsUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateString(for: scheduledMeeting)
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Multiple.MulitpleFieldsUpdate.description(
-                            email,
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateString(for: scheduledMeeting)
-                        )
-                    }
-                }
-            }
-            
-        }
+        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
         
-        guard let content else { return nil }
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForMonthlyScheduledMeetingWithMultipleFieldsChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        var content: String?
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.first,
-               let specificWeekDay = monthWeekDayList.first?.last {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Ending.MulitpleFieldsUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        "\(scheduledMeeting.rules.interval)",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Ending.MulitpleFieldsUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Ending.MulitpleFieldsUpdate.description(
-                        email,
-                        "\(day)",
-                        scheduledMeeting.rules.interval,
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                    
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Ending.MulitpleFieldsUpdate.description(
-                        email,
-                        "\(day)",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                }
-            }
-        } else {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.last,
-               let specificWeekDay = monthWeekDayList.first?.first {
-                
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Forever.MulitpleFieldsUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        "\(scheduledMeeting.rules.interval)",
-                        dateString(for: scheduledMeeting)
-                    )
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Forever.MulitpleFieldsUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        dateString(for: scheduledMeeting)
-                    )
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Forever.MulitpleFieldsUpdate.description(
-                        email,
-                        "\(day)",
-                        scheduledMeeting.rules.interval,
-                        dateString(for: scheduledMeeting)
-                    )
-                    
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Forever.MulitpleFieldsUpdate.description(
-                        email,
-                        "\(day)",
-                        dateString(for: scheduledMeeting)
-                    )
-                }
-            }
-        }
-        
-        guard let content else { return nil }
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForOneOffScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        return contentForScheduledMeetingWithTwoPlaceholders(
-            scheduledMeeting,
-            email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DescriptionFieldUpdate.description
+        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoomEntity)
+        return scheduledMeetingDateBuilder.buildDateDescriptionString(
+            removingFormatter: formatter,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: startTime,
+            endTime: endTime
         )
-    }
-    
-    private func contentForDailyScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        let content: String
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Ending.DescriptionFieldUpdate.description(email, dateStrings.startDateString, dateStrings.endDateString)
-        } else {
-            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Forever.DescriptionFieldUpdate.description(email, dateString(for: scheduledMeeting))
-        }
-        
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForWeeklyScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        var content: String?
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                let weekName = stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? ""
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Single.DescriptionFieldUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekName,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Single.DescriptionFieldUpdate.description(
-                            email,
-                            weekName,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Multiple.DescriptionFieldUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Multiple.DescriptionFieldUpdate.description(
-                            email,
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateStrings.startDateString,
-                            dateStrings.endDateString
-                        )
-                    }
-                    
-                }
-            }
-        } else {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Single.DescriptionFieldUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                            dateString(for: scheduledMeeting)
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Single.DescriptionFieldUpdate.description(
-                            email,
-                            stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                            dateString(for: scheduledMeeting)
-                        )
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    if scheduledMeeting.rules.interval > 0 {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Multiple.DescriptionFieldUpdate.description(
-                            email,
-                            "\(scheduledMeeting.rules.interval)",
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateString(for: scheduledMeeting)
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Multiple.DescriptionFieldUpdate.description(
-                            email,
-                            weekdayStringList,
-                            lastWeekdayString,
-                            dateString(for: scheduledMeeting)
-                        )
-                    }
-                }
-            }
-            
-        }
-        
-        guard let content else { return nil }
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForMonthlyScheduledMeetingWithDescriptionFieldChanged(scheduledMeeting: ScheduledMeetingEntity, email: String) -> NSAttributedString? {
-        var content: String?
-        if let dateStrings = startAndEndDateString(for: scheduledMeeting) {
-             if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.first,
-               let specificWeekDay = monthWeekDayList.first?.last {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Ending.DescriptionFieldUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        "\(scheduledMeeting.rules.interval)",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Ending.DescriptionFieldUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Ending.DescriptionFieldUpdate.description(
-                        email,
-                        "\(day)",
-                        scheduledMeeting.rules.interval,
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                    
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Ending.DescriptionFieldUpdate.description(
-                        email,
-                        "\(day)",
-                        dateStrings.startDateString,
-                        dateStrings.endDateString
-                    )
-                }
-            }
-        } else {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.last,
-               let specificWeekDay = monthWeekDayList.first?.first {
-                
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Forever.DescriptionFieldUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        "\(scheduledMeeting.rules.interval)",
-                        dateString(for: scheduledMeeting)
-                    )
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Forever.DescriptionFieldUpdate.description(
-                        email,
-                        stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                        stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                        dateString(for: scheduledMeeting)
-                    )
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Forever.DescriptionFieldUpdate.description(
-                        email,
-                        "\(day)",
-                        scheduledMeeting.rules.interval,
-                        dateString(for: scheduledMeeting)
-                    )
-                    
-                } else {
-                    content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Forever.DescriptionFieldUpdate.description(
-                        email,
-                        "\(day)",
-                        dateString(for: scheduledMeeting)
-                    )
-                }
-            }
-        }
-        
-        guard let content else { return nil }
-        return createAttributedStringWithOneBoldTag(content: content)
-    }
-    
-    private func contentForOneOffScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
-        guard let scheduledMeeting = scheduledMeeting(
-            withScheduleMeetingId: alert.scheduledMeetingId,
-            chatId: alert.nodeHandle
-        )?.toScheduledMeetingEntity() else {
-            return NSAttributedString(string: alert.title)
-        }
-        
-        let startDateList = alert.startDateList
-        let startDateOriginal = startDateList?.first
-        let startDateUpdated = startDateList?.count == 2 ? startDateList?.last : nil
-        
-        let endDateList = alert.endDateList
-        let endDateOriginal = endDateList?.first
-        let endDateUpdated = endDateList?.count == 2 ? endDateList?.last : nil
-        
-        let startDate = (startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate
-        let endDate = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
-
-        let startDateString = DateFormatter.fromTemplate("E").localisedString(from: startDate)
-        + ", "
-        + dateString(for: startDate)
-        
-        let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
-        let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endDate)
-
-        if let startDateOriginal, startDateUpdated != nil {
-            let startDateOriginalString = DateFormatter.fromTemplate("E").localisedString(from: startDateOriginal)
-            + ", "
-            + dateString(for: startDateOriginal)
-            
-            if startDateString != startDateOriginalString {
-                let content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DayChanged.description(
-                    alert.email ?? "",
-                    startDateString,
-                    "• " + startTimeString + " - " + endTimeString
-                )
-                
-                return createAttributedStringWithTwoBoldTags(content: content)
-            }
-        }
-        
-        let content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TimeChanged.description(
-            alert.email ?? "",
-            startDateString + " •",
-            startTimeString + " - " + endTimeString
-        )
-        return createAttributedStringWithTwoBoldTags(content: content)
-    }
-    
-    private func contentForDailyScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
-        guard let scheduledMeeting = scheduledMeeting(
-            withScheduleMeetingId: alert.scheduledMeetingId,
-            chatId: alert.nodeHandle
-        )?.toScheduledMeetingEntity() else {
-            return NSAttributedString(string: alert.title)
-        }
-
-        let startDateList = alert.startDateList
-        let startDateOriginal = startDateList?.first
-        let startDateUpdated = startDateList?.count == 2 ? startDateList?.last : nil
-        
-        let endDateList = alert.endDateList
-        let endDateOriginal = endDateList?.first
-        let endDateUpdated = endDateList?.count == 2 ? endDateList?.last : nil
-        
-        let startDate = ((startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate)
-        let endTime = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
-        let endDate = scheduledMeeting.rules.until ?? endTime
-
-        let startDateString = dateString(for: startDate)
-        let endDateString = dateString(for: endDate)
-
-        let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
-        let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endTime)
-        
-        let content: String
-        if scheduledMeeting.rules.until != nil {
-            if isTimeChanged(forAlert: alert) {
-                content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Ending.TimeChanged.description(
-                    alert.email ?? "",
-                    startDateString,
-                    endDateString + " •",
-                    startTimeString + " - " + endTimeString
-                )
-
-            } else {
-                content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Ending.DayChanged.description(
-                    alert.email ?? "",
-                    startDateString,
-                    endDateString,
-                    "• " + startTimeString + " - " + endTimeString
-                )
-            }
-        } else {
-            if isTimeChanged(forAlert: alert) {
-                content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Forever.TimeChanged.description(
-                    alert.email ?? "",
-                    startDateString + " •",
-                    startTimeString + " - " + endTimeString
-                )
-            } else {
-                content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Daily.Forever.DayChanged.description(
-                    alert.email ?? "",
-                    startDateString,
-                    "•" + startTimeString + " - " + endTimeString
-                )
-            }
-        }
-        
-        return createAttributedStringWithTwoBoldTags(content: content)
-    }
-    
-    private func contentForWeeklyScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
-        guard let scheduledMeeting = scheduledMeeting(
-            withScheduleMeetingId: alert.scheduledMeetingId,
-            chatId: alert.nodeHandle
-        )?.toScheduledMeetingEntity() else {
-            return NSAttributedString(string: alert.title)
-        }
-        
-        let startDateList = alert.startDateList
-        let startDateOriginal = startDateList?.first
-        let startDateUpdated = startDateList?.count == 2 ? startDateList?.last : nil
-        
-        let endDateList = alert.endDateList
-        let endDateOriginal = endDateList?.first
-        let endDateUpdated = endDateList?.count == 2 ? endDateList?.last : nil
-        
-        let startDate = ((startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate)
-        let endTime = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
-        let endDate = scheduledMeeting.rules.until ?? endTime
-
-        let startDateString = dateString(for: startDate)
-        let endDateString = dateString(for: endDate)
-
-        let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
-        let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endTime)
-        
-        var content: String?
-        if scheduledMeeting.rules.until != nil {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                let weekName = stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? ""
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Single.TimeChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                weekName,
-                                startDateString,
-                                endDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Single.DayChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                weekName,
-                                startDateString,
-                                endDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    } else {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Single.TimeChanged.description(
-                                alert.email ?? "",
-                                weekName,
-                                startDateString,
-                                endDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Single.DayChanged.description(
-                                alert.email ?? "",
-                                weekName,
-                                startDateString,
-                                endDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    
-                    if scheduledMeeting.rules.interval > 0 {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Multiple.TimeChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString,
-                                endDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Ending.Multiple.DayChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString,
-                                endDateString,
-                                " •" + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    } else {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Multiple.TimeChanged.description(
-                                alert.email ?? "",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString,
-                                endDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Ending.Multiple.DayChanged.description(
-                                alert.email ?? "",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString,
-                                endDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    }
-                }
-            }
-        } else {
-            if let weekDays = scheduledMeeting.rules.weekDayList {
-                if weekDays.count == 1 {
-                    if scheduledMeeting.rules.interval > 0 {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Single.TimeChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                                startDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Single.DayChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                                startDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    } else {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Single.TimeChanged.description(
-                                alert.email ?? "",
-                                stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                                startDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Single.DayChanged.description(
-                                alert.email ?? "",
-                                stringRepresentingWeekDayShortName(forNumber: weekDays[0]) ?? "",
-                                startDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    }
-                } else if weekDays.count > 1 {
-                    let weekdayStringList = weekDays
-                        .compactMap {  $0 == weekDays.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
-                        .joined(separator: ", ")
-                    let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDays[weekDays.count - 1]) ?? ""
-                    if scheduledMeeting.rules.interval > 0 {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Multiple.TimeChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificWeek.Forever.Multiple.DayChanged.description(
-                                alert.email ?? "",
-                                "\(scheduledMeeting.rules.interval)",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-                        }
-                    } else {
-                        if isTimeChanged(forAlert: alert) {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Multiple.TimeChanged.description(
-                                alert.email ?? "",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString + " •",
-                                startTimeString + " - " + endTimeString
-                            )
-                        } else {
-                            content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Weekly.Forever.Multiple.DayChanged.description(
-                                alert.email ?? "",
-                                weekdayStringList,
-                                lastWeekdayString,
-                                startDateString,
-                                "• " + startTimeString + " - " + endTimeString
-                            )
-
-                        }
-                    }
-                }
-            }
-            
-        }
-        
-        guard let content else { return nil }
-        return createAttributedStringWithTwoBoldTags(content: content)
-    }
-    
-    private func contentForMonthlyScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
-        guard let scheduledMeeting = scheduledMeeting(
-            withScheduleMeetingId: alert.scheduledMeetingId,
-            chatId: alert.nodeHandle
-        )?.toScheduledMeetingEntity() else {
-            return NSAttributedString(string: alert.title)
-        }
-        
-        let startDateList = alert.startDateList
-        let startDateOriginal = startDateList?.first
-        let startDateUpdated = startDateList?.count == 2 ? startDateList?.last : nil
-        
-        let endDateList = alert.endDateList
-        let endDateOriginal = endDateList?.first
-        let endDateUpdated = endDateList?.count == 2 ? endDateList?.last : nil
-        
-        let startDate = ((startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate)
-        let endTime = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
-        let endDate = scheduledMeeting.rules.until ?? endTime
-
-        let startDateString = dateString(for: startDate)
-        let endDateString = dateString(for: endDate)
-
-        let startTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: startDate)
-        let endTimeString = DateFormatter.fromTemplate("h:mm").localisedString(from: endTime)
-        
-        var content: String?
-        if scheduledMeeting.rules.until != nil {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.first,
-               let specificWeekDay = monthWeekDayList.first?.last {
-                if scheduledMeeting.rules.interval > 1 {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Ending.TimeChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            "\(scheduledMeeting.rules.interval)",
-                            startDateString,
-                            endDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Ending.DayChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            "\(scheduledMeeting.rules.interval)",
-                            startDateString,
-                            endDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                } else {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Ending.TimeChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            startDateString,
-                            endDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Ending.DayChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            startDateString,
-                            endDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Ending.TimeChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            scheduledMeeting.rules.interval,
-                            startDateString,
-                            endDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Ending.DayChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            scheduledMeeting.rules.interval,
-                            startDateString,
-                            endDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                } else {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Ending.TimeChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            startDateString,
-                            endDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Ending.DayChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            startDateString,
-                            endDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                }
-            }
-        } else {
-            if let monthWeekDayList = scheduledMeeting.rules.monthWeekDayList,
-               let specificWeek = monthWeekDayList.first?.last,
-               let specificWeekDay = monthWeekDayList.first?.first {
-                
-                if scheduledMeeting.rules.interval > 1 {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Forever.TimeChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            "\(scheduledMeeting.rules.interval)",
-                            startDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificWeekDay.Forever.DayChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            "\(scheduledMeeting.rules.interval)",
-                            startDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                    
-                } else {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Forever.TimeChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            startDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificWeekDay.Forever.DayChanged.description(
-                            alert.email ?? "",
-                            stringRepresentingWeek(forNumber: specificWeek) ?? "",
-                            stringRepresentingWeekDayShortName(forNumber: specificWeekDay) ?? "",
-                            startDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                }
-                
-            } else if let day = scheduledMeeting.rules.monthDayList?.first {
-                if scheduledMeeting.rules.interval > 1 {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Forever.TimeChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            scheduledMeeting.rules.interval,
-                            startDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                        
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.SpecificMonth.SpecificDay.Forever.DayChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            scheduledMeeting.rules.interval,
-                            startDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                        
-                    }
-                    
-                } else {
-                    if isTimeChanged(forAlert: alert) {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Forever.TimeChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            startDateString + " •",
-                            startTimeString + " - " + endTimeString
-                        )
-                    } else {
-                        content = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Monthly.SpecificDay.Forever.DayChanged.description(
-                            alert.email ?? "",
-                            "\(day)",
-                            startDateString,
-                            "• " + startTimeString + " - " + endTimeString
-                        )
-                    }
-                }
-            }
-        }
-        
-        guard let content else { return nil }
-        return createAttributedStringWithTwoBoldTags(content: content)
     }
     
     private func isTimeChanged(forAlert alert: MEGAUserAlert) -> Bool {
@@ -1491,27 +308,271 @@ extension NotificationsTableViewController {
         return counter > 1
     }
     
-    private func stringRepresentingWeek(forNumber number: Int) -> String? {
-        switch number {
-        case 1: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Week.One.title
-        case 2: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Week.Two.title
-        case 3: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Week.Three.title
-        case 4: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Week.Four.title
-        case 5: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Week.Five.title
-        default: return nil
-        }
+    // MARK: - One Off
+    
+    private func contentForOneOffScheduledMeeting(
+        _ scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String,
+        localizedString: String,
+        removingFormatter formatter: ScheduledMeetingDateBuilder.Formatter,
+        createAttributedStringWithBoldTag: (String) -> NSAttributedString?,
+        startDate: Date? = nil,
+        endDate: Date? = nil,
+        startTime: Date? = nil,
+        endTime: Date? = nil
+    ) -> NSAttributedString? {
+        let description = localizedString.replacingOccurrences(of: "[Email]", with: email)
+        let dateInfo = dateInfo(
+            for: scheduledMeeting,
+            chatId: chatId,
+            removingFormatter: formatter,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: startTime,
+            endTime: endTime
+        ) ?? ""
+        return createAttributedStringWithBoldTag(description + "\n" + dateInfo)
     }
     
-    private func stringRepresentingWeekDayShortName(forNumber number: Int) -> String? {
-        switch number {
-        case 1: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Mon.title
-        case 2: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Tue.title
-        case 3: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Wed.title
-        case 4: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Thu.title
-        case 5: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Fri.title
-        case 6: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Sat.title
-        case 7: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Sun.title
-        default: return nil
+    private func contentForOneOffNewScheduledMeeting(
+        _ scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForOneOffScheduledMeeting(
+            scheduledMeeting,
+            chatId: chatId,
+            email: email,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.New.description,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    private func contentForOneOffCancelledScheduledMeeting(
+        _ scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForOneOffScheduledMeeting(
+            scheduledMeeting,
+            chatId: chatId,
+            email: email,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.Cancelled.description,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    func contentForOneOffScheduledMeetingWithMultipleFieldsChanged(
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForOneOffScheduledMeeting(
+            scheduledMeeting,
+            chatId: chatId,
+            email: email,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.MulitpleFieldsUpdate.description,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    private func contentForOneOffScheduledMeetingWithDescriptionFieldChanged(
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForOneOffScheduledMeeting(
+            scheduledMeeting,
+            chatId: chatId,
+            email: email,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DescriptionFieldUpdate.description,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    private func contentForOneOffScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
+        guard let scheduledMeeting = scheduledMeeting(
+            withScheduleMeetingId: alert.scheduledMeetingId,
+            chatId: alert.nodeHandle
+        )?.toScheduledMeetingEntity() else {
+            return NSAttributedString(string: alert.title)
         }
+        
+        let startDateList = alert.startDateList
+        let startDateOriginal = startDateList?.first
+        let startDateUpdated = startDateList?.count == 2 ? startDateList?.last : nil
+        
+        let endDateList = alert.endDateList
+        let endDateOriginal = endDateList?.first
+        let endDateUpdated = endDateList?.count == 2 ? endDateList?.last : nil
+        
+        let startDate = (startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate
+        let endDate = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
+
+        let startDateString = DateFormatter.dateMedium().localisedString(from: startDate)
+
+        if let startDateOriginal, startDateUpdated != nil {
+            let startDateOriginalString = DateFormatter.dateMedium().localisedString(from: startDateOriginal)
+            
+            if startDateString != startDateOriginalString {
+                return contentForOneOffScheduledMeeting(
+                    scheduledMeeting,
+                    chatId: alert.nodeHandle,
+                    email: alert.email ?? "",
+                    localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DayChanged.description,
+                    removingFormatter: .last,
+                    createAttributedStringWithBoldTag: createAttributedStringWithTwoBoldTags,
+                    startDate: startDate,
+                    endDate: endDate,
+                    startTime: startDate,
+                    endTime: endDate
+                )
+            }
+        }
+        
+        return contentForOneOffScheduledMeeting(
+            scheduledMeeting,
+            chatId: alert.nodeHandle,
+            email: alert.email ?? "",
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TimeChanged.description,
+            removingFormatter: .first,
+            createAttributedStringWithBoldTag: createAttributedStringWithTwoBoldTags,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: startDate,
+            endTime: endDate
+        )
+    }
+    
+    //MARK: - Recurring
+    
+    private func contentForRecurringCancelledScheduledMeeting(withEmail email: String) -> NSAttributedString? {
+        createAttributedStringWithOneBoldTag(
+            content: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Cancelled.description.replacingOccurrences(
+                of: "[Email]",
+                with: email
+            )
+        )
+    }
+    
+    private func contentForRecurringScheduledMeeting(
+        scheduledMeeting: ScheduledMeetingEntity,
+        localizedString: String,
+        chatId: ChatIdEntity,
+        email: String,
+        removingFormatter formatter: ScheduledMeetingDateBuilder.Formatter,
+        createAttributedStringWithBoldTag: (String) -> NSAttributedString?,
+        startDate: Date? = nil,
+        endDate: Date? = nil,
+        startTime: Date? = nil,
+        endTime: Date? = nil
+    ) -> NSAttributedString? {
+        let content = localizedString.replacingOccurrences(of: "[Email]", with: email)
+        let dateInfo = dateInfo(
+            for: scheduledMeeting,
+            chatId: chatId,
+            removingFormatter: formatter,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: startTime,
+            endTime: endTime
+        ) ?? ""
+        return createAttributedStringWithBoldTag(content + "\n" + dateInfo)
+    }
+    
+    private func contentForRecurringNewScheduledMeeting(
+        _ scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForRecurringScheduledMeeting(
+            scheduledMeeting: scheduledMeeting,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.New.description,
+            chatId: chatId,
+            email: email,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    private func contentForRecurringScheduledMeetingWithMultipleFieldsChanged(
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForRecurringScheduledMeeting(
+            scheduledMeeting: scheduledMeeting,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.MulitpleFieldsUpdate.description,
+            chatId: chatId,
+            email: email,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    private func contentForRecurringScheduledMeetingWithDescriptionFieldChanged(
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatId: ChatIdEntity,
+        email: String
+    ) -> NSAttributedString? {
+        contentForRecurringScheduledMeeting(
+            scheduledMeeting: scheduledMeeting,
+            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.DescriptionFieldUpdate.description,
+            chatId: chatId,
+            email: email,
+            removingFormatter: .all,
+            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+        )
+    }
+    
+    private func contentForRecurringScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
+        var localizedString: String
+        
+        let isTimeChanged = isTimeChanged(forAlert: alert)
+        let removeFormatter: ScheduledMeetingDateBuilder.Formatter
+        
+        if isTimeChanged {
+            localizedString = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.TimeChanged.description
+            removeFormatter = .first
+        } else {
+            localizedString = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.DayChanged.description
+            removeFormatter = .last
+        }
+        
+        guard let scheduledMeeting = scheduledMeeting(
+            withScheduleMeetingId: alert.scheduledMeetingId,
+            chatId: alert.nodeHandle
+        )?.toScheduledMeetingEntity() else {
+            return createAttributedStringWithOneBoldTag(content: description)
+        }
+        
+        let startDateList = alert.startDateList
+        let startDateOriginal = startDateList?.first
+        let startDateUpdated = startDateList?.count == 2 ? startDateList?.last : nil
+        
+        let endDateList = alert.endDateList
+        let endDateOriginal = endDateList?.first
+        let endDateUpdated = endDateList?.count == 2 ? endDateList?.last : nil
+        
+        let startDate = (startDateUpdated ?? startDateOriginal) ?? scheduledMeeting.startDate
+        let endDate = ((endDateUpdated ?? endDateOriginal) ?? scheduledMeeting.endDate)
+
+        return contentForRecurringScheduledMeeting(
+            scheduledMeeting: scheduledMeeting,
+            localizedString: localizedString,
+            chatId: alert.nodeHandle,
+            email: alert.email ?? "",
+            removingFormatter: removeFormatter,
+            createAttributedStringWithBoldTag: createAttributedStringWithTwoBoldTags,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: startDate,
+            endTime: endDate
+        )
     }
 }

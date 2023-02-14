@@ -3883,291 +3883,50 @@ public enum Strings {
         public enum ScheduledMeetings {
           public enum OneOff {
             public enum Cancelled {
-              /// [B]%@ cancelled[/B] the meeting scheduled for:
-              /// %@
-              public static func description(_ p1: Any, _ p2: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.cancelled.description", String(describing: p1), String(describing: p2))
-              }
+              /// [B][Email] cancelled[/B] the meeting scheduled for:
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.cancelled.description")
             }
             public enum DayChanged {
-              /// [B]%@ updated[/B] the meeting date
-              /// [B]%@[/B] %@
-              public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3))
-              }
+              /// [B][Email] updated[/B] the meeting date
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.dayChanged.description")
             }
             public enum DescriptionFieldUpdate {
-              /// [B]%@ updated[/B] the meeting description
-              /// %@
-              public static func description(_ p1: Any, _ p2: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2))
-              }
+              /// [B][Email] updated[/B] the meeting description
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description")
             }
             public enum MulitpleFieldsUpdate {
-              /// [B]%@ updated[/B] the meeting details scheduled for:
-              /// %@
-              public static func description(_ p1: Any, _ p2: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2))
-              }
+              /// [B][Email] updated[/B] the meeting details scheduled for:
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description")
             }
             public enum New {
-              /// [B]%@ invited[/B] you to a meeting scheduled for:
-              /// %@
-              public static func description(_ p1: Any, _ p2: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.new.description", String(describing: p1), String(describing: p2))
-              }
+              /// [B][Email] invited[/B] you to a meeting scheduled for:
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.new.description")
             }
             public enum TimeChanged {
-              /// [B]%@ updated[/B] the meeting time
-              /// %@ [B]%@[/B]
-              public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3))
-              }
-            }
-            public enum TitleUpdate {
-              /// [B]%@ updated[/B] the meeting name from ”%@” to [B]”%@”[/B]
-              /// %@
-              public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.titleUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-              }
+              /// [B][Email] updated[/B] the meeting time
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.timeChanged.description")
             }
           }
           public enum Recurring {
-            public enum Monthly {
-              public enum SpecificDay {
-                public enum Ending {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Day %@ of every month, effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Day %@ of every month, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// Day %@ of every month, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Day %@ of every month, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Day %@ of every month, effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                }
-                public enum Forever {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Day %@ of every month, effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Day %@ of every month, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// Day %@ of every month, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Day %@ of every month, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.new.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Day %@ of every month, effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                }
-              }
-              public enum SpecificWeekDay {
-                public enum Ending {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// %@ %@ of every month effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// %@ %@ of every month effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// %@ %@ of every month effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// %@ %@ of every month effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// %@ %@ of every month effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                }
-                public enum Forever {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// %@ %@ of every month effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// %@ %@ of every month effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// %@ %@ of every month effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// %@ %@ of every month effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// %@ %@ of every month effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                }
-              }
-            }
             public enum Cancelled {
-              /// [B]%@ cancelled[/B] the meeting and all its occurrences
-              public static func description(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.cancelled.description", String(describing: p1))
-              }
+              /// [B][Email] cancelled[/B] the meeting and all its occurrences
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.cancelled.description")
             }
-            public enum Daily {
-              public enum Ending {
-                public enum DayChanged {
-                  /// [B]%@ updated[/B] the recurring meeting date
-                  /// Everyday, effective [B]%@ until %@[/B] %@
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.ending.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                  }
-                }
-                public enum DescriptionFieldUpdate {
-                  /// [B]%@ updated[/B] the recurring meeting description
-                  /// Everyday, effective %@ until %@
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.ending.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                  }
-                }
-                public enum MulitpleFieldsUpdate {
-                  /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                  /// Everyday, effective %@ until %@
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.ending.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                  }
-                }
-                public enum New {
-                  /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                  /// Everyday, effective %@ until %@
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.ending.new.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                  }
-                }
-                public enum TimeChanged {
-                  /// [B]%@ updated[/B] the recurring meeting time
-                  /// Everyday, effective %@ until %@ [B]%@[/B]
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.ending.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                  }
-                }
-              }
-              public enum Forever {
-                public enum DayChanged {
-                  /// [B]%@ updated[/B] the recurring meeting date
-                  /// Everyday, effective [B]%@[/B] %@
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.forever.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                  }
-                }
-                public enum DescriptionFieldUpdate {
-                  /// [B]%@ updated[/B] the recurring meeting description
-                  /// Everyday, effective %@
-                  public static func description(_ p1: Any, _ p2: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.forever.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2))
-                  }
-                }
-                public enum MulitpleFieldsUpdate {
-                  /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                  /// Everyday, effective %@
-                  public static func description(_ p1: Any, _ p2: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.forever.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2))
-                  }
-                }
-                public enum New {
-                  /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                  /// Everyday, effective %@
-                  public static func description(_ p1: Any, _ p2: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.forever.new.description", String(describing: p1), String(describing: p2))
-                  }
-                }
-                public enum TimeChanged {
-                  /// [B]%@ updated[/B] the recurring meeting time
-                  /// Everyday, effective %@ [B]%@[/B]
-                  public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                    return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.daily.forever.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                  }
-                }
-              }
+            public enum DayChanged {
+              /// [B][Email] updated[/B] the recurring meeting date
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.dayChanged.description")
+            }
+            public enum DescriptionFieldUpdate {
+              /// [B][Email] updated[/B] the recurring meeting description
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description")
+            }
+            public enum MulitpleFieldsUpdate {
+              /// [B][Email] updated[/B] the recurring meeting details scheduled for:
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description")
+            }
+            public enum New {
+              /// [B][Email][/B] invited you to a recurring meeting scheduled for:
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.new.description")
             }
             public enum OccurrenceCancelled {
               /// [B][Email] cancelled[/B] the occurrence scheduled for:
@@ -4179,496 +3938,14 @@ public enum Strings {
               /// [WeekDay], [Date] from [StartTime] to [EndTime]
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description")
             }
-            public enum SpecificMonth {
-              public enum SpecificDay {
-                public enum Ending {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Day %@ of every %@ months, effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Day %@ of every %@ months, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// Day %@ of every %@ months, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Day %@ of every %@ months, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Day %@ of every %@ months, effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                }
-                public enum Forever {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Day %@ of every %@ months, effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Day %@ of every %@ months, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// Day %@ of every %@ months, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Day %@ of every %@ months, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Day %@ of every %@ months, effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                }
-              }
-              public enum SpecificWeekDay {
-                public enum Ending {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// %@ %@ of every %@ months effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any, _ p7: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6), String(describing: p7))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// %@ %@ of every %@ months effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// %@ %@ of every %@ months effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// %@ %@ of every %@ months effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// %@ %@ of every %@ months effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any, _ p7: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6), String(describing: p7))
-                    }
-                  }
-                }
-                public enum Forever {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// %@ %@ of every %@ months effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// %@ %@ of every %@ months effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details
-                    /// %@ %@ of every %@ months effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// %@ %@ of every %@ months effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// %@ %@ of every %@ months effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                }
-              }
-            }
-            public enum SpecificWeek {
-              public enum Ending {
-                public enum Multiple {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every %@ weeks on %@ and %@, effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any, _ p7: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6), String(describing: p7))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every %@ weeks on %@ and %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every %@ weeks on %@ and %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every %@ weeks on %@ and %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every %@ weeks on %@ and %@, effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any, _ p7: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6), String(describing: p7))
-                    }
-                  }
-                }
-                public enum Single {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every %@ weeks on %@, effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every %@ weeks on %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every %@ weeks on %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every %@ weeks on %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every %@ weeks on %@, effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                }
-              }
-              public enum Forever {
-                public enum Multiple {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every %@ weeks on %@ and %@, effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every %@ weeks on %@ and %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every %@ weeks on %@ and %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every %@ weeks on %@ and %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every %@ weeks on %@ and %@, effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                }
-                public enum Single {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every %@ weeks on %@, effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every %@ weeks on %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every %@ weeks on %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every %@ weeks on %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every %@ weeks on %@, effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                }
-              }
-            }
-            public enum TitleUpdate {
-              /// [B]%@ updated[/B] the meeting name from ”%@” to [B]”%@”[/B]
-              public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.titleUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-              }
-            }
-            public enum Weekly {
-              public enum Ending {
-                public enum Multiple {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every week on %@ and %@, effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every week on %@ and %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every week on %@ and %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every week on %@ and %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every week on %@ and %@, effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any, _ p6: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), String(describing: p6))
-                    }
-                  }
-                }
-                public enum Single {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every week on %@, effective [B]%@ until %@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every week on %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every week on %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every week on %@, effective %@ until %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every week on %@, effective %@ until %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                }
-              }
-              public enum Forever {
-                public enum Multiple {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every week on %@ and %@, effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every week on %@ and %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every week on %@ and %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every week on %@ and %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.new.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every week on %@ and %@, effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
-                    }
-                  }
-                }
-                public enum Single {
-                  public enum DayChanged {
-                    /// [B]%@ updated[/B] the recurring meeting date
-                    /// Every week on %@, effective [B]%@[/B] %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.dayChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                  public enum DescriptionFieldUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting description
-                    /// Every week on %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.descriptionFieldUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                    }
-                  }
-                  public enum MulitpleFieldsUpdate {
-                    /// [B]%@ updated[/B] the recurring meeting details scheduled for:
-                    /// Every week on %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.mulitpleFieldsUpdate.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                    }
-                  }
-                  public enum New {
-                    /// [B]%@[/B] invited you to a recurring meeting scheduled for:
-                    /// Every week on %@, effective %@
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.new.description", String(describing: p1), String(describing: p2), String(describing: p3))
-                    }
-                  }
-                  public enum TimeChanged {
-                    /// [B]%@ updated[/B] the recurring meeting time
-                    /// Every week on %@, effective %@ [B]%@[/B]
-                    public static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-                      return Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.timeChanged.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-                    }
-                  }
-                }
-              }
+            public enum TimeChanged {
+              /// [B][Email] updated[/B] the recurring meeting time
+              public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.timeChanged.description")
             }
           }
-          public enum Week {
-            public enum Five {
-              /// Fifth
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.week.Five.title")
-            }
-            public enum Four {
-              /// Fourth
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.week.Four.title")
-            }
-            public enum One {
-              /// First
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.week.one.title")
-            }
-            public enum Three {
-              /// Third
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.week.three.title")
-            }
-            public enum Two {
-              /// Second
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.week.two.title")
-            }
+          public enum TitleUpdate {
+            /// [B][Email] updated[/B] the meeting name from ”[PreviousTitle]” to [B]”[UpdatedTitle]”[/B]
+            public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.titleUpdate.description")
           }
           public enum WeekDay {
             public enum Fri {
@@ -5020,7 +4297,7 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
       }
       public enum Scheduled {
-        /// %@, %@ from %@ to %@
+        /// [B]%@, %@[/B] from [B]%@ to %@[/B]
         public static func oneOff(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
           return Strings.tr("Localizable", "meetings.scheduled.oneOff", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
         }
@@ -5040,11 +4317,11 @@ public enum Strings {
         }
         public enum Recurring {
           public enum Daily {
-            /// Everyday, effective %@ from %@ to %@
+            /// Everyday, effective [B]%@[/B] from [B]%@ to %@[/B]
             public static func forever(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever", String(describing: p1), String(describing: p2), String(describing: p3))
             }
-            /// Everyday, effective %@ until %@ from %@ to %@
+            /// Everyday, effective [B]%@ until %@[/B] from [B]%@ to %@[/B]
             public static func until(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
             }
@@ -5070,8 +4347,8 @@ public enum Strings {
                     return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first", p1)
                   }
                   /// Plural format key: "%#@interval@"
-                  public static func fourt(_ p1: Int) -> String {
-                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt", p1)
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth", p1)
                   }
                   /// Plural format key: "%#@interval@"
                   public static func second(_ p1: Int) -> String {
@@ -5114,8 +4391,8 @@ public enum Strings {
                     return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first", p1)
                   }
                   /// Plural format key: "%#@interval@"
-                  public static func fourt(_ p1: Int) -> String {
-                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt", p1)
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth", p1)
                   }
                   /// Plural format key: "%#@interval@"
                   public static func second(_ p1: Int) -> String {
@@ -5136,8 +4413,8 @@ public enum Strings {
                     return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first", p1)
                   }
                   /// Plural format key: "%#@interval@"
-                  public static func fourt(_ p1: Int) -> String {
-                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt", p1)
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth", p1)
                   }
                   /// Plural format key: "%#@interval@"
                   public static func second(_ p1: Int) -> String {
@@ -5158,8 +4435,8 @@ public enum Strings {
                     return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first", p1)
                   }
                   /// Plural format key: "%#@interval@"
-                  public static func fourt(_ p1: Int) -> String {
-                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt", p1)
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth", p1)
                   }
                   /// Plural format key: "%#@interval@"
                   public static func second(_ p1: Int) -> String {
@@ -5180,8 +4457,8 @@ public enum Strings {
                     return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", p1)
                   }
                   /// Plural format key: "%#@interval@"
-                  public static func fourt(_ p1: Int) -> String {
-                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt", p1)
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", p1)
                   }
                   /// Plural format key: "%#@interval@"
                   public static func second(_ p1: Int) -> String {
@@ -5202,8 +4479,8 @@ public enum Strings {
                     return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first", p1)
                   }
                   /// Plural format key: "%#@interval@"
-                  public static func fourt(_ p1: Int) -> String {
-                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt", p1)
+                  public static func fourth(_ p1: Int) -> String {
+                    return Strings.tr("Localizable", "meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth", p1)
                   }
                   /// Plural format key: "%#@interval@"
                   public static func second(_ p1: Int) -> String {
