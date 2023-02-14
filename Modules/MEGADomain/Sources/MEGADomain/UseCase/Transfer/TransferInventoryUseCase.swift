@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Use case protocol -
-public protocol TransfersUseCaseProtocol {
+public protocol TransferInventoryUseCaseProtocol {
     func transfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
@@ -10,18 +10,18 @@ public protocol TransfersUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepositoryProtocol>: TransfersUseCaseProtocol {
+public struct TransferInventoryUseCase<T: TransferInventoryRepositoryProtocol, U: FileSystemRepositoryProtocol>: TransferInventoryUseCaseProtocol {
     
-    private let transfersRepository: T
+    private let transferInventoryRepository: T
     private let fileSystemRepository: U
 
-    public init(transfersRepository: T, fileSystemRepository: U) {
-        self.transfersRepository = transfersRepository
+    public init(transferInventoryRepository: T, fileSystemRepository: U) {
+        self.transferInventoryRepository = transferInventoryRepository
         self.fileSystemRepository = fileSystemRepository
     }
     
     public func transfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = transfersRepository.transfers()
+        let transfers = transferInventoryRepository.transfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -30,7 +30,7 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     }
 
     public func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = transfersRepository.downloadTransfers()
+        let transfers = transferInventoryRepository.downloadTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -39,7 +39,7 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     }
     
     public func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = transfersRepository.uploadTransfers()
+        let transfers = transferInventoryRepository.uploadTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -48,7 +48,7 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     }
     
     public func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
-        let transfers = transfersRepository.completedTransfers()
+        let transfers = transferInventoryRepository.completedTransfers()
         if filteringUserTransfers {
             return filterUserTransfers(transfers)
         } else {
@@ -67,11 +67,11 @@ public struct TransfersUseCase<T: TransfersRepositoryProtocol, U: FileSystemRepo
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {
-        transfersRepository.isExportFileTransfer(transfer)
+        transferInventoryRepository.isExportFileTransfer(transfer)
     }
     
     private func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
-        transfersRepository.isSaveToPhotosAppTransfer(transfer)
+        transferInventoryRepository.isSaveToPhotosAppTransfer(transfer)
     }
     
     public func documentsDirectory() -> URL {

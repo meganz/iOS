@@ -1,8 +1,8 @@
 import MEGADomain
 
-@objc final class TransferUseCaseHelper: NSObject {
-    private let transfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
-    private let sharedFolderTransfersUseCase = TransfersUseCase(transfersRepository: TransfersRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)
+@objc final class TransferInventoryUseCaseHelper: NSObject {
+    private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
+    private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)
     
     @objc func completedTransfers() -> [MEGATransfer] {
         if let list = MEGASdkManager.sharedMEGASdk().completedTransfers as? [MEGATransfer] {
@@ -15,8 +15,8 @@ import MEGADomain
     }
     
     @objc func transfers() -> [MEGATransfer] {
-        let transfers = transfersUseCase.transfers(filteringUserTransfers: true)
-        let sharedFolderTransfers = sharedFolderTransfersUseCase.transfers(filteringUserTransfers: true)
+        let transfers = transferInventoryUseCase.transfers(filteringUserTransfers: true)
+        let sharedFolderTransfers = sharedFolderTransferInventoryUseCase.transfers(filteringUserTransfers: true)
         let megaTransfers = transfers.compactMap { MEGASdkManager.sharedMEGASdk().transfer(byTag: $0.tag) }
         let sharedFolderMegaTransfers = sharedFolderTransfers.compactMap { MEGASdkManager.sharedMEGASdkFolder().transfer(byTag: $0.tag) }
         return megaTransfers + sharedFolderMegaTransfers

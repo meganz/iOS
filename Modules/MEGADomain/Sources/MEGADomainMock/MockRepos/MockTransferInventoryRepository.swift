@@ -1,8 +1,8 @@
 import MEGADomain
 
-public struct MockTransfersRepository: TransfersRepositoryProtocol {
-    public static var newRepo: MockTransfersRepository {
-        MockTransfersRepository()
+public struct MockTransferInventoryRepository: TransferInventoryRepositoryProtocol {
+    public static var newRepo: MockTransferInventoryRepository {
+        MockTransferInventoryRepository()
     }
 
     public func transfers() -> [TransferEntity] {

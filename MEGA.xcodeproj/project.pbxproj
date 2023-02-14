@@ -1071,7 +1071,7 @@
 		83A2894F27F5BC070063CA8C /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
 		83A2895027F5C04B0063CA8C /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
-		83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A49E7C270476A300FD0D85 /* TransfersRepository.swift */; };
+		83A49E7D270476A300FD0D85 /* TransferInventoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A49E7C270476A300FD0D85 /* TransferInventoryRepository.swift */; };
 		83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */; };
 		83A4E47327F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
 		83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
@@ -1679,7 +1679,7 @@
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
 		B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */; };
-		B582965A27C5DF50004DD7A5 /* TransfersUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */; };
+		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58F7BF8298A68610046F0FA /* OnboardingViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */; };
 		B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
@@ -3738,7 +3738,7 @@
 		839B9FCE283D2DCA001A49DF /* reconnecting.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reconnecting.wav; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
-		83A49E7C270476A300FD0D85 /* TransfersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRepository.swift; sourceTree = "<group>"; };
+		83A49E7C270476A300FD0D85 /* TransferInventoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryRepository.swift; sourceTree = "<group>"; };
 		83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferViewModel.swift; sourceTree = "<group>"; };
 		83A4E47227F49AE000A429F4 /* TransferStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferStage.swift; sourceTree = "<group>"; };
 		83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferRouter.swift; sourceTree = "<group>"; };
@@ -4164,7 +4164,7 @@
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAHandleRepository.swift; sourceTree = "<group>"; };
-		B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersUseCaseHelper.swift; sourceTree = "<group>"; };
+		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+SecureFlag.swift"; sourceTree = "<group>"; };
 		B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSecureFingerprintManager.swift; sourceTree = "<group>"; };
@@ -5423,7 +5423,7 @@
 				5D2AF57E24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift */,
 				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
 				0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */,
-				83A49E7C270476A300FD0D85 /* TransfersRepository.swift */,
+				83A49E7C270476A300FD0D85 /* TransferInventoryRepository.swift */,
 				A8D8A5A42990F964008518BE /* TransferRepository.swift */,
 			);
 			path = Transfer;
@@ -9658,7 +9658,7 @@
 		B582965627C5DF28004DD7A5 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
-				B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */,
+				B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */,
 				83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */,
 				8354DF57288FF4880027011A /* FileSystemHelperOCWrapper.swift */,
 			);
@@ -13531,7 +13531,7 @@
 				B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */,
 				B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */,
 				5D6D0F5425270357002A777D /* DevicePermissionUseCase.swift in Sources */,
-				B582965A27C5DF50004DD7A5 /* TransfersUseCaseHelper.swift in Sources */,
+				B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */,
 				83B71A6028F0356600E006C6 /* ChatRoomView.swift in Sources */,
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
 				12397E292820C72E00A30CCC /* PhotoAlbumContainerViewController.swift in Sources */,
@@ -13595,7 +13595,7 @@
 				A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */,
 				5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */,
 				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
-				83A49E7D270476A300FD0D85 /* TransfersRepository.swift in Sources */,
+				83A49E7D270476A300FD0D85 /* TransferInventoryRepository.swift in Sources */,
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,

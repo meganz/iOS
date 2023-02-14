@@ -1,6 +1,6 @@
 import MEGADomain
 
-struct TransfersRepository: TransfersRepositoryProtocol {
+struct TransferInventoryRepository: TransferInventoryRepositoryProtocol {
     
     private let sdk: MEGASdk
     

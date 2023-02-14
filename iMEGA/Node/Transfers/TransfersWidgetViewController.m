@@ -44,7 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *clearAllButton;
 
-@property (strong, nonatomic) TransferUseCaseHelper *transfersUseCaseHelper;
+@property (strong, nonatomic) TransferInventoryUseCaseHelper *transferInventoryUseCaseHelper;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *transfers;
 @property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *completedTransfers;
@@ -75,7 +75,7 @@ static TransfersWidgetViewController* instance = nil;
     
     self.uploadTransfersQueued = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
-    self.transfersUseCaseHelper = [[TransferUseCaseHelper alloc] init];
+    self.transferInventoryUseCaseHelper = [[TransferInventoryUseCaseHelper alloc] init];
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -469,7 +469,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)getAllTransfers {
-    self.transfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper transfers]];
+    self.transfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper transfers]];
     
     [self getQueuedUploadTransfers];
 }
@@ -855,13 +855,13 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSMutableArray *)transfers {
     if (!_transfers) {
-        _transfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper transfers]];
+        _transfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper transfers]];
     }
     return _transfers;
 }
 
 - (NSMutableArray *)completedTransfers {
-    _completedTransfers = [[NSMutableArray alloc] initWithArray:[self.transfersUseCaseHelper completedTransfers]];
+    _completedTransfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper completedTransfers]];
     return _completedTransfers;
 }
 
