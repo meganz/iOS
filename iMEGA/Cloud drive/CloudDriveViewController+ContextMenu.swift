@@ -122,9 +122,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .shareLink, .manageLink:
             presentGetLinkVC(for: [parentNode])
         case .shareFolder:
-            BackupNodesValidator(presenter: self, nodes: [parentNode.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
-                self?.showShareFolderForNodes([parentNode])
-            }
+            viewModel.openShareFolderDialog(forNodes: [parentNode])
         case .rename:
             parentNode.mnz_renameNode(in: self) { [weak self] request in
                 self?.navigationItem.title = request.name

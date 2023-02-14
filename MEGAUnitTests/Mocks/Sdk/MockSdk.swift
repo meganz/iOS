@@ -16,6 +16,8 @@ final class MockSdk: MEGASdk {
     private let sets: [MEGASet]
     private let setElements: [MEGASetElement]
     private let megaSetElementCounts: [MEGAHandle: UInt]
+    private let nodeList: MEGANodeList
+    private let shareList: MEGAShareList
     private let isSharedFolderOwnerVerified: Bool
     private let sharedFolderOwner: MEGAUser?
     
@@ -32,6 +34,8 @@ final class MockSdk: MEGASdk {
          megaRootNode: MEGANode? = nil,
          rubbishBinNode: MEGANode? = nil,
          megaSetElementCounts: [MEGAHandle: UInt] = [:],
+         nodeList: MEGANodeList = MEGANodeList(),
+         shareList: MEGAShareList = MEGAShareList(),
          isSharedFolderOwnerVerified: Bool = false,
          sharedFolderOwner: MEGAUser? = nil
     ) {
@@ -46,6 +50,8 @@ final class MockSdk: MEGASdk {
         self.megaRootNode = megaRootNode
         self.rubbishBinNode = rubbishBinNode
         self.megaSetElementCounts = megaSetElementCounts
+        self.nodeList = nodeList
+        self.shareList = shareList
         self.isSharedFolderOwnerVerified = isSharedFolderOwnerVerified
         self.sharedFolderOwner = sharedFolderOwner
         super.init()
@@ -182,6 +188,7 @@ final class MockSdk: MEGASdk {
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
+    //MARK: - Share
     override func contact(forEmail: String?) -> MEGAUser? {
         sharedFolderOwner
     }
@@ -190,7 +197,19 @@ final class MockSdk: MEGASdk {
         isSharedFolderOwnerVerified
     }
     
-    //MARK: - Share
+    override func publicLinks(_ order: MEGASortOrderType) -> MEGANodeList {
+        nodeList
+    }
+    
+    override func outShares(_ order: MEGASortOrderType) -> MEGAShareList {
+        shareList
+    }
+    
+    override func openShareDialog(_ node: MEGANode, delegate: MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: node.handle)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
+
     override func upgradeSecurity(with delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())

@@ -18,9 +18,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
             setEditMode(false)
         case .shareFolder:
-            BackupNodesValidator(presenter: self, nodes: nodes.compactMap{$0.toNodeEntity()}).showWarningAlertIfNeeded() { [weak self] in
-                self?.showShareFolderForNodes(nodes)
-            }
+            viewModel.openShareFolderDialog(forNodes: nodes)
         case .shareLink, .manageLink:
             presentGetLinkVC(for: nodes)
             setEditMode(false)
@@ -102,9 +100,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
                 self?.manageShare(node)
             }
         case .shareFolder:
-            BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
-                self?.showShareFolderForNodes([node])
-            }
+            viewModel.openShareFolderDialog(forNodes: [node])
         case .manageLink, .shareLink:
             presentGetLinkVC(for: [node])
         case .sendToChat:

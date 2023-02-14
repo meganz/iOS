@@ -4,25 +4,24 @@ extension SharedItemsViewController: ContatctsViewControllerDelegate {
     @objc func shareFolder() {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             guard let nodes = selectedNodesMutableArray as? [MEGANode] else { return }
-            BackupNodesValidator(presenter: self, nodes: nodes.toNodeEntities()).showWarningAlertIfNeeded() { [weak self] in
-                guard let `self` = self,
-                        let navigationController = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController,
-                        let contactsVC = navigationController.viewControllers.first as? ContactsViewController else {
-                    return
-                }
-                
-                contactsVC.contatctsViewControllerDelegate = self
-                contactsVC.nodesArray = nodes
-                contactsVC.contactsMode = .shareFoldersWith
-                
-                self.present(navigationController, animated: true)
-            }
+            viewModel.openShareFolderDialog(forNodes: nodes)
         }
     }
 }
 
 //MARK: - Unverified outgoing and incoming nodes
 extension SharedItemsViewController {
+    @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
+        SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+    }
+    
+    @objc func createNodeInfoViewModel(withNode node: MEGANode,
+                                       isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
+        return NodeInfoViewModel(withNode:node,
+                                 shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+                                 isNodeUndecryptedFolder: isNodeUndecryptedFolder)
+    }
+    
     @objc func indexPathFromSender(_ sender: UIButton) -> IndexPath? {
         let nonZeroPoint = CGPointMake(2, 2);
         let buttonPosition = sender.convert(nonZeroPoint, to: tableView)
