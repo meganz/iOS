@@ -82,6 +82,10 @@ final class PhotoAlbumContainerViewController: UIViewController {
         pageTabViewModel.selectedTab = page
     }
     
+    func isTimelineActive() -> Bool {
+        pageTabViewModel.selectedTab == .timeline
+    }
+    
     // MARK: - Private
     
     private func setUpPhotosAndAlbumsControllers() {

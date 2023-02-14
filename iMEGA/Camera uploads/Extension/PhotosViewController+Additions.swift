@@ -60,6 +60,10 @@ extension PhotosViewController {
         present(navigationController, animated: true)
         toggleEditing()
     }
+    
+    @objc func isTimelineActive() -> Bool {
+        parentPhotoAlbumsController?.isTimelineActive() ?? false
+    }
 }
 
 //MARK: - NodeActionViewControllerDelegate
