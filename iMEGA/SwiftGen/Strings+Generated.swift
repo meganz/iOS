@@ -5674,6 +5674,12 @@ public enum Strings {
           /// [Undecrypted folder]
           public static let undecryptedFolderName = Strings.tr("Localizable", "sharedItems.tab.incoming.undecryptedFolderName")
         }
+        public enum Outgoing {
+          /// Shared to %@
+          public static func sharedToContact(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "sharedItems.tab.outgoing.sharedToContact", String(describing: p1))
+          }
+        }
         public enum Recents {
           /// Plural format key: "%#@count@"
           public static func undecryptedFileName(_ p1: Int) -> String {

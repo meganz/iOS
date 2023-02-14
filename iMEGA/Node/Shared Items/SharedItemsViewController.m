@@ -59,6 +59,7 @@
 @property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
+@property (nonatomic) NSMutableArray *searchUnverifiedNodesArray;
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
@@ -100,6 +101,14 @@
     self.incomingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
     self.outgoingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.outgoingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
+    
+    self.outgoingUnverifiedSharesMutableArray = NSMutableArray.alloc.init;
+    self.outgoingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
+    [self outgoingUnverifiedNodes];
+    
+    self.incomingUnverifiedSharesMutableArray = NSMutableArray.alloc.init;
+    self.incomingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
+    [self incomingUnverifiedNodes];
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -197,8 +206,10 @@
 - (void)reloadUI {
     if (self.incomingButton.selected) {
         [self incomingNodes];
+        [self incomingUnverifiedNodes];
     } else if (self.outgoingButton.selected) {
         [self outgoingNodes];
+        [self outgoingUnverifiedNodes];
     } else if (self.linksButton.selected) {
         [self publicLinks];
     }
@@ -362,11 +373,20 @@
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     if (self.searchController.isActive) {
-        return self.searchNodesArray[indexPath.row];
+        if (self.linksButton.selected || indexPath.section == 1) {
+            return self.searchNodesArray[indexPath.row];
+        }
+        return self.searchUnverifiedNodesArray[indexPath.row];
     } else {
         if (self.incomingButton.selected) {
+            if (indexPath.section == 0) {
+                return self.incomingUnverifiedNodesMutableArray[indexPath.row];
+            }
             return self.incomingNodesMutableArray[indexPath.row];
         } else if (self.outgoingButton.selected) {
+            if (indexPath.section == 0) {
+                return self.outgoingUnverifiedNodesMutableArray[indexPath.row];
+            }
             return self.outgoingNodesMutableArray[indexPath.row];
         } else if (self.linksButton.selected) {
             return self.publicLinksArray[indexPath.row];
@@ -376,8 +396,13 @@
     }
 }
 
-- (void)showNodeInfo:(MEGANode *)node {
-    BOOL isUndecryptedFolder = self.incomingButton.selected && [self isFeatureFlagFingerprintVerificationEnabled];
+- (void)showNodeInfo:(MEGANode *)node from:(UIButton *)sender {
+    NSIndexPath *indexPath = [self indexPathFromSender:sender];
+    if (indexPath == nil) {
+        return;
+    }
+    
+    BOOL isUndecryptedFolder = self.incomingButton.selected && indexPath.section == 0 && [self isFeatureFlagFingerprintVerificationEnabled];
     MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node
                                                                            isUndecryptedFolder:isUndecryptedFolder
                                                                                       delegate:self];
@@ -424,7 +449,7 @@
 
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
-    cell.nameLabel.text = [self incomingSharedFolderNameWithNode:node];
+    cell.nameLabel.text = node.name;
     cell.nameLabel.textColor = UIColor.mnz_label;
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
@@ -433,8 +458,7 @@
     NSString *userDisplayName = user.mnz_displayName;
     cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
 
-    [cell.permissionsButton setImage:[self incomingSharedFolderPermissionIconWithType:share.access]
-                            forState:UIControlStateNormal];
+    [cell.permissionsButton setImage:[UIImage mnz_permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
     cell.permissionsButton.hidden = NO;
 
     cell.nodeHandle = node.handle;
@@ -467,7 +491,7 @@
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
-    
+    cell.nameLabel.textColor = UIColor.mnz_label;
     cell.nameLabel.text = node.name;
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
@@ -488,7 +512,6 @@
     
     cell.nodeHandle = share.nodeHandle;
     
-    [self configOutgoingVerifyCredentialCellIfNeeded:cell];
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
     
@@ -705,8 +728,10 @@
         return;
     }
     
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSIndexPath *indexPath = [self indexPathFromSender:sender];
+    if (indexPath == nil) {
+        return;
+    }
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
@@ -791,6 +816,7 @@
     [self disableSearchAndSelection];
     
     [self incomingNodes];
+    [self incomingUnverifiedNodes];
     [self.tableView reloadData];
 }
 
@@ -807,6 +833,7 @@
     [self disableSearchAndSelection];
     
     [self outgoingNodes];
+    [self outgoingUnverifiedNodes];
     [self.tableView reloadData];
 }
 
@@ -852,17 +879,32 @@
 }
 
 #pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self numberOfSections];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
-            numberOfRows = self.searchNodesArray.count;
+            if (self.linksButton.selected || section == 1) {
+                numberOfRows = self.searchNodesArray.count;
+            } else {
+                numberOfRows = self.searchUnverifiedNodesArray.count;
+            }
         } else {
             if (self.incomingButton.selected) {
-                numberOfRows = self.incomingNodesMutableArray.count;
+                if (section == 0) {
+                    numberOfRows = self.incomingUnverifiedNodesMutableArray.count;
+                } else {
+                    numberOfRows = self.incomingNodesMutableArray.count;
+                }
             } else if (self.outgoingButton.selected) {
-                numberOfRows = self.outgoingNodesMutableArray.count;
+                if (section == 0) {
+                    numberOfRows = self.outgoingUnverifiedNodesMutableArray.count;
+                } else {
+                    numberOfRows = self.outgoingNodesMutableArray.count;
+                }
             } else if (self.linksButton.selected) {
                 numberOfRows = self.publicLinksArray.count;
             }
@@ -884,8 +926,14 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (self.incomingButton.selected) {
+        if (indexPath.section == 0) {
+            return [self unverifiedIncomingSharedCellAtIndexPath:indexPath node:node];
+        }
         return [self incomingSharedCellAtIndexPath:indexPath forNode:node];
     } else if (self.outgoingButton.selected) {
+        if (indexPath.section == 0) {
+            return [self unverifiedOutgoingSharedCellAtIndexPath:indexPath node:node];
+        }
         return [self outgoingSharedCellAtIndexPath:indexPath forNode:node];
     } else {
         return [self linkSharedCellAtIndexPath:indexPath forNode:node];
@@ -959,9 +1007,8 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            BOOL isVerifyContacts = [self isFeatureFlagFingerprintVerificationEnabled];
-            if (isVerifyContacts) {
-                [self showContactVerificationView];
+            if ([self shouldShowContactVerificationOnTapForIndexPath:indexPath]) {
+                [self showContactVerificationViewForIndexPath:indexPath];
             } else {
                 BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
                 CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1079,19 +1126,25 @@
     if (searchController.isActive) {
         if ([searchString isEqualToString:@""]) {
             if (self.incomingButton.selected) {
+                [self.searchUnverifiedNodesArray removeAllObjects];
                 self.searchNodesArray = self.incomingNodesMutableArray;
             } else if (self.outgoingButton.selected) {
+                self.searchUnverifiedNodesArray = self.outgoingUnverifiedNodesMutableArray;
                 self.searchNodesArray = self.outgoingNodesMutableArray;
             } else if (self.linksButton.selected) {
+                [self.searchUnverifiedNodesArray removeAllObjects];
                 self.searchNodesArray = self.publicLinksArray.mutableCopy;
             }
         } else {
             NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
             if (self.incomingButton.selected) {
+                [self.searchUnverifiedNodesArray removeAllObjects];
                 self.searchNodesArray = [[self.incomingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             } else if (self.outgoingButton.selected) {
+                self.searchUnverifiedNodesArray = [[self.outgoingUnverifiedNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
                 self.searchNodesArray = [[self.outgoingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             } else if (self.linksButton.selected) {
+                [self.searchUnverifiedNodesArray removeAllObjects];
                 self.searchNodesArray = [self.publicLinksArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
             }
         }
@@ -1170,7 +1223,7 @@
         }
             
         case MegaNodeActionTypeInfo:
-            [self showNodeInfo:node];
+            [self showNodeInfo:node from:sender];
             break;
             
         case MegaNodeActionTypeFavourite: {
@@ -1230,9 +1283,11 @@
             [node mnz_copyInViewController:self];
             break;
             
-        case MegaNodeActionTypeVerifyContact:
-            [self showContactVerificationView];
+        case MegaNodeActionTypeVerifyContact: {
+            NSIndexPath *indexPath = [self indexPathFromSender:sender];
+            [self showContactVerificationViewForIndexPath:indexPath];
             break;
+        }
             
         case MegaNodeActionTypeViewVersions:
             [node mnz_showNodeVersionsInViewController:self];
@@ -1246,15 +1301,30 @@
 #pragma mark - SharedItemsTableViewCellDelegate
 
 - (void)didTapInfoButtonWithSender:(UIButton *)sender {
+    [self showNodeContextMenu:sender];
+}
+
+- (void)showNodeContextMenu:(UIButton *)sender {
     if (self.tableView.isEditing) {
         return;
     }
     
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSIndexPath *indexPath = [self indexPathFromSender:sender];
+    if (indexPath == nil) {
+        return;
+    }
     MEGANode *node = [self nodeAtIndexPath:indexPath];
+    MEGAShare *share = [self shareAtIndexPath:indexPath];
+    
     BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node
+                                                                                delegate:self
+                                                                             displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem
+                                                                              isIncoming:self.incomingButton.selected
+                                                                            isBackupNode:isBackupNode
+                                                                            sharedFolder:share
+                                                                 shouldShowVerifyContact:indexPath.section == 0
+                                                                                  sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 

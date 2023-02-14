@@ -68,7 +68,6 @@ class NodeActionViewController: ActionSheetViewController {
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
-        self.isUndecryptedFolder = isIncoming && FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
@@ -77,6 +76,24 @@ class NodeActionViewController: ActionSheetViewController {
                           displayMode: displayMode,
                           isIncoming: isIncoming,
                           isBackupNode: isBackupNode)
+    }
+    
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare, shouldShowVerifyContact: Bool, sender: Any) {
+        self.nodes = [node]
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        self.isUndecryptedFolder = isIncoming && shouldShowVerifyContact && FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.setupActions(node: node,
+                          displayMode: displayMode,
+                          isIncoming: isIncoming,
+                          isBackupNode: isBackupNode,
+                          sharedFolder: sharedFolder,
+                          shouldShowVerifyContact: shouldShowVerifyContact)
     }
     
     init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
@@ -285,13 +302,16 @@ class NodeActionViewController: ActionSheetViewController {
         separatorLineView.backgroundColor = tableView.separatorColor
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool) {
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false) {
         let isImageOrVideoFile = node.name?.mnz_isVisualMediaPathExtension == true
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
         let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
         let isTakedown = node.isTakenDown()
-        let isVerifyContact = displayMode == .sharedItem ? FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification) : false
-        let verifyContactName = ""
+        let isVerifyContact = displayMode == .sharedItem &&
+                            shouldShowVerifyContact &&
+                            !sharedFolder.isVerified &&
+                            FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+        let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user) ?? MEGAUser()
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
@@ -311,7 +331,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
             .setIsTakedown(isTakedown)
-            .setIsVerifyContact(isVerifyContact, contactName: verifyContactName)
+            .setIsVerifyContact(isVerifyContact, sharedFolderContact: sharedFolderContact)
             .build()
     }
 }
