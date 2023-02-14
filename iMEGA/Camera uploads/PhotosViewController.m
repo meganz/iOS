@@ -144,7 +144,10 @@
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [self updateAppearance];
         [self setupBarButtons];
-        [self setupNavigationBarButtons];
+        
+        if ([self isTimelineActive]) {
+            [self setupNavigationBarButtons];
+        }
     }
     
     [self updateBannerViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
@@ -187,7 +190,6 @@
 
 - (void)hideRightBarButtonItem:(BOOL)shouldHide {
     if (shouldHide) {
-        [self.objcWrapper_parent.navigationItem setRightBarButtonItem:nil];
         [self.objcWrapper_parent.navigationItem setRightBarButtonItems:nil];
     }
 }
