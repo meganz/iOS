@@ -2,6 +2,10 @@ import UIKit
 import MEGADomain
 
 extension MEGAPhotoBrowserViewController {
+    @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
+        NodeInfoViewModel(withNode: node)
+    }
+    
     @objc func subtitle(fromDate date: Date) -> String {
         DateFormatter.fromTemplate("MMMM dd • HH:mm").localisedString(from: date)
     }

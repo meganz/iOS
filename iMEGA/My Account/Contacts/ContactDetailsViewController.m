@@ -1061,7 +1061,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             break;
             
         case MegaNodeActionTypeInfo: {
-            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:nil];
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:[self createNodeInfoViewModelWithNode:node]
+                                                                                                   delegate:nil];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }

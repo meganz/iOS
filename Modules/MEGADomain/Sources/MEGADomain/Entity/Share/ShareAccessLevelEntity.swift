@@ -1,4 +1,4 @@
-public enum ShareAccessLevelEntity {
+public enum ShareAccessLevelEntity: Sendable {
     case unknown
     case read
     case readWrite

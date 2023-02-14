@@ -197,7 +197,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
 
     func viewInfo(node: MEGANode) {
-        let nodeInfoViewController = NodeInfoViewController.instantiate(withNode: node, delegate: nil)
+        let viewModel = NodeInfoViewModel(withNode: node)
+        let nodeInfoViewController = NodeInfoViewController.instantiate(withViewModel: viewModel, delegate: nil)
         baseViewController?.present(nodeInfoViewController, animated: true, completion: nil)
     }
 

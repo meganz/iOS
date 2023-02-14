@@ -71,6 +71,7 @@ final class HomeScreenFactory: NSObject {
 
         let router = HomeRouter(navigationController: navigationController, tabBarController: tabBarController)
         homeViewController.router = router
+        homeViewController.homeViewModel = HomeViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
 
         return navigationController
     }
