@@ -34,6 +34,8 @@ final class HomeViewController: UIViewController {
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
     
+    var homeViewModel: HomeViewModel!
+    
     private var featureFlagProvider = FeatureFlagProvider()
     
     // MARK: - Router
@@ -567,7 +569,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .exportFile:
                 router?.didTap(on: .exportFile(node, sender))
             case .shareFolder:
-                router?.didTap(on: .shareFolder(node))
+                self.homeViewModel.openShareFolderDialog(forNode: node, router: router)
             case .manageShare:
                 router?.didTap(on: .manageShare(node))
             case .leaveSharing:

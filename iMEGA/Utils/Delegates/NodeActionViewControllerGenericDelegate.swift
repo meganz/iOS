@@ -43,9 +43,7 @@ final class NodeActionViewControllerGenericDelegate:
             exportFile(node: node, sender: sender)
 
         case .shareFolder:
-            BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
-                self?.shareFolder(node)
-           }
+            openShareFolderDialog(node, viewController: viewController)
             
         case .manageShare:
             BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
@@ -163,6 +161,24 @@ final class NodeActionViewControllerGenericDelegate:
         }
         let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
         CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download).start()
+    }
+    
+    private func openShareFolderDialog(_ node: MEGANode, viewController: UIViewController) {
+        Task { @MainActor in
+            do {
+                let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo)
+                let _ = try await shareUseCase.createShareKey(forNode: node.toNodeEntity())
+                showContactListForShareFolderNode(node, viewController: viewController)
+            } catch {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    private func showContactListForShareFolderNode(_ node: MEGANode, viewController: UIViewController) {
+        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+            self?.shareFolder(node)
+       }
     }
     
     private func shareFolder(_ node: MEGANode) {

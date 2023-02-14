@@ -193,6 +193,14 @@
     }
 }
 
+- (SharedItemsViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self createSharedItemsViewModel];
+    }
+    
+    return _viewModel;
+}
+
 #pragma mark - Private
 
 - (void)updateAppearance {
@@ -401,11 +409,11 @@
     if (indexPath == nil) {
         return;
     }
-    
-    BOOL isUndecryptedFolder = self.incomingButton.selected && indexPath.section == 0 && [self isFeatureFlagFingerprintVerificationEnabled];
-    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node
-                                                                           isUndecryptedFolder:isUndecryptedFolder
-                                                                                      delegate:self];
+
+    BOOL isNodeUndecryptedFolder = self.incomingButton.selected && indexPath.section == 0 && [self isFeatureFlagFingerprintVerificationEnabled];
+    NodeInfoViewModel *viewModel = [self createNodeInfoViewModelWithNode:node
+                                                 isNodeUndecryptedFolder:isNodeUndecryptedFolder];
+    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:viewModel delegate:self];
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 

@@ -1189,7 +1189,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             if (!currentNode) {
                 return;
             }
-            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:currentNode delegate:self];
+            MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:[self createNodeInfoViewModelWithNode:node] delegate:self];
             [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
             break;
         }

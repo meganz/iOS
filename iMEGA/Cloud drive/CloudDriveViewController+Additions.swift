@@ -1,6 +1,13 @@
 import MEGADomain
 
 extension CloudDriveViewController {
+    @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
+        NodeInfoViewModel(withNode: node, shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+    }
+    
+    @objc func createCloudDriveViewModel() -> CloudDriveViewModel {
+        CloudDriveViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+    }
     
     private func updatedParentNodeIfBelongs(_ nodeList: MEGANodeList) -> MEGANode? {
         nodeList
