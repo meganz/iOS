@@ -1675,6 +1675,10 @@
 		B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransfersUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
+		B58F7BF8298A68610046F0FA /* OnboardingViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */; };
+		B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
+		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
+		B58F7BFE298A8B670046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
 		B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
 		B5925B7A279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
@@ -1701,6 +1705,9 @@
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
+		B5CC280C298A911000A966A0 /* FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */; };
+		B5CC280D298B453000A966A0 /* FeatureFlagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231728A0B3240018C3C3 /* FeatureFlagRepository.swift */; };
+		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
 		B5E411A928AB65A600D05719 /* FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */; };
@@ -4140,6 +4147,9 @@
 		B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAHandleRepository.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransfersUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
+		B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+SecureFlag.swift"; sourceTree = "<group>"; };
+		B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSecureFingerprintManager.swift; sourceTree = "<group>"; };
+		B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+SecureFlag.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
 		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B5925B88279119E400170CD6 /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
@@ -5655,6 +5665,7 @@
 			isa = PBXGroup;
 			children = (
 				12E23288286D49000099775D /* NodeActionViewModel.swift */,
+				B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -7975,6 +7986,7 @@
 				7795677821C80D36002B6227 /* Onboarding.storyboard */,
 				7795677521C80CDF002B6227 /* OnboardingViewController.h */,
 				7795677621C80CDF002B6227 /* OnboardingViewController.m */,
+				B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */,
 			);
 			path = OnboardingViewController;
 			sourceTree = "<group>";
@@ -9084,6 +9096,7 @@
 				94598D741F0CD53A00B57144 /* Share.storyboard */,
 				943F8B1E1EF2704900AFD89F /* ShareViewController.h */,
 				5B3B0D142684B24700479A68 /* ShareViewController.m */,
+				B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */,
 				5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */,
 				949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */,
 				949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */,
@@ -13300,6 +13313,7 @@
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
+				B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */,
 				0D0B53B626264B3200E9BB16 /* TransferEntity+Mapper.swift in Sources */,
 				8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */,
 				BF7EBD3F24526A140015255F /* AddToChatMediaCollectionSource.swift in Sources */,
@@ -13485,6 +13499,7 @@
 				832CAEEF2864857D0069409D /* HangOrEndCallViewModel.swift in Sources */,
 				BFAB114023CEA5C300BCE72D /* UIViewController+PhotoAlbumBrowserAdditions.swift in Sources */,
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
+				B58F7BF8298A68610046F0FA /* OnboardingViewController+SecureFlag.swift in Sources */,
 				836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */,
 				BF08A9F525CA12A0009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
@@ -14142,6 +14157,7 @@
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
+				B5CC280D298B453000A966A0 /* FeatureFlagRepository.swift in Sources */,
 				B6D0B351283CDE050020C64D /* AppGroupContainer.swift in Sources */,
 				2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				943AFB5B283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */,
@@ -14183,6 +14199,7 @@
 				A82F364928EF352900093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */,
+				B5CC280C298A911000A966A0 /* FeatureFlagProvider.swift in Sources */,
 				A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */,
 				B5300AF42754A09C001E516B /* Strings+Generated.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
@@ -14221,6 +14238,7 @@
 				A84F4A92298903600017ACB4 /* MEGASdk+SharedInstance.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
+				B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
 				B64A71AF287943BA0085087D /* NodeEntity+Mapper.swift in Sources */,
 				B695B604264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
@@ -14319,6 +14337,7 @@
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				83BFB9A727D8E2CE001755B6 /* MOOfflineNode.m in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
+				B58F7BFE298A8B670046F0FA /* SharedSecureFingerprintManager.swift in Sources */,
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */,
@@ -14331,6 +14350,7 @@
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
+				B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */,
 				83E53D2A282A96E70049DFBE /* URL+FileAttribute.swift in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
 				834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,

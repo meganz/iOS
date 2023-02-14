@@ -6,6 +6,9 @@ struct QASettingsView: View {
         static let appUpdatesHeaderText = "APP UPDATES"
         static let featureListHeaderText = "FEATURE LIST"
         static let checkForUpdateText = "Check for updates"
+        static let fingerprintVerificationHeaderText = "SDK SECURE FLAG"
+        static let fingerprintVerificationFooterText = "To toggle secure flag: logout user > on onboarding screen > tap 5 times"
+        static let fingerprintVerificationText = "Share secure flag: "
         static let cellDarkBackgroundColor = Color(Colors.General.Black._1c1c1e.name)
         static let cellLightBackgroundColor = Color.white
     }
@@ -28,8 +31,13 @@ struct QASettingsView: View {
                 FeatureFlagView()
                     .listRowBackground(listRowBackgroundColor)
             }
+
+            Section(header: Text(Constants.fingerprintVerificationHeaderText),
+                    footer: Text(Constants.fingerprintVerificationFooterText)) {
+                Text(Constants.fingerprintVerificationText + viewModel.fingerprintVerificationFlagStatus())
+            }
         }
-        .listStyle(.plain)
+        .listStyle(.grouped)
         .padding(.top)
         .background(backgroundColor)
     }

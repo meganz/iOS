@@ -57,4 +57,9 @@ final class QASettingsViewModel {
     private func show(error: Error) {
         router.showAlert(withError: error)
     }
+    
+    //MARK: - Fingerprint flag
+    func fingerprintVerificationFlagStatus() -> String {
+        SharedSecureFingerprintManager().secureFingerprintStatus()
+    }
 }
