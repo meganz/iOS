@@ -44,33 +44,23 @@ class NodeInfoViewController: UIViewController {
     private var folderInfo : MEGAFolderInfo?
     private weak var delegate: NodeInfoViewControllerDelegate?
     private var nodeVersions: [MEGANode] = []
-    private var isUndecryptedFolder: Bool = false
+    private var viewModel: NodeInfoViewModel?
     
     //MARK: - Lifecycle
 
-    @objc class func instantiate(withNode node: MEGANode, delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
+    @objc class func instantiate(withViewModel viewModel: NodeInfoViewModel,
+                                 delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
         guard let nodeInfoVC = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(withIdentifier: "NodeInfoViewControllerID") as? NodeInfoViewController else {
             fatalError("Could not instantiate NodeInfoViewController")
         }
-
-        nodeInfoVC.node = node
+        
+        nodeInfoVC.viewModel = viewModel
+        nodeInfoVC.node = viewModel.node
         nodeInfoVC.delegate = delegate
-        nodeInfoVC.nodeVersions = node.mnz_versions()
+        nodeInfoVC.nodeVersions = viewModel.node.mnz_versions()
         return MEGANavigationController.init(rootViewController: nodeInfoVC)
     }
-    
-    @objc class func instantiate(withNode node: MEGANode, isUndecryptedFolder: Bool, delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
-        guard let nodeInfoVC = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(withIdentifier: "NodeInfoViewControllerID") as? NodeInfoViewController else {
-            fatalError("Could not instantiate NodeInfoViewController")
-        }
 
-        nodeInfoVC.node = node
-        nodeInfoVC.delegate = delegate
-        nodeInfoVC.nodeVersions = node.mnz_versions()
-        nodeInfoVC.isUndecryptedFolder = isUndecryptedFolder
-        return MEGANavigationController.init(rootViewController: nodeInfoVC)
-    }
-    
     // MARK: - Public Interface
     func display(_ node: MEGANode, withDelegate delegate: NodeInfoViewControllerDelegate) {
         self.node = node
@@ -168,20 +158,8 @@ class NodeInfoViewController: UIViewController {
         CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: self)
     }
     
-    private func showAddShareContactView() {
-        BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
-            guard let `self` = self, let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else {
-                fatalError("Could not instantiate ContactsViewController")
-            }
-            contactsVC.contactsMode = .shareFoldersWith
-            contactsVC.nodesArray = [self.node]
-            let navigation = MEGANavigationController.init(rootViewController: contactsVC)
-            self.present(navigation, animated: true, completion: nil)
-        }
-    }
-    
     @IBAction func shareButtonTapped(_ sender: Any) {
-        showAddShareContactView()
+        viewModel?.openSharedDialog()
     }
     
     @objc private func closeButtonTapped() {
@@ -364,7 +342,10 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node, isNodeInRubbish: node.mnz_isInRubbishBin(), folderInfo: folderInfo, isUndecryptedFolder: isUndecryptedFolder)
+        cell.configure(forNode: node,
+                       isNodeInRubbish: node.mnz_isInRubbishBin(),
+                       folderInfo: folderInfo,
+                       isUndecryptedFolder: viewModel?.isNodeUndecryptedFolder == true)
         return cell
     }
     
@@ -588,7 +569,7 @@ extension NodeInfoViewController: UITableViewDelegate {
             node.mnz_removeSharing()
         case .sharing:
             if indexPath.row == 0 {
-                showAddShareContactView()
+                viewModel?.openSharedDialog()
             } else {
                 prepareShareFolderPermissionsAlertController(fromIndexPat: indexPath)
             }

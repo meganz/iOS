@@ -1,6 +1,7 @@
 import Foundation
 
-public protocol ShareRepositoryProtocol {
+public protocol ShareRepositoryProtocol: RepositoryProtocol, Sendable {
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity]
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]
+    func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity
 }

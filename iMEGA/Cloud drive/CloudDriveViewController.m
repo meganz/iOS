@@ -236,6 +236,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
+- (CloudDriveViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self createCloudDriveViewModel];
+    }
+    return _viewModel;
+}
+
 #pragma mark - Layout
 
 - (void)determineViewMode {
@@ -703,7 +710,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)showNodeInfo:(MEGANode *)node {
-    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithNode:node delegate:self];
+    MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:[self createNodeInfoViewModelWithNode:node]
+                                                                                           delegate:self];
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 

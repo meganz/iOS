@@ -6,7 +6,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 
-@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager;
+@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIBarButtonItem *contextBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *uploadAddBarButtonItem;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
+
+@property (strong, nonatomic) CloudDriveViewModel *viewModel;
 
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;

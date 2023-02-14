@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsTableViewCell;
+@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) MEGAShareList *incomingUnverifiedShareList;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *incomingUnverifiedSharesMutableArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *incomingUnverifiedNodesMutableArray;
+
+@property (strong, nonatomic) SharedItemsViewModel *viewModel;
 
 - (void)selectSegment:(NSUInteger)index;
 - (void)didTapSelect;
