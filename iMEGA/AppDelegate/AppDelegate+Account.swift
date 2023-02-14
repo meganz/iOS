@@ -32,4 +32,9 @@ extension AppDelegate {
             }
         }
     }
+    
+    @objc func showUpgradeSecurityAlert() {
+        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification) else { return }
+        CustomModalAlertRouter(.upgradeSecurity, presenter: UIApplication.mnz_presentingViewController()).start()
+    }
 }
