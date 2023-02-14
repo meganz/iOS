@@ -37,4 +37,26 @@ struct AccountRepository: AccountRepositoryProtocol {
             }
         })
     }
+    
+    func upgradeSecurity() async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            sdk.upgradeSecurity(with: RequestDelegate { (result) in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+
+                switch result {
+                case .success:
+                    continuation.resume(returning: true)
+                case .failure:
+                    continuation.resume(throwing: AccountErrorEntity.generic)
+                }
+            })
+        }
+    }
 }

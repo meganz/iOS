@@ -3458,3 +3458,7 @@
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:\n[WeekDay], [Date] from [StartTime] to [EndTime]";
 /* In app notification description when an occurence is updated in a reccurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:\n[WeekDay], [Date] from [StartTime] to [EndTime]";
+/* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.title"="Security upgrade";
+/* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account.  */
+"account.upgradeSecurity.message.upgrade"="Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap Cancel.";

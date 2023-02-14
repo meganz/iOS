@@ -1370,6 +1370,11 @@
             [self showLaunchViewController];
             break;
         }
+        
+        case EventUpgradeSecurity:
+            [self showUpgradeSecurityAlert];
+            break;
+            
         default:
             break;
     }
