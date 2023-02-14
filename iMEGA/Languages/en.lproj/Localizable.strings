@@ -3178,6 +3178,8 @@
 "verifyCredentials.yourCredentials.title"="Your credentials";
 /* On Incoming Shared Items Tab. Name of the folder if the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Undecrypted folder]";
+/* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
+"sharedItems.tab.outgoing.sharedToContact"="Shared to %@";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: created a meeting";
 /* Button title to load more participants in meeting info view */

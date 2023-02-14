@@ -58,6 +58,7 @@
     
     [self configProgressView];
     
+    [self setBadgeValueForSharedItems];
     [self setBadgeValueForChats];
     [self configurePhoneImageBadge];
     

@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton;
+@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsTableViewCell;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,9 +29,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
+@property (nonatomic, strong, nullable) MEGAShareList *outgoingUnverifiedShareList;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *outgoingUnverifiedSharesMutableArray;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *outgoingUnverifiedNodesMutableArray;
+
+@property (nonatomic, strong, nullable) MEGAShareList *incomingUnverifiedShareList;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *incomingUnverifiedSharesMutableArray;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *incomingUnverifiedNodesMutableArray;
+
 - (void)selectSegment:(NSUInteger)index;
 - (void)didTapSelect;
 - (void)nodesSortTypeHasChanged;
+- (void)setupLabelAndFavouriteForNode:(MEGANode *)node cell:(SharedItemsTableViewCell *)cell;
+- (void)configureAccessibilityForCell:(SharedItemsTableViewCell *)cell;
+- (void)reloadUI;
+- (void)showNodeContextMenu:(UIButton *)sender;
 
 @end
 
