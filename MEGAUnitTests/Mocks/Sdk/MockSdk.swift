@@ -189,4 +189,10 @@ final class MockSdk: MEGASdk {
     override func areCredentialsVerified(of: MEGAUser) -> Bool {
         isSharedFolderOwnerVerified
     }
+    
+    //MARK: - Share
+    override func upgradeSecurity(with delegate: MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
 }

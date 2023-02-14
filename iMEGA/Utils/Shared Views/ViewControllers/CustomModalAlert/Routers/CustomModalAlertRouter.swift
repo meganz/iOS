@@ -11,6 +11,7 @@ import MEGADomain
     case outgoingContactRequest
     case contactNotInMEGA
     case enableKeyRotation
+    case upgradeSecurity
 }
 
 @objc class CustomModalAlertRouter: NSObject, Routing {
@@ -50,6 +51,9 @@ import MEGADomain
         case .enableKeyRotation:
             guard let chatId else { return customModalAlertVC }
             customModalAlertVC.configureForEnableKeyRotation(in: chatId)
+        
+        case .upgradeSecurity:
+            customModalAlertVC.configureForUpgradeSecurity()
             
         default: break
         }
@@ -59,9 +63,10 @@ import MEGADomain
     
     @objc func start() {
         let visibleViewController = UIApplication.mnz_visibleViewController()
-        if visibleViewController is CustomModalAlertViewController ||
-           visibleViewController is UpgradeTableViewController ||
-           visibleViewController is ProductDetailViewController {
+        if mode != .upgradeSecurity &&
+            (visibleViewController is CustomModalAlertViewController ||
+             visibleViewController is UpgradeTableViewController ||
+             visibleViewController is ProductDetailViewController) {
             return
         }
         
