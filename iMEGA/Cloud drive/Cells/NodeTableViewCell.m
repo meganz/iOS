@@ -160,30 +160,19 @@
     [self updateWithTrait:[self traitCollection]];
     self.leadingConstraint.constant = 24;
     self.recentActionBucket = recentActionBucket;
+    
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
+    [self setTitleAndFolderNameFor:recentActionBucket withNodes:nodesArray];
+    
+    BOOL isMultipleNodes = nodesArray.count > 1;
+    self.moreButton.hidden = isMultipleNodes;
+    self.disclosureIndicatorView.hidden = !isMultipleNodes;
     
     MEGANode *node = nodesArray.firstObject;
     [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    
-    NSString *title;
-    if (nodesArray.count == 1) {
-        title = node.name;
-        
-        self.moreButton.hidden = NO;
-        self.disclosureIndicatorView.hidden = YES;
-    } else if (nodesArray.count > 1) {
-        NSString *tempString = NSLocalizedString(@"%1 and [A]%2 more[/A]", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
-        tempString = tempString.mnz_removeWebclientFormatters;
-        tempString = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:node.name];
-        title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", nodesArray.count - 1]];
-        
-        self.moreButton.hidden = YES;
-        self.disclosureIndicatorView.hidden = NO;
-    }
-    self.nameLabel.text = title;
     
     MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
     if ([recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
@@ -205,10 +194,7 @@
         self.incomingOrOutgoingImageView.hidden = NO;
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
-    
-    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle];
-    self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];
-    
+
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;

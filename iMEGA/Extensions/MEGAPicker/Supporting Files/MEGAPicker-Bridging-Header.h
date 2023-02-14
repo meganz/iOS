@@ -18,6 +18,7 @@
 #import "Helper.h"
 #import "EmptyStateView.h"
 #import "SelectableTableViewCell.h"
+#import "NodeTableViewCell.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 

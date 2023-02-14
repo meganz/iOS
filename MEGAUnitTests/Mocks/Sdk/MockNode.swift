@@ -10,6 +10,7 @@ final class MockNode: MEGANode {
     private let changeType: MEGANodeChangeType
     private var nodeModificationTime: Date?
     private let _hasThumbnail: Bool
+    private let isNodeDecrypted: Bool
     let nodePath: String?
     
     init(handle: HandleEntity,
@@ -19,7 +20,8 @@ final class MockNode: MEGANode {
          changeType: MEGANodeChangeType = .new,
          modificationTime: Date? = nil,
          hasThumbnail: Bool = false,
-         nodePath: String? = nil) {
+         nodePath: String? = nil,
+         isNodeDecrypted: Bool = false) {
         nodeHandle = handle
         nodeName = name
         self.nodeType = nodeType
@@ -28,6 +30,7 @@ final class MockNode: MEGANode {
         nodeModificationTime = modificationTime
         _hasThumbnail = hasThumbnail
         self.nodePath = nodePath
+        self.isNodeDecrypted = isNodeDecrypted
         super.init()
     }
     
