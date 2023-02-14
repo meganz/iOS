@@ -2850,6 +2850,18 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.title")
         }
       }
+      public enum UpgradeSecurity {
+        /// Security upgrade
+        public static let title = Strings.tr("Localizable", "account.upgradeSecurity.title")
+        public enum Message {
+          /// Plural format key: "%#@folderNames@"
+          public static func sharedFolderNames(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "account.upgradeSecurity.message.sharedFolderNames", p1)
+          }
+          /// Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap Cancel.
+          public static let upgrade = Strings.tr("Localizable", "account.upgradeSecurity.message.upgrade")
+        }
+      }
     }
     public enum AutoAway {
       /// Set status as Away after [X] of inactivity.
