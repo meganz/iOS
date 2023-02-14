@@ -101,10 +101,11 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-#ifdef DEBUG
+#if defined(DEBUG) || defined(QA_CONFIG)
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
     [MEGAChatSdk setCatchException:false];
+    [self configSharedSecureFingerprintFlag];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelFatal];
