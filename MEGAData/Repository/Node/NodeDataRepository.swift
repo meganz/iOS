@@ -2,18 +2,16 @@ import MEGADomain
 
 struct NodeDataRepository: NodeDataRepositoryProtocol {
     static var newRepo: NodeDataRepository {
-        NodeDataRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), nodeRepository: NodeRepository.newRepo)
+        NodeDataRepository(sdk: MEGASdk.shared, sharedFolderSdk:  MEGASdk.sharedFolderLink, nodeRepository: NodeRepository.newRepo)
     }
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
-    private let chatSdk: MEGAChatSdk
     private let nodeRepository: NodeRepositoryProtocol
     
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, chatSdk: MEGAChatSdk, nodeRepository: NodeRepositoryProtocol) {
+    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, nodeRepository: NodeRepositoryProtocol) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
-        self.chatSdk = chatSdk
         self.nodeRepository = nodeRepository
     }
     
