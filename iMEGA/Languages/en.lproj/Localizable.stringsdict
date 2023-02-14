@@ -1890,5 +1890,21 @@
         <string>Fifth Sunday of every %d months, effective [StartDate] from [StartTime] to [EndTime]</string>
       </dict>
     </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Undecrypted file]</string>
+        <key>other</key>
+        <string>[Undecrypted files]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
