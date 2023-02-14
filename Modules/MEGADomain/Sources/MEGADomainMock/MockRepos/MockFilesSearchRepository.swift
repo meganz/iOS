@@ -32,6 +32,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public func search(string: String?,
                        parent node:NodeEntity?,
+                       supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity,
                        completion: @escaping ([NodeEntity]?, Bool) -> Void) {
@@ -40,6 +41,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public func search(string: String?,
                        parent node: NodeEntity?,
+                       supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         if formatType == .photo {

@@ -79,6 +79,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
     private func allPhotos() async throws -> [NodeEntity] {
         try await fileSearchRepository.search(string: "",
                                               parent: nil,
+                                              supportCancel: false,
                                               sortOrderType: .defaultDesc,
                                               formatType: .photo)
     }
@@ -86,6 +87,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
     private func allVideos() async throws -> [NodeEntity] {
         try await fileSearchRepository.search(string: "",
                                               parent: nil,
+                                              supportCancel: false,
                                               sortOrderType: .defaultDesc,
                                               formatType: .video)
     }
