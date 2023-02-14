@@ -9,7 +9,7 @@ extension RecentsViewController {
         
         verifyCredentialsVC.user = user
         verifyCredentialsVC.userName = user.mnz_displayName ?? user.email
-        verifyCredentialsVC.setContactVerificationWithIncomingSharedItem(true, isShowIncomingItemWarningView: false)
+        verifyCredentialsVC.setContactVerification(true)
         verifyCredentialsVC.statusUpdateCompletionBlock = { [weak self] in
             self?.reloadUI()
         }

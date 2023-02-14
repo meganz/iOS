@@ -77,15 +77,19 @@ extension SharedItemsViewController: DisplayMenuDelegate {
     }
 
     //MARK: - NodeActionMenu
-    @objc func showContactVerificationView() {
-        guard let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
+    @objc func showContactVerificationView(forIndexPath indexPath: IndexPath?) {
+        guard let indexPath, let userContact = userContactFromShareAtIndexPath(indexPath),
+              let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
             return
         }
-        verifyCredentialsVC.user = MEGAUser()
-        verifyCredentialsVC.userName = ""
-        verifyCredentialsVC.setContactVerificationWithIncomingSharedItem(incomingButton?.isSelected ?? false,
-                                                                         isShowIncomingItemWarningView: incomingButton?.isSelected ?? false)
-        verifyCredentialsVC.statusUpdateCompletionBlock = {}
+        verifyCredentialsVC.user = userContact
+        verifyCredentialsVC.userName = userContact.mnz_displayName ?? userContact.email
+        
+        let isIncomingTab = incomingButton?.isSelected ?? false
+        verifyCredentialsVC.setContactVerification(isIncomingTab)
+        verifyCredentialsVC.statusUpdateCompletionBlock = { [weak self] in
+            self?.reloadUI()
+        }
         
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
