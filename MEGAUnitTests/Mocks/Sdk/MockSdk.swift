@@ -16,6 +16,8 @@ final class MockSdk: MEGASdk {
     private let sets: [MEGASet]
     private let setElements: [MEGASetElement]
     private let megaSetElementCounts: [MEGAHandle: UInt]
+    private let isSharedFolderOwnerVerified: Bool
+    private let sharedFolderOwner: MEGAUser?
     
     var hasGlobalDelegate = false
     
@@ -29,7 +31,9 @@ final class MockSdk: MEGASdk {
          megaSetElements: [MEGASetElement] = [],
          megaRootNode: MEGANode? = nil,
          rubbishBinNode: MEGANode? = nil,
-         megaSetElementCounts: [MEGAHandle: UInt] = [:]
+         megaSetElementCounts: [MEGAHandle: UInt] = [:],
+         isSharedFolderOwnerVerified: Bool = false,
+         sharedFolderOwner: MEGAUser? = nil
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -42,6 +46,8 @@ final class MockSdk: MEGASdk {
         self.megaRootNode = megaRootNode
         self.rubbishBinNode = rubbishBinNode
         self.megaSetElementCounts = megaSetElementCounts
+        self.isSharedFolderOwnerVerified = isSharedFolderOwnerVerified
+        self.sharedFolderOwner = sharedFolderOwner
         super.init()
     }
     
@@ -174,5 +180,13 @@ final class MockSdk: MEGASdk {
         mockRequest.updateSetCover = true
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
+    
+    override func contact(forEmail: String?) -> MEGAUser? {
+        sharedFolderOwner
+    }
+    
+    override func areCredentialsVerified(of: MEGAUser) -> Bool {
+        isSharedFolderOwnerVerified
     }
 }

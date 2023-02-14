@@ -79,4 +79,22 @@ final class MEGANode_Additions_Tests: XCTestCase {
         let sdk = MockSdk(nodes: [childNode, parentNode, grandParentNode, greatGrandParentNode])
         XCTAssertTrue(childNode.isDescendant(of: greatGrandParentNode, in: sdk))
     }
+    
+    func testIsUndecrypted_nodeIsDecryptedTrue_ownerIsVerifiedTrue_shouldBeFalse() {
+        let node = MockNode(handle: 1, isNodeDecrypted: true)
+        let sdk = MockSdk(isSharedFolderOwnerVerified: true, sharedFolderOwner: MockUser(handle: 1))
+        XCTAssertFalse(node.isUndecrypted(ownerEmail: "", in: sdk))
+    }
+    
+    func testIsUndecrypted_nodeIsDecryptedFalse_ownerIsVerifiedFalse_shouldBeTrue() {
+        let node = MockNode(handle: 1, isNodeDecrypted: false)
+        let sdk = MockSdk(isSharedFolderOwnerVerified: false, sharedFolderOwner: MockUser(handle: 1))
+        XCTAssertTrue(node.isUndecrypted(ownerEmail: "", in: sdk))
+    }
+    
+    func testIsUndecrypted_nodeIsDecryptedTrue_ownerIsVerifiedFalse_shouldBeTrue() {
+        let node = MockNode(handle: 1, isNodeDecrypted: true)
+        let sdk = MockSdk(isSharedFolderOwnerVerified: false, sharedFolderOwner: MockUser(handle: 1))
+        XCTAssertTrue(node.isUndecrypted(ownerEmail: "", in: sdk))
+    }
 }

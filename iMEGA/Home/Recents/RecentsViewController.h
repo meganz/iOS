@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic, nullable) IBOutlet UITableView *tableView;
 
+- (void)reloadUI;
 
 @end
 

@@ -108,7 +108,15 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     MEGANode *node = nodesArray.firstObject;
     
-    [self.delegate showCustomActionsForNode:node fromSender:sender];
+    if (node) {
+        BOOL isNodeUndecrypted = [node isUndecryptedWithOwnerEmail:recentActionBucket.userEmail
+                                                                in:MEGASdkManager.sharedMEGASdk];
+        if (isNodeUndecrypted) {
+            [self showContactVerificationViewForUserEmail:recentActionBucket.userEmail];
+        } else {
+            [self.delegate showCustomActionsForNode:node fromSender:sender];
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -219,8 +227,20 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
         return;
     }
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
+    
+    MEGANode *node = nodesArray.firstObject;
+    if (node) {
+        BOOL isNodeUndecrypted = [node isUndecryptedWithOwnerEmail:recentActionBucket.userEmail
+                                                                in:MEGASdkManager.sharedMEGASdk];
+        
+        if (isNodeUndecrypted) {
+            [self showContactVerificationViewForUserEmail:recentActionBucket.userEmail];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            return;
+        }
+    }
+    
     if (nodesArray.count == 1) {
-        MEGANode *node = nodesArray.firstObject;
         if (node.name.mnz_isVisualMediaPathExtension) {
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject];
             [self.delegate showSelectedNodeInViewController:photoBrowserVC];

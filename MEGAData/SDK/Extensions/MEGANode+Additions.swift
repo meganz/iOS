@@ -22,4 +22,17 @@ extension MEGANode {
             return parent.isDescendant(of: node, in: sdk)
         }
     }
+    
+    /// Check whether the receiver is a child node of an unverified shared folder node.
+    /// - Parameters:
+    ///   - email: The email of the receiver's owner.
+    ///   - sdk: `MEGASdk` instance which manages receiver's owner.
+    /// - Returns: true if the node's `isNodeKeyDecrypted` is false and user has not yet verified the owner; otherwise false.
+    @objc func isUndecrypted(ownerEmail email: String, in sdk: MEGASdk) -> Bool {
+        guard let owner = sdk.contact(forEmail: email),
+              !self.isNodeKeyDecrypted() else {
+            return false
+        }
+        return !sdk.areCredentialsVerified(of: owner)
+    }
 }
