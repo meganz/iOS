@@ -114,11 +114,9 @@
 
 #pragma mark - Public
 
-- (void)setContactVerificationWithIncomingSharedItem:(BOOL)isIncomingSharedItem
-                       isShowIncomingItemWarningView:(BOOL)isShowIncomingItemWarningView {
+- (void)setContactVerification:(BOOL)isIncomingSharedItem {
     self.incomingSharedItem = isIncomingSharedItem;
     self.verifyContactForSharedItem = true;
-    self.showIncomingItemWarningView = isShowIncomingItemWarningView;
 }
 
 #pragma mark - Private

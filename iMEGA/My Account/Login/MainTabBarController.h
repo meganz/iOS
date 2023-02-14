@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setBadgeValueForChats;
 - (void)shouldUpdateProgressViewLocation;
+- (void)setBadgeValue:(nullable NSString *)badgeValue tabPosition:(NSInteger)tabPosition;
 @end
 
 NS_ASSUME_NONNULL_END
