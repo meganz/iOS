@@ -1,3 +1,4 @@
+import MEGADomain
 import Foundation
 import MEGAPresentation
 
