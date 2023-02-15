@@ -99,7 +99,7 @@ extension NotificationsTableViewController {
     }
     
     @objc func scheduledMeeting(withScheduleMeetingId meetingId: ChatIdEntity, chatId: ChatIdEntity) -> MEGAChatScheduledMeeting? {
-        MEGASdkManager.sharedMEGAChatSdk().scheduledMeeting(chatId, scheduledId: meetingId)
+        MEGAChatSdk.shared.scheduledMeeting(chatId, scheduledId: meetingId)
     }
     
     @objc func openChatRoom(forUserAlert alert: MEGAUserAlert) {

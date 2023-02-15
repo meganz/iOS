@@ -3269,15 +3269,15 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="See more occurrences";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B]%@, %@[/B] from [B]%@ to %@[/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Everyday, effective [B]%@[/B] from [B]%@ to %@[/B]";
+"meetings.scheduled.recurring.daily.forever"="Everyday, effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Everyday, effective [B]%@ until %@[/B] from [B]%@ to %@[/B]";
-/* In app notification description when an occurence is cancelled in a reccurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:\n[WeekDay], [Date] from [StartTime] to [EndTime]";
-/* In app notification description when an occurence is updated in a reccurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:\n[WeekDay], [Date] from [StartTime] to [EndTime]";
+"meetings.scheduled.recurring.daily.until"="Everyday, effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+/* In app notification description when an occurence is cancelled in a recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
+/* In app notification description when an occurence is updated in a recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Security upgrade";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account.  */
