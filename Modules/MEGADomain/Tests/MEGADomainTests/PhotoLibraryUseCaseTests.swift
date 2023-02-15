@@ -1,7 +1,6 @@
 import XCTest
 import MEGADomain
 import MEGADomainMock
-@testable import MEGA
 
 final class PhotoLibraryUseCaseTests: XCTestCase {
     

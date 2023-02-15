@@ -1,7 +1,6 @@
 import Combine
-import MEGADomain
 
-protocol PhotoLibraryUseCaseProtocol: Sendable {
+public protocol PhotoLibraryUseCaseProtocol: Sendable {
     /// Load CameraUpload and MediaUpload node
     /// - Returns: PhotoLibraryContainerEntity, which contains CameraUpload and MediaUpload node itself
     func photoLibraryContainer() async -> PhotoLibraryContainerEntity
@@ -23,21 +22,16 @@ protocol PhotoLibraryUseCaseProtocol: Sendable {
     func allPhotosFromCameraUpload() async throws -> [NodeEntity]
 }
 
-struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol>: PhotoLibraryUseCaseProtocol {
+public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepositoryProtocol>: PhotoLibraryUseCaseProtocol {
     private let photosRepository: T
     private let searchRepository: U
     
-    enum ContainerType {
-        case camera(MEGANode?)
-        case media(MEGANode?)
-    }
-    
-    init(photosRepository: T, searchRepository: U) {
+    public init(photosRepository: T, searchRepository: U) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
     }
     
-    func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
+    public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
         async let cameraUploadNode = try? await photosRepository.photoSourceNode(for: .camera)
         async let mediaUploadNode = try? await photosRepository.photoSourceNode(for: .media)
         
@@ -47,27 +41,27 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
         )
     }
     
-    func cameraUploadPhotos() async throws -> [NodeEntity] {
+    public func cameraUploadPhotos() async throws -> [NodeEntity] {
         let container = await photoLibraryContainer()
         let nodesCameraUpload = photosRepository.visualMediaNodes(inParent: container.cameraUploadNode)
         let nodesMediaUpload = photosRepository.visualMediaNodes(inParent: container.mediaUploadNode)
         let nodes = nodesCameraUpload + nodesMediaUpload
-
+        
         return nodes
     }
     
-    func allPhotos() async throws -> [NodeEntity] {
+    public func allPhotos() async throws -> [NodeEntity] {
         try await loadAllPhotos()
     }
     
-    func allPhotosFromCloudDriveOnly() async throws -> [NodeEntity] {
+    public func allPhotosFromCloudDriveOnly() async throws -> [NodeEntity] {
         let container = await photoLibraryContainer()
         let nodes: [NodeEntity] = try await loadAllPhotos()
         
         return nodes.filter({$0.parentHandle != container.cameraUploadNode?.handle && $0.parentHandle != container.mediaUploadNode?.handle})
     }
     
-    func allPhotosFromCameraUpload() async throws -> [NodeEntity] {
+    public func allPhotosFromCameraUpload() async throws -> [NodeEntity] {
         let container = await photoLibraryContainer()
         
         async let photosCameraUpload = photosRepository.visualMediaNodes(inParent: container.cameraUploadNode)
@@ -97,7 +91,7 @@ struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSearchRepo
         if let photos = photosFromCloudDrive {
             nodes.append(contentsOf: photos)
         }
-
+        
         if let videos = videosFromCloudDrive {
             nodes.append(contentsOf: videos)
         }
