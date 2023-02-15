@@ -8,10 +8,12 @@ extension VerifyCredentialsViewController: VerifyCredentialsViewProvider {
     }
 
     @objc func objcWrapper_configSharedItemWarningView() {
+        guard isIncomingSharedItem else { return }
         configWarningView(in: incomingItemWarningView)
     }
 
     @objc func updateSharedItemWarningViewIfNeeded(previousTraitCollection: UITraitCollection?) {
+        guard isIncomingSharedItem else { return }
         if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
             self.updateWarningViewSize()
         }
