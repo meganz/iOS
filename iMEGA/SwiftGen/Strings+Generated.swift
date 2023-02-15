@@ -3930,12 +3930,10 @@ public enum Strings {
             }
             public enum OccurrenceCancelled {
               /// [B][Email] cancelled[/B] the occurrence scheduled for:
-              /// [WeekDay], [Date] from [StartTime] to [EndTime]
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description")
             }
             public enum OccurrenceUpdated {
               /// [B][Email] updated[/B] an occurrence to:
-              /// [WeekDay], [Date] from [StartTime] to [EndTime]
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description")
             }
             public enum TimeChanged {
@@ -4297,10 +4295,8 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
       }
       public enum Scheduled {
-        /// [B]%@, %@[/B] from [B]%@ to %@[/B]
-        public static func oneOff(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-          return Strings.tr("Localizable", "meetings.scheduled.oneOff", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-        }
+        /// [B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]
+        public static let oneOff = Strings.tr("Localizable", "meetings.scheduled.oneOff")
         public enum ButtonOverlay {
           /// Join meeting
           public static let joinMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.joinMeeting")
@@ -4317,14 +4313,10 @@ public enum Strings {
         }
         public enum Recurring {
           public enum Daily {
-            /// Everyday, effective [B]%@[/B] from [B]%@ to %@[/B]
-            public static func forever(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-              return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever", String(describing: p1), String(describing: p2), String(describing: p3))
-            }
-            /// Everyday, effective [B]%@ until %@[/B] from [B]%@ to %@[/B]
-            public static func until(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-              return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4))
-            }
+            /// Everyday, effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
+            public static let forever = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever")
+            /// Everyday, effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]
+            public static let until = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until")
           }
           public enum Frequency {
             /// Occurs daily

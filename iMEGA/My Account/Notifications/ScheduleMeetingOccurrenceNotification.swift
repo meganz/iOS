@@ -86,14 +86,24 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
         endDate: Date,
         localizedString: String
     ) -> String {
-        var string = localizedString
+        var content = localizedString.replacingOccurrences(of: "[Email]", with: alert.email ?? "")
+
+        let chatRoomUseCase = ChatRoomUseCase(
+            chatRoomRepo: ChatRoomRepository.sharedRepo,
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())
+        )
         
-        string = string.replacingOccurrences(of: "[Email]", with: alert.email ?? "")
-        string = string.replacingOccurrences(of: "[WeekDay]", with: DateFormatter.fromTemplate("E").localisedString(from: startDate))
-        string = string.replacingOccurrences(of: "[Date]", with: DateFormatter.dateMedium().localisedString(from: startDate))
-        string = string.replacingOccurrences(of: "[StartTime]", with: DateFormatter.timeShort().localisedString(from: startDate))
-        string = string.replacingOccurrences(of: "[EndTime]", with:  DateFormatter.timeShort().localisedString(from: endDate))
+        let scheduledMeeting: MEGAChatScheduledMeeting? = MEGAChatSdk.shared.scheduledMeeting(alert.nodeHandle, scheduledId: alert.scheduledMeetingId)
         
-        return string
+        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: alert.nodeHandle),
+              let scheduledMeetingEntity = scheduledMeeting?.toScheduledMeetingEntity() else {
+            return content
+        }
+        
+        content += "\n"
+        
+        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeetingEntity, chatRoom: chatRoomEntity)
+        content += scheduledMeetingDateBuilder.buildDateDescriptionString()
+        return content
     }
 }

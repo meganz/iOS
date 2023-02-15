@@ -61,14 +61,24 @@ struct ScheduledMeetingDateBuilder {
             if scheduledMeeting.endDate < Date(), let chatRoom {
                 return Strings.Localizable.Meetings.Panel.participantsCount(chatRoom.peers.count + 1)
             } else {
-                let weekday = DateFormatter.fromTemplate("E").localisedString(from: startDate)
-                return Strings.Localizable.Meetings.Scheduled.oneOff(weekday, startDateString, startTimeString, endTimeString)
+                return Strings.Localizable.Meetings.Scheduled.oneOff
+                    .replacingOccurrences(of: "[WeekDay]", with: DateFormatter.fromTemplate("E").localisedString(from: startDate))
+                    .replacingOccurrences(of: "[StartDate]", with: startDateString)
+                    .replacingOccurrences(of: "[StartTime]", with: startTimeString)
+                    .replacingOccurrences(of: "[EndTime]", with: endTimeString)
             }
         case .daily:
             if scheduledMeeting.rules.until != nil {
-                return Strings.Localizable.Meetings.Scheduled.Recurring.Daily.until(startDateString, endDateString, startTimeString, endTimeString)
+                return Strings.Localizable.Meetings.Scheduled.Recurring.Daily.until
+                    .replacingOccurrences(of: "[StartDate]", with: startDateString)
+                    .replacingOccurrences(of: "[UntilDate]", with: endDateString)
+                    .replacingOccurrences(of: "[StartTime]", with: startTimeString)
+                    .replacingOccurrences(of: "[EndTime]", with: endTimeString)
             } else {
-                return  Strings.Localizable.Meetings.Scheduled.Recurring.Daily.forever(startDateString, startTimeString, endTimeString)
+                return Strings.Localizable.Meetings.Scheduled.Recurring.Daily.forever
+                    .replacingOccurrences(of: "[StartDate]", with: startDateString)
+                    .replacingOccurrences(of: "[StartTime]", with: startTimeString)
+                    .replacingOccurrences(of: "[EndTime]", with: endTimeString)
             }
         case .weekly:
             guard let weekDaysList = scheduledMeeting.rules.weekDayList else {
