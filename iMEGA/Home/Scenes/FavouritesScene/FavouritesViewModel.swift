@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 
 enum FavouritesViewAction: ActionType {
     case viewWillAppear

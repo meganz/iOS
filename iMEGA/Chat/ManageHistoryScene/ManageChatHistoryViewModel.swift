@@ -1,6 +1,7 @@
 
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 enum ManageHistoryAction: ActionType {
     case historyRetentionValue

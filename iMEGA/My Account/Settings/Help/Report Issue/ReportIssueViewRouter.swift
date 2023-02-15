@@ -2,6 +2,7 @@
 import SwiftUI
 import MEGADomain
 import MEGAData
+import MEGAPresentation
 
 protocol ReportIssueViewRouting: Routing {
     func dismiss()

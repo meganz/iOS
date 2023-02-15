@@ -1,5 +1,6 @@
 import Foundation
 import FlexLayout
+import MEGAPresentation
 
 protocol EncourageGuestUserToJoinMegaRouting: Routing {
     func dismiss(completion: (() -> Void)?)

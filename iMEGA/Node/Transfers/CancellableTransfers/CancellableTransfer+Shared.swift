@@ -1,3 +1,4 @@
+import MEGAPresentation
 
 protocol CancellableTransferRouting: Routing {
     func showTransfersAlert()

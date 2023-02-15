@@ -1,4 +1,5 @@
 import UIKit
+import MEGAPresentation
 
 protocol SlideShowInteraction {
     func pausePlaying()

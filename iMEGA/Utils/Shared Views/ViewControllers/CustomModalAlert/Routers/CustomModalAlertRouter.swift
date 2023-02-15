@@ -1,6 +1,7 @@
 
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 @objc enum CustomModalAlertMode: Int {
     case storageEvent = 0

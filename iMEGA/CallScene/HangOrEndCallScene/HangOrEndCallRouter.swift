@@ -1,5 +1,6 @@
 import SwiftUI
 import MEGADomain
+import MEGAPresentation
 
 protocol HangOrEndCallRouting: AnyObject, Routing {
     func leaveCall()

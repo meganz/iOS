@@ -1,5 +1,6 @@
 import SwiftUI
 import MEGADomain
+import MEGAPresentation
 
 final class SlideShowOptionRouter: Routing {
     private weak var presenter: UIViewController?

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 
 final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     

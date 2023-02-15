@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import MEGAUIKit
 import MEGADomain
+import MEGAPresentation
 
 final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
     let viewModel: AlbumContentViewModel

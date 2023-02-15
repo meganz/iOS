@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGASwiftUI
 import Foundation
+import MEGAPresentation
 
 enum SlideShowAction: ActionType {
     case play

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 enum DiskFullBlockingAction: ActionType {
     case onViewLoaded

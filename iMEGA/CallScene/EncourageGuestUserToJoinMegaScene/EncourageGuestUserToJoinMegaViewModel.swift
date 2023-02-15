@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 enum EncourageGuestUserToJoinMegaViewAction: ActionType {
     case didCreateAccountButton

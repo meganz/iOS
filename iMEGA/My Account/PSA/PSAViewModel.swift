@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 
 enum PSAViewAction: ActionType {
     case showPSAViewIfNeeded

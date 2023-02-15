@@ -1,5 +1,6 @@
 import UIKit
 import MEGAUIKit
+import MEGAPresentation
 
 final class DiskFullBlockingViewController: UIViewController, ViewType {
     

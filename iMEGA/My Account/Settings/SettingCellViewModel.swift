@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 class SettingCellViewModel: ViewModelType {
     

@@ -1,5 +1,6 @@
 import UIKit
 import MEGADomain
+import MEGAPresentation
 
 @objc final class MediaDiscoveryRouter: NSObject, Routing {
     private weak var presenter: UIViewController?

@@ -1,4 +1,5 @@
 import UIKit
+import MEGAPresentation
 
 class MeetingParticipantTableViewCell: UITableViewCell, ViewType {    
 

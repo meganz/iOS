@@ -200,6 +200,13 @@
         "identifier" : "MEGAUIKitTests",
         "name" : "MEGAUIKitTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/MEGAPresentation",
+        "identifier" : "MEGAPresentationTests",
+        "name" : "MEGAPresentationTests"
+      }
     }
   ],
   "version" : 1

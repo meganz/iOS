@@ -1,6 +1,7 @@
 import UIKit
 import MEGAUIKit
 import MEGADomain
+import MEGAPresentation
 
 final class PSAView: UIView, ViewType {
     
