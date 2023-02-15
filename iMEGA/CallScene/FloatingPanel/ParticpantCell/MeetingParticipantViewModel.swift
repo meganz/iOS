@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 enum MeetingParticipantViewAction: ActionType {
     case onViewReady

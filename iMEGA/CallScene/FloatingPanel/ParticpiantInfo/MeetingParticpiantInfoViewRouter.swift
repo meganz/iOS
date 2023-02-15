@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 
 protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInfo()

@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGAPresentation
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     private enum Constants {

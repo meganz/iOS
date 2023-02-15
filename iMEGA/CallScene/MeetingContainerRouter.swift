@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)

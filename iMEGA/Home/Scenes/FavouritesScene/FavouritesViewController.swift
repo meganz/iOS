@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 final class FavouritesViewController: UIViewController, ViewType {
     

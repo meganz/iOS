@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import MEGADomain
 import MEGAFoundation
+import MEGAPresentation
 
 enum MediaDiscoveryAction: ActionType {
     case onViewReady

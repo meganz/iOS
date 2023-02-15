@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 
 protocol NameCollisionViewRouting: Routing {
     func showNameCollisionsView()

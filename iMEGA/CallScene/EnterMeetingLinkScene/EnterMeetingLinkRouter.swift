@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 protocol EnterMeetingLinkRouting: Routing {
     func joinMeeting(link: String)

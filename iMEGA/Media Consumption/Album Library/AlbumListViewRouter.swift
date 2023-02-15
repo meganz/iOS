@@ -1,5 +1,6 @@
 import SwiftUI
 import MEGADomain
+import MEGAPresentation
 
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity) -> AlbumCell

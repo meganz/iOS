@@ -1,5 +1,6 @@
 import PanModal
 import MEGADomain
+import MEGAPresentation
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)

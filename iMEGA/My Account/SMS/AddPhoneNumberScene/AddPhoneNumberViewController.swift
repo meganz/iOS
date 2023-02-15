@@ -1,4 +1,5 @@
 import UIKit
+import MEGAPresentation
 
 final class AddPhoneNumberViewController: UIViewController, ViewType {
     // MARK: - Private properties

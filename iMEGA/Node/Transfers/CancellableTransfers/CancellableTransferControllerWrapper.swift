@@ -1,5 +1,5 @@
-
 import UIKit
+import MEGAPresentation
 
 final class CancellableTransferControllerWrapper<U: ViewModelType>: NSObject {
     private var viewModel: U

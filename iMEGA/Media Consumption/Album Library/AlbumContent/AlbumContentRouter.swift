@@ -1,5 +1,6 @@
 import UIKit
 import MEGADomain
+import MEGAPresentation
 
 struct AlbumContentRouter: Routing {
     private let album: AlbumEntity

@@ -1,6 +1,7 @@
 import Foundation
 import MEGAFoundation
 import MEGADomain
+import MEGAPresentation
 
 enum MiniPlayerAction: ActionType {
     case onViewDidLoad

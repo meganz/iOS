@@ -1,3 +1,5 @@
+import MEGAPresentation
+
 enum CreateTextFileAlertViewAction: ActionType {
     case createTextFile(_ fileName: String)
 }

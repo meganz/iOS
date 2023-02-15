@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGAPresentation
 
 protocol QASettingsRouting: Routing {
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction])

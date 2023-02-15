@@ -1,5 +1,6 @@
 import MEGAFoundation
 import MEGADomain
+import MEGAPresentation
 
 enum FilesExplorerAction: ActionType {
     case onViewReady

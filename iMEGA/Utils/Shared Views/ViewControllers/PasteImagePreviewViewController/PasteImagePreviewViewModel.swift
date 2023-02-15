@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 enum PasteImagePreviewAction: ActionType {
     case didClickSend

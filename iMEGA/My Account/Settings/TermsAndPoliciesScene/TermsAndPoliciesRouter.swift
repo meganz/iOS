@@ -3,6 +3,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import Settings
+import MEGAPresentation
 
 final class TermsAndPoliciesRouter: NSObject, Routing {
     
