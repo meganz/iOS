@@ -1,6 +1,6 @@
 import MEGADomain
 
-final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate, NodesUpdateListenerProtocol {
+final class SDKNodesUpdateListenerRepository: NSObject, NodesUpdateListenerProtocol {
     var onNodesUpdateHandler: (([NodeEntity]) -> Void)?
     
     private let sdk: MEGASdk
@@ -14,8 +14,10 @@ final class SDKNodesUpdateListenerRepository: NSObject, MEGAGlobalDelegate, Node
     deinit {
         sdk.remove(self)
     }
-    
-    func onNodesUpdateHandler(_ api: MEGASdk, nodeList: MEGANodeList?) {
+}
+
+extension SDKNodesUpdateListenerRepository: MEGAGlobalDelegate {
+    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let updatedNodes = nodeList?.toNodeEntities() else { return }
         onNodesUpdateHandler?(updatedNodes)
     }
