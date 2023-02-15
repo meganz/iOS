@@ -20,7 +20,6 @@ extension CallParticipantEntity {
         self.init(chatId: chatId,
                   participantId: session.peerId,
                   clientId: session.clientId,
-                  networkQuality: 0,
                   email: contact?.email,
                   isModerator: isModerator,
                   isInContactList: isInContactList,
@@ -30,7 +29,9 @@ extension CallParticipantEntity {
                   isVideoLowRes: session.isLowResolution,
                   canReceiveVideoHiRes: session.canReceiveVideoHiRes,
                   canReceiveVideoLowRes: session.canReceiveVideoLowRes,
-                  sessionRecoverable: session.termCode == .recoverable)
+                  name: nil,
+                  sessionRecoverable: session.termCode == .recoverable,
+                  isSpeakerPinned: false)
     }
     
     static func myself(
@@ -47,15 +48,18 @@ extension CallParticipantEntity {
         let participant = CallParticipantEntity(chatId: chatId,
                                                 participantId: user.handle,
                                                 clientId: 0,
-                                                networkQuality: 0,
                                                 email: email,
                                                 isModerator: chatRoom.toChatRoomEntity().ownPrivilege == .moderator,
                                                 isInContactList: false,
+                                                video: .unknown,
+                                                audio: .unknown,
                                                 isVideoHiRes: true,
                                                 isVideoLowRes: false,
                                                 canReceiveVideoHiRes: true,
                                                 canReceiveVideoLowRes: false,
-                                                name: chatSDK.myFullname)
+                                                name: chatSDK.myFullname,
+                                                sessionRecoverable: false,
+                                                isSpeakerPinned: false)
         
         return participant
     }

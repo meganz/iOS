@@ -1,3 +1,4 @@
+import MEGADomain
 
 protocol CallCollectionViewDelegate: AnyObject {
     func collectionViewDidChangeOffset(to page: Int, visibleIndexPaths: [IndexPath])

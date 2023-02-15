@@ -1,3 +1,4 @@
+import MEGADomain
 
 class CallParticipantCell: UICollectionViewCell {
     @IBOutlet weak var videoImageView: UIImageView!
