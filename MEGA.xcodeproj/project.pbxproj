@@ -1168,6 +1168,7 @@
 		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		83FF5030247E86F600EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
+		940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */; };
 		9405E70E28A3AC43005A16D1 /* BackupNodesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */; };
 		940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
@@ -1276,6 +1277,8 @@
 		9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */; };
 		94417EAF296D825B007C9230 /* RubbishBinRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */; };
 		9441FC1828DE148600DADFDD /* ContactLinkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */; };
+		9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */; };
+		9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009E2982EAA6005521C2 /* LogSettingRepository.swift */; };
 		9444D0DD28C74B2D001F681C /* AudioPlayerConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */; };
 		9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */; };
 		9449939328BD41CC001AE14B /* MockFolderSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449939228BD41CC001AE14B /* MockFolderSdk.swift */; };
@@ -1335,7 +1338,6 @@
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */; };
-		9D3563BF28B54A7200CB3365 /* AboutViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563BE28B54A7200CB3365 /* AboutViewRouter.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
 		9D3563C828B54C1300CB3365 /* AppearanceViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */; };
@@ -3810,6 +3812,7 @@
 		83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
+		940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepositoryTests.swift; sourceTree = "<group>"; };
 		9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupNodesValidator.swift; sourceTree = "<group>"; };
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
@@ -3877,6 +3880,8 @@
 		9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertDataModel.swift; sourceTree = "<group>"; };
 		94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinRepositoryTests.swift; sourceTree = "<group>"; };
 		9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkRepository.swift; sourceTree = "<group>"; };
+		9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepository.swift; sourceTree = "<group>"; };
+		9442009E2982EAA6005521C2 /* LogSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSettingRepository.swift; sourceTree = "<group>"; };
 		9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntity.swift; sourceTree = "<group>"; };
 		9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepositoryTests.swift; sourceTree = "<group>"; };
 		9449939228BD41CC001AE14B /* MockFolderSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFolderSdk.swift; sourceTree = "<group>"; };
@@ -3915,7 +3920,6 @@
 		94E71806283D24D3000EDDDF /* ChatStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStatus.swift; sourceTree = "<group>"; };
 		94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
-		9D3563BE28B54A7200CB3365 /* AboutViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewRouter.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
 		9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewRouter.swift; sourceTree = "<group>"; };
@@ -5433,6 +5437,7 @@
 				6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */,
 				0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */,
 				94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */,
+				940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */,
 				A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */,
 				B5CC2A632994A22800A966A0 /* ShareRepositoryTests.swift */,
 				0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */,
@@ -6206,6 +6211,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				940D8018298AC6170041A7C0 /* API */,
 				940DB9122924D77F004E7349 /* AudioSession */,
 				9464C2EB28C5EF1900F8B082 /* SortOrder */,
 				B51DD9CB28B5D3110094A979 /* LiveText */,
@@ -6441,7 +6447,6 @@
 				41AC66461AB1D493003FE8DA /* AboutTableViewController.h */,
 				41AC66471AB1D493003FE8DA /* AboutTableViewController.m */,
 				BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */,
-				9D3563BE28B54A7200CB3365 /* AboutViewRouter.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -8996,6 +9001,13 @@
 			path = BackupNodesValidator;
 			sourceTree = "<group>";
 		};
+		940D8018298AC6170041A7C0 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		940DB9122924D77F004E7349 /* AudioSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -9129,6 +9141,15 @@
 				943FF9F4292FEDA600B744C8 /* SnackBarRouter.swift */,
 			);
 			path = Snackbar;
+			sourceTree = "<group>";
+		};
+		945A8AE7297EC442007F76DA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */,
+				9442009E2982EAA6005521C2 /* LogSettingRepository.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		9464C2EB28C5EF1900F8B082 /* SortOrder */ = {
@@ -9985,6 +10006,7 @@
 		B662B84C24EC6F790089376A /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				945A8AE7297EC442007F76DA /* Settings */,
 				A84683032939FBC100FACCA1 /* AppConfiguration */,
 				129D51D32821D63000A4D4D3 /* Album */,
 				6D854F77290E012A006CEC20 /* MediaDiscovery */,
@@ -12551,6 +12573,7 @@
 				32860721288509DD0056A3A5 /* PhotoLibraryFilterView.swift in Sources */,
 				8340CAFE284E52F5007C3B39 /* ItemView.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
+				9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */,
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
 				C4EACA912772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
 				5B9199F426E7CAF600402358 /* ThumbnailRepository.swift in Sources */,
@@ -12608,7 +12631,6 @@
 				B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */,
 				5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */,
 				7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */,
-				9D3563BF28B54A7200CB3365 /* AboutViewRouter.swift in Sources */,
 				B67507B62766BE670034F951 /* PhotoLibraryContentViewRouter.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */,
@@ -13032,6 +13054,7 @@
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
 				BF7EBD2E244E916F0015255F /* AddToChatViewController.swift in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
+				9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */,
 				B65AC8BA21F6A91A0094FF4F /* ImageExportOperation.m in Sources */,
 				BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */,
 				124667FA275DB82000C94335 /* CustomModalAlertViewController+CookieDialog.swift in Sources */,
@@ -14386,6 +14409,7 @@
 				B6E18AED2937237800EDFC10 /* PhotoDateSectionTests.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
+				940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,

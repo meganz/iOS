@@ -203,10 +203,17 @@
     },
     {
       "target" : {
+        "containerPath" : "container:Modules\/Features\/Settings",
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:Modules\/MEGAPresentation",
         "identifier" : "MEGAPresentationTests",
         "name" : "MEGAPresentationTests"
-      }
+        }
     }
   ],
   "version" : 1

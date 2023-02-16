@@ -21,5 +21,6 @@ public enum PreferenceKeyEntity: String {
     case saveVideoToGallery = "IsSaveVideoToGalleryEnabled"
     case callsSoundNotification
     case logging
+    case apiEnvironment = "MEGAAPIEnv"
     case secureFingerprintVerification
 }
