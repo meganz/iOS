@@ -1917,7 +1917,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>You're currently sharing the following folder: [A]</string>
+        <string>You’re currently sharing the following folder: [A]</string>
         <key>other</key>
         <string>You’re currently sharing the following folders: [A]</string>
         </dict>

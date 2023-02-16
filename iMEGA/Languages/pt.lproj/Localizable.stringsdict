@@ -2126,5 +2126,41 @@
         <string></string>
       </dict>
     </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Arquivo não criptografado]</string>
+        <key>many</key>
+        <string>[Arquivos não criptografados]</string>
+        <key>other</key>
+        <string>[Arquivos não criptografados]</string>
+      </dict>
+    </dict>
+    <key>account.upgradeSecurity.message.sharedFolderNames</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folderNames@</string>
+      <key>folderNames</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Você está compartilhando a seguinte pasta: [A]</string>
+        <key>many</key>
+        <string>Você está compartilhando as seguintes pastas: [A]</string>
+        <key>other</key>
+        <string>Você está compartilhando as seguintes pastas: [A]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
