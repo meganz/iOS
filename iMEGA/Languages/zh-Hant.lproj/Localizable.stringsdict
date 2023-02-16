@@ -1654,5 +1654,35 @@
         <string></string>
       </dict>
     </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Undecrypted file]</string>
+        <key>other</key>
+        <string>[Undecrypted files]</string>
+      </dict>
+    </dict>
+    <key>account.upgradeSecurity.message.sharedFolderNames</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folderNames@</string>
+      <key>folderNames</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>您正在共享以下資料夾：[A]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

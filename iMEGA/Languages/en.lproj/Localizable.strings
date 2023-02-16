@@ -3176,10 +3176,10 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Your credentials";
-/* On Incoming Shared Items Tab. Name of the folder if the owner and the receiver has not yet verified each other. */
+/* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Undecrypted folder]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
-"sharedItems.tab.outgoing.sharedToContact"="Shared to %@";
+"sharedItems.tab.outgoing.sharedToContact"="Shared with %@";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: created a meeting";
 /* Button title to load more participants in meeting info view */
@@ -3462,5 +3462,5 @@
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B]%@ updated[/B] an occurrence to:\n%@, %@ from %@ to %@";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Security upgrade";
-/* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account.  */
-"account.upgradeSecurity.message.upgrade"="Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap Cancel.";
+/* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.message.upgrade"="Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap on Cancel.";

@@ -1890,5 +1890,37 @@
         <string></string>
       </dict>
     </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Ongecodeerd bestand]</string>
+        <key>other</key>
+        <string>[Ongecodeerde bestanden]</string>
+      </dict>
+    </dict>
+    <key>account.upgradeSecurity.message.sharedFolderNames</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folderNames@</string>
+      <key>folderNames</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>U bent de volgende map aan het delen: [A]</string>
+        <key>other</key>
+        <string>U bent de volgende mappen aan het delen: [A]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
