@@ -22,6 +22,8 @@ final class MockSdk: MEGASdk {
     private let sharedFolderOwner: MEGAUser?
     
     var hasGlobalDelegate = false
+    var apiURL: String?
+    var disablepkp: Bool?
     
     init(nodes: [MEGANode] = [],
          rubbishNodes: [MEGANode] = [],
@@ -186,6 +188,11 @@ final class MockSdk: MEGASdk {
         mockRequest.updateSetCover = true
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
+    
+    override func changeApiUrl(_ apiURL: String, disablepkp: Bool) {
+        self.apiURL = apiURL
+        self.disablepkp = disablepkp
     }
     
     //MARK: - Share

@@ -181,3 +181,4 @@
 #import "NotificationsTableViewController.h"
 #import "VerifyCredentialsViewController.h"
 #import "VideoUploadsTableViewController.h"
+#import "MEGALogger.h"
