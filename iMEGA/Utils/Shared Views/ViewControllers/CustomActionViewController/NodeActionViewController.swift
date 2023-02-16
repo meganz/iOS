@@ -83,7 +83,7 @@ class NodeActionViewController: ActionSheetViewController {
         self.displayMode = displayMode
         self.delegate = delegate
         self.sender = sender
-        self.isUndecryptedFolder = isIncoming && shouldShowVerifyContact && FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+        self.isUndecryptedFolder = isIncoming && shouldShowVerifyContact
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
@@ -309,8 +309,7 @@ class NodeActionViewController: ActionSheetViewController {
         let isTakedown = node.isTakenDown()
         let isVerifyContact = displayMode == .sharedItem &&
                             shouldShowVerifyContact &&
-                            !sharedFolder.isVerified &&
-                            FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
+                            !sharedFolder.isVerified
         let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user) ?? MEGAUser()
         
         self.actions = NodeActionBuilder()

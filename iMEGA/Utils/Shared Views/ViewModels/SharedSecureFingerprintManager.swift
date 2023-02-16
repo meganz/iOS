@@ -6,17 +6,10 @@ import MEGADomain
     var secureFingerprintVerification: Bool
     
     @objc func setSecureFingerprintFlag(_ flag: Bool) {
-        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification) else {
-            return
-        }
         MEGASdkManager.sharedMEGASdk().setShareSecureFlag(flag)
     }
     
     @objc func toggleSecureFingerprintFlag() {
-        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification) else {
-            return
-        }
-        
         let isSecure = !secureFingerprintVerification
         secureFingerprintVerification = isSecure
         setSecureFingerprintFlag(isSecure)
