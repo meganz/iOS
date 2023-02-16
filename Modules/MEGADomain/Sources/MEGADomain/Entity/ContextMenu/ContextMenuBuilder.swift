@@ -338,7 +338,9 @@ public final class ContextMenuBuilder {
         if isAlbum {
             return CMEntity(type: .display(actionType: .filter),
                             currentFilterType: filterType,
-                            children: [filterAllMedia, filterImages, filterVideos])
+                            children: [CMEntity(displayInline: true, children: [filterAllMedia]),
+                                        filterImages,
+                                        filterVideos])
         } else {
             return CMEntity(displayInline: true,
                      children: [filter])
@@ -364,7 +366,7 @@ public final class ContextMenuBuilder {
         } else if isAlbum {
             displayActionsMenuChildren = [selectMenu()]
             if !isEmptyState {
-                displayActionsMenuChildren.append(sortMenu())
+                displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [sortMenu()]))
             }
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
