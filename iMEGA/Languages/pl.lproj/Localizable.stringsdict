@@ -2362,5 +2362,45 @@
         <string></string>
       </dict>
     </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Nierozszyfrowany plik]</string>
+        <key>few</key>
+        <string>[Nierozszyfrowane pliki]</string>
+        <key>many</key>
+        <string>[Nierozszyfrowane pliki]</string>
+        <key>other</key>
+        <string>[Nierozszyfrowane pliki]</string>
+      </dict>
+    </dict>
+    <key>account.upgradeSecurity.message.sharedFolderNames</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folderNames@</string>
+      <key>folderNames</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Obecnie udostępniasz następujący katalog: [A]</string>
+        <key>few</key>
+        <string>Obecnie udostępniasz następujące katalogi: [A]</string>
+        <key>many</key>
+        <string>Obecnie udostępniasz następujące katalogi: [A]</string>
+        <key>other</key>
+        <string>Obecnie udostępniasz następujące katalogi: [A]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

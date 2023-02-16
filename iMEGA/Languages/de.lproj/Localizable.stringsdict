@@ -1890,5 +1890,37 @@
         <string></string>
       </dict>
     </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Nicht entschlüsselte Datei]</string>
+        <key>other</key>
+        <string>[Nicht entschlüsselte Dateien]</string>
+      </dict>
+    </dict>
+    <key>account.upgradeSecurity.message.sharedFolderNames</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folderNames@</string>
+      <key>folderNames</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Sie haben aktuell den folgenden Ordner freigegeben: [A]</string>
+        <key>other</key>
+        <string>Sie haben aktuell folgende Ordner freigegeben: [A]</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

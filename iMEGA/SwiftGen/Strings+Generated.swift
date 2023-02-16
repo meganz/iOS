@@ -2858,7 +2858,7 @@ public enum Strings {
           public static func sharedFolderNames(_ p1: Int) -> String {
             return Strings.tr("Localizable", "account.upgradeSecurity.message.sharedFolderNames", p1)
           }
-          /// Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap Cancel.
+          /// Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap on Cancel.
           public static let upgrade = Strings.tr("Localizable", "account.upgradeSecurity.message.upgrade")
         }
       }
@@ -4940,7 +4940,7 @@ public enum Strings {
           public static let undecryptedFolderName = Strings.tr("Localizable", "sharedItems.tab.incoming.undecryptedFolderName")
         }
         public enum Outgoing {
-          /// Shared to %@
+          /// Shared with %@
           public static func sharedToContact(_ p1: Any) -> String {
             return Strings.tr("Localizable", "sharedItems.tab.outgoing.sharedToContact", String(describing: p1))
           }
