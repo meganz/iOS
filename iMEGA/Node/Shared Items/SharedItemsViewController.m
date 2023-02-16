@@ -410,7 +410,7 @@
         return;
     }
 
-    BOOL isNodeUndecryptedFolder = self.incomingButton.selected && indexPath.section == 0 && [self isFeatureFlagFingerprintVerificationEnabled];
+    BOOL isNodeUndecryptedFolder = self.incomingButton.selected && indexPath.section == 0;
     NodeInfoViewModel *viewModel = [self createNodeInfoViewModelWithNode:node
                                                  isNodeUndecryptedFolder:isNodeUndecryptedFolder];
     MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:viewModel delegate:self];
