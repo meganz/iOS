@@ -28,10 +28,6 @@ extension SharedItemsViewController {
         return tableView?.indexPathForRow(at: buttonPosition)
     }
     
-    @objc func isFeatureFlagFingerprintVerificationEnabled() -> Bool {
-        FeatureFlagProvider().isFeatureFlagEnabled(for: .mandatoryFingerprintVerification)
-    }
-    
     @objc func unverifiedIncomingSharedCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> SharedItemsTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "sharedItemsTableViewCell", for: indexPath) as? SharedItemsTableViewCell else {
             return SharedItemsTableViewCell(style: .default, reuseIdentifier: "sharedItemsTableViewCell")
