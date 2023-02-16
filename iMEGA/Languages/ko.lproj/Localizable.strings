@@ -1988,8 +1988,8 @@
 "recents.emptyState.activityHidden.button"="활동 보기";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@님이 수정";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A]"="%1 [A]외 %2개[/A]";
+/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="%1$s 그리고 %2$s개 더";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@님이 생성";
 /* Message shown when the user has not recent activity in their account. */
@@ -3178,6 +3178,8 @@
 "verifyCredentials.yourCredentials.title"="당신의 자격 증명";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[복호화 되지 않은 폴더]";
+/* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
+"sharedItems.tab.outgoing.sharedToContact"="%@ 님과 공유됨";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: 회의 만듦";
 /* Button title to load more participants in meeting info view */
@@ -3458,3 +3460,7 @@
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B]%@ cancelled[/B] the occurrence scheduled for:\n%@, %@ from %@ to %@";
 /* In app notification description when an occurence is updated in a reccurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B]%@ updated[/B] an occurrence to:\n%@, %@ from %@ to %@";
+/* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.title"="보안 업그레이드";
+/* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.message.upgrade"="계정의 보안이 업그레이드 되는 중입니다. 이것은 한번만 실행됩니다. 만약 이 계정에서 이 메시지를 본 적이 있다면, 취소를 탭하세요.";

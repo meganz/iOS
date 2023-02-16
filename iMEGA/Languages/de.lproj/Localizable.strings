@@ -1988,8 +1988,8 @@
 "recents.emptyState.activityHidden.button"="Aktivitäten anzeigen";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Geändert durch %@";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A]"="%1 und [A]%2 weitere[/A]";
+/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="%1$s und %2$s weitere";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Erstellt von %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -3178,6 +3178,8 @@
 "verifyCredentials.yourCredentials.title"="Ihre Identitätsdaten";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Nicht entschlüsselter Ordner]";
+/* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
+"sharedItems.tab.outgoing.sharedToContact"="Für %@ freigegeben";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: hat ein meeting erstellt";
 /* Button title to load more participants in meeting info view */
@@ -3458,3 +3460,7 @@
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="";
 /* In app notification description when an occurence is updated in a reccurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="";
+/* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.title"="Sicherheitsupgrade";
+/* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.message.upgrade"="Die Sicherheit Ihres Accounts wird jetzt weiter erhöht. Dies ist ein einmaliger Vorgang. Wurde diese Nachricht für diesen Account schon einmal angezeigt? Dann tippen Sie auf Abbrechen.";
