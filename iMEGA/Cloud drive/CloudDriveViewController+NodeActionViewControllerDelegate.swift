@@ -28,6 +28,8 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .removeLink:
             removeLinksForNodes(nodes)
             setEditMode(false)
+        case .saveToPhotos:
+            saveToPhotos(nodes: nodes.toNodeEntities())
         default:
             break
         }
@@ -85,16 +87,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
                 navigationController?.popViewController(animated: true)
             }
         case .saveToPhotos:
-            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            
-            saveMediaUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
-                if case let .failure(error) = result, error != .cancelled {
-                    SVProgressHUD.dismiss()
-                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
-                }
-            }
+            saveToPhotos(nodes: [node.toNodeEntity()])
         case .manageShare:
             BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
                 self?.manageShare(node)
@@ -123,5 +116,19 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         contactsVC.node = node
         contactsVC.contactsMode = .folderSharedWith
         navigationController?.pushViewController(contactsVC, animated: true)
+    }
+    
+    private func saveToPhotos(nodes: [NodeEntity]) {
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: nodes)
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            }
+        }
     }
 }

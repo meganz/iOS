@@ -1,5 +1,6 @@
 import UIKit
 import MEGADomain
+import MEGAData
 
 @objc protocol NodeActionViewControllerDelegate {
     // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions
@@ -114,17 +115,22 @@ class NodeActionViewController: ActionSheetViewController {
             selectionType = .files
         }
         
+        let mediaUseCase = MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo, videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo))
+        let areMediaFiles = nodes.allSatisfy { mediaUseCase.isPlayableMediaFile($0.toNodeEntity()) }
+        
         let nodesCount = nodes.count
         if displayMode == .favouriteAlbumSelectionToolBar {
             actions = NodeActionBuilder()
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsFavourite(true)
                 .setIsBackupNode(containsABackupNode)
+                .setAreMediaFiles(areMediaFiles)
                 .multiSelectFavouriteAlbumBuild()
         } else if displayMode == .albumSelectionToolBar {
             actions = NodeActionBuilder()
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsBackupNode(containsABackupNode)
+                .setAreMediaFiles(areMediaFiles)
                 .mutiSelectNormalAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
@@ -133,6 +139,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setLinkedNodeCount(linkedNodeCount)
                 .setIsAllLinkedNode(linkedNodeCount == nodesCount)
                 .setIsBackupNode(containsABackupNode)
+                .setAreMediaFiles(areMediaFiles)
                 .multiselectBuild()
         }
     }

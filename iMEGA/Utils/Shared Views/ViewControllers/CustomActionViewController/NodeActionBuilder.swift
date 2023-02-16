@@ -24,6 +24,7 @@ final class NodeActionBuilder {
     private var isBackupNode: Bool = false
     private var isTakedown = false
     private var isVerifyContact = false
+    private var areMediaFiles = false
     private var sharedFolderContact: MEGAUser = MEGAUser()
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
@@ -146,6 +147,11 @@ final class NodeActionBuilder {
     func setIsVerifyContact(_ isVerifyContact: Bool, sharedFolderContact: MEGAUser) -> NodeActionBuilder {
         self.isVerifyContact = isVerifyContact
         self.sharedFolderContact = sharedFolderContact
+        return self
+    }
+    
+    func setAreMediaFiles(_ areMediaFiles: Bool) -> NodeActionBuilder {
+        self.areMediaFiles = areMediaFiles
         return self
     }
     
@@ -690,6 +696,10 @@ final class NodeActionBuilder {
                        multiselectedLinkNodesAction(),
                        .exportFileAction(nodeCount: selectedNodeCount),
                        .sendToChatAction()]
+        
+        if areMediaFiles {
+            actions.append(.saveToPhotosAction())
+        }
         
         if isBackupNode {
             actions.append(.copyAction())

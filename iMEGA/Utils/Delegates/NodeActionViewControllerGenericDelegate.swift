@@ -8,14 +8,6 @@ final class NodeActionViewControllerGenericDelegate:
 
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
-    private let saveToPhotosCompletion: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
-        if case let .failure(error) = result, error != .cancelled {
-            AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
-            SVProgressHUD.dismiss()
-            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
-        }
-    }
-
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
@@ -151,8 +143,17 @@ final class NodeActionViewControllerGenericDelegate:
     
     private func saveToPhotos(_ node: MEGANode) {
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-
-        saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity(), completion: saveToPhotosCompletion)
+        
+        Task { @MainActor in
+            do {
+                try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            }
+        }
     }
     
     private func download(_ node: MEGANode) {

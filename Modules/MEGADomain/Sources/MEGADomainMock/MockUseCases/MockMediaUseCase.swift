@@ -13,6 +13,9 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
     private let rawImageFiles: [FileNameEntity]?
     private let gifImageFiles: [FileNameEntity]?
     private var multimediaNodeNames: [String]
+    private let isPlayable: Bool
+    private let isMediaFile: Bool
+    private let isPlayableMediaFile: Bool
     private var allPhotos: [NodeEntity]
     private var allVideos: [NodeEntity]
     
@@ -28,6 +31,9 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
                 rawImageFiles: [FileNameEntity]? = nil,
                 gifImageFiles: [FileNameEntity]? = nil,
                 multimediaNodeNames: [String] = [],
+                isPlayable: Bool = false,
+                isMediaFile: Bool = false,
+                isPlayableMediaFile: Bool = false,
                 allPhotos: [NodeEntity] = [],
                 allVideos: [NodeEntity] = []) {
         self.isURLVideo = isURLVideo
@@ -41,6 +47,9 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
         self.rawImageFiles = rawImageFiles
         self.gifImageFiles = gifImageFiles
         self.multimediaNodeNames = multimediaNodeNames
+        self.isPlayable = isPlayable
+        self.isMediaFile = isMediaFile
+        self.isPlayableMediaFile = isPlayableMediaFile
         self.allPhotos = allPhotos
         self.allVideos = allVideos
     }
@@ -73,11 +82,23 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
         multimediaNodeNames.contains(where: {$0 == name})
     }
     
+    public func isPlayable(_ node: NodeEntity) -> Bool {
+        isPlayable
+    }
+    
+    public func isMediaFile(_ node: MEGADomain.NodeEntity) -> Bool {
+        isMediaFile
+    }
+    
     public func allPhotos() async throws -> [NodeEntity] {
         allPhotos
     }
     
     public func allVideos() async throws -> [NodeEntity] {
         allVideos
+    }
+    
+    public func isPlayableMediaFile(_ node: NodeEntity) -> Bool {
+        isPlayableMediaFile
     }
 }
