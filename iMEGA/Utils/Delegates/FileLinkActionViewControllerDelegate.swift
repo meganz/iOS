@@ -41,15 +41,19 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     
     private func saveToPhotos(node: MEGANode) {
         TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-
         let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
-        saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
-            if case let .failure(error) = result, error != .cancelled {
-                AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
-                SVProgressHUD.dismiss()
-                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+        Task { @MainActor in
+            do {
+                try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
             }
+            
         }
     }
     

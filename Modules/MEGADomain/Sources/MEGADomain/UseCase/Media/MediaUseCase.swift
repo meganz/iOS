@@ -10,6 +10,8 @@ public protocol MediaUseCaseProtocol {
     func isRawImage(_ name: FileNameEntity) -> Bool
     func isGifImage(_ name: FileNameEntity) -> Bool
     func isMultimedia(_ name: FileNameEntity) -> Bool
+    func isMediaFile(_ node: NodeEntity) -> Bool
+    func isPlayableMediaFile(_ node: NodeEntity) -> Bool
     
     func allPhotos() async throws -> [NodeEntity]
     func allVideos() async throws -> [NodeEntity]
@@ -17,9 +19,11 @@ public protocol MediaUseCaseProtocol {
 
 public struct MediaUseCase: MediaUseCaseProtocol {
     private let fileSearchRepo: FilesSearchRepositoryProtocol
+    private let videoMediaUseCase: VideoMediaUseCaseProtocol?
     
-    public init(fileSearchRepo: FilesSearchRepositoryProtocol) {
+    public init(fileSearchRepo: FilesSearchRepositoryProtocol, videoMediaUseCase: VideoMediaUseCaseProtocol? = nil) {
         self.fileSearchRepo = fileSearchRepo
+        self.videoMediaUseCase = videoMediaUseCase
     }
     
     public func isVideo(for url: URL) -> Bool {
@@ -51,6 +55,14 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     
     public func isMultimedia(_ name: FileNameEntity) -> Bool {
         isImage(name) || isVideo(name)
+    }
+    
+    public func isMediaFile(_ node: NodeEntity) -> Bool {
+        node.isFile && isMultimedia(node.name)
+    }
+    
+    public func isPlayableMediaFile(_ node: NodeEntity) -> Bool {
+        isMediaFile(node) && (videoMediaUseCase?.isPlayable(node) ?? false)
     }
     
     public func allPhotos() async throws -> [NodeEntity] {

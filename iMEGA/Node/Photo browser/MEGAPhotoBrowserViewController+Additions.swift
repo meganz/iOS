@@ -59,7 +59,16 @@ extension MEGAPhotoBrowserViewController {
                     let fileLink = FileLinkEntity(linkURL: linkUrl)
                     saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
                 default:
-                    saveMediaUseCase.saveToPhotos(node: node.toNodeEntity(), completion: completionBlock)
+                    Task { @MainActor in
+                        do {
+                            try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+                        } catch {
+                            if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                                await SVProgressHUD.dismiss()
+                                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                            }
+                        }
+                    }
                 }
             } else {
                 DevicePermissionsHelper.alertPhotosPermission()

@@ -1,6 +1,6 @@
 
 public protocol SaveMediaToPhotosUseCaseProtocol {
-    func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
+    func saveToPhotos(nodes: [NodeEntity]) async throws
     func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
     func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
 }
@@ -18,16 +18,44 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
         self.nodeRepository = nodeRepository
     }
     
-    public func saveToPhotos(node: NodeEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        let tempUrl = fileCacheRepository.tempFileURL(for: node)
-       
-        downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, metaData: .saveInPhotos) { result in
-            switch result {
-            case .success:
-                completion(.success)
-            case .failure(let error):
-                completion(.failure(error == TransferErrorEntity.cancelled ? .cancelled : .downloadFailed))
+    private func saveToPhotos(node: NodeEntity) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
             }
+            
+            let tempUrl = fileCacheRepository.tempFileURL(for: node)
+            
+            downloadFileRepository.download(nodeHandle: node.handle, to: tempUrl, metaData: .saveInPhotos) { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                if case let .failure(error) = result {
+                    continuation.resume(throwing: error == TransferErrorEntity.cancelled ? SaveMediaToPhotosErrorEntity.cancelled : SaveMediaToPhotosErrorEntity.downloadFailed)
+                    return
+                }
+                
+                continuation.resume(with: .success)
+            }
+        }
+    }
+    
+    public func saveToPhotos(nodes: [NodeEntity]) async throws {
+        try await withThrowingTaskGroup(of: Void.self) { taskGroup in
+            guard taskGroup.isCancelled == false else {
+                throw TransferErrorEntity.generic
+            }
+            
+            nodes.forEach { node in
+                taskGroup.addTask {
+                    try await saveToPhotos(node: node)
+                }
+            }
+            
+            try await taskGroup.waitForAll()
         }
     }
     

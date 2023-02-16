@@ -35,14 +35,18 @@ final class HomeRecentActionViewModel:
             case .authorized:
                 guard let self = self else { return }
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                self.saveMediaToPhotosUseCase.saveToPhotos(node: node.toNodeEntity()) { result in
-                    if case let .failure(error) = result, error != .cancelled {
-                        AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
-                        SVProgressHUD.dismiss()
-                        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                Task { @MainActor in
+                    do {
+                        try await self.saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+                    } catch {
+                        if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                            AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
+                            await SVProgressHUD.dismiss()
+                            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                        }
                     }
+                    
                 }
-                
             default:
                 guard let self = self else { return }
                 self.error = .photos

@@ -1019,6 +1019,15 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testMultiselectMediaFiles() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setAreMediaFiles(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
+    }
+    
     func testExportedNodeActions_nodeExported() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)

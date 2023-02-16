@@ -45,8 +45,8 @@ public struct NodeEntity: Sendable {
     // MARK: - Media
     public let width: Int
     public let height: Int
-    public let shortFormat: Int
-    public let codecId: Int
+    public let shortFormat: ShortFormatEntity
+    public let codecId: CodecIdEntity
     public let duration: Int
     
     // MARK: - Photo

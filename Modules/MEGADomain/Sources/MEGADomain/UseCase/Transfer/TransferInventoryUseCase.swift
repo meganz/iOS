@@ -6,6 +6,7 @@ public protocol TransferInventoryUseCaseProtocol {
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
+    func saveToPhotosTransfers(filteringUserTransfer: Bool) -> [TransferEntity]?
     func documentsDirectory() -> URL
 }
 
@@ -54,6 +55,11 @@ public struct TransferInventoryUseCase<T: TransferInventoryRepositoryProtocol, U
         } else {
             return transfers
         }
+    }
+    
+    public func saveToPhotosTransfers(filteringUserTransfer: Bool) -> [TransferEntity]? {
+        let transfers = transfers(filteringUserTransfers: filteringUserTransfer)
+        return transfers.filter(isSaveToPhotosAppTransfer)
     }
     
     private func filterUserTransfers(_ transfers: [TransferEntity]) -> [TransferEntity] {

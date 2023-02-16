@@ -14,7 +14,10 @@ import MEGADomain
         saveNodeUseCase.saveNode(from:transfer.toTransferEntity()) { result in
             switch result {
             case .success(let savedToPhotos):
-                if savedToPhotos {
+                let transferInventoryUseCase = TransferInventoryUseCase(
+                    transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
+                let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
+                if savedToPhotos, !anyPendingSavePhotosTransfer {
                     SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savedToPhotos)
                 }
             case .failure(let error):
