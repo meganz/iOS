@@ -146,7 +146,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     func testCreateContextMenu_withAlbumConfigurationFilterEnabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
-                                                                        isAlbum: true,
+                                                                        albumType: .gif,
                                                                         isFilterEnabled: true,
                                                                         isEmptyState: false))
         
@@ -166,7 +166,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     func testCreateContextMenu_withAlbumConfigurationFilterDisabledAndInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
-                                                                        isAlbum: true,
+                                                                        albumType: .favourite,
                                                                         isFilterEnabled: false,
                                                                         isEmptyState: true))
         
@@ -180,7 +180,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     func testCreateContextMenu_onAlbumContentPageFilterDisabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         sortType: SortOrderEntity.modificationDesc,
-                                                                        isAlbum: true,
+                                                                        albumType: .gif,
                                                                         isFilterEnabled: false,
                                                                         isEmptyState: false))
 
@@ -190,6 +190,20 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                             .sort(actionType: .modificationDesc),
                             .sort(actionType: .modificationAsc)
         ]
+
+        XCTAssertEqual(menuActions, menuActionsArray)
+    }
+    
+    func testCreateContextMenu_onCustomAlbumContentPageInEmptyState_shouldShowCorrecMenuActions() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        sortType: SortOrderEntity.modificationDesc,
+                                                                        albumType: .user,
+                                                                        isFilterEnabled: true,
+                                                                        isEmptyState: true))
+
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+
+        menuActionsArray = []
 
         XCTAssertEqual(menuActions, menuActionsArray)
     }
