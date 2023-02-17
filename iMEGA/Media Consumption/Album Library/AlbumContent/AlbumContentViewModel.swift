@@ -73,12 +73,14 @@ final class AlbumContentViewModel: ViewModelType {
         album.type == .favourite
     }
     
-    var contextMenuConfiguration: CMConfigEntity {
+    var contextMenuConfiguration: CMConfigEntity? {
+        guard !(photos.isEmpty && isFavouriteAlbum) else { return nil }
+        
         return CMConfigEntity(
             menuType: .menu(type: .display),
             sortType: selectedSortOrder.toSortOrderEntity(),
             filterType: selectedFilter.toFilterEntity(),
-            isAlbum: true,
+            albumType: album.type,
             isFilterEnabled: isFilterEnabled,
             isEmptyState: photos.isEmpty
         )

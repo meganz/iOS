@@ -18,7 +18,7 @@ public final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
-    private var isAlbum: Bool = false
+    private var albumType: AlbumEntityType? = nil
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
@@ -133,8 +133,8 @@ public final class ContextMenuBuilder {
         return self
     }
     
-    public func setIsAlbum(_ isAlbum: Bool) -> ContextMenuBuilder {
-        self.isAlbum = isAlbum
+    public func setAlbumType(_ albumType: AlbumEntityType?) -> ContextMenuBuilder {
+        self.albumType = albumType
         return self
     }
     
@@ -363,7 +363,17 @@ public final class ContextMenuBuilder {
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }
-        } else if isAlbum {
+        } else {
+            let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
+            displayActionsMenuChildren.append(contentsOf: menu)
+        }
+        
+        if let albumType = albumType {
+            if albumType == .user && isEmptyState {
+                return CMEntity(displayInline: true,
+                                       children: [])
+            }
+            
             displayActionsMenuChildren = [selectMenu()]
             if !isEmptyState {
                 displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [sortMenu()]))
@@ -371,9 +381,6 @@ public final class ContextMenuBuilder {
             if isFilterEnabled {
                 displayActionsMenuChildren.append(filterMenu())
             }
-        } else {
-            let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
-            displayActionsMenuChildren.append(contentsOf: menu)
         }
         
         if isRubbishBinFolder && !isViewInFolder {
@@ -487,5 +494,10 @@ public final class ContextMenuBuilder {
         
         return CMEntity(displayInline: true,
                         children: myQRCodeActions)
+    }
+    
+    //MARK: - Album
+    private var isAlbum: Bool {
+        albumType != nil
     }
 }

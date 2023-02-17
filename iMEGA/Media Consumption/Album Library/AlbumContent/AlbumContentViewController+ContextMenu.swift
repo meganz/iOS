@@ -13,7 +13,9 @@ extension AlbumContentViewController {
     }
 
     private func makeContextMenuBarButton() -> UIBarButtonItem? {
-        guard let menu = contextMenuManager?.contextMenu(with: viewModel.contextMenuConfiguration) else { return nil }
+        guard let contextMenuConfig = viewModel.contextMenuConfiguration,
+              let menu = contextMenuManager?.contextMenu(with: contextMenuConfig) else { return nil }
+        
         return UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, menu: menu)
     }
     
