@@ -22,7 +22,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         addBarButtonItem?.menu = contextMenuManager?.contextMenu(
             with: CMConfigEntity(
                 menuType: .menu(type: .meeting),
-                shouldScheduleMeeting: FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting)
+                shouldScheduleMeeting: false
             )
         )
         addBarButtonItem?.target = nil
