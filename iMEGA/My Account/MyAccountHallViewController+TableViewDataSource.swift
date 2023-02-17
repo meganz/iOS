@@ -42,18 +42,15 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     //MARK: - Contacts row setup data
-    private func contactsSetupData(isPendingViewHidden: Bool) -> MyAccountHallCellData {
+    private func contactsSetupData(existsPendingView: Bool) -> MyAccountHallCellData {
         var isPendingViewVisible = false
         var pendingText = ""
         
-        let incomingContactsLists = MEGASdkManager.sharedMEGASdk().incomingContactRequests()
+        let incomingContactsLists = MEGASdk.shared.incomingContactRequests()
         let incomingContacts = incomingContactsLists.size.intValue
         
-        if incomingContacts != 0 {
-            if isPendingViewHidden {
-                isPendingViewVisible = true
-            }
-            
+        if existsPendingView && incomingContacts != 0 {
+            isPendingViewVisible = true
             pendingText = String(describing: incomingContacts)
         }
         return MyAccountHallCellData(sectionText: Strings.Localizable.contactsTitle,
@@ -63,16 +60,13 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     //MARK: - Notifications row setup data
-    private func notificationsSetupData(isPendingViewHidden: Bool) -> MyAccountHallCellData {
+    private func notificationsSetupData(existsPendingView: Bool) -> MyAccountHallCellData {
         var isPendingViewVisible = false
         var pendingText = ""
         
-        let unseenUserAlerts = MEGASdkManager.sharedMEGASdk().userAlertList().mnz_relevantUnseenCount
-        if unseenUserAlerts != 0 {
-            if isPendingViewHidden {
-                isPendingViewVisible = true
-            }
-            
+        let unseenUserAlerts = MEGASdk.shared.userAlertList().mnz_relevantUnseenCount
+        if existsPendingView && unseenUserAlerts != 0 {
+            isPendingViewVisible = true
             pendingText = String(describing: unseenUserAlerts)
         }
         
@@ -148,9 +142,9 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
-        case .contacts: cell.setup(data: contactsSetupData(isPendingViewHidden: cell.pendingView?.isHidden ?? true))
+        case .contacts: cell.setup(data: contactsSetupData(existsPendingView: cell.pendingView != nil))
         case .backups: cell.setup(data: backupsSetupData())
-        case .notifications: cell.setup(data: notificationsSetupData(isPendingViewHidden: cell.pendingView?.isHidden ?? true))
+        case .notifications: cell.setup(data: notificationsSetupData(existsPendingView: cell.pendingView != nil))
         case .achievements: cell.setup(data: achievementsSetupData())
         case .transfers: cell.setup(data: transfersSetupData())
         case .offline: cell.setup(data: offlineSetupData())
