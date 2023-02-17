@@ -1,7 +1,6 @@
 
 #import "MainTabBarController.h"
 
-#import "ChatRoomsViewController.h"
 #import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
