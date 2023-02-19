@@ -14,28 +14,28 @@ final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRe
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         
         self.nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
-            self?.checkAlbumForReload(nodes.toMEGANodes(in: sdk))
+            self?.checkAlbumForReload(nodes)
         }
     }
     
-    private func isAnyNodeMovedIntoTrash(_ nodes: [MEGANode]) -> Bool {
-        let trashedNodes = nodes.lazy.filter {
-            self.sdk.rubbishNode == $0
-        }
-        return trashedNodes.isNotEmpty
+    private func isAnyNodeMovedIntoTrash(_ nodes: [NodeEntity]) -> Bool {
+        guard let rubbishNode = self.sdk.rubbishNode else { return false }
+        
+        let rubbishNodeEntity = rubbishNode.toNodeEntity()
+        
+        return nodes.contains(rubbishNodeEntity)
     }
     
-    private func checkAlbumForReload(_ nodes: [MEGANode]) {
+    private func checkAlbumForReload(_ nodes: [NodeEntity]) {
         let isAnyNodesTrashed = isAnyNodeMovedIntoTrash(nodes)
         let hasNewNodes = nodes.containsNewNode()
         let hasModifiedNodes = nodes.hasModifiedAttributes()
         let hasModifiedParent = nodes.hasModifiedParent()
-        let hasPublicLink = nodes.hasPublicLink()
-        let isPublicLinkRemoved = nodes.isPublicLinkRemoved()
+        let hasModifiedPublicLink = nodes.hasModifiedPublicLink()
         
         if isAnyNodesTrashed || hasNewNodes ||
             hasModifiedNodes || hasModifiedParent ||
-            hasPublicLink || isPublicLinkRemoved {
+            hasModifiedPublicLink {
             onAlbumReload?()
         }
     }

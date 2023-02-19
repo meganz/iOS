@@ -19,20 +19,6 @@ extension Sequence where Element: MEGANode {
         nodes(for: [.removed, .parent])
     }
     
-    func hasPublicLink() -> Bool {
-        contains {
-            $0.hasChangedType(.publicLink) &&
-            $0.publicLink != nil
-        }
-    }
-    
-    func isPublicLinkRemoved() -> Bool {
-        contains {
-            $0.hasChangedType(.publicLink) &&
-            $0.publicLink == nil
-        }
-    }
-    
     func publicLinkedNodes() -> [MEGANode] {
         filter({ $0.isExported() })
     }

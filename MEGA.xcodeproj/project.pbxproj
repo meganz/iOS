@@ -635,6 +635,7 @@
 		6D4AF9AE2934298A00A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		6D4AF9AF293429F900A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		6D4AF9B0293429FA00A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
+		6D58E9E7299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D58E9E6299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift */; };
 		6D60254D28F7B9BF00FF9767 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
 		6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
@@ -3350,6 +3351,7 @@
 		6D0CA0EC2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerTypeEntityMappingTests.swift; sourceTree = "<group>"; };
 		6D4AF9AB2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumElementRequestDelegate.swift; sourceTree = "<group>"; };
 		6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
+		6D58E9E6299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepositoryTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesUpdateProtocol.swift; sourceTree = "<group>"; };
@@ -5425,6 +5427,7 @@
 			isa = PBXGroup;
 			children = (
 				B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */,
+				6D58E9E6299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift */,
 				12B1E5792874FFEF00D23A58 /* AnalyticsRepositoryTests.swift */,
 				9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */,
 				3235F2C428C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift */,
@@ -14394,6 +14397,7 @@
 				B6E18AED2937237800EDFC10 /* PhotoDateSectionTests.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
+				6D58E9E7299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift in Sources */,
 				940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,

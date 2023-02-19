@@ -21,4 +21,8 @@ public extension Sequence where Element == NodeEntity {
     func hasModifiedParent() -> Bool {
         contains { $0.changeTypes.contains(.parent) }
     }
+    
+    func hasModifiedPublicLink() -> Bool {
+        contains { $0.changeTypes.contains(.publicLink) }
+    }
 }
