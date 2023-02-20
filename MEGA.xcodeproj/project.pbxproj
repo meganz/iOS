@@ -1288,7 +1288,10 @@
 		944DB356295EE64900CE4D83 /* RubbishBinRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */; };
 		944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
+		9450A38F299E62620031BBEB /* UserAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9450A38E299E62620031BBEB /* UserAttributeRepository.swift */; };
+		9450A391299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9450A390299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift */; };
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
+		94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */; };
 		9455CF532927F17200E6FB8F /* SnackBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */; };
 		945605401EDD65400094EF0F /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		945605411EDD65490094EF0F /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
@@ -1313,6 +1316,7 @@
 		94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		9464C2ED28C5EF3200F8B082 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464C2EC28C5EF3200F8B082 /* SortOrderType+Mapper.swift */; };
 		9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */; };
+		9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */; };
 		946ACCC3299C0ADD00E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */; };
 		946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC4299C0B0000E6C0F5 /* MEGAPresentation */; };
 		946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC6299C0B3500E6C0F5 /* MEGAPresentation */; };
@@ -3886,7 +3890,10 @@
 		944AD0B028EF039700AB1E59 /* MyBackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* MyBackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBackupsOCWrapper.swift; sourceTree = "<group>"; };
 		944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RubbishBinRepository.swift; sourceTree = "<group>"; };
+		9450A38E299E62620031BBEB /* UserAttributeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeRepository.swift; sourceTree = "<group>"; };
+		9450A390299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAttributeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChangeNameViewController+Additions.swift"; sourceTree = "<group>"; };
 		9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarViewModel.swift; sourceTree = "<group>"; };
 		945605431EDD66350094EF0F /* MEGAPicker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-Bridging-Header.h"; path = "iMEGA/Extensions/MEGAPicker/Supporting Files/MEGAPicker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		9458610B292696B300866F03 /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
@@ -3901,6 +3908,7 @@
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAExportRequestDelegate.m; path = API/Requests/MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
 		9464C2EC28C5EF3200F8B082 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraPositionEntity+Mapper.swift"; sourceTree = "<group>"; };
+		9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeEntityMappingTests.swift; sourceTree = "<group>"; };
 		946ACCC1299C099900E6C0F5 /* MEGAPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPresentation; sourceTree = "<group>"; };
 		946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyrightWarningViewController.h; sourceTree = "<group>"; };
 		946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyrightWarningViewController.m; sourceTree = "<group>"; };
@@ -8707,6 +8715,7 @@
 				BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */,
 				BF90C7A626040930006061F8 /* UserStoreRepository.swift */,
 				9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */,
+				9450A38E299E62620031BBEB /* UserAttributeRepository.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -9379,6 +9388,7 @@
 				5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */,
 				5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */,
 				A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */,
+				94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */,
 			);
 			path = ChangeName;
 			sourceTree = "<group>";
@@ -10086,6 +10096,7 @@
 				6D6FCBF3297E2B360051EB4A /* ExplorerTypeEntity+Mapper.swift */,
 				836A04E729828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift */,
 				A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */,
+				9450A390299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift */,
 			);
 			path = "Model Mapping";
 			sourceTree = "<group>";
@@ -11176,6 +11187,7 @@
 				BFE556FB27E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift */,
 				6D0CA0EA2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift */,
 				6D0CA0EC2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift */,
+				9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */,
 			);
 			path = "Model Mapping";
 			sourceTree = "<group>";
@@ -12632,6 +12644,7 @@
 				BFAFB143252AC6ED003ADFE3 /* FilesExplorerRouter.swift in Sources */,
 				9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */,
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
+				9450A391299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
@@ -13166,6 +13179,7 @@
 				835833332948DB0A00394F1A /* AddParticipantsView.swift in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */,
+				9450A38F299E62620031BBEB /* UserAttributeRepository.swift in Sources */,
 				5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */,
 				BFAB114E23CEA5C300BCE72D /* AlbumsTableViewController.swift in Sources */,
 				BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */,
@@ -13260,6 +13274,7 @@
 				837B179C2881848400A4D01B /* DownloadLinkRouter.swift in Sources */,
 				9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */,
 				5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */,
+				94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */,
 				5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */,
 				C458D94825CC23D300D1A496 /* AudioPlayer+Notifiers.swift in Sources */,
 				9D3563DF28B5568500CB3365 /* SettingsTableViewCell.swift in Sources */,
@@ -14480,6 +14495,7 @@
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */,
 				B6880C2728C495750089D2A2 /* PhotoCellViewModelTests.swift in Sources */,
+				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
