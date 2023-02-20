@@ -104,9 +104,13 @@ struct ScheduledMeetingDateBuilder {
                 }
             } else {
                 let weekdayStringList = weekDaysList
-                    .compactMap {  $0 == weekDaysList.last ? nil : stringRepresentingWeekDayShortName(forNumber: $0) }
+                    .compactMap {
+                        $0 == weekDaysList.last
+                        ? nil
+                        : stringRepresentingWeekDayShortName(forNumber: $0, isAtTheStartOfSentence: $0 == weekDaysList.first)
+                    }
                     .joined(separator: ", ")
-                let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDaysList[weekDaysList.count - 1])
+                let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDaysList.last, isAtTheStartOfSentence: false)
                 if scheduledMeeting.rules.until != nil {
                     let format = NSLocalizedString("meetings.scheduled.recurring.weekly.severalDays.until", comment: "")
                     return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
@@ -703,16 +707,45 @@ struct ScheduledMeetingDateBuilder {
 
     }
     
-    private func stringRepresentingWeekDayShortName(forNumber number: Int?) -> String {
+    private func stringRepresentingWeekDayShortName(forNumber number: Int?, isAtTheStartOfSentence: Bool = true) -> String {
         switch number {
-        case 1: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Mon.title
-        case 2: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Tue.title
-        case 3: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Wed.title
-        case 4: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Thu.title
-        case 5: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Fri.title
-        case 6: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Sat.title
-        case 7: return Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.Sun.title
-        default: return ""
+        case 1:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Mon.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Mon.title
+            
+        case 2:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Tue.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Tue.title
+            
+        case 3:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Wed.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Wed.title
+            
+        case 4:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Thu.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Thu.title
+            
+        case 5:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Fri.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Fri.title
+            
+        case 6:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Sat.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Sat.title
+            
+        case 7:
+            return isAtTheStartOfSentence
+            ? Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.SentenceStart.Sun.title
+            : Strings.Localizable.Inapp.Notifications.ScheduledMeetings.WeekDay.MidSentence.Sun.title
+                        
+        default:
+            return ""
         }
     }
     

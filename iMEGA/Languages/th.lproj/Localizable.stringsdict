@@ -601,7 +601,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDay] ทุก %d สัปดาห์ มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -615,7 +615,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDay] ทุก %d สัปดาห์ มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -629,7 +629,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDaysList] และ [LastWeekDay] ทุก %d สัปดาห์ มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -643,7 +643,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDaysList] และ [LastWeekDay] ทุก %d สัปดาห์ มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -657,7 +657,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>วันที่ [MonthDay] ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -671,7 +671,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>วันที่ [MonthDay] ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -685,7 +685,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์แรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -699,7 +699,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์แรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -713,7 +713,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -727,7 +727,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -741,7 +741,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -755,7 +755,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -769,7 +769,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -783,7 +783,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -797,7 +797,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -811,7 +811,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>จันทร์ที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -825,7 +825,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารแรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -839,7 +839,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารแรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -853,7 +853,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -867,7 +867,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -881,7 +881,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -895,7 +895,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -909,10 +909,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -923,7 +923,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -937,7 +937,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -951,7 +951,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อังคารที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -965,7 +965,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธแรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -979,7 +979,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธแรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -993,7 +993,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1007,7 +1007,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1021,7 +1021,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1035,7 +1035,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1049,10 +1049,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1063,7 +1063,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1077,7 +1077,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1091,7 +1091,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พุธที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1105,7 +1105,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีแรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1119,7 +1119,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีแรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1133,7 +1133,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1147,7 +1147,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1161,7 +1161,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1175,7 +1175,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1189,10 +1189,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1203,7 +1203,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1217,7 +1217,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1231,7 +1231,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>พฤหัสบดีที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1245,7 +1245,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์แรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1259,7 +1259,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์แรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1273,7 +1273,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1287,7 +1287,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1301,7 +1301,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1315,7 +1315,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1329,10 +1329,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1343,7 +1343,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1357,7 +1357,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1371,7 +1371,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>ศุกร์ที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1385,7 +1385,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์แรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1399,7 +1399,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์แรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -1413,7 +1413,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -1427,7 +1427,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -1441,7 +1441,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -1455,7 +1455,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -1469,10 +1469,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1483,7 +1483,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -1497,7 +1497,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -1511,7 +1511,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>เสาร์ที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -1525,7 +1525,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์แรก ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -1539,7 +1539,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์แรก ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -1553,7 +1553,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่สอง ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -1567,7 +1567,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่สอง ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -1581,7 +1581,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่สาม ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -1595,7 +1595,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่สาม ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -1609,10 +1609,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่สี่ ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1623,7 +1623,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่สี่ ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -1637,7 +1637,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่ห้า ของทุก %d เดือน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -1651,7 +1651,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>อาทิตย์ที่ห้า ของทุก %d เดือน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>

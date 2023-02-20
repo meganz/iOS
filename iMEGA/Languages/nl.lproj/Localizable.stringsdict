@@ -685,9 +685,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>[WeekDay] elke week van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDay]elke %d weken van kracht [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -701,9 +701,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>[WeekDay] elke week van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDay]elke %d weken van kracht [B][StartDate]  [/B] van[B][StartTime] tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -717,9 +717,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDaysList], en [LastWeekDay] elke %d weken van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime] tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -733,9 +733,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht [B][StartDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDaysList], en [LastWeekDay] elke %d weken van kracht [B][StartDate] [/B] van[B][StartTime] tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -749,9 +749,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Dag [MonthDay] van elke maand van kracht [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Dag [MonthDay] van elke %d maanden van kracht [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -765,9 +765,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Dag [MonthDay] van elke maand van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Dag [MonthDay] van elke %d maanden van kracht [B][StartDate] [/B] van [B][StartTime] tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -781,9 +781,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Maandag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -797,9 +797,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Maandag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -813,9 +813,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Maandag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -829,9 +829,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Maandag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -845,9 +845,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Maandag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -861,9 +861,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Maandag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -877,9 +877,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Maandag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -893,9 +893,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Maandag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -909,9 +909,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Maandag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -925,9 +925,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Maandag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -941,9 +941,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Dinsdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -957,9 +957,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Dinsdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -973,9 +973,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Dinsdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -989,9 +989,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Dinsdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1005,9 +1005,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Dinsdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1021,9 +1021,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Dinsdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1037,12 +1037,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Dinsdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1053,9 +1053,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Dinsdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1069,9 +1069,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Dinsdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1085,9 +1085,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Dinsdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1101,9 +1101,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Woensdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1117,9 +1117,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Woensdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1133,9 +1133,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Woensdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1149,9 +1149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Woensdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1165,9 +1165,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Woensdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1181,9 +1181,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Woensdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1197,12 +1197,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Woensdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1213,9 +1213,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Woensdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1229,9 +1229,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Woensdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1245,9 +1245,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Woensdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1261,9 +1261,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Donderdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1277,9 +1277,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Donderdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1293,9 +1293,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Donderdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1309,9 +1309,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Donderdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1325,9 +1325,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Donderdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1341,9 +1341,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Donderdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1357,12 +1357,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Donderdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1373,9 +1373,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Donderdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1389,9 +1389,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Donderdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1405,9 +1405,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Donderdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1421,9 +1421,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Vrijdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1437,9 +1437,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Vrijdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1453,9 +1453,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Vrijdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1469,9 +1469,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Vrijdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1485,9 +1485,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Vrijdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1501,9 +1501,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Vrijdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1517,12 +1517,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Vrijdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1533,9 +1533,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Vrijdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1549,9 +1549,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Vrijdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1565,9 +1565,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Vrijdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1581,9 +1581,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Zaterdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1597,9 +1597,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Zaterdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -1613,9 +1613,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Zaterdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -1629,9 +1629,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Zaterdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -1645,9 +1645,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Zaterdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -1661,9 +1661,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Zaterdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -1677,12 +1677,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Zaterdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1693,9 +1693,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Zaterdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -1709,9 +1709,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Zaterdag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -1725,9 +1725,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Zaterdag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -1741,9 +1741,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Zondag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -1757,9 +1757,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De eerste Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De eerste Zondag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -1773,9 +1773,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Zondag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -1789,9 +1789,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De tweede Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De tweede Zondag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -1805,9 +1805,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Zondag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -1821,9 +1821,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De derde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De derde Zondag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -1837,12 +1837,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Zondag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1853,9 +1853,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vierde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vierde Zondag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -1869,9 +1869,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Zondag van elke %d maanden van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime]tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -1885,9 +1885,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>De vijfde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>De vijfde Zondag van elke %d maanden van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>

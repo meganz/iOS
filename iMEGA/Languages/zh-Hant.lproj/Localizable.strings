@@ -535,7 +535,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="新相簿";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
+"cameraUploads.albums.create.alert.userAlbumExists"="已存在相同名稱相簿。";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="不允許使用此相簿名稱";
 /* Used in create album popup album name validation */
@@ -543,7 +543,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="輸入新的名稱。";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
+"cameraUploads.albums.create.addItemsTo"="新增項目到「%@」";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="空的相簿";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -571,9 +571,9 @@
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="由於沒有Wi-Fi連線，上傳暫停，%lu個檔案待處理";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="照片已上傳，影片上傳關閉；1個影片未上傳";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="相片已上傳，影片上傳關閉；1個影片未上傳";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上傳，影片上傳關閉；%lu個影片未上傳";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="相片已上傳，影片上傳關閉；%lu個影片未上傳";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已選擇%lu項目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -683,11 +683,11 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相機上傳";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA對您相簿的存取權限有限，無法備份您的所有照片。點擊以更改權限。";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA對您照片的存取權限有限，無法備份您的所有相片。點擊以更改權限。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
-"photo.empty.title"="未找到照片";
+"photo.empty.title"="未找到相片";
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="年";
 /* Title of Photo's Months tab */
@@ -729,9 +729,9 @@
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="（推薦的）";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="將HEIC照片儲存為";
+"SAVE HEIC PHOTOS AS"="將HEIC相片儲存為";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="我們建議使用JPG，因為它是最相容的照片格式。";
+"We recommend JPG, as its the most compatible format for photos."="我們建議使用JPG，因為它是最相容的相片格式。";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="將HEVC影片儲存為";
 /* Footer for HEVC format section */
@@ -741,11 +741,11 @@
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="上傳影片";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
-"When enabled, photos will be uploaded."="啟用後將上傳照片。";
+"When enabled, photos will be uploaded."="啟用後將上傳相片。";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
 "Photos will be uploaded to Camera Uploads folder."="照片將上傳到「相機上傳」資料夾。";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="照片與影片將上傳到相機上傳資料夾。";
+"Photos and videos will be uploaded to Camera Uploads folder."="相片與影片將上傳到相機上傳資料夾。";
 /* Footer for video uploads switch section when enabled */
 "Videos will be uploaded to the Camera Uploads folder."="影片將上傳到「相機上傳」資料夾。";
 /* Footer for video uploads switch section when disabled */
@@ -753,7 +753,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="新的相機上傳選項";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIC/HEVC照片和影片轉檔成相容性更好的JPEG/H.264格式。";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIC/HEVC相片和影片轉檔成相容性更好的JPEG/H.264格式。";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="使用最相容的格式";
 /* Title for custom settings */
@@ -769,29 +769,29 @@
 /* Title of the switch to config whether to upload videos for Live Photos */
 "Upload Videos for Live Photos"="上傳作為原況照片的影片";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload All Burst Photos"="上傳所有的連拍照片";
+"Upload All Burst Photos"="上傳所有的連拍相片";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="上傳隱藏的相簿";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="將上傳每張原況照片的照片與影片版本。";
+"The video and the photo in each Live Photo will be uploaded."="將上傳每張原況照片的相片與影片版本。";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="只會上傳每張原況照片的照片版本。";
+"Only the photo in each Live Photo will be uploaded."="只會上傳每張原況照片的相片版本。";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="將上傳您連拍照片序列的所有照片。";
+"All the photos from your burst photo sequences will be uploaded."="將上傳您連拍相片系列的所有相片。";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍照片序列中收藏的照片。";
+"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍相片系列中最愛的相片。";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="隱藏相簿是在您裝置的照片應用程式中隱藏照片或影片的地方。";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="隱藏相簿是您裝置的照片應用程式中隱藏相片或影片的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上傳共享相簿";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="您裝置的照片程式裡的共享相簿將會被上傳。";
+"Shared Albums from your device's Photos app will be uploaded."="您裝置的照片應用程式裡的共享相簿將會被上傳。";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="您裝置的照片程式裡的共享相簿不會被上傳。";
+"Shared Albums from your device's Photos app will not be uploaded."="您裝置的照片應用程式裡的共享相簿不會被上傳。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload Albums Synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您照片與影片從iTunes同步到您裝置相簿的地方。";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您相片與影片從iTunes同步到您裝置照片應用程式的地方。";
 /* App means “Application” */
 "App Version"="應用程式版本";
 /* Title of the label where the SDK version is shown */
@@ -1075,17 +1075,17 @@
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="月";
 /*  */
-"days"="日";
+"days"="天";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="移除照片";
+"Remove Photo"="移除相片";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="更改照片";
+"Change Photo"="更改相片";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="加入照片";
+"Add Photo"="加入相片";
 /* Button title that allows the user change his name */
 "changeName"="更改名稱";
 /* Success message when changing profile information. */
@@ -1115,7 +1115,7 @@
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為Pro帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
+"cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S][A]立即升級[/A]為Pro帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為Pro帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
@@ -1357,7 +1357,7 @@
 /*  */
 "fromCloudDrive"="從雲端硬碟";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="加入聯絡人";
+"sendContact"="傳送聯絡人";
 /*  */
 "done"="完成";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1691,15 +1691,15 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="您的驗證裝置不見了？";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="儲存圖片至相簿";
+"Save Images in Photos"="儲存圖片至照片";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="儲存影片至相簿";
+"Save Videos in Photos"="儲存影片至照片";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下載的圖片或影片將儲存在裝置的媒體庫，而非離線存取區。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相機";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="儲存於相簿";
+"Save in Photos"="儲存於照片";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的圖片和影片備份儲存至裝置的媒體庫中。";
 /* Title of the Spotlight Search section */
@@ -1717,7 +1717,7 @@
 /* Description shown in a page of the onboarding screens explaining contacts */
 "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="無需離開MEGA即可加入聯絡人、建立連線，協作及進行語音與視訊通話";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="您在雲端的照片";
+"Your Photos in the Cloud"="您在雲端的相片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的必要功能，我們現已為您提供這項服務。請立即建立您的帳戶。";
 /* Button which triggers the initial setup */
@@ -1729,9 +1729,9 @@
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%2之%1";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="允許存取照片";
+"Allow Access to Photos"="允許存取相片";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="請允許MEGA存取照片的權限以進行照片和影片的共享。";
+"Please give the MEGA App permission to access Photos to share photos and videos."="請允許MEGA存取照片的權限以進行相片和影片的共享。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="啟用麥克風和相機";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1791,15 +1791,15 @@
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="點擊即可返回通話";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="儲存至相簿";
+"Save to Photos"="儲存至照片";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="正在儲存至相簿⋯";
+"Saving to Photos…"="正在儲存至照片⋯";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="所有媒體";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="%@下載中";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="儲存至相簿";
+"Saved to Photos"="儲存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="無法儲存項目";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
@@ -1989,7 +1989,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
 /* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s and %2$s more";
+"home.recent.multipleFileTitle"="%1$s和另外%2$s個";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="由%@建立";
 /* Message shown when the user has not recent activity in their account. */
@@ -2153,7 +2153,7 @@
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="取消選取";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
-"No Photos or Videos"="無照片或影片";
+"No Photos or Videos"="無相片或影片";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="在資料夾中檢視";
 /* Error message shown when opening a link with an account that not corresponds to the link */
@@ -2919,7 +2919,7 @@
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
 "chat.joinCall"="加入通話";
 /* Description shown in chat screen if the user didn't allow access to photos */
-"chat.photos.allowPhotoAccessMessage"="要分享照片和影片，請允許MEGA存取您的相簿";
+"chat.photos.allowPhotoAccessMessage"="要分享相片和影片，請允許MEGA存取您的相簿";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.title"="附上日誌檔案";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
@@ -3045,7 +3045,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="檔案將更新為新版本。";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="";
+"nameCollision.applyToAll"="套用至所有%@個重複項目";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="這裡只有你一人";
 /* Meetings end call dialog description */
@@ -3219,137 +3219,31 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="會議";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="";
-/* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="";
-/* In app notification description for cancelled recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="";
-/* In app notification description for scheduled meeting title update for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.titleUpdate.description"="";
-/* In app notification description for scheduled meeting title update for recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.titleUpdate.description"="";
-/* In app notification description for daily recurring new meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.new.description"="";
-/* In app notification description for daily recurring new meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.new.description"="";
-/* In app notification description for single day of the week - recurring new meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.new.description"="";
-/* In app notification description for multiple days of the week - recurring new meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.new.description"="";
-/* In app notification description for single day of specific week - recurring new meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.new.description"="";
-/* In app notification description for multiple days of specific week  - recurring new meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.new.description"="";
-/* In app notification description for single day of the week - recurring new meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.new.description"="";
-/* In app notification description for single day of the week - recurring new meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.new.description"="";
-/* In app notification description for single day of specific week - recurring new meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.new.description"="";
-/* In app notification description for single day of specific week  - recurring new meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.new.description"="";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] 邀請[/B]您參加會議，排程時間：";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="";
-/* In app notification description for multiple fields update in daily recurring meeting. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.mulitpleFieldsUpdate.description"="";
-/* In app notification description for multiple fields update in daily recurring meeting. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for single day of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for multiple days of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for single day of specific week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for multiple days of specific week  - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for single day of specific week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for single day of specific week  - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.mulitpleFieldsUpdate.description"="";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="";
-/* In app notification description for description Field update in daily recurring meeting. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.descriptionFieldUpdate.description"="";
-/* In app notification description for description Field update in daily recurring meeting. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for single day of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for multiple days of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for single day of specific week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for multiple days of specific week  - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for single day of specific week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.descriptionFieldUpdate.description"="";
-/* In app notification description when description Field updated for single day of specific week  - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.descriptionFieldUpdate.description"="";
-/* In app notification description for new meeting that is recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.new.description"="";
-/* In app notification description for new meeting that is recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.new.description"="";
-/* In app notification description for new meeting that is recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.new.description"="";
-/* In app notification description for new meeting that is recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.new.description"="";
-/* In app notification description for new meeting that is recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.new.description"="";
-/* In app notification description for new meeting that is recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.new.description"="";
-/* In app notification description for new meeting that is recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.new.description"="";
-/* In app notification description for new meeting that is recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.new.description"="";
-/* In app notification description when multiple fields updated for recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.mulitpleFieldsUpdate.description"="";
-/* In app notification description n when multiple fields updated for recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.mulitpleFieldsUpdate.description"="";
-/* In app notification description when multiple fields updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.mulitpleFieldsUpdate.description"="";
-/* In app notification description when description field is updated for recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.descriptionFieldUpdate.description"="";
-/* In app notification description n when description field is updated for recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.descriptionFieldUpdate.description"="";
-/* In app notification description when description field is updated for recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.descriptionFieldUpdate.description"="";
-/* In app notification description when description field is updated for recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.descriptionFieldUpdate.description"="";
-/* In app notification description when description field is updated for recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.descriptionFieldUpdate.description"="";
-/* In app notification description when description field is updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.descriptionFieldUpdate.description"="";
-/* In app notification description when description field is updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.descriptionFieldUpdate.description"="[B]%@更新[/B]週期性會議說明\n從%@開始，每月的第%@天";
-/* In app notification description when description field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.descriptionFieldUpdate.description"="[B]%@更新[/B]週期性會議說明\n從%@開始，每月的%@ %@";
-/* In app notification description text representing the meeting is scheduled during week one */
-"inapp.notifications.scheduledMeetings.week.one.title"="";
-/* In app notification description text representing the meeting is scheduled during week two */
-"inapp.notifications.scheduledMeetings.week.two.title"="";
-/* In app notification description text representing the meeting is scheduled during week three */
-"inapp.notifications.scheduledMeetings.week.three.title"="";
-/* In app notification description text representing the meeting is scheduled during week four */
-"inapp.notifications.scheduledMeetings.week.Four.title"="";
-/* In app notification description text representing the meeting is scheduled during week five */
-"inapp.notifications.scheduledMeetings.week.Five.title"="第五個";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 更新[/B]會議說明";
+/* In app notification description for one off cancelled meeting */
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] 取消[/B]排程時間如下的會議：";
+/* In app notification description representing the day was changed for one off meeting */
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] 更新[/B]會議日期";
+/* In app notification description representing the time was changed for one off meeting */
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] 更新[/B]會議時間";
+/* In app notification description for scheduled meeting title update. */
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] 更新[/B]會議名稱，從「[PreviousTitle]」更新為[B]「[UpdatedTitle]」[/B]";
+/* In app notification description for cancelled recurring meeting */
+"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] 取消[/B]會議及其所有事件";
+/* In app notification description for recurring new meeting invitation. */
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加定期會議，排程時間：";
+/* In app notification description for multiple fields update in recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+/* In app notification description for description Field update in recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]定期會議說明";
+/* In app notification description when date field is updated for recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] 更新[/B]定期會議日期";
+/* In app notification description when time field is updated for recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] 更新[/B]定期會議時間";
 /* In app notification description text representing the meeting repeats every sunday */
 "inapp.notifications.scheduledMeetings.weekDay.sun.title"="星期日";
 /* In app notification description text representing the meeting repeats every monday */
@@ -3364,102 +3258,26 @@
 "inapp.notifications.scheduledMeetings.weekDay.fri.title"="星期五";
 /* In app notification description text representing the meeting repeats every saturday */
 "inapp.notifications.scheduledMeetings.weekDay.sat.title"="星期六";
-/* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B]%@更新[/B]會議日期\n%@[B]%@[/B]";
-/* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B]%@更新[/B]會議時間\n%@[B]%@[/B]";
-/* In app notification description when date field is updated for daily recurring meeting. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每天%@";
-/* In app notification description when time field is updated for daily recurring meeting. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.forever.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每天[B]%@[/B]";
-/* In app notification description when date field is updated for daily recurring meeting. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每天%@";
-/* In app notification description when time field is updated for daily recurring meeting. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.daily.ending.timeChanged.description"="%@更新[/B]週期性會議時間\n從%@到%@[B]，每天[B]%@[/B]";
-/* In app notification description when date field is updated for single day of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每周%@ %@";
-/* In app notification description when time Field is updated for single day of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.single.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每周%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for multiple days of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每周%@和%@ %@";
-/* In app notification description when time Field is updated for multiple days of the week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.forever.multiple.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每周%@和%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for single day of specific week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每%@周的%@ %@";
-/* In app notification description when time Field is updated for single day of specific week - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.single.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每%@周的%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for multiple days of specific week  - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每%@周的%@和%@ %@";
-/* In app notification description when time Field is updated for multiple days of specific week  - recurring meeting invitation. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.forever.multiple.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每%@周的%@和%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每周%@ %@";
-/* In app notification description when time Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.single.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每周%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每周%@和%@ %@";
-/* In app notification description when time Field is updated for single day of the week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.weekly.ending.multiple.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每周%@和%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for single day of specific week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每%@周的%@ %@";
-/* In app notification description when time Field is updated for single day of specific week - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.single.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每%@周的%@ [B]%@[/B]";
-/* In app notification description when date Field is updated for single day of specific week  - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每%@周的%@和%@ %@";
-/* In app notification description when time Field is updated for single day of specific week  - recurring meeting invitation. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificWeek.ending.multiple.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每%@周的%@和%@ [B]%@[/B]";
-/* In app notification description when date field is updated for recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每%@個月的第%@天 %@";
-/* In app notification description when time field is updated for recurring on a specific day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.ending.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每%@個月的第%@天 [B]%@[/B]";
-/* In app notification description n when date field is updated for recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每%@個月的%@ %@ %@";
-/* In app notification description n when time field is updated for recurring on a specific week day of the specific month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.ending.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每%@個月的%@ %@ [B]%@[/B]";
-/* In app notification description when date field is updated for recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每個月的第%@天 %@";
-/* In app notification description when time field is updated for recurring monthly on a specific day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.ending.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每個月的第%@天 [B]%@[/B]";
-/* In app notification description when date field is updated for recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@到%@[/B]，每個月的%@ %@ %@";
-/* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.ending.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@到%@，每個月的%@ %@ [B]%@[/B]";
-/* In app notification description when date field is updated for recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每%@個月的第%@天 %@";
-/* In app notification description when time field is updated for recurring on a specific day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificDay.forever.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每%@個月的第%@天 [B]%@[/B]";
-/* In app notification description when date field is updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每%@個月的%@ %@ %@";
-/* In app notification description when time field is updated for recurring on a specific week day of the specific month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.specificMonth.specificWeekDay.forever.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每%@個月的%@ %@ [B]%@[/B]";
-/* In app notification description when date field is updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.dayChanged.description"="[B]%@更新[/B]週期性會議日期\n從[B]%@[/B]開始，每個月的第%@天 %@";
-/* In app notification description when time field is updated for recurring monthly on a specific day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificDay.forever.timeChanged.description"="[B]%@更新[/B]週期性會議時間\n從%@開始，每個月的第%@天 [B]%@[/B]";
-/* In app notification description when date field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.dayChanged.description"="[B]%@更新[/B]週期性會議說明\n從[B]%@[/B]開始，每個月的%@ %@ %@";
-/* In app notification description when time field is updated for recurring monthly on a specific week day of the month. There is no end date for the meeting */
-"inapp.notifications.scheduledMeetings.recurring.Monthly.specificWeekDay.forever.timeChanged.description"="[B]%@更新[/B]週期性會議說明\n從%@開始，每個月的%@ %@ [B]%@[/B]";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="事件";
 /* Label to indicate the daily recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.daily"="";
+"meetings.scheduled.recurring.frequency.daily"="每天發生";
 /* Label to indicate the weekly recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.weekly"="";
+"meetings.scheduled.recurring.frequency.weekly"="每週發生";
 /* Label to indicate the monthly recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.monthly"="";
+"meetings.scheduled.recurring.frequency.monthly"="每月發生";
 /* Button label to indicate that more occurencies can be loaded in the list */
-"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="";
+"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="顯示更多";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="";
+"meetings.scheduled.oneOff"="[B][StartDate]起[WeekDay][/B]的[B][StartTime]到[EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="";
+"meetings.scheduled.recurring.daily.forever"="[B][StartDate][/B]起，每天的[B][StartTime]到[EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="";
-/* In app notification description when an occurence is cancelled in a reccurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="";
-/* In app notification description when an occurence is updated in a reccurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="";
+"meetings.scheduled.recurring.daily.until"="從[B][StartDate]到[UntilDate][/B]，每天的[B][StartTime]到[EndTime][/B]";
+/* In app notification description when an occurence is cancelled in a recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] 取消[/B]排程時間如下的事件：";
+/* In app notification description when an occurence is updated in a recurring meeting. */
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 更新[/B]事件為：";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="安全性升級";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
