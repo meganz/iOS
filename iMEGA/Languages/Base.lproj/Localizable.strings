@@ -3282,3 +3282,5 @@
 "account.upgradeSecurity.title"="Security upgrade";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap on Cancel.";
+/* Label to introduce meeting info description field */
+"meetings.info.descriptionLabel"="Description";

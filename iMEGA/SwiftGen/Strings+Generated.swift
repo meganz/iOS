@@ -4137,6 +4137,8 @@ public enum Strings {
       public enum Info {
         /// Chat notifications
         public static let chatNotifications = Strings.tr("Localizable", "meetings.info.chatNotifications")
+        /// Description
+        public static let descriptionLabel = Strings.tr("Localizable", "meetings.info.descriptionLabel")
         /// Leave meeting
         public static let leaveMeeting = Strings.tr("Localizable", "meetings.info.leaveMeeting")
         /// Manage chat history
