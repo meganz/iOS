@@ -26,7 +26,7 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 case .success:
                     continuation.resume()
                 case .failure:
-                    continuation.resume(throwing: FetchnodesErrorEntity.generic)
+                    continuation.resume(throwing: GenericErrorEntity())
                 }
             })
         }
