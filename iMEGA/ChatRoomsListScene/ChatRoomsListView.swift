@@ -116,7 +116,11 @@ struct ChatRoomsListView: View {
                                 , alignment: .center
                             )
                     } else {
-                        ChatRoomsEmptyView(emptyViewState: viewModel.emptyChatRoomsViewState())
+                        if viewModel.isFirstMeetingsLoad {
+                            FirstMeetingsLoadView()
+                        } else {
+                            ChatRoomsEmptyView(emptyViewState: viewModel.emptyChatRoomsViewState())
+                        }
                     }
                 }
             }

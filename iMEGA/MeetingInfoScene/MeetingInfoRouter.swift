@@ -123,7 +123,6 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             selectedUsersHandler: selectedUsersHandler
         ) else { return }
         
-        contactsNavigationController.overrideUserInterfaceStyle = .dark
         presenter.present(contactsNavigationController, animated: true)
     }
     

@@ -26,9 +26,23 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         return "\(start) - \(end)"
     }
     
+    var recurrence: String {
+        switch scheduledMeeting.rules.frequency {
+        case .invalid:
+            return ""
+        case .daily:
+            return Strings.Localizable.Meetings.Scheduled.Recurring.daily
+        case .weekly:
+            return Strings.Localizable.Meetings.Scheduled.Recurring.weekly
+        case .monthly:
+            return Strings.Localizable.Meetings.Scheduled.Recurring.monthly
+        }
+    }
+    
     var shouldShowUnreadCount = false
     var unreadCountString = ""
-    
+    var isRecurring: Bool
+
     var lastMessageTimestamp: String? {
         let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
         if let lastMessageDate = chatListItem?.lastMessageDate {
@@ -70,7 +84,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatNotificationControl = chatNotificationControl
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
-
+        self.isRecurring = scheduledMeeting.rules.frequency != .invalid
+        
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: scheduledMeeting.title,
