@@ -213,7 +213,7 @@ public enum Strings {
     public static let allMedia = Strings.tr("Localizable", "All Media")
     /// All the photos from your burst photo sequences will be uploaded.
     public static let allThePhotosFromYourBurstPhotoSequencesWillBeUploaded = Strings.tr("Localizable", "All the photos from your burst photo sequences will be uploaded.")
-    /// ALL transfers
+    /// All transfers
     public static let allInUppercaseTransfers = Strings.tr("Localizable", "allInUppercaseTransfers")
     /// Allow access
     public static let allowAccess = Strings.tr("Localizable", "Allow Access")
@@ -445,11 +445,11 @@ public enum Strings {
     public static let cloudDriveEmptyStateTitle = Strings.tr("Localizable", "cloudDriveEmptyState_title")
     /// Empty Rubbish bin
     public static let cloudDriveEmptyStateTitleRubbishBin = Strings.tr("Localizable", "cloudDriveEmptyState_titleRubbishBin")
-    /// [S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
+    /// [S]Your Cloud drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
     public static func cloudDriveIsAlmostFull(_ p1: Any, _ p2: Any) -> String {
       return Strings.tr("Localizable", "cloudDriveIsAlmostFull", String(describing: p1), String(describing: p2))
     }
-    /// [S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
+    /// [S]Your Cloud drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
     public static func cloudDriveIsFull(_ p1: Any, _ p2: Any) -> String {
       return Strings.tr("Localizable", "cloudDriveIsFull", String(describing: p1), String(describing: p2))
     }
@@ -667,7 +667,7 @@ public enum Strings {
     public static func downloading(_ p1: Any) -> String {
       return Strings.tr("Localizable", "Downloading %@", String(describing: p1))
     }
-    /// DOWNLOAD transfers
+    /// Download transfers
     public static let downloadInUppercaseTransfers = Strings.tr("Localizable", "downloadInUppercaseTransfers")
     /// Downloads
     public static let downloads = Strings.tr("Localizable", "downloads")
@@ -2225,7 +2225,7 @@ public enum Strings {
     public static let uploadSharedAlbums = Strings.tr("Localizable", "Upload Shared Albums")
     /// Upload videos for Live photos
     public static let uploadVideosForLivePhotos = Strings.tr("Localizable", "Upload Videos for Live Photos")
-    /// UPLOAD transfers
+    /// Upload transfers
     public static let uploadInUppercaseTransfers = Strings.tr("Localizable", "uploadInUppercaseTransfers")
     /// Uploads
     public static let uploads = Strings.tr("Localizable", "uploads")
@@ -3895,7 +3895,7 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description")
             }
             public enum MulitpleFieldsUpdate {
-              /// [B][Email] updated[/B] the meeting details scheduled for:
+              /// [B][Email] updated[/B] the details of the meeting scheduled for:
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description")
             }
             public enum New {
@@ -3921,7 +3921,7 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description")
             }
             public enum MulitpleFieldsUpdate {
-              /// [B][Email] updated[/B] the recurring meeting details scheduled for:
+              /// [B][Email] updated[/B] the details of the recurring meeting scheduled for:
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description")
             }
             public enum New {
@@ -3946,33 +3946,65 @@ public enum Strings {
             public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.titleUpdate.description")
           }
           public enum WeekDay {
-            public enum Fri {
-              /// Fri
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.fri.title")
+            public enum MidSentence {
+              public enum Fri {
+                /// Fri
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.fri.title")
+              }
+              public enum Mon {
+                /// Mon
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.mon.title")
+              }
+              public enum Sat {
+                /// Sat
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title")
+              }
+              public enum Sun {
+                /// Sun
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.sun.title")
+              }
+              public enum Thu {
+                /// Thu
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.thu.title")
+              }
+              public enum Tue {
+                /// Tue
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.tue.title")
+              }
+              public enum Wed {
+                /// Wed
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.midSentence.wed.title")
+              }
             }
-            public enum Mon {
-              /// Mon
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.mon.title")
-            }
-            public enum Sat {
-              /// Sat
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sat.title")
-            }
-            public enum Sun {
-              /// Sun
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sun.title")
-            }
-            public enum Thu {
-              /// Thu
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.thu.title")
-            }
-            public enum Tue {
-              /// Tue
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.tue.title")
-            }
-            public enum Wed {
-              /// Wed
-              public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.wed.title")
+            public enum SentenceStart {
+              public enum Fri {
+                /// Fri
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.fri.title")
+              }
+              public enum Mon {
+                /// Mon
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.mon.title")
+              }
+              public enum Sat {
+                /// Sat
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sat.title")
+              }
+              public enum Sun {
+                /// Sun
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sun.title")
+              }
+              public enum Thu {
+                /// Thu
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.thu.title")
+              }
+              public enum Tue {
+                /// Tue
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.tue.title")
+              }
+              public enum Wed {
+                /// Wed
+                public static let title = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.weekDay.sentenceStart.wed.title")
+              }
             }
           }
         }
@@ -4315,9 +4347,9 @@ public enum Strings {
         }
         public enum Recurring {
           public enum Daily {
-            /// Everyday, effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
+            /// Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
             public static let forever = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever")
-            /// Everyday, effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]
+            /// Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]
             public static let until = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until")
           }
           public enum Frequency {
@@ -4656,7 +4688,7 @@ public enum Strings {
           }
           public enum Occurrences {
             public enum List {
-              /// See more occurrences
+              /// See more
               public static let seeMoreOccurrences = Strings.tr("Localizable", "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences")
             }
           }

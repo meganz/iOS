@@ -853,13 +853,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>[WeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -873,13 +869,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>[WeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -893,13 +885,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>[WeekDaysList], and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDaysList], and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -913,13 +901,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>[WeekDaysList], and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>[WeekDaysList], and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -933,13 +917,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Day [MonthDay] of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Day [MonthDay] of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -953,13 +933,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Day [MonthDay] of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Day [MonthDay] of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -973,13 +949,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -993,13 +965,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -1013,13 +981,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -1033,13 +997,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -1053,13 +1013,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -1073,13 +1029,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -1093,13 +1045,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -1113,13 +1061,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -1133,13 +1077,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1153,13 +1093,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1173,13 +1109,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1193,13 +1125,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1213,13 +1141,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1233,13 +1157,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1253,13 +1173,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1273,13 +1189,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1293,16 +1205,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1313,13 +1221,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1333,13 +1237,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1353,13 +1253,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1373,13 +1269,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1393,13 +1285,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1413,13 +1301,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1433,13 +1317,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1453,13 +1333,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1473,13 +1349,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1493,16 +1365,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1513,13 +1381,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1533,13 +1397,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1553,13 +1413,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1573,13 +1429,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1593,13 +1445,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1613,13 +1461,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1633,13 +1477,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1653,13 +1493,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1673,13 +1509,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1693,16 +1525,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1713,13 +1541,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1733,13 +1557,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1753,13 +1573,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1773,13 +1589,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1793,13 +1605,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1813,13 +1621,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1833,13 +1637,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1853,13 +1653,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1873,13 +1669,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1893,16 +1685,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1913,13 +1701,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1933,13 +1717,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1953,13 +1733,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1973,13 +1749,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1993,13 +1765,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -2013,13 +1781,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -2033,13 +1797,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -2053,13 +1813,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -2073,13 +1829,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -2093,16 +1845,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -2113,13 +1861,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -2133,13 +1877,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -2153,13 +1893,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -2173,13 +1909,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -2193,13 +1925,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>First Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>First Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -2213,13 +1941,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -2233,13 +1957,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Second Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Second Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -2253,13 +1973,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -2273,13 +1989,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Third Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Third Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -2293,16 +2005,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -2313,13 +2021,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fourth Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fourth Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -2333,13 +2037,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -2353,13 +2053,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
+        <string>Fifth Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Fifth Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>

@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Применить к дупликату</string>
+        <string>Применить к дубликату</string>
         <key>few</key>
-        <string>Применить ко всем %d дупликатам</string>
+        <string>Применить ко всем %d дубликатам</string>
         <key>many</key>
-        <string>Применить ко всем %d дупликатам</string>
+        <string>Применить ко всем %d дубликатам</string>
         <key>other</key>
-        <string>Применить ко всем %d дупликатам</string>
+        <string>Применить ко всем %d дубликатам</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -853,13 +853,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждую неделю в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d недель в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -873,13 +873,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждую неделю в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d недель в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -893,13 +893,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждую неделю в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d недель в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -913,13 +913,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждую неделю в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d недель в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -933,13 +933,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -953,13 +953,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -973,13 +973,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -993,13 +993,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -1013,13 +1013,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -1033,13 +1033,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -1053,13 +1053,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -1073,13 +1073,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -1093,13 +1093,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -1113,13 +1113,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -1133,13 +1133,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1153,13 +1153,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1173,13 +1173,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1193,13 +1193,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1213,13 +1213,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1233,13 +1233,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1253,13 +1253,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1273,13 +1273,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1293,16 +1293,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1313,13 +1313,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1333,13 +1333,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1353,13 +1353,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1373,13 +1373,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1393,13 +1393,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1413,13 +1413,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1433,13 +1433,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1453,13 +1453,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1473,13 +1473,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1493,16 +1493,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1513,13 +1513,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1533,13 +1533,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1553,13 +1553,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1573,13 +1573,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1593,13 +1593,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1613,13 +1613,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1633,13 +1633,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1653,13 +1653,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1673,13 +1673,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1693,16 +1693,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1713,13 +1713,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1733,13 +1733,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1753,13 +1753,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1773,13 +1773,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1793,13 +1793,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1813,13 +1813,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1833,13 +1833,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1853,13 +1853,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1873,13 +1873,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1893,16 +1893,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -1913,13 +1913,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1933,13 +1933,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1953,13 +1953,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1973,13 +1973,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1993,13 +1993,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -2013,13 +2013,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -2033,13 +2033,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -2053,13 +2053,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -2073,13 +2073,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -2093,16 +2093,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -2113,13 +2113,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -2133,13 +2133,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -2153,13 +2153,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -2173,13 +2173,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -2193,13 +2193,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -2213,13 +2213,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -2233,13 +2233,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -2253,13 +2253,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -2273,13 +2273,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -2293,16 +2293,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
-    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourt</key>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@interval@</string>
@@ -2313,13 +2313,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -2333,13 +2333,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -2353,13 +2353,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Каждый месяц в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string></string>
+        <string>Каждые %d месяца в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string></string>
+        <string>Каждые %d месяцев в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string></string>
+        <string>Каждые %d месяца в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
