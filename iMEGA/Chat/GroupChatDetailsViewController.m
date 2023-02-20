@@ -354,7 +354,7 @@
 #pragma mark - IBActions
 
 - (IBAction)didTapPermissionsButton:(UIButton *)sender {
-    NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (sender.tag - 1) : sender.tag;
+    NSInteger index = [self shouldShowAddParticipants] ? (sender.tag - 1) : sender.tag;
     
     NSNumber *participant = [self.participantsMutableArray objectOrNilAtIndex:index];
     if (participant == nil) {
