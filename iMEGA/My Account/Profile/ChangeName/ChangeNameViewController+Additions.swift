@@ -100,17 +100,16 @@ extension ChangeNameViewController: UITextFieldDelegate {
         
         var shouldSaveButtonBeEnabled = true
         
-        switch textField.tag {
-        case TextFieldType.firstName.rawValue:
-            shouldSaveButtonBeEnabled = (text?.isEmpty ?? true) ? false : hasTextfieldBeenEdited(text ?? "", tag: textField.tag)
-        case TextFieldType.lastName.rawValue:
-            let hasLastNameBeenEdited = hasTextfieldBeenEdited(text ?? "", tag: textField.tag)
-            if hasLastNameBeenEdited && !(firstNameTextField.text?.isEmpty ?? true) {
-                shouldSaveButtonBeEnabled = true
-            } else {
-                shouldSaveButtonBeEnabled = hasTextfieldBeenEdited(firstNameTextField.text ?? "", tag: firstNameTextField.tag)
-            }
-        default: break
+        let hasCurrentTextfieldBeenEdited = hasTextfieldBeenEdited(text ?? "", tag: textField.tag)
+        let areAnyTextfieldsEmpty = (text?.isEmpty ?? true) || (textField.tag == TextFieldType.lastName.rawValue ? (firstNameTextField.text?.isEmpty ?? true) : (lastNameTextField.text?.isEmpty ?? true))
+        
+        if areAnyTextfieldsEmpty {
+            shouldSaveButtonBeEnabled = false
+        } else if hasCurrentTextfieldBeenEdited {
+            shouldSaveButtonBeEnabled = true
+        } else {
+            let secondaryTextField = textField.tag == TextFieldType.firstName.rawValue ? lastNameTextField : firstNameTextField
+            shouldSaveButtonBeEnabled = hasTextfieldBeenEdited(secondaryTextField?.text ?? "", tag: secondaryTextField?.tag ?? 0)
         }
         
         saveButton.isEnabled = shouldSaveButtonBeEnabled
