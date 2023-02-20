@@ -1,0 +1,120 @@
+import MEGASwift
+import MEGADomain
+
+extension ChangeNameViewController: UITextFieldDelegate {
+    private enum Constants {
+        static let maxNumOfCharacters: Int = 40
+    }
+    
+    private enum TextFieldType: Int {
+        case firstName = 0
+        case lastName = 1
+    }
+    
+    private func hasValidNameFormat() -> Bool {
+        firstNameTextField.text = firstNameTextField.text?.trim
+        lastNameTextField.text = lastNameTextField.text?.trim
+        
+        if firstNameTextField.text?.isEmpty ?? true {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.nameInvalidFormat)
+            firstNameTextField.becomeFirstResponder()
+            return false
+        }
+        
+        return true
+    }
+    
+    private func update(attribute: UserAttributeEntity, value: String) {
+        Task { @MainActor in
+            let userAttributeUC = UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+            SVProgressHUD.show()
+            do {
+                try await userAttributeUC.updateUserAttribute(attribute, value: value)
+                SVProgressHUD.showSuccess(withStatus: Strings.Localizable.youHaveSuccessfullyChangedYourProfile)
+                dismiss(animated: true)
+            } catch let megaError as MEGAError {
+                SVProgressHUD.showError(withStatus: NSLocalizedString(megaError.name, comment: ""))
+            } catch {
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField.tag {
+        case TextFieldType.firstName.rawValue:
+            lastNameTextField.becomeFirstResponder()
+        case TextFieldType.lastName.rawValue:
+            validateAndSaveUpdatedName()
+        default: break
+        }
+        
+        return true
+    }
+    
+    @objc func validateAndSaveUpdatedName() {
+        firstNameTextField.resignFirstResponder()
+        lastNameTextField.resignFirstResponder()
+        
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            if hasValidNameFormat() {
+                saveButton.isEnabled = false
+                
+                if hasTextfieldBeenEdited(firstNameTextField.text ?? "", tag: firstNameTextField.tag) {
+                    update(attribute: .firstName, value: firstNameTextField.text ?? "")
+                }
+                
+                if hasTextfieldBeenEdited(lastNameTextField.text ?? "", tag: lastNameTextField.tag) {
+                    update(attribute: .lastName, value: lastNameTextField.text ?? "")
+                }
+            }
+        } else {
+            saveButton.isEnabled = true
+        }
+    }
+    
+    @objc func hasTextfieldBeenEdited(_ currentText: String, tag: Int) -> Bool {
+        let trimmedText = currentText.trim
+        switch tag {
+        case TextFieldType.firstName.rawValue:
+            return firstName != trimmedText
+        case TextFieldType.lastName.rawValue:
+            return lastName != trimmedText
+        default: break
+        }
+        
+        return false
+    }
+    
+    //MARK: - UITextFieldDelegate
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        switch textField.tag {
+        case TextFieldType.firstName.rawValue, TextFieldType.lastName.rawValue:
+            textField.text = textField.text?.trim
+        default: break
+        }
+    }
+    
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        
+        var shouldSaveButtonBeEnabled = true
+        
+        switch textField.tag {
+        case TextFieldType.firstName.rawValue:
+            shouldSaveButtonBeEnabled = (text?.isEmpty ?? true) ? false : hasTextfieldBeenEdited(text ?? "", tag: textField.tag)
+        case TextFieldType.lastName.rawValue:
+            let hasLastNameBeenEdited = hasTextfieldBeenEdited(text ?? "", tag: textField.tag)
+            if hasLastNameBeenEdited && !(firstNameTextField.text?.isEmpty ?? true) {
+                shouldSaveButtonBeEnabled = true
+            } else {
+                shouldSaveButtonBeEnabled = hasTextfieldBeenEdited(firstNameTextField.text ?? "", tag: firstNameTextField.tag)
+            }
+        default: break
+        }
+        
+        saveButton.isEnabled = shouldSaveButtonBeEnabled
+        
+        return text?.count ?? 0 <= Constants.maxNumOfCharacters
+    }
+}

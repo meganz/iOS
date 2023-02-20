@@ -182,3 +182,4 @@
 #import "VerifyCredentialsViewController.h"
 #import "VideoUploadsTableViewController.h"
 #import "MEGALogger.h"
+#import "ChangeNameViewController.h"
