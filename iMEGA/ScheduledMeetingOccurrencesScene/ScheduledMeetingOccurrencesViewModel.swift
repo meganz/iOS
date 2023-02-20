@@ -79,7 +79,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
                 id: UUID().uuidString,
                 date: dateFormatter.localisedString(from: $0.startDate),
                 title: scheduledMeeting.title,
-                time: timeFormatter.localisedString(from: scheduledMeeting.startDate) + " - " + timeFormatter.localisedString(from: scheduledMeeting.endDate))
+                time: timeFormatter.localisedString(from: $0.startDate) + " - " + timeFormatter.localisedString(from: $0.endDate))
         }
         DispatchQueue.main.async {
             self.displayOccurrences.append(contentsOf: newDisplayOccurrences)

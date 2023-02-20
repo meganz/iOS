@@ -4346,6 +4346,12 @@ public enum Strings {
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
         }
         public enum Recurring {
+          /// Daily
+          public static let daily = Strings.tr("Localizable", "meetings.scheduled.recurring.daily")
+          /// Monthly
+          public static let monthly = Strings.tr("Localizable", "meetings.scheduled.recurring.monthly")
+          /// Weekly
+          public static let weekly = Strings.tr("Localizable", "meetings.scheduled.recurring.weekly")
           public enum Daily {
             /// Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
             public static let forever = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever")

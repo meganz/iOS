@@ -80,6 +80,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var title: String = Strings.Localizable.Chat.title
     @Published var myAvatarBarButton: UIBarButtonItem?
     @Published var isConnectedToNetwork: Bool
+    @Published var isFirstMeetingsLoad: Bool
     @Published var bottomViewHeight: CGFloat = 0
     @Published var displayChatRooms: [ChatRoomViewModel]?
     
@@ -130,6 +131,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         self.searchText = ""
         self.isSearchActive = false
+        self.isFirstMeetingsLoad = true
         
         configureTitle()
     }
@@ -167,100 +169,6 @@ final class ChatRoomsListViewModel: ObservableObject {
             fetchMeetings()
         } else {
             fetchNonMeetingChats()
-        }
-    }
-    
-    private func fetchNonMeetingChats() {
-        guard let chatListItems = chatUseCase.chatsList(ofType: .nonMeeting), isViewOnScreen else {
-            MEGALogDebug("Unable to fetch chat list items")
-            return
-        }
-        
-        chatRooms = chatListItems.map(constructChatRoomViewModel)
-        filterChats()
-    }
-    
-    private func fetchMeetings() {
-        guard let chatListItems = chatUseCase.chatsList(ofType: .meeting), isViewOnScreen else {
-            MEGALogDebug("Unable to fetch chat list items")
-            return
-        }
-        
-        fetchFutureScheduledMeetings()
-        
-        let futureScheduledMeetingsChatIds: [ChatIdEntity] = self.futureMeetings?.flatMap(\.allChatIds) ?? []
-        pastMeetings = chatListItems.compactMap { chatListItem in
-            guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
-                return nil
-            }
-            
-            return constructChatRoomViewModel(forChatListItem: chatListItem)
-        }
-        
-        filterMeetings()
-    }
-    
-    private func fetchFutureScheduledMeetings() {
-        let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetings()
-        let sortedScheduledMeetings = scheduledMeetings.sorted { $0.startDate < $1.startDate}
-        let futureScheduledMeetings = sortedScheduledMeetings.filter {
-            if $0.rules.frequency == .invalid {
-                return $0.endDate >= Date()
-            } else {
-                if let until = $0.rules.until  {
-                    return until >= Date()
-                } else {
-                    return true
-                }
-            }
-        }
-        populateFutureMeetings(futureScheduledMeetings)
-    }
-    
-    private func filterChats() {
-        if searchText.isNotEmpty {
-            displayChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
-        } else {
-            displayChatRooms = chatRooms
-        }
-    }
-    
-    private func filterMeetings() {
-        if searchText.isNotEmpty {
-            displayPastMeetings = pastMeetings?.filter { $0.contains(searchText: searchText)}
-            displayFutureMeetings = futureMeetings?.compactMap { $0.filter(withSearchText: searchText) }
-        } else {
-            displayPastMeetings = pastMeetings
-            displayFutureMeetings = futureMeetings
-        }
-    }
-    
-    private func populateFutureMeetings(_ meetings: [ScheduledMeetingEntity]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, d MMM"
-
-        self.futureMeetings = meetings.reduce([FutureMeetingSection]()) { partialResult, meeting in
-            let key: String
-            if Calendar.current.isDateInToday(meeting.startDate) {
-                key = Strings.Localizable.today
-            } else {
-                key = dateFormatter.localisedString(from: meeting.startDate)
-            }
-            
-            var result = partialResult
-            let futureMeetingViewModel = constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting)
-            
-            if let index = result.firstIndex(where: { $0.title == key }) {
-                let futureMeetingSection = result[index]
-                result[index] = FutureMeetingSection(
-                    title: futureMeetingSection.title,
-                    items: futureMeetingSection.items + [futureMeetingViewModel]
-                )
-            } else {
-                result.append(FutureMeetingSection(title: key, items: [futureMeetingViewModel]))
-            }
-            
-            return result
         }
     }
     
@@ -364,6 +272,123 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     //MARK: - Private
+    private func fetchNonMeetingChats() {
+        guard let chatListItems = chatUseCase.chatsList(ofType: .nonMeeting), isViewOnScreen else {
+            MEGALogDebug("Unable to fetch chat list items")
+            return
+        }
+        
+        chatRooms = chatListItems.map(constructChatRoomViewModel)
+        filterChats()
+    }
+    
+    private func fetchMeetings() {
+        guard let chatListItems = chatUseCase.chatsList(ofType: .meeting), isViewOnScreen else {
+            MEGALogDebug("Unable to fetch chat list items")
+            return
+        }
+        
+        fetchFutureScheduledMeetings()
+        
+        let futureScheduledMeetingsChatIds: [ChatIdEntity] = self.futureMeetings?.flatMap(\.allChatIds) ?? []
+        pastMeetings = chatListItems.compactMap { chatListItem in
+            guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
+                return nil
+            }
+            
+            return constructChatRoomViewModel(forChatListItem: chatListItem)
+        }
+        
+        filterMeetings()
+    }
+    
+    private func fetchFutureScheduledMeetings() {
+        let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetings()
+        let futureScheduledMeetings = scheduledMeetings.filter {
+            if $0.parentScheduledId != .invalid {
+                return false
+            }
+            if $0.rules.frequency == .invalid {
+                return $0.endDate >= Date()
+            } else {
+                if let until = $0.rules.until  {
+                    return until >= Date()
+                } else {
+                    return true
+                }
+            }
+        }
+        
+        Task {
+            let recurringMeetingsNextDates = try await scheduledMeetingUseCase.recurringMeetingsNextDates(futureScheduledMeetings)
+            populateFutureMeetings(futureScheduledMeetings, recurringMeetingsNextDates: recurringMeetingsNextDates)
+        }
+    }
+    
+    private func filterChats() {
+        if searchText.isNotEmpty {
+            displayChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
+        } else {
+            displayChatRooms = chatRooms
+        }
+    }
+    
+    private func filterMeetings() {
+        if searchText.isNotEmpty {
+            displayPastMeetings = pastMeetings?.filter { $0.contains(searchText: searchText)}
+            displayFutureMeetings = futureMeetings?.compactMap { $0.filter(withSearchText: searchText) }
+        } else {
+            displayPastMeetings = pastMeetings
+            displayFutureMeetings = futureMeetings
+        }
+    }
+    
+    private func populateFutureMeetings(_ meetings: [ScheduledMeetingEntity], recurringMeetingsNextDates: [ChatIdEntity:Date]) {
+        DispatchQueue.main.async {
+            let futureMeetingsTemp = meetings.reduce([FutureMeetingSection]()) { partialResult, meeting in
+                let date: Date
+                
+                if meeting.rules.frequency == .invalid {
+                    date = meeting.startDate
+                } else {
+                    date = recurringMeetingsNextDates[meeting.scheduledId] ?? meeting.startDate
+                }
+                
+                let key = self.formatedDateString(date)
+                
+                var result = partialResult
+                let futureMeetingViewModel = self.constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting)
+                
+                if let index = result.firstIndex(where: { $0.title == key }) {
+                    let futureMeetingSection = result[index]
+                    result[index] = FutureMeetingSection(
+                        title: futureMeetingSection.title,
+                        date: futureMeetingSection.date,
+                        items: futureMeetingSection.items + [futureMeetingViewModel]
+                    )
+                } else {
+                    result.append(FutureMeetingSection(title: key, date: date, items: [futureMeetingViewModel]))
+                }
+                return result
+            }
+            self.futureMeetings = futureMeetingsTemp.sorted { $0.date < $1.date }
+            self.filterMeetings()
+            if self.isFirstMeetingsLoad {
+                self.isFirstMeetingsLoad.toggle()
+            }
+        }
+    }
+    
+    private func formatedDateString(_ date: Date) -> String {
+        if Calendar.current.isDateInToday(date) {
+            return Strings.Localizable.today
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE, d MMM"
+            return dateFormatter.string(from: date)
+        }
+    }
+
     private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
                                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))

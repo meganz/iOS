@@ -18,17 +18,27 @@ struct FutureMeetingRoomView: View {
                 )
             }
             
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 3) {
                     Text(viewModel.title)
                         .font(.subheadline)
+                    if viewModel.isRecurring {
+                        Image(uiImage: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.image)
+                            .resizable()
+                            .frame(width: 12, height: 12)
+                    }
                     if viewModel.isMuted {
                         Image(uiImage: Asset.Images.Chat.mutedChat.image)
                     }
                 }
-                Text(viewModel.time)
-                    .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
-                    .font(.caption)
+                HStack(spacing: 3) {
+                    Text(viewModel.time)
+                        .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
+                        .font(.caption)
+                    Text(viewModel.recurrence)
+                        .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
+                        .font(.caption)
+                }
             }
             
             Spacer()
