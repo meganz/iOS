@@ -28,7 +28,7 @@ final class SlideShowViewModel: ViewModelType {
     
     private var dataSource: SlideShowDataSourceProtocol
     private let slideShowUseCase: SlideShowUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     
     var configuration: SlideShowConfigurationEntity
     
@@ -56,13 +56,13 @@ final class SlideShowViewModel: ViewModelType {
     
     init(dataSource: SlideShowDataSourceProtocol,
          slideShowUseCase: SlideShowUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         accountUseCase: AccountUseCaseProtocol) {
         
         self.dataSource = dataSource
         self.slideShowUseCase = slideShowUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         
-        if let userHandle = userUseCase.myHandle {
+        if let userHandle = accountUseCase.currentUser?.handle {
             configuration = slideShowUseCase.loadConfiguration(forUser: userHandle)
         } else {
             configuration = slideShowUseCase.defaultConfig
@@ -132,7 +132,7 @@ extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
     
     func restart(withConfig config: SlideShowConfigurationEntity) {
         do {
-            if let userHandle = userUseCase.myHandle {
+            if let userHandle = accountUseCase.currentUser?.handle {
                 try slideShowUseCase.saveConfiguration(config: config, forUser: userHandle)
             }
         } catch {

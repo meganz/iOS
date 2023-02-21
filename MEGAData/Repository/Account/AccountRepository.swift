@@ -3,13 +3,29 @@ import MEGADomain
 
 struct AccountRepository: AccountRepositoryProtocol {
     static var newRepo: AccountRepository {
-        AccountRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        AccountRepository(sdk: MEGASdk.shared)
     }
     
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
+    }
+    
+    var currentUser: UserEntity? {
+        sdk.myUser?.toUserEntity()
+    }
+    
+    var isGuest: Bool {
+        sdk.isGuestAccount
+    }
+    
+    func isLoggedIn() -> Bool {
+        sdk.isLoggedIn() > 0
+    }
+    
+    func contacts() -> [UserEntity] {
+        sdk.contacts().toUserEntities()
     }
     
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {

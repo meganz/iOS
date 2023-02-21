@@ -1,6 +1,7 @@
-
 import XCTest
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
 
 class MEGAavatarGeneratingUseCase: XCTestCase {
     
@@ -10,7 +11,7 @@ class MEGAavatarGeneratingUseCase: XCTestCase {
         let useCaseUT = MEGAAavatarGeneratingUseCase(
             storeUserClient: .foundAUser,
             megaAvatarClient: .foundImage,
-            megaUserClient: .foundNil
+            accountUseCase: MockAccountUseCase(currentUser: nil)
         )
         let avatarName = useCaseUT.avatarName()
         XCTAssertNil(avatarName)
@@ -24,7 +25,7 @@ class MEGAavatarGeneratingUseCase: XCTestCase {
         let useCaseUT = MEGAAavatarGeneratingUseCase(
             storeUserClient: .foundNil,
             megaAvatarClient: .foundImage,
-            megaUserClient: .foundUser
+            accountUseCase: MockAccountUseCase()
         )
         let avatarName = useCaseUT.avatarName()
         XCTAssertNil(avatarName)
@@ -34,7 +35,7 @@ class MEGAavatarGeneratingUseCase: XCTestCase {
         let useCaseUT = MEGAAavatarGeneratingUseCase(
             storeUserClient: .foundAUser,
             megaAvatarClient: .foundImage,
-            megaUserClient: .foundUser
+            accountUseCase: MockAccountUseCase()
         )
 
         let avatarName = useCaseUT.avatarName()

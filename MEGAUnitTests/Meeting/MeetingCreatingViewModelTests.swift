@@ -17,7 +17,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                  devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                  userImageUseCase: MockUserImageUseCase(),
-                                                 userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                 accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  link: nil,
                                                  userHandle: 0)
         test(viewModel: viewModel,
@@ -42,7 +42,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                  devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                  userImageUseCase: MockUserImageUseCase(),
-                                                 userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                 accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  link: "",
                                                  userHandle: 0)
         
@@ -69,7 +69,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                  devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                  userImageUseCase: MockUserImageUseCase(),
-                                                 userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                 accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  link: nil,
                                                  userHandle: 0)
         test(viewModel: viewModel,
@@ -92,7 +92,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                  devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                  userImageUseCase: MockUserImageUseCase(),
-                                                 userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                 accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  link: nil,
                                                  userHandle: 0)
         
@@ -114,7 +114,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                  devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                  userImageUseCase: MockUserImageUseCase(),
-                                                 userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false),
+                                                 accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  link: nil,
                                                  userHandle: 0)
         

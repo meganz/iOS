@@ -7,7 +7,7 @@ final class UserAvatarViewModel: ObservableObject {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private var isRightToLeftLanguage: Bool?
 
     @Published private(set) var primaryAvatar: UIImage?
@@ -22,13 +22,13 @@ final class UserAvatarViewModel: ObservableObject {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol) {
+         accountUseCase: AccountUseCaseProtocol) {
         self.userId = userId
         self.chatId = chatId
         self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
     }
 
     //MARK: - Interface methods
@@ -125,7 +125,7 @@ final class UserAvatarViewModel: ObservableObject {
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
-        if userHandle == userUseCase.myHandle {
+        if userHandle == accountUseCase.currentUser?.handle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
             let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatId: chatId)

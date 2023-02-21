@@ -46,7 +46,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let contactsUseCase: ContactsUseCaseProtocol
     private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
@@ -112,7 +112,7 @@ final class ChatRoomsListViewModel: ObservableObject {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          contactsUseCase: ContactsUseCaseProtocol,
          networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
@@ -124,7 +124,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.chatViewMode = chatViewMode
@@ -409,7 +409,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     sdk: MEGASdkManager.sharedMEGASdk(),
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
-            userUseCase: UserUseCase(repo: .live),
+            accountUseCase: accountUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl
@@ -436,7 +436,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     sdk: MEGASdkManager.sharedMEGASdk(),
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
-            userUseCase: UserUseCase(repo: .live),
+            accountUseCase: accountUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
@@ -490,7 +490,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] statusForUser in
-                guard let self, let myHandle = self.userUseCase.myHandle, statusForUser.0 == myHandle else { return }
+                guard let self, let myHandle = self.accountUseCase.currentUser?.handle, statusForUser.0 == myHandle else { return }
                 self.chatStatus = statusForUser.1
             })
             .store(in: &subscriptions)

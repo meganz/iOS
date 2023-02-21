@@ -43,16 +43,16 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
     private let userImageUseCase: UserImageUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     
     init(viewModel: MeetingFloatingPanelViewModel,
          userImageUseCase: UserImageUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         super.init(nibName: nil, bundle: nil)
     }
@@ -136,7 +136,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .enabledLoudSpeaker(let enabled):
             speakerQuickActionView?.isSelected = enabled
         case .microphoneMuted(let muted):
-            if let myHandle = userUseCase.myHandle,
+            if let myHandle = accountUseCase.currentUser?.handle,
                let participant = callParticipants.first(where: { $0.participantId == myHandle }) {
                 participant.audio = muted ? .off : .on
                 participantsTableView.reloadData()
@@ -145,7 +145,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .updatedCameraPosition(let position):
             updatedCameraPosition(position)
         case .cameraTurnedOn(let on):
-            if let myHandle = userUseCase.myHandle,
+            if let myHandle = accountUseCase.currentUser?.handle,
                let participant = callParticipants.first(where: { $0.participantId == myHandle }) {
                 participant.video = on ? .on : .off
                 participantsTableView.reloadData()
@@ -268,7 +268,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
         cell.viewModel = MeetingParticipantViewModel(participant: callParticipants[indexPath.row],
                                                      userImageUseCase: userImageUseCase,
-                                                     userUseCase: userUseCase,
+                                                     accountUseCase: accountUseCase,
                                                      chatRoomUseCase: chatRoomUseCase) { [weak self] participant, button in
             guard let self = self else { return }
             self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))

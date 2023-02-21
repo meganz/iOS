@@ -28,7 +28,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
-            userUseCase: UserUseCase(repo: .live),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)

@@ -13,23 +13,23 @@ protocol MEGAAvatarUseCaseProtocol {
 final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
 
     private let avatarRepository: SDKAvatarClient
-
     private let avatarFileSystemClient: FileSystemImageCacheClient
-
-    private let megaUserClient: SDKUserClient
-
-    private var thumbnailRepo: ThumbnailRepositoryProtocol
-
+    private let accountUseCase: AccountUseCaseProtocol
+    private let thumbnailRepo: ThumbnailRepositoryProtocol
+    private let handleUseCase: MEGAHandleUseCaseProtocol
+    
     init(
         megaAvatarClient: SDKAvatarClient,
         avatarFileSystemClient: FileSystemImageCacheClient,
-        megaUserClient: SDKUserClient,
-        thumbnailRepo: ThumbnailRepositoryProtocol
+        accountUseCase: AccountUseCaseProtocol,
+        thumbnailRepo: ThumbnailRepositoryProtocol,
+        handleUseCase: MEGAHandleUseCaseProtocol
     ) {
         self.avatarRepository = megaAvatarClient
         self.avatarFileSystemClient = avatarFileSystemClient
-        self.megaUserClient = megaUserClient
+        self.accountUseCase = accountUseCase
         self.thumbnailRepo = thumbnailRepo
+        self.handleUseCase = handleUseCase
     }
 
     // MARK: - Shared Avatar Caching Path
@@ -41,7 +41,11 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     // MARK: - Search Local Cached Avatar
 
     func getCachedAvatarImage() -> UIImage? {
-        guard let userBase64Handle = megaUserClient.currentUser()?.base64Handle else {
+        guard let handle = accountUseCase.currentUser?.handle else {
+            return nil
+        }
+        
+        guard let userBase64Handle = handleUseCase.base64Handle(forUserHandle: handle) else {
             return nil
         }
 
@@ -50,7 +54,12 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     }
 
     func loadCachedAvatarImage(completion: @escaping (UIImage?) -> Void) {
-        guard let userBase64Handle = megaUserClient.currentUser()?.base64Handle else {
+        guard let handle = accountUseCase.currentUser?.handle else {
+            completion(nil)
+            return
+        }
+        
+        guard let userBase64Handle = handleUseCase.base64Handle(forUserHandle: handle) else {
             completion(nil)
             return
         }
@@ -62,14 +71,17 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     }
 
     func loadRemoteAvatarImage(completion: @escaping (UIImage?) -> Void) {
-        guard let userBase64Handle = megaUserClient.currentUser()?.base64Handle else {
+        guard let handle = accountUseCase.currentUser?.handle else {
+            completion(nil)
+            return
+        }
+        
+        guard let userBase64Handle = handleUseCase.base64Handle(forUserHandle: handle) else {
             completion(nil)
             return
         }
 
         let localAvatarCachingPath = cachedAvatarFilePath(of: userBase64Handle)
-        if let userHandle = megaUserClient.currentUser()?.handle {
-            avatarRepository.loadUserAvatar(userHandle, localAvatarCachingPath, completion)
-        }
+        avatarRepository.loadUserAvatar(handle, localAvatarCachingPath, completion)
     }
 }

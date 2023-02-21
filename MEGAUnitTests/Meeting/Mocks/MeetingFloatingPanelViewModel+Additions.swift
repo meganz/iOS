@@ -14,7 +14,7 @@ extension MeetingFloatingPanelViewModel {
         devicePermissionUseCase: DevicePermissionCheckingProtocol = DevicePermissionCheckingProtocol.mock(),
         captureDeviceUseCase: CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
         localVideoUseCase: CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
-        userUseCase: UserUseCaseProtocol = MockUserUseCase(),
+        accountUseCase: AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         isTesting: Bool = true
     ) {
@@ -29,7 +29,7 @@ extension MeetingFloatingPanelViewModel {
             devicePermissionUseCase: devicePermissionUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
             localVideoUseCase: localVideoUseCase,
-            userUseCase: userUseCase,
+            accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase
         )
     }

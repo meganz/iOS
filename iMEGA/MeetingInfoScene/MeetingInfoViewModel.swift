@@ -25,7 +25,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private var chatLinkUseCase: ChatLinkUseCaseProtocol
     private let router: MeetingInfoRouting
     @Published var isAllowNonHostToAddParticipantsOn = true
@@ -58,7 +58,7 @@ final class MeetingInfoViewModel: ObservableObject {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          chatLinkUseCase: ChatLinkUseCaseProtocol
     ) {
         self.scheduledMeeting = scheduledMeeting
@@ -66,7 +66,7 @@ final class MeetingInfoViewModel: ObservableObject {
         self.chatRoomUseCase = chatRoomUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
         
@@ -78,7 +78,7 @@ final class MeetingInfoViewModel: ObservableObject {
                 chatRoomUseCase: chatRoomUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
-                userUseCase: userUseCase
+                accountUseCase: accountUseCase
             )
             self.isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
         } else {

@@ -42,7 +42,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
                 thumbnailRepo: ThumbnailRepository.newRepo,
                 fileSystemRepo: FileSystemRepository.newRepo),
             chatUseCase: chatUseCase,
-            userUseCase: UserUseCase(repo: .live)
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
         )
         
         chatRoomUseCase.userDisplayName(forPeerId: chatParticipantId, chatId: chatRoom.chatId) { result in

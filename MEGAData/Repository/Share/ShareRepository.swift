@@ -13,6 +13,14 @@ struct ShareRepository: ShareRepositoryProtocol {
         self.sdk = sdk
     }
     
+    func user(sharing node: NodeEntity) -> UserEntity? {
+        guard let megaNode = node.toMEGANode(in: sdk) else {
+            return nil
+        }
+        
+        return sdk.userFrom(inShare: megaNode)?.toUserEntity()
+    }
+    
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
         sdk.publicLinks(order.toMEGASortOrderType())
             .toNodeEntities()

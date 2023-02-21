@@ -31,7 +31,7 @@ class SlideshowViewModelTests: XCTestCase {
                     timeIntervalForSlideInSeconds: .normal,
                     isRepeat: false, includeSubfolders: false),
                 forUser: 1),
-            userUseCase: MockUserUseCase()
+            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 3))
         )
     }
 
@@ -108,7 +108,7 @@ class SlideshowViewModelTests: XCTestCase {
                     timeIntervalForSlideInSeconds: .normal,
                     isRepeat: false, includeSubfolders: false),
                 forUser: 100),
-            userUseCase: MockUserUseCase()
+            accountUseCase: MockAccountUseCase()
         )
 
         let expectation = expectation(description: "Initial Photo Download Callback")

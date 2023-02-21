@@ -17,7 +17,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     private let participant: CallParticipantEntity
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
@@ -25,7 +25,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     private var avatarRefetchTask: Task<Void, Never>?
     
     private var shouldHideContextMenu: Bool {
-        if userUseCase.isGuest {
+        if accountUseCase.isGuest {
             return true
         }
         
@@ -33,7 +33,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private var isMe: Bool {
-        return userUseCase.myHandle == participant.participantId
+        accountUseCase.currentUser?.handle == participant.participantId
     }
     
     private var isOneToOneChat: Bool {
@@ -44,12 +44,12 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          contextMenuTappedHandler: @escaping (CallParticipantEntity, UIButton) -> Void) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.contextMenuTappedHandler = contextMenuTappedHandler
     }

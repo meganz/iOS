@@ -36,7 +36,7 @@ final class ScheduledMeetingOccurrencesRouter: NSObject {
                         sdk: MEGASdkManager.sharedMEGASdk(),
                         chatSDK: MEGASdkManager.sharedMEGAChatSdk())
                 ),
-                userUseCase: UserUseCase(repo: .live)
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
             )
         }
 

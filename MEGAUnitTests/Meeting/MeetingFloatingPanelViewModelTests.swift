@@ -21,7 +21,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -49,7 +49,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -80,7 +80,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -113,7 +113,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDevice,
                                                       localVideoUseCase: localVideoUseCase,
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -141,7 +141,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -169,7 +169,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -197,7 +197,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -227,7 +227,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(containerRouter.dismiss_calledTimes == 1)
@@ -253,7 +253,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(containerRouter.dismiss_calledTimes == 1)
@@ -279,7 +279,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         viewModel.participantJoined(participant: CallParticipantEntity())
 
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
@@ -306,7 +306,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         viewModel.participantJoined(participant: CallParticipantEntity())
         viewModel.participantJoined(participant: CallParticipantEntity())
         
@@ -333,7 +333,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(containerRouter.shareLink_calledTimes == 1)
     }
@@ -354,134 +354,70 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 0)
     }
     
     func testAction_inviteParticipants() {
         let router = MockMeetingFloatingPanelRouter()
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let accountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
     
     func testAction_inviteParticipants_showAllContactsAlreadyAddedAlert() {
         let router = MockMeetingFloatingPanelRouter()
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let accountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase, chatRoomUseCase: chatRoomUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
     
     func testAction_inviteParticipants_showNoAvailableContactsAlert() {
         let router = MockMeetingFloatingPanelRouter()
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .blocked
-                )
-            )
+        let accountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
         ])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.showNoAvailableContactsAlert_CalledTimes == 1)
     }
     
     func testAction_inviteParticipants_singleContactBlocked() {
         let router = MockMeetingFloatingPanelRouter()
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .blocked
-                )
-            )
+        let accountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
         ])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 0)
     }
     
     func testAction_inviteParticipants_singleContactVisible() {
         let router = MockMeetingFloatingPanelRouter()
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let accountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
     
     func testAction_inviteParticipants_singleAddedContactAndABlockedContact() {
         let router = MockMeetingFloatingPanelRouter()
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            ),
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 102,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .blocked
-                )
-            )
+        let mockAccountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible),
+            UserEntity(email: "user@email.com", handle: 102, visibility: .blocked),
         ])
-        
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, userUseCase: userUseCase, chatRoomUseCase: chatRoomUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: mockAccountUseCase, chatRoomUseCase: chatRoomUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.showAllContactsAlreadyAddedAlert_CalledTimes == 1)
     }
@@ -489,22 +425,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_inviteParticipants_reAddParticipantScenario() {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let mockAccountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomUseCase = MockChatRoomUseCase()
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
-            userUseCase: userUseCase,
+            accountUseCase: mockAccountUseCase,
             chatRoomUseCase: chatRoomUseCase
         )
         viewModel.dispatch(.inviteParticipants)
@@ -529,7 +456,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         test(viewModel: viewModel, action: .onContextMenuTap(presenter: UIViewController(), sender: UIButton(), participant: particpant), expectedCommands: [])
         XCTAssert(router.showContextMenu_calledTimes == 1)
@@ -552,7 +479,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: true), expectedCommands: [.microphoneMuted(muted: true)])
         XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
     }
@@ -574,7 +501,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: MockCaptureDeviceUseCase(),
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: false), expectedCommands: [.microphoneMuted(muted: false)])
         XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
     }
@@ -599,7 +526,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: localVideoUseCase,
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
              expectedCommands: [
@@ -629,7 +556,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: localVideoUseCase,
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
              expectedCommands: [
@@ -659,7 +586,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: localVideoUseCase,
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel,
              action: .turnCamera(on: false),
              expectedCommands: [
@@ -689,7 +616,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: localVideoUseCase,
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: true),
@@ -721,7 +648,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: localVideoUseCase,
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: false),
@@ -752,7 +679,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel,
              action: .switchCamera(backCameraOn: false),
@@ -783,7 +710,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel,
              action: .enableLoudSpeaker,
@@ -812,7 +739,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel,
              action: .disableLoudSpeaker,
@@ -842,7 +769,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       devicePermissionUseCase: devicePermissonCheckingUseCase,
                                                       captureDeviceUseCase: captureDeviceUseCase,
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
-                                                      userUseCase: MockUserUseCase(handle: 100, isLoggedIn: true, isGuest: false))
+                                                      accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         test(viewModel: viewModel,
              action: .makeModerator(participant: particpant),
@@ -855,24 +782,15 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled() {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let mockAccountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomEntity = ChatRoomEntity(chatId: 100, isOpenInviteEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
             chatRoom: chatRoomEntity,
-            userUseCase: userUseCase,
+            accountUseCase: mockAccountUseCase,
             chatRoomUseCase: chatRoomUseCase
         )
         
@@ -895,24 +813,15 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled() {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let mockAccountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomEntity = ChatRoomEntity(chatId: 100, isOpenInviteEnabled: false)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
             chatRoom: chatRoomEntity,
-            userUseCase: userUseCase,
+            accountUseCase: mockAccountUseCase,
             chatRoomUseCase: chatRoomUseCase
         )
         
