@@ -111,7 +111,8 @@ final class MockNameCollisionRouter: NameCollisionViewRouting {
     var dismiss_calledTimes = 0
     var showCopyOrMoveSuccess_calledTimes = 0
     var showCopyOrMoveError_calledTimes = 0
-    
+    var showProgressIndicator_calledTimes = 0
+
     func showNameCollisionsView() {
         showNameCollisionsView_calledTimes += 1
     }
@@ -130,5 +131,9 @@ final class MockNameCollisionRouter: NameCollisionViewRouting {
     
     func showCopyOrMoveError() {
         showCopyOrMoveError_calledTimes += 1
+    }
+    
+    func showProgressIndicator() {
+        showProgressIndicator_calledTimes += 1
     }
 }

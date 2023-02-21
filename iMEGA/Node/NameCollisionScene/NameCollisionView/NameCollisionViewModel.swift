@@ -7,6 +7,7 @@ protocol NameCollisionViewRouting: Routing {
     func dismiss()
     func showCopyOrMoveSuccess()
     func showCopyOrMoveError()
+    func showProgressIndicator()
 }
 
 final class NameCollisionViewModel: ObservableObject {
@@ -151,6 +152,7 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     private func applyToAllMoveOrCopyCollisions(_ action: NameCollisionActionType) {
+        router.showProgressIndicator()
         for i in 0..<collisions.count {
             var collision = collisions[i]
             collision.collisionAction = action

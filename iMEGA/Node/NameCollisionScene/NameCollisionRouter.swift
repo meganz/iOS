@@ -48,6 +48,8 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     }
     
     func dismiss() {
+        SVProgressHUD.setDefaultMaskType(.none)
+        SVProgressHUD.dismiss()
         baseViewController?.dismiss(animated: true)
     }
     
@@ -80,5 +82,10 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     func showCopyOrMoveError() {
         dismiss()
         SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
+    }
+    
+    func showProgressIndicator() {
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.show()
     }
 }
