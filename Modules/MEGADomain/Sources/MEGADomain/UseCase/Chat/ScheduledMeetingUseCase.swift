@@ -42,7 +42,9 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
         for meeting in meetings {
             if meeting.rules.frequency != .invalid {
                 let occurrences = try await scheduledMeetingOccurrencesByChat(chatId: meeting.chatId)
-                futureMeetingDates[meeting.scheduledId] = occurrences.first?.startDate
+                if let nextOccurrence = occurrences.first(where: { !$0.cancelled } ) {
+                    futureMeetingDates[meeting.scheduledId] = nextOccurrence.startDate
+                }
             }
         }
             

@@ -67,14 +67,16 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
                 self.seeMoreOccurrencesVisible = false
             }
         }
-        occurrences.append(contentsOf: newOccurrences)
         lastOccurrenceDate = newOccurrences.last?.startDate ?? Date()
+
+        let filteredOccurrences = newOccurrences.filter { !$0.cancelled }
+        occurrences.append(contentsOf: filteredOccurrences)
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, d MMM"
         let timeFormatter = DateFormatter.timeShort()
         
-        let newDisplayOccurrences = newOccurrences.map {
+        let newDisplayOccurrences = filteredOccurrences.map {
             ScheduleMeetingOccurence(
                 id: UUID().uuidString,
                 date: dateFormatter.localisedString(from: $0.startDate),
