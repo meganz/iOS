@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomainMock
 
 class MEGAavatarLoadingUseCaseTests: XCTestCase {
     
@@ -9,8 +10,9 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
         let useCaseUT = MEGAavatarUseCase(
             megaAvatarClient: .foundImage,
             avatarFileSystemClient: .foundNil,
-            megaUserClient: .foundNil,
-            thumbnailRepo: ThumbnailRepository.newRepo
+            accountUseCase: MockAccountUseCase(),
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            handleUseCase: MockMEGAHandleUseCase()
         )
         
         let expectations = expectation(description: "for async load image")
@@ -25,8 +27,9 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
         let useCaseUT = MEGAavatarUseCase(
             megaAvatarClient: .foundNil,
             avatarFileSystemClient: .foundNil,
-            megaUserClient: .foundUser,
-            thumbnailRepo: ThumbnailRepository.newRepo
+            accountUseCase: MockAccountUseCase(),
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            handleUseCase: MockMEGAHandleUseCase()
         )
         
         let expectations = expectation(description: "for async load image")
@@ -41,8 +44,9 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
         let useCaseUT = MEGAavatarUseCase(
             megaAvatarClient: .foundImage,
             avatarFileSystemClient: .foundNil,
-            megaUserClient: .foundUser,
-            thumbnailRepo: ThumbnailRepository.newRepo
+            accountUseCase: MockAccountUseCase(),
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            handleUseCase: MockMEGAHandleUseCase()
         )
         
         let expectations = expectation(description: "for async load image")

@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 protocol MEGAAvatarGeneratingUseCaseProtocol {
 
@@ -13,22 +14,22 @@ final class MEGAAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol {
 
     private let meagAvatarClient: SDKAvatarClient
 
-    private let megaUserClient: SDKUserClient
+    private let accountUseCase: AccountUseCaseProtocol
 
     init(
         storeUserClient: StoreUserClient,
         megaAvatarClient: SDKAvatarClient,
-        megaUserClient: SDKUserClient
+        accountUseCase: AccountUseCaseProtocol
     ) {
         self.storeUserClient = storeUserClient
         self.meagAvatarClient = megaAvatarClient
-        self.megaUserClient = megaUserClient
+        self.accountUseCase = accountUseCase
     }
 
     // MARK: - Generating Avatar Image
 
     func avatarName() -> String? {
-        guard let userHandle = megaUserClient.currentUser()?.handle else {
+        guard let userHandle = accountUseCase.currentUser?.handle else {
             return nil
         }
 
@@ -39,7 +40,7 @@ final class MEGAAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol {
     }
 
     func avatarBackgroundColorHex() -> String? {
-        guard let userHandle = megaUserClient.currentUser()?.handle else {
+        guard let userHandle = accountUseCase.currentUser?.handle else {
             return nil
         }
 

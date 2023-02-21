@@ -1,3 +1,4 @@
+import MEGADomain
 
 @objc protocol MyAvatarManagerProtocol {
     var myAvatarBarButton: UIBarButtonItem? { get }
@@ -34,13 +35,14 @@
             megaAvatarUseCase: MEGAavatarUseCase(
                 megaAvatarClient: .live,
                 avatarFileSystemClient: .live,
-                megaUserClient: .live,
-                thumbnailRepo: ThumbnailRepository.newRepo
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                thumbnailRepo: ThumbnailRepository.newRepo,
+                handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
             ),
             megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
                 storeUserClient: .live,
                 megaAvatarClient: .live,
-                megaUserClient: .live
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
             )
         )
         

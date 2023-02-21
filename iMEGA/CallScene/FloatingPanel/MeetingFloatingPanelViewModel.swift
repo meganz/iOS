@@ -54,7 +54,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
@@ -74,7 +74,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private var canInviteParticipants: Bool {
-        (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && !userUseCase.isGuest
+        (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && !accountUseCase.isGuest
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -89,7 +89,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
@@ -101,7 +101,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.isSpeakerEnabled = isSpeakerEnabled
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
     }
     
@@ -240,7 +240,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         ParticipantsAddingViewFactory(
-            userUseCase: userUseCase,
+            accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatId: chatRoom.chatId
         )

@@ -1,6 +1,11 @@
 
 // MARK: - Use case protocol
 public protocol AccountUseCaseProtocol {
+    var currentUser: UserEntity? { get }
+    var isGuest: Bool { get }
+    func isLoggedIn() -> Bool
+    func contacts() -> [UserEntity]
+    
     func totalNodesCount() -> UInt
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void)
@@ -14,6 +19,22 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public init(repository: T) {
         self.repository = repository
+    }
+    
+    public var currentUser: UserEntity? {
+        repository.currentUser
+    }
+    
+    public var isGuest: Bool {
+        repository.isGuest
+    }
+    
+    public func isLoggedIn() -> Bool {
+        repository.isLoggedIn()
+    }
+    
+    public func contacts() -> [UserEntity] {
+        repository.contacts()
     }
     
     public func totalNodesCount() -> UInt {

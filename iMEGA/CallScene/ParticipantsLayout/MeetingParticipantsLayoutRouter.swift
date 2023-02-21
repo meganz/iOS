@@ -46,7 +46,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             chatRoomUseCase: ChatRoomUseCase(
                 chatRoomRepo: ChatRoomRepository.sharedRepo,
                 userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())),
-            userUseCase: UserUseCase(repo: .live),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             userImageUseCase: userImageUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
             chatRoom: chatRoom,

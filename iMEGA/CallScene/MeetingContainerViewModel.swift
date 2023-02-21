@@ -38,7 +38,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let chatRoom: ChatRoomEntity
     private let callUseCase: CallUseCaseProtocol
     private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
@@ -59,7 +59,7 @@ final class MeetingContainerViewModel: ViewModelType {
          callUseCase: CallUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          authUseCase: AuthUseCaseProtocol,
          noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol,
          analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
@@ -68,7 +68,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callCoordinatorUseCase = callCoordinatorUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
@@ -128,7 +128,7 @@ final class MeetingContainerViewModel: ViewModelType {
                     self.router.shareLink(presenter: presenter,
                                           sender: sender,
                                           link: link,
-                                          isGuestAccount: self.userUseCase.isGuest,
+                                          isGuestAccount: self.accountUseCase.isGuest,
                                           completion: completion)
                 case .failure(_):
                     self.router.showShareMeetingError()
@@ -140,7 +140,7 @@ final class MeetingContainerViewModel: ViewModelType {
             dismissCall(completion: completion)
         case .endGuestUserCall(let completion):
             dismissCall {
-                if self.userUseCase.isGuest {
+                if self.accountUseCase.isGuest {
                     self.authUseCase.logout()
                 }
                 
@@ -176,7 +176,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     //MARK: -Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
-        if !userUseCase.isGuest {
+        if !accountUseCase.isGuest {
             dismissCall(completion: nil)
         } else {
             guard let presenter = presenter, let sender = sender else {
@@ -233,8 +233,8 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func isOnlyMyselfInTheMeeting() -> Bool {
         guard let call = call,
-           call.numberOfParticipants == 1,
-           call.participants.first == userUseCase.myHandle else {
+              call.numberOfParticipants == 1,
+              call.participants.first == accountUseCase.currentUser?.handle else {
             return false
         }
         
@@ -272,7 +272,7 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func endCall() {
-        if self.userUseCase.isGuest {
+        if accountUseCase.isGuest {
             self.dispatch(.endGuestUserCall {
                 self.dispatch(.showJoinMegaScreen)
             })

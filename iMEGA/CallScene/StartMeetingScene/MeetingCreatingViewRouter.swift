@@ -42,7 +42,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
             userImageUseCase: userImageUseCase,
-            userUseCase: UserUseCase(repo: .live),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             link: link,
             userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)

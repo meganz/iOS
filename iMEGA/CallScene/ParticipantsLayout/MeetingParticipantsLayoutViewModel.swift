@@ -136,7 +136,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
@@ -175,7 +175,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
          remoteVideoUseCase: CallRemoteVideoUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
          chatRoom: ChatRoomEntity,
@@ -189,7 +189,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.localVideoUseCase = localVideoUseCase
         self.remoteVideoUseCase = remoteVideoUseCase
         self.chatRoomUseCase = chatRoomUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.userImageUseCase = userImageUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.chatRoom = chatRoom
@@ -389,7 +389,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: "",
-                                isUserAGuest: userUseCase.isGuest,
+                                isUserAGuest: accountUseCase.isGuest,
                                 isOneToOne: false)
                 )
                 initTimerIfNeeded(with: Int(call.duration))
@@ -397,7 +397,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 invokeCommand?(
                     .configView(title: chatRoom.title ?? "",
                                 subtitle: initialSubtitle(),
-                                isUserAGuest: userUseCase.isGuest,
+                                isUserAGuest: accountUseCase.isGuest,
                                 isOneToOne: chatRoom.chatType == .oneToOne)
                 )
             }
@@ -510,7 +510,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func showEmptyCallMessageIfNeeded() {
         if let call = callUseCase.call(for: chatRoom.chatId),
            call.numberOfParticipants == 1,
-           call.participants.first == userUseCase.myHandle {
+           call.participants.first == accountUseCase.currentUser?.handle {
             invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
         }
     }
@@ -570,7 +570,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     @MainActor
     private func handle(addedParticipantCount: Int, removedParticipantCount: Int, addedParticipantNames: [String], removedParticipantNames: [String]) {
         guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
-        let isOnlyMyselfRemainingInTheCall = call.numberOfParticipants == 1 && call.participants.first == userUseCase.myHandle
+        let isOnlyMyselfRemainingInTheCall = call.numberOfParticipants == 1 && call.participants.first == accountUseCase.currentUser?.handle
         
         self.invokeCommand?(
             .participantsStatusChanged(addedParticipantCount: addedParticipantCount,

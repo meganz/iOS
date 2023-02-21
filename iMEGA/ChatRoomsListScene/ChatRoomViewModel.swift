@@ -9,7 +9,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     let chatListItem: ChatListItemEntity
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
@@ -49,7 +49,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
@@ -59,7 +59,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
-        self.userUseCase = userUseCase
+        self.accountUseCase = accountUseCase
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
@@ -77,7 +77,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 chatRoomUseCase: chatRoomUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
-                userUseCase: userUseCase
+                accountUseCase: accountUseCase
             )
         } else {
             self.chatRoomAvatarViewModel = nil
@@ -389,7 +389,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
-        if userHandle == userUseCase.myHandle {
+        if userHandle == accountUseCase.currentUser?.handle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
             let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatId: chatListItem.chatId)
@@ -551,7 +551,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         case .rejected:
             return Strings.Localizable.callWasRejected
         case .noAnswer:
-            if userHandle == userUseCase.myHandle {
+            if userHandle == accountUseCase.currentUser?.handle {
                 return Strings.Localizable.callWasNotAnswered
             } else {
                 return Strings.Localizable.missedCall
@@ -559,7 +559,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         case .failed:
             return Strings.Localizable.callFailed
         case .cancelled:
-            if userHandle == userUseCase.myHandle {
+            if userHandle == accountUseCase.currentUser?.handle {
                 return Strings.Localizable.callWasCancelled
             } else {
                 return Strings.Localizable.missedCall

@@ -77,7 +77,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   callUseCase: createCallUseCase,
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callCoordinatorUseCase: CallCoordinatorUseCase(),
-                                                  userUseCase: UserUseCase(repo: .live),
+                                                  accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                   authUseCase: authUseCase,
                                                   noUserJoinedUseCase: meetingNoUserJoinedUseCase,
                                                   analyticsEventUseCase: analyticsEventUseCase)

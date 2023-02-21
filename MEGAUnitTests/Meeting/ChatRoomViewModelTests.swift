@@ -7,8 +7,9 @@ final class ChatRoomViewModelTests: XCTestCase {
     
     func test_ScheduledMeetingManagementMessage_MeetingCreatedMyself() async throws {
         let chatListItemEntity = ChatListItemEntity(lastMessageType: .scheduledMeeting, lastMessageSender: 1001)
-        let userUseCase = MockUserUseCase(handle: 1001)
-        let viewModel = ChatRoomViewModel(chatListItem: chatListItemEntity, userUseCase: userUseCase, scheduledMeetingUseCase: MockScheduledMeetingUseCase())
+        let viewModel = ChatRoomViewModel(chatListItem: chatListItemEntity,
+                                          accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 1001)),
+                                          scheduledMeetingUseCase: MockScheduledMeetingUseCase())
         try await viewModel.updateDescription()
         XCTAssertTrue(viewModel.description == Strings.Localizable.Chat.Listing.Description.MeetingCreated.message("Me"))
     }

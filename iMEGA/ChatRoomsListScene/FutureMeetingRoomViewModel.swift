@@ -69,7 +69,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
-         userUseCase: UserUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
@@ -94,7 +94,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 chatRoomUseCase: chatRoomUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
-                userUseCase: userUseCase
+                accountUseCase: accountUseCase
             )
             self.shouldShowUnreadCount = chatRoomEntity.unreadCount != 0
             self.unreadCountString = chatRoomEntity.unreadCount > 0 ? "\(chatRoomEntity.unreadCount)" : "\(-chatRoomEntity.unreadCount)+"

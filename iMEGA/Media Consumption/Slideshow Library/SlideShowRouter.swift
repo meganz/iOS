@@ -24,7 +24,7 @@ struct SlideShowRouter: Routing {
         
         return SlideShowViewModel(dataSource: slideShowDataSource(photos: photoEntities),
                                   slideShowUseCase: SlideShowUseCase(preferenceRepo: preferenceRepo),
-                                  userUseCase: UserUseCase(repo: .live))
+                                  accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
     }
     
     private func slideShowDataSource(photos: [NodeEntity]) -> SlideShowDataSource {

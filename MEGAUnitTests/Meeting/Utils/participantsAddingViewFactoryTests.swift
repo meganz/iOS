@@ -1,11 +1,13 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
 
 final class ParticipantsAddingViewFactoryTests: XCTestCase {
 
     func test_shouldShowAddParticipantsScreen_hasNoVisibleContacts() {
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
-            userUseCase: MockUserUseCase(contacts: []),
+            accountUseCase: MockAccountUseCase(),
             chatRoomUseCase: MockChatRoomUseCase(),
             chatId: .invalid
         )
@@ -15,21 +17,11 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
     }
     
     func test_shouldShowAddParticipantsScreen_hasNonAddedVisibleContacts() {
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let mockAccountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
-            userUseCase: userUseCase,
+            accountUseCase: mockAccountUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
             chatId: .invalid
         )
@@ -42,23 +34,12 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
     }
     
     func test_shouldShowAddParticipantsScreen_AllContactsAlreadyAdded() {
-        let userUseCase = MockUserUseCase(contacts: [
-            UserSDKEntity(
-                email: "user@email.com",
-                handle: 101,
-                base64Handle: nil,
-                change: nil,
-                contact: UserSDKEntity.Contact(
-                    withBecomingContactDate: Date(),
-                    contactVisibility: .visible
-                )
-            )
+        let mockAccountUseCase = MockAccountUseCase(contacts: [
+            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
-        
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
-            userUseCase: userUseCase,
+            accountUseCase: mockAccountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatId: .invalid
         )

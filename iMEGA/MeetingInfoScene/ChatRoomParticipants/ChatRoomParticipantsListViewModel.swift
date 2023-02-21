@@ -103,7 +103,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         ParticipantsAddingViewFactory(
-            userUseCase: UserUseCase(repo: .live),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             chatId: chatRoom.chatId
         )
