@@ -3185,7 +3185,7 @@
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="모두 보기";
 /* Button title to leave the meeting in info view */
-"meetings.info.leaveMeeting"="회의 떠나기";
+"meetings.info.leaveMeeting"="회의 나가기";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="대화 알림";
 /* Title for shared files option in meeting info */
@@ -3221,7 +3221,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] 님이 당신을 다음의 회의에 초대[/B]하였습니다:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] 님이 다음의 회의 정보를 수정[/B]하였습니다:";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 님이 회의 설명을 수정[/B]하였습니다";
 /* In app notification description for one off cancelled meeting */
@@ -3237,27 +3237,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 님이 당신을 다음의 반복 회의에 초대하였습니다:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] 님이 다음의 반복 회의 정보를 수정[/B]하였습니다:";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 님이 반복 회의 설명을 수정[/B]하였습니다";
 /* In app notification description when date field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] 님이 반복 회의 날짜를 수정[/B]하였습니다";
 /* In app notification description when time field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] 님이 반복 회의 시간을 수정[/B]하였습니다";
-/* In app notification description text representing the meeting repeats every sunday */
-"inapp.notifications.scheduledMeetings.weekDay.sun.title"="일";
-/* In app notification description text representing the meeting repeats every monday */
-"inapp.notifications.scheduledMeetings.weekDay.mon.title"="월";
-/* In app notification description text representing the meeting repeats every tuesday */
-"inapp.notifications.scheduledMeetings.weekDay.tue.title"="화";
-/* In app notification description text representing the meeting repeats every wednesday */
-"inapp.notifications.scheduledMeetings.weekDay.wed.title"="수";
-/* In app notification description text representing the meeting repeats every thursday */
-"inapp.notifications.scheduledMeetings.weekDay.thu.title"="목";
-/* In app notification description text representing the meeting repeats every friday */
-"inapp.notifications.scheduledMeetings.weekDay.fri.title"="금";
-/* In app notification description text representing the meeting repeats every saturday */
-"inapp.notifications.scheduledMeetings.weekDay.sat.title"="토";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="주기";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3269,7 +3255,7 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="더 보기";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][StartDate] [WeekDay][/B] [B][StartTime]부터 [EndTime]까지[/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
 "meetings.scheduled.recurring.daily.forever"="[B][StartDate][/B]부터 매일 [B][StartTime]부터 [EndTime][/B]까지";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
@@ -3282,3 +3268,39 @@
 "account.upgradeSecurity.title"="보안 업그레이드";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="계정의 보안이 업그레이드 되는 중입니다. 이것은 한번만 실행됩니다. 만약 이 계정에서 이 메시지를 본 적이 있다면, 취소를 탭하세요.";
+/* Label to introduce meeting info description field */
+"meetings.info.descriptionLabel"="설명";
+/* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sun.title"="일";
+/* In app notification description text representing the meeting repeats every monday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.mon.title"="월";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.tue.title"="화";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.wed.title"="수";
+/* In app notification description text representing the meeting repeats every thursday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.thu.title"="목";
+/* In app notification description text representing the meeting repeats every friday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.fri.title"="금";
+/* In app notification description text representing the meeting repeats every saturday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sat.title"="토";
+/* In app notification description text representing the meeting repeats every sunday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sun.title"="일";
+/* In app notification description text representing the meeting repeats every monday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.mon.title"="월";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.tue.title"="화";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.wed.title"="수";
+/* In app notification description text representing the meeting repeats every thursday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.thu.title"="목";
+/* In app notification description text representing the meeting repeats every friday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.fri.title"="금";
+/* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="토";
+/* Text description for a meeting showing that is a daily recurring meeting */
+"meetings.scheduled.recurring.daily"="매일";
+/* Text description for a meeting showing that is a weekly recurring meeting */
+"meetings.scheduled.recurring.weekly"="매주";
+/* Text description for a meeting showing that is a monthly recurring meeting */
+"meetings.scheduled.recurring.monthly"="매월";

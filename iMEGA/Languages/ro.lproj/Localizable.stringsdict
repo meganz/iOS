@@ -13,9 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Apply to the duplicate</string>
+        <string>Aplică la duplicat</string>
+        <key>few</key>
+        <string>Aplică la toate cele %d duplicate</string>
         <key>other</key>
-        <string>Apply to all %d duplicates</string>
+        <string>Aplică la toate cele %d de duplicate</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -659,9 +661,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>This folder can only be shared as read-only because it is a backup folder. Any changes to its content could disable the backup.</string>
+        <string>Acest folder poate fi partajat doar în modul numai citire, deoarece este un folder de backup. Orice modificare a conținutului său ar putea dezactiva backupul.</string>
+        <key>few</key>
+        <string>Aceste foldere pot fi partajate doar în modul numai citire, deoarece sunt foldere de backup. Orice modificare a conținutului lor ar putea dezactiva backupurile.</string>
         <key>other</key>
-        <string>These folders can only be shared as read-only because they are backup folders. Any changes to their content could disable the backups.</string>
+        <string>Aceste foldere pot fi partajate doar în modul numai citire, deoarece sunt foldere de backup. Orice modificare a conținutului lor ar putea dezactiva backupurile.</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>
@@ -765,9 +769,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDay], în fiecare săptămână, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDay], la fiecare %d săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -781,9 +787,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDay], în fiecare săptămână, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -797,9 +805,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -813,9 +823,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -829,9 +841,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Day [MonthDay] of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ziua a [MonthDay]-a a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Ziua a [MonthDay]-a la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Day [MonthDay] of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ziua a [MonthDay]-a la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -845,9 +859,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Day [MonthDay] of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ziua a [MonthDay]-a a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Ziua a [MonthDay]-a la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Day [MonthDay] of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ziua a [MonthDay]-a la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -861,9 +877,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -877,9 +895,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -893,9 +913,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -909,9 +931,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -925,9 +949,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -941,9 +967,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -957,9 +985,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -973,9 +1003,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -989,9 +1021,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1005,9 +1039,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1021,9 +1057,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1037,9 +1075,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1053,9 +1093,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1069,9 +1111,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1085,9 +1129,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1101,9 +1147,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1117,9 +1165,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
@@ -1133,9 +1183,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1149,9 +1201,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1165,9 +1219,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1181,9 +1237,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1197,9 +1255,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1213,9 +1273,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1229,9 +1291,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1245,9 +1309,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1261,9 +1327,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1277,9 +1345,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
@@ -1293,9 +1363,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1309,9 +1381,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1325,9 +1399,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1341,9 +1417,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1357,9 +1435,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1373,9 +1453,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1389,9 +1471,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1405,9 +1489,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1421,9 +1507,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1437,9 +1525,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
@@ -1453,9 +1543,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1469,9 +1561,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1485,9 +1579,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1501,9 +1597,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1517,9 +1615,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1533,9 +1633,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1549,9 +1651,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1565,9 +1669,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1581,9 +1687,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1597,9 +1705,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
@@ -1613,9 +1723,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1629,9 +1741,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1645,9 +1759,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1661,9 +1777,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1677,9 +1795,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -1693,9 +1813,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -1709,9 +1831,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -1725,9 +1849,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -1741,9 +1867,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -1757,9 +1885,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
@@ -1773,9 +1903,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -1789,9 +1921,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -1805,9 +1939,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -1821,9 +1957,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -1837,9 +1975,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>First Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>First Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Prima duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -1853,9 +1993,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -1869,9 +2011,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Second Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A doua duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -1885,9 +2029,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -1901,9 +2047,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Third Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A treia duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -1917,9 +2065,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
@@ -1933,9 +2083,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fourth Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A patra duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -1949,9 +2101,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -1965,9 +2119,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fifth Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>A cincea duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
@@ -1981,9 +2137,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[Undecrypted file]</string>
+        <string>[Fișier nedecriptat]</string>
+        <key>few</key>
+        <string>[Fișiere nedecriptate]</string>
         <key>other</key>
-        <string>[Undecrypted files]</string>
+        <string>[Fișiere nedecriptate]</string>
       </dict>
     </dict>
     <key>account.upgradeSecurity.message.sharedFolderNames</key>
@@ -1997,9 +2155,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>You’re currently sharing the following folder: [A]</string>
+        <string>În prezent partajezi următorul folder: [A]</string>
+        <key>few</key>
+        <string>În prezent partajezi următoarele foldere: [A]</string>
         <key>other</key>
-        <string>You’re currently sharing the following folders: [A]</string>
+        <string>În prezent partajezi următoarele foldere: [A]</string>
       </dict>
     </dict>
   </dict>

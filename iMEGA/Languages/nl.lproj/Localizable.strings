@@ -3221,7 +3221,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]heeft u uitgenodigd [/B]voor een vergadering gepland voor:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]heeft de details van de vergadering gepland voor :[/B]bijgewerkt";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]heeft de vergader omschrijving bijgewerkt[/B]";
 /* In app notification description for one off cancelled meeting */
@@ -3237,27 +3237,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]heeft u uitgenodigd tot een herhalende vergadering gepland voor:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]heeft de details van de vergadering gepland voor :[/B]bijgewerkt";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email]heeft de herhalende vergader omschrijving bijgewerkt[/B]";
 /* In app notification description when date field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]heeft de herhalende vergaderdatum bijgewerkt[/B]";
 /* In app notification description when time field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email]heeft de herhalende vergadertijd bijgewerkt[/B]";
-/* In app notification description text representing the meeting repeats every sunday */
-"inapp.notifications.scheduledMeetings.weekDay.sun.title"="Zo";
-/* In app notification description text representing the meeting repeats every monday */
-"inapp.notifications.scheduledMeetings.weekDay.mon.title"="Ma";
-/* In app notification description text representing the meeting repeats every tuesday */
-"inapp.notifications.scheduledMeetings.weekDay.tue.title"="Di";
-/* In app notification description text representing the meeting repeats every wednesday */
-"inapp.notifications.scheduledMeetings.weekDay.wed.title"="Woe";
-/* In app notification description text representing the meeting repeats every thursday */
-"inapp.notifications.scheduledMeetings.weekDay.thu.title"="Do";
-/* In app notification description text representing the meeting repeats every friday */
-"inapp.notifications.scheduledMeetings.weekDay.fri.title"="Vrij";
-/* In app notification description text representing the meeting repeats every saturday */
-"inapp.notifications.scheduledMeetings.weekDay.sat.title"="Za";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Voorvallen";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3267,7 +3253,7 @@
 /* Label to indicate the monthly recurrence of an scheduled meeting */
 "meetings.scheduled.recurring.frequency.monthly"="Komt maandelijks voor";
 /* Button label to indicate that more occurencies can be loaded in the list */
-"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Zie meer";
+"meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Meer weergeven";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] van [B][StartTime] tot [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
@@ -3282,3 +3268,39 @@
 "account.upgradeSecurity.title"="Beveiligingsupgrade";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="De beveiliging van uw account wordt nu geüpgraded. Dit zal slechts één keer gebeuren. Als u dit bericht eerder voor dit account hebt gezien, tikt u op Annuleren.";
+/* Label to introduce meeting info description field */
+"meetings.info.descriptionLabel"="Omschrijving";
+/* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sun.title"="Zo";
+/* In app notification description text representing the meeting repeats every monday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.mon.title"="Ma";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.tue.title"="Di";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.wed.title"="Woe";
+/* In app notification description text representing the meeting repeats every thursday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.thu.title"="Do";
+/* In app notification description text representing the meeting repeats every friday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.fri.title"="Vrij";
+/* In app notification description text representing the meeting repeats every saturday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sat.title"="Za";
+/* In app notification description text representing the meeting repeats every sunday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sun.title"="zo";
+/* In app notification description text representing the meeting repeats every monday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.mon.title"="ma";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.tue.title"="di";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.wed.title"="woe";
+/* In app notification description text representing the meeting repeats every thursday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.thu.title"="do";
+/* In app notification description text representing the meeting repeats every friday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.fri.title"="vrij";
+/* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="za";
+/* Text description for a meeting showing that is a daily recurring meeting */
+"meetings.scheduled.recurring.daily"="dagelijks";
+/* Text description for a meeting showing that is a weekly recurring meeting */
+"meetings.scheduled.recurring.weekly"="wekelijks";
+/* Text description for a meeting showing that is a monthly recurring meeting */
+"meetings.scheduled.recurring.monthly"="maandelijks";

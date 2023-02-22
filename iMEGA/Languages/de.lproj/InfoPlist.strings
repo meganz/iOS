@@ -5,7 +5,7 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA greift auf Fotos und Videos zu, wenn Sie sie in Ihren Cloudspeicher kopieren (dies schließt Chats ein) und wenn Sie Kamera-Uploads aktivieren.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="If you allow access, MEGA will save the information in your address book on its servers. This will help you find existing MEGA users in your contacts and connect with them on MEGA. MEGA will never send messages to your contacts or share this information with third parties.";
+"NSContactsUsageDescription"="Wenn Sie den Zugriff erlauben, werden die Informationen in Ihrem Adressbuch auf den MEGA-Servern gespeichert. Auf diese Weise können Sie MEGA-Nutzer unter Ihren Kontakten finden und mit ihnen über MEGA Kontakt aufnehmen. MEGA wird niemals Nachrichten an Ihre Kontakte senden oder diese Informationen an Dritte weitergeben.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA benötigt Zugriff auf Ihre Fotos, um Fotos und Videos hinzufügen zu können";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */

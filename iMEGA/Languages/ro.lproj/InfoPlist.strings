@@ -1,11 +1,11 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA îți accesează microfonul când capturezi un videoclip, când efectuezi un apel sau când înregistrezi mesaje vocale în aplicație.";
+"NSMicrophoneUsageDescription"="MEGA îți accesează microfonul atunci când capturezi un videoclip, când efectuezi un apel sau când înregistrezi mesaje vocale în cadrul aplicației.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="MEGA accesează camera când capturezi un videoclip, o fotografie sau când efectuezi un apel în interiorul aplicației.";
+"NSCameraUsageDescription"="MEGA accesează camera atunci când capturezi un videoclip, o fotografie sau când efectuezi un apel în cadrul aplicației.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA îți accesează fotografiile și videoclipurile când le încarci, le partajezi prin chat și când Încărcări cameră este activat.";
+"NSPhotoLibraryUsageDescription"="MEGA îți accesează fotografiile și videoclipurile atunci când le încarci, le partajezi prin chat și când Încărcări cameră este activat.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="If you allow access, MEGA will save the information in your address book on its servers. This will help you find existing MEGA users in your contacts and connect with them on MEGA. MEGA will never send messages to your contacts or share this information with third parties.";
+"NSContactsUsageDescription"="Dacă permiți accesul, MEGA va salva pe serverele sale informațiile din agenda ta de adrese. Acest lucru te va ajuta să găsești utilizatorii MEGA existenți în contactele tale și să te conectezi cu ei pe MEGA. MEGA nu va trimite niciodată mesaje către contactele tale și nu va împărtăși aceste informații cu terțe părți.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA necesită acces la biblioteca foto pentru a adăuga fotografii și videoclipuri în galeria dispozitivului";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -17,6 +17,6 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA îți accesează locația atunci când o partajezi cu contactele tale într-un chat.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
-"NSLocalNetworkUsageDescription"="Acest lucru îți va permite să folosești MEGA pentru a efectua și primi apeluri prin intermediul dispozitivelor care se află pe aceeași rețea Wi-Fi sau locală.";
+"NSLocalNetworkUsageDescription"="Acest lucru îți va permite să folosești MEGA pentru a efectua și primi apeluri prin intermediul dispozitivelor care se află în aceeași rețea Wi-Fi sau locală.";

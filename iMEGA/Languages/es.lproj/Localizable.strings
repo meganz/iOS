@@ -535,7 +535,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="Nuevo álbum";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
+"cameraUploads.albums.create.alert.userAlbumExists"="Ya existe un álbum con este nombre.";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="Este nombre de álbum no está permitido";
 /* Used in create album popup album name validation */
@@ -543,7 +543,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="Introduce un nombre nuevo.";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
+"cameraUploads.albums.create.addItemsTo"="Añadir elementos a “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Álbum vacío";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
@@ -1989,7 +1989,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificado por %@";
 /* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s and %2$s more";
+"home.recent.multipleFileTitle"="%1$s y %2$s más";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Creado por %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -3045,7 +3045,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="El archivo se subirá con una nueva versión.";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Apply to all %@ duplicates";
+"nameCollision.applyToAll"="Aplicar a los %@ duplicados";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Solo estás tú aquí";
 /* Meetings end call dialog description */
@@ -3219,45 +3219,31 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Reuniones";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] invited[/B] you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]te ha invitado[/B] a una reunión programada para:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] updated[/B] the meeting description";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]ha actualizado[/B] la descripción de la reunión";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]ha cancelado[/B] la reunión programada para:";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]ha actualizado[/B] la fecha de la reunión";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email]ha actualizado[/B]la hora de la reunión";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from ”[PreviousTitle]” to [B]”[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] ha actualizado[/B] el nombre de la reunión de “[PreviousTitle]” a [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
+"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email]ha cancelado[/B] la reunión y todos los eventos correspondientes";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] invited you to a recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]te ha invitado a una reunión programada para:";
 /* In app notification description for multiple fields update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] updated[/B] the recurring meeting description";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email]ha actualizado[/B] la descripción de la reunión periódica";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]ha actualizado[/B] la fecha de la reunión periódica";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
-/* In app notification description text representing the meeting repeats every sunday */
-"inapp.notifications.scheduledMeetings.weekDay.sun.title"="Dom";
-/* In app notification description text representing the meeting repeats every monday */
-"inapp.notifications.scheduledMeetings.weekDay.mon.title"="Lun";
-/* In app notification description text representing the meeting repeats every tuesday */
-"inapp.notifications.scheduledMeetings.weekDay.tue.title"="Mar";
-/* In app notification description text representing the meeting repeats every wednesday */
-"inapp.notifications.scheduledMeetings.weekDay.wed.title"="Mie";
-/* In app notification description text representing the meeting repeats every thursday */
-"inapp.notifications.scheduledMeetings.weekDay.thu.title"="Jue";
-/* In app notification description text representing the meeting repeats every friday */
-"inapp.notifications.scheduledMeetings.weekDay.fri.title"="Vie";
-/* In app notification description text representing the meeting repeats every saturday */
-"inapp.notifications.scheduledMeetings.weekDay.sat.title"="Sab";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email]ha actualizado[/B] la hora de la reunión periódica";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Eventos";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3269,16 +3255,52 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Mostrar más";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay][StartDate][/B] de [B][StartTime] a [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
 "meetings.scheduled.recurring.daily.forever"="Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]ha cancelado[/B] el evento programado para:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]ha actualizado[/B] un evento al:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Actualización de seguridad";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="La seguridad de tu cuenta se está actualizando. Este proceso solo se realizará una vez. Si has visto este mensaje antes para esta misma cuenta, pulsa Cancelar.";
+/* Label to introduce meeting info description field */
+"meetings.info.descriptionLabel"="Descripción";
+/* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sun.title"="Dom";
+/* In app notification description text representing the meeting repeats every monday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.mon.title"="Lun";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.tue.title"="Mar";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.wed.title"="Mie";
+/* In app notification description text representing the meeting repeats every thursday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.thu.title"="Jue";
+/* In app notification description text representing the meeting repeats every friday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.fri.title"="Vie";
+/* In app notification description text representing the meeting repeats every saturday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sat.title"="Sab";
+/* In app notification description text representing the meeting repeats every sunday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sun.title"="dom";
+/* In app notification description text representing the meeting repeats every monday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.mon.title"="lun";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.tue.title"="mar";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.wed.title"="mie";
+/* In app notification description text representing the meeting repeats every thursday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.thu.title"="jue";
+/* In app notification description text representing the meeting repeats every friday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.fri.title"="vie";
+/* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="sab";
+/* Text description for a meeting showing that is a daily recurring meeting */
+"meetings.scheduled.recurring.daily"="cada día";
+/* Text description for a meeting showing that is a weekly recurring meeting */
+"meetings.scheduled.recurring.weekly"="cada semana";
+/* Text description for a meeting showing that is a monthly recurring meeting */
+"meetings.scheduled.recurring.monthly"="mes";

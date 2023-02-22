@@ -1664,10 +1664,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[Undecrypted file]</string>
         <key>other</key>
-        <string>[Undecrypted files]</string>
+        <string>[未解密檔案]</string>
       </dict>
     </dict>
     <key>account.upgradeSecurity.message.sharedFolderNames</key>
