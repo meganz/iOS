@@ -218,18 +218,15 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.alertViewModel.validator?(newSysAlbum.name))
     }
     
-    func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
+    func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
 
         let sampleAlbum = AlbumEntity(id: 1, name: "hello", coverNode: nil, count: 0, type: .user)
-        let successMsg = "Album content added successfully"
+        let nodes = [NodeEntity(handle: 1)]
+        sut.onNewAlbumContentAdded(sampleAlbum, photos: nodes)
         
-        sut.onAlbumContentAdded(successMsg, sampleAlbum)
-        await sut.albumLoadingTask?.value
-        
-        XCTAssertEqual(sut.album, sampleAlbum)
-        XCTAssertEqual(sut.albumCreationAlertMsg, successMsg)
-        XCTAssert(sut.album?.count == 0)
+        XCTAssertEqual(sut.newAlbumContent?.0, sampleAlbum)
+        XCTAssertEqual(sut.newAlbumContent?.1, nodes)
     }
     
     func testValidateAlbum_withSystemAlbumNames_returnsErrorMessage() {
@@ -258,6 +255,25 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.columns(horizontalSizeClass: .compact).count, 3)
         XCTAssertEqual(sut.columns(horizontalSizeClass: nil).count, 3)
         XCTAssertEqual(sut.columns(horizontalSizeClass: .regular).count, 5)
+    }
+    
+    func testNavigateToNewAlbum_onNewAlbumContentAdded_shouldNavigateToAlbumContentIfSet() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        let userAlbum = AlbumEntity(id: 1, name: "User", coverNode: nil, count: 0, type: .user)
+        let newAlbumPhotos = [NodeEntity(name: "a.jpg", handle: 1),
+                              NodeEntity(name: "b.jpg", handle: 2)]
+        sut.onNewAlbumContentAdded(userAlbum, photos: newAlbumPhotos)
+        sut.navigateToNewAlbum()
+        XCTAssertEqual(sut.album, userAlbum)
+        XCTAssertEqual(sut.newAlbumContent?.1, newAlbumPhotos)
+    }
+    
+    func testNavigateToNewAlbum_onNewAlbumContentAddedNotCalled_shouldNotNavigate() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        
+        sut.navigateToNewAlbum()
+        XCTAssertNil(sut.album)
+        XCTAssertNil(sut.newAlbumContent)
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {

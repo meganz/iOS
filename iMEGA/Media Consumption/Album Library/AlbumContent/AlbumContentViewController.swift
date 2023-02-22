@@ -17,6 +17,12 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         target: self,
         action: #selector(editButtonPressed(_:))
     )
+    lazy var addToAlbumBarButtonItem = UIBarButtonItem(
+        image: Asset.Images.NavigationBar.add.image,
+        style: .plain,
+        target: self,
+        action: #selector(addToAlbumButtonPressed(_:))
+    )
     
     lazy var leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
                                                  style:.plain,
@@ -57,10 +63,6 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         }
         
         viewModel.dispatch(.onViewReady)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        viewModel.dispatch(.onViewDidAppear)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -184,6 +186,10 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
         configPhotoLibrarySelectAll()
         configureToolbarButtonsWithAlbumType()
+    }
+    
+    @objc private func addToAlbumButtonPressed(_ barButtonItem: UIBarButtonItem) {
+        viewModel.showAlbumContentPicker()
     }
     
     // MARK: - TraitEnviromentAware

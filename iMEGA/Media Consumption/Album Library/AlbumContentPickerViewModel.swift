@@ -6,8 +6,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
    
     private let album: AlbumEntity
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
-    private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
-    private let completion: (String, AlbumEntity) -> Void
+    private let completion: (AlbumEntity, [NodeEntity]) -> Void
     private var subscriptions = Set<AnyCancellable>()
     var photosLoadingTask: Task<Void, Never>?
     
@@ -24,11 +23,9 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @MainActor
     init(album: AlbumEntity,
          photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-         albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
-         completion: @escaping (String, AlbumEntity) -> Void) {
+         completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
         self.album = album
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.albumContentModificationUseCase = albumContentModificationUseCase
         self.completion = completion
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .album)
@@ -47,19 +44,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
             isDismiss.toggle()
             return
         }
-        
-        photosLoadingTask = Task(priority: .userInitiated) {
-            do {
-                let result = try await albumContentModificationUseCase.addPhotosToAlbum(by: album.id, nodes: nodes)
-                if result.success > 0 {
-                    let successMsg = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
-                    completion(successMsg, album)
-                }
-            } catch {
-                MEGALogError("Error occurred when adding photos to an album. \(error.localizedDescription)")
-            }
-        }
-        
+        completion(album, nodes)        
         isDismiss.toggle()
     }
     
@@ -151,9 +136,5 @@ final class AlbumContentPickerViewModel: ObservableObject {
     
     private func navigationTitle(forNumberOfItems num: Int) -> String {
         num == 1 ? Strings.Localizable.oneItemSelected(1): Strings.Localizable.itemsSelected(num)
-    }
-    
-    private func successMessage(forAlbumName name: String, withNumberOfItmes num: UInt) -> String {
-        Strings.Localizable.CameraUploads.Albums.addedItemTo(Int(num)).replacingOccurrences(of: "[A]", with: "\(name)")
     }
 }

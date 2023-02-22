@@ -1,14 +1,21 @@
 import UIKit
+import SwiftUI
 import MEGADomain
 import MEGAPresentation
 
-struct AlbumContentRouter: Routing {
+protocol AlbumContentRouting: Routing {
+    func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)
+}
+
+struct AlbumContentRouter: AlbumContentRouting {
+    private weak var navigationController: UINavigationController?
     private let album: AlbumEntity
-    private let messageForNewAlbum: String?
-    
-    init(album: AlbumEntity, messageForNewAlbum: String?) {
+    private let newAlbumPhotos: [NodeEntity]?
+        
+    init(navigationController: UINavigationController?, album: AlbumEntity, newAlbumPhotos: [NodeEntity]?) {
+        self.navigationController = navigationController
         self.album = album
-        self.messageForNewAlbum = messageForNewAlbum
+        self.newAlbumPhotos = newAlbumPhotos
     }
     
     func build() -> UIViewController {
@@ -19,21 +26,36 @@ struct AlbumContentRouter: Routing {
             nodesUpdateListenerRepo: nodesUpdateRepo
         )
         let filesSearchRepo = FilesSearchRepository.newRepo
+        let userAlbumRepo = UserAlbumRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
-            userAlbumRepo: UserAlbumRepository.newRepo
+            userAlbumRepo: userAlbumRepo
         )
         
         let viewModel = AlbumContentViewModel(
             album: album,
-            messageForNewAlbum: self.messageForNewAlbum,
             albumContentsUseCase: albumContentsUseCase,
             mediaUseCase: mediaUseCase,
-            router: self)
+            albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: userAlbumRepo),
+            router: self,
+            newAlbumPhotosToAdd: newAlbumPhotos)
         return AlbumContentViewController(viewModel: viewModel)
+    }
+    
+    @MainActor
+    func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
+        let photoLibraryRepository = PhotoLibraryRepository.newRepo
+        let fileSearchRepository = FilesSearchRepository.newRepo
+        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
+                                                      searchRepository: fileSearchRepository)
+        let viewModel = AlbumContentPickerViewModel(album: album,
+                                                    photoLibraryUseCase: photoLibraryUseCase,
+                                                    completion: completion)
+        let content = AlbumContentPickerView(viewModel: viewModel)
+        navigationController?.present(UIHostingController(rootView: content), animated: true)
     }
     
     func start() {}

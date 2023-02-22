@@ -15,39 +15,19 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isDismiss)
     }
     
-    func testOnDone_whenSomeImagesSelected_shouldDismissTheScreenAndReturnTheAlbumAndPluralSuccessMsg() async {
-        let exp = XCTestExpectation(description: "Adding content to album should be successful")
+    func testOnDone_whenItemsSelected_completionShouldReturnSelectedPhotos() async {
+        let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
+        let expectedSelectedPhotos = [node1]
         
-        let resultEntity = AlbumElementsResultEntity(success: 2, failure: 0)
-        let sut = makeAlbumContentPickerViewModel(resultEntity: resultEntity, completion: { msg, album in
-            XCTAssertEqual(msg, "Added 2 items to “\(album.name)”")
+        let exp = XCTestExpectation(description: "Adding content to album should be successful")
+        let sut = makeAlbumContentPickerViewModel(completion: { album, photos in
             XCTAssertNotNil(album)
+            XCTAssertEqual(photos, expectedSelectedPhotos)
             exp.fulfill()
         })
         await sut.photosLoadingTask?.value
         
-        let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
-        let node2 = NodeEntity(name: "b.png", handle: HandleEntity(2))
-        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([node1, node2])
-        sut.onDone()
-        await sut.photosLoadingTask?.value
-        XCTAssertTrue(sut.isDismiss)
-        wait(for: [exp], timeout: 2.0)
-    }
-    
-    func testOnDone_whenOneImageSelected_shouldDismissTheScreenAndReturnTheAlbumAndSingularSuccessMsg() async {
-        let exp = XCTestExpectation(description: "Adding content to album should be successful")
-        
-        let resultEntity = AlbumElementsResultEntity(success: 1, failure: 0)
-        let sut = makeAlbumContentPickerViewModel(resultEntity: resultEntity, completion: { msg, album in
-            XCTAssertEqual(msg, "Added 1 item to “\(album.name)”")
-            XCTAssertNotNil(album)
-            exp.fulfill()
-        })
-        await sut.photosLoadingTask?.value
-        
-        let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
-        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([node1])
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(expectedSelectedPhotos)
         sut.onDone()
         await sut.photosLoadingTask?.value
         XCTAssertTrue(sut.isDismiss)
@@ -223,11 +203,10 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldRemoveFilter)
     }
     
-    private func makeAlbumContentPickerViewModel(resultEntity: AlbumElementsResultEntity? = nil,
-                                               allPhotos: [NodeEntity] = [],
-                                               allPhotosFromCloudDriveOnly: [NodeEntity] = [],
-                                               allPhotosFromCameraUpload: [NodeEntity] = [],
-                                               completion: @escaping ((String, AlbumEntity) -> Void) = {_, _ in }) -> AlbumContentPickerViewModel {
+    private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
+                                                 allPhotosFromCloudDriveOnly: [NodeEntity] = [],
+                                                 allPhotosFromCameraUpload: [NodeEntity] = [],
+                                                 completion: @escaping ((AlbumEntity, [NodeEntity]) -> Void) = {_, _ in }) -> AlbumContentPickerViewModel {
         let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
         return AlbumContentPickerViewModel(album: album,
                                            photoLibraryUseCase:
@@ -235,7 +214,6 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                 allPhotos: allPhotos,
                                                 allPhotosFromCloudDriveOnly: allPhotosFromCloudDriveOnly,
                                                 allPhotosFromCameraUpload: allPhotosFromCameraUpload),
-                                           albumContentModificationUseCase: MockAlbumContentModificationUseCase(resultEntity: resultEntity),
                                            completion: completion )
     }
     

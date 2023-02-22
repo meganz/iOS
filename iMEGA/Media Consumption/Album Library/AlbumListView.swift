@@ -20,7 +20,6 @@ struct AlbumListView: View {
                     ForEach(viewModel.albums, id: \.self) { album in
                         router.cell(album: album)
                             .onTapGesture(count: 1)  {
-                                viewModel.albumCreationAlertMsg = nil
                                 viewModel.album = album
                             }
                             .clipped()
@@ -32,12 +31,16 @@ struct AlbumListView: View {
         .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel)
         .overlay(viewModel.shouldLoad ? ProgressView()
             .scaleEffect(1.5) : nil)
-        .fullScreenCover(item: $viewModel.album) {
-            router.albumContainer(album: $0, messageForNewAlbum: viewModel.albumCreationAlertMsg)
+        .fullScreenCover(item: $viewModel.album, onDismiss: {
+            viewModel.newAlbumContent = nil
+        }, content: {
+            router.albumContainer(album: $0, newAlbumPhotosToAdd: viewModel.newAlbumContent?.1)
                 .ignoresSafeArea()
-        }
-        .sheet(item: $viewModel.newlyAddedAlbum, content: { item in
-            albumContentAdditionView(item)
+        })
+        .sheet(item: $viewModel.newlyAddedAlbum, onDismiss: {
+            viewModel.navigateToNewAlbum()
+        }, content: {
+            albumContentAdditionView($0)
         })
         .padding([.top, .bottom], 10)
         .onAppear {
@@ -54,9 +57,8 @@ struct AlbumListView: View {
         AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
             album: album,
             photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: FilesSearchRepository.newRepo),
-            albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: UserAlbumRepository.newRepo),
-            completion: { msg, album in
-                viewModel.onAlbumContentAdded(msg, album)
+            completion: { album, selectedPhotos in
+                viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)
             })
         )
     }
