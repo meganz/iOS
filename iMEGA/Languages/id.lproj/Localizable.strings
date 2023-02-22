@@ -3231,7 +3231,7 @@
 /* In app notification description representing the time was changed for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from ”[PreviousTitle]” to [B]”[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
 "inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
 /* In app notification description for recurring new meeting invitation. */
@@ -3244,20 +3244,6 @@
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date";
 /* In app notification description when time field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
-/* In app notification description text representing the meeting repeats every sunday */
-"inapp.notifications.scheduledMeetings.weekDay.sun.title"="Min";
-/* In app notification description text representing the meeting repeats every monday */
-"inapp.notifications.scheduledMeetings.weekDay.mon.title"="Sen";
-/* In app notification description text representing the meeting repeats every tuesday */
-"inapp.notifications.scheduledMeetings.weekDay.tue.title"="Sel";
-/* In app notification description text representing the meeting repeats every wednesday */
-"inapp.notifications.scheduledMeetings.weekDay.wed.title"="Rabu";
-/* In app notification description text representing the meeting repeats every thursday */
-"inapp.notifications.scheduledMeetings.weekDay.thu.title"="Kam";
-/* In app notification description text representing the meeting repeats every friday */
-"inapp.notifications.scheduledMeetings.weekDay.fri.title"="Jum";
-/* In app notification description text representing the meeting repeats every saturday */
-"inapp.notifications.scheduledMeetings.weekDay.sat.title"="Sab";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Occurrences";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3282,3 +3268,39 @@
 "account.upgradeSecurity.title"="Peningkatan keamanan";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap on Cancel.";
+/* Label to introduce meeting info description field */
+"meetings.info.descriptionLabel"="Deskripsi";
+/* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sun.title"="Min";
+/* In app notification description text representing the meeting repeats every monday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.mon.title"="Sen";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.tue.title"="Sel";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.wed.title"="Rabu";
+/* In app notification description text representing the meeting repeats every thursday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.thu.title"="Kam";
+/* In app notification description text representing the meeting repeats every friday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.fri.title"="Jum";
+/* In app notification description text representing the meeting repeats every saturday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sat.title"="Sab";
+/* In app notification description text representing the meeting repeats every sunday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sun.title"="Min";
+/* In app notification description text representing the meeting repeats every monday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.mon.title"="Sen";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.tue.title"="Sel";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.wed.title"="Rabu";
+/* In app notification description text representing the meeting repeats every thursday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.thu.title"="Kam";
+/* In app notification description text representing the meeting repeats every friday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.fri.title"="Jum";
+/* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="Sab";
+/* Text description for a meeting showing that is a daily recurring meeting */
+"meetings.scheduled.recurring.daily"="daily";
+/* Text description for a meeting showing that is a weekly recurring meeting */
+"meetings.scheduled.recurring.weekly"="weekly";
+/* Text description for a meeting showing that is a monthly recurring meeting */
+"meetings.scheduled.recurring.monthly"="bulanan";

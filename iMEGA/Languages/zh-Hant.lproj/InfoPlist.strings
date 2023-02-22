@@ -1,13 +1,13 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSMicrophoneUsageDescription"="當您在app裡開啟錄影、撥打電話或是錄製語音留言時，MEGA會存取您的麥克風使用權限。";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="當您拍攝影片、照片或使用MEGA撥打電話時，MEGA會需要使用您的相機。";
+"NSCameraUsageDescription"="當您拍攝影片、相片或使用MEGA撥打電話時，MEGA會需要使用您的相機。";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA將因您上傳或分享您的照片/影片，或啟用相機上傳功能時，需要存取您的相簿。";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="If you allow access, MEGA will save the information in your address book on its servers. This will help you find existing MEGA users in your contacts and connect with them on MEGA. MEGA will never send messages to your contacts or share this information with third parties.";
+"NSContactsUsageDescription"="如果您允許權限，MEGA會將您通訊錄中的資訊儲存在其伺服器上。這將幫助您在通訊錄中找到現有的MEGA使用者並在MEGA上與他們聯繫。MEGA絕不會向您的聯絡人發送訊息或與第三方共享此資訊。";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA需要有您相簿的存取權，才能新增照片和影片到您裝置中的相簿裡";
+"NSPhotoLibraryAddUsageDescription"="MEGA需要有您照片的存取權，才能新增相片和影片到您裝置中的相簿裡";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="當你允許此選項時，MEGA會存取Face ID以輕鬆解鎖應用程式密碼。";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */

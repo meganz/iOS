@@ -3,7 +3,7 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA accesses your camera when you capture a video, photo or make a call inside the app.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera Uploads is enabled.";
+"NSPhotoLibraryUsageDescription"="MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera uploads is enabled.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="If you allow access, MEGA will save the information in your address book on its servers. This will help you find existing MEGA users in your contacts and connect with them on MEGA. MEGA will never send messages to your contacts or share this information with third parties.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -12,7 +12,7 @@
 "NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Search";
-/* Upload on the iOS home screen quick action menu. "Upload" here is a verb.*/
+/*  */
 "quickActionUploadString"="Upload";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
@@ -20,5 +20,3 @@
 "NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
 "NSLocalNetworkUsageDescription"="This will let you use MEGA to place and receive calls through devices that are on the same Wi-Fi or local network.";
-/* Siri Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why our app wants to use Siri. */
-"NSSiriUsageDescription"="You can use Siri to call your contacts.";

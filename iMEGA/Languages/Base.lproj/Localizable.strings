@@ -3231,7 +3231,7 @@
 /* In app notification description representing the time was changed for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from ”[PreviousTitle]” to [B]”[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
 "inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
 /* In app notification description for recurring new meeting invitation. */
@@ -3299,8 +3299,8 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="Sat";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="Daily";
+"meetings.scheduled.recurring.daily"="daily";
 /* Text description for a meeting showing that is a weekly recurring meeting */
-"meetings.scheduled.recurring.weekly"="Weekly";
+"meetings.scheduled.recurring.weekly"="weekly";
 /* Text description for a meeting showing that is a monthly recurring meeting */
-"meetings.scheduled.recurring.monthly"="Monthly";
+"meetings.scheduled.recurring.monthly"="monthly";

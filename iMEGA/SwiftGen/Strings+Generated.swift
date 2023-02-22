@@ -25,10 +25,8 @@ public enum Strings {
     public static let nsMicrophoneUsageDescription = Strings.tr("InfoPlist", "NSMicrophoneUsageDescription")
     /// MEGA requires access to your photo library to add photos and videos to your device gallery
     public static let nsPhotoLibraryAddUsageDescription = Strings.tr("InfoPlist", "NSPhotoLibraryAddUsageDescription")
-    /// MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera Uploads is enabled.
+    /// MEGA accesses your photos and videos when you upload them, share them through the chat and when Camera uploads is enabled.
     public static let nsPhotoLibraryUsageDescription = Strings.tr("InfoPlist", "NSPhotoLibraryUsageDescription")
-    /// You can use Siri to call your contacts.
-    public static let nsSiriUsageDescription = Strings.tr("InfoPlist", "NSSiriUsageDescription")
     /// Offline
     public static let quickActionOfflineString = Strings.tr("InfoPlist", "quickActionOfflineString")
     /// Search
@@ -3942,7 +3940,7 @@ public enum Strings {
             }
           }
           public enum TitleUpdate {
-            /// [B][Email] updated[/B] the meeting name from ”[PreviousTitle]” to [B]”[UpdatedTitle]”[/B]
+            /// [B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]
             public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.titleUpdate.description")
           }
           public enum WeekDay {
@@ -4346,11 +4344,11 @@ public enum Strings {
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
         }
         public enum Recurring {
-          /// Daily
+          /// daily
           public static let daily = Strings.tr("Localizable", "meetings.scheduled.recurring.daily")
-          /// Monthly
+          /// monthly
           public static let monthly = Strings.tr("Localizable", "meetings.scheduled.recurring.monthly")
-          /// Weekly
+          /// weekly
           public static let weekly = Strings.tr("Localizable", "meetings.scheduled.recurring.weekly")
           public enum Daily {
             /// Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]

@@ -367,9 +367,9 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Скопировано в буфер обмена";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Предупреждение об авторском праве";
+"copyrightWarning"="Предупреждение о защите авторских прав";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="Предупреждение о защите авторских прав";
+"copyrightWarningToAll"="Предупреждение о защите авторских прав для всех пользователей";
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA уважает авторские права других лиц и требует, чтобы пользователи облачного сервиса MEGA соблюдали закон об авторском праве.";
 /* String already exists: 367, but we need to split paragraphs */
@@ -505,7 +505,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Включить Загрузки из камеры";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Закачки с камеры включены";
+"cameraUploadsEnabled"="Загрузки из камеры включены";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Загрузки из камеры завершены";
 /* Message shown while uploading files. Singular. */
@@ -639,7 +639,7 @@
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Добавить";
 /* Add contacts and share dialog error message when user try to add your own email address */
-"noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
+"noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный адрес электронной почты";
 /* Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user */
 "dialog.inviteContact.outgoingContactRequest"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
 /* Success message shown when some contacts have been invited */
@@ -797,7 +797,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Версия MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Версия MEGA chat SDK";
+"megachatSdkVersion"="Версия MEGA Chat SDK";
 /* Link to the public code of the app */
 "View Source Code"="Посмотреть исходный код";
 /* Title for the section "Acknowledgements" of the app */
@@ -843,13 +843,13 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Если вы не можете получить доступ к своему адресу, свяжитесь с support@mega.nz.";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="Срок действия ссылки удаления истёк.";
+"cancellationLinkHasExpired"="Срок действия ссылки для удаления истёк.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением учётной записи. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением аккаунта. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Ваш аккаунт успешно удалён.";
 /* Account closure, password check dialog when user click on closure email. */
-"closeAccount"="Закрыть учётную запись";
+"closeAccount"="Закрыть аккаунт";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Удалить";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -897,7 +897,7 @@
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Время действия этой ссылки восстановления истекло, пожалуйста, попробуйте ещё ​​раз.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="Восстановление пароля";
+"passwordReset"="Сброс пароля";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Введите ключ восстановления";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Ключ восстановления будет использован для сброса пароля. Введите новый пароль.";
 /*  */
-"yourPasswordHasBeenReset"="Ваш пароль успешно восстановлен. Пожалуйста, зайдите в свою учётную запись прямо сейчас.";
+"yourPasswordHasBeenReset"="Ваш пароль успешно сброшен. Пожалуйста, зайдите в свой аккаунт прямо сейчас.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Отправить";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -3221,7 +3221,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] пригласил[/B] вас на встречу, назначенную на:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности встречи, назначенной на:";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] изменил[/B] описание встречи";
 /* In app notification description for one off cancelled meeting */
@@ -3237,27 +3237,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] пригласил вас на повторяющуюся встречу, назначенную на:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности повторяющейся встречи, назначенной на:";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] изменил[/B] описание повторяющейся встречи";
 /* In app notification description when date field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] изменил[/B] дату повторяющейся встречи";
 /* In app notification description when time field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] изменил[/B] время повторяющейся встречи";
-/* In app notification description text representing the meeting repeats every sunday */
-"inapp.notifications.scheduledMeetings.weekDay.sun.title"="Вс";
-/* In app notification description text representing the meeting repeats every monday */
-"inapp.notifications.scheduledMeetings.weekDay.mon.title"="Пн";
-/* In app notification description text representing the meeting repeats every tuesday */
-"inapp.notifications.scheduledMeetings.weekDay.tue.title"="Вт";
-/* In app notification description text representing the meeting repeats every wednesday */
-"inapp.notifications.scheduledMeetings.weekDay.wed.title"="Ср";
-/* In app notification description text representing the meeting repeats every thursday */
-"inapp.notifications.scheduledMeetings.weekDay.thu.title"="Чт";
-/* In app notification description text representing the meeting repeats every friday */
-"inapp.notifications.scheduledMeetings.weekDay.fri.title"="Пт";
-/* In app notification description text representing the meeting repeats every saturday */
-"inapp.notifications.scheduledMeetings.weekDay.sat.title"="Сб";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Повторения";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3282,3 +3268,39 @@
 "account.upgradeSecurity.title"="Обновление параметров безопасности";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="Параметры безопасности вашего аккаунта сейчас обновляются. Это произойдёт только один раз. Если вы уже видели это сообщение для этого аккаунта, нажмите «Отмена».";
+/* Label to introduce meeting info description field */
+"meetings.info.descriptionLabel"="Описание";
+/* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sun.title"="Вс";
+/* In app notification description text representing the meeting repeats every monday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.mon.title"="Пн";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.tue.title"="Вт";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.wed.title"="Ср";
+/* In app notification description text representing the meeting repeats every thursday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.thu.title"="Чт";
+/* In app notification description text representing the meeting repeats every friday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.fri.title"="Пт";
+/* In app notification description text representing the meeting repeats every saturday. This text is used at the start of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.sentenceStart.sat.title"="Сб";
+/* In app notification description text representing the meeting repeats every sunday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sun.title"="вс";
+/* In app notification description text representing the meeting repeats every monday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.mon.title"="пн";
+/* In app notification description text representing the meeting repeats every tuesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.tue.title"="вт";
+/* In app notification description text representing the meeting repeats every wednesday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.wed.title"="ср";
+/* In app notification description text representing the meeting repeats every thursday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.thu.title"="чт";
+/* In app notification description text representing the meeting repeats every friday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.fri.title"="пт";
+/* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
+"inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="сб";
+/* Text description for a meeting showing that is a daily recurring meeting */
+"meetings.scheduled.recurring.daily"="ежедневно";
+/* Text description for a meeting showing that is a weekly recurring meeting */
+"meetings.scheduled.recurring.weekly"="еженедельно";
+/* Text description for a meeting showing that is a monthly recurring meeting */
+"meetings.scheduled.recurring.monthly"="ежемесячно";
