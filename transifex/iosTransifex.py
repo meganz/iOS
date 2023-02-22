@@ -246,7 +246,7 @@ def run_upload(file_content, resource, branch):
             else:
                 print("Error: Failed to download gitlab file")
                 return False
-        now = int(datetime.datetime.utcnow().strftime("%s")) - 30
+        now = int(datetime.datetime.now(datetime.timezone.utc).timestamp()) - 30
         print("Uploading file")
         if resource_put_english(resource_key, process_as_upload(file_content, is_plurals)):
             print("Upload completed")
@@ -294,13 +294,19 @@ def run_merge(resource, branch_resource, language = False, lang_code = "Base"):
         print("Error: Resources specified for merge don't exist")
 
 # Call this function to lock an unlocked resource in Transifex to prevent translations from being saved
-def run_lock(resource, update_time = 0, is_stores = False):
+def run_lock(resource, update_time = 0, is_stores = False, updated_comments = False):
     is_change_logs = resource == 'Changelogs'
     if is_stores or does_resource_exist(resource):
         print("Preparing to lock resource")
         if not is_stores:
             resource = PROJECT_ID + ":r:" + resource.lower()
-        response = do_request(BASE_URL + "/resource_strings?filter[resource]=" + resource)
+        if updated_comments:
+            # This data is fetched in a different way as time changes can't be detected when updating dev comments
+            response = {
+                "data": []
+            }
+        else:
+            response = do_request(BASE_URL + "/resource_strings?filter[resource]=" + resource)
         if "errors" in response:
             print_error(response["errors"])
             print("Error: Unable to retrieve strings to lock")
@@ -314,7 +320,7 @@ def run_lock(resource, update_time = 0, is_stores = False):
             locked_tags.append("locked_" + languages[language]["code"])
         for string in response["data"]:
             mod_time = datetime.datetime.strptime(string["attributes"]["strings_datetime_modified"], "%Y-%m-%dT%H:%M:%SZ")
-            if int(mod_time.strftime("%s")) >= update_time:
+            if int(mod_time.replace(tzinfo=datetime.timezone.utc).timestamp()) >= update_time:
                 string_tags = string["attributes"]["tags"]
                 not_fully_locked = False
                 for tag in locked_tags:
@@ -327,8 +333,22 @@ def run_lock(resource, update_time = 0, is_stores = False):
             print("Locking strings")
             update_tags(to_lock)
             print("Strings locked successfully")
-        else:
+        elif not updated_comments:
             print("Error: Resource is already locked or there are no strings to lock")
+        if updated_comments: 
+            print("Locking strings with updated developer comments.")
+            to_lock = {}
+            for id in updated_comments.keys():
+                not_fully_locked = False
+                string_tags = updated_comments[id]
+                for tag in locked_tags:
+                    if tag not in updated_comments[id]:
+                        not_fully_locked = True
+                        string_tags.append(tag)
+                if not_fully_locked:
+                    to_lock[id] = string_tags
+            update_tags(to_lock)
+            update_comments(to_lock)
     else:
         print("Error: Resource " + resource + " not found")
 
@@ -441,8 +461,9 @@ def run_comment(resource):
             edit_string_nodes = []
             create_string_nodes = []
             more_input = True
+            comment_keys = []
             while more_input:
-                key = input("Enter a string code to edit or press enter to continue: ")
+                key = input("Enter a string key to edit or press enter to continue: ")
                 if key == "":
                     more_input = False
                 elif key in resource_map:
@@ -450,8 +471,9 @@ def run_comment(resource):
                         create_string_nodes.append(key)
                     else:
                         edit_string_nodes.append(key)
+                    comment_keys.append(key)
                 else:
-                    print("Invalid string code entered. Try again")
+                    print("Invalid string key entered. Try again")
             if len(create_string_nodes) + len(edit_string_nodes) == 0:
                 print("No strings were found to edit")
             else:
@@ -469,9 +491,20 @@ def run_comment(resource):
                         while comment_value == "":
                             comment_value = input("Comment for " + key + ": ")
                         resource_map[key]["c"] = comment_value
-                update_content = process_as_upload(map_to_content(resource_map)) # Prepare the upload version
+                now = int(datetime.datetime.now(datetime.timezone.utc).timestamp()) - 30
+                update_content = process_as_upload(map_to_content(resource_map), False) # Prepare the upload version
                 print("Updating Transifex")
                 if resource_put_english(resource_key, update_content):
+                    comment_ids = {}
+                    for key in comment_keys:
+                        response = do_request(BASE_URL + '/resource_strings?filter[resource]=' + resource_key + '&filter[key]=' + key)
+                        if "errors" in response:
+                            print_error(response["errors"])
+                        else:
+                            for string in response["data"]:
+                                if string["attributes"]["key"] == key:
+                                    comment_ids[string["id"]] = string["attributes"]["tags"]
+                    run_lock(resource, now, False, comment_ids)
                     print("Comments updated in Transifex")
                 else:
                     print("Error: Unable to upload updated comments to Transifex")
@@ -862,6 +895,36 @@ def update_tags(to_lock):
             }
         }
         response = do_request(BASE_URL + "/resource_strings/" + key, payload, "PATCH")
+        if "errors" in response:
+            print_error(response["errors"])
+
+# Call this function to create a string comment after the strings developer comments have been updated
+def update_comments(to_comment):
+    for key in to_comment:
+        payload  = {
+            "data": {
+                "attributes": {
+                    "message": "The developer comment has been updated. Please check the new comment and update as needed.",
+                    "type": "comment",
+                },
+                "relationships": {
+                    "language": {
+                        "data": {
+                            "id": "l:en",
+                            "type": "languages"
+                        }
+                    },
+                    "resource_string": {
+                        "data": {
+                            "id": key,
+                            "type": "resource_strings"
+                        }
+                    }
+                },
+                "type": "resource_string_comments"
+            }
+        }
+        response = do_request(BASE_URL + "/resource_string_comments", payload)
         if "errors" in response:
             print_error(response["errors"])
 
@@ -1455,7 +1518,7 @@ def run_download_stores():
 # Call this function to upload the content for a stores resource
 def run_upload_stores(content):
     if content:
-        now = int(datetime.datetime.utcnow().strftime("%s")) - 30
+        now = int(datetime.datetime.now(datetime.timezone.utc).timestamp()) - 30
         print("Uploading to stores resource")
         if resource_put_english(STORES_IOS_ID, content):
             return run_lock(STORES_IOS_ID, now, True)
