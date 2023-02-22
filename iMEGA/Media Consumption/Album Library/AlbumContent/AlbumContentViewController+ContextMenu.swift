@@ -29,7 +29,14 @@ extension AlbumContentViewController {
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
         } else {
             if FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu) {
-                navigationItem.rightBarButtonItem = makeContextMenuBarButton()
+                var rightBarButtonItems = [UIBarButtonItem]()
+                if let contextMenuBarButton = makeContextMenuBarButton() {
+                    rightBarButtonItems.append(contextMenuBarButton)
+                }
+                if viewModel.isUserAlbum {
+                    rightBarButtonItems.append(addToAlbumBarButtonItem)
+                }
+                navigationItem.rightBarButtonItems = rightBarButtonItems
             } else {
                 navigationItem.rightBarButtonItem = rightBarButtonItem
             }

@@ -22,6 +22,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     var isCreateAlbumFeatureFlagEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     }
+    var newAlbumContent: (AlbumEntity, [NodeEntity]?)?
     
     private let usecase: AlbumListUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
@@ -169,10 +170,12 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         return newAlbumName
     }
     
-    func onAlbumContentAdded(_ msg: String, _ album: AlbumEntity) {
-        self.album = album
-        albumCreationAlertMsg = msg
-        loadAlbums()
+    func onNewAlbumContentAdded(_ album: AlbumEntity, photos: [NodeEntity]) {
+        newAlbumContent = (album, photos)
+    }
+    
+    func navigateToNewAlbum() {
+        album = newAlbumContent?.0
     }
     
     private func isReservedAlbumName(name: String) -> Bool {

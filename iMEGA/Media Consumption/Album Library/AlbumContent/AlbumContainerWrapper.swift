@@ -3,18 +3,19 @@ import MEGADomain
 
 struct AlbumContainerWrapper: UIViewControllerRepresentable {
     private let album: AlbumEntity
-    private let messageForNewAlbum: String?
+    private let newAlbumPhotos: [NodeEntity]?
     
-    init(album: AlbumEntity, messageForNewAlbum: String?) {
+    init(album: AlbumEntity, newAlbumPhotos: [NodeEntity]?) {
         self.album = album
-        self.messageForNewAlbum = messageForNewAlbum
+        self.newAlbumPhotos = newAlbumPhotos
     }
     
     func makeUIViewController(context: Context) -> UINavigationController {
-        let nav = MEGANavigationController(rootViewController: AlbumContentRouter(album: album, messageForNewAlbum: messageForNewAlbum).build())
-        nav.modalPresentationStyle = .fullScreen
-        
-        return nav
+        let navigationController = MEGANavigationController()
+        let router = AlbumContentRouter(navigationController: navigationController, album: album, newAlbumPhotos: newAlbumPhotos)
+        navigationController.setViewControllers([router.build()], animated: false)
+        navigationController.modalPresentationStyle = .fullScreen
+        return navigationController
     }
     
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}

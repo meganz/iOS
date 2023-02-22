@@ -1,8 +1,10 @@
 import Foundation
 import MEGADomain
 
-public struct MockAlbumContentModificationUseCase: AlbumContentModificationUseCaseProtocol {
+public final class MockAlbumContentModificationUseCase: AlbumContentModificationUseCaseProtocol {
     private var resultEntity = AlbumElementsResultEntity(success: 0, failure: 0)
+    
+    public private(set) var addedPhotosToAlbum: [NodeEntity]?
     
     public init(resultEntity: AlbumElementsResultEntity? = nil) {
         if let resultEntity = resultEntity {
@@ -11,6 +13,7 @@ public struct MockAlbumContentModificationUseCase: AlbumContentModificationUseCa
     }
 
     public func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
+        addedPhotosToAlbum = nodes
         return resultEntity
     }
 }

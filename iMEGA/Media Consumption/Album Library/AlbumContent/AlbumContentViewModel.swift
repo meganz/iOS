@@ -5,7 +5,6 @@ import MEGAPresentation
 
 enum AlbumContentAction: ActionType {
     case onViewReady
-    case onViewDidAppear
     case changeSortOrder(SortOrderType)
     case changeFilter(FilterType)
 }
@@ -19,32 +18,35 @@ final class AlbumContentViewModel: ViewModelType {
     
     private let albumContentsUseCase: AlbumContentsUseCaseProtocol
     private let mediaUseCase: MediaUseCaseProtocol
+    private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
     private let album: AlbumEntity
-    private let router: AlbumContentRouter
+    private let router: AlbumContentRouting
     private var loadingTask: Task<Void, Never>?
     private var photos = [NodeEntity]()
     private var updateSubscription: AnyCancellable?
     private var selectedSortOrder: SortOrderType = .newest
     private var selectedFilter: FilterType = .allMedia
+    private var addAdditionalPhotosTask: Task<Void, Never>?
+    private var newAlbumPhotosToAdd: [NodeEntity]?
     
     let albumName: String
-    var messageForNewAlbum: String?
-    
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     
     init(
         album: AlbumEntity,
-        messageForNewAlbum: String? = nil,
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
         mediaUseCase: MediaUseCaseProtocol,
-        router: AlbumContentRouter
+        albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
+        router: AlbumContentRouting,
+        newAlbumPhotosToAdd: [NodeEntity]? = nil
     ) {
         self.album = album
-        self.messageForNewAlbum = messageForNewAlbum
+        self.newAlbumPhotosToAdd = newAlbumPhotosToAdd
         self.albumContentsUseCase = albumContentsUseCase
         self.mediaUseCase = mediaUseCase
+        self.albumContentModificationUseCase = albumContentModificationUseCase
         self.router = router
         self.albumName = album.name
         
@@ -57,10 +59,9 @@ final class AlbumContentViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             loadingTask = Task {
+                await addNewAlbumPhotosIfNeeded()
                 await loadNodes()
             }
-        case .onViewDidAppear:
-            showNewlyAddedAlbumHud()
         case .changeSortOrder(let sortOrder):
             updateSortOrder(sortOrder)
         case .changeFilter(let filter):
@@ -71,6 +72,10 @@ final class AlbumContentViewModel: ViewModelType {
     // MARK: - Internal
     var isFavouriteAlbum: Bool {
         album.type == .favourite
+    }
+    
+    var isUserAlbum: Bool {
+        album.type == .user
     }
     
     var contextMenuConfiguration: CMConfigEntity? {
@@ -88,6 +93,13 @@ final class AlbumContentViewModel: ViewModelType {
     
     func cancelLoading() {
         loadingTask?.cancel()
+        addAdditionalPhotosTask?.cancel()
+    }
+    
+    func showAlbumContentPicker()  {
+        router.showAlbumContentPicker(album: album, completion: { [weak self] _, albumPhotos in
+            self?.addAdditionalPhotos(albumPhotos)
+        })
     }
     
     // MARK: Private
@@ -130,6 +142,37 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
+    @MainActor
+    private func addNewAlbumPhotosIfNeeded() async {
+        if let newAlbumPhotosToAdd {
+            await addPhotos(newAlbumPhotosToAdd)
+            self.newAlbumPhotosToAdd = nil
+        }
+    }
+    
+    private func addAdditionalPhotos(_ photos: [NodeEntity]) {
+        addAdditionalPhotosTask = Task {
+            await addPhotos(photos)
+        }
+    }
+    
+    @MainActor
+    private func addPhotos(_ photos: [NodeEntity]) async {
+        let photosToAdd = photos.filter { !self.photos.contains($0) }
+        guard photosToAdd.isNotEmpty else {
+            return
+        }
+        do {
+            let result = try await albumContentModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photosToAdd)
+            if result.success > 0 {
+                let message = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
+                invokeCommand?(.showHud(message))
+            }
+        } catch {
+            MEGALogError("Error occurred when adding photos to an album. \(error.localizedDescription)")
+        }
+    }
+    
     private func showAlbumPhotos() {
         invokeCommand?(.showAlbumPhotos(photos: filteredPhotos, sortOrder: selectedSortOrder))
     }
@@ -151,12 +194,6 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
-    private func showNewlyAddedAlbumHud() {
-        guard let message = messageForNewAlbum else { return }
-        invokeCommand?(.showHud(message))
-        messageForNewAlbum = nil
-    }
-    
     private func updateSortOrder(_ sortOrder: SortOrderType) {
         guard sortOrder != selectedSortOrder else { return }
         selectedSortOrder = sortOrder
@@ -167,5 +204,9 @@ final class AlbumContentViewModel: ViewModelType {
         guard filter != selectedFilter else { return }
         selectedFilter = filter
         showAlbumPhotos()
+    }
+    
+    private func successMessage(forAlbumName name: String, withNumberOfItmes num: UInt) -> String {
+        Strings.Localizable.CameraUploads.Albums.addedItemTo(Int(num)).replacingOccurrences(of: "[A]", with: "\(name)")
     }
 }
