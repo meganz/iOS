@@ -138,13 +138,13 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         ) { [weak self] in
             self?.toggleDND()
         } markAsReadAction: { [weak self] in
-            guard let self else { return }
-            self.chatRoomUseCase.setMessageSeenForChat(forChatId: self.chatListItem.chatId, messageId: self.chatListItem.lastMessageId)
+            guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else { return }
+            self.chatRoomUseCase.setMessageSeenForChat(forChatRoom: chatRoom, messageId: self.chatListItem.lastMessageId)
         } infoAction: { [weak self] in
             self?.showChatRoomInfo()
         } archiveAction: { [weak self] in
-            guard let self else { return }
-            self.chatRoomUseCase.archive(true, chatId: self.chatListItem.chatId)
+            guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else { return }
+            self.chatRoomUseCase.archive(true, chatRoom: chatRoom)
         }
     }
     
@@ -157,7 +157,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     func archiveChat() {
-        chatRoomUseCase.archive(true, chatId: chatListItem.chatId)
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
+        chatRoomUseCase.archive(true, chatRoom: chatRoom)
     }
     
     func pushNotificationSettingsChanged() {
@@ -240,9 +241,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                     title: Strings.Localizable.markAsRead,
                     imageName: Asset.Images.Chat.ContextualMenu.markUnreadMenu.name,
                     action: { [weak self] in
-                        guard let self else { return }
+                        guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else { return }
                         self.chatRoomUseCase.setMessageSeenForChat(
-                            forChatId: self.chatListItem.chatId,
+                            forChatRoom: chatRoom,
                             messageId: self.chatListItem.lastMessageId
                         )
                     })
@@ -305,11 +306,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 return
             }
             
-            async let fullNamesTask = self.chatRoomUseCase.userFullNames(forPeerIds: chatRoom.peers.map(\.handle), chatId: self.chatListItem.chatId).joined(separator: " ")
+            async let fullNamesTask = self.chatRoomUseCase.userFullNames(forPeerIds: chatRoom.peers.map(\.handle), chatRoom: chatRoom).joined(separator: " ")
             
-            async let userNickNamesTask = self.chatRoomUseCase.userNickNames(forChatId: chatRoom.chatId).values.joined(separator: " ")
+            async let userNickNamesTask = self.chatRoomUseCase.userNickNames(forChatRoom: chatRoom).values.joined(separator: " ")
             
-            async let userEmailsTask = self.chatRoomUseCase.userEmails(forChatId: chatRoom.chatId).values.joined(separator: " ")
+            async let userEmailsTask = self.chatRoomUseCase.userEmails(forChatRoom: chatRoom).values.joined(separator: " ")
             
             do {
                 let (fullNames, userNickNames, userEmails) = try await (fullNamesTask, userNickNamesTask, userEmailsTask)
@@ -335,7 +336,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
                 router.showMeetingInfo(for: scheduledMeeting)
             } else {
-                guard let chatIdString = chatRoomUseCase.base64Handle(forChatId: chatListItem.chatId),
+                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
+                      let chatIdString = chatRoomUseCase.base64Handle(forChatRoom: chatRoom),
                       MEGALinkManager.joiningOrLeavingChatBase64Handles.notContains(where: { element in
                           if let elementId = element as? String, elementId == chatIdString {
                               return true
@@ -348,7 +350,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 router.showGroupChatInfo(forChatId: chatListItem.chatId)
             }
         } else {
-            guard let userHandle = chatRoomUseCase.peerHandles(forChatId: chatListItem.chatId).first,
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
+                  let userHandle = chatRoomUseCase.peerHandles(forChatRoom: chatRoom).first,
                     let userEmail = chatRoomUseCase.contactEmail(forUserHandle: userHandle) else {
                 return
             }
@@ -392,7 +395,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         if userHandle == accountUseCase.currentUser?.handle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
-            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatId: chatListItem.chatId)
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return nil }
+            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatRoom: chatRoom)
             return usernames.first
         }
     }
@@ -456,7 +460,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private func updateDescriptionForAlertParticipants() async throws {
         let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: false)
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
-              let lastMessageUsername = try await chatRoomUseCase.userDisplayNames(forPeerIds: [chatListItem.lastMessageHandle], chatId: chatRoom.chatId).first else {
+              let lastMessageUsername = try await chatRoomUseCase.userDisplayNames(forPeerIds: [chatListItem.lastMessageHandle], chatRoom: chatRoom).first else {
             return
         }
         
@@ -490,7 +494,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private func updateDescriptionForPrivilageChange() async throws {
         guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: false),
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
-              let lastMessageUsername = try await chatRoomUseCase.userDisplayNames(forPeerIds: [chatListItem.lastMessageHandle], chatId: chatRoom.chatId).first else {
+              let lastMessageUsername = try await chatRoomUseCase.userDisplayNames(forPeerIds: [chatListItem.lastMessageHandle], chatRoom: chatRoom).first else {
             return
         }
         
@@ -616,7 +620,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func updateDescriptionForVoiceClip() async throws {
         let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: true)
-        let message = chatRoomUseCase.message(forChatId: chatListItem.chatId, messageId: chatListItem.lastMessageId)
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
+        let message = chatRoomUseCase.message(forChatRoom: chatRoom, messageId: chatListItem.lastMessageId)
         
         guard let duration = TimeInterval(message?.nodes?.first?.duration ?? 0).timeDisplayString(),
               let image = UIImage(named: chatListItem.unreadCount > 0 ? "voiceMessage" : "voiceMessageGrey") else {
@@ -633,7 +638,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private func updateDescriptionForDefault() async throws {
         let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: true)
         if chatListItem.lastMessageType == .containsMeta {
-            let message = chatRoomUseCase.message(forChatId: chatListItem.chatId, messageId: chatListItem.lastMessageId)
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
+            let message = chatRoomUseCase.message(forChatRoom: chatRoom, messageId: chatListItem.lastMessageId)
             
             if message?.containsMeta?.type == .geolocation,
                 let image = UIImage(named: chatListItem.unreadCount > 0 ? "locationMessage" : "locationMessageGrey") {

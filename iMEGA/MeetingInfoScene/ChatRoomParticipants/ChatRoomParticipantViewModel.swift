@@ -45,7 +45,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
         )
         
-        chatRoomUseCase.userDisplayName(forPeerId: chatParticipantId, chatId: chatRoom.chatId) { result in
+        chatRoomUseCase.userDisplayName(forPeerId: chatParticipantId, chatRoom: chatRoom) { result in
             switch result {
             case .success(let name):
                 if self.isMyUser {
@@ -83,7 +83,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     }
     
     private func requestOwnPrivilegeChange(forChat chatRoom: ChatRoomEntity) {
-        chatRoomUseCase.ownPrivilegeChanged(forChatId: chatRoom.chatId)
+        chatRoomUseCase.ownPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
@@ -99,7 +99,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     }
     
     private func requestPrivilegeChange(forChat chatRoom: ChatRoomEntity) {
-        chatRoomUseCase.userPrivilegeChanged(forChatId: chatRoom.chatId)
+        chatRoomUseCase.userPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
@@ -116,7 +116,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
         if isMyUser {
             participantPrivilege = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege()
         } else {
-            participantPrivilege = chatRoomUseCase.peerPrivilege(forUserHandle: chatParticipantId, inChatId: chatRoom.chatId)?.toChatRoomParticipantPrivilege() ?? .unknown
+            participantPrivilege = chatRoomUseCase.peerPrivilege(forUserHandle: chatParticipantId, chatRoom: chatRoom)?.toChatRoomParticipantPrivilege() ?? .unknown
         }
     }
     

@@ -128,7 +128,8 @@ final class UserAvatarViewModel: ObservableObject {
         if userHandle == accountUseCase.currentUser?.handle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
-            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatId: chatId)
+            guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
+            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatRoom: chatRoom)
             return usernames.first
         }
     }

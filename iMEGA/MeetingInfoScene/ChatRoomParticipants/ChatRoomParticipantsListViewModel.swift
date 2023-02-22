@@ -105,7 +105,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoom: chatRoom
         )
     }
     
@@ -114,7 +114,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func listenToInviteChanges() {
-        chatRoomUseCase.ownPrivilegeChanged(forChatId: chatRoom.chatId)
+        chatRoomUseCase.ownPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
@@ -128,7 +128,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
         
-        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatId: chatRoom.chatId)
+        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching allow host to add participants with error \(error)")
@@ -144,7 +144,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func listenToParticipantsUpdate() {
-        chatRoomUseCase.participantsUpdated(forChatId: chatRoom.chatId)
+        chatRoomUseCase.participantsUpdated(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")

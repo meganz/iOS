@@ -144,11 +144,11 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 return
             }
             
-            async let fullNamesTask = self.chatRoomUseCase.userFullNames(forPeerIds: chatRoom.peers.map(\.handle), chatId: self.scheduledMeeting.chatId).joined(separator: " ")
+            async let fullNamesTask = self.chatRoomUseCase.userFullNames(forPeerIds: chatRoom.peers.map(\.handle), chatRoom: chatRoom).joined(separator: " ")
             
-            async let userNickNamesTask = self.chatRoomUseCase.userNickNames(forChatId: chatRoom.chatId).values.joined(separator: " ")
+            async let userNickNamesTask = self.chatRoomUseCase.userNickNames(forChatRoom: chatRoom).values.joined(separator: " ")
             
-            async let userEmailsTask = self.chatRoomUseCase.userEmails(forChatId: chatRoom.chatId).values.joined(separator: " ")
+            async let userEmailsTask = self.chatRoomUseCase.userEmails(forChatRoom: chatRoom).values.joined(separator: " ")
             
             do {
                 let (fullNames, userNickNames, userEmails) = try await (fullNamesTask, userNickNamesTask, userEmailsTask)
@@ -225,7 +225,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func archiveChat() {
-        chatRoomUseCase.archive(true, chatId: scheduledMeeting.chatId)
+        guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
+        chatRoomUseCase.archive(true, chatRoom: chatRoom)
     }
     
     private func monitorActiveCallChanges() {

@@ -302,7 +302,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func participantName(for userHandle: HandleEntity, completion: @escaping (String?) -> Void) {
-        chatRoomUseCase.userDisplayName(forPeerId: userHandle, chatId: chatRoom.chatId) { result in
+        chatRoomUseCase.userDisplayName(forPeerId: userHandle, chatRoom:chatRoom) { result in
             switch result {
             case .success(let displayName):
                 completion(displayName)
@@ -359,11 +359,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     do {
                         async let addedParticipantNamesAsyncTask = self.chatRoomUseCase.userDisplayNames(
                             forPeerIds: addedParticipantHandlersSubset,
-                            chatId: self.chatRoom.chatId)
+                            chatRoom: self.chatRoom)
                         
                         async let removedParticipantNamesAsyncTask = self.chatRoomUseCase.userDisplayNames(
                             forPeerIds: removedParticipantHandlersSubset,
-                            chatId: self.chatRoom.chatId)
+                            chatRoom: self.chatRoom)
                         
                         let participantNamesResult = try await [addedParticipantNamesAsyncTask, removedParticipantNamesAsyncTask]
                         
@@ -449,7 +449,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .showRenameChatAlert:
             invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
         case .setNewTitle(let newTitle):
-            chatRoomUseCase.renameChatRoom(chatId: chatRoom.chatId, title: newTitle) { [weak self] result in
+            chatRoomUseCase.renameChatRoom(chatRoom, title: newTitle) { [weak self] result in
                 switch result {
                 case .success(let title):
                     self?.invokeCommand?(.updateName(title))
@@ -694,10 +694,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func createRefetchAvatarTask(forHandle handle: HandleEntity, chatId: HandleEntity) -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self = self else { return }
+            guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
             
             do {
-                guard let name = try await self.chatRoomUseCase.userDisplayNames(forPeerIds: [handle], chatId: chatId).first else {
+                guard let name = try await self.chatRoomUseCase.userDisplayNames(forPeerIds: [handle], chatRoom: chatRoom).first else {
                     MEGALogDebug("Unable to find the name for handle \(handle)")
                     return
                 }

@@ -144,8 +144,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 updateSpeakerInfo()
             }
             addChatRoomParticipantsChangedListener()
-            requestPrivilegeChange(forChatId: chatRoom.chatId)
-            requestAllowNonHostToAddParticipantsValueChange(forChatID: chatRoom.chatId)
+            requestPrivilegeChange(forChatRoom: chatRoom)
+            requestAllowNonHostToAddParticipantsValueChange(forChatRoom: chatRoom)
         case .hangCall(let presenter, let sender):
             manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
@@ -206,7 +206,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             invokeCommand?(.reloadParticpantsList(participants: callParticipants))
         case .allowNonHostToAddParticipants(let enabled):
             updateAllowNonHostToAddParticipantsTask?.cancel()
-            updateAllowNonHostToAddParticipantsTask = createAllowNonHostToAddParticipants(enabled: enabled, chatId: chatRoom.chatId)
+            updateAllowNonHostToAddParticipantsTask = createAllowNonHostToAddParticipants(enabled: enabled, chatRoom: chatRoom)
         }
     }
     
@@ -242,13 +242,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         ParticipantsAddingViewFactory(
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoom: chatRoom
         )
     }
     
     private func addChatRoomParticipantsChangedListener() {
         chatRoomUseCase
-            .participantsUpdated(forChatId: chatRoom.chatId)
+            .participantsUpdated(forChatRoom: chatRoom)
             .sink() { [weak self] peerHandles in
                 guard let self = self else { return }
                 
@@ -411,20 +411,20 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func requestPrivilegeChange(forChatId chatId: HandleEntity) {
-        chatRoomUseCase.userPrivilegeChanged(forChatId: chatId)
+    private func requestPrivilegeChange(forChatRoom chatRoom: ChatRoomEntity) {
+        chatRoomUseCase.userPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
             }, receiveValue: { [weak self] handle in
-                self?.participantPrivilegeChanged(forUserHandle: handle)
+                self?.participantPrivilegeChanged(forUserHandle: handle, chatRoom: chatRoom)
             })
             .store(in: &subscriptions)
     }
     
-    private func requestAllowNonHostToAddParticipantsValueChange(forChatID chatId: HandleEntity) {
+    private func requestAllowNonHostToAddParticipantsValueChange(forChatRoom chatRoom: ChatRoomEntity) {
         chatRoomUseCase
-            .allowNonHostToAddParticipantsValueChanged(forChatId: chatId)
+            .allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching allow host to add participants with error \(error)")
@@ -440,19 +440,19 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             .store(in: &subscriptions)
     }
     
-    private func participantPrivilegeChanged(forUserHandle handle: HandleEntity) {
+    private func participantPrivilegeChanged(forUserHandle handle: HandleEntity, chatRoom: ChatRoomEntity) {
         callParticipants.filter( { $0.participantId == handle} ).forEach { participant in
-            participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, inChatId: participant.chatId) == .moderator
+            participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, chatRoom: chatRoom) == .moderator
         }
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))
     }
     
-    private func createAllowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) -> Task<Void, Never> {
+    private func createAllowNonHostToAddParticipants(enabled: Bool, chatRoom: ChatRoomEntity) -> Task<Void, Never> {
         Task { [weak self] in
             guard let self = self else { return }
             
             do {
-                let allowNonHostToAddParticipantsEnabled = try await self.chatRoomUseCase.allowNonHostToAddParticipants(enabled: enabled, chatId: chatId)
+                let allowNonHostToAddParticipantsEnabled = try await self.chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
                 if let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatRoom.chatId) {
                     self.chatRoom = chatRoom
                 }
