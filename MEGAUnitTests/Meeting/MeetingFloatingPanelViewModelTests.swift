@@ -364,7 +364,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()))
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
@@ -405,7 +405,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()))
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
         XCTAssert(router.inviteParticpants_calledTimes == 1)
     }
@@ -428,7 +428,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let mockAccountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
-        let chatRoomUseCase = MockChatRoomUseCase()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
             accountUseCase: mockAccountUseCase,

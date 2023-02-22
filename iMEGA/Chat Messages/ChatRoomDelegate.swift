@@ -139,7 +139,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.updateJoinView()
                 SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
             } else {
-                ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chat.chatId) { _ in }
+                guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chat.chatId) else { return }
+                ChatRoomRepository.sharedRepo.closeChatRoom(chatRoom) { _ in }
                 chatViewController?.navigationController?.popViewController(animated: true)
             }
         case .updatePreviewers:

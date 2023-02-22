@@ -11,7 +11,8 @@ extension ContactDetailsViewController {
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
-        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatId: chatId) {
+        guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
+        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {
             ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
         }
         try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)

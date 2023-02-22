@@ -3,7 +3,6 @@ import Combine
 import MEGADomain
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
-    
     var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var userDisplayNamesCompletion: Result<[(handle: HandleEntity, name: String)], ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
@@ -40,11 +39,11 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         return chatRoomEntity
     }
     
-    func peerPrivilege(forUserHandle userHandle: HandleEntity, inChatId chatId: HandleEntity) -> ChatRoomPrivilegeEntity? {
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity? {
         peerPrivilege
     }
 
-    func peerHandles(forChatId chatId: HandleEntity) -> [HandleEntity] {
+    func peerHandles(forChatRoom chatRoom: ChatRoomEntity) -> [HandleEntity] {
         myPeerHandles
     }
     
@@ -58,11 +57,11 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         completion(publicLinkCompletion)
     }
     
-    func userDisplayName(forPeerId peerId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func userDisplayName(forPeerId peerId: HandleEntity, chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(userDisplayNameCompletion)
     }
     
-    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String] {
+    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatRoom: ChatRoomEntity) async throws -> [String] {
         switch userDisplayNamesCompletion {
         case .success(let handleNamePairArray):
             return peerIds.compactMap { handle in
@@ -73,11 +72,11 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         }
     }
     
-    func renameChatRoom(chatId: HandleEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
+    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(renameChatRoomCompletion)
     }
     
-    func participantsUpdated(forChatId chatId: HandleEntity) -> AnyPublisher<[HandleEntity], Never> {
+    func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
         participantsUpdatedSubject.eraseToAnyPublisher()
     }
     
@@ -85,19 +84,19 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         userStatusEntity
     }
     
-    func message(forChatId chatId: ChatIdEntity, messageId: HandleEntity) -> ChatMessageEntity? {
+    func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity? {
         message
     }
     
-    func archive(_ archive: Bool, chatId: ChatIdEntity) {
-        archivedChatId?(chatId, archive)
+    func archive(_ archive: Bool, chatRoom: ChatRoomEntity) {
+        archivedChatId?(chatRoom.chatId, archive)
     }
     
-    func setMessageSeenForChat(forChatId chatId: ChatIdEntity, messageId: HandleEntity) {
-        messageSeenChatId?(chatId)
+    func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) {
+        messageSeenChatId?(chatRoom.chatId)
     }
     
-    func base64Handle(forChatId chatId: ChatIdEntity) -> String? {
+    func base64Handle(forChatRoom chatRoom: ChatRoomEntity) -> String? {
         base64Handle
     }
     
@@ -105,27 +104,27 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         contactEmail
     }
     
-    func userFullNames(forPeerIds peerIds: [HandleEntity], chatId: HandleEntity) async throws -> [String] {
+    func userFullNames(forPeerIds peerIds: [HandleEntity], chatRoom: ChatRoomEntity) async throws -> [String] {
         userFullNames
     }
     
-    func userNickNames(forChatId chatId: ChatIdEntity) async throws -> [HandleEntity : String] {
+    func userNickNames(forChatRoom chatRoom: ChatRoomEntity) async throws -> [HandleEntity : String] {
         userNickNames
     }
     
-    func userEmails(forChatId chatId: ChatIdEntity) async throws -> [HandleEntity : String] {
+    func userEmails(forChatRoom chatRoom: ChatRoomEntity) async throws -> [HandleEntity : String] {
         userEmails
     }
     
-    mutating func userPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+    func userPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never> {
         privilegeChangedSubject.eraseToAnyPublisher()
     }
     
-    func allowNonHostToAddParticipants(enabled: Bool, chatId: HandleEntity) async throws -> Bool {
+    func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {
         allowNonHostToAddParticipantsEnabled
     }
     
-    mutating func allowNonHostToAddParticipantsValueChanged(forChatId chatId: HandleEntity) -> AnyPublisher<Bool, Never> {
+    func allowNonHostToAddParticipantsValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
         allowNonHostToAddParticipantsValueChangedSubject.eraseToAnyPublisher()
     }
     
@@ -137,7 +136,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         leaveChatRoomSuccess
     }
     
-    func ownPrivilegeChanged(forChatId chatId: HandleEntity) -> AnyPublisher<HandleEntity, Never> {
+    func ownPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never> {
         ownPrivilegeChangedSubject.eraseToAnyPublisher()
     }
     
@@ -149,7 +148,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         invitedToChat?(userId)
     }
     
-    func remove(fromChat chat: MEGADomain.ChatRoomEntity, userId: HandleEntity) {
+    func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) {
         removedFromChat?(userId)
     }
 }

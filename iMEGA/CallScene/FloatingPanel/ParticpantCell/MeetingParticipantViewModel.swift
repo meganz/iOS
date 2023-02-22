@@ -78,7 +78,12 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
-        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatId: participant.chatId) { [weak self] result in
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.participantId) else {
+            MEGALogDebug("ChatRoom not found for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
+            return
+        }
+        
+        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatRoom: chatRoom) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let name):
@@ -165,10 +170,11 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func createAvatarUsingName(forParticipant participant: CallParticipantEntity) async throws -> UIImage? {
-        guard let name = try await chatRoomUseCase.userDisplayNames(
-            forPeerIds: [participant.participantId],
-            chatId: participant.chatId
-        ).first else {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.participantId) ,
+              let name = try await chatRoomUseCase.userDisplayNames(
+                forPeerIds: [participant.participantId],
+                chatRoom: chatRoom
+              ).first else {
             MEGALogDebug("Unable to find the name for handle \(participant.participantId)")
             return nil
         }

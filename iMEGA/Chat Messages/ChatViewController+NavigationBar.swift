@@ -139,7 +139,7 @@ extension ChatViewController {
         return ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoom: chatRoom.toChatRoomEntity()
         )
     }
 }

@@ -95,7 +95,8 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
-        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatId: participant.chatId) { result in
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else { return }
+        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatRoom: chatRoom) { result in
             switch result {
             case .success(let name):
                 invokeCommand?(.updateName(name: name))

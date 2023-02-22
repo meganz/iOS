@@ -27,10 +27,12 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
-        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatId: chatId) {
-            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
+        guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
+        
+        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {
+            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: delegate)
         }
-        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)
+        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatRoom.chatId, delegate: delegate)
     }
     
     @objc func showEndCallForAll() {
@@ -64,7 +66,7 @@ extension GroupChatDetailsViewController {
         return ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoom: chatRoom.toChatRoomEntity()
         )
     }
     

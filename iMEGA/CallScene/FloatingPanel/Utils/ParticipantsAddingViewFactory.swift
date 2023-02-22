@@ -3,14 +3,14 @@ import MEGADomain
 struct ParticipantsAddingViewFactory {
     let accountUseCase: AccountUseCaseProtocol
     let chatRoomUseCase: ChatRoomUseCaseProtocol
-    let chatId: HandleEntity
+    let chatRoom: ChatRoomEntity
     
     var hasVisibleContacts: Bool {
         accountUseCase.contacts().contains { $0.visibility == .visible }
     }
     
     func hasNonAddedVisibleContacts(withExcludedHandles handles: Set<HandleEntity>) -> Bool {
-        let peerHandles = chatRoomUseCase.peerHandles(forChatId: chatId)
+        let peerHandles = chatRoomUseCase.peerHandles(forChatRoom: chatRoom)
         let excludedHandles = handles.union(peerHandles)
 
         let hasNonAddedVisibleContacts = accountUseCase.contacts()
@@ -62,8 +62,7 @@ struct ParticipantsAddingViewFactory {
         
         contactController.contactsMode = contactsMode
         
-        guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
-        let chatRoomCurrentParticipants = chatRoomEntity
+        let chatRoomCurrentParticipants = chatRoom
             .peers
             .compactMap { $0.privilege.isPeerVisibleByPrivilege() ? $0.handle : nil }
         
