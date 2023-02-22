@@ -5,10 +5,11 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let isUpgradeSecuritySuccess: Bool
-    private let _currentUser: UserEntity?
-    private let _isGuest: Bool
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
+    
+    public let currentUser: UserEntity?
+    public let isGuest: Bool
     
     public init(currentUser: UserEntity? = nil,
                 isGuest: Bool = false,
@@ -18,22 +19,14 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 isUpgradeSecuritySuccess: Bool = false) {
-        self._currentUser = currentUser
-        self._isGuest = isGuest
+        self.currentUser = currentUser
+        self.isGuest = isGuest
         self._isLoggedIn = isLoggedIn
         self._contacts = contacts
         self.nodesCount = nodesCount
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetails = accountDetails
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
-    }
-    
-    public var currentUser: UserEntity? {
-        _currentUser
-    }
-    
-    public var isGuest: Bool {
-        _isGuest
     }
     
     public func isLoggedIn() -> Bool {
