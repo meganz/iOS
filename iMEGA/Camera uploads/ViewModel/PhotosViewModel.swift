@@ -51,7 +51,6 @@ final class PhotosViewModel: NSObject {
             do {
                 guard let container = await self?.photoLibraryUseCase.photoLibraryContainer() else { return }
                 guard self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
-                
                 await self?.loadPhotos()
             }
         }
@@ -106,13 +105,18 @@ final class PhotosViewModel: NSObject {
         nodeList: MEGANodeList,
         container: PhotoLibraryContainerEntity
     ) -> Bool {
-        let cameraUploadNodesModified = shouldProcessOnNodeEntitiesUpdate(with: nodeList,
-                                                                   childNodes: mediaNodes,
-                                                                   parentNode: container.cameraUploadNode)
-        let mediaUploadNodesModified = shouldProcessOnNodeEntitiesUpdate(with: nodeList,
-                                                                  childNodes: mediaNodes,
-                                                                  parentNode:  container.mediaUploadNode)
-        return cameraUploadNodesModified || mediaUploadNodesModified
+        if filterLocation == .allLocations || filterLocation == .cloudDrive {
+            return nodeList.toNodeEntities()
+                .contains(where: {
+                    ($0.name.mnz_isImagePathExtension || $0.name.mnz_isVideoPathExtension) && $0.hasThumbnail
+                })
+        } else if filterLocation == .cameraUploads {
+            return shouldProcessOnNodeEntitiesUpdate(with: nodeList,
+                                                     childNodes: mediaNodes,
+                                                     parentNode: container.cameraUploadNode)
+        }
+        
+        return false
     }
     
     private func loadSortOrderType() {
