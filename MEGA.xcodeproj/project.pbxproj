@@ -2299,7 +2299,6 @@
 		BFAB115123CEA5C300BCE72D /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB113523CEA5C300BCE72D /* AlbumTableViewCell.swift */; };
 		BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAB113623CEA5C300BCE72D /* AlbumTableViewCell.xib */; };
 		BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */; };
-		BFAB115523CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB115423CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift */; };
 		BFAC873925FEF26C009CA3F6 /* AudioSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */; };
 		BFAC87972600041C009CA3F6 /* CaptureDeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */; };
 		BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */; };
@@ -4746,7 +4745,6 @@
 		BFAB113523CEA5C300BCE72D /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		BFAB113623CEA5C300BCE72D /* AlbumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumTableViewCell.xib; sourceTree = "<group>"; };
 		BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewDataSource.swift; sourceTree = "<group>"; };
-		BFAB115423CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+PhotoAlbumBrowserAdditions.swift"; sourceTree = "<group>"; };
 		BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionRepository.swift; sourceTree = "<group>"; };
 		BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureDeviceRepository.swift; sourceTree = "<group>"; };
 		BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewRouter.swift; sourceTree = "<group>"; };
@@ -10933,7 +10931,6 @@
 			isa = PBXGroup;
 			children = (
 				BFAB111B23CEA5C300BCE72D /* UIViewController+PhotoAlbumBrowserAdditions.swift */,
-				BFAB115423CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -12867,7 +12864,6 @@
 				BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */,
 				C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
-				BFAB115523CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */,

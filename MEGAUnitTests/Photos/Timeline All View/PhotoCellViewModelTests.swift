@@ -42,7 +42,7 @@ final class PhotoCellViewModelTests: XCTestCase {
                                      mediaUseCase: MockMediaUseCase())
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), type: .placeholder)))
-        XCTAssertEqual(sut.duration, "00:00")
+        XCTAssertEqual(sut.duration, "0:00")
         XCTAssertEqual(sut.isVideo, false)
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         XCTAssertEqual(sut.isSelected, false)
