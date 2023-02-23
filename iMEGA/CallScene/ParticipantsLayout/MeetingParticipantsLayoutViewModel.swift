@@ -210,7 +210,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             let callDurationInfo = CallDurationInfo(initDuration: duration, baseDate: Date())
             let timer = Timer(timeInterval: 1, repeats: true, block: { [weak self] (timer) in
                 let duration = Int(Date().timeIntervalSince1970) - Int(callDurationInfo.baseDate.timeIntervalSince1970) + callDurationInfo.initDuration
-                self?.invokeCommand?(.updateDuration(NSString.mnz_string(fromTimeInterval: TimeInterval(duration))))
+                self?.invokeCommand?(.updateDuration(TimeInterval(duration).timeString))
             })
             RunLoop.main.add(timer, forMode: .common)
             self.timer = timer

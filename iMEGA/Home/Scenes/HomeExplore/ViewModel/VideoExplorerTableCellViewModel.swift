@@ -16,7 +16,7 @@ final class VideoExplorerTableCellViewModel {
     }
     
     var duration: String? {
-        return TimeInterval(node.duration).timeDisplayString()
+        return TimeInterval(node.duration).timeString
     }
     
     var parentFolderName: String {

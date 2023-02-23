@@ -180,7 +180,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 downloadGifIcon.isHidden = !loadingIndicator.isHidden
             }
         } else if name.mnz_isVideoPathExtension {
-            durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(node.duration))
+            durationLabel.text = TimeInterval(node.duration).timeString
             durationLabel.isHidden = false
             playIconView.isHidden = !loadingIndicator.isHidden
             downloadGifIcon.isHidden = true

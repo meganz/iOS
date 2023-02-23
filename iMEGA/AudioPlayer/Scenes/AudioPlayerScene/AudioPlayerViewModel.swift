@@ -379,7 +379,7 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool) {
         if remainingTime > 0.0 { invokeCommand?(.showLoading(false)) }
-        invokeCommand?(.reloadPlayerStatus(currentTime: NSString.mnz_string(fromTimeInterval: currentTime), remainingTime: String(describing: "-\(NSString.mnz_string(fromTimeInterval: remainingTime))"), percentage: percentageCompleted, isPlaying: isPlaying))
+        invokeCommand?(.reloadPlayerStatus(currentTime: currentTime.timeString, remainingTime: String(describing: "-\(remainingTime.timeString)"), percentage: percentageCompleted, isPlaying: isPlaying))
     }
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {

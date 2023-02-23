@@ -18,7 +18,7 @@ final class PhotoCarouselDataSource: PhotoGridViewDataSource {
     private func configCell(_ cell: PhotoCarouselCell, by asset: PHAsset) {
         cell.asset = asset
         cell.selectedIndex = selectedAssets.firstIndex(of: asset)
-        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
+        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeString : nil
     }
     
     override func updateCollectionCell(atIndexPath indexPath: IndexPath, selectedIndex: Int?) {

@@ -83,6 +83,6 @@ class PhotoGridViewBaseDataSource: NSObject {
             return self.handlePanSelection(isSelected: isSelected, asset: asset)
         }
         
-        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
+        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeString : nil
     }
 }
