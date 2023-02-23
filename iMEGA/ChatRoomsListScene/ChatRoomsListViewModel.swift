@@ -357,14 +357,16 @@ final class ChatRoomsListViewModel: ObservableObject {
                 let key = self.formatedDateString(date)
                 
                 var result = partialResult
-                let futureMeetingViewModel = self.constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting)
+                let futureMeetingViewModel = self.constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting, nextOccurrenceDate: date)
                 
                 if let index = result.firstIndex(where: { $0.title == key }) {
                     let futureMeetingSection = result[index]
+                    var futureMeetingsViewModel = futureMeetingSection.items + [futureMeetingViewModel]
+                    futureMeetingsViewModel = futureMeetingsViewModel.sorted { $0.nextOccurrenceDate < $1.nextOccurrenceDate }
                     result[index] = FutureMeetingSection(
                         title: futureMeetingSection.title,
                         date: futureMeetingSection.date,
-                        items: futureMeetingSection.items + [futureMeetingViewModel]
+                        items: futureMeetingsViewModel
                     )
                 } else {
                     result.append(FutureMeetingSection(title: key, date: date, items: [futureMeetingViewModel]))
@@ -416,7 +418,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity) -> FutureMeetingRoomViewModel {
+    private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity, nextOccurrenceDate: Date) -> FutureMeetingRoomViewModel {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
                                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let userImageUseCase = UserImageUseCase(
@@ -428,6 +430,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         
         return FutureMeetingRoomViewModel(
             scheduledMeeting: scheduledMeetingEntity,
+            nextOccurrenceDate: nextOccurrenceDate,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
             userImageUseCase: userImageUseCase,

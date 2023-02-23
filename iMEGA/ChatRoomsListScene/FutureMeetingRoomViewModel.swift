@@ -3,6 +3,7 @@ import Combine
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let scheduledMeeting: ScheduledMeetingEntity
+    let nextOccurrenceDate: Date
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
@@ -65,6 +66,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     @Published var existsInProgressCallInChatRoom = false
 
     init(scheduledMeeting: ScheduledMeetingEntity,
+         nextOccurrenceDate: Date,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
@@ -76,6 +78,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
+        self.nextOccurrenceDate = nextOccurrenceDate
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
