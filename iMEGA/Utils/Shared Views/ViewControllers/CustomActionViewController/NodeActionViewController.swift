@@ -97,7 +97,7 @@ class NodeActionViewController: ActionSheetViewController {
                           shouldShowVerifyContact: shouldShowVerifyContact)
     }
     
-    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
+    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, isMediaDiscovery: Bool = false, isPhotosTimeline: Bool = false, sender: Any) {
         self.nodes = nodes
         self.displayMode = displayMode
         self.delegate = delegate
@@ -131,7 +131,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
-                .mutiSelectNormalAlbumBuild()
+                .multiSelectNormalAlbumBuild()
         } else {
             let linkedNodeCount = nodes.publicLinkedNodes().count
             actions = NodeActionBuilder()
@@ -140,6 +140,8 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsAllLinkedNode(linkedNodeCount == nodesCount)
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
+                .setIsMediaDiscovery(isMediaDiscovery)
+                .setIsPhotosTimeline(isPhotosTimeline)
                 .multiselectBuild()
         }
     }
