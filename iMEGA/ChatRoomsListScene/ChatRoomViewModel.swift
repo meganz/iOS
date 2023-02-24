@@ -344,10 +344,12 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                           }
                           return false
                       }) else {
-                          return
-                      }
-                
-                router.showGroupChatInfo(forChatId: chatListItem.chatId)
+                    return
+                }
+                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else {
+                    return
+                }
+                router.showGroupChatInfo(forChatRoom: chatRoom)
             }
         } else {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
