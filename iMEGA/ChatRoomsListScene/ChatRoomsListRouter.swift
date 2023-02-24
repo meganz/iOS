@@ -190,12 +190,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController?.present(actionSheetController, animated: true)
     }
     
-    func showGroupChatInfo(forChatId chatId: HandleEntity) {
-        guard let groupChatDetailsController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController else {
+    func showGroupChatInfo(forChatRoom chatRoom: ChatRoomEntity) {
+        guard let megaChatRoom = chatRoom.toMEGAChatRoom(), let groupChatDetailsController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController else {
             return
         }
         
-        groupChatDetailsController.chatId = chatId
+        groupChatDetailsController.chatRoom = megaChatRoom
         navigationController?.pushViewController(groupChatDetailsController, animated: true)
     }
     

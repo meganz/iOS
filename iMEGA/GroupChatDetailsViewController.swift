@@ -12,12 +12,10 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func addChatRoomDelegate() {
-        guard let chatRoom else { return }
         MEGASdkManager.sharedMEGAChatSdk().addChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func removeChatRoomDelegate() {
-        guard let chatRoom else { return }
         MEGASdkManager.sharedMEGAChatSdk().removeChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
@@ -76,7 +74,6 @@ extension GroupChatDetailsViewController {
     }
     
     private func changeChatNotificationStatus(sender: UISwitch) {
-        guard let chatRoom else { return }
         if sender.isOn {
             chatNotificationControl.turnOffDND(chatId: ChatIdEntity(chatRoom.chatId))
         } else {
