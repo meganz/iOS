@@ -25,6 +25,8 @@ final class NodeActionBuilder {
     private var isTakedown = false
     private var isVerifyContact = false
     private var areMediaFiles = false
+    private var isMediaDiscovery = false
+    private var isPhotosTimeline = false
     private var sharedFolderContact: MEGAUser = MEGAUser()
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
@@ -155,6 +157,16 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setIsMediaDiscovery(_ isMediaDiscovery: Bool) -> NodeActionBuilder {
+        self.isMediaDiscovery = isMediaDiscovery
+        return self
+    }
+    
+    func setIsPhotosTimeline(_ isPhotosTimeline: Bool) -> NodeActionBuilder {
+        self.isPhotosTimeline = isPhotosTimeline
+        return self
+    }
+    
     func build() -> [NodeAction] {
         var nodeActions = [NodeAction]()
         
@@ -188,7 +200,7 @@ final class NodeActionBuilder {
         favouriteAlbumActions()
     }
     
-    func mutiSelectNormalAlbumBuild() -> [NodeAction] {
+    func multiSelectNormalAlbumBuild() -> [NodeAction] {
         normalAlbumActions()
     }
     
@@ -697,7 +709,7 @@ final class NodeActionBuilder {
                        .exportFileAction(nodeCount: selectedNodeCount),
                        .sendToChatAction()]
         
-        if areMediaFiles {
+        if areMediaFiles && !(displayMode == .favouriteAlbumSelectionToolBar || displayMode == .albumSelectionToolBar || isMediaDiscovery || isPhotosTimeline) {
             actions.append(.saveToPhotosAction())
         }
         

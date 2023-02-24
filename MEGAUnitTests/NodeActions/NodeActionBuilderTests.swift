@@ -1028,6 +1028,47 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testMultiselectMediaFiles_albumSelectionToolbar() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.albumSelectionToolBar)
+            .setAreMediaFiles(true)
+            .multiSelectNormalAlbumBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy]))
+    }
+    
+    func testMultiselectMediaFiles_favouriteAlbumSelectionToolbar() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.favouriteAlbumSelectionToolBar)
+            .setIsFavourite(true)
+            .setAreMediaFiles(true)
+            .multiSelectFavouriteAlbumBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .favourite, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectMediaFiles_PhotosTimeline() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setAreMediaFiles(true)
+            .setIsPhotosTimeline(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectMediaFiles_MediaDiscovery() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setAreMediaFiles(true)
+            .setIsMediaDiscovery(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+    }
+    
     func testExportedNodeActions_nodeExported() {
         actions = NodeActionBuilder()
             .setDisplayMode(.cloudDrive)
