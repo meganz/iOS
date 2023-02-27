@@ -93,23 +93,32 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     func testPhotoSourceLocation_onContentLoadForAllLocations_shouldChangeToCloudDriveIfOnlyCloudDriveItemsLoaded() async {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, "")
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoSourceLocation, .cloudDrive)
+        let expectedLocation: PhotosFilterLocation = .cloudDrive
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testPhotoSourceLocation_onContentLoadForAllLocations_shouldChangeToCameraUploadIfOnlyCameraUploadItemsLoaded() async {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCameraUpload: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, "")
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoSourceLocation, .cameraUploads)
+        let expectedLocation: PhotosFilterLocation = .cameraUploads
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testPhotoSourceLocation_onContentLoadForAllLocations_shouldNotChangeIfCloudDriveAndCameraUploadItemsLoaded() async {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
                                                   allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
-        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, "")
+        let expectedLocation: PhotosFilterLocation = .allLocations
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testPhotoSourceLocation_onContentLoad_shouldNotChangeSourceLocationIfItsTheSame() async {
@@ -130,6 +139,28 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         await sut.photosLoadingTask?.value
         wait(for: [exp], timeout: 1.0)
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+    }
+    
+    func testPhotoSourceLocationNavigationTitle_onContentLoad_shouldNotChangeNavTitleIfItsTheSame() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+                                                  allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
+        let expectedLocation: PhotosFilterLocation = .allLocations
+        sut.photoSourceLocationNavigationTitle = expectedLocation.localization
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        await sut.photosLoadingTask?.value
+        let exp = expectation(description: "Should not change if the same")
+        exp.isInverted = true
+        sut.$photoSourceLocationNavigationTitle
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = expectedLocation
+        await sut.photosLoadingTask?.value
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testContentLibrary_onContentLocationCloudDrive_shouldDisplaySortedCloudDrivePhotos() async throws {
@@ -201,6 +232,32 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         await sut.photosLoadingTask?.value
         wait(for: [exp], timeout: 1.0)
         XCTAssertTrue(sut.shouldRemoveFilter)
+    }
+    
+    func testIsDoneButtonDisabled_onItemsSelected_shouldChangeButNotEmitDuplicates() {
+        let sut = makeAlbumContentPickerViewModel()
+        XCTAssertTrue(sut.isDoneButtonDisabled)
+        XCTAssertTrue(sut.photoLibraryContentViewModel.selection.photos.isEmpty)
+        
+        let exp = expectation(description: "Should change disabled state")
+        exp.expectedFulfillmentCount = 4
+        var result = [Bool]()
+        sut.$isDoneButtonDisabled
+            .dropFirst()
+            .sink {
+                result.append($0)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let selectedPhoto = NodeEntity(name: "photo1.jpg", handle: 1)
+        let selectedPhotos = [selectedPhoto.handle: selectedPhoto]
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        sut.photoLibraryContentViewModel.selection.photos = [:]
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(result, [true, false, true, false])
     }
     
     private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
