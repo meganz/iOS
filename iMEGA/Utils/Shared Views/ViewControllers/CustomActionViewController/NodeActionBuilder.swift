@@ -28,6 +28,7 @@ final class NodeActionBuilder {
     private var isMediaDiscovery = false
     private var isPhotosTimeline = false
     private var sharedFolderContact: MEGAUser = MEGAUser()
+    private var sharedFolderReceiverDetail = ""
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -146,9 +147,11 @@ final class NodeActionBuilder {
         return self
     }
     
-    func setIsVerifyContact(_ isVerifyContact: Bool, sharedFolderContact: MEGAUser) -> NodeActionBuilder {
+    func setIsVerifyContact(_ isVerifyContact: Bool,
+                            sharedFolderReceiverEmail: String,
+                            sharedFolderContact: MEGAUser?) -> NodeActionBuilder {
         self.isVerifyContact = isVerifyContact
-        self.sharedFolderContact = sharedFolderContact
+        self.sharedFolderReceiverDetail = sharedFolderContact?.mnz_displayName ?? sharedFolderContact?.email ?? sharedFolderReceiverEmail
         return self
     }
     
@@ -322,8 +325,7 @@ final class NodeActionBuilder {
     
     private func verifyContactNodeActions(accessType: MEGAShareType) -> [NodeAction] {
         var nodeActions: [NodeAction] = []
-        let contactName = sharedFolderContact.mnz_displayName ?? sharedFolderContact.email ?? ""
-        nodeActions.append(.verifyContactAction(contactName: contactName))
+        nodeActions.append(.verifyContactAction(receiverDetail: sharedFolderReceiverDetail))
         nodeActions.append(.infoAction())
         
         if accessType == .accessFull {
@@ -389,8 +391,7 @@ final class NodeActionBuilder {
         var nodeActions: [NodeAction] = []
         
         if isVerifyContact {
-            let contactName = sharedFolderContact.mnz_displayName ?? sharedFolderContact.email ?? ""
-            nodeActions.append(.verifyContactAction(contactName: contactName))
+            nodeActions.append(.verifyContactAction(receiverDetail: sharedFolderReceiverDetail))
         }
 
         if !isBackupNode && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {
@@ -515,8 +516,7 @@ final class NodeActionBuilder {
         var nodeActions: [NodeAction] = []
         
         if isVerifyContact {
-            let contactName = sharedFolderContact.mnz_displayName ?? sharedFolderContact.email ?? ""
-            nodeActions.append(.verifyContactAction(contactName: contactName))
+            nodeActions.append(.verifyContactAction(receiverDetail: sharedFolderReceiverDetail))
         }
         
         if !isBackupNode && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) {

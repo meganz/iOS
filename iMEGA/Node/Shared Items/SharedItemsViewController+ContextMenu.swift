@@ -77,11 +77,25 @@ extension SharedItemsViewController: DisplayMenuDelegate {
     }
 
     //MARK: - NodeActionMenu
-    @objc func showContactVerificationView(forIndexPath indexPath: IndexPath?) {
-        guard let indexPath, let userContact = userContactFromShareAtIndexPath(indexPath),
-              let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
+    @objc func showPendingOutShareModal(forIndexPath indexPath: IndexPath) {
+        guard let share = shareAtIndexPath(indexPath), let userEmail = share.user else {
             return
         }
+        viewModel.showPendingOutShareModal(for: userEmail)
+    }
+    
+    @objc func showContactVerificationView(forIndexPath indexPath: IndexPath?) {
+        guard let indexPath else { return }
+        
+        guard let userContact = userContactFromShareAtIndexPath(indexPath) else {
+            showPendingOutShareModal(forIndexPath: indexPath)
+            return
+        }
+        
+        guard let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
+            return
+        }
+        
         verifyCredentialsVC.user = userContact
         verifyCredentialsVC.userName = userContact.mnz_displayName ?? userContact.email
         

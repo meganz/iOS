@@ -698,6 +698,7 @@ internal enum Asset {
       internal static let readPermissions = ImageAsset(name: "readPermissions")
       internal static let readWritePermissions = ImageAsset(name: "readWritePermissions")
       internal static let removeShare = ImageAsset(name: "removeShare")
+      internal static let verifyPendingOutshareEmail = ImageAsset(name: "verifyPendingOutshareEmail")
       internal static let warningPermission = ImageAsset(name: "warningPermission")
     }
     internal enum TabBarIcons {
