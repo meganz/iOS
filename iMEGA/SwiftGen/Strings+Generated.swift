@@ -4982,6 +4982,16 @@ public enum Strings {
           public static func sharedToContact(_ p1: Any) -> String {
             return Strings.tr("Localizable", "sharedItems.tab.outgoing.sharedToContact", String(describing: p1))
           }
+          public enum Modal {
+            public enum CannotVerifyContact {
+              /// You can't verify %@ as they're not in your contact list. Wait for them to accept your invitation first.
+              public static func message(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "sharedItems.tab.outgoing.modal.cannotVerifyContact.message", String(describing: p1))
+              }
+              /// Cannot verify contact
+              public static let title = Strings.tr("Localizable", "sharedItems.tab.outgoing.modal.cannotVerifyContact.title")
+            }
+          }
         }
         public enum Recents {
           /// Plural format key: "%#@count@"

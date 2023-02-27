@@ -116,8 +116,8 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.ShareFolder.title(nodeCount), detail: nil, image: Asset.Images.NodeActions.shareFolder.image, type: .shareFolder)
     }
     
-    class func verifyContactAction(contactName: String) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.VerifyContact.title(contactName), detail: nil, image: Asset.Images.ActionSheetIcons.verifyContact.image, type: .verifyContact)
+    class func verifyContactAction(receiverDetail: String) -> NodeAction {
+        NodeAction(title: Strings.Localizable.General.MenuAction.VerifyContact.title(receiverDetail), detail: nil, image: Asset.Images.ActionSheetIcons.verifyContact.image, type: .verifyContact)
     }
     
     class func manageFolderAction() -> NodeAction {

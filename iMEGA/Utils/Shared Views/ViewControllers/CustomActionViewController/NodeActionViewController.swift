@@ -319,7 +319,7 @@ class NodeActionViewController: ActionSheetViewController {
         let isVerifyContact = displayMode == .sharedItem &&
                             shouldShowVerifyContact &&
                             !sharedFolder.isVerified
-        let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user) ?? MEGAUser()
+        let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user)
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
@@ -339,7 +339,9 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
             .setIsTakedown(isTakedown)
-            .setIsVerifyContact(isVerifyContact, sharedFolderContact: sharedFolderContact)
+            .setIsVerifyContact(isVerifyContact,
+                                sharedFolderReceiverEmail: sharedFolder.user ?? "",
+                                sharedFolderContact: sharedFolderContact)
             .build()
     }
 }
