@@ -25,7 +25,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let sdk = MockSdk(megaSetElements: megaSetElements)
         let repo = UserAlbumRepository(sdk: sdk)
         
-        let setElements = await repo.albumContent(by: 1)
+        let setElements = await repo.albumContent(by: 1, includeElementsInRubbishBin: false)
         
         XCTAssertEqual(setElements.count, megaSetElements.count)
     }

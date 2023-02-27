@@ -19,7 +19,7 @@ extension AlbumContentViewController {
         return UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, menu: menu)
     }
     
-    func configureRightBarButton() {
+    func configureRightBarButtons() {
         if isEditing {
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel,
@@ -33,7 +33,7 @@ extension AlbumContentViewController {
                 if let contextMenuBarButton = makeContextMenuBarButton() {
                     rightBarButtonItems.append(contextMenuBarButton)
                 }
-                if viewModel.isUserAlbum {
+                if viewModel.canAddPhotosToAlbum {
                     rightBarButtonItems.append(addToAlbumBarButtonItem)
                 }
                 navigationItem.rightBarButtonItems = rightBarButtonItems

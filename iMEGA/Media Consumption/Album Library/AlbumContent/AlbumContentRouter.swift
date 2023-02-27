@@ -34,12 +34,14 @@ struct AlbumContentRouter: AlbumContentRouting {
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: userAlbumRepo
         )
-        
+        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo,
+                                                      searchRepository: FilesSearchRepository.newRepo)
         let viewModel = AlbumContentViewModel(
             album: album,
             albumContentsUseCase: albumContentsUseCase,
             mediaUseCase: mediaUseCase,
             albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: userAlbumRepo),
+            photoLibraryUseCase: photoLibraryUseCase,
             router: self,
             newAlbumPhotosToAdd: newAlbumPhotos)
         return AlbumContentViewController(viewModel: viewModel)

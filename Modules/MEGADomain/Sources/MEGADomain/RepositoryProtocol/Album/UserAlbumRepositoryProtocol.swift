@@ -8,9 +8,11 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     func albums() async -> [SetEntity]
     
     /// Fetch particular user album content
-    /// - Parameter id: User album id
+    /// - Parameters:
+    ///   - id: User album id
+    ///   - includeElementsInRubbishBin: Filter out Elements in Rubbish Bin
     /// - Returns: The particular user album content
-    func albumContent(by id: HandleEntity) async -> [SetElementEntity]
+    func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity]
     
     /// Create a user album
     /// - Parameter name: The user album name, can be nil
