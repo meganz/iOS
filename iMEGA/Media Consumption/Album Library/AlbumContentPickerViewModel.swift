@@ -12,9 +12,11 @@ final class AlbumContentPickerViewModel: ObservableObject {
     
     @Published private(set) var photoSourceLocation: PhotosFilterLocation = .allLocations
     @Published var navigationTitle: String = ""
+    @Published var photoSourceLocationNavigationTitle: String = ""
     @Published var isDismiss = false
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
     @Published var shouldRemoveFilter = true
+    @Published var isDoneButtonDisabled = true
     
     private var normalNavigationTitle: String {
         Strings.Localizable.CameraUploads.Albums.Create.addItemsTo(album.name)
@@ -44,7 +46,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
             isDismiss.toggle()
             return
         }
-        completion(album, nodes)        
+        completion(album, nodes)   
         isDismiss.toggle()
     }
     
@@ -66,6 +68,12 @@ final class AlbumContentPickerViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$navigationTitle)
         
+        photoLibraryContentViewModel.selection.$photos
+            .map { $0.isEmpty }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isDoneButtonDisabled)
+        
         photoLibraryContentViewModel.filterViewModel.$appliedFilterLocation
             .removeDuplicates()
             .sink { [weak self] appliedPhotoFilterLocation in
@@ -84,6 +92,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
                 await updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
                                                           isCloudDriveEmpty: cloudDrivePhotos.isEmpty,
                                                           isCameraUploadsEmpty: cameraUploadPhotos.isEmpty)
+                await updatePhotoSourceLocationNavigationTitleIfRequired()
                 await updatePhotoLibraryContent(cloudDrivePhotos: cloudDrivePhotos, cameraUploadPhotos: cameraUploadPhotos)
             } catch {
                 MEGALogError("Error occurred when loading photos. \(error.localizedDescription)")
@@ -136,5 +145,13 @@ final class AlbumContentPickerViewModel: ObservableObject {
     
     private func navigationTitle(forNumberOfItems num: Int) -> String {
         num == 1 ? Strings.Localizable.oneItemSelected(1): Strings.Localizable.itemsSelected(num)
+    }
+    
+    @MainActor
+    private func updatePhotoSourceLocationNavigationTitleIfRequired() {
+        guard photoSourceLocationNavigationTitle != photoSourceLocation.localization else {
+            return
+        }
+        photoSourceLocationNavigationTitle = photoSourceLocation.localization
     }
 }
