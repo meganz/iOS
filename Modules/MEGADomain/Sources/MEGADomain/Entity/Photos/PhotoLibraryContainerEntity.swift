@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PhotoLibraryContainerEntity {
+public struct PhotoLibraryContainerEntity: Sendable {
     public let cameraUploadNode: NodeEntity?
     public let mediaUploadNode: NodeEntity?
     
