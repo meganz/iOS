@@ -1530,6 +1530,8 @@
 		A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */; };
 		A88E7FED2549FD8A001B0A66 /* Recents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE82549FD8A001B0A66 /* Recents.storyboard */; };
 		A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */; };
+		A8919422299F8E6300B2A225 /* NodeAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */; };
+		A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */; };
 		A893322A24127B1B0088E588 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
@@ -4056,6 +4058,8 @@
 		A88E7FE82549FD8A001B0A66 /* Recents.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Recents.storyboard; sourceTree = "<group>"; };
 		A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentsTableViewHeaderFooterView.m; sourceTree = "<group>"; };
 		A88E7FEA2549FD8A001B0A66 /* RecentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentsViewController.h; sourceTree = "<group>"; };
+		A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAttributeRepository.swift; sourceTree = "<group>"; };
+		A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAttributeRepositoryTests.swift; sourceTree = "<group>"; };
 		A89629731FACE78B00F02F7A /* MEGACallManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGACallManager.h; path = Chat/MEGACallManager.h; sourceTree = "<group>"; };
 		A89629741FACE78B00F02F7A /* MEGACallManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGACallManager.m; path = Chat/MEGACallManager.m; sourceTree = "<group>"; };
 		A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAProviderDelegate.h; path = Chat/MEGAProviderDelegate.h; sourceTree = "<group>"; };
@@ -5378,6 +5382,7 @@
 				944AD0B028EF039700AB1E59 /* MyBackupsRepository.swift */,
 				0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */,
 				944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */,
+				A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -5442,6 +5447,7 @@
 				A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */,
 				B5CC2A632994A22800A966A0 /* ShareRepositoryTests.swift */,
 				0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */,
+				A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */,
 			);
 			path = Repos;
 			sourceTree = "<group>";
@@ -12951,6 +12957,7 @@
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
+				A8919422299F8E6300B2A225 /* NodeAttributeRepository.swift in Sources */,
 				BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */,
 				C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */,
 				A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */,
@@ -14401,6 +14408,7 @@
 				B64A71D5287BBAEB0085087D /* MockNode.swift in Sources */,
 				B60F818128BECC5E00E3C5BF /* PhotoLibraryModeAllViewModelTests.swift in Sources */,
 				C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */,
+				A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */,
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				6DD04A3A292B28C000B7E797 /* MockMEGASetElement.swift in Sources */,
