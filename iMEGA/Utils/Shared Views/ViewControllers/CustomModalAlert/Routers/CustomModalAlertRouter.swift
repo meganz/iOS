@@ -13,6 +13,7 @@ import MEGAPresentation
     case contactNotInMEGA
     case enableKeyRotation
     case upgradeSecurity
+    case pendingUnverifiedOutShare
 }
 
 @objc class CustomModalAlertRouter: NSObject, Routing {
@@ -23,6 +24,8 @@ import MEGAPresentation
     
     private var chatId: ChatIdEntity?
     
+    private var outShareEmail: String?
+    
     @objc init(_ mode: CustomModalAlertMode, presenter: UIViewController) {
         self.mode = mode
         self.presenter = presenter
@@ -32,6 +35,12 @@ import MEGAPresentation
         self.mode = mode
         self.presenter = presenter
         self.chatId = chatId
+    }
+    
+    init(_ mode: CustomModalAlertMode, presenter: UIViewController, outShareEmail: String) {
+        self.mode = mode
+        self.presenter = presenter
+        self.outShareEmail = outShareEmail
     }
     
     func build() -> UIViewController {
@@ -55,6 +64,10 @@ import MEGAPresentation
         
         case .upgradeSecurity:
             customModalAlertVC.configureForUpgradeSecurity()
+        
+        case .pendingUnverifiedOutShare:
+            guard let outShareEmail else { return customModalAlertVC }
+            customModalAlertVC.configureForPendingUnverifiedOutshare(for: outShareEmail)
             
         default: break
         }

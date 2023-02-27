@@ -19,4 +19,8 @@ import MEGADomain
             }
         }
     }
+    
+    @objc func showPendingOutShareModal(for email: String) {
+        router.showPendingOutShareModal(for: email)
+    }
 }
