@@ -1,21 +1,24 @@
+import Combine
 import MEGADomain
 
-final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRepositoryProtocol {
-    var onAlbumReload: (() -> Void)?
+final class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdateNotifierRepositoryProtocol {
+    static var newRepo = AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.shared)
     
+    private let albumReloadSourcePublisher = PassthroughSubject<Void, Never>()
     private let sdk: MEGASdk
-    private var nodesUpdateListenerRepo: NodesUpdateListenerProtocol
     
-    init(
-        sdk: MEGASdk,
-        nodesUpdateListenerRepo: NodesUpdateListenerProtocol
-    ) {
+    var albumReloadPublisher: AnyPublisher<Void, Never> {
+        albumReloadSourcePublisher.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGASdk) {
         self.sdk = sdk
-        self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
-        
-        self.nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
-            self?.checkAlbumForReload(nodes)
-        }
+        super.init()
+        sdk.add(self)
+    }
+    
+    deinit {
+        sdk.remove(self)
     }
     
     private func isAnyNodeMovedIntoTrash(_ nodes: [NodeEntity]) -> Bool {
@@ -26,17 +29,23 @@ final class AlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRe
         return nodes.contains(rubbishNodeEntity)
     }
     
-    private func checkAlbumForReload(_ nodes: [NodeEntity]) {
+    private func shouldAlbumReload(_ nodes: [NodeEntity]) -> Bool {
         let isAnyNodesTrashed = isAnyNodeMovedIntoTrash(nodes)
         let hasNewNodes = nodes.containsNewNode()
         let hasModifiedNodes = nodes.hasModifiedAttributes()
         let hasModifiedParent = nodes.hasModifiedParent()
         let hasModifiedPublicLink = nodes.hasModifiedPublicLink()
         
-        if isAnyNodesTrashed || hasNewNodes ||
+        return isAnyNodesTrashed || hasNewNodes ||
             hasModifiedNodes || hasModifiedParent ||
-            hasModifiedPublicLink {
-            onAlbumReload?()
-        }
+            hasModifiedPublicLink
+    }
+}
+
+extension AlbumContentsUpdateNotifierRepository: MEGAGlobalDelegate {
+    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let updatedNodes = nodeList?.toNodeEntities(),
+        shouldAlbumReload(updatedNodes) else { return }
+        albumReloadSourcePublisher.send()
     }
 }

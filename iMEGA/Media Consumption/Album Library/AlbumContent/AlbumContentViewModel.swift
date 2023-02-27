@@ -198,7 +198,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func setupSubscription() {
-        updateSubscription = albumContentsUseCase.updatePublisher.sink { [weak self] in
+        updateSubscription = albumContentsUseCase.albumReloadPublisher.sink { [weak self] in
             self?.reloadAlbum()
         }
     }

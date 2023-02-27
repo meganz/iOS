@@ -1,7 +1,7 @@
 import Combine
 
 public protocol AlbumContentsUseCaseProtocol {
-    var updatePublisher: AnyPublisher<Void, Never> { get }
+    var albumReloadPublisher: AnyPublisher<Void, Never> { get }
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
 }
 
@@ -11,8 +11,9 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private let fileSearchRepo: FilesSearchRepositoryProtocol
     private let userAlbumRepo: UserAlbumRepositoryProtocol
     
-    public let updatePublisher: AnyPublisher<Void, Never>
-    private let updateSubject = PassthroughSubject<Void, Never>()
+    public var albumReloadPublisher: AnyPublisher<Void, Never> {
+        albumContentsRepo.albumReloadPublisher
+    }
     
     public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol,
                 mediaUseCase: MediaUseCaseProtocol,
@@ -22,12 +23,6 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
         self.userAlbumRepo = userAlbumRepo
-        
-        updatePublisher = AnyPublisher(updateSubject)
-        
-        self.albumContentsRepo.onAlbumReload = { [weak self] in
-            self?.updateSubject.send()
-        }
     }
     
     // MARK: Protocols

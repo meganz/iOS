@@ -94,9 +94,10 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     func testSubscription_onAlbumContentUpdated_shouldShowAlbumWithNewNodes() throws {
-        let updatePublisher = PassthroughSubject<Void, Never>()
+        let albumReloadPublisher = PassthroughSubject<Void, Never>()
         let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
-        let useCase = MockAlbumContentUseCase(nodes: expectedNodes, updatePublisher: updatePublisher.eraseToAnyPublisher())
+        let useCase = MockAlbumContentUseCase(nodes: expectedNodes,
+                                              albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: useCase,
                                         mediaUseCase: MockMediaUseCase(),
@@ -114,7 +115,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTFail("Unexpected command")
             }
         }
-        updatePublisher.send()
+        albumReloadPublisher.send()
         
         wait(for: [exp], timeout: 1.0)
     }
