@@ -1654,6 +1654,7 @@
 		B51977C62942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */; };
 		B51977C92942DC27008770CD /* VerifyCredentialsViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C82942DC27008770CD /* VerifyCredentialsViewProvider.swift */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
+		B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */; };
 		B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */; };
 		B52B8C68297FE9A400981F47 /* RecentsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */; };
 		B52E231828A0B3240018C3C3 /* FeatureFlagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231728A0B3240018C3C3 /* FeatureFlagRepository.swift */; };
@@ -4145,6 +4146,7 @@
 		B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+WarningBannerView.swift"; sourceTree = "<group>"; };
 		B51977C82942DC27008770CD /* VerifyCredentialsViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCredentialsViewProvider.swift; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
+		B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SharedItem.swift"; sourceTree = "<group>"; };
 		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
 		B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B52E231728A0B3240018C3C3 /* FeatureFlagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagRepository.swift; sourceTree = "<group>"; };
@@ -5582,6 +5584,7 @@
 				124667F3275DB81F00C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
 				83B4FC68292402E100364F04 /* CustomModalAlertViewcontroller+EnableKeyRotation.swift */,
 				B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */,
+				B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -12507,6 +12510,7 @@
 				B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */,
 				5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */,
+				B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */,
 				B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,

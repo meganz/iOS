@@ -65,11 +65,12 @@ extension SharedItemsViewController {
         cell.permissionsButton.setImage(Asset.Images.SharedItems.warningPermission.image, for: .normal)
         cell.permissionsButton.isHidden = false
         
+        cell.infoLabel.text = ""
         if let user = userContactFromShareAtIndexPath(indexPath) {
             let userName: String = user.mnz_displayName ?? user.email
             cell.infoLabel.text = Strings.Localizable.SharedItems.Tab.Outgoing.sharedToContact(userName)
-        } else {
-            cell.infoLabel.text = ""
+        } else if let share = shareAtIndexPath(indexPath), let userEmail = share.user {
+            cell.infoLabel.text = Strings.Localizable.SharedItems.Tab.Outgoing.sharedToContact(userEmail)
         }
         
         setupLabelAndFavourite(for: node, cell: cell)
@@ -77,7 +78,7 @@ extension SharedItemsViewController {
         return cell
     }
     
-    @objc func userContactFromShareAtIndexPath(_ indexPath: IndexPath) -> MEGAUser? {
+    func userContactFromShareAtIndexPath(_ indexPath: IndexPath) -> MEGAUser? {
         guard let share = shareAtIndexPath(indexPath) else { return nil }
         return MEGASdk.shared.contact(forEmail: share.user)
     }

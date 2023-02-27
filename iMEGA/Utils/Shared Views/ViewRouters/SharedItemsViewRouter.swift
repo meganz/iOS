@@ -14,4 +14,10 @@ final class SharedItemsViewRouter: NSObject {
         }
     }
     
+    @objc func showPendingOutShareModal(for email: String) {
+        CustomModalAlertRouter(.pendingUnverifiedOutShare,
+                               presenter: UIApplication.mnz_presentingViewController(),
+                               outShareEmail: email).start()
+    }
+    
 }

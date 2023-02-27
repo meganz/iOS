@@ -329,7 +329,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessFull)
             .setIsFile(false)
             .setisIncomingShareChildView(true)
-            .setIsVerifyContact(true, sharedFolderContact: MockUser())
+            .setIsVerifyContact(true, sharedFolderReceiverEmail: "", sharedFolderContact: MockUser())
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .label, .leaveSharing]))
@@ -385,7 +385,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessReadWrite)
             .setIsFile(false)
             .setisIncomingShareChildView(true)
-            .setIsVerifyContact(true, sharedFolderContact: MockUser())
+            .setIsVerifyContact(true, sharedFolderReceiverEmail: "", sharedFolderContact: MockUser())
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .leaveSharing]))
@@ -441,7 +441,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setAccessLevel(.accessOwner)
             .setIsFile(false)
             .setIsOutshare(true)
-            .setIsVerifyContact(true, sharedFolderContact: MockUser())
+            .setIsVerifyContact(true, sharedFolderReceiverEmail: "", sharedFolderContact: MockUser())
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .copy, .removeSharing]))
@@ -466,7 +466,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setIsFile(false)
             .setIsOutshare(true)
             .setIsExported(true)
-            .setIsVerifyContact(true, sharedFolderContact: MockUser())
+            .setIsVerifyContact(true, sharedFolderReceiverEmail: "", sharedFolderContact: MockUser())
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .copy, .removeSharing]))
