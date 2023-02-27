@@ -119,6 +119,16 @@ final class MockSdk: MEGASdk {
         return mockNode.nodePath
     }
     
+    override func numberChildren(forParent parent: MEGANode?) -> Int {
+        var numberChildren = 0
+        for node in nodes {
+            if node.parentHandle == parent?.handle {
+                numberChildren += 1
+            }
+        }
+        return numberChildren
+    }
+    
     //MARK: - Sets
     
     override func megaSets() -> [MEGASet] {
