@@ -1,7 +1,7 @@
 public protocol ShareUseCaseProtocol: Sendable {
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity]
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]
-    func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity
+    func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity]
 }
 
 public struct ShareUseCase<T: ShareRepositoryProtocol>: ShareUseCaseProtocol {
@@ -18,7 +18,17 @@ public struct ShareUseCase<T: ShareRepositoryProtocol>: ShareUseCaseProtocol {
         repo.allOutShares(sortBy: order)
     }
     
-    public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
-        try await repo.createShareKey(forNode: node)
+    public func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity] {
+        try await withThrowingTaskGroup(of: HandleEntity.self, returning: [HandleEntity].self) { group in
+            nodes.forEach { node in
+                group.addTask {
+                    return try await repo.createShareKey(forNode: node)
+                }
+            }
+            
+            return try await group.reduce(into: [HandleEntity](), { result, handle in
+                result.append(handle)
+            })
+        }
     }
 }
