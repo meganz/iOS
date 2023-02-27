@@ -1,17 +1,13 @@
 import Foundation
 import MEGADomain
 
-public struct MockShareRepository: ShareRepositoryProtocol {
-    public static var newRepo: MockShareRepository {
-        MockShareRepository(sharedNodeHandle: 0)
-    }
+final public class MockShareRepository: ShareRepositoryProtocol, @unchecked Sendable {
+    public static var newRepo: MockShareRepository = MockShareRepository()
     
-    private let sharedNodeHandle: HandleEntity
     private let sharingUser: UserEntity?
+    public private(set) var sharedNodeHandles = [HandleEntity]()
     
-    public init(sharedNodeHandle: HandleEntity = 0,
-                sharingUser: UserEntity? = nil) {
-        self.sharedNodeHandle = sharedNodeHandle
+    public init(sharingUser: UserEntity? = nil) {
         self.sharingUser = sharingUser
     }
     
@@ -28,6 +24,7 @@ public struct MockShareRepository: ShareRepositoryProtocol {
     }
     
     public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
-        sharedNodeHandle
+        sharedNodeHandles.append(node.handle)
+        return node.handle
     }
 }
