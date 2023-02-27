@@ -147,7 +147,7 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
         return await withTaskGroup(of: (HandleEntity, NodeEntity?).self) { taskGroup -> [HandleEntity: NodeEntity] in
             albums.forEach { setEntity in
                 taskGroup.addTask { [weak self] in
-                    guard let albumContents = await self?.userAlbumRepository.albumContent(by: setEntity.handle),
+                    guard let albumContents = await self?.userAlbumRepository.albumContent(by: setEntity.handle, includeElementsInRubbishBin: false),
                           let albumCoverSetElement = albumContents.first(where: {
                               $0.handle == setEntity.coverId
                           }) else {

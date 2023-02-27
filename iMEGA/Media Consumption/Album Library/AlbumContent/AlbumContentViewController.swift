@@ -140,7 +140,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     
     private func configureBarButtons() {
         configureLeftBarButton()
-        configureRightBarButton()
+        configureRightBarButtons()
     }
     
     private func configureLeftBarButton() {

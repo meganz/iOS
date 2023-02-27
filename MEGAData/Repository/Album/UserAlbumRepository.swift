@@ -27,8 +27,9 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
         return results
     }
     
-    func albumContent(by id: HandleEntity) async -> [SetElementEntity] {
-        let megaSetElements = sdk.megaSetElements(bySid: id, includeElementsInRubbishBin: true)
+    func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
+        let megaSetElements = sdk.megaSetElements(bySid: id,
+                                                  includeElementsInRubbishBin: includeElementsInRubbishBin)
         let elements = megaSetElements.toSetElementsEntities()
         
         return elements

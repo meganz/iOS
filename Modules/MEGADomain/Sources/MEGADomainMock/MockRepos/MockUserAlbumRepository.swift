@@ -23,7 +23,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
         albums
     }
     
-    public func albumContent(by id: HandleEntity) async -> [SetElementEntity] {
+    public func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
         albumContent[id] ?? []
     }
     

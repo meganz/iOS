@@ -16,10 +16,11 @@ final class AlbumContentViewModel: ViewModelType {
         case showHud(String)
     }
     
+    private let album: AlbumEntity
     private let albumContentsUseCase: AlbumContentsUseCaseProtocol
     private let mediaUseCase: MediaUseCaseProtocol
     private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
-    private let album: AlbumEntity
+    private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     private let router: AlbumContentRouting
     private var loadingTask: Task<Void, Never>?
     private var photos = [NodeEntity]()
@@ -28,6 +29,7 @@ final class AlbumContentViewModel: ViewModelType {
     private var selectedFilter: FilterType = .allMedia
     private var addAdditionalPhotosTask: Task<Void, Never>?
     private var newAlbumPhotosToAdd: [NodeEntity]?
+    private var doesPhotoLibraryContainPhotos: Bool = false
     
     let albumName: String
     var invokeCommand: ((Command) -> Void)?
@@ -39,6 +41,7 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
         mediaUseCase: MediaUseCaseProtocol,
         albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
+        photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
         router: AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil
     ) {
@@ -47,6 +50,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumContentsUseCase = albumContentsUseCase
         self.mediaUseCase = mediaUseCase
         self.albumContentModificationUseCase = albumContentModificationUseCase
+        self.photoLibraryUseCase = photoLibraryUseCase
         self.router = router
         self.albumName = album.name
         
@@ -74,8 +78,8 @@ final class AlbumContentViewModel: ViewModelType {
         album.type == .favourite
     }
     
-    var isUserAlbum: Bool {
-        album.type == .user
+    var canAddPhotosToAlbum: Bool {
+        album.type == .user && !doesPhotoLibraryContainPhotos
     }
     
     var contextMenuConfiguration: CMConfigEntity? {
@@ -136,6 +140,11 @@ final class AlbumContentViewModel: ViewModelType {
     private func loadNodes() async {
         do {
             photos = try await albumContentsUseCase.nodes(forAlbum: album)
+            doesPhotoLibraryContainPhotos = photos.isEmpty
+            if photos.isEmpty && album.type == .user {
+                doesPhotoLibraryContainPhotos = (try? await photoLibraryUseCase.allPhotos()
+                    .isEmpty) ?? true
+            }
             shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")

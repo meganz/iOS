@@ -62,7 +62,8 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     private func userAlbumContent(by id: HandleEntity) async -> [NodeEntity] {
         await withTaskGroup(of: NodeEntity?.self) { group in
-            let nodeIds = await userAlbumRepo.albumContent(by: id).map { $0.nodeId }
+            let nodeIds = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
+                .map { $0.nodeId }
             nodeIds.forEach { handle in
                 group.addTask { [weak self] in
                     await self?.fileSearchRepo.node(by: handle)
