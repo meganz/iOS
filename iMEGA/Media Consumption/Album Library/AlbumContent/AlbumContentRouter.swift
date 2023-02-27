@@ -19,17 +19,12 @@ struct AlbumContentRouter: AlbumContentRouting {
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
-        let nodesUpdateRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
-        let albumContentsRepo = AlbumContentsUpdateNotifierRepository(
-            sdk: sdk,
-            nodesUpdateListenerRepo: nodesUpdateRepo
-        )
+        let albumContentsUpdateRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let filesSearchRepo = FilesSearchRepository.newRepo
         let userAlbumRepo = UserAlbumRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let albumContentsUseCase = AlbumContentsUseCase(
-            albumContentsRepo: albumContentsRepo,
+            albumContentsRepo: albumContentsUpdateRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: userAlbumRepo

@@ -1,3 +1,5 @@
-public protocol AlbumContentsUpdateNotifierRepositoryProtocol {
-    var onAlbumReload: (() -> Void)? { get set }
+import Combine
+
+public protocol AlbumContentsUpdateNotifierRepositoryProtocol: RepositoryProtocol {
+    var albumReloadPublisher: AnyPublisher<Void, Never> { get }
 }
