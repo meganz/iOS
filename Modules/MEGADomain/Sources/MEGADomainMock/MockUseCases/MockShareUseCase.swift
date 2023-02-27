@@ -3,12 +3,12 @@ import MEGADomain
 public struct MockShareUseCase: ShareUseCaseProtocol {
     private let nodes: [NodeEntity]
     private let shares: [ShareEntity]
-    private let sharedNodeHandle: HandleEntity
+    private let sharedNodeHandles: [HandleEntity]
     
-    public init(nodes: [NodeEntity], shares: [ShareEntity], sharedNodeHandle: HandleEntity = 0) {
+    public init(nodes: [NodeEntity], shares: [ShareEntity], sharedNodeHandles: [HandleEntity] = []) {
         self.nodes = nodes
         self.shares = shares
-        self.sharedNodeHandle = sharedNodeHandle
+        self.sharedNodeHandles = sharedNodeHandles
     }
     
     public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
@@ -19,7 +19,7 @@ public struct MockShareUseCase: ShareUseCaseProtocol {
         shares
     }
     
-    public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
-        sharedNodeHandle
+    public func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity] {
+        sharedNodeHandles
     }
 }
