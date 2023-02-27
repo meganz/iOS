@@ -168,7 +168,7 @@ final class NodeActionViewControllerGenericDelegate:
         Task { @MainActor in
             do {
                 let shareUseCase = ShareUseCase(repo: ShareRepository.newRepo)
-                let _ = try await shareUseCase.createShareKey(forNode: node.toNodeEntity())
+                let _ = try await shareUseCase.createShareKeys(forNodes: [node.toNodeEntity()])
                 showContactListForShareFolderNode(node, viewController: viewController)
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
