@@ -25,14 +25,16 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @MainActor
     init(album: AlbumEntity,
          photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-         completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
+         completion: @escaping (AlbumEntity, [NodeEntity]) -> Void,
+         isNewAlbum: Bool = false) {
         self.album = album
         self.photoLibraryUseCase = photoLibraryUseCase
         self.completion = completion
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .album)
         navigationTitle = normalNavigationTitle
-        setupSubscriptions()
+        isDoneButtonDisabled = !isNewAlbum
+        setupSubscriptions(isNewAlbum: isNewAlbum)
     }
     
     deinit {
@@ -59,7 +61,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     // MARK: - Private
-    private func setupSubscriptions() {
+    private func setupSubscriptions(isNewAlbum: Bool) {
         photoLibraryContentViewModel.selection.$photos
             .compactMap { [weak self] photos in
                 guard let self = self else { return nil }
@@ -68,11 +70,13 @@ final class AlbumContentPickerViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$navigationTitle)
         
-        photoLibraryContentViewModel.selection.$photos
-            .map { $0.isEmpty }
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$isDoneButtonDisabled)
+        if !isNewAlbum {
+            photoLibraryContentViewModel.selection.$photos
+                .map { $0.isEmpty }
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$isDoneButtonDisabled)
+        }
         
         photoLibraryContentViewModel.filterViewModel.$appliedFilterLocation
             .removeDuplicates()

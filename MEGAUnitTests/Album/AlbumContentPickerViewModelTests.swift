@@ -260,6 +260,32 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertEqual(result, [true, false, true, false])
     }
     
+    func testIsDoneButtonDisabled_onItemsSelectedWithNewAlbum_shouldNotChangeOnItemSelection() {
+        let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
+        let sut = AlbumContentPickerViewModel(album: album,
+                                              photoLibraryUseCase:
+                                                MockPhotoLibraryUseCase(),
+                                              completion: { _, _ in
+        }, isNewAlbum: true)
+        XCTAssertFalse(sut.isDoneButtonDisabled)
+        
+        let exp = expectation(description: "Should not change disabled state")
+        exp.isInverted = true
+        sut.$isDoneButtonDisabled
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let selectedPhoto = NodeEntity(name: "photo1.jpg", handle: 1)
+        let selectedPhotos = [selectedPhoto.handle: selectedPhoto]
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        sut.photoLibraryContentViewModel.selection.photos = [:]
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertFalse(sut.isDoneButtonDisabled)
+    }
+    
     private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
                                                  allPhotosFromCloudDriveOnly: [NodeEntity] = [],
                                                  allPhotosFromCameraUpload: [NodeEntity] = [],
