@@ -59,7 +59,7 @@ struct AlbumListView: View {
             photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: FilesSearchRepository.newRepo),
             completion: { album, selectedPhotos in
                 viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)
-            })
+            }, isNewAlbum: true)
         )
     }
 }
