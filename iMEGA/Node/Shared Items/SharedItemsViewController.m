@@ -1027,7 +1027,7 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            if ([self shouldShowContactVerificationOnTapForIndexPath:indexPath]) {
+            if ([self shouldShowContactVerificationOnTapForIndexPath:indexPath node:node]) {
                 [self showContactVerificationViewForIndexPath:indexPath];
             } else {
                 BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];

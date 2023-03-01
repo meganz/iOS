@@ -36,7 +36,7 @@ extension SharedItemsViewController {
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_incomingFolder()
         cell.nameLabel.textColor = UIColor.mnz_red(for: self.traitCollection)
-        cell.nameLabel.text = Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+        cell.nameLabel.text = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
         cell.nodeHandle = node.handle
         cell.permissionsButton.setImage(Asset.Images.SharedItems.warningPermission.image, for: .normal)
         cell.permissionsButton.isHidden = false
@@ -132,7 +132,12 @@ extension SharedItemsViewController {
         return nil
     }
     
-    @objc func shouldShowContactVerificationOnTap(forIndexPath indexPath: IndexPath) -> Bool {
+    @objc func shouldShowContactVerificationOnTap(forIndexPath indexPath: IndexPath, node: MEGANode) -> Bool {
+        if incomingButton?.isSelected == true &&
+            node.isNodeKeyDecrypted() {
+            return false
+        }
+        
         guard indexPath.section == 0, let share = shareAtIndexPath(indexPath) else { return false }
         return !share.isVerified
     }
