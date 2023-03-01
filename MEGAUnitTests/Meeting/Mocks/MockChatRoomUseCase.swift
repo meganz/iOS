@@ -3,8 +3,6 @@ import Combine
 import MEGADomain
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
-    var userDisplayNameCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
-    var userDisplayNamesCompletion: Result<[(handle: HandleEntity, name: String)], ChatRoomErrorEntity> = .failure(.generic)
     var publicLinkCompletion: Result<String, ChatLinkErrorEntity> = .failure(.generic)
     var createChatRoomCompletion: Result<ChatRoomEntity, ChatRoomErrorEntity>?
     var chatRoomEntity: ChatRoomEntity?
@@ -21,9 +19,6 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var base64Handle: String? = nil
     var messageSeenChatId: ((ChatIdEntity) -> Void)? = nil
     var archivedChatId: ((ChatIdEntity, Bool) -> Void)? = nil
-    var userFullNames: [String] = []
-    var userNickNames: [HandleEntity : String] = [:]
-    var userEmails:  [HandleEntity : String] = [:]
     var closePreviewChatId: ((ChatIdEntity) -> Void)? = nil
     var leaveChatRoomSuccess = false
     var ownPrivilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
@@ -57,21 +52,6 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         completion(publicLinkCompletion)
     }
     
-    func userDisplayName(forPeerId peerId: HandleEntity, chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
-        completion(userDisplayNameCompletion)
-    }
-    
-    func userDisplayNames(forPeerIds peerIds: [HandleEntity], chatRoom: ChatRoomEntity) async throws -> [String] {
-        switch userDisplayNamesCompletion {
-        case .success(let handleNamePairArray):
-            return peerIds.compactMap { handle in
-                return handleNamePairArray.first(where: { $0.handle == handle })?.name
-            }
-        case .failure(let error):
-            throw error
-        }
-    }
-    
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         completion(renameChatRoomCompletion)
     }
@@ -102,18 +82,6 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
         contactEmail
-    }
-    
-    func userFullNames(forPeerIds peerIds: [HandleEntity], chatRoom: ChatRoomEntity) async throws -> [String] {
-        userFullNames
-    }
-    
-    func userNickNames(forChatRoom chatRoom: ChatRoomEntity) async throws -> [HandleEntity : String] {
-        userNickNames
-    }
-    
-    func userEmails(forChatRoom chatRoom: ChatRoomEntity) async throws -> [HandleEntity : String] {
-        userEmails
     }
     
     func userPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never> {

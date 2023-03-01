@@ -128,6 +128,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     // MARK: - Execute command
+    @MainActor
     func executeCommand(_ command: MeetingParticipantsLayoutViewModel.Command) {
         switch command {
         case .configView(let title, let subtitle, let isUserAGuest, let isOneToOne):

@@ -3,6 +3,7 @@ import Combine
 
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private var chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private let router: MeetingInfoRouting
     
     private var chatParticipantId: HandleEntity
@@ -21,12 +22,14 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
 
     init(router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          chatParticipantId: MEGAHandle,
          chatRoom: ChatRoomEntity)
     {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.chatUseCase = chatUseCase
         self.chatParticipantId = chatParticipantId
         self.chatRoom = chatRoom
@@ -36,6 +39,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
             userId: chatParticipantId,
             chatId: chatRoom.chatId,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: UserImageUseCase(
                 userImageRepo: UserImageRepository.newRepo,
                 userStoreRepo: UserStoreRepository.newRepo,
@@ -44,20 +48,6 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
             chatUseCase: chatUseCase,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
         )
-        
-        chatRoomUseCase.userDisplayName(forPeerId: chatParticipantId, chatRoom: chatRoom) { result in
-            switch result {
-            case .success(let name):
-                if self.isMyUser {
-                    self.name = String(format: "%@ (%@)", name, Strings.Localizable.me)
-                } else {
-                    self.name = name
-                }
-            case .failure:
-                MEGALogError("Unable to fetch user name")
-            }
-        }
-
         self.updateParticipantPrivilege()
         if isMyUser {
             self.requestOwnPrivilegeChange(forChat: chatRoom)
@@ -67,6 +57,22 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
         
         self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatParticipantId).toChatStatus()
         self.listeningForChatStatusUpdate()
+        
+        loadName()
+    }
+    
+    private func loadName() {
+        Task { @MainActor in
+            guard let name = try? await chatRoomUserUseCase.userDisplayName(forPeerId: self.chatParticipantId, in: self.chatRoom) else {
+                return
+            }
+            
+            if self.isMyUser {
+                self.name = String(format: "%@ (%@)", name, Strings.Localizable.me)
+            } else {
+                self.name = name
+            }
+        }
     }
     
     private func listeningForChatStatusUpdate() {
@@ -121,7 +127,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     }
     
     func chatParticipantTapped() {
-        guard let participantEmail = chatRoomUseCase.contactEmail(forUserHandle: chatParticipantId) else {
+        guard let participantEmail = chatRoomUserUseCase.contactEmail(forUserHandle: chatParticipantId) else {
             return
         }
         router.showParticipantDetails(email: participantEmail, userHandle: chatParticipantId, chatRoom: chatRoom)

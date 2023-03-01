@@ -213,10 +213,7 @@ extension NotificationsTableViewController {
         startTime: Date? = nil,
         endTime: Date? = nil
     ) -> String? {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
-            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())
-        )
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         
         guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
         

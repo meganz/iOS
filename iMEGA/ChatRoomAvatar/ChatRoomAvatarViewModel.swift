@@ -6,6 +6,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     let peerHandle: HandleEntity
     let chatRoomEntity: ChatRoomEntity
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
@@ -24,6 +25,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         peerHandle: HandleEntity,
         chatRoomEntity: ChatRoomEntity,
         chatRoomUseCase: ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
         userImageUseCase: UserImageUseCaseProtocol,
         chatUseCase: ChatUseCaseProtocol,
         accountUseCase: AccountUseCaseProtocol
@@ -32,6 +34,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         self.peerHandle = peerHandle
         self.chatRoomEntity = chatRoomEntity
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
@@ -185,7 +188,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         if userHandle == accountUseCase.currentUser?.handle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
-            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatRoom: chatRoomEntity)
+            let usernames = try await chatRoomUserUseCase.userDisplayNames(forPeerIds: [userHandle], in: chatRoomEntity)
             return usernames.first
         }
     }

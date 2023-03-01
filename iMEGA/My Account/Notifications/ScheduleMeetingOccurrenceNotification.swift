@@ -88,10 +88,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     ) -> String {
         var content = localizedString.replacingOccurrences(of: "[Email]", with: alert.email ?? "")
 
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
-            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())
-        )
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         
         let scheduledMeeting: MEGAChatScheduledMeeting? = MEGAChatSdk.shared.scheduledMeeting(alert.nodeHandle, scheduledId: alert.scheduledMeetingId)
         

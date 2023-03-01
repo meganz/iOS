@@ -88,54 +88,6 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         
         sdk.queryChatLink(chatRoom.chatId, delegate: publicChatLinkCreationDelegate)
     }
-    
-    func userFullName(forPeerId peerId: HandleEntity, chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
-        if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
-            MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-            completion(.success(name))
-            return
-        }
-        
-        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
-            guard let self = self else { return }
-            guard error.type == .MEGAChatErrorTypeOk,
-                  let name = self.sdk.userFullnameFromCache(byUserHandle: peerId) else {
-                MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
-                completion(.failure(.generic))
-                return
-            }
-            
-            completion(.success(name))
-        }
-        
-        MEGALogDebug("Load user name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-        sdk.loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
-    }
-    
-    func userFullName(forPeerId peerId: HandleEntity, chatRoom: ChatRoomEntity) async throws -> String {
-        if let name = sdk.userFullnameFromCache(byUserHandle: peerId) {
-            MEGALogDebug("user name is \(name) for handle \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-            return name
-        }
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            let delegate = MEGAChatGenericRequestDelegate { [weak self]  (request, error) in
-                guard let self = self else { return }
-                guard error.type == .MEGAChatErrorTypeOk,
-                      let name = self.sdk.userFullnameFromCache(byUserHandle: peerId) else {
-                    MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
-                    continuation.resume(throwing: ChatRoomErrorEntity.generic)
-                    return
-                }
-                
-                continuation.resume(returning: name)
-            }
-            
-
-            MEGALogDebug("Load user name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-            sdk.loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate, queueType: .globalBackground)
-        }
-    }
 
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "No name") with title \(title)")
@@ -170,10 +122,6 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func base64Handle(forChatRoom chatRoom: ChatRoomEntity) -> String? {
         MEGASdk.base64Handle(forUserHandle: chatRoom.chatId)
-    }
-    
-    func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
-        sdk.contactEmail(byHandle: userHandle)
     }
     
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {
