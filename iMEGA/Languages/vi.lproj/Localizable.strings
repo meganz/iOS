@@ -3304,3 +3304,7 @@
 "meetings.scheduled.recurring.weekly"="weekly";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="hằng tháng";
+/* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Không thể xác thực tên liên lạc";
+/* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Bạn không thể xác thực %@ vì họ không có trong sổ liên lạc của bạn. Hãy chờ đến khi họ chấp nhận lời mời của bạn trước.";
