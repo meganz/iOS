@@ -83,8 +83,43 @@ extension SharedItemsViewController {
         return MEGASdk.shared.contact(forEmail: share.user)
     }
     
+    @objc func searchUnverifiedNodes(key: String) {
+        searchUnverifiedNodesArray?.removeAllObjects()
+        searchUnverifiedSharesArray?.removeAllObjects()
+        
+        var nodes: [MEGANode]?
+        var shares: [MEGAShare]?
+        if outgoingButton?.isSelected == true {
+            nodes = outgoingUnverifiedNodesMutableArray as? [MEGANode]
+            shares = outgoingUnverifiedSharesMutableArray as? [MEGAShare]
+        }
+        
+        if incomingButton?.isSelected == true {
+            nodes = incomingUnverifiedNodesMutableArray as? [MEGANode]
+            shares = incomingUnverifiedSharesMutableArray as? [MEGAShare]
+        }
+
+        guard let nodes, let shares else { return }
+        guard key.isNotEmpty else {
+            searchUnverifiedSharesArray?.addObjects(from: shares)
+            searchUnverifiedNodesArray?.addObjects(from: nodes)
+            return
+        }
+        
+        nodes.indices.filter {
+            nodes[$0].name?.lowercased().contains(key.lowercased()) == true
+        }.forEach { index in
+            searchUnverifiedSharesArray?.add(shares[index])
+            searchUnverifiedNodesArray?.add(nodes[index])
+        }
+    }
+    
     @objc func shareAtIndexPath(_ indexPath: IndexPath) -> MEGAShare? {
         guard indexPath.section == 0 else { return nil }
+        
+        if searchController.isActive {
+            return searchUnverifiedSharesArray?[indexPath.row] as? MEGAShare
+        }
         
         if outgoingButton?.isSelected == true {
             return outgoingUnverifiedSharesMutableArray?[indexPath.row] as? MEGAShare
