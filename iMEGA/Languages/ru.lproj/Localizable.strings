@@ -3304,3 +3304,7 @@
 "meetings.scheduled.recurring.weekly"="еженедельно";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="ежемесячно";
+/* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Не удаётся подтвердить контакт";
+/* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете подтвердить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
