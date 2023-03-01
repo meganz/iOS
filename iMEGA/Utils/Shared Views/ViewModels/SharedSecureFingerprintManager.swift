@@ -2,7 +2,7 @@ import MEGADomain
 
 @objc final class SharedSecureFingerprintManager: NSObject {
     
-    @PreferenceWrapper(key: .secureFingerprintVerification, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: .secureFingerprintVerification, defaultValue: true, useCase: PreferenceUseCase.default)
     var secureFingerprintVerification: Bool
     
     @objc func setSecureFingerprintFlag(_ flag: Bool) {
