@@ -35,7 +35,7 @@ extension SharedItemsViewController {
         
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_incomingFolder()
-        cell.nameLabel.textColor = UIColor.mnz_label()
+        cell.nameLabel.textColor = UIColor.mnz_red(for: self.traitCollection)
         cell.nameLabel.text = Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
         cell.nodeHandle = node.handle
         cell.permissionsButton.setImage(Asset.Images.SharedItems.warningPermission.image, for: .normal)
