@@ -4984,7 +4984,7 @@ public enum Strings {
           }
           public enum Modal {
             public enum CannotVerifyContact {
-              /// You can't verify %@ as they're not in your contact list. Wait for them to accept your invitation first.
+              /// You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.
               public static func message(_ p1: Any) -> String {
                 return Strings.tr("Localizable", "sharedItems.tab.outgoing.modal.cannotVerifyContact.message", String(describing: p1))
               }
