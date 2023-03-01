@@ -127,18 +127,14 @@ extension SharedItemsViewController {
         count == 0 ? "" : String(count)
     }
     
-    @objc func outgoingUnverifiedNodes() {
-        let shareList = MEGASdk.shared.getUnverifiedOutShares(sortOrderType)
-        outgoingUnverifiedSharesMutableArray?.removeAllObjects()
-        outgoingUnverifiedNodesMutableArray?.removeAllObjects()
-        
-        let shares = shares(from: shareList)
-        outgoingUnverifiedSharesMutableArray?.addObjects(from: shares)
-
-        let nodes = nodes(from: shares)
-        outgoingUnverifiedNodesMutableArray?.addObjects(from: nodes)
-
-        outgoingButton?.setBadgeCount(value: badgeValue(shares.count))
+    @objc func addToUnverifiedOutShares(share: MEGAShare, node: MEGANode) {
+        outgoingUnverifiedSharesMutableArray?.add(share)
+        outgoingUnverifiedNodesMutableArray?.add(node)
+    }
+    
+    @objc func configUnverifiedOutShareBadge() {
+        let shareCount = outgoingUnverifiedSharesMutableArray?.count ?? 0
+        outgoingButton?.setBadgeCount(value: badgeValue(shareCount))
     }
     
     @objc func incomingUnverifiedNodes() {

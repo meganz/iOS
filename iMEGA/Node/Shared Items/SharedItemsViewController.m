@@ -104,7 +104,7 @@
     
     self.outgoingUnverifiedSharesMutableArray = NSMutableArray.alloc.init;
     self.outgoingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
-    [self outgoingUnverifiedNodes];
+    [self allOutgoingNodes];
     
     self.incomingUnverifiedSharesMutableArray = NSMutableArray.alloc.init;
     self.incomingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
@@ -213,11 +213,10 @@
 
 - (void)reloadUI {
     if (self.incomingButton.selected) {
-        [self incomingNodes];
+        [self incomingVerifiedNodes];
         [self incomingUnverifiedNodes];
     } else if (self.outgoingButton.selected) {
-        [self outgoingNodes];
-        [self outgoingUnverifiedNodes];
+        [self allOutgoingNodes];
     } else if (self.linksButton.selected) {
         [self publicLinks];
     }
@@ -265,7 +264,7 @@
     }
 }
 
-- (void)incomingNodes {
+- (void)incomingVerifiedNodes {
     [_incomingNodesForEmailMutableDictionary removeAllObjects];
     [_incomingIndexPathsMutableDictionary removeAllObjects];
     
@@ -286,15 +285,17 @@
     }
 }
 
-- (void)outgoingNodes {
+- (void)allOutgoingNodes {
     [_outgoingNodesForEmailMutableDictionary removeAllObjects];
     [_outgoingIndexPathsMutableDictionary removeAllObjects];
     
     _outgoingShareList = [MEGASdkManager.sharedMEGASdk outShares:self.sortOrderType];
     self.outgoingSharesMutableArray = NSMutableArray.alloc.init;
+    self.outgoingUnverifiedSharesMutableArray = NSMutableArray.alloc.init;
     
     NSString *lastBase64Handle = @"";
     self.outgoingNodesMutableArray = NSMutableArray.alloc.init;
+    self.outgoingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
     
     NSUInteger count = self.outgoingShareList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < count; i++) {
@@ -308,9 +309,15 @@
                 lastBase64Handle = node.base64Handle;
                 [_outgoingNodesMutableArray addObject:node];
             }
+            
+            if (!share.isVerified) {
+                [self addToUnverifiedOutSharesWithShare:share node:node];
+            }
         }
     }
     
+    [self configUnverifiedOutShareBadge];
+
     if (self.outgoingNodesMutableArray.count == 0) {
         self.tableView.tableHeaderView = nil;
     } else {
@@ -823,7 +830,7 @@
 
     [self disableSearchAndSelection];
     
-    [self incomingNodes];
+    [self incomingVerifiedNodes];
     [self incomingUnverifiedNodes];
     [self.tableView reloadData];
 }
@@ -840,8 +847,7 @@
     
     [self disableSearchAndSelection];
     
-    [self outgoingNodes];
-    [self outgoingUnverifiedNodes];
+    [self allOutgoingNodes];
     [self.tableView reloadData];
 }
 
