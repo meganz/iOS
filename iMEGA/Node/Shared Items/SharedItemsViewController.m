@@ -59,7 +59,6 @@
 @property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
-@property (nonatomic) NSMutableArray *searchUnverifiedNodesArray;
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
@@ -110,13 +109,10 @@
     self.incomingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
     [self incomingUnverifiedNodes];
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-    });
+    self.searchUnverifiedNodesArray = NSMutableArray.new;
+    self.searchUnverifiedSharesArray = NSMutableArray.new;
+    
+    [self configSearchController];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -202,6 +198,15 @@
 }
 
 #pragma mark - Private
+- (void)configSearchController {
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.delegate = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    });
+}
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
@@ -252,8 +257,10 @@
 }
 
 - (void)addSearchBar {
-    if (self.searchController && !self.tableView.tableHeaderView) {
-        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    if (self.searchController) {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+        }
         self.tableView.tableHeaderView = self.searchController.searchBar;
     }
 }
@@ -981,12 +988,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     
-    if (self.searchController.isActive) {
-        self.searchController.active = NO;
-        [self searchBarCancelButtonClicked:self.searchController.searchBar];
-    }
-    
     if (tableView.isEditing) {
+        if (self.searchController.isActive) {
+            self.searchController.active = NO;
+            [self searchBarCancelButtonClicked:self.searchController.searchBar];
+        }
         
         for (MEGANode *tempNode in self.selectedNodesMutableArray) {
             if (tempNode.handle == node.handle) {
@@ -1130,6 +1136,8 @@
     
     if (!MEGAReachabilityManager.isReachable) {
         self.tableView.tableHeaderView = nil;
+    } else {
+        [self configSearchController];
     }
 }
 
@@ -1140,10 +1148,10 @@
     if (searchController.isActive) {
         if ([searchString isEqualToString:@""]) {
             if (self.incomingButton.selected) {
-                [self.searchUnverifiedNodesArray removeAllObjects];
+                [self searchUnverifiedNodesWithKey:searchString];
                 self.searchNodesArray = self.incomingNodesMutableArray;
             } else if (self.outgoingButton.selected) {
-                self.searchUnverifiedNodesArray = self.outgoingUnverifiedNodesMutableArray;
+                [self searchUnverifiedNodesWithKey:searchString];
                 self.searchNodesArray = self.outgoingNodesMutableArray;
             } else if (self.linksButton.selected) {
                 [self.searchUnverifiedNodesArray removeAllObjects];
@@ -1152,10 +1160,10 @@
         } else {
             NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
             if (self.incomingButton.selected) {
-                [self.searchUnverifiedNodesArray removeAllObjects];
+                [self searchUnverifiedNodesWithKey:searchString];
                 self.searchNodesArray = [[self.incomingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             } else if (self.outgoingButton.selected) {
-                self.searchUnverifiedNodesArray = [[self.outgoingUnverifiedNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+                [self searchUnverifiedNodesWithKey:searchString];
                 self.searchNodesArray = [[self.outgoingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             } else if (self.linksButton.selected) {
                 [self.searchUnverifiedNodesArray removeAllObjects];

@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *incomingUnverifiedSharesMutableArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *incomingUnverifiedNodesMutableArray;
 
+@property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *searchUnverifiedSharesArray;
+@property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *searchUnverifiedNodesArray;
+
 @property (strong, nonatomic) SharedItemsViewModel *viewModel;
 
 - (void)selectSegment:(NSUInteger)index;
