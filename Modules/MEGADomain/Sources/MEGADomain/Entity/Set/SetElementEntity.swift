@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SetElementEntity {
+public struct SetElementEntity: Hashable, Sendable {
     public let handle: HandleEntity
     public let order: HandleEntity
     public let nodeId: HandleEntity
@@ -16,3 +16,6 @@ public struct SetElementEntity {
     }
 }
 
+extension SetElementEntity: Identifiable {
+    public var id: HandleEntity { handle }
+}

@@ -1,22 +1,29 @@
 import MEGADomain
 import Foundation
+import Combine
 
 public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
+    public static var newRepo = MockUserAlbumRepository()
     private let node: NodeEntity?
     private let albums: [SetEntity]
     private let albumContent: [HandleEntity: [SetElementEntity]]
+    public let setsUpdatedPublisher: AnyPublisher<[SetEntity], Never>
+    public let setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
+    public let albumElement: SetElementEntity?
     
     public init(node: NodeEntity? = nil,
                 albums: [SetEntity] = [],
-                albumContent: [HandleEntity: [SetElementEntity]] = [:]
+                albumContent: [HandleEntity: [SetElementEntity]] = [:],
+                setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> = Empty().eraseToAnyPublisher(),
+                setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> = Empty().eraseToAnyPublisher(),
+                albumElement: SetElementEntity? = nil
     ) {
         self.node = node
         self.albums = albums
         self.albumContent = albumContent
-    }
-    
-    public static var newRepo: MockUserAlbumRepository {
-        MockUserAlbumRepository()
+        self.setsUpdatedPublisher = setsUpdatedPublisher
+        self.setElemetsUpdatedPublisher = setElemetsUpdatedPublisher
+        self.albumElement = albumElement
     }
     
     public func albums() async -> [SetEntity] {
@@ -25,6 +32,10 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     
     public func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
         albumContent[id] ?? []
+    }
+    
+    public func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
+        albumElement
     }
     
     public func createAlbum(_ name: String?) async throws -> SetEntity {
