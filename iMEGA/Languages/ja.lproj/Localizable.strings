@@ -3304,3 +3304,7 @@
 "meetings.scheduled.recurring.weekly"="毎週";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="毎月";
+/* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="連絡先を認証できません";
+/* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="連絡先リストにないため、%@を認証できません。相手側が最初にあなたの招待を受け入れるのを待ちます。";
