@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MessageKit
 
 class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate {
@@ -140,7 +141,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
             } else {
                 guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chat.chatId) else { return }
-                ChatRoomRepository.sharedRepo.closeChatRoom(chatRoom) { _ in }
+                ChatRoomRepository.sharedRepo.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
                 chatViewController?.navigationController?.popViewController(animated: true)
             }
         case .updatePreviewers:

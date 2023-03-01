@@ -115,7 +115,7 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     
     public mutating func allowNonHostToAddParticipantsValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
         if chatRoomRepo.isChatRoomOpen(chatRoom) == false {
-            try? chatRoomRepo.openChatRoom(chatRoom) { _ in }
+            try? chatRoomRepo.openChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
         }
         
         return chatRoomRepo.allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)

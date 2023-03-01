@@ -203,12 +203,12 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         openChatRooms.contains(chatRoom.chatId)
     }
     
-    func openChatRoom(_ chatRoom: ChatRoomEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void) throws {
-        try openChatRoom(chatId: chatRoom.chatId, delegate: ChatRoomRepoDelegate(callback: callback))
+    func openChatRoom(_ chatRoom: ChatRoomEntity, delegate: ChatRoomDelegateEntity) throws {
+        try openChatRoom(chatId: chatRoom.chatId, delegate: ChatRoomDelegateDTO(chatId: chatRoom.chatId, chatRoomDelegate: delegate))
     }
     
-    func closeChatRoom(_ chatRoom: ChatRoomEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void) {
-        closeChatRoom(chatId: chatRoom.chatId, delegate: ChatRoomRepoDelegate(callback: callback))
+    func closeChatRoom(_ chatRoom: ChatRoomEntity, delegate: ChatRoomDelegateEntity) {
+        closeChatRoom(chatId: chatRoom.chatId, delegate: ChatRoomDelegateDTO(chatId: chatRoom.chatId, chatRoomDelegate: delegate))
     }
     
     func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) throws {
@@ -224,7 +224,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         listenersForChatId.forEach({ listener in
             chatRoomUpdateListeners.remove(object: listener)
         })
-        return sdk.closeChatRoom(chatId, delegate: delegate)
+        sdk.closeChatRoom(chatId, delegate: delegate)
     }
     
     func closeChatRoomPreview(chatRoom: ChatRoomEntity) {
@@ -296,14 +296,42 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     }
 }
 
-fileprivate class ChatRoomRepoDelegate: NSObject, MEGAChatRoomDelegate {
-    private let callback: (ChatRoomCallbackEntity) -> Void
+fileprivate class ChatRoomDelegateDTO: NSObject, MEGAChatRoomDelegate {
+    private let chatId: ChatIdEntity
+    private let chatRoomDelegate: ChatRoomDelegateEntity
+
+    init(chatId: ChatIdEntity, chatRoomDelegate: ChatRoomDelegateEntity) {
+        self.chatId = chatId
+        self.chatRoomDelegate = chatRoomDelegate
+        super.init()
+        MEGAChatSdk.shared.addChatRoomDelegate(chatId, delegate: self)
+    }
     
-    init(callback: @escaping (ChatRoomCallbackEntity) -> Void) {
-        self.callback = callback
+    deinit {
+        MEGAChatSdk.shared.removeChatRoomDelegate(chatId, delegate: self)
     }
     
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
-        callback(.onUpdate(chat.toChatRoomEntity()))
+        chatRoomDelegate.onChatRoomUpdate?(chat.toChatRoomEntity())
+    }
+    
+    func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+        chatRoomDelegate.onMessageLoaded?(message.toChatMessageEntity())
+    }
+    
+    func onMessageReceived(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+        chatRoomDelegate.onMessageReceived?(message.toChatMessageEntity())
+    }
+    
+    func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+        chatRoomDelegate.onMessageUpdate?(message.toChatMessageEntity())
+    }
+    
+    func onHistoryReloaded(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+        chatRoomDelegate.onHistoryReloaded?(chat.toChatRoomEntity())
+    }
+    
+    func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
+        chatRoomDelegate.onReactionUpdate?(messageId, reaction, count)
     }
 }
