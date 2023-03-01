@@ -5,6 +5,7 @@ final class UserAvatarViewModel: ObservableObject {
     private let userId: MEGAHandle
     private let chatId: MEGAHandle
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
@@ -20,12 +21,14 @@ final class UserAvatarViewModel: ObservableObject {
     init(userId: MEGAHandle,
          chatId: MEGAHandle,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol) {
         self.userId = userId
         self.chatId = chatId
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
@@ -129,7 +132,7 @@ final class UserAvatarViewModel: ObservableObject {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
-            let usernames = try await chatRoomUseCase.userDisplayNames(forPeerIds: [userHandle], chatRoom: chatRoom)
+            let usernames = try await chatRoomUserUseCase.userDisplayNames(forPeerIds: [userHandle], in: chatRoom)
             return usernames.first
         }
     }

@@ -22,8 +22,7 @@ extension MainTabBarController {
             return
         }
         
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatUseCase = ChatUseCase(
             chatRepo: ChatRepository(
                 sdk: MEGASdkManager.sharedMEGASdk(),

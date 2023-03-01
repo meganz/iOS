@@ -9,13 +9,10 @@ public protocol ChatRoomRepositoryProtocol {
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func createPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func queryChatLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
-    func userFullName(forPeerId peerId: HandleEntity, chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
-    func userFullName(forPeerId peerId: HandleEntity, chatRoom: ChatRoomEntity) async throws -> String
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity,  messageId: HandleEntity)
     func base64Handle(forChatRoom chatRoom: ChatRoomEntity) -> String?
-    func contactEmail(forUserHandle userHandle: HandleEntity) -> String?
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
     func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never>
     func userPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never>

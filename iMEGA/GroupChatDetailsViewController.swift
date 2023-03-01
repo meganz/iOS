@@ -58,12 +58,9 @@ extension GroupChatDetailsViewController {
     }
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
-            userStoreRepo: UserStoreRepository(store: .shareInstance()))
-        return ParticipantsAddingViewFactory(
+        ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
             chatRoom: chatRoom.toChatRoomEntity()
         )
     }

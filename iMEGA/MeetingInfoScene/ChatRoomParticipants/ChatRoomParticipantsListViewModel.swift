@@ -6,6 +6,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private let initialParticipantsLoad: Int = 4
     
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private var chatUseCase: ChatUseCaseProtocol
     private let router: MeetingInfoRouting
     private var chatRoom: ChatRoomEntity
@@ -20,17 +21,20 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
 
     init(router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          chatRoom: ChatRoomEntity)
     {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.chatUseCase = chatUseCase
         self.chatRoom = chatRoom
         
         self.myUserParticipant = ChatRoomParticipantViewModel(
             router: router,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             chatUseCase: chatUseCase,
             chatParticipantId: chatUseCase.myUserHandle(),
             chatRoom: chatRoom)
@@ -68,14 +72,24 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private func loadAllParticipants() {
         chatRoomParticipants = chatRoom.peers
             .map {
-                ChatRoomParticipantViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatParticipantId: $0.handle, chatRoom: chatRoom)
+                ChatRoomParticipantViewModel(router: router,
+                                             chatRoomUseCase: chatRoomUseCase,
+                                             chatRoomUserUseCase: chatRoomUserUseCase,
+                                             chatUseCase: chatUseCase,
+                                             chatParticipantId: $0.handle,
+                                             chatRoom: chatRoom)
             }
     }
     
     private func loadInitialParticipants() {
         chatRoomParticipants =  chatRoom.peers[0..<(initialParticipantsLoad - 1)]
             .map {
-                ChatRoomParticipantViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatParticipantId: $0.handle, chatRoom: chatRoom)
+                ChatRoomParticipantViewModel(router: router,
+                                             chatRoomUseCase: chatRoomUseCase,
+                                             chatRoomUserUseCase: chatRoomUserUseCase,
+                                             chatUseCase: chatUseCase,
+                                             chatParticipantId: $0.handle,
+                                             chatRoom: chatRoom)
             }
     }
     

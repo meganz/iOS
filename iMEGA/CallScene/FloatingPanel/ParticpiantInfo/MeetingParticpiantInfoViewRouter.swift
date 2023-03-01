@@ -39,14 +39,16 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
             fileSystemRepo: FileSystemRepository.newRepo
         )
         
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
+                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
 
         let userInviteUseCase = UserInviteUseCase(repo: UserInviteRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
         let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
+                                                        chatRoomUserUseCase: chatRoomUserUseCase,
                                                         userInviteUseCase: userInviteUseCase,
                                                         isMyselfModerator: isMyselfModerator,
                                                         router: self)

@@ -22,6 +22,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private let participant: CallParticipantEntity
     private let userImageUseCase: UserImageUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private let userInviteUseCase: UserInviteUseCaseProtocol
     private let isMyselfModerator: Bool
     private let router: MeetingParticpiantInfoViewRouting
@@ -29,12 +30,14 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          userInviteUseCase: UserInviteUseCaseProtocol,
          isMyselfModerator: Bool,
          router: MeetingParticpiantInfoViewRouting) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.userInviteUseCase = userInviteUseCase
         self.isMyselfModerator = isMyselfModerator
         self.router = router
@@ -46,9 +49,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             invokeCommand?(.configView(email: participant.email, actions: actions()))
-            fetchName(forParticipant: participant) { name in
-                fetchUserAvatar(forParticipant: participant, name: name)
-            }
+            fetchName(forParticipant: participant)
         case .showInfo:
             router.showInfo()
         case .sendMessage:
@@ -94,16 +95,16 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         return actions
     }
     
-    private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
+    private func fetchName(forParticipant participant: CallParticipantEntity) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else { return }
-        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatRoom: chatRoom) { result in
-            switch result {
-            case .success(let name):
-                invokeCommand?(.updateName(name: name))
-                completion(name)
-            case .failure(_):
-                break
+        
+        Task { @MainActor in
+            guard let name = try? await chatRoomUserUseCase.userDisplayName(forPeerId: participant.participantId, in: chatRoom) else {
+                return
             }
+            
+            invokeCommand?(.updateName(name: name))
+            fetchUserAvatar(forParticipant: participant, name: name)
         }
     }
 

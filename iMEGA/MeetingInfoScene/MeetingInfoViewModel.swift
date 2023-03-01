@@ -23,6 +23,7 @@ protocol MeetingInfoRouting {
 final class MeetingInfoViewModel: ObservableObject {
     private let scheduledMeeting: ScheduledMeetingEntity
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
@@ -56,6 +57,7 @@ final class MeetingInfoViewModel: ObservableObject {
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
@@ -64,6 +66,7 @@ final class MeetingInfoViewModel: ObservableObject {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.userImageUseCase = userImageUseCase
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
@@ -76,6 +79,7 @@ final class MeetingInfoViewModel: ObservableObject {
                 peerHandle: .invalid,
                 chatRoomEntity: chatRoom,
                 chatRoomUseCase: chatRoomUseCase,
+                chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
                 accountUseCase: accountUseCase
@@ -107,7 +111,11 @@ final class MeetingInfoViewModel: ObservableObject {
             }
         }
         
-        chatRoomParticipantsListViewModel = ChatRoomParticipantsListViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatRoom: chatRoom)
+        chatRoomParticipantsListViewModel = ChatRoomParticipantsListViewModel(
+            router: router,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            chatUseCase: chatUseCase, chatRoom: chatRoom)
     }
     
     private func chatRoomLinkViewModel(for chatRoom: ChatRoomEntity) -> ChatRoomLinkViewModel {

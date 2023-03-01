@@ -392,8 +392,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
 
     private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
+                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
@@ -405,6 +406,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             chatListItem: chatListItem,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
             chatUseCase: ChatUseCase(
                 chatRepo: ChatRepository(
@@ -419,8 +421,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity, nextOccurrenceDate: Date) -> FutureMeetingRoomViewModel {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
+                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
@@ -433,6 +436,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             nextOccurrenceDate: nextOccurrenceDate,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
             chatUseCase: ChatUseCase(
                 chatRepo: ChatRepository(

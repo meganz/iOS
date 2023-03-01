@@ -13,8 +13,10 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     }
     
     func build() -> UIViewController {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        
+        let chatRoomUserUseCase = ChatRoomUserUseCase(
+            chatRoomRepo: ChatRoomUserRepository.newRepo,
             userStoreRepo: UserStoreRepository(store: .shareInstance())
         )
         
@@ -29,6 +31,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             scheduledMeeting: scheduledMeeting,
             router: self,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
             chatUseCase: ChatUseCase(
                 chatRepo: ChatRepository(

@@ -27,6 +27,7 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
         viewModel?.dispatch(.onViewReady)
     }
     
+    @MainActor
     func executeCommand(_ command: MeetingParticpiantInfoViewModel.Command) {
         switch command {
         case .configView(let email, let actions):

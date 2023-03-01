@@ -12,10 +12,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     }
     
     func build() -> UIViewController {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
-            userStoreRepo: UserStoreRepository(store: .shareInstance())
-        )
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         
         let viewModel = ChatRoomsListViewModel(
             router: self,

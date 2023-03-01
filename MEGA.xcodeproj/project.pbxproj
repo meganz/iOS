@@ -2055,6 +2055,8 @@
 		B6E7A8E12503622200CD6AC2 /* PreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */; };
 		B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026B5258308E900D29CB6 /* BackupRecorder.swift */; };
 		B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */; };
+		B6F2ACCB29AC5305004FC7A3 /* ChatRoomUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */; };
+		B6F2ACCD29AD6E19004FC7A3 /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		B6F39F092772A986002386BE /* PhotoLibraryModeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */; };
 		B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F222773D337002386BE /* PhotoCellImage.swift */; };
 		B6F39F272773D547002386BE /* PhotoChronologicalCategory+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F262773D546002386BE /* PhotoChronologicalCategory+Additions.swift */; };
@@ -4547,6 +4549,8 @@
 		B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceRepository.swift; sourceTree = "<group>"; };
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
+		B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomUserRepository.swift; sourceTree = "<group>"; };
+		B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+Additions.swift"; sourceTree = "<group>"; };
 		B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeCardViewModel.swift; sourceTree = "<group>"; };
 		B6F39F222773D337002386BE /* PhotoCellImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellImage.swift; sourceTree = "<group>"; };
 		B6F39F262773D546002386BE /* PhotoChronologicalCategory+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoChronologicalCategory+Additions.swift"; sourceTree = "<group>"; };
@@ -6043,6 +6047,7 @@
 				4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */,
 				4147C2D21B4EE9BA00A37044 /* MEGAStore.h */,
 				4147C2D31B4EE9BA00A37044 /* MEGAStore.m */,
+				B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */,
 				B63F3196223BA47400B0C6A6 /* CameraUpload.xcdatamodeld */,
 				B63F319E223BA8FA00B0C6A6 /* MEGACoreDataStack.h */,
 				B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */,
@@ -7060,6 +7065,7 @@
 				83DE9D2528EC823400F24DF4 /* ChatRepository.swift */,
 				836B091029224BD70058D53C /* ChatLinkRepository.swift */,
 				836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */,
+				B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -12708,6 +12714,7 @@
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
 				BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */,
 				1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */,
+				B6F2ACCB29AC5305004FC7A3 /* ChatRoomUserRepository.swift in Sources */,
 				BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */,
 				5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */,
 				836B091129224BD70058D53C /* ChatLinkRepository.swift in Sources */,
@@ -13476,6 +13483,7 @@
 				B6FCBFD527121AB600B3599F /* PhotoLibraryContentView.swift in Sources */,
 				B6FB5F8229A321220023BA6A /* UserEntity+Mapper.swift in Sources */,
 				B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */,
+				B6F2ACCD29AD6E19004FC7A3 /* MEGAStore+Additions.swift in Sources */,
 				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
 				B67A2C8D2517EE6600B40D89 /* L10nRepository.swift in Sources */,
 				12397E1D2820C47100A30CCC /* AlbumCell.swift in Sources */,
