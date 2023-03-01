@@ -24,7 +24,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let router: AlbumContentRouting
     private var loadingTask: Task<Void, Never>?
     private var photos = [NodeEntity]()
-    private var updateSubscription: AnyCancellable?
+    private var subscriptions = Set<AnyCancellable>()
     private var selectedSortOrder: SortOrderType = .newest
     private var selectedFilter: FilterType = .allMedia
     private var addAdditionalPhotosTask: Task<Void, Never>?
@@ -192,15 +192,16 @@ final class AlbumContentViewModel: ViewModelType {
     
     private func reloadAlbum() {
         loadingTask = Task {
-            try? await Task.sleep(nanoseconds: 0_350_000_000)
             await loadNodes()
         }
     }
     
     private func setupSubscription() {
-        updateSubscription = albumContentsUseCase.albumReloadPublisher.sink { [weak self] in
-            self?.reloadAlbum()
-        }
+        albumContentsUseCase.albumReloadPublisher(for: album.type)
+            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+            .sink { [weak self] in
+                self?.reloadAlbum()
+            }.store(in: &subscriptions)
     }
     
     private func updateSortOrder(_ sortOrder: SortOrderType) {
