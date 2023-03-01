@@ -8,18 +8,20 @@ final class MockMEGASet: MEGASet {
     private let setCoverId: HandleEntity
     private let setName: String
     private let setChangeType: MEGASetChangeType
+    private var setModificationTime: Date
     
-    private var setModificationTime: Date?
     override var handle: UInt64 { setHandle }
+    override var userId: UInt64 { setUserId }
+    override var cover: UInt64 { setCoverId }
     override var name: String? { setName }
-    override var timestamp: Date { setModificationTime ?? Date() }
+    override var timestamp: Date { setModificationTime }
     
     init(handle: HandleEntity,
          userId: HandleEntity,
          coverId: HandleEntity,
          name: String = "",
          changeType: MEGASetChangeType = .new,
-         modificationTime: Date? = nil) {
+         modificationTime: Date = Date()) {
         setHandle = handle
         setUserId = userId
         setCoverId = coverId

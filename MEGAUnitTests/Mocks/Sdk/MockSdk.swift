@@ -143,6 +143,10 @@ final class MockSdk: MEGASdk {
         megaSetElementCounts[sid] ?? 0
     }
     
+    override func megaSetElement(bySid sid: MEGAHandle, eid: MEGAHandle) -> MEGASetElement? {
+        setElements.first(where: { $0.handle == eid})
+    }
+    
     override func createSet(_ name: String?, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaSet = MockMEGASet(handle: 1, userId: 0, coverId: 1, name: name ?? "")
