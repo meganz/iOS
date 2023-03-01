@@ -21,12 +21,13 @@ extension AlbumContentViewController {
     
     func configureRightBarButtons() {
         if isEditing {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
+            let cancelBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel,
                 target: self,
                 action: #selector(cancelButtonPressed(_:))
             )
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+            cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+            navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
             if FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu) {
                 var rightBarButtonItems = [UIBarButtonItem]()
