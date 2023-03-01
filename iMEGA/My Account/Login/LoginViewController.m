@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
-    [[NSURL URLWithString:@"https://mega.nz/recovery"] mnz_presentSafariViewController];
+    [[self recoveryPasswordURL:self.emailInputView.inputTextField.text] mnz_presentSafariViewController];
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {

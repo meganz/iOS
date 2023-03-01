@@ -6,6 +6,10 @@ public extension String {
        public static let invalidFileFolderNameCharacters = "” * / : < > ? \\ |"
     }
     
+    var base64Encoded: String? {
+        data(using: .utf8)?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
+    }
+    
     var base64Decoded: String? {
         guard let data = Data(base64Encoded: self) else { return nil }
         return String(data: data, encoding: .utf8)
