@@ -1,7 +1,7 @@
 import Combine
 
 public protocol AlbumContentsUseCaseProtocol {
-    var albumReloadPublisher: AnyPublisher<Void, Never> { get }
+    func albumReloadPublisher(for type: AlbumEntityType) -> AnyPublisher<Void, Never>
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
 }
 
@@ -10,10 +10,6 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private let mediaUseCase: MediaUseCaseProtocol
     private let fileSearchRepo: FilesSearchRepositoryProtocol
     private let userAlbumRepo: UserAlbumRepositoryProtocol
-    
-    public var albumReloadPublisher: AnyPublisher<Void, Never> {
-        albumContentsRepo.albumReloadPublisher
-    }
     
     public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol,
                 mediaUseCase: MediaUseCaseProtocol,
@@ -26,6 +22,18 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     }
     
     // MARK: Protocols
+    
+    public func albumReloadPublisher(for type: AlbumEntityType) -> AnyPublisher<Void, Never> {
+        if type == .user {
+            return userAlbumRepo.setElemetsUpdatedPublisher
+                .filter { $0.isNotEmpty }
+                .map { _ in ()}
+                .eraseToAnyPublisher()
+                .merge(with: albumContentsRepo.albumReloadPublisher)
+                .eraseToAnyPublisher()
+        }
+        return albumContentsRepo.albumReloadPublisher
+    }
     
     public func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
         if album.systemAlbum {

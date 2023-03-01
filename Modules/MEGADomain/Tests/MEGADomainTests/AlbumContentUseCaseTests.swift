@@ -100,4 +100,51 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let result = try await sut.nodes(forAlbum: album)
         XCTAssertEqual(result.count, 2)
     }
+    
+    func testAlbumReloadPublisher_onNonUserAlbum_shouldOnlyReloadOnAlbumReloadPublisher() {
+        let albumReloadPublisher = PassthroughSubject<Void, Never>()
+        let setElemetsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher()),
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository.newRepo,
+            userAlbumRepo: MockUserAlbumRepository(setElemetsUpdatedPublisher: setElemetsUpdatedPublisher.eraseToAnyPublisher())
+        )
+        
+        let exp = expectation(description: "Should reload once")
+        sut.albumReloadPublisher(for: .favourite)
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        albumReloadPublisher.send()
+        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testAlbumReloadPublisher_onUserAlbum_shouldReloadOnAlbumReloadPublisherAndSetElementsUpdated() {
+        let albumReloadPublisher = PassthroughSubject<Void, Never>()
+        let setElemetsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher()),
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository.newRepo,
+            userAlbumRepo: MockUserAlbumRepository(setElemetsUpdatedPublisher: setElemetsUpdatedPublisher.eraseToAnyPublisher())
+        )
+        
+        let exp = expectation(description: "Should reload twice")
+        exp.expectedFulfillmentCount = 2
+        
+        sut.albumReloadPublisher(for: .user)
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        albumReloadPublisher.send()
+        setElemetsUpdatedPublisher.send([])
+        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        
+        wait(for: [exp], timeout: 1.0)
+    }
 }
