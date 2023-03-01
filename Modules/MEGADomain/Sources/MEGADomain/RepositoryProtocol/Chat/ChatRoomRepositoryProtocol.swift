@@ -20,8 +20,8 @@ public protocol ChatRoomRepositoryProtocol {
     func allowNonHostToAddParticipantsValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
     func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity?
     func isChatRoomOpen(_ chatRoom: ChatRoomEntity) -> Bool
-    func openChatRoom(_ chatRoom: ChatRoomEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void) throws
-    func closeChatRoom(_ chatRoom: ChatRoomEntity, callback:  @escaping (ChatRoomCallbackEntity) -> Void)
+    func openChatRoom(_ chatRoom: ChatRoomEntity, delegate: ChatRoomDelegateEntity) throws
+    func closeChatRoom(_ chatRoom: ChatRoomEntity, delegate: ChatRoomDelegateEntity)
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
