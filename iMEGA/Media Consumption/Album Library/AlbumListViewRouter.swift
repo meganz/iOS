@@ -29,7 +29,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 albumRepository: AlbumRepository.newRepo,
                 userAlbumRepository: UserAlbumRepository.newRepo,
                 fileSearchRepository: filesSearchRepo,
-                mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo)
+                mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
+                albumContentsUpdateRepository: AlbumContentsUpdateNotifierRepository.newRepo
             ), alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,

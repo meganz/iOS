@@ -56,17 +56,6 @@ final class AlbumListViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
-    func testCancelLoading_stopMonitoringForNodeUpdates() async throws {
-        let useCase = MockAlbumListUseCase()
-        let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())
-        XCTAssertTrue(useCase.startMonitoringNodesUpdateCalled == 0)
-        XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 0)
-        sut.loadAlbums()
-        XCTAssertTrue(useCase.startMonitoringNodesUpdateCalled == 1)
-        sut.cancelLoading()
-        XCTAssertTrue(useCase.stopMonitoringNodesUpdateCalled == 1)
-    }
-    
     func testCreateUserAlbum_shouldCreateUserAlbum() {
         let exp = expectation(description: "should load album at first after creating")
         let useCase = MockAlbumListUseCase()
@@ -274,6 +263,27 @@ final class AlbumListViewModelTests: XCTestCase {
         sut.navigateToNewAlbum()
         XCTAssertNil(sut.album)
         XCTAssertNil(sut.newAlbumContent)
+    }
+    
+    func testReloadUpdates_onAlbumsUpdateEmiited_shouldRealodAlbums() {
+        let albums = [AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
+                                  count: 1, type: .user, modificationTime: nil)]
+        let albumsUpdatedPublisher = PassthroughSubject<Void, Never>()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums,
+                                                                   albumsUpdatedPublisher: albumsUpdatedPublisher.eraseToAnyPublisher()),
+                                     alertViewModel: alertViewModel())
+        XCTAssertTrue(sut.albums.isEmpty)
+        
+        let exp = expectation(description: "should retrieve albums")
+        sut.$albums
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, albums)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        albumsUpdatedPublisher.send()
+        wait(for: [exp], timeout: 2.0)
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {

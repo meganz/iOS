@@ -1,49 +1,60 @@
 import Foundation
+import Combine
 
 public protocol AlbumListUseCaseProtocol {
+    var albumsUpdatedPublisher: AnyPublisher<Void, Never> { get }
     func loadCameraUploadNode() async throws -> NodeEntity?
     func systemAlbums() async throws -> [AlbumEntity]
     func userAlbums() async -> [AlbumEntity]
-    func startMonitoringNodesUpdate(callback: @escaping () -> Void)
-    func stopMonitoringNodesUpdate()
     func createUserAlbum(with name: String?) async throws -> AlbumEntity
     func hasNoPhotosAndVideos() async -> Bool
 }
 
-public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRepositoryProtocol, V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol>:
+public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRepositoryProtocol,
+                                    V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol,
+                                    X: AlbumContentsUpdateNotifierRepositoryProtocol>:
     AlbumListUseCaseProtocol {
     
     private let albumRepository: T
     private let fileSearchRepository: U
     private let mediaUseCase: V
     private let userAlbumRepository: W
+    private let albumContentsUpdateRepository: X
     
-    private var callback: (() -> Void)?
+    public var albumsUpdatedPublisher: AnyPublisher<Void, Never> {
+        userAlbumUpdates
+            .merge(with: albumContentsUpdateRepository.albumReloadPublisher)
+            .eraseToAnyPublisher()
+    }
+    
+    private var userAlbumUpdates: AnyPublisher<Void, Never> {
+        userAlbumRepository.setsUpdatedPublisher
+            .filter { $0.isNotEmpty }
+            .map { _ in () }
+            .eraseToAnyPublisher()
+            .merge(with: userAlbumRepository.setElemetsUpdatedPublisher
+                .filter { $0.isNotEmpty }
+                .map { _ in () }
+                .eraseToAnyPublisher())
+            .eraseToAnyPublisher()
+    }
     
     public init(
         albumRepository: T,
         userAlbumRepository: W,
         fileSearchRepository: U,
-        mediaUseCase: V
+        mediaUseCase: V,
+        albumContentsUpdateRepository: X
     ) {
         self.albumRepository = albumRepository
-        self.userAlbumRepository = userAlbumRepository
         self.fileSearchRepository = fileSearchRepository
         self.mediaUseCase = mediaUseCase
+        self.userAlbumRepository = userAlbumRepository
+        self.albumContentsUpdateRepository = albumContentsUpdateRepository
     }
     
     public func loadCameraUploadNode() async throws -> NodeEntity? {
         return try await albumRepository.loadCameraUploadNode()
-    }
-    
-    public func startMonitoringNodesUpdate(callback: @escaping () -> Void) {
-        self.callback = callback
-        fileSearchRepository.startMonitoringNodesUpdate(callback: onNodesUpdate)
-    }
-    
-    public func stopMonitoringNodesUpdate() {
-        self.callback = nil
-        fileSearchRepository.stopMonitoringNodesUpdate()
     }
     
     public func systemAlbums() async throws -> [AlbumEntity] {
@@ -146,14 +157,14 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
     private func albumCovers(_ albums: [SetEntity]) async -> [HandleEntity: NodeEntity] {
         return await withTaskGroup(of: (HandleEntity, NodeEntity?).self) { taskGroup -> [HandleEntity: NodeEntity] in
             albums.forEach { setEntity in
-                taskGroup.addTask { [weak self] in
-                    guard let albumContents = await self?.userAlbumRepository.albumContent(by: setEntity.handle, includeElementsInRubbishBin: false),
-                          let albumCoverSetElement = albumContents.first(where: {
-                              $0.handle == setEntity.coverId
-                          }) else {
+                taskGroup.addTask {
+                    let albumContents = await userAlbumRepository.albumContent(by: setEntity.handle, includeElementsInRubbishBin: false)
+                    guard let albumCoverSetElement = albumContents.first(where: {
+                        $0.handle == setEntity.coverId
+                    }) else {
                         return (setEntity.coverId, nil)
                     }
-                    let albumCover = await self?.fileSearchRepository.node(by: albumCoverSetElement.nodeId)
+                    let albumCover = await fileSearchRepository.node(by: albumCoverSetElement.nodeId)
                     return (setEntity.coverId, albumCover)
                 }
             }
@@ -172,9 +183,5 @@ public final class AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRe
             .flatMap { $0 }
             .filter { $0.hasThumbnail }
         return allPhotosAndVideos?.isEmpty ?? true
-    }
-    
-    private func onNodesUpdate(_ nodes: [NodeEntity]) {
-        callback?()
     }
 }

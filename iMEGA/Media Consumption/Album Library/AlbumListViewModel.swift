@@ -27,6 +27,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     private let usecase: AlbumListUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private let featureFlagProvider: FeatureFlagProviderProtocol
+    private var subscriptions = Set<AnyCancellable>()
     
     init(usecase: AlbumListUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
@@ -35,6 +36,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         self.alertViewModel = alertViewModel
         self.featureFlagProvider = featureFlagProvider
         super.init()
+        setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in
             self?.createUserAlbum(with: newAlbumName)
         }
@@ -73,14 +75,15 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     func loadAlbums() {
-        loadAllAlbums()
-        usecase.startMonitoringNodesUpdate { [weak self] in
-            self?.loadAllAlbums()
+        albumLoadingTask = Task {
+            async let systemAlbums = systemAlbums()
+            async let userAlbums = userAlbums()
+            albums = await systemAlbums + userAlbums
+            shouldLoad = false
         }
     }
     
     func cancelLoading() {
-        usecase.stopMonitoringNodesUpdate()
         albumLoadingTask?.cancel()
         createAlbumTask?.cancel()
     }
@@ -111,15 +114,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     // MARK: - Private
-    private func loadAllAlbums() {
-        albumLoadingTask = Task {
-            async let systemAlbums = systemAlbums()
-            async let userAlbums = userAlbums()
-            albums = await systemAlbums + userAlbums
-            shouldLoad = false
-        }
-    }
-    
     private func systemAlbums() async -> [AlbumEntity] {
         do {
             return try await usecase.systemAlbums().map({ album in
@@ -185,5 +179,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                              Strings.Localizable.CameraUploads.Albums.MyAlbum.title,
                              Strings.Localizable.CameraUploads.Albums.SharedAlbum.title]
         return reservedNames.reduce(false) { $0 || name.caseInsensitiveCompare($1) == .orderedSame }
+    }
+    
+    private func setupSubscription() {
+        usecase.albumsUpdatedPublisher
+            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+            .sink { [weak self] in
+                self?.loadAlbums()
+            }.store(in: &subscriptions)
     }
 }
