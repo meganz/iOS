@@ -117,11 +117,10 @@ final class AlbumListUseCaseTests: XCTestCase {
             SetEntity(handle: albumId, userId: HandleEntity(2), coverId: albumSetCoverId,
                       modificationTime: Date(), name: "Album 1"),
         ]
-        let expectedAlbumContents = [albumId:
-                                        [SetElementEntity(handle: albumSetCoverId, order: 2, nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")]]
+        let albumElement = SetElementEntity(handle: albumSetCoverId, order: 2, nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumContent: expectedAlbumContents),
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumElement: albumElement),
             fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
             mediaUseCase: MockMediaUseCase(),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
@@ -145,6 +144,38 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
         XCTAssertNil(albums.first?.coverNode)
+    }
+    
+    func testUserAlbum_withInvalidCoverId_shouldUseLatestModifiedAlbumElementAsCover() async throws {
+        let albumId = HandleEntity(1)
+        let expectedAlbums = [
+            SetEntity(handle: albumId, userId: HandleEntity(2), coverId: HandleEntity.invalid,
+                      modificationTime: Date(), name: "Album 1"),
+        ]
+        let expectedAlbumCoverNodeId = HandleEntity(6)
+        let albumElements = [
+            SetElementEntity(handle: 1, order: 1, nodeId: .invalid,
+                             modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 1"),
+            SetElementEntity(handle: 2, order: 2, nodeId: 4,
+                             modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 2"),
+            SetElementEntity(handle: 3, order: 3, nodeId: 4,
+                             modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 3"),
+            SetElementEntity(handle: 4, order: 4, nodeId: expectedAlbumCoverNodeId,
+                             modificationTime: try "2023-03-01T06:01:04Z".date, name: "Test 4")
+        ]
+        let expectedAlbumCover = NodeEntity(handle: expectedAlbumCoverNodeId)
+        let userRepo = MockUserAlbumRepository(albums: expectedAlbums,
+                                               albumContent: [albumId: albumElements],
+                                               albumElement: nil)
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: userRepo,
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
+        let albums = await sut.userAlbums()
+        XCTAssertEqual(albums.count, expectedAlbums.count)
+        XCTAssertEqual(albums.first?.coverNode, expectedAlbumCover)
     }
     
     func testCreateUserAlbum_shouldCreateAlbumWithName() async throws {

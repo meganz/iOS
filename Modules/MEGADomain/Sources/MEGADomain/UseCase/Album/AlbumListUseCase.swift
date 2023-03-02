@@ -68,7 +68,7 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         return albums
             .map { AlbumEntity(id: $0.handle,
                                name: $0.name,
-                               coverNode: albumCovers[$0.coverId],
+                               coverNode: albumCovers[$0.handle],
                                count: $0.size,
                                type: .user,
                                modificationTime: $0.modificationTime)
@@ -158,14 +158,14 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         return await withTaskGroup(of: (HandleEntity, NodeEntity?).self) { taskGroup -> [HandleEntity: NodeEntity] in
             albums.forEach { setEntity in
                 taskGroup.addTask {
-                    let albumContents = await userAlbumRepository.albumContent(by: setEntity.handle, includeElementsInRubbishBin: false)
-                    guard let albumCoverSetElement = albumContents.first(where: {
-                        $0.handle == setEntity.coverId
-                    }) else {
-                        return (setEntity.coverId, nil)
+                    guard setEntity.coverId != .invalid,
+                          let albumCoverSetElement = await userAlbumRepository.albumElement(by: setEntity.handle,
+                                                                                            elementId: setEntity.coverId),
+                          let albumCover = await fileSearchRepository.node(by: albumCoverSetElement.nodeId) else {
+                        return (setEntity.handle,
+                                await latestModifiedAlbumElementNode(albumId: setEntity.handle))
                     }
-                    let albumCover = await fileSearchRepository.node(by: albumCoverSetElement.nodeId)
-                    return (setEntity.coverId, albumCover)
+                    return (setEntity.handle, albumCover)
                 }
             }
             return await taskGroup.reduce(into: [HandleEntity: NodeEntity](), {
@@ -174,6 +174,25 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
                 }
             })
         }
+    }
+    
+    private func latestModifiedAlbumElementNode(albumId: HandleEntity) async -> NodeEntity? {
+        var albumContents = await userAlbumRepository.albumContent(by: albumId,
+                                                                   includeElementsInRubbishBin: false)
+            .filter { $0.nodeId != .invalid }
+        guard albumContents.isNotEmpty else {
+            return nil
+        }
+        albumContents.sort {
+            if $0.modificationTime == $1.modificationTime {
+                return $0.handle > $1.handle
+            }
+            return $0.modificationTime > $1.modificationTime
+        }
+        guard let albumCoverNodeId = albumContents.first?.nodeId else {
+            return nil
+        }
+        return await fileSearchRepository.node(by: albumCoverNodeId)
     }
     
     public func hasNoPhotosAndVideos() async -> Bool {
