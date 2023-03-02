@@ -1,22 +1,25 @@
 import Foundation
+import Combine
 import MEGADomain
 
-public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
+public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
     private let cameraUploadNode: NodeEntity?
     private let albums: [AlbumEntity]
     private let createdUserAlbums: [String: AlbumEntity]
-    
-    public var startMonitoringNodesUpdateCalled = 0
-    public var stopMonitoringNodesUpdateCalled = 0
+    public var albumsUpdatedPublisher: AnyPublisher<Void, Never>
     
     public static func sampleUserAlbum(name: String) -> AlbumEntity {
         AlbumEntity(id: 4, name: name, coverNode: NodeEntity(handle: 4), count: 0, type: .user)
     }
     
-    public init(cameraUploadNode: NodeEntity? = nil, albums: [AlbumEntity] = [], createdUserAlbums: [String: AlbumEntity] = [:]) {
+    public init(cameraUploadNode: NodeEntity? = nil,
+                albums: [AlbumEntity] = [],
+                createdUserAlbums: [String: AlbumEntity] = [:],
+                albumsUpdatedPublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()) {
         self.cameraUploadNode = cameraUploadNode
         self.albums = albums
         self.createdUserAlbums = createdUserAlbums
+        self.albumsUpdatedPublisher = albumsUpdatedPublisher
     }
     
     public func loadCameraUploadNode() async throws -> NodeEntity? {
@@ -29,14 +32,6 @@ public final class MockAlbumListUseCase: AlbumListUseCaseProtocol {
     
     public func userAlbums() async -> [AlbumEntity] {
         albums.filter { $0.type == .user }
-    }
-    
-    public func startMonitoringNodesUpdate(callback: @escaping () -> Void) {
-        startMonitoringNodesUpdateCalled += 1
-    }
-    
-    public func stopMonitoringNodesUpdate() {
-        stopMonitoringNodesUpdateCalled += 1
     }
     
     public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
