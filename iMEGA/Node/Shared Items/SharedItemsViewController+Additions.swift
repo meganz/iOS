@@ -115,7 +115,7 @@ extension SharedItemsViewController {
     }
     
     @objc func shareAtIndexPath(_ indexPath: IndexPath) -> MEGAShare? {
-        guard indexPath.section == 0 else { return nil }
+        guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
         
         if searchController.isActive {
             return searchUnverifiedSharesArray?[indexPath.row] as? MEGAShare
