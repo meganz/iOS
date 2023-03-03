@@ -207,6 +207,8 @@
 		325857332845D410007890F5 /* MediaUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325857322845D410007890F5 /* MediaUploadNodeAccess.swift */; };
 		3258B90F298B787C0055E65C /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3258B90E298B787C0055E65C /* FilterType.swift */; };
 		325EFA7328AB9408005D4851 /* Slideshow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EFA7028AB9405005D4851 /* Slideshow.storyboard */; };
+		3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */; };
+		328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328201A129AF071A00C0E841 /* AlbumNameValidatorTests.swift */; };
 		32860721288509DD0056A3A5 /* PhotoLibraryFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32860720288509DD0056A3A5 /* PhotoLibraryFilterView.swift */; };
 		3288949228EBF77A00F4BF63 /* SlideShowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288949128EBF77A00F4BF63 /* SlideShowDataSource.swift */; };
 		328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913928A9DB890058C645 /* SlideShowCollectionView.swift */; };
@@ -2874,6 +2876,8 @@
 		325857322845D410007890F5 /* MediaUploadNodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUploadNodeAccess.swift; sourceTree = "<group>"; };
 		3258B90E298B787C0055E65C /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		325EFA7028AB9405005D4851 /* Slideshow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Slideshow.storyboard; sourceTree = "<group>"; };
+		3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumNameValidator.swift; sourceTree = "<group>"; };
+		328201A129AF071A00C0E841 /* AlbumNameValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumNameValidatorTests.swift; sourceTree = "<group>"; };
 		32860720288509DD0056A3A5 /* PhotoLibraryFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterView.swift; sourceTree = "<group>"; };
 		3288949128EBF77A00F4BF63 /* SlideShowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowDataSource.swift; sourceTree = "<group>"; };
 		328A913928A9DB890058C645 /* SlideShowCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowCollectionView.swift; sourceTree = "<group>"; };
@@ -5508,6 +5512,7 @@
 				127053A32822216800D64C21 /* AlbumListViewRouter.swift */,
 				9D4B25312964D5A20017E51A /* AlbumContentPickerView.swift */,
 				9D94AF6B296532EE00C7FBAA /* AlbumContentPickerViewModel.swift */,
+				3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */,
 			);
 			path = "Album Library";
 			sourceTree = "<group>";
@@ -5971,6 +5976,7 @@
 				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
 				3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */,
 				9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */,
+				328201A129AF071A00C0E841 /* AlbumNameValidatorTests.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -12632,6 +12638,7 @@
 				C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				C44FE40925B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift in Sources */,
+				3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */,
 				835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */,
 				B6C9CB0D27FBC2220073BA1A /* PHAsset+CU.swift in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
@@ -14536,6 +14543,7 @@
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				B64A71D7287BBB250085087D /* MockSdk.swift in Sources */,
+				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,

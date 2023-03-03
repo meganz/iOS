@@ -265,6 +265,18 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNil(sut.newAlbumContent)
     }
     
+    func testAlbumNames_whenExistingAlbumNamesNeeded_shouldReturnAlbumNames() async {
+        let album1 = AlbumEntity(id: 1, name: "Hey there", coverNode: nil, count: 0, type: .user)
+        let album2 = AlbumEntity(id: 1, name: "", coverNode: nil, count: 0, type: .user)
+        let album3 = AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite)
+        
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: [album1, album2, album3]), alertViewModel: alertViewModel())
+        sut.loadAlbums()
+        await sut.albumLoadingTask?.value
+        
+        XCTAssertEqual(sut.albumNames.sorted(), ["Hey there", "", "Favourites"].sorted())
+    }
+    
     func testReloadUpdates_onAlbumsUpdateEmiited_shouldRealodAlbums() {
         let albums = [AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
                                   count: 1, type: .user, modificationTime: nil)]

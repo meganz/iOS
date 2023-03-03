@@ -371,10 +371,17 @@ public final class ContextMenuBuilder {
         if let albumType = albumType {
             if albumType == .user && isEmptyState {
                 return CMEntity(displayInline: true,
-                                       children: [])
+                                       children: [rename])
             }
             
-            displayActionsMenuChildren = [selectMenu()]
+            displayActionsMenuChildren = []
+            
+            if albumType == .user {
+                displayActionsMenuChildren.append(rename)
+            }
+            
+            displayActionsMenuChildren.append(selectMenu())
+            
             if !isEmptyState {
                 displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [sortMenu()]))
             }

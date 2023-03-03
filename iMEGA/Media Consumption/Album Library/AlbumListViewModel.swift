@@ -24,6 +24,10 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     var newAlbumContent: (AlbumEntity, [NodeEntity]?)?
     
+    var albumNames: [String] {
+        albums.map { $0.name }
+    }
+    
     private let usecase: AlbumListUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private let featureFlagProvider: FeatureFlagProviderProtocol
@@ -41,23 +45,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             self?.createUserAlbum(with: newAlbumName)
         }
         
-        self.alertViewModel.validator = { name in
-            guard let name = name, name.isNotEmpty else { return nil }
-            guard let name = name.trim, name.isNotEmpty else {
-                return TextFieldAlertError(title: alertViewModel.title, description: "")
-            }
-            
-            if name.mnz_containsInvalidChars() {
-                return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
-            }
-            if self.isReservedAlbumName(name: name) {
-                return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.albumNameNotAllowed, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
-            }
-            if self.albums.first(where: { $0.name == name }) != nil {
-                return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.userAlbumExists, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
-            }
-            return nil
-        }
+        assignAlbumNameValidator()
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -147,6 +135,14 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         return userAlbums
     }
     
+    private func assignAlbumNameValidator() {
+        alertViewModel.validator = AlbumNameValidator(
+            albumTitle: alertViewModel.title,
+            existingAlbumNames: { [weak self] in
+                self?.albumNames ?? []
+            }).create
+    }
+    
 
     func newAlbumName() -> String {
         let newAlbumName = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder
@@ -170,15 +166,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     func navigateToNewAlbum() {
         album = newAlbumContent?.0
-    }
-    
-    private func isReservedAlbumName(name: String) -> Bool {
-        let reservedNames = [Strings.Localizable.CameraUploads.Albums.Favourites.title,
-                             Strings.Localizable.CameraUploads.Albums.Gif.title,
-                             Strings.Localizable.CameraUploads.Albums.Raw.title,
-                             Strings.Localizable.CameraUploads.Albums.MyAlbum.title,
-                             Strings.Localizable.CameraUploads.Albums.SharedAlbum.title]
-        return reservedNames.reduce(false) { $0 || name.caseInsensitiveCompare($1) == .orderedSame }
     }
     
     private func setupSubscription() {

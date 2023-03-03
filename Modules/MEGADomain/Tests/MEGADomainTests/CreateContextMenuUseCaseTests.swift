@@ -203,7 +203,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
 
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
 
-        menuActionsArray = []
+        menuActionsArray = [.quickActions(actionType: .rename)]
 
         XCTAssertEqual(menuActions, menuActionsArray)
     }

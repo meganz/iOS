@@ -7,6 +7,7 @@ extension AlbumContentViewController {
     func contextMenuManagerConfiguration() -> ContextMenuManager {
         ContextMenuManager(
             displayMenuDelegate: self,
+            quickActionsMenuDelegate: self,
             filterMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
@@ -65,3 +66,11 @@ extension AlbumContentViewController: FilterMenuDelegate {
     }
 }
 
+// MARK: - QuickActionsMenuDelegate
+extension AlbumContentViewController: QuickActionsMenuDelegate {
+    func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
+        if action == .rename {
+            present(UIAlertController(alert: viewModel.alertViewModel), animated: true)
+        }
+    }
+}

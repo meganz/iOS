@@ -126,6 +126,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         case .showHud(let msg):
             SVProgressHUD.dismiss(withDelay: 3)
             SVProgressHUD.showSuccess(withStatus: msg)
+        case .updateNavigationTitle:
+            buildNavigationBar()
         }
     }
     
