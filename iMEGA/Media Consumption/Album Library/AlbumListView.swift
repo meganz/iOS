@@ -34,7 +34,7 @@ struct AlbumListView: View {
         .fullScreenCover(item: $viewModel.album, onDismiss: {
             viewModel.newAlbumContent = nil
         }, content: {
-            router.albumContainer(album: $0, newAlbumPhotosToAdd: viewModel.newAlbumContent?.1)
+            router.albumContainer(album: $0, newAlbumPhotosToAdd: viewModel.newAlbumContent?.1, existingAlbumNames: {viewModel.albumNames})
                 .ignoresSafeArea()
         })
         .sheet(item: $viewModel.newlyAddedAlbum, onDismiss: {

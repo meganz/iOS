@@ -4,7 +4,7 @@ import MEGAPresentation
 
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity) -> AlbumCell
-    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?) -> AlbumContainerWrapper
+    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
@@ -17,8 +17,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return AlbumCell(viewModel: vm)
     }
     
-    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?) -> AlbumContainerWrapper {
-        return AlbumContainerWrapper(album: album, newAlbumPhotos: newAlbumPhotosToAdd)
+    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper {
+        return AlbumContainerWrapper(album: album, newAlbumPhotos: newAlbumPhotosToAdd, existingAlbumNames: existingAlbumNames)
     }
     
     @MainActor

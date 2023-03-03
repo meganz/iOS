@@ -11,11 +11,13 @@ struct AlbumContentRouter: AlbumContentRouting {
     private weak var navigationController: UINavigationController?
     private let album: AlbumEntity
     private let newAlbumPhotos: [NodeEntity]?
+    private let existingAlbumNames: () -> [String]
         
-    init(navigationController: UINavigationController?, album: AlbumEntity, newAlbumPhotos: [NodeEntity]?) {
+    init(navigationController: UINavigationController?, album: AlbumEntity, newAlbumPhotos: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) {
         self.navigationController = navigationController
         self.album = album
         self.newAlbumPhotos = newAlbumPhotos
+        self.existingAlbumNames = existingAlbumNames
     }
     
     func build() -> UIViewController {
@@ -31,6 +33,17 @@ struct AlbumContentRouter: AlbumContentRouting {
         )
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo,
                                                       searchRepository: FilesSearchRepository.newRepo)
+        
+        let alertViewModel = TextFieldAlertViewModel(textString: album.name,
+                                                     title: Strings.Localizable.rename,
+                                                     placeholderText: "",
+                                                     affirmativeButtonTitle: Strings.Localizable.rename,
+                                                     affirmativeButtonInitiallyEnabled: false,
+                                                     message: Strings.Localizable.renameNodeMessage,
+                                                     validator: AlbumNameValidator(
+                                                        albumTitle: self.album.name,
+                                                        existingAlbumNames: existingAlbumNames).rename)
+        
         let viewModel = AlbumContentViewModel(
             album: album,
             albumContentsUseCase: albumContentsUseCase,
@@ -38,7 +51,8 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: userAlbumRepo),
             photoLibraryUseCase: photoLibraryUseCase,
             router: self,
-            newAlbumPhotosToAdd: newAlbumPhotos)
+            newAlbumPhotosToAdd: newAlbumPhotos,
+            alertViewModel: alertViewModel)
         return AlbumContentViewController(viewModel: viewModel)
     }
     
