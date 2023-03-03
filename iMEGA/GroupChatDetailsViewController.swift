@@ -120,7 +120,7 @@ extension GroupChatDetailsViewController {
 }
 
 extension GroupChatDetailsViewController: MEGAChatCallDelegate {
-    public func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         guard call.chatId == self.chatRoom.chatId else { return }
         
         let statusToReload: [MEGAChatCallStatus] = [.inProgress,
@@ -133,7 +133,7 @@ extension GroupChatDetailsViewController: MEGAChatCallDelegate {
 }
 
 extension GroupChatDetailsViewController: MEGAChatRoomDelegate {
-    public func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+    public func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         if chat.hasChanged(for: .openInvite) {
             DispatchQueue.main.async {
                 self.chatRoom = chat

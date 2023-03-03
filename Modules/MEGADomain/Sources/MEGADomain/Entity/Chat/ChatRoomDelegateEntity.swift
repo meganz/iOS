@@ -1,7 +1,7 @@
 
 public struct ChatRoomDelegateEntity {
     public var onChatRoomUpdate: ((ChatRoomEntity) -> ())?
-    public var onMessageLoaded: ((ChatMessageEntity) -> ())?
+    public var onMessageLoaded: ((ChatMessageEntity?) -> ())?
     public var onMessageReceived: ((ChatMessageEntity) -> ())?
     public var onMessageUpdate: ((ChatMessageEntity) -> ())?
     public var onHistoryReloaded: ((ChatRoomEntity) -> ())?
@@ -9,7 +9,7 @@ public struct ChatRoomDelegateEntity {
     
     public init(
         onChatRoomUpdate: ((ChatRoomEntity) -> Void)? = nil,
-        onMessageLoaded: ((ChatMessageEntity) -> Void)? = nil,
+        onMessageLoaded: ((ChatMessageEntity?) -> Void)? = nil,
         onMessageReceived: ((ChatMessageEntity) -> Void)? = nil,
         onMessageUpdate: ((ChatMessageEntity) -> Void)? = nil,
         onHistoryReloaded: ((ChatRoomEntity) -> Void)? = nil,

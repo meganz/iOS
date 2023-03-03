@@ -265,7 +265,7 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
         super.init()
     }
     
-    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         completion(request, error)
     }
 }
@@ -291,7 +291,7 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
         sdk.removeChatRoomDelegate(chatId, delegate: self)
     }
     
-    func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+    func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         source.send(chat.toChatRoomEntity())
     }
 }
@@ -311,27 +311,27 @@ fileprivate class ChatRoomDelegateDTO: NSObject, MEGAChatRoomDelegate {
         MEGAChatSdk.shared.removeChatRoomDelegate(chatId, delegate: self)
     }
     
-    func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+    func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         chatRoomDelegate.onChatRoomUpdate?(chat.toChatRoomEntity())
     }
     
-    func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        chatRoomDelegate.onMessageLoaded?(message.toChatMessageEntity())
+    func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
+        chatRoomDelegate.onMessageLoaded?(message?.toChatMessageEntity())
     }
     
-    func onMessageReceived(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+    func onMessageReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
         chatRoomDelegate.onMessageReceived?(message.toChatMessageEntity())
     }
     
-    func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+    func onMessageUpdate(_ api: MEGAChatSdk, message: MEGAChatMessage) {
         chatRoomDelegate.onMessageUpdate?(message.toChatMessageEntity())
     }
     
-    func onHistoryReloaded(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+    func onHistoryReloaded(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         chatRoomDelegate.onHistoryReloaded?(chat.toChatRoomEntity())
     }
     
-    func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
+    func onReactionUpdate(_ api: MEGAChatSdk, messageId: UInt64, reaction: String, count: Int) {
         chatRoomDelegate.onReactionUpdate?(messageId, reaction, count)
     }
 }

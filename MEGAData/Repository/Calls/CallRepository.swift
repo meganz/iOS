@@ -191,7 +191,7 @@ fileprivate final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
         sdk.remove(self)
     }
     
-    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         guard call.callId == callId, call.changes.toChangeTypeEntity() == changeType else {
             return
         }
@@ -201,7 +201,7 @@ fileprivate final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
 
 extension CallRepository: MEGAChatCallDelegate {
     
-    func onChatSessionUpdate(_ api: MEGAChatSdk!, chatId: UInt64, callId: UInt64, session: MEGAChatSession!) {
+    func onChatSessionUpdate(_ api: MEGAChatSdk, chatId: UInt64, callId: UInt64, session: MEGAChatSession) {
         if self.callId != callId {
             return
         }
@@ -236,7 +236,7 @@ extension CallRepository: MEGAChatCallDelegate {
         }
     }
     
-    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         guard callId == call.callId else {
             return
         }
@@ -300,7 +300,7 @@ extension CallRepository: MEGAChatCallDelegate {
 }
 
 extension CallRepository: MEGAChatDelegate {
-    func onChatListItemUpdate(_ api: MEGAChatSdk!, item: MEGAChatListItem!) {
+    func onChatListItemUpdate(_ api: MEGAChatSdk, item: MEGAChatListItem) {
         guard let chatId = call?.chatId,
               item.chatId == chatId else {
             return

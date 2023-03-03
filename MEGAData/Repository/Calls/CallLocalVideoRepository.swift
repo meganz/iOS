@@ -87,7 +87,7 @@ extension CallLocalVideoRepository: MEGAChatVideoDelegate {
 }
 
 extension CallLocalVideoRepository: MEGAChatRequestDelegate {
-    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         if request.type == .changeVideoStream {
             localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
         }

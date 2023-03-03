@@ -1,14 +1,14 @@
 
 
 extension ChatViewController: MEGAChatDelegate {
-    func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
         if chatRoom.chatId == chatId {
             configureNavigationBar()
             checkIfChatHasActiveCall()
         }
     }
     
-    func onChatOnlineStatusUpdate(_ api: MEGAChatSdk!, userHandle: UInt64, status onlineStatus: MEGAChatStatus, inProgress: Bool) {
+    func onChatOnlineStatusUpdate(_ api: MEGAChatSdk, userHandle: UInt64, status onlineStatus: MEGAChatStatus, inProgress: Bool) {
         if inProgress || userHandle == api.myUserHandle || chatRoom.isGroup {
             return
         }
@@ -26,7 +26,7 @@ extension ChatViewController: MEGAChatDelegate {
         }
     }
     
-    func onChatPresenceLastGreen(_ api: MEGAChatSdk!, userHandle: UInt64, lastGreen: Int) {
+    func onChatPresenceLastGreen(_ api: MEGAChatSdk, userHandle: UInt64, lastGreen: Int) {
         
         switch chatRoom.onlineStatus {
         case .offline, .away:
