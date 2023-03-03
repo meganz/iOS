@@ -92,7 +92,7 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
         sdk.remove(self)
     }
 
-    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         if request.type == changeType,
            chatId == request.chatHandle {
             source.send(request.text)

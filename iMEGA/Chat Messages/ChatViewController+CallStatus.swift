@@ -236,7 +236,7 @@ extension ChatViewController {
 }
 
 extension ChatViewController: MEGAChatCallDelegate {
-    func onChatCallUpdate(_: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_: MEGAChatSdk, call: MEGAChatCall) {
         onCallUpdate(call)
     }
 }

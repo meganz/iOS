@@ -196,7 +196,7 @@ fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
         sdk.remove(self)
     }
     
-    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         if call.hasChanged(for: .status) {
             source.send(call.toCallEntity())
         }
@@ -226,7 +226,7 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
         sdk.remove(self)
     }
 
-    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         if request.type == changeType,
            chatId == request.chatHandle,
            let chatRoom = sdk.chatRoom(forChatId: chatId) {

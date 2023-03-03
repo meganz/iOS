@@ -246,7 +246,7 @@ private final class ChatOnlineListener: NSObject {
 }
 
 extension ChatOnlineListener: MEGAChatDelegate {
-    func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
         if self.chatId == chatId,
            newState == MEGAChatConnection.online.rawValue {
             MEGALogDebug("CallActionManager: chat state changed to online now for chat id \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
@@ -291,17 +291,13 @@ private final class CallAvailabilityListener: NSObject {
 }
 
 extension CallAvailabilityListener: MEGAChatCallDelegate {
-    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         if call.chatId == chatId {
             MEGALogDebug("CallActionManager: onChatCallUpdate for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-            if let call = call {
-                MEGALogDebug("CallActionManager: call object is \(call)")
-                removeListener()
-                completion?(chatId, call)
-                self.completion = nil
-            } else {
-                MEGALogDebug("CallActionManager: no call object found for  \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-            }
+            MEGALogDebug("CallActionManager: call object is \(call)")
+            removeListener()
+            completion?(chatId, call)
+            self.completion = nil
         }
     }
 }
@@ -333,10 +329,10 @@ private final class CallInProgressListener: NSObject {
 }
 
 extension CallInProgressListener: MEGAChatCallDelegate {
-    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         if call.chatId == chatId {
             MEGALogDebug("CallActionManager: onChatCallUpdate for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-            if let call = call, call.status == .inProgress {
+            if call.status == .inProgress {
                 MEGALogDebug("CallActionManager: call object is \(call)")
                 removeListener()
                 completion?(chatId, call)
