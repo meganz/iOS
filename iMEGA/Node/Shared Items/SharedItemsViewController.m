@@ -42,23 +42,15 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
 
-@property (nonatomic, strong) MEGAShareList *incomingShareList;
 @property (nonatomic, strong) NSMutableArray *incomingNodesMutableArray;
-
-@property (nonatomic, strong) MEGAShareList *outgoingShareList;
-@property (nonatomic, strong) NSMutableArray *outgoingSharesMutableArray;
 @property (nonatomic, strong) NSMutableArray *outgoingNodesMutableArray;
-
-@property (nonatomic, strong) NSArray *publicLinksArray;
-
+@property (nonatomic, strong) NSMutableArray *outgoingSharesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
 
 @property (nonatomic, strong) NSMutableDictionary *incomingNodesForEmailMutableDictionary;
 @property (nonatomic, strong) NSMutableDictionary *incomingIndexPathsMutableDictionary;
 @property (nonatomic, strong) NSMutableDictionary *outgoingNodesForEmailMutableDictionary;
 @property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
-
-@property (nonatomic) NSMutableArray *searchNodesArray;
 
 @property (nonatomic, assign) BOOL shouldRemovePlayerDelegate;
 
@@ -227,22 +219,19 @@
     }
     
     [self updateNavigationBarTitle];
+    [self configNavigationBarButtonItems];
     
     [self.tableView reloadData];
 }
 
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
-    [self setNavigationBarButtonItemsEnabled:boolValue];
+    [self setNavigationBarButtonItemsEnabled:boolValue || self.tableView.isEditing];
     [self toolbarItemsSetEnabled:boolValue];
     
     boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
     
     [self.tableView reloadData];
-}
-
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.editBarButtonItem setEnabled:boolValue];
 }
 
 - (void)toolbarItemsSetEnabled:(BOOL)boolValue {
@@ -631,6 +620,7 @@
     self.selectedSharesMutableArray = NSMutableArray.alloc.init;
     
     [self configToolbarItemsForSharedItems];
+    [self configNavigationBarButtonItems];
     [self toolbarItemsSetEnabled:NO];
 }
 
@@ -932,13 +922,6 @@
             }
         }
     }
-    
-    if (numberOfRows == 0) {
-        [self setNavigationBarButtonItemsEnabled:NO];
-    } else {
-        [self setNavigationBarButtonItemsEnabled:YES];
-    }
-    
     return numberOfRows;
 }
 
@@ -1133,7 +1116,7 @@
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.searchNodesArray = nil;
+    [self.searchNodesArray removeAllObjects];
     [self.searchUnverifiedNodesArray removeAllObjects];
     [self.searchUnverifiedSharesArray removeAllObjects];
     
