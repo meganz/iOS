@@ -84,8 +84,8 @@ extension SharedItemsViewController {
     }
     
     @objc func searchUnverifiedNodes(key: String) {
-        searchUnverifiedNodesArray?.removeAllObjects()
-        searchUnverifiedSharesArray?.removeAllObjects()
+        searchUnverifiedNodesArray.removeAllObjects()
+        searchUnverifiedSharesArray.removeAllObjects()
         
         var nodes: [MEGANode]?
         var shares: [MEGAShare]?
@@ -101,16 +101,16 @@ extension SharedItemsViewController {
 
         guard let nodes, let shares else { return }
         guard key.isNotEmpty else {
-            searchUnverifiedSharesArray?.addObjects(from: shares)
-            searchUnverifiedNodesArray?.addObjects(from: nodes)
+            searchUnverifiedSharesArray.addObjects(from: shares)
+            searchUnverifiedNodesArray.addObjects(from: nodes)
             return
         }
         
         nodes.indices.filter {
             nodes[$0].name?.lowercased().contains(key.lowercased()) == true
         }.forEach { index in
-            searchUnverifiedSharesArray?.add(shares[index])
-            searchUnverifiedNodesArray?.add(nodes[index])
+            searchUnverifiedSharesArray.add(shares[index])
+            searchUnverifiedNodesArray.add(nodes[index])
         }
     }
     
@@ -118,7 +118,7 @@ extension SharedItemsViewController {
         guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
         
         if searchController.isActive {
-            return searchUnverifiedSharesArray?[indexPath.row] as? MEGAShare
+            return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
         }
         
         if outgoingButton?.isSelected == true {
@@ -147,6 +147,41 @@ extension SharedItemsViewController {
             return 2
         }
         return 1
+    }
+    
+    @objc func configNavigationBarButtonItems() {
+        let isEditing = tableView?.isEditing ?? false
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else {
+            setNavigationBarButtonItemsEnabled(isEditing)
+            return
+        }
+        
+        guard !searchController.isActive else {
+            var isEnabled = searchNodesArray.count > 0
+            
+            if incomingButton?.isSelected == true ||
+                outgoingButton?.isSelected == true {
+                isEnabled = isEnabled || searchUnverifiedNodesArray.count > 0
+            }
+            setNavigationBarButtonItemsEnabled(isEnabled || isEditing)
+            return
+        }
+        
+        var isEnabled = false
+        if incomingButton?.isSelected == true {
+            isEnabled = incomingShareList.size.intValue > 0 ||
+                        incomingUnverifiedShareList.size.intValue > 0
+        } else if outgoingButton?.isSelected == true {
+            isEnabled = outgoingShareList.size.intValue > 0
+        } else if linksButton?.isSelected == true {
+            isEnabled = publicLinksArray.isNotEmpty
+        }
+        
+        setNavigationBarButtonItemsEnabled(isEnabled || isEditing)
+    }
+    
+    @objc func setNavigationBarButtonItemsEnabled(_ isEnabled: Bool) {
+        self.editBarButtonItem?.isEnabled = isEnabled
     }
     
     private func shares(from shareList: MEGAShareList) -> [MEGAShare] {
