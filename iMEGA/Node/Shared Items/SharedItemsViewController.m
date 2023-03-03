@@ -886,6 +886,7 @@
 - (void)disableSearchAndSelection {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
+        [self searchBarCancelButtonClicked:self.searchController.searchBar];
     }
     
     if (self.tableView.isEditing) {
@@ -1133,6 +1134,8 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
+    [self.searchUnverifiedNodesArray removeAllObjects];
+    [self.searchUnverifiedSharesArray removeAllObjects];
     
     if (!MEGAReachabilityManager.isReachable) {
         self.tableView.tableHeaderView = nil;
