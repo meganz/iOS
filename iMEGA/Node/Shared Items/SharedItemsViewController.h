@@ -29,16 +29,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
+@property (nonatomic, strong) MEGAShareList *outgoingShareList;
 @property (nonatomic, strong, nullable) MEGAShareList *outgoingUnverifiedShareList;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *outgoingUnverifiedSharesMutableArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *outgoingUnverifiedNodesMutableArray;
 
-@property (nonatomic, strong, nullable) MEGAShareList *incomingUnverifiedShareList;
+@property (nonatomic, strong) MEGAShareList *incomingShareList;
+@property (nonatomic, strong) MEGAShareList *incomingUnverifiedShareList;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *incomingUnverifiedSharesMutableArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *incomingUnverifiedNodesMutableArray;
 
-@property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *searchUnverifiedSharesArray;
-@property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *searchUnverifiedNodesArray;
+@property (nonatomic) NSMutableArray *searchNodesArray;
+@property (nonatomic, strong) NSMutableArray<MEGAShare *> *searchUnverifiedSharesArray;
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *searchUnverifiedNodesArray;
+
+@property (nonatomic, strong) NSArray *publicLinksArray;
 
 @property (strong, nonatomic) SharedItemsViewModel *viewModel;
 
