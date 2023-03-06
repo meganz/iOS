@@ -117,7 +117,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             SetEntity(handle: albumId, userId: HandleEntity(2), coverId: albumSetCoverId,
                       modificationTime: Date(), name: "Album 1"),
         ]
-        let albumElement = SetElementEntity(handle: albumSetCoverId, order: 2, nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")
+        let albumElement = SetElementEntity(handle: albumSetCoverId, ownerId: albumId, order: 2,
+                                            nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumElement: albumElement),
@@ -154,13 +155,13 @@ final class AlbumListUseCaseTests: XCTestCase {
         ]
         let expectedAlbumCoverNodeId = HandleEntity(6)
         let albumElements = [
-            SetElementEntity(handle: 1, order: 1, nodeId: .invalid,
+            SetElementEntity(handle: 1, ownerId: albumId, order: 1, nodeId: .invalid,
                              modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 1"),
-            SetElementEntity(handle: 2, order: 2, nodeId: 4,
+            SetElementEntity(handle: 2, ownerId: albumId, order: 2, nodeId: 4,
                              modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 2"),
-            SetElementEntity(handle: 3, order: 3, nodeId: 4,
+            SetElementEntity(handle: 3, ownerId: albumId, order: 3, nodeId: 4,
                              modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 3"),
-            SetElementEntity(handle: 4, order: 4, nodeId: expectedAlbumCoverNodeId,
+            SetElementEntity(handle: 4, ownerId: albumId, order: 4, nodeId: expectedAlbumCoverNodeId,
                              modificationTime: try "2023-03-01T06:01:04Z".date, name: "Test 4")
         ]
         let expectedAlbumCover = NodeEntity(handle: expectedAlbumCoverNodeId)
@@ -259,7 +260,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         setsUpdatedPublisher.send([SetEntity(handle: 1, userId: 1, coverId: 1,
                                              modificationTime: Date(), name: "Test")])
         setElementsUpdatedPublisher.send([])
-        setElementsUpdatedPublisher.send([SetElementEntity(handle: 1, order: 1, nodeId: 1,
+        setElementsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: 2, order: 1, nodeId: 1,
                                                            modificationTime: Date(), name: "Test")])
         wait(for: [exp], timeout: 1.0)
     }
