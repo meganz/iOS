@@ -169,10 +169,12 @@ extension SharedItemsViewController {
         
         var isEnabled = false
         if incomingButton?.isSelected == true {
-            isEnabled = incomingShareList.size.intValue > 0 ||
-                        incomingUnverifiedShareList.size.intValue > 0
+            let inShareSize = incomingShareList?.size.intValue ?? 0
+            let unverifiedInShareSize = incomingUnverifiedShareList?.size.intValue ?? 0
+            isEnabled = inShareSize > 0 || unverifiedInShareSize > 0
         } else if outgoingButton?.isSelected == true {
-            isEnabled = outgoingShareList.size.intValue > 0
+            let outShareSize = outgoingShareList?.size.intValue ?? 0
+            isEnabled = outShareSize > 0
         } else if linksButton?.isSelected == true {
             isEnabled = publicLinksArray.isNotEmpty
         }
