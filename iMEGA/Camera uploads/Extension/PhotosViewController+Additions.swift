@@ -1,6 +1,6 @@
 extension PhotosViewController {
     @IBAction func moreAction(_ sender: UIBarButtonItem) {
-        let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .selectionToolBar, isPhotosTimeline: true, sender: sender)
+        let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .photosTimeline, sender: sender)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     
