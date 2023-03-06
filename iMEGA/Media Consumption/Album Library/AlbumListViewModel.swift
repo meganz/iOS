@@ -16,6 +16,8 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
     }
    
+    lazy var selection = AlbumSelection()
+    
     var albumCreationAlertMsg: String?
     var albumLoadingTask: Task<Void, Never>?
     var createAlbumTask: Task<Void, Never>?
@@ -33,11 +35,15 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     private let featureFlagProvider: FeatureFlagProviderProtocol
     private var subscriptions = Set<AnyCancellable>()
     
+    private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
+    
     init(usecase: AlbumListUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
+         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
          featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.usecase = usecase
         self.alertViewModel = alertViewModel
+        self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.featureFlagProvider = featureFlagProvider
         super.init()
         setupSubscription()
@@ -46,6 +52,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
         
         assignAlbumNameValidator()
+        subscribeToEditMode()
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -94,11 +101,17 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                     albums.append(newAlbum)
                 }
                 newlyAddedAlbum = await usecase.hasNoPhotosAndVideos() ? nil : newAlbum
+                photoAlbumContainerViewModel?.shouldShowSelectBarButton = true
             } catch {
                 MEGALogError("Error creating user album: \(error.localizedDescription)")
             }
             shouldLoad = false
         }
+    }
+    
+    func onCreateAlbum() {
+        guard selection.editMode.isEditing == false else { return }
+        showCreateAlbumAlert.toggle()
     }
     
     // MARK: - Private
@@ -131,6 +144,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     private func userAlbums() async -> [AlbumEntity] {
         var userAlbums = await usecase.userAlbums()
+        photoAlbumContainerViewModel?.shouldShowSelectBarButton = userAlbums.isNotEmpty
         userAlbums.sort { ($0.modificationTime ?? .distantPast) > ($1.modificationTime ?? .distantPast) }
         return userAlbums
     }
@@ -168,11 +182,30 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         album = newAlbumContent?.0
     }
     
+    @MainActor
+    func onAlbumTap(_ album: AlbumEntity) {
+        guard selection.editMode.isEditing == false else { return }
+        
+        albumCreationAlertMsg = nil
+        self.album = album
+    }
+    
+    // MARK: - Private
+    
     private func setupSubscription() {
         usecase.albumsUpdatedPublisher
             .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
             .sink { [weak self] in
                 self?.loadAlbums()
             }.store(in: &subscriptions)
+    }
+    
+    private func subscribeToEditMode() {
+        photoAlbumContainerViewModel?.$editMode
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] in
+                self?.selection.editMode = $0
+            })
+            .store(in: &subscriptions)
     }
 }

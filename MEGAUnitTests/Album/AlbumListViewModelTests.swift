@@ -56,6 +56,21 @@ final class AlbumListViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
+    func testHasCustomAlbum_whenUserLoadAlbums_shouldReturnTrue() async throws {
+        let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
+        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
+                                     count: 1, type: .user, modificationTime: nil)
+        let mockAlbumUseCase = MockAlbumListUseCase(albums: [rawAlbum, userAlbum1])
+                                     
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: mockAlbumUseCase, alertViewModel: alertViewModel(), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        sut.loadAlbums()
+        await sut.albumLoadingTask?.value
+        
+        XCTAssertTrue(photoAlbumContainerViewModel.shouldShowSelectBarButton)
+    }
+    
     func testCreateUserAlbum_shouldCreateUserAlbum() {
         let exp = expectation(description: "should load album at first after creating")
         let useCase = MockAlbumListUseCase()
@@ -72,6 +87,22 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.albums.last?.name, "userAlbum")
         XCTAssertEqual(sut.albums.last?.type, .user)
         XCTAssertEqual(sut.albums.last?.count, 0)
+    }
+    
+    func testHasCustomAlbum_whenUserCreateNewAlbum_shouldReturnTrue() {
+        let exp = expectation(description: "Should set hasCustomAlbut to true when user create a new album")
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        sut.createUserAlbum(with: "userAlbum")
+        sut.$shouldLoad
+            .dropFirst()
+            .sink {
+                XCTAssertFalse($0)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(photoAlbumContainerViewModel.shouldShowSelectBarButton)
     }
     
     func testCreateUserAlbum_shouldCreateUserAlbumAndInsertBeforeOlderUserAlbums() async throws {
@@ -207,7 +238,7 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.alertViewModel.validator?(newSysAlbum.name))
     }
     
-    func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() {
+    func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
 
         let sampleAlbum = AlbumEntity(id: 1, name: "hello", coverNode: nil, count: 0, type: .user)
@@ -232,15 +263,13 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testColumns_createFeatureFlagIsOffThatThreeColumsReturn() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(), featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
         let result = sut.columns(horizontalSizeClass: .regular)
         XCTAssertEqual(result.count, 3)
     }
     
     func testColumns_sizeConfigurationsChangesReturnCorrectColumnsWhenCreateAlbumFeatureIsTurnedOn() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel(), featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         XCTAssertEqual(sut.columns(horizontalSizeClass: .compact).count, 3)
         XCTAssertEqual(sut.columns(horizontalSizeClass: nil).count, 3)
         XCTAssertEqual(sut.columns(horizontalSizeClass: .regular).count, 5)
@@ -263,6 +292,32 @@ final class AlbumListViewModelTests: XCTestCase {
         sut.navigateToNewAlbum()
         XCTAssertNil(sut.album)
         XCTAssertNil(sut.newAlbumContent)
+    }
+    
+    func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
+        
+        sut.onAlbumTap(gifAlbum)
+        XCTAssertNil(sut.albumCreationAlertMsg)
+        XCTAssertEqual(sut.album, gifAlbum)
+    }
+    
+    func testOnCreateAlbum_whenIsEditModeActive_shouldReturnFalseForShowCreateAlbumAlert() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        
+        sut.selection.editMode = .active
+        XCTAssertFalse(sut.showCreateAlbumAlert)
+        sut.onCreateAlbum()
+        XCTAssertFalse(sut.showCreateAlbumAlert)
+    }
+    
+    func testOnCreateAlbum_whenIsEditModeNotActive_shouldToggleShowCreateAlbumAlert() {
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), alertViewModel: alertViewModel())
+        
+        XCTAssertFalse(sut.showCreateAlbumAlert)
+        sut.onCreateAlbum()
+        XCTAssertTrue(sut.showCreateAlbumAlert)
     }
     
     func testAlbumNames_whenExistingAlbumNamesNeeded_shouldReturnAlbumNames() async {

@@ -19,10 +19,14 @@ final class PhotoAlbumContainerViewController: UIViewController {
         PhotosPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
     
-    private let pageTabViewModel = PagerTabViewModel()
+    let pageTabViewModel = PagerTabViewModel()
+    let viewModel = PhotoAlbumContainerViewModel()
+    
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
+    
+    var leftBarButton: UIBarButtonItem?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -105,7 +109,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
             photoViewController.photoUpdatePublisher = photoUpdatePublisher
         }
 
-        albumHostingController = AlbumListViewRouter().build()
+        albumHostingController = AlbumListViewRouter(photoAlbumContainerViewModel: viewModel).build()
         
         photoViewController?.parentPhotoAlbumsController = self
         photoViewController?.configureMyAvatarManager()
@@ -156,9 +160,25 @@ final class PhotoAlbumContainerViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
-        pageController.$currentPage
+        pageTabViewModel.$selectedTab
+            .filter { $0 == .album }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateRightBarButton()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$shouldShowSelectBarButton
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateRightBarButton()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$editMode
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.photoViewController?.hideRightBarButtonItem($0 != .timeline)
+                self?.isEditing = $0 == .active
             }
             .store(in: &subscriptions)
     }

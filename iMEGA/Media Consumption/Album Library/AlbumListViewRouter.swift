@@ -1,18 +1,21 @@
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import Combine
 
 protocol AlbumListViewRouting {
-    func cell(album: AlbumEntity) -> AlbumCell
+    func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell
     func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
-    
-    func cell(album: AlbumEntity) -> AlbumCell {
+    weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
+
+    func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell {
         let vm = AlbumCellViewModel(
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            album: album
+            album: album,
+            selection: selection
         )
         return AlbumCell(viewModel: vm)
     }
@@ -34,7 +37,8 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             ), alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,
-                                                       message: nil)
+                                                       message: nil),
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel
         )
         
         let content = AlbumListView(viewModel: vm,
