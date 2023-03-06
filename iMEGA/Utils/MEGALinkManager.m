@@ -290,6 +290,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [MEGALinkManager resetLinkAndURLType];
             break;
             
+        case URLTypeFileRequestLink:
+            [MEGALinkManager openBrowserBy:MEGALinkManager.linkURL.mnz_MEGAURL];
+            break;
+            
         case URLTypeFileLink:
             [MEGALinkManager showFileLinkView];
             [MEGALinkManager resetLinkAndURLType];
@@ -578,6 +582,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)showFileLinkView {
     NSString *fileLinkURLString = MEGALinkManager.linkURL.mnz_MEGAURL;
+    
     MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (error.type) {
             [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
