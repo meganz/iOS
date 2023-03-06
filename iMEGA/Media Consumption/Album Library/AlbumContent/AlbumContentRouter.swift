@@ -40,9 +40,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                      affirmativeButtonTitle: Strings.Localizable.rename,
                                                      affirmativeButtonInitiallyEnabled: false,
                                                      message: Strings.Localizable.renameNodeMessage,
-                                                     validator: AlbumNameValidator(
-                                                        albumTitle: self.album.name,
-                                                        existingAlbumNames: existingAlbumNames).rename)
+                                                     validator: AlbumNameValidator(existingAlbumNames: existingAlbumNames).rename)
         
         let viewModel = AlbumContentViewModel(
             album: album,

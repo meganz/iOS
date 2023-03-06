@@ -151,7 +151,6 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     private func assignAlbumNameValidator() {
         alertViewModel.validator = AlbumNameValidator(
-            albumTitle: alertViewModel.title,
             existingAlbumNames: { [weak self] in
                 self?.albumNames ?? []
             }).create

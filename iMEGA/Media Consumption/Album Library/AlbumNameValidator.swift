@@ -2,7 +2,6 @@ import Foundation
 import MEGADomain
 
 struct AlbumNameValidator {
-    let albumTitle: String
     let existingAlbumNames: () -> [String]
     
     func create(_ name: String?) -> TextFieldAlertError? {

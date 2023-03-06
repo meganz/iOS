@@ -125,6 +125,10 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
+    func updateAlertViewModel() {
+        alertViewModel.textString = albumName
+    }
+    
     // MARK: Private
     private var isFilterEnabled: Bool {
         guard photos.isNotEmpty,
