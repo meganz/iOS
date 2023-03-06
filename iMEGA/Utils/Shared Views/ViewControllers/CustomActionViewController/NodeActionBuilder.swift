@@ -437,7 +437,7 @@ final class NodeActionBuilder {
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
             
-        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor: break
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery: break
             
         case .nodeVersions:
             nodeActions = nodeVersionsNodeActions()
