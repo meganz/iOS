@@ -29,13 +29,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
-@property (nonatomic, strong) MEGAShareList *outgoingShareList;
+@property (nonatomic, strong, nullable) MEGAShareList *outgoingShareList;
 @property (nonatomic, strong, nullable) MEGAShareList *outgoingUnverifiedShareList;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *outgoingUnverifiedSharesMutableArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *outgoingUnverifiedNodesMutableArray;
 
-@property (nonatomic, strong) MEGAShareList *incomingShareList;
-@property (nonatomic, strong) MEGAShareList *incomingUnverifiedShareList;
+@property (nonatomic, strong, nullable) MEGAShareList *incomingShareList;
+@property (nonatomic, strong, nullable) MEGAShareList *incomingUnverifiedShareList;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *incomingUnverifiedSharesMutableArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *incomingUnverifiedNodesMutableArray;
 
