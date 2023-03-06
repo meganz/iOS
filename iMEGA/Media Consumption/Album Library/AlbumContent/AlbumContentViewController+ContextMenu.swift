@@ -70,6 +70,7 @@ extension AlbumContentViewController: FilterMenuDelegate {
 extension AlbumContentViewController: QuickActionsMenuDelegate {
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
         if action == .rename {
+            viewModel.updateAlertViewModel()
             present(UIAlertController(alert: viewModel.alertViewModel), animated: true)
         }
     }

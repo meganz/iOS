@@ -1,7 +1,7 @@
 import Foundation
 
 struct TextFieldAlertViewModel {
-    let textString: String
+    var textString: String
     let title: String
     var placeholderText: String
     let affirmativeButtonTitle: String
@@ -35,4 +35,3 @@ struct TextFieldAlertError: Equatable {
     let title: String
     let description: String
 }
-

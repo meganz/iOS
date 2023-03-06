@@ -555,6 +555,26 @@ final class AlbumContentViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
+    func testUpdateAlertViewModel_whenUserRenamesStaysSamePageAndRenameAgain_shouldShowLatestRenamedAlbumName() async {
+        let photo = [NodeEntity(name: "a.jpg", handle: 1)]
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
+        let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
+        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let alertViewModel = TextFieldAlertViewModel(textString: "Old Album", title: "Hey there", placeholderText: "", affirmativeButtonTitle: "Rename", affirmativeButtonInitiallyEnabled: true, message: "", action: nil, validator: nil)
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: MockAlbumContentUseCase(nodes: photo),
+                                        mediaUseCase: MockMediaUseCase(),
+                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: albumContentRouter,
+                                        alertViewModel: alertViewModel)
+        
+        sut.albumName = "New Album"
+        sut.updateAlertViewModel()
+        
+        XCTAssertEqual(sut.alertViewModel.textString, "New Album")
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title, placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder, affirmativeButtonTitle: Strings.Localizable.rename, message: nil)
     }
