@@ -15,6 +15,12 @@ extension MEGALinkManager {
         CancellableTransferRouter(presenter: UIApplication.mnz_visibleViewController(), transfers: transfers, transferType: .download, isFolderLink: true).start()
     }
     
+    @objc class func openBrowser(by urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        UIApplication.shared.open(url)
+    }
+    
     class func nodesFromLinkToDownloadAfterLogin(nodes: [NodeEntity]) {
         MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes.toMEGANodes(in: MEGASdkManager.sharedMEGASdkFolder()))
     }

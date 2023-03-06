@@ -20,6 +20,11 @@
     XCTAssertEqual([url3 mnz_type], URLTypeFileLink);
 }
 
+- (void)testDeepLinkShouldReturnFileRequestLinkType {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/filerequest/7W2qzsGbNpU"];
+    XCTAssertEqual([url mnz_type], URLTypeFileRequestLink);
+}
+
 - (void)testDeepLinkShouldReturnFolderLinkType {
     NSURL *url = [NSURL URLWithString:@"https://testbed.preview.mega.co.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A"];
     XCTAssertEqual([url mnz_type], URLTypeFolderLink);
