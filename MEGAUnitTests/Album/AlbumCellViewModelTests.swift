@@ -21,7 +21,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testInit_setTitleNodesAndTitlePublishers() throws {
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: album)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: album, selection: AlbumSelection())
         
         XCTAssertEqual(sut.title, album.name)
         XCTAssertEqual(sut.numberOfNodes, album.count)
@@ -31,8 +31,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     func testLoadAlbumThumbnail_onThumbnailLoaded_loadingStateIsCorrect() throws {
         let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),
-                                     album: album)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),album: album, selection: AlbumSelection())
         
         let exp = expectation(description: "loading should change during loading of albums")
         exp.expectedFulfillmentCount = 2
@@ -52,8 +51,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     func testLoadAlbumThumbnail_onLoadThumbnail_thumbnailContainerIsUpdatedWithLoadedImageIfContainerIsCurrentlyPlaceholder() throws {
         let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),
-                                     album: album)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),album: album, selection: AlbumSelection())
         
         let exp = expectation(description: "thumbnail image changed")
         sut.$thumbnailContainer
@@ -69,7 +67,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     func testLoadAlbumThumbnail_onLoadThumbnailFailed_thumbnailIsNotUpdatedAndLoadedIsFalse() throws {
         let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(),
-                                     album: album)
+                                     album: album, selection: AlbumSelection())
         let exp = expectation(description: "thumbnail should not change")
         exp.isInverted = true
         
@@ -91,7 +89,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertTrue(isLocalFileCreated)
         
         let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)]),
-                                     album: album)
+                                     album: album, selection: AlbumSelection())
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "thumbnail should not update again")
@@ -114,7 +112,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         XCTAssertTrue(isLocalFileCreated)
         
         let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)]),
-                                     album: album)
+                                     album: album, selection: AlbumSelection())
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
         let exp = expectation(description: "loading flag should not change")
@@ -131,9 +129,113 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testCancelLoading_verifyIsLoadingIsFalse() {
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: album)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: album, selection: AlbumSelection())
         sut.loadAlbumThumbnail()
         sut.cancelLoading()
         XCTAssertFalse(sut.isLoading)
+    }
+    
+    func testIsSelected_whenUserTapOnAlbum_shouldBeSelected() {
+        let selection = AlbumSelection()
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: album, selection: selection)
+        sut.isSelected = true
+        
+        XCTAssertTrue(selection.isAlbumSelected(album))
+    }
+    
+    func testShouldShowEditStateOpacity_whenAlbumListEditingAndonUserAlbum_shouldReturnRightValue() {
+        let selection = AlbumSelection()
+        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
+                                                       count: 1, type: .user, modificationTime: nil)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: userAlbum1, selection: selection )
+        
+        let exp = expectation(description: "Should set shouldShowEditStateOpacity to 1.0")
+        exp.expectedFulfillmentCount = 2
+        
+        var result = [Double]()
+        
+        sut.$shouldShowEditStateOpacity
+            .dropFirst()
+            .sink {
+                result.append($0)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        selection.editMode = .active
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(result, [0.0, 1.0])
+    }
+    
+    func testShouldShowEditStateOpacity_whenAlbumListEditingAndonSystemAlbum_shouldReturnRightValue() {
+        let selection = AlbumSelection()
+        let systemAlbum = AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
+                                                       count: 1, type: .gif, modificationTime: nil)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: systemAlbum, selection: selection )
+        
+        let exp = expectation(description: "Should set shouldShowEditStateOpaicity to 0.0")
+        exp.expectedFulfillmentCount = 2
+        
+        var result = [Double]()
+        
+        sut.$shouldShowEditStateOpacity
+            .dropFirst()
+            .sink {
+                result.append($0)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        selection.editMode = .active
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(result, [0.0, 0.0])
+    }
+    
+    func testOpacity_whenAlbumListEditingAndUserAlbum_shouldReturnRightValue() {
+        let selection = AlbumSelection()
+        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
+                                                       count: 1, type: .user, modificationTime: nil)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: userAlbum1, selection: selection)
+        
+        let exp = expectation(description: "Should set shouldShowEditStateOpacity to 1.0")
+        exp.expectedFulfillmentCount = 2
+        
+        var result = [Double]()
+        
+        sut.$opacity
+            .dropFirst()
+            .sink {
+                result.append($0)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        selection.editMode = .active
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(result, [1.0, 1.0])
+    }
+    
+    func testOpacity_whenAlbumListEditingAndSystemAlbum_shouldReturnRightValue() {
+        let selection = AlbumSelection()
+        let systemAlbum = AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
+                                                       count: 1, type: .gif, modificationTime: nil)
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(), album: systemAlbum, selection: selection)
+        
+        let exp = expectation(description: "Should set shouldShowEditStateOpacity to 0.5")
+        exp.expectedFulfillmentCount = 2
+        
+        var result = [Double]()
+        
+        sut.$opacity
+            .dropFirst()
+            .sink {
+                result.append($0)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        selection.editMode = .active
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(result, [1.0, 0.5])
     }
 }

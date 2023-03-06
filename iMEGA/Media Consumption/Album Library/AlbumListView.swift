@@ -7,22 +7,21 @@ struct AlbumListView: View {
     @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
     var router: AlbumListViewRouting
     
+    @State private var editMode: EditMode = .inactive
+    
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
                 LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 10) {
                     if viewModel.isCreateAlbumFeatureFlagEnabled {
                         CreateAlbumCell(viewModel: createAlbumCellViewModel)
-                            .onTapGesture {
-                                viewModel.showCreateAlbumAlert.toggle()
-                            }
+                            .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
+                            .onTapGesture { viewModel.onCreateAlbum() }
                     }
                     ForEach(viewModel.albums, id: \.self) { album in
-                        router.cell(album: album)
-                            .onTapGesture(count: 1)  {
-                                viewModel.album = album
-                            }
-                            .clipped()
+                        router.cell(album: album, selection: viewModel.selection)
+                        .clipped()
+                        .onTapGesture(count: 1) { viewModel.onAlbumTap(album) }
                     }
                 }
             }
@@ -50,6 +49,10 @@ struct AlbumListView: View {
             viewModel.cancelLoading()
         }
         .progressViewStyle(.circular)
+        .environment(\.editMode, $editMode)
+        .onReceive(viewModel.selection.$editMode) {
+            editMode = $0
+        }
     }
     
     @ViewBuilder
