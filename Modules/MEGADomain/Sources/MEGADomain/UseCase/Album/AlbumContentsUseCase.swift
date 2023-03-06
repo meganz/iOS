@@ -1,7 +1,7 @@
 import Combine
 
 public protocol AlbumContentsUseCaseProtocol {
-    func albumReloadPublisher(for type: AlbumEntityType) -> AnyPublisher<Void, Never>
+    func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
 }
 
@@ -23,10 +23,10 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     // MARK: Protocols
     
-    public func albumReloadPublisher(for type: AlbumEntityType) -> AnyPublisher<Void, Never> {
-        if type == .user {
+    public func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never> {
+        if album.type == .user {
             return userAlbumRepo.setElemetsUpdatedPublisher
-                .filter { $0.isNotEmpty }
+                .filter { $0.contains(where: { $0.ownerId == album.id }) }
                 .map { _ in ()}
                 .eraseToAnyPublisher()
                 .merge(with: albumContentsRepo.albumReloadPublisher)

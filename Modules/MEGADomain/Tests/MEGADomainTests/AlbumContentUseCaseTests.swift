@@ -81,8 +81,8 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let albumName = "New Album"
         
         let set = SetEntity(handle: albumId, userId: 1, coverId: handle1, modificationTime: Date(), name: albumName)
-        let element1 = SetElementEntity(handle: handle1, order: 1, nodeId: handle1, modificationTime: Date(), name: name1)
-        let element2 = SetElementEntity(handle: handle2, order: 2, nodeId: handle2, modificationTime: Date(), name: name2)
+        let element1 = SetElementEntity(handle: handle1, ownerId: albumId, order: 1, nodeId: handle1, modificationTime: Date(), name: name1)
+        let element2 = SetElementEntity(handle: handle2, ownerId: albumId, order: 2, nodeId: handle2, modificationTime: Date(), name: name2)
         
         let album = AlbumEntity(id: albumId, name: albumName, coverNode: NodeEntity(handle: 1), count: 1, type: .user)
         let node1 = NodeEntity(name: name1, handle: handle1, hasThumbnail: true)
@@ -110,15 +110,17 @@ final class AlbumContentUseCaseTests: XCTestCase {
             fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository(setElemetsUpdatedPublisher: setElemetsUpdatedPublisher.eraseToAnyPublisher())
         )
-        
+        let favouriteAlbum = AlbumEntity(id: 1, name: "Favourites", coverNode: nil,
+                                    count: 1, type: .favourite)
         let exp = expectation(description: "Should reload once")
-        sut.albumReloadPublisher(for: .favourite)
+        sut.albumReloadPublisher(forAlbum: favouriteAlbum)
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
         
         albumReloadPublisher.send()
-        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: favouriteAlbum.id,
+                                                          order: 1, nodeId: 1, modificationTime: Date(), name: "")])
         
         wait(for: [exp], timeout: 1.0)
     }
@@ -132,18 +134,21 @@ final class AlbumContentUseCaseTests: XCTestCase {
             fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository(setElemetsUpdatedPublisher: setElemetsUpdatedPublisher.eraseToAnyPublisher())
         )
-        
+        let albumId = HandleEntity(6)
+        let userAlbum = AlbumEntity(id: albumId, name: "Test", coverNode: nil,
+                                    count: 1, type: .user)
         let exp = expectation(description: "Should reload twice")
         exp.expectedFulfillmentCount = 2
         
-        sut.albumReloadPublisher(for: .user)
+        sut.albumReloadPublisher(forAlbum: userAlbum)
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
         
         albumReloadPublisher.send()
         setElemetsUpdatedPublisher.send([])
-        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: 2, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 2, ownerId: albumId, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
         
         wait(for: [exp], timeout: 1.0)
     }

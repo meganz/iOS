@@ -12,7 +12,7 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
         self.albumReloadPublisher = albumReloadPublisher
     }
     
-    public func albumReloadPublisher(for type: AlbumEntityType) -> AnyPublisher<Void, Never> {
+    public func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never> {
         albumReloadPublisher
     }
     

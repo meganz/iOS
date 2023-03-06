@@ -15,6 +15,7 @@ extension Array where Element: MEGASetElement {
 fileprivate extension SetElementEntity {
     init(setElement: MEGASetElement) {
         self.init(handle            :setElement.handle,
+                  ownerId           :setElement.ownerId,
                   order             :setElement.order,
                   nodeId            :setElement.nodeId,
                   modificationTime  :setElement.timestamp,

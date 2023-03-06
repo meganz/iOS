@@ -220,7 +220,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func setupSubscription() {
-        albumContentsUseCase.albumReloadPublisher(for: album.type)
+        albumContentsUseCase.albumReloadPublisher(forAlbum: album)
             .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
             .sink { [weak self] in
                 self?.reloadAlbum()

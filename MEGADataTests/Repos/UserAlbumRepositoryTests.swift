@@ -111,12 +111,14 @@ final class UserAlbumRepositoryTests: XCTestCase {
     }
     
     func testAlbumElement_onFinish_shouldReturnSetElement() async {
+        let albumId: UInt64 = 5
         let elementId: UInt64 = 3
-        let expected = MockMEGASetElement(handle: elementId, order: 4, nodeId: 1)
+        let expected = MockMEGASetElement(handle: elementId, ownerId: albumId,
+                                          order: 4, nodeId: 1)
         let sdk = MockSdk(megaSetElements: sampleSetElements() + [expected])
         let repo = UserAlbumRepository(sdk: sdk)
         
-        let albumElement = await repo.albumElement(by: 1, elementId: elementId)
+        let albumElement = await repo.albumElement(by: albumId, elementId: elementId)
         XCTAssertEqual(albumElement, expected.toSetElementEntity())
     }
     
@@ -162,8 +164,8 @@ final class UserAlbumRepositoryTests: XCTestCase {
     }
     
     private func sampleSetElements() -> [MockMEGASetElement] {
-        let setElement1 = MockMEGASetElement(handle: 1, order: 0, nodeId: 1)
-        let setElement2 = MockMEGASetElement(handle: 2, order: 0, nodeId: 2)
+        let setElement1 = MockMEGASetElement(handle: 1, ownerId: 3, order: 0, nodeId: 1)
+        let setElement2 = MockMEGASetElement(handle: 2, ownerId: 3, order: 0, nodeId: 2)
         
         return [setElement1,setElement2]
     }
