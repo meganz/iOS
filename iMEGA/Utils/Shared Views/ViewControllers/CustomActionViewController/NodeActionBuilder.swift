@@ -25,8 +25,6 @@ final class NodeActionBuilder {
     private var isTakedown = false
     private var isVerifyContact = false
     private var areMediaFiles = false
-    private var isMediaDiscovery = false
-    private var isPhotosTimeline = false
     private var sharedFolderContact: MEGAUser = MEGAUser()
     private var sharedFolderReceiverDetail = ""
 
@@ -160,16 +158,6 @@ final class NodeActionBuilder {
         return self
     }
     
-    func setIsMediaDiscovery(_ isMediaDiscovery: Bool) -> NodeActionBuilder {
-        self.isMediaDiscovery = isMediaDiscovery
-        return self
-    }
-    
-    func setIsPhotosTimeline(_ isPhotosTimeline: Bool) -> NodeActionBuilder {
-        self.isPhotosTimeline = isPhotosTimeline
-        return self
-    }
-    
     func build() -> [NodeAction] {
         var nodeActions = [NodeAction]()
         
@@ -187,6 +175,14 @@ final class NodeActionBuilder {
     }
     
     func multiselectBuild() -> [NodeAction] {
+        switch displayMode {
+        case .photosAlbum:
+            return normalAlbumActions()
+        case .photosFavouriteAlbum:
+            return favouriteAlbumActions()
+        default: break
+        }
+        
         switch nodeSelectionType {
         case .single:
             return []
@@ -197,14 +193,6 @@ final class NodeActionBuilder {
         case .filesAndFolders:
             return multiselectFoldersAndFilesActions()
         }
-    }
-    
-    func multiSelectFavouriteAlbumBuild() -> [NodeAction] {
-        favouriteAlbumActions()
-    }
-    
-    func multiSelectNormalAlbumBuild() -> [NodeAction] {
-        normalAlbumActions()
     }
     
     // MARK: - Private methods
@@ -404,10 +392,6 @@ final class NodeActionBuilder {
             }
             
             if !isBackupNode {
-                if displayMode == .favouriteAlbumSelectionToolBar {
-                    nodeActions.append(.favouriteAction(isFavourite: isFavourite))
-                }
-                
                 nodeActions.append(.labelAction(label: label))
             }
         }
@@ -453,7 +437,7 @@ final class NodeActionBuilder {
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
             
-        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor, .selectionToolBar: break
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor: break
             
         case .nodeVersions:
             nodeActions = nodeVersionsNodeActions()
@@ -463,12 +447,6 @@ final class NodeActionBuilder {
 
         case .backup:
             nodeActions = backupsNodeActions()
-            
-        case .favouriteAlbumSelectionToolBar:
-            nodeActions = favouriteAlbumActions()
-            
-        case .albumSelectionToolBar:
-            nodeActions = normalAlbumActions()
             
         @unknown default: break
         }
@@ -709,7 +687,7 @@ final class NodeActionBuilder {
                        .exportFileAction(nodeCount: selectedNodeCount),
                        .sendToChatAction()]
         
-        if areMediaFiles && !(displayMode == .favouriteAlbumSelectionToolBar || displayMode == .albumSelectionToolBar || isMediaDiscovery || isPhotosTimeline) {
+        if areMediaFiles && !(displayMode == .photosFavouriteAlbum || displayMode == .photosAlbum || displayMode == .mediaDiscovery || displayMode == .photosTimeline) {
             actions.append(.saveToPhotosAction())
         }
         

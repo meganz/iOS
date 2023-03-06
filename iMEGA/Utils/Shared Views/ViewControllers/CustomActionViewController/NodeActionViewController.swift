@@ -63,6 +63,39 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsBackupNode(isBackupNode)
             .build()
     }
+    
+    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
+        self.nodes = nodes
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        var selectionType: NodeSelectionType = .filesAndFolders
+        let fileNodes = nodes.filter { $0.isFile() }
+        if fileNodes.isEmpty {
+            selectionType = .folders
+        } else if fileNodes.count == nodes.count {
+            selectionType = .files
+        }
+        
+        let mediaUseCase = MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo, videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo))
+        let areMediaFiles = nodes.allSatisfy { mediaUseCase.isPlayableMediaFile($0.toNodeEntity()) }
+        
+        let nodesCount = nodes.count
+        let linkedNodeCount = nodes.publicLinkedNodes().count
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
+            .setLinkedNodeCount(linkedNodeCount)
+            .setIsAllLinkedNode(linkedNodeCount == nodesCount)
+            .setIsFavourite(displayMode == .photosFavouriteAlbum)
+            .setIsBackupNode(containsABackupNode)
+            .setAreMediaFiles(areMediaFiles)
+            .multiselectBuild()
+    }
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
@@ -95,55 +128,6 @@ class NodeActionViewController: ActionSheetViewController {
                           isBackupNode: isBackupNode,
                           sharedFolder: sharedFolder,
                           shouldShowVerifyContact: shouldShowVerifyContact)
-    }
-    
-    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, isMediaDiscovery: Bool = false, isPhotosTimeline: Bool = false, sender: Any) {
-        self.nodes = nodes
-        self.displayMode = displayMode
-        self.delegate = delegate
-        self.sender = sender
-        
-        super.init(nibName: nil, bundle: nil)
-        
-        configurePresentationStyle(from: sender)
-        
-        var selectionType: NodeSelectionType = .filesAndFolders
-        let fileNodes = nodes.filter { $0.isFile() }
-        if fileNodes.isEmpty {
-            selectionType = .folders
-        } else if fileNodes.count == nodes.count {
-            selectionType = .files
-        }
-        
-        let mediaUseCase = MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo, videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo))
-        let areMediaFiles = nodes.allSatisfy { mediaUseCase.isPlayableMediaFile($0.toNodeEntity()) }
-        
-        let nodesCount = nodes.count
-        if displayMode == .favouriteAlbumSelectionToolBar {
-            actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
-                .setIsFavourite(true)
-                .setIsBackupNode(containsABackupNode)
-                .setAreMediaFiles(areMediaFiles)
-                .multiSelectFavouriteAlbumBuild()
-        } else if displayMode == .albumSelectionToolBar {
-            actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
-                .setIsBackupNode(containsABackupNode)
-                .setAreMediaFiles(areMediaFiles)
-                .multiSelectNormalAlbumBuild()
-        } else {
-            let linkedNodeCount = nodes.publicLinkedNodes().count
-            actions = NodeActionBuilder()
-                .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
-                .setLinkedNodeCount(linkedNodeCount)
-                .setIsAllLinkedNode(linkedNodeCount == nodesCount)
-                .setIsBackupNode(containsABackupNode)
-                .setAreMediaFiles(areMediaFiles)
-                .setIsMediaDiscovery(isMediaDiscovery)
-                .setIsPhotosTimeline(isPhotosTimeline)
-                .multiselectBuild()
-        }
     }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, sender: Any) {

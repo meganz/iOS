@@ -130,8 +130,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
               !selectedNodes.isEmpty else {
             return
         }
-        
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: albumToolbarConfigurator?.albumType == .favourite ? .favouriteAlbumSelectionToolBar : .albumSelectionToolBar, sender: button)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: albumToolbarConfigurator?.albumType == .favourite ? .photosFavouriteAlbum : .photosAlbum, sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     

@@ -18,7 +18,8 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModePreviewDocument,
     DisplayModeTextEditor,
     DisplayModeBackup,
-    DisplayModeSelectionToolBar,
-    DisplayModeFavouriteAlbumSelectionToolBar,
-    DisplayModeAlbumSelectionToolBar
+    DisplayModeMediaDiscovery,
+    DisplayModePhotosFavouriteAlbum,
+    DisplayModePhotosAlbum,
+    DisplayModePhotosTimeline
 };

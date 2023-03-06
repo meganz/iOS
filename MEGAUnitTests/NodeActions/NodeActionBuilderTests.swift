@@ -1028,23 +1028,23 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectMediaFiles_albumSelectionToolbar() {
+    func testMultiselectMediaFiles_PhotosAlbum() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.albumSelectionToolBar)
             .setAreMediaFiles(true)
-            .multiSelectNormalAlbumBuild()
+            .setDisplayMode(.photosAlbum)
+            .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy]))
     }
     
-    func testMultiselectMediaFiles_favouriteAlbumSelectionToolbar() {
+    func testMultiselectMediaFiles_PhotosFavouriteAlbum() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.favouriteAlbumSelectionToolBar)
             .setIsFavourite(true)
             .setAreMediaFiles(true)
-            .multiSelectFavouriteAlbumBuild()
+            .setDisplayMode(.photosFavouriteAlbum)
+            .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .favourite, .copy, .moveToRubbishBin]))
     }
@@ -1053,7 +1053,7 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setAreMediaFiles(true)
-            .setIsPhotosTimeline(true)
+            .setDisplayMode(.photosTimeline)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
@@ -1063,7 +1063,7 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setAreMediaFiles(true)
-            .setIsMediaDiscovery(true)
+            .setDisplayMode(.mediaDiscovery)
             .multiselectBuild()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
