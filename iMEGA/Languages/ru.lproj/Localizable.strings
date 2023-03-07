@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Файлы отправлены в чат";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="Файлы успешно отправлены (%d)";
+"xfilesSentSuccesfully"="Файлы отправлены (%d)";
 /* Title show when a file is being downloaded */
 "downloading"="Скачивание";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Доступ к папке открыт";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="Вы поделились %d папками.";
+"sharedFolders_success"="Папки перемещены (%d)";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Импорт";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Остался один шаг перед удалением аккаунта. Все данные в облаке будут безвозвратно утрачены. Введите пароль.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Ваш аккаунт успешно удалён.";
+"accountCanceledSuccessfully"="Ваш аккаунт удалён";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Закрыть аккаунт";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Ключ восстановления будет использован для сброса пароля. Введите новый пароль.";
 /*  */
-"yourPasswordHasBeenReset"="Ваш пароль успешно сброшен. Пожалуйста, зайдите в свой аккаунт прямо сейчас.";
+"yourPasswordHasBeenReset"="Ваш пароль сброшен. Пожалуйста, зайдите в свой аккаунт прямо сейчас.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Отправить";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Создать новый аккаунт";
 /*  */
-"yourAccounHasBeenParked"="Ваш старый аккаунт успешно прекратил своё существование. Вы можете войти в новый аккаунт.";
+"yourAccounHasBeenParked"="Ваш старый аккаунт прекратил своё существование. Теперь вы можете войти в новый аккаунт.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Новый адрес электронной почты";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Сменить имя";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Профиль успешно изменён.";
+"youHaveSuccessfullyChangedYourProfile"="Профиль изменён";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Имя";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] был удалён из группового чата пользователем [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] покинул(а) групповой чат.";
+"leftTheGroupChat"="[A] покинул групповой чат";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] присоединился к групповому чату по приглашению пользователя [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Некоторыми элементами нельзя поделиться в MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Общий доступ предоставлен успешно";
+"Shared successfully"="Общие";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Пересылка не удалось:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Сообщения отправлены";
 /* Title of archived chats button */
-"archivedChats"="Архивные чаты";
+"archivedChats"="Архивировано";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="Вы действительно хотите архивировать этот разговор?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Вы действительно хотите разархивировать этот разговор?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Разархивировать чат";
+"unarchiveChat"="Разархивировать";
 /* Title of button to archive chats. */
-"archiveChat"="Архивировать чат";
+"archiveChat"="Архивировать";
 /* Title of flag of archived chats. */
 "archived"="Архивировано";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Нет архивных чатов";
+"noArchivedChats"="Нет архивных чатов или встреч";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Двухфакторная аутентификация";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ присоединился к вызову.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ покинул вызов.";
+"%@ left the call."="%@ покинул звонок";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Не получили код?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Ваш номер телефона был успешно подтверждён";
+"Your phone number has been verified successfully"="Ваш номер телефона подтверждён";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Ваш аккаунт был временно заблокирован для вашей безопасности.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Эта операция удалит ваш текущий номер телефона и начнёт привязку нового номера к аккаунту.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Номер телефона успешно удалён.";
+"Your phone number has been removed successfully."="Номер телефона удалён";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Не удалось удалить номер телефона, повторите попытку позже.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Помогите нам понять, как вы используете наши услуги, и предоставьте нам данные, которые мы можем использовать для улучшения. Непринятие этих файлов cookie будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Версия была успешно создана как новый файл.";
+"Version created as a new file successfully."="Версия была успешно как новый файл";
 /* Text shown for the action create new file */
 "Create new file"="Создать новый файл";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ присоединился";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ вышел";
+"meetings.notification.singleUserLeft"="%@ покинул звонок";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ и %@ присоединились";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ и %@ вышли";
+"meetings.notification.twoUsersLeft"="%@ и %@ покинули звонок";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ и ещё %@ присоединились";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ и ещё %@ вышли";
+"meetings.notification.moreThanTwoUsersLeft"="%@ и ещё %@ покинули звонок";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Переместить в Корзину";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Не удаётся подтвердить контакт";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете подтвердить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Gerando links…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copiado";
+"linkCopied"="O link foi copiado";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Links copiados";
+"linksCopied"="Os links foram copiados";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiado ao bloco de notas";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Arquivos enviados ao chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d arquivos foram enviados";
+"xfilesSentSuccesfully"="%d arquivos enviados";
 /* Title show when a file is being downloaded */
 "downloading"="Fazendo o download";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Pasta compartilhada";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d pastas compartilhadas corretamente.";
+"sharedFolders_success"="%d pastas compartilhadas";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importar";
 /* Message shown when a file has been imported */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="A sua chave de recuperação será usada para resetar a sua senha. Por favor, digite a sua nova senha.";
 /*  */
-"yourPasswordHasBeenReset"="A sua senha foi resetada corretamente. Por favor, faça login na sua conta agora.";
+"yourPasswordHasBeenReset"="A sua senha foi resetada. Por favor, faça login na sua conta.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Alterar nome";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Você mudou o seu perfil corretamente.";
+"youHaveSuccessfullyChangedYourProfile"="Você alterou o seu perfil";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nome";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] foi eliminado do grupo de chat por [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] saiu do grupo de chat.";
+"leftTheGroupChat"="[A] saiu do grupo de chat";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] juntou-se ao grupo de chat por convite de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="O histórico do chat foi deletado";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="Não foi possível deletar o histórico do chat";
+"An error has occurred. The chat history has not been successfully cleared"="Ocorreu um erro. O histórico do chat não foi deletado";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Não foi possível compartilhar alguns dos itens com o MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Compartilhado corretamente";
+"Shared successfully"="Compartilhar";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Falha na transferência:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Mensagens enviadas";
 /* Title of archived chats button */
-"archivedChats"="Chats arquivados";
+"archivedChats"="Arquivado";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="Você tem certeza de que quer arquivar este chat?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Você tem certeza de que quer deixar de arquivar este chat?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Deixar de arquivar chat";
+"unarchiveChat"="Deixar de arquivar";
 /* Title of button to archive chats. */
-"archiveChat"="Arquivar chat";
+"archiveChat"="Arquivo";
 /* Title of flag of archived chats. */
 "archived"="Arquivado";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Não há chats arquivados";
+"noArchivedChats"="Não há chats ou reuniões arquivados";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Autenticação de dois fatores";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ entrou na chamada.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ saiu da chamada.";
+"%@ left the call."="%@ saiu da chamada";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Não recebeu o código?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="O seu telefone foi confirmado corretamente";
+"Your phone number has been verified successfully"="O seu número de telefone foi verificado";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="A sua conta foi bloqueada temporalmente por motivos de segurança.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Esta operação removerá o seu número de telefone atual e iniciará o processo de associação de um novo número de telefone à sua conta.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="O seu número de telefone foi removido corretamente.";
+"Your phone number has been removed successfully."="O seu número de telefone foi removido";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Não foi possível ao remover o seu número de telefone, por favor, tente novamente mais tarde.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2391,7 +2391,7 @@
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Link copiado para a área de transferência";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Links copiados para a área de transferência";
+"Links Copied to Clipboard"="Links copiado para a área de transferência";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Chave copiada para a área de transferência";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ entrou";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ saiu";
+"meetings.notification.singleUserLeft"="%@ saiu da chamada";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ e %@ entraram";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ e %@ saíram";
+"meetings.notification.twoUsersLeft"="%@ e %@ saíram da chamada ";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ e outros %@ entraram";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ e outros %@ saíram";
+"meetings.notification.moreThanTwoUsersLeft"="%@ e outros %@ saíram da chamada";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Mover para a Lixeira";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3177,7 +3177,7 @@
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Suas credenciais";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
-"sharedItems.tab.incoming.undecryptedFolderName"="[Pasta não criptografada]";
+"sharedItems.tab.incoming.undecryptedFolderName"="[Pasta não decodificada]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
 "sharedItems.tab.outgoing.sharedToContact"="Compartilhado com %@";
 /* Chat Listing - row description for the created meeting */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Não foi possível verificar o contato";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Você não pode verificar %@ porque ele não está na sua lista de contatos. Espere que ele aceite o seu convite.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
