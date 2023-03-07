@@ -644,9 +644,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testDocumentPreviewPdfPageViewLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .setIsLink(true)
             .build()
         
@@ -658,7 +657,6 @@ class NodeActionBuilderTests: XCTestCase {
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsLink(true)
-            .setIsPageView(false)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
@@ -683,9 +681,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdfPageViewDocument() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfThumbnailView]))
@@ -693,9 +690,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdfPageViewDocumentLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .setIsLink(true)
             .build()
         
@@ -704,9 +700,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdfPageViewDocumentOwner() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .setAccessLevel(.accessOwner)
             .build()
         
@@ -717,7 +712,6 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
-            .setIsPageView(false)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView]))
@@ -727,7 +721,6 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
-            .setIsPageView(false)
             .setIsLink(true)
             .build()
         
@@ -738,7 +731,6 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
-            .setIsPageView(false)
             .setAccessLevel(.accessOwner)
             .build()
         
