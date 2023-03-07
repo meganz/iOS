@@ -238,6 +238,8 @@
 		32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */; };
 		32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */; };
 		32D167EC294C555F008C5ED6 /* CreateAlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */; };
+		32EC27C429B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */; };
+		32EC27C629B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27C529B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift */; };
 		32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */; };
 		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
 		32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */; };
@@ -2911,6 +2913,8 @@
 		32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSlideShowDataSource.swift; sourceTree = "<group>"; };
 		32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlbumCell.swift; sourceTree = "<group>"; };
 		32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlbumCellViewModel.swift; sourceTree = "<group>"; };
+		32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerToolbarProvider.swift; sourceTree = "<group>"; };
+		32EC27C529B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerToolbarConfiguration.swift; sourceTree = "<group>"; };
 		32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModelTests.swift; sourceTree = "<group>"; };
 		32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
 		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -5506,6 +5510,8 @@
 				12397E2B2820C75900A30CCC /* PhotosPageViewController.swift */,
 				12397E2D2820C79100A30CCC /* PhotoAlbumViewController+PageViewController.swift */,
 				3282013D29AC431200C0E841 /* PhotoAlbumContainerViewController+ContextMenu.swift */,
+				32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */,
+				32EC27C529B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift */,
 			);
 			path = PhotoAlbum;
 			sourceTree = "<group>";
@@ -13557,6 +13563,7 @@
 				B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */,
 				B662B88D24FC3F990089376A /* RegionListSource.swift in Sources */,
 				3288949228EBF77A00F4BF63 /* SlideShowDataSource.swift in Sources */,
+				32EC27C429B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
 				5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
@@ -13627,6 +13634,7 @@
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
 				B6D7FB1A2762A534003D9570 /* PhotoCardViewModel.swift in Sources */,
 				B65AC8E421F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m in Sources */,
+				32EC27C629B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */,

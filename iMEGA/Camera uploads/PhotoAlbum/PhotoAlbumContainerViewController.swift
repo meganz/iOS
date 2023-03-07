@@ -2,10 +2,14 @@ import UIKit
 import SwiftUI
 import Combine
 import MEGADomain
+import MEGAUIKit
 
-final class PhotoAlbumContainerViewController: UIViewController {
+final class PhotoAlbumContainerViewController: UIViewController, TraitEnviromentAware {
     var photoViewController: PhotosViewController?
     var numberOfPages: Int = PhotoLibraryTab.allCases.count
+    
+    lazy var toolbar = UIToolbar()
+    var albumToolbarConfigurator: PhotoAlbumContainerToolbarConfiguration?
     
     override var isEditing: Bool {
         willSet {
@@ -88,6 +92,24 @@ final class PhotoAlbumContainerViewController: UIViewController {
     
     func isTimelineActive() -> Bool {
         pageTabViewModel.selectedTab == .timeline
+    }
+    
+    // MARK: - TraitEnviromentAware
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            if pageTabViewModel.selectedTab == .album {
+                updateBarButtons()
+            }
+        }
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        if pageTabViewModel.selectedTab == .album {
+            AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
+        }
     }
     
     // MARK: - Private
