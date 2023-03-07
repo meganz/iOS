@@ -687,7 +687,7 @@ final class NodeActionBuilder {
                        .exportFileAction(nodeCount: selectedNodeCount),
                        .sendToChatAction()]
         
-        if areMediaFiles && !(displayMode == .photosFavouriteAlbum || displayMode == .photosAlbum || displayMode == .mediaDiscovery || displayMode == .photosTimeline) {
+        if areMediaFiles {
             actions.append(.saveToPhotosAction())
         }
         
@@ -724,6 +724,7 @@ final class NodeActionBuilder {
          .shareLinkAction(nodeCount: selectedNodeCount),
          .exportFileAction(nodeCount: selectedNodeCount),
          .sendToChatAction(),
+         .saveToPhotosAction(),
          .favouriteAction(isFavourite: isFavourite),
          .copyAction(),
          .moveToRubbishBinAction()]
@@ -734,8 +735,9 @@ final class NodeActionBuilder {
          .shareLinkAction(nodeCount: selectedNodeCount),
          .exportFileAction(nodeCount: selectedNodeCount),
          .sendToChatAction(),
+         .saveToPhotosAction(),
          .moveAction(),
-         .copyAction(),]
+         .copyAction()]
     }
     
     private func takedownNodeActions() -> [NodeAction] {

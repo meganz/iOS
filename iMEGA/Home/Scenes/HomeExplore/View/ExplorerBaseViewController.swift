@@ -110,6 +110,26 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
+    fileprivate func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            }
+            
+            endEditingMode()
+        }
+    }
+    
     fileprivate func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
@@ -269,6 +289,8 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             didPressedSendToChat(sender)
         case .removeLink:
             handleRemoveLinks(for: nodes)
+        case .saveToPhotos:
+            saveToPhotosButtonPressed(sender)
         default:
             break
         }
