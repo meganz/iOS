@@ -7,11 +7,11 @@ public struct MockTransferRepository: TransferRepositoryProtocol {
         MockTransferRepository()
     }
     
-    public func download(node: NodeEntity, to localUrl: URL) async throws -> TransferEntity {
-        TransferEntity(type: .download, path: localUrl.path, nodeHandle: node.handle)
+    public func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)? = nil, progressHandler: ((TransferEntity) -> Void)? = nil) async throws -> TransferEntity {
+        TransferEntity(type: .upload, path: fileUrl.path, parentHandle: parent.handle)
     }
     
-    public func uploadFile(at fileUrl: URL, to parent: NodeEntity) async throws -> TransferEntity {
-        TransferEntity(type: .upload, path: fileUrl.path, parentHandle: parent.handle)
+    public func download(node: NodeEntity, to localUrl: URL, startHandler: ((TransferEntity) -> Void)? = nil, progressHandler: ((TransferEntity) -> Void)? = nil) async throws -> TransferEntity {
+        TransferEntity(type: .download, path: localUrl.path, nodeHandle: node.handle)
     }
 }

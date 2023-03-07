@@ -71,7 +71,11 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
             case .success(let pathContent):
                 for filename in pathContent {
                     if filename.contains("megaclient") || filename.contains("karere") {
-                        fileManager.mnz_removeItem(atPath: url.appendingPathComponent(filename).path)
+                        do {
+                            try fileManager.removeItem(at: url.appendingPathComponent(filename))
+                        } catch {
+                            MEGALogError("Failed remove item: \(error)");
+                        }
                     }
                 }
                 completion(.success(()))
