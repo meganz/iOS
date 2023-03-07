@@ -5,18 +5,23 @@ import MEGADomain
 
 // MARK: - Context Menu
 extension PhotoAlbumContainerViewController {
-    @objc func toggleEditing(sender: UIBarButtonItem) {
-        isEditing = !isEditing
-        viewModel.editMode = isEditing ? .active : .inactive
-        
+    func updateBarButtons() {
         if isEditing {
             navigationItem.setRightBarButton(cancelBarButton, animated: true)
             leftBarButton = navigationItem.leftBarButtonItem
             navigationItem.setLeftBarButton(nil, animated: true)
+            showToolbar()
         } else {
             navigationItem.setRightBarButton(selectBarButton, animated: true)
             navigationItem.setLeftBarButton(leftBarButton, animated: true)
+            hideToolbar()
         }
+    }
+    
+    @objc func toggleEditing(sender: UIBarButtonItem) {
+        isEditing = !isEditing
+        viewModel.editMode = isEditing ? .active : .inactive
+        updateBarButtons()
     }
     
     var selectBarButton: UIBarButtonItem {
@@ -24,7 +29,9 @@ extension PhotoAlbumContainerViewController {
     }
     
     var cancelBarButton: UIBarButtonItem {
-        UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(toggleEditing))
+        let cancelBarButton = UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(toggleEditing))
+        cancelBarButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+        return cancelBarButton
     }
     
     func updateRightBarButton() {
