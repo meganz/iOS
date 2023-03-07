@@ -1,4 +1,0 @@
-
-@interface DocumentPickerViewController : UIDocumentPickerExtensionViewController
-
-@end

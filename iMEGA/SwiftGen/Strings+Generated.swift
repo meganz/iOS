@@ -4849,6 +4849,16 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "photo.navigation.title")
       }
     }
+    public enum Picker {
+      public enum Disable {
+        public enum Passcode {
+          /// To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.
+          public static let description = Strings.tr("Localizable", "picker.disable.passcode.description")
+          /// Disable MEGA passcode
+          public static let title = Strings.tr("Localizable", "picker.disable.passcode.title")
+        }
+      }
+    }
     public enum Recents {
       public enum EmptyState {
         public enum ActivityHidden {
