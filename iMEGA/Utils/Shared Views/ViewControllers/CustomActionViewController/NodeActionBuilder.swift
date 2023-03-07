@@ -10,7 +10,6 @@ final class NodeActionBuilder {
     private var isRestorable = false
     private var isPdf = false
     private var isLink = false
-    private var isPageView = true
     private var isIncomingShareChildView = false
     private var isExported = false
     private var linkedNodeCount = 0
@@ -80,11 +79,6 @@ final class NodeActionBuilder {
     
     func setIsLink(_ isLink: Bool) -> NodeActionBuilder {
         self.isLink = isLink
-        return self
-    }
-    
-    func setIsPageView(_ isPageView: Bool) -> NodeActionBuilder {
-        self.isPageView = isPageView
         return self
     }
     
@@ -279,7 +273,7 @@ final class NodeActionBuilder {
         nodeActions.append(.sendToChatAction())
         if isPdf {
             nodeActions.append(.searchAction())
-            if isPageView {
+            if displayMode == .previewPdfPage {
                 nodeActions.append(.pdfThumbnailViewAction())
             } else {
                 nodeActions.append(.pdfPageViewAction())
@@ -437,7 +431,7 @@ final class NodeActionBuilder {
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
             
-        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery: break
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .previewPdfPage, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery: break
             
         case .nodeVersions:
             nodeActions = nodeVersionsNodeActions()
@@ -470,7 +464,7 @@ final class NodeActionBuilder {
             return transfersFailedNodeActions()
         case .chatSharedFiles, .chatAttachment:
             return chatNodeActions()
-        case .previewDocument:
+        case .previewDocument, .previewPdfPage:
             return previewDocumentNodeActions()
         case .textEditor:
             return textEditorActions()

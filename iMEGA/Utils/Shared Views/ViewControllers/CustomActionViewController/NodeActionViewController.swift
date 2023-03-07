@@ -164,7 +164,7 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, isPageView: Bool = true, displayMode: DisplayMode = .previewDocument, isInVersionsView: Bool = false, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, displayMode: DisplayMode, isInVersionsView: Bool = false, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -178,7 +178,6 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(self.displayMode)
             .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
             .setIsLink(isLink)
-            .setIsPageView(isPageView)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
             .setVersionCount(node.mnz_numberOfVersions())
