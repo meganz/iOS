@@ -3,6 +3,7 @@ import Combine
 public protocol AlbumContentsUseCaseProtocol {
     func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
+    func userAlbumNodes(by id: HandleEntity) async -> [NodeEntity]
 }
 
 public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
@@ -39,7 +40,23 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         if album.systemAlbum {
             return try await filter(forAlbum: album)
         } else {
-            return await userAlbumContent(by: album.id)
+            return await userAlbumNodes(by: album.id)
+        }
+    }
+    
+    public func userAlbumNodes(by id: HandleEntity) async -> [NodeEntity] {
+        await withTaskGroup(of: NodeEntity?.self) { group in
+            let nodeIds = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
+                .map { $0.nodeId }
+            nodeIds.forEach { handle in
+                group.addTask { [weak self] in
+                    await self?.fileSearchRepo.node(by: handle)
+                }
+            }
+            
+            return await group.reduce(into: [NodeEntity](), {
+                if let node = $1 { $0.append(node) }
+            })
         }
     }
     
@@ -61,21 +78,5 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         }
         
         return nodes
-    }
-    
-    private func userAlbumContent(by id: HandleEntity) async -> [NodeEntity] {
-        await withTaskGroup(of: NodeEntity?.self) { group in
-            let nodeIds = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
-                .map { $0.nodeId }
-            nodeIds.forEach { handle in
-                group.addTask { [weak self] in
-                    await self?.fileSearchRepo.node(by: handle)
-                }
-            }
-            
-            return await group.reduce(into: [NodeEntity](), {
-                if let node = $1 { $0.append(node) }
-            })
-        }
     }
 }

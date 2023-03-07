@@ -27,13 +27,20 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     @MainActor
     func build() -> UIViewController {
         let filesSearchRepo = FilesSearchRepository.newRepo
+        let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
+        let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
+        let userAlbumRepo = UserAlbumRepository.newRepo
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
                 albumRepository: AlbumRepository.newRepo,
-                userAlbumRepository: UserAlbumRepository.newRepo,
+                userAlbumRepository: userAlbumRepo,
                 fileSearchRepository: filesSearchRepo,
-                mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
-                albumContentsUpdateRepository: AlbumContentsUpdateNotifierRepository.newRepo
+                mediaUseCase: mediaUseCase,
+                albumContentsUpdateRepository: albumContentsUpdatesRepo,
+                albumContentsUseCase: AlbumContentsUseCase(albumContentsRepo: albumContentsUpdatesRepo,
+                                                           mediaUseCase: mediaUseCase,
+                                                           fileSearchRepo: filesSearchRepo,
+                                                           userAlbumRepo: userAlbumRepo)
             ), alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,

@@ -152,4 +152,30 @@ final class AlbumContentUseCaseTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func testUserAlbumNodes_onAlbumContentLoaded_shouldReturnNodes() async {
+        let albumId: HandleEntity = 5
+        let handle1 = HandleEntity(1)
+        let handle2 = HandleEntity(2)
+        let element1 = SetElementEntity(handle: handle1, ownerId: albumId,
+                                        order: 1, nodeId: handle1, modificationTime: Date(), name: "")
+        let element2 = SetElementEntity(handle: handle2, ownerId: albumId,
+                                        order: 2, nodeId: handle2, modificationTime: Date(), name: "")
+        let setElements = [element1, element2]
+        let contents = [
+            NodeEntity(name: "Test.jpg", handle: handle1),
+            NodeEntity(name: "Test2.png", handle: handle2)
+        ]
+        let userAlbumRepo = MockUserAlbumRepository(albumContent: [albumId: setElements])
+        
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            mediaUseCase: MockMediaUseCase(isGifImage: true),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: contents),
+            userAlbumRepo: userAlbumRepo
+        )
+        
+        let result = await sut.userAlbumNodes(by: albumId)
+        XCTAssertEqual(result, contents)
+    }
 }

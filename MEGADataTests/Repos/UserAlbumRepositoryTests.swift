@@ -8,21 +8,12 @@ final class UserAlbumRepositoryTests: XCTestCase {
     
     func testLoadingAlbums_onRetrieved_shouldReturnAlbums() async throws {
         let megaSets = sampleSets()
-        let megaSetCounts: [MEGAHandle: UInt] = Dictionary(uniqueKeysWithValues: megaSets.map {
-            ($0.handle, UInt.random(in: 0...100))
-        })
-        let expectedSets = megaSets.toSetEntities()
-            .map {
-                var set = $0
-                set.size = megaSetCounts[set.handle] ?? 0
-                return set
-            }
-        let sdk = MockSdk(megaSets:megaSets, megaSetElementCounts: megaSetCounts)
+        let sdk = MockSdk(megaSets:megaSets)
         let repo = UserAlbumRepository(sdk: sdk)
         
         let sets = await repo.albums()
         
-        XCTAssertEqual(sets, expectedSets)
+        XCTAssertEqual(sets, megaSets.toSetEntities())
     }
     
     func testLoadingAlbumContent_onRetrieved_shouldReturnAlbumElements() async throws {
