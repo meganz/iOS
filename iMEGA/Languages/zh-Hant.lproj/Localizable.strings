@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="檔案已發送至對話中";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="已成功發送%d個檔案";
+"xfilesSentSuccesfully"="已發送%d個檔案";
 /* Title show when a file is being downloaded */
 "downloading"="下載中";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="資料夾已共享";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="已成功共享 %d 個資料夾。";
+"sharedFolders_success"="已共享%d個資料夾";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="匯入";
 /* Message shown when a file has been imported */
@@ -603,7 +603,7 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="共享";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="傳入的";
+"incoming"="傳入";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="傳出";
 /* Text shown to explain with how many contacts you have shared a folder */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="這是刪除帳戶的最後步驟。您將永久遺失儲存在雲端空間中的所有資料。請於下方輸入您的密碼。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="您的帳號已成功刪除。";
+"accountCanceledSuccessfully"="您的帳戶已被刪除";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="關閉帳戶";
 /* Title for the action that allows to remove a file or folder */
@@ -907,17 +907,17 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="還原金鑰將被用於重設您的密碼。請輸入您的新密碼。";
 /*  */
-"yourPasswordHasBeenReset"="您的密碼已成功重設。請即登入測試。";
+"yourPasswordHasBeenReset"="您的密碼已重置。請立即登入您的帳戶。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="停用帳號";
+"parkAccount"="封存帳號";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="我已瞭解我正在重新註冊一個全新且空白的帳戶。除非我能想起原本的密碼，或者找到之前匯出的還原金鑰，否則我將失去我現在帳戶中的所有資料。";
 /* Caption of the button to proceed */
 "startNewAccount"="開始建立新帳號";
 /*  */
-"yourAccounHasBeenParked"="您的舊帳號已成功停用。現在可登入您的新帳號。";
+"yourAccounHasBeenParked"="您的舊帳戶已封存。您現在可以登入您的新帳戶。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="更改名稱";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人資料。";
+"youHaveSuccessfullyChangedYourProfile"="您已更改您的個人資料";
 /* Hint text for the first name (Placeholder) */
 "firstName"="名字";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[B]已將[A]從此群組對話中移除。";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A]已離開此群組。";
+"leftTheGroupChat"="[A]離開群組對話";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A]接受[B]的邀請，已加入此群組對話。";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="對話紀錄已清空";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="發生錯誤。對話記錄尚未成功清除。";
+"An error has occurred. The chat history has not been successfully cleared"="發生錯誤。對話記錄未被清除";
 /* 'Next' button in a dialog */
 "continue"="繼續";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些項目無法與MEGA共享";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="共享成功";
+"Shared successfully"="已共享";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="傳輸失敗：";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="訊息已送出";
 /* Title of archived chats button */
-"archivedChats"="已封存的對話";
+"archivedChats"="已封存";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="您確定要封存這個對話嗎？";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="您確定要解除封存此對話嗎？";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="解除封存對話";
+"unarchiveChat"="未封存";
 /* Title of button to archive chats. */
-"archiveChat"="封存對話";
+"archiveChat"="封存";
 /* Title of flag of archived chats. */
 "archived"="已封存";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="沒有封存的對話";
+"noArchivedChats"="沒有已封存的對話或會議";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="雙重驗證";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@加入通話。";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@離開通話。";
+"%@ left the call."="%@離開通話";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="有一個進行中的群組通話。點擊即可加入。";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="沒有收到驗證碼嗎？";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="您的手機號碼已成功驗證";
+"Your phone number has been verified successfully"="您的手機號碼已通過驗證";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="為了安全起見，您的帳戶已暫時被封鎖。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="此操作將移除您目前的手機號碼並開始進行將新的號碼與您的帳戶做連結。";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="您的手機號碼已成功移除。";
+"Your phone number has been removed successfully."="您的手機號碼已被刪除";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="無法移除您的手機號碼，請稍後再試。";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2389,9 +2389,9 @@
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="選項如個別發送解密金鑰、到期日期或密碼設定只適用於單個項目。";
 /* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="連結已複製到剪貼簿";
+"Link Copied to Clipboard"="已複製連結到剪貼簿";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="連結已複製到剪貼簿";
+"Links Copied to Clipboard"="已複製連結到剪貼簿";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="金鑰已複製到剪貼簿";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="協助我們瞭解您如何使用我們的服務，並提供我們可用來改進的資訊。不接受這些Cookies將意謂著我們將缺少可用來幫助我們改進設計的資訊。";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="已成功的以此版本建立新檔案。";
+"Version created as a new file successfully."="該版本以新檔案建立";
 /* Text shown for the action create new file */
 "Create new file"="建立新檔案";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@已加入";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@已離開";
+"meetings.notification.singleUserLeft"="%@離開通話";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@和%@已加入";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@和%@已離開";
+"meetings.notification.twoUsersLeft"="%@和%@離開通話";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@和其他%@人已加入";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@和其他%@人已離開";
+"meetings.notification.moreThanTwoUsersLeft"="%@和其他%@個人離開通話";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="移至垃圾筒";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3257,7 +3257,7 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][StartDate]起[WeekDay][/B]的[B][StartTime]到[EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="[B][StartDate][/B]起，每天的[B][StartTime]到[EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="從[B][StartDate][/B]起，每天的[B][StartTime]到[EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="從[B][StartDate]到[UntilDate][/B]，每天的[B][StartTime]到[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="無法驗證聯絡人";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="您無法驗證%@，因為他們不在您的聯絡人列表中。請先等待他們接受您的邀請。";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

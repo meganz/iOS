@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="リンクを作成中…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="リンクがコピーされました";
+"linkCopied"="リンクをコピーしました";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="リンクがコピーされました";
+"linksCopied"="リンクをコピーしました";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="クリップボードにコピーされました";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="ファイルがチャットに送信されました";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%dファイルが正常に送信されました";
+"xfilesSentSuccesfully"="%d個のファイルが送信されました";
 /* Title show when a file is being downloaded */
 "downloading"="ダウンロード中";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="フォルダを共有しました";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d個のフォルダが正常に共有されました。";
+"sharedFolders_success"="%d個のフォルダが共有されました";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="インポート";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="これはあなたのアカウントを削除する最後のステップです。クラウドに保存されているデータはすべて完全に失われます。以下にパスワードを入力してください。";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="アカウントは正常に削除されました。";
+"accountCanceledSuccessfully"="あなたのアカウントは削除されました";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="アカウントを閉じる";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="あなたの回復キーは、パスワードのリセットに使用されます。あなたの新しいパスワードを入力してください。";
 /*  */
-"yourPasswordHasBeenReset"="パスワードが正常にリセットされました。アカウントにログインしてください。";
+"yourPasswordHasBeenReset"="あなたのパスワードはリセットされました。今すぐアカウントにログインしてください。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送信";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="新しいアカウントを開く";
 /*  */
-"yourAccounHasBeenParked"="古いアカウントは放置されていますので、新しいアカウントにログインできます。";
+"yourAccounHasBeenParked"="あなたの古いアカウントは放置されていましたが、新しいアカウントにログインできるようになりました。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新しいメールアドレス";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="名前の変更";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="プロファイルが正常に変更されました。";
+"youHaveSuccessfullyChangedYourProfile"="プロフィールを変更しました";
 /* Hint text for the first name (Placeholder) */
 "firstName"="名前";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A]さんは[B]さんによってグループチャットから削除されました。";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] さんがグループチャットから退出しました。";
+"leftTheGroupChat"="[A]さんがグループチャットから退出しました";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A]さんは[B]さんからの招待によってグループチャットに参加しました。";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="チャット履歴がクリアされました";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="エラーが発生しました。チャット履歴が正常にクリアされませんでした";
+"An error has occurred. The chat history has not been successfully cleared"="エラーが発生しました。チャット履歴がクリアされませんでした";
 /* 'Next' button in a dialog */
 "continue"="続ける";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="一部の項目はMEGAと共有できませんでした";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="正常に共有されました";
+"Shared successfully"="共有済み";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="転送に失敗しました：";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="メッセージが送信されました";
 /* Title of archived chats button */
-"archivedChats"="アーカイブされたチャット";
+"archivedChats"="アーカイブ済み";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="この会話をアーカイブしてもよろしいですか？";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="この会話のアーカイブを解除してもよろしいですか？";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="チャットのアーカイブを解除";
+"unarchiveChat"="アーカイブを解除";
 /* Title of button to archive chats. */
-"archiveChat"="チャットをアーカイブ";
+"archiveChat"="アーカイブ";
 /* Title of flag of archived chats. */
 "archived"="アーカイブ済み";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="アーカイブされたチャットはありません";
+"noArchivedChats"="No archived chats or meetings";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="二要素認証";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@さんが通話に参加しました。";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@さんが通話から抜けました。";
+"%@ left the call."="%@さんが通話から抜けました";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="コードを受信しませんでしたか？";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="お使いの電話番号が正常に検証されました";
+"Your phone number has been verified successfully"="あなたの電話番号が認証されました";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="あなたのアカウントは一時的に安全を確保するためにロックされました。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="この操作により、現在の電話番号が削除され、新しい電話番号をアカウントに関連付けるプロセスが開始されます。";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="お使いの電話番号が正常に削除されました。";
+"Your phone number has been removed successfully."="あなたの電話番号が削除されました";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="電話番号を削除できませんでした。しばらくしてからもう一度お試しください。";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2389,9 +2389,9 @@
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="「復号キーを個別に送信」、「有効期限の設定」、または「パスワードの設定」などのオプションは、単一の項目でのみ使用できます。";
 /* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="リンクがクリップボードにコピーされました";
+"Link Copied to Clipboard"="リンクをクリップボードにコピーしました";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="リンクがクリップボードにコピーされました";
+"Links Copied to Clipboard"="リンクをクリップボードにコピーしました";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="キーがクリップボードにコピーされました";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="お客様が当社サービスをどのようにご使用になられているのかを理解し、改善に使用できるデータをご提供いただくのに役立つクッキーです。これらのクッキーを受け入れない場合、当社が設計を改善するのに役立つデータが少なくなります。";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="バージョンは新しいファイルとして正常に作成されました。";
+"Version created as a new file successfully."="バージョンは新しいファイルとして作成されました";
 /* Text shown for the action create new file */
 "Create new file"="新規ファイルを作成";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@さんが参加しました";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@さんが抜けました";
+"meetings.notification.singleUserLeft"="%@さんが通話から抜けました";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@さんと%@さんが参加しました";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@さんと%@さんが抜けました";
+"meetings.notification.twoUsersLeft"="%@さんと%@さんが通話から抜けました";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@さんとその他%@人の方々が参加しました";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@さんとその他%@人の方々が抜けました";
+"meetings.notification.moreThanTwoUsersLeft"="%@さんとその他%@人の方々が通話から抜けました";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="ごみ箱に移す";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="連絡先を認証できません";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="連絡先リストにないため、%@を認証できません。相手側が最初にあなたの招待を受け入れるのを待ちます。";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

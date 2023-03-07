@@ -81,7 +81,7 @@
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et retoucher ensuite le lien de confirmation.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Connexion";
+"login"="Me connecter";
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Avez-vous déjà un compte ?";
 /* Button title which triggers the action to create a MEGA account */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Les fichiers ont été envoyés vers la conversation";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d fichiers ont été envoyés avec succès";
+"xfilesSentSuccesfully"="%d fichiers ont été envoyés";
 /* Title show when a file is being downloaded */
 "downloading"="Téléchargement en cours";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -443,11 +443,11 @@
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 fichier a été copié";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d fichiers ont été copiés";
+"copyFilesMessage"="%d fichiers ont été copiés";
 /* Success message shown when you have copied 1 folder */
 "copyFolderMessage"="1 dossier a été copié";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d dossiers ont été copiés";
+"copyFoldersMessage"="%d  dossiers ont été copiés";
 /* Success message shown when you have copied 1 file and 1 folder */
 "copyFileFolderMessage"="1 fichier et 1 dossier ont été copiés";
 /* Success message shown when you have copied 1 file and {1+} folders */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Le dossier a été partagé";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d dossiers ont été partagés avec succès.";
+"sharedFolders_success"="%d dossiers sont partagés";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importer";
 /* Message shown when a file has been imported */
@@ -611,9 +611,9 @@
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Les droits ont été changés";
 /* Message shown when a share has been left */
-"shareLeft"="Le partage a été quitté";
+"shareLeft"="Vous avez quitté le partage";
 /* Message shown when some shares have been left */
-"sharesLeft"="Les partages ont été quittés";
+"sharesLeft"="Vous avez quitté les partages";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Supprimer le partage";
 /* The text in the button to remove all contacts to a shared folder on one click */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour supprimer votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Votre compte a été supprimé avec succès.";
+"accountCanceledSuccessfully"="Votre compte a été supprimé";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Fermer le compte";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Votre Clé de récupération sera utilisée pour réinitialiser votre mot de passe. Veuillez saisir votre nouveau mot de passe.";
 /*  */
-"yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé avec succès. Veuillez maintenant vous connecter à votre compte.";
+"yourPasswordHasBeenReset"="Votre mot de passe a été réinitialisé. Veuillez maintenant vous connecter à votre compte.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Envoyer";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Commencer un nouveau compte";
 /*  */
-"yourAccounHasBeenParked"="Votre ancien compte a été remisé avec succès. Vous pouvez maintenant vous connecter à votre nouveau compte.";
+"yourAccounHasBeenParked"="Votre ancien compte a été remisé. Vous pouvez maintenant vous connecter à votre nouveau compte.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nouvelle adresse courriel";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Modifier le nom";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Vous avez modifié votre profil avec succès.";
+"youHaveSuccessfullyChangedYourProfile"="Vous avez modifié votre profil";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Prénom";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] a été exclu de la conversation de groupe par [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] a quitté la conversation de groupe.";
+"leftTheGroupChat"="[A] a quitté la conversation de groupe";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] s’est joint à la conversation de groupe sur invitation de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="L’historique de la conversation a été effacé";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="Une erreur est survenue. L’historique de la conversation n’a pas été effacé avec succès";
+"An error has occurred. The chat history has not been successfully cleared"="Une erreur est survenue. L’historique de la conversation n’a pas été effacé";
 /* 'Next' button in a dialog */
 "continue"="Poursuivre";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Certains éléments n’ont pas pu être partagés avec MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="A été partagé avec succès";
+"Shared successfully"="Partagés";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Échec de transfert :";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Le message a été envoyé";
 /* Title of archived chats button */
-"archivedChats"="Conversations archivées";
+"archivedChats"="Archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="Voulez-vous vraiment archiver cette conversation ?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Voulez-vous vraiment désarchiver cette conversation ?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Désarchiver la conversation";
+"unarchiveChat"="Désarchiver";
 /* Title of button to archive chats. */
-"archiveChat"="Archiver la conversation";
+"archiveChat"="Archiver";
 /* Title of flag of archived chats. */
-"archived"="Archivée";
+"archived"="Archivées";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Aucune conversation n’est archivée";
+"noArchivedChats"="Aucune conversation ou réunion archivée";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Authentification à deux facteurs";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ s’est joint à l’appel.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ a quitté l’appel.";
+"%@ left the call."="%@ a quitté l’appel";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Un appel de groupe est actif. Touchez pour vous y joindre.";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="N’avez-vous pas reçu un code ?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Votre numéro de téléphone a été confirmé avec succès";
+"Your phone number has been verified successfully"="Votre numéro de téléphone a été confirmé";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Votre compte a temporairement été verrouillé pour votre sécurité.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Cette opération supprimera votre numéro de téléphone actuel et lancera le processus d’association d’un nouveau numéro de téléphone à votre compte.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Votre numéro de téléphone a été supprimé avec succès.";
+"Your phone number has been removed successfully."="Votre numéro de téléphone a été supprimé";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Échec de suppression de votre numéro de téléphone, veuillez réessayer ultérieurement.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="La version a été créée avec succès en tant que nouveau fichier.";
+"Version created as a new file successfully."="La version a été créée en tant que nouveau fichier";
 /* Text shown for the action create new file */
 "Create new file"="Créer un nouveau fichier";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Impossible de vérifier le contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Vous ne pouvez pas vérifier %@, car cette personne n’est pas dans votre liste de contacts. Attendez qu’elle accepte d’abord votre invitation.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
