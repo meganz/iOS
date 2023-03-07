@@ -190,6 +190,32 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         endEditingMode()
     }
     
+    func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+                  return
+              }
+        
+        endEditingMode()
+        
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        
+        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+        
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            }
+        }
+    }
+    
     // MARK: - Private
     private func openBrowserViewController(withAction action: BrowserAction) {
         guard let selectedNodes = selectedNodes(),
@@ -251,6 +277,8 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
             didPressedSendToChat(sender)
         case .favourite:
             favouriteButtonPressed(sender)
+        case .saveToPhotos:
+            saveToPhotosButtonPressed(sender)
         default:
             break
         }
