@@ -274,11 +274,7 @@
         [self.incomingNodesMutableArray addObject:node];
     }
     
-    if (self.incomingNodesMutableArray.count == 0) {
-        self.tableView.tableHeaderView = nil;
-    } else {
-        [self addSearchBar];
-    }
+    [self addInShareSearcBarIfNeeded];
 }
 
 - (void)allOutgoingNodes {
