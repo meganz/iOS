@@ -23,4 +23,8 @@ public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
     public func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
         nodes
     }
+    
+    public func userAlbumNodes(by id: HandleEntity) async -> [NodeEntity] {
+        nodes
+    }
 }

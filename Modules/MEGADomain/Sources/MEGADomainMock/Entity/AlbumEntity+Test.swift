@@ -5,7 +5,7 @@ public extension AlbumEntity {
     init(id: HandleEntity,
                 name: String,
                 coverNode: NodeEntity? = nil,
-                count: UInt,
+                count: Int,
                 type: AlbumEntityType,
                 modificationTime: Date? = nil,
                 isTesting: Bool = true) {

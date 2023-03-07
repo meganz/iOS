@@ -11,15 +11,16 @@ public protocol AlbumListUseCaseProtocol {
 }
 
 public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRepositoryProtocol,
-                                    V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol,
-                                    X: AlbumContentsUpdateNotifierRepositoryProtocol>:
-    AlbumListUseCaseProtocol {
+                               V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol,
+                               X: AlbumContentsUpdateNotifierRepositoryProtocol, Y: AlbumContentsUseCaseProtocol>:
+                                AlbumListUseCaseProtocol {
     
     private let albumRepository: T
     private let fileSearchRepository: U
     private let mediaUseCase: V
     private let userAlbumRepository: W
     private let albumContentsUpdateRepository: X
+    private let albumContentsUseCase: Y
     
     public var albumsUpdatedPublisher: AnyPublisher<Void, Never> {
         userAlbumUpdates
@@ -44,13 +45,15 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         userAlbumRepository: W,
         fileSearchRepository: U,
         mediaUseCase: V,
-        albumContentsUpdateRepository: X
+        albumContentsUpdateRepository: X,
+        albumContentsUseCase: Y
     ) {
         self.albumRepository = albumRepository
         self.fileSearchRepository = fileSearchRepository
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.albumContentsUpdateRepository = albumContentsUpdateRepository
+        self.albumContentsUseCase = albumContentsUseCase
     }
     
     public func loadCameraUploadNode() async throws -> NodeEntity? {
@@ -64,15 +67,25 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
     
     public func userAlbums() async -> [AlbumEntity] {
         let albums = await userAlbumRepository.albums()
-        let albumCovers = await albumCovers(albums)
-        return albums
-            .map { AlbumEntity(id: $0.handle,
-                               name: $0.name,
-                               coverNode: albumCovers[$0.handle],
-                               count: $0.size,
-                               type: .user,
-                               modificationTime: $0.modificationTime)
+        return await withTaskGroup(of: AlbumEntity.self,
+                                   returning: [AlbumEntity].self) { group in
+            albums.forEach { setEntity in
+                group.addTask {
+                    var userAlbumContent = await albumContentsUseCase.userAlbumNodes(by: setEntity.handle)
+                    let coverNode = await albumCoverNode(forAlbum: setEntity,
+                                                         albumContent: &userAlbumContent)
+                    return AlbumEntity(id: setEntity.handle,
+                                       name: setEntity.name,
+                                       coverNode: coverNode,
+                                       count: userAlbumContent.count,
+                                       type: .user,
+                                       modificationTime: setEntity.modificationTime)
+                }
             }
+            return await group.reduce(into: [AlbumEntity]()) {
+                $0.append($1)
+            }
+        }
     }
     
     public func createUserAlbum(with name: String?) async throws -> AlbumEntity {
@@ -122,9 +135,9 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         var coverOfFavouritePhoto: NodeEntity?
         var coverOfGifPhoto: NodeEntity?
         var coverOfRawPhoto: NodeEntity?
-        var numOfFavouritePhotos: UInt = 0
-        var numOfGifPhotos: UInt = 0
-        var numOfRawPhotos: UInt = 0
+        var numOfFavouritePhotos = 0
+        var numOfGifPhotos = 0
+        var numOfRawPhotos = 0
         
         photos.forEach { photo in
             if photo.isFavourite {
@@ -154,45 +167,20 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         return albums
     }
     
-    private func albumCovers(_ albums: [SetEntity]) async -> [HandleEntity: NodeEntity] {
-        return await withTaskGroup(of: (HandleEntity, NodeEntity?).self) { taskGroup -> [HandleEntity: NodeEntity] in
-            albums.forEach { setEntity in
-                taskGroup.addTask {
-                    guard setEntity.coverId != .invalid,
-                          let albumCoverSetElement = await userAlbumRepository.albumElement(by: setEntity.handle,
-                                                                                            elementId: setEntity.coverId),
-                          let albumCover = await fileSearchRepository.node(by: albumCoverSetElement.nodeId) else {
-                        return (setEntity.handle,
-                                await latestModifiedAlbumElementNode(albumId: setEntity.handle))
-                    }
-                    return (setEntity.handle, albumCover)
-                }
-            }
-            return await taskGroup.reduce(into: [HandleEntity: NodeEntity](), {
-                if let albumCoverNode = $1.1 {
-                    $0[$1.0] = albumCoverNode
-                }
-            })
+    private func albumCoverNode(forAlbum entity: SetEntity, albumContent: inout [NodeEntity]) async -> NodeEntity? {
+        if entity.coverId != .invalid,
+           let albumCoverSetElement = await userAlbumRepository.albumElement(by: entity.handle,
+                                                                             elementId: entity.coverId),
+           let albumCover = albumContent.first(where: { $0.handle == albumCoverSetElement.nodeId }) {
+            return albumCover
         }
-    }
-    
-    private func latestModifiedAlbumElementNode(albumId: HandleEntity) async -> NodeEntity? {
-        var albumContents = await userAlbumRepository.albumContent(by: albumId,
-                                                                   includeElementsInRubbishBin: false)
-            .filter { $0.nodeId != .invalid }
-        guard albumContents.isNotEmpty else {
-            return nil
-        }
-        albumContents.sort {
+        albumContent.sort {
             if $0.modificationTime == $1.modificationTime {
                 return $0.handle > $1.handle
             }
             return $0.modificationTime > $1.modificationTime
         }
-        guard let albumCoverNodeId = albumContents.first?.nodeId else {
-            return nil
-        }
-        return await fileSearchRepository.node(by: albumCoverNodeId)
+        return albumContent.first
     }
     
     public func hasNoPhotosAndVideos() async -> Bool {

@@ -30,25 +30,13 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
     // MARK: - Albums
     func albums() async -> [SetEntity] {
-        let megaSets = sdk.megaSets()
-        var results: [SetEntity] = []
-        
-        for megaSet in megaSets {
-            var setEntity = megaSet.toSetEntity()
-            setEntity.size = sdk.megaSetElementCount(megaSet.handle, includeElementsInRubbishBin: true)
-            
-            results.append(setEntity)
-        }
-        
-        return results
+        sdk.megaSets().toSetEntities()
     }
     
     func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
         let megaSetElements = sdk.megaSetElements(bySid: id,
                                                   includeElementsInRubbishBin: includeElementsInRubbishBin)
-        let elements = megaSetElements.toSetElementsEntities()
-        
-        return elements
+        return megaSetElements.toSetElementsEntities()
     }
     
     func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
