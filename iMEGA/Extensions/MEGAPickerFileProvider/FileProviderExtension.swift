@@ -27,7 +27,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         // When calling it from itemChanged, url is similar to (it doesn't include "/private"): file:///var/mobile/Containers/Shared/AppGroup/2F61E5F1-174B-434D-A51C-0A7019C3AD8D/File%20Provider%20Storage/
         // When calling it from providingPlaceholder or startProvidingItem url includes "/private": file:///private/var/mobile/Containers/Shared/AppGroup/2F61E5F1-174B-434D-A51C-0A7019C3AD8D/File%20Provider%20Storage/
         // This is the reason of the following code, getting the correct identifier
-        if url.path().contains("/private") {
+        if url.path.contains("/private") {
             identifier = url.path.replacingOccurrences(of: NSFileProviderManager.default.documentStorageURL.path, with: "")
         } else {
             identifier = url.path.replacingOccurrences(of: NSFileProviderManager.default.documentStorageURL.path.replacingOccurrences(of: "/private", with: ""), with: "")
@@ -36,8 +36,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     override func urlForItem(withPersistentIdentifier identifier: NSFileProviderItemIdentifier) -> URL? {
-        let url: URL? = NSFileProviderManager.default.documentStorageURL
-            .appending(component: identifier.rawValue.dropFirst())
+        let url: URL? = NSFileProviderManager.default.documentStorageURL.appendingPathComponent(String(identifier.rawValue.dropFirst()))
         return url
     }
     
