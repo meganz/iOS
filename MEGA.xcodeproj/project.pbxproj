@@ -27,6 +27,8 @@
 		0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */; };
 		0E32FFB2293E896A004BB11D /* NodeUpdateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
+		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
+		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		12084048286120020079127B /* SearchOperation+Initialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12084047286120020079127B /* SearchOperation+Initialize.swift */; };
 		1208CEC527FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */; };
 		120B4A7927430F3E00312B35 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
@@ -2522,6 +2524,8 @@
 		0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepositoryTests.swift; sourceTree = "<group>"; };
 		0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepository.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
+		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
+		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		12084047286120020079127B /* SearchOperation+Initialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchOperation+Initialize.swift"; sourceTree = "<group>"; };
 		1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellVideoDurationViewModifier.swift; sourceTree = "<group>"; };
 		120B4A7827430F3E00312B35 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
@@ -5496,6 +5500,7 @@
 			isa = PBXGroup;
 			children = (
 				12F23A57284EA35D007B9821 /* PhotoAlbum.swift */,
+				0EA150D629B810D2005C6486 /* AlbumType.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -5752,6 +5757,7 @@
 				9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */,
 				3256C39429A8656C001B0280 /* AlbumSelectionTests.swift */,
 				328201A129AF071A00C0E841 /* AlbumNameValidatorTests.swift */,
+				0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -13230,6 +13236,7 @@
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */,
 				BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */,
+				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */,
 				BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */,
 				B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */,
@@ -14152,6 +14159,7 @@
 				9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
+				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				B688C0632947269F00976CE9 /* PhotoChronologicalCategory_photoByYear_refreshTests.swift in Sources */,
 				B6DAED3F28AB322800703E28 /* PhotoSelectionTests.swift in Sources */,
@@ -15221,10 +15229,11 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
@@ -15241,6 +15250,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development mega.ios.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -15259,12 +15269,13 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
@@ -15280,6 +15291,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc mega.ios.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -15297,13 +15309,14 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
@@ -15319,6 +15332,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc mega.ios.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

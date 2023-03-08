@@ -6,7 +6,7 @@ protocol AlbumToolbarProvider {
     
     func showToolbar()
     func hideToolbar()
-    func configureToolbarButtons(albumType: AlbumToolbarConfigurator.AlbumType)
+    func configureToolbarButtons(albumType: AlbumType)
     func downloadButtonPressed(_ button: UIBarButtonItem)
     func shareLinkButtonPressed(_ button: UIBarButtonItem)
     func favouriteButtonPressed(_ button: UIBarButtonItem)
@@ -48,7 +48,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         }
     }
     
-    func configureToolbarButtons(albumType: AlbumToolbarConfigurator.AlbumType) {
+    func configureToolbarButtons(albumType: AlbumType) {
         if albumToolbarConfigurator == nil {
             albumToolbarConfigurator = AlbumToolbarConfigurator(
                 downloadAction: downloadButtonPressed,
@@ -59,8 +59,10 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                 favouriteAction: favouriteButtonPressed,
                 removeToRubbishBinAction: deleteButtonPressed,
                 exportAction: didPressedExportFile,
+                sendToChatAction: didPressedSendToChat,
                 moreAction: moreButtonPressed,
-                albumType: albumType
+                albumType: albumType,
+                isCreateAlbumFeatureFlagEnabled: FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum)
             )
         }
         
