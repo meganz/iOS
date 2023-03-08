@@ -15,7 +15,7 @@ extension PhotosBannerViewProvider {
         let host = UIHostingController(rootView: content)
         addChild(host)
         container.wrap(host.view)
-        host.view.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
+        host.view.setContentHuggingPriority(.defaultHigh, for: .vertical)
         host.didMove(toParent: self)
     }
     
