@@ -6,6 +6,8 @@ struct WarningView: View {
     var body: some View {
         ZStack {
             Color(Colors.Banner.warningBannerBackground.name)
+                .edgesIgnoringSafeArea(.all)
+            
             HStack {
                 Text(viewModel.warningType.description)
                     .font(.caption2.bold())
@@ -26,7 +28,6 @@ struct WarningView: View {
         }
         .frame(height: viewModel.isHideWarningView ? 0 : nil)
         .opacity(viewModel.isHideWarningView ? 0 : 1)
-        .edgesIgnoringSafeArea(.all)
     }
 
     private var warningCloseButton: some View {
