@@ -334,7 +334,17 @@ platform :ios do
       derived_data_path: "derivedData",
       archive_path: "archive",
       export_options: {
-        iCloudContainerEnvironment: "Production"
+        iCloudContainerEnvironment: "Production",
+        signingStyle: "manual",
+        provisioningProfiles: {
+          "mega.ios": "match AdHoc mega.ios",
+          "mega.ios.MEGAIntent": "match AdHoc mega.ios.MEGAIntent",
+          "mega.ios.MEGANotifications": "match AdHoc mega.ios.MEGANotifications",
+          "mega.ios.MEGAPicker": "match AdHoc mega.ios.MEGAPicker",
+          "mega.ios.MEGAPickerFileProvider": "match AdHoc mega.ios.MEGAPickerFileProvider",
+          "mega.ios.MEGAShare": "match AdHoc mega.ios.MEGAShare",
+          "mega.ios.MEGAWidget": "match AdHoc mega.ios.MEGAWidget"
+        }
       }
     )
   end
