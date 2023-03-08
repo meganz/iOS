@@ -136,8 +136,6 @@
 #ifdef MNZ_SHARE_EXTENSION
         [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-#elif MNZ_PICKER_EXTENSION
-        
 #else
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 #endif
