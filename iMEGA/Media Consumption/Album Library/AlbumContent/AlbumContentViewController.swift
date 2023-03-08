@@ -94,7 +94,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     }
     
     func configureToolbarButtonsWithAlbumType() {
-        configureToolbarButtons(albumType: viewModel.isFavouriteAlbum ? .favourite : .normal)
+        configureToolbarButtons(albumType: viewModel.albumType)
     }
     
     func startEditingMode() {

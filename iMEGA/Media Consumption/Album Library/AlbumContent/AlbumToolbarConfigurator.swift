@@ -1,14 +1,11 @@
 
 final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
-    enum AlbumType {
-        case favourite
-        case normal
-    }
-    
     let favouriteAction: ButtonAction
     let removeToRubbishBinAction: ButtonAction
     let exportAction: ButtonAction
+    let sendToChatAction: ButtonAction
     let albumType: AlbumType
+    let isCreateAlbumFeatureFlagEnabled: Bool
     
     private var favouriteItemImage: ImageAsset {
         albumType == .favourite ? Asset.Images.NodeActions.removeFavourite :
@@ -22,12 +19,36 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         action: #selector(buttonPressed(_:))
     )
     
+    lazy var sendToChatItem = UIBarButtonItem(
+        image: Asset.Images.NodeActions.sendToChat.image,
+        style: .plain,
+        target: self,
+        action: #selector(buttonPressed(_:))
+    )
+    
     lazy var removeToRubbishBinItem = UIBarButtonItem(
         image: Asset.Images.NodeActions.rubbishBin.image,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
+    
+    lazy var favouriteBarButtonItems: [UIBarButtonItem] = {
+        if isCreateAlbumFeatureFlagEnabled {
+            return [
+                flexibleItem,
+                favouriteItem
+            ]
+        } else {
+            return [
+                favouriteItem,
+                flexibleItem,
+                removeToRubbishBinItem,
+                flexibleItem,
+                moreItem
+            ]
+        }
+    }()
     
     init(
         downloadAction: @escaping ButtonAction,
@@ -38,13 +59,17 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         favouriteAction: @escaping ButtonAction,
         removeToRubbishBinAction: @escaping ButtonAction,
         exportAction: @escaping ButtonAction,
+        sendToChatAction: @escaping ButtonAction,
         moreAction: @escaping ButtonAction,
-        albumType: AlbumType
+        albumType: AlbumType,
+        isCreateAlbumFeatureFlagEnabled: Bool
     ) {
         self.favouriteAction = favouriteAction
         self.removeToRubbishBinAction = removeToRubbishBinAction
         self.exportAction = exportAction
+        self.sendToChatAction = sendToChatAction
         self.albumType = albumType
+        self.isCreateAlbumFeatureFlagEnabled = isCreateAlbumFeatureFlagEnabled
         
         super.init(
             downloadAction: downloadAction,
@@ -68,6 +93,8 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             removeToRubbishBinAction(barButtonItem)
         case exportItem:
             exportAction(barButtonItem)
+        case sendToChatItem:
+            sendToChatAction(barButtonItem)
         case moreItem:
             super.moreAction(barButtonItem)
         default:
@@ -81,21 +108,32 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             flexibleItem,
             shareLinkItem,
             flexibleItem,
-            favouriteItem,
-            flexibleItem,
-            removeToRubbishBinItem,
-            flexibleItem,
-            moreItem
         ]
-        
-        if albumType == .normal {
-            if barButtonItems.contains(favouriteItem), let indexOfFavouriteItem = barButtonItems.firstIndex(where: { $0 == favouriteItem }) {
-                barButtonItems[indexOfFavouriteItem] = moveItem
+        if isCreateAlbumFeatureFlagEnabled {
+            barButtonItems.append(contentsOf: [
+                exportItem,
+                flexibleItem,
+                sendToChatItem
+            ])
+        }
+        switch albumType {
+        case .raw, .gif:
+            if !isCreateAlbumFeatureFlagEnabled {
+                barButtonItems.append(contentsOf: [
+                    moveItem,
+                    flexibleItem,
+                    exportItem,
+                    flexibleItem,
+                    moreItem
+                ])
             }
-            
-            if barButtonItems.contains(removeToRubbishBinItem), let indexOfRubbishBinItem = barButtonItems.firstIndex(where: { $0 == removeToRubbishBinItem }) {
-                barButtonItems[indexOfRubbishBinItem] = exportItem
-            }
+        case .favourite:
+            barButtonItems.append(contentsOf: favouriteBarButtonItems)
+        case .user:
+            barButtonItems.append(contentsOf: [
+                flexibleItem,
+                removeToRubbishBinItem,
+            ])
         }
 
         return enable(nodes?.isNotEmpty == true, barButtonItems: barButtonItems)

@@ -86,6 +86,19 @@ final class AlbumContentViewModel: ViewModelType {
         album.type == .favourite
     }
     
+    var albumType: AlbumType {
+        switch album.type {
+        case .favourite:
+            return .favourite
+        case .raw:
+            return .raw
+        case .gif:
+            return .gif
+        case .user:
+            return .user
+        }
+    }
+    
     var canAddPhotosToAlbum: Bool {
         album.type == .user && !doesPhotoLibraryContainPhotos
     }
