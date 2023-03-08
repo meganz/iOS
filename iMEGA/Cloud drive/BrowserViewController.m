@@ -10,8 +10,6 @@
 #import "MEGAReachabilityManager.h"
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
-#elif MNZ_PICKER_EXTENSION
-#import "MEGAPicker-Swift.h"
 #else
 #import "MEGA-Swift.h"
 #endif
@@ -135,8 +133,6 @@
         [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [ExtensionAppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
         [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-#elif MNZ_PICKER_EXTENSION
-        
 #else
         [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
@@ -532,7 +528,6 @@
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
-#ifndef MNZ_PICKER_EXTENSION
 - (CancellableTransfer *)transferToUpload {
     if (self.localpath) {
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
@@ -541,7 +536,6 @@
         return nil;
     }
 }
-#endif
 
 #pragma mark - IBActions
 
@@ -632,7 +626,6 @@
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
-#ifndef MNZ_PICKER_EXTENSION
     if (self.browserAction == BrowserActionOpenIn) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [self dismissAndSelectNodesIfNeeded:NO completion:^{
@@ -647,7 +640,6 @@
                || self.browserAction == BrowserActionNewFileSave) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
     }
-#endif
 }
 
 - (IBAction)sendNodes:(UIBarButtonItem *)sender {

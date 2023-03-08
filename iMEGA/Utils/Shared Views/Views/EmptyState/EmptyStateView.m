@@ -4,8 +4,6 @@
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
-#elif MNZ_PICKER_EXTENSION
-#import "MEGAPicker-Swift.h"
 #else
 #import "MEGA-Swift.h"
 #endif

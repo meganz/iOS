@@ -3,8 +3,6 @@
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
-#elif MNZ_PICKER_EXTENSION
-#import "MEGAPicker-Swift.h"
 #else
 #import "MEGA-Swift.h"
 #endif
@@ -31,8 +29,6 @@
 #ifdef MNZ_SHARE_EXTENSION
         [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
         [ExtensionAppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-#elif MNZ_PICKER_EXTENSION
-        
 #else
         [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];

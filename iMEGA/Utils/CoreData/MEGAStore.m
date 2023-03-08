@@ -5,8 +5,6 @@
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
-#elif MNZ_PICKER_EXTENSION
-#import "MEGAPicker-Swift.h"
 #elif MNZ_NOTIFICATION_EXTENSION
 #import "MEGANotifications-Swift.h"
 #elif MNZ_WIDGET_EXTENSION
