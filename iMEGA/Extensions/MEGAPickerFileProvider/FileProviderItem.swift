@@ -12,33 +12,15 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var itemIdentifier: NSFileProviderItemIdentifier {
-        guard let path = nodeAttributeUseCase.pathFor(node: node) else {
-            assertionFailure("Path is needed")
-            return NSFileProviderItemIdentifier("")
-        }
-        
-        if path == "/" {
-            return NSFileProviderItemIdentifier.rootContainer
-        }
-        return NSFileProviderItemIdentifier(path)
+        NSFileProviderItemIdentifier(rawValue: node.base64Handle.toItemIdentifier())
     }
     
     var parentItemIdentifier: NSFileProviderItemIdentifier {
-        if MEGASdk.shared.rootNode?.handle == node.handle {
-            return itemIdentifier
-        }
-        
-        guard let parentNode = MEGASdk.shared.node(forHandle: node.parentHandle),
-              let parentPath = nodeAttributeUseCase.pathFor(node: parentNode.toNodeEntity()) else {
-            assertionFailure("Parent path is needed")
+        guard let parentBase64Handle = MEGASdk.base64Handle(forHandle: node.parentHandle) else {
+            assertionFailure("Parent item identifier is needed")
             return NSFileProviderItemIdentifier("")
         }
-        
-        if parentPath == "/" {
-            return NSFileProviderItemIdentifier(NSFileProviderItemIdentifier.rootContainer.rawValue)
-        } else {
-            return NSFileProviderItemIdentifier(parentPath)
-        }
+        return NSFileProviderItemIdentifier(parentBase64Handle.toItemIdentifier())
     }
     
     var capabilities: NSFileProviderItemCapabilities {
@@ -123,5 +105,17 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
             return false
         }
         return MEGASdk.shared.fingerprint(forFilePath: itemURL.path) == node.fingerprint
+    }
+}
+
+private extension String {
+    func toItemIdentifier() -> String {
+        let rootNodeHandle = MEGASdk.shared.rootNode?.handle ?? ~UInt64(0)
+        let rootNodeBase64Handle = MEGASdk.base64Handle(forHandle: rootNodeHandle)!
+        if self == rootNodeBase64Handle {
+            return NSFileProviderItemIdentifier.rootContainer.rawValue
+        } else {
+            return self
+        }
     }
 }
