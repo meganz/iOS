@@ -4,9 +4,10 @@ import MEGADomain
 final class FileProviderExtension: NSFileProviderExtension {
     private let semaphore = DispatchSemaphore(value: 0)
     
-    private lazy var credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
+    private var credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
     private lazy var nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
     private lazy var transferUseCase = TransferUseCase(repo: TransferRepository.newRepo)
+    private lazy var nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
     
     override init() {
         super.init()
@@ -20,7 +21,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     // MARK: - Working with items and persistent identifiers
     
     override func persistentIdentifierForItem(at url: URL) -> NSFileProviderItemIdentifier? {
-        var identifier: String
+        var localRelativePath: String
         // This is a bit tricky. As an identifier, we use the "path" in MEGA ex: /folder/subfolder/file,
         // We create "placeholders" and files/folders in NSFileProviderManager.default.documentStorageURL (+ identifier) appending the identifier (path in MEGA)
         // This method is called from different places and the URL may contain "/private" or not, documentStorageURL includes "/private": file:///private/var/mobile/Containers/Shared/AppGroup/E987FA27-C16B-424A-8148-865F8AE2E932/File%20Provider%20Storage/
@@ -28,15 +29,30 @@ final class FileProviderExtension: NSFileProviderExtension {
         // When calling it from providingPlaceholder or startProvidingItem url includes "/private": file:///private/var/mobile/Containers/Shared/AppGroup/2F61E5F1-174B-434D-A51C-0A7019C3AD8D/File%20Provider%20Storage/
         // This is the reason of the following code, getting the correct identifier
         if url.path.contains("/private") {
-            identifier = url.path.replacingOccurrences(of: NSFileProviderManager.default.documentStorageURL.path, with: "")
+            localRelativePath = url.path.replacingOccurrences(of: NSFileProviderManager.default.documentStorageURL.path, with: "")
         } else {
-            identifier = url.path.replacingOccurrences(of: NSFileProviderManager.default.documentStorageURL.path.replacingOccurrences(of: "/private", with: ""), with: "")
+            localRelativePath = url.path.replacingOccurrences(of: NSFileProviderManager.default.documentStorageURL.path.replacingOccurrences(of: "/private", with: ""), with: "")
         }
-        return NSFileProviderItemIdentifier(identifier)
+        var nodePath: String
+        if localRelativePath.hasPrefix("//") {
+            nodePath = String(localRelativePath.dropFirst())
+        } else {
+            nodePath = localRelativePath
+        }
+        guard let node = MEGASdk.shared.node(forPath: nodePath),
+              let base64Handle = node.base64Handle else {
+            return nil
+        }
+        return NSFileProviderItemIdentifier(base64Handle)
     }
     
     override func urlForItem(withPersistentIdentifier identifier: NSFileProviderItemIdentifier) -> URL? {
-        let url: URL? = NSFileProviderManager.default.documentStorageURL.appendingPathComponent(String(identifier.rawValue.dropFirst()))
+        guard let node = node(for: identifier),
+              let path = nodeAttributeUseCase.pathFor(node: node) else {
+            return nil
+        }
+        
+        let url: URL? = NSFileProviderManager.default.documentStorageURL.appendingPathComponent(path)
         return url
     }
     
@@ -247,13 +263,12 @@ final class FileProviderExtension: NSFileProviderExtension {
     }
     
     private func node(for identifier: NSFileProviderItemIdentifier) -> NodeEntity? {
-        var path: String
         if identifier == NSFileProviderItemIdentifier.rootContainer {
-            path = "/"
-        } else {
-            path = identifier.rawValue
+            return MEGASdk.shared.rootNode?.toNodeEntity()
         }
-        guard let node = MEGASdk.shared.node(forPath: path) else {
+        let base64Handle = identifier.rawValue
+        let handle = MEGASdk.handle(forBase64Handle: base64Handle)
+        guard let node = MEGASdk.shared.node(forHandle: handle) else {
             return nil
         }
         return node.toNodeEntity()
