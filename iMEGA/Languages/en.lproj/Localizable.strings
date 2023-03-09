@@ -546,6 +546,8 @@
 "cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Empty album";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Select album cover";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */

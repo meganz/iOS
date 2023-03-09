@@ -214,5 +214,10 @@ extension ContextMenuBuilder {
     var scheduleMeeting: CMActionEntity {
         CMActionEntity(type: .meeting(actionType: .scheduleMeeting))
     }
-
+    
+    //MARK: - Album
+    
+    var selectAlbumCover: CMActionEntity {
+        CMActionEntity(type: .album(actionType: .selectAlbumCover))
+    }
 }

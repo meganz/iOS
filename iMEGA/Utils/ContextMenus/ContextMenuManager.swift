@@ -38,6 +38,10 @@ protocol FilterMenuDelegate: AnyObject {
     func filterMenu(didSelect filterType: FilterType)
 }
 
+protocol AlbumMenuDelegate: AnyObject {
+    func albumMenu(didSelect action: AlbumActionEntity)
+}
+
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: DisplayMenuDelegate?
     weak var quickActionsMenuDelegate: QuickActionsMenuDelegate?
@@ -47,6 +51,7 @@ final class ContextMenuManager: NSObject {
     weak var qrMenuDelegate: QRMenuDelegate?
     weak var meetingContextMenuDelegate: MeetingContextMenuDelegate?
     weak var filterMenuDelegate: FilterMenuDelegate?
+    weak var albumMenuDelegate: AlbumMenuDelegate?
     
     private let createContextMenuUC: CreateContextMenuUseCaseProtocol
     
@@ -58,7 +63,8 @@ final class ContextMenuManager: NSObject {
          qrMenuDelegate: QRMenuDelegate? = nil,
          meetingContextMenuDelegate: MeetingContextMenuDelegate? = nil,
          filterMenuDelegate: FilterMenuDelegate? = nil,
-         createContextMenuUseCase: CreateContextMenuUseCaseProtocol) {
+         createContextMenuUseCase: CreateContextMenuUseCaseProtocol,
+         albumMenuDelegate: AlbumMenuDelegate? = nil) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
         self.uploadAddMenuDelegate = uploadAddMenuDelegate
@@ -68,6 +74,7 @@ final class ContextMenuManager: NSObject {
         self.meetingContextMenuDelegate = meetingContextMenuDelegate
         self.filterMenuDelegate = filterMenuDelegate
         self.createContextMenuUC = createContextMenuUseCase
+        self.albumMenuDelegate = albumMenuDelegate
     }
     
     // MARK: - Configure functions
@@ -120,7 +127,8 @@ final class ContextMenuManager: NSObject {
             
         case .meeting(let action):
             meetingContextMenuDelegate?.meetingContextMenu(didSelect: action)
-            
+        case .album(let action):
+            albumMenuDelegate?.albumMenu(didSelect: action)
         default:
             break
         }

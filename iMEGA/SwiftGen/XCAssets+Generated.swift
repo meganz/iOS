@@ -76,6 +76,7 @@ internal enum Asset {
     }
     internal enum Album {
       internal static let placeholder = ImageAsset(name: "placeholder")
+      internal static let selectAlbumCover = ImageAsset(name: "selectAlbumCover")
     }
     internal enum AppIcons {
       internal static let altIconDay = ImageAsset(name: "altIconDay")

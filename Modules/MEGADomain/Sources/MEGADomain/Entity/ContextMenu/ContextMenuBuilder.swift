@@ -234,6 +234,8 @@ public final class ContextMenuBuilder {
                 return myQRCodeMenu()
             case .meeting:
                 return meetingMenu()
+            case .album:
+                return albumMenu()
             default:
                 return nil
             }
@@ -347,13 +349,6 @@ public final class ContextMenuBuilder {
         }
     }
     
-    private func userAlbumMenu() -> CMEntity {
-        var children: [CMElement] = [rename]
-        children.append(contentsOf: selectMenu().children)
-        
-        return CMEntity(displayInline: true, children: children)
-    }
-    
     private func displayMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         
@@ -373,28 +368,6 @@ public final class ContextMenuBuilder {
         } else {
             let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
             displayActionsMenuChildren.append(contentsOf: menu)
-        }
-        
-        if let albumType = albumType {
-            if albumType == .user && isEmptyState {
-                return CMEntity(displayInline: true,
-                                       children: [rename])
-            }
-            
-            displayActionsMenuChildren = []
-            
-            if albumType == .user {
-                displayActionsMenuChildren.append(userAlbumMenu())
-            } else {
-                displayActionsMenuChildren.append(selectMenu())
-            }
-            
-            if !isEmptyState {
-                displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [sortMenu()]))
-            }
-            if isFilterEnabled {
-                displayActionsMenuChildren.append(filterMenu())
-            }
         }
         
         if isRubbishBinFolder && !isViewInFolder {
@@ -513,5 +486,38 @@ public final class ContextMenuBuilder {
     //MARK: - Album
     private var isAlbum: Bool {
         albumType != nil
+    }
+    
+    private func userAlbumMenu() -> CMEntity {
+        var children: [CMElement] = [rename, selectAlbumCover]
+        children.append(contentsOf: selectMenu().children)
+        
+        return CMEntity(displayInline: true, children: children)
+    }
+    
+    private func albumMenu() -> CMEntity {
+        guard let albumType else { return CMEntity(displayInline: true, children: []) }
+        var displayActionsMenuChildren = [CMElement]()
+        
+        if albumType == .user && isEmptyState {
+            return CMEntity(displayInline: true, children: [rename])
+        }
+        
+        displayActionsMenuChildren = []
+        
+        if albumType == .user {
+            displayActionsMenuChildren.append(userAlbumMenu())
+        } else {
+            displayActionsMenuChildren.append(selectMenu())
+        }
+        
+        if !isEmptyState {
+            displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [sortMenu()]))
+        }
+        if isFilterEnabled {
+            displayActionsMenuChildren.append(filterMenu())
+        }
+        
+        return CMEntity(displayInline: true, children: displayActionsMenuChildren)
     }
 }

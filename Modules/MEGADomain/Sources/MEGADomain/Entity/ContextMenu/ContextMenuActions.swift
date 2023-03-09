@@ -27,13 +27,14 @@ public enum CMElementTypeEntity: Equatable {
     case chatDoNotDisturbEnabled(optionType: DNDTurnOnOptionEntity)
     case qr(actionType: MyQRActionEntity)
     case meeting(actionType: MeetingActionEntity)
+    case album(actionType: AlbumActionEntity)
     
     case unknown
 }
 
 //MARK: - Context Menu types
 public enum ContextMenuTypeEntity {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album
 }
 
 //MARK: - Context Menu grouped actions
@@ -67,4 +68,8 @@ public enum MyQRActionEntity: CaseIterable {
 
 public enum MeetingActionEntity: CaseIterable  {
     case startMeeting, joinMeeting, scheduleMeeting
+}
+
+public enum AlbumActionEntity: CaseIterable {
+    case selectAlbumCover
 }
