@@ -29,13 +29,16 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     
     private func fetchItems() throws -> [FileProviderItem] {
         var items: [FileProviderItem] = []
-        var path: String
+
+        var node: MEGANode?
         if identifier == NSFileProviderItemIdentifier.rootContainer {
-            path = "/"
+            node = MEGASdk.shared.rootNode
         } else {
-            path = identifier.rawValue
+            let base64Handle = identifier.rawValue
+            node = MEGASdk.shared.node(forHandle: MEGASdk.handle(forBase64Handle: base64Handle))
         }
-        guard let node = MEGASdk.shared.node(forPath: path) else {
+        
+        guard let node else {
             throw NSFileProviderError(.noSuchItem)
         }
         
