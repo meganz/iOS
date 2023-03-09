@@ -9,7 +9,8 @@ extension AlbumContentViewController {
             displayMenuDelegate: self,
             quickActionsMenuDelegate: self,
             filterMenuDelegate: self,
-            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
+            albumMenuDelegate: self
         )
     }
 
@@ -73,5 +74,12 @@ extension AlbumContentViewController: QuickActionsMenuDelegate {
             viewModel.updateAlertViewModel()
             present(UIAlertController(alert: viewModel.alertViewModel), animated: true)
         }
+    }
+}
+
+// MARK: - AlbumMenuDelegate
+extension AlbumContentViewController: AlbumMenuDelegate {
+    func albumMenu(didSelect action: AlbumActionEntity) {
+        if action == .selectAlbumCover {  }
     }
 }

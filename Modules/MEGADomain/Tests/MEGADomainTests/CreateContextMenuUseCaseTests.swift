@@ -56,7 +56,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testMenuItemsForAlbumContentScreen_whenUserOpenAnAlbum_shouldReturnTheRightMenuItems() throws {
-        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
                                                                         sortType: .creationDesc,
                                                                         filterType: .allMedia,
                                                                         albumType: .user,
@@ -64,6 +64,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                                                         isEmptyState: false))
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         menuActionsArray = [.quickActions(actionType: .rename),
+                            .album(actionType: .selectAlbumCover),
                             .display(actionType: .select),
                             .sort(actionType: .modificationDesc),
                             .sort(actionType: .modificationAsc),
@@ -164,7 +165,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testCreateContextMenu_withAlbumConfigurationFilterEnabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
-        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         albumType: .gif,
                                                                         isFilterEnabled: true,
@@ -184,7 +185,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testCreateContextMenu_withAlbumConfigurationFilterDisabledAndInEmptyState_shouldShowCorrecMenuActions() throws {
-        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         albumType: .favourite,
                                                                         isFilterEnabled: false,
@@ -198,7 +199,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testCreateContextMenu_onAlbumContentPageFilterDisabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
-        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         albumType: .gif,
                                                                         isFilterEnabled: false,
@@ -215,7 +216,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
     }
     
     func testCreateContextMenu_onCustomAlbumContentPageInEmptyState_shouldShowCorrecMenuActions() throws {
-        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
                                                                         sortType: SortOrderEntity.modificationDesc,
                                                                         albumType: .user,
                                                                         isFilterEnabled: true,
@@ -389,5 +390,46 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
+    func testCreateContextMenu_whenUsedOnAlbum_shouldReturnRightAlbumMenu() throws {
+        let cmEntity1 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album)))
+        let menuActions1 = decomposeMenuIntoActions(menu: cmEntity1)
+        XCTAssertEqual(menuActions1, [])
+        
+        let cmEntity2 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .user, isEmptyState: true))
+        let menuActions2 = decomposeMenuIntoActions(menu: cmEntity2)
+        XCTAssertEqual(menuActions2, [.quickActions(actionType: .rename)])
+        
+        let cmEntity3 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .user))
+        let menuActions3 = decomposeMenuIntoActions(menu: cmEntity3)
+        XCTAssertEqual(menuActions3, [.quickActions(actionType: .rename),
+                                      .album(actionType: .selectAlbumCover),
+                                      .display(actionType: .select),
+                                      .sort(actionType: .modificationDesc),
+                                      .sort(actionType: .modificationAsc)])
+
+        let cmEntity4 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .favourite, isEmptyState: true))
+        let menuActions4 = decomposeMenuIntoActions(menu: cmEntity4)
+        XCTAssertEqual(menuActions4, [
+                                      .display(actionType: .select)])
+        
+        let cmEntity5 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .gif, isFilterEnabled: true))
+        let menuActions5 = decomposeMenuIntoActions(menu: cmEntity5)
+        XCTAssertEqual(menuActions5, [.display(actionType: .select),
+                                      .sort(actionType: .modificationDesc),
+                                      .sort(actionType: .modificationAsc),
+                                      .filter(actionType: .allMedia),
+                                      .filter(actionType: .images),
+                                      .filter(actionType: .videos)])
+        
+        let cmEntity6 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .favourite, isFilterEnabled: true))
+        let menuActions6 = decomposeMenuIntoActions(menu: cmEntity6)
+        XCTAssertEqual(menuActions6, [.display(actionType: .select),
+                                      .sort(actionType: .modificationDesc),
+                                      .sort(actionType: .modificationAsc),
+                                      .filter(actionType: .allMedia),
+                                      .filter(actionType: .images),
+                                      .filter(actionType: .videos)])
     }
 }

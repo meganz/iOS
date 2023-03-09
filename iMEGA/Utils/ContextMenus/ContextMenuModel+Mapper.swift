@@ -61,6 +61,8 @@ extension ContextMenuModel {
             return dataForChatDoNotDisturbDisabledAction(option: option)
         case .qr(let action):
             return dataForQRAction(action: action)
+        case .album(let action):
+            return dataForAlbumAction(action: action)
         default:
             return nil
         }
@@ -221,6 +223,13 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "settings", title: Strings.Localizable.settingsTitle)
         case .resetQR:
             return ContextMenuDataModel(identifier: "resetQR", title: Strings.Localizable.resetQrCode)
+        }
+    }
+    
+    private func dataForAlbumAction(action: AlbumActionEntity) -> ContextMenuDataModel {
+        switch action {
+        case .selectAlbumCover:
+            return ContextMenuDataModel(identifier: "selectAlbumCover", title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover, image: Asset.Images.Album.selectAlbumCover.image)
         }
     }
 }

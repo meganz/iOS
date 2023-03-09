@@ -107,7 +107,7 @@ final class AlbumContentViewModel: ViewModelType {
         guard !(photos.isEmpty && isFavouriteAlbum) else { return nil }
         
         return CMConfigEntity(
-            menuType: .menu(type: .display),
+            menuType: .menu(type: .album),
             sortType: selectedSortOrder.toSortOrderEntity(),
             filterType: selectedFilter.toFilterEntity(),
             albumType: album.type,
