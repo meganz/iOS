@@ -88,6 +88,7 @@ class NodeActionViewController: ActionSheetViewController {
         let nodesCount = nodes.count
         let linkedNodeCount = nodes.publicLinkedNodes().count
         actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
             .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
             .setLinkedNodeCount(linkedNodeCount)
             .setIsAllLinkedNode(linkedNodeCount == nodesCount)
