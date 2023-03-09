@@ -90,6 +90,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             return
         }
         
+        photoAlbumContainerViewModel?.disableSelectBarButton = true
         shouldLoad = true
         createAlbumTask = Task {
             do {
@@ -106,6 +107,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                 MEGALogError("Error creating user album: \(error.localizedDescription)")
             }
             shouldLoad = false
+            photoAlbumContainerViewModel?.disableSelectBarButton = false
         }
     }
     

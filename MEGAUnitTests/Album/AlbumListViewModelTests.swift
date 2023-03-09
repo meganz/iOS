@@ -124,6 +124,21 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.albums, [newUserAlbum, existingUserAlbum])
     }
     
+    func testCreateUserAlbum_whenUserCreatingAnAlbum_setShouldShowSelectBarButtonToFalse() async throws {
+        let newAlbumName = "New Album"
+        let newUserAlbum = AlbumEntity(id: 1, name: newAlbumName, coverNode: nil,
+                                       count: 0, type: .user, modificationTime: try "2023-01-16T11:01:04Z".date)
+        let useCase = MockAlbumListUseCase(albums: [], createdUserAlbums: [newAlbumName: newUserAlbum])
+        
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel(), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+
+        sut.createUserAlbum(with: newAlbumName)
+        XCTAssertTrue(photoAlbumContainerViewModel.disableSelectBarButton)
+        await sut.createAlbumTask?.value
+        XCTAssertFalse(photoAlbumContainerViewModel.disableSelectBarButton)
+    }
+    
     func testNewAlbumName_whenAlbumContainsNoNewAlbum() async {
         let useCase = MockAlbumListUseCase()
         let sut = AlbumListViewModel(usecase: useCase, alertViewModel: alertViewModel())

@@ -12,13 +12,15 @@ extension PhotoAlbumContainerViewController {
             navigationItem.setLeftBarButton(nil, animated: true)
             showToolbar()
         } else {
-            navigationItem.setRightBarButton(selectBarButton, animated: true)
+            navigationItem.setRightBarButton(selectBarButton, animated: false)
             navigationItem.setLeftBarButton(leftBarButton, animated: true)
             hideToolbar()
         }
     }
     
     @objc func toggleEditing(sender: UIBarButtonItem) {
+        guard !viewModel.disableSelectBarButton else { return }
+        
         isEditing = !isEditing
         viewModel.editMode = isEditing ? .active : .inactive
         updateBarButtons()
@@ -40,6 +42,6 @@ extension PhotoAlbumContainerViewController {
             return
         }
         
-        navigationItem.setRightBarButton(viewModel.shouldShowSelectBarButton ? selectBarButton : nil, animated: false)
+        navigationItem.setRightBarButtonItems(viewModel.shouldShowSelectBarButton ? [selectBarButton] : nil, animated: false)
     }
 }
