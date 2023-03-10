@@ -123,8 +123,12 @@ extension CallCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? CallParticipantCell, let participant = cell.participant, let image = avatars[participant.participantId] else { return }
-        cell.setAvatar(image: image)
+        guard let cell = cell as? CallParticipantCell, let participant = cell.participant else { return }
+        
+        if let image = avatars[participant.participantId] {
+            cell.setAvatar(image: image)
+        }
+        
         callCollectionViewDelegate?.participantCellIsVisible(participant, at: indexPath)
         cell.configure(for: participant, in: layoutMode)
     }
