@@ -19,12 +19,11 @@ final class AlbumContentViewModel: ViewModelType {
     
     private let album: AlbumEntity
     private let albumContentsUseCase: AlbumContentsUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
     private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     private let router: AlbumContentRouting
     private var loadingTask: Task<Void, Never>?
-    private var photos = [NodeEntity]()
+    private var photos = [AlbumPhotoEntity]()
     private var subscriptions = Set<AnyCancellable>()
     private var selectedSortOrder: SortOrderType = .newest
     private var selectedFilter: FilterType = .allMedia
@@ -44,7 +43,6 @@ final class AlbumContentViewModel: ViewModelType {
     init(
         album: AlbumEntity,
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
-        mediaUseCase: MediaUseCaseProtocol,
         albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
         router: AlbumContentRouting,
@@ -54,7 +52,6 @@ final class AlbumContentViewModel: ViewModelType {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd
         self.albumContentsUseCase = albumContentsUseCase
-        self.mediaUseCase = mediaUseCase
         self.albumContentModificationUseCase = albumContentModificationUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
         self.router = router
@@ -151,22 +148,22 @@ final class AlbumContentViewModel: ViewModelType {
         }
         switch selectedFilter {
         case .images:
-            return photos.contains(where: { mediaUseCase.isVideo($0.name) })
+            return photos.contains(where: { $0.photo.mediaType == .video })
         case .videos:
-            return photos.contains(where: { mediaUseCase.isImage($0.name) })
+            return photos.contains(where: { $0.photo.mediaType == .image })
         default:
-            let containsImage = photos.contains(where: { mediaUseCase.isImage($0.name) })
-            let containsVideo = photos.contains(where: { mediaUseCase.isVideo($0.name) })
+            let containsImage = photos.contains(where: { $0.photo.mediaType == .image })
+            let containsVideo = photos.contains(where: { $0.photo.mediaType == .video })
             return containsImage && containsVideo
         }
     }
     
-    private var filteredPhotos: [NodeEntity] {
+    private var filteredPhotos: [AlbumPhotoEntity] {
         switch selectedFilter {
         case .images:
-            return photos.filter { mediaUseCase.isImage($0.name) }
+            return photos.filter { $0.photo.mediaType == .image }
         case .videos:
-            return photos.filter { mediaUseCase.isVideo($0.name) }
+            return photos.filter { $0.photo.mediaType == .video }
         default:
             return photos
         }
@@ -175,7 +172,7 @@ final class AlbumContentViewModel: ViewModelType {
     @MainActor
     private func loadNodes() async {
         do {
-            photos = try await albumContentsUseCase.nodes(forAlbum: album)
+            photos = try await albumContentsUseCase.photos(in: album)
             doesPhotoLibraryContainPhotos = photos.isEmpty
             if photos.isEmpty && album.type == .user {
                 doesPhotoLibraryContainPhotos = (try? await photoLibraryUseCase.allPhotos()
@@ -203,7 +200,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     @MainActor
     private func addPhotos(_ photos: [NodeEntity]) async {
-        let photosToAdd = photos.filter { !self.photos.contains($0) }
+        let photosToAdd = photos.filter { photo in !self.photos.contains(where: { photo == $0.photo }) }
         guard photosToAdd.isNotEmpty else {
             return
         }
@@ -219,7 +216,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func showAlbumPhotos() {
-        invokeCommand?(.showAlbumPhotos(photos: filteredPhotos, sortOrder: selectedSortOrder))
+        invokeCommand?(.showAlbumPhotos(photos: filteredPhotos.map { $0.photo }, sortOrder: selectedSortOrder))
     }
         
     private var shouldDismissAlbum: Bool {

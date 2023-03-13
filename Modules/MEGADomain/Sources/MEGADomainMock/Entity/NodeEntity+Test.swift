@@ -36,6 +36,7 @@ public extension NodeEntity {
          shortFormat: Int = .zero,
          codecId: Int = .zero,
          duration: Int = .zero,
+         mediaType: MediaTypeEntity? = nil,
          latitude: Double? = nil,
          longitude: Double? = nil,
          isTesting: Bool = true,
@@ -75,6 +76,7 @@ public extension NodeEntity {
             shortFormat: shortFormat,
             codecId: codecId,
             duration: duration,
+            mediaType: mediaType,
             latitude: latitude,
             longitude: longitude,
             deviceId: deviceId
