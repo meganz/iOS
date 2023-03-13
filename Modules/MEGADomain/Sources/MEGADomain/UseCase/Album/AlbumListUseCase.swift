@@ -71,7 +71,7 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
                                    returning: [AlbumEntity].self) { group in
             albums.forEach { setEntity in
                 group.addTask {
-                    var userAlbumContent = await albumContentsUseCase.userAlbumNodes(by: setEntity.handle)
+                    var userAlbumContent = await albumContentsUseCase.userAlbumPhotos(by: setEntity.handle)
                     let coverNode = await albumCoverNode(forAlbum: setEntity,
                                                          albumContent: &userAlbumContent)
                     return AlbumEntity(id: setEntity.handle,
@@ -167,20 +167,20 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         return albums
     }
     
-    private func albumCoverNode(forAlbum entity: SetEntity, albumContent: inout [NodeEntity]) async -> NodeEntity? {
+    private func albumCoverNode(forAlbum entity: SetEntity, albumContent: inout [AlbumPhotoEntity]) async -> NodeEntity? {
         if entity.coverId != .invalid,
            let albumCoverSetElement = await userAlbumRepository.albumElement(by: entity.handle,
                                                                              elementId: entity.coverId),
-           let albumCover = albumContent.first(where: { $0.handle == albumCoverSetElement.nodeId }) {
-            return albumCover
+           let albumCover = albumContent.first(where: { $0.id == albumCoverSetElement.nodeId }) {
+            return albumCover.photo
         }
         albumContent.sort {
-            if $0.modificationTime == $1.modificationTime {
-                return $0.handle > $1.handle
+            if $0.photo.modificationTime == $1.photo.modificationTime {
+                return $0.id > $1.id
             }
-            return $0.modificationTime > $1.modificationTime
+            return $0.photo.modificationTime > $1.photo.modificationTime
         }
-        return albumContent.first
+        return albumContent.first?.photo
     }
     
     public func hasNoPhotosAndVideos() async -> Bool {

@@ -126,18 +126,19 @@ final class AlbumListUseCaseTests: XCTestCase {
         ]
         let albumElement = SetElementEntity(handle: albumSetCoverId, ownerId: albumId, order: 2,
                                             nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")
-        let expectedNodes = [expectedAlbumCover, NodeEntity(name: "Test.jpg", handle: 50)]
+        let albumPhotos = [AlbumPhotoEntity(photo: expectedAlbumCover, albumPhotoId: albumSetCoverId),
+                             AlbumPhotoEntity(photo: NodeEntity(name: "Test.jpg", handle: 50))]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumElement: albumElement),
             fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
             mediaUseCase: MockMediaUseCase(),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase(nodes: expectedNodes))
+            albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos))
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
         XCTAssertFalse(albums.contains { $0.type != .user})
-        XCTAssertEqual(albums.first?.count, expectedNodes.count)
+        XCTAssertEqual(albums.first?.count, albumPhotos.count)
         XCTAssertEqual(albums.first?.coverNode, expectedAlbumCover)
     }
     
@@ -165,11 +166,14 @@ final class AlbumListUseCaseTests: XCTestCase {
                       modificationTime: Date(), name: "Album 1"),
         ]
         let expectedAlbumCoverNode = NodeEntity(name: "Test 4.mov", handle: 4, modificationTime: try "2023-03-01T06:01:04Z".date)
-        let albumContentNodes = [
-            NodeEntity(name: "Test 1.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
-            NodeEntity(name: "Test 2.mp4", handle: 2, modificationTime: try "2022-08-18T22:01:04Z".date),
-            NodeEntity(name: "Test 3.png", handle: 3, modificationTime: try "2022-08-18T22:01:04Z".date),
-            expectedAlbumCoverNode
+        let albumPhotos = [
+            AlbumPhotoEntity(photo: NodeEntity(name: "Test 1.jpg", handle: 1,
+                                               modificationTime: try "2022-08-18T22:01:04Z".date)),
+            AlbumPhotoEntity(photo: NodeEntity(name: "Test 2.mp4", handle: 2,
+                                               modificationTime: try "2022-08-18T22:01:04Z".date)),
+            AlbumPhotoEntity(photo: NodeEntity(name: "Test 3.png", handle: 3,
+                                               modificationTime: try "2022-08-18T22:01:04Z".date)),
+            AlbumPhotoEntity(photo: expectedAlbumCoverNode)
         ]
         let userRepo = MockUserAlbumRepository(albums: expectedAlbums,
                                                albumElement: nil)
@@ -179,10 +183,10 @@ final class AlbumListUseCaseTests: XCTestCase {
             fileSearchRepository: MockFilesSearchRepository.newRepo,
             mediaUseCase: MockMediaUseCase(),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase(nodes: albumContentNodes))
+            albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos))
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
-        XCTAssertEqual(albums.first?.count, albumContentNodes.count)
+        XCTAssertEqual(albums.first?.count, albumPhotos.count)
         XCTAssertEqual(albums.first?.coverNode, expectedAlbumCoverNode)
     }
     

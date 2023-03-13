@@ -8,75 +8,82 @@ final class AlbumContentUseCaseTests: XCTestCase {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    func testNodesForAlbum_onThumbnailPhotosReturned_shouldReturnGifNodes() async throws {
+    func testPhotosForAlbum_onThumbnailPhotosReturned_shouldReturnGifNodes() async throws {
         let nodes = [
-            NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "sample3.gif", handle: 7, hasThumbnail: false),
-            NodeEntity(name: "test.raw", handle: 3, hasThumbnail: true),
-            NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: true),
-            NodeEntity(name: "test3.png", handle: 5, hasThumbnail: true),
-            NodeEntity(name: "test3.mp4", handle: 6, hasThumbnail: true),
-            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true),
+            NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "sample3.gif", handle: 7, hasThumbnail: false, mediaType: .image),
+            NodeEntity(name: "test.raw", handle: 3, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "test3.png", handle: 5, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "test3.mp4", handle: 6, hasThumbnail: true, mediaType: .video),
+            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true, mediaType: .image),
         ]
         let gifNodes = nodes.filter { $0.name.contains(".gif") }
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name), allPhotos: nodes),
+            mediaUseCase: MockMediaUseCase(gifImageFiles: gifNodes.map(\.name),
+                                           allPhotos: nodes),
             fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
-        let nodesForGifAlbum = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif))
-        XCTAssertEqual(nodesForGifAlbum, gifNodes.filter { $0.hasThumbnail })
+        let result = try await sut.photos(in: AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif))
+        let expectedResult = gifNodes.filter { $0.hasThumbnail }.map { AlbumPhotoEntity(photo: $0) }
+        XCTAssertEqual(result, expectedResult)
     }
     
-    func testNodesForAlbum_onThumbnailPhotosReturned_shouldReturnRawNodes() async throws {
+    func testPhotosForAlbum_onThumbnailPhotosReturned_shouldReturnRawNodes() async throws {
         let nodes = [
-            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true),
-            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false),
-            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true),
-            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
-            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
-            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true),
+            NodeEntity(name: "sample1.raw", handle: 1, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "sample2.raw", handle: 6, hasThumbnail: false, mediaType: .image),
+            NodeEntity(name: "test2.jpg", handle: 3, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true, mediaType: .video),
         ]
         let rawImageNodes = nodes.filter { $0.name.contains(".raw") }
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name), allPhotos: nodes),
+            mediaUseCase: MockMediaUseCase(rawImageFiles: rawImageNodes.map(\.name),
+                                           allPhotos: nodes),
             fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
-        let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
-        XCTAssertEqual(result, rawImageNodes.filter { $0.hasThumbnail })
+        let result = try await sut.photos(in: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 1, type: .raw))
+        let expectedResult = rawImageNodes.filter { $0.hasThumbnail }.map { AlbumPhotoEntity(photo: $0) }
+        XCTAssertEqual(result, expectedResult)
     }
     
-    func testNodesForAlbum_onThumbnailPhotosReturned_onlyFavouritesAreReturned() async throws {
-        let expectedPhotoNode = NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true, isFavourite: true)
-        let expectedVideoNode = NodeEntity(name: "test.mp4", handle: 1, hasThumbnail: true, isFavourite: true)
-        
+    func testPhotosForAlbum_onThumbnailPhotosReturned_onlyFavouritesAreReturned() async throws {
+        let expectedPhotoNode = NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true, isFavourite: true, mediaType: .image)
+        let expectedVideoNode = NodeEntity(name: "test.mp4", handle: 1, hasThumbnail: true, isFavourite: true, mediaType: .video)
+        let photoNodes = [
+            expectedPhotoNode,
+            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "sample3.gif", handle: 2, hasThumbnail: false, mediaType: .image)
+        ]
+        let videoNodes = [
+            NodeEntity(name: "test-2.mp4", handle: 2, hasThumbnail: true, mediaType: .video),
+            expectedVideoNode,
+            NodeEntity(name: "test-3.mp4", handle: 2, hasThumbnail: false, mediaType: .video)
+        ]
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(isGifImage: true, allPhotos: [
-                expectedPhotoNode,
-                NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true),
-                NodeEntity(name: "sample3.gif", handle: 2, hasThumbnail: false)
-            ], allVideos: [
-                NodeEntity(name: "test-2.mp4", handle: 2, hasThumbnail: true),
-                expectedVideoNode,
-                NodeEntity(name: "test-3.mp4", handle: 2, hasThumbnail: false)
-            ]),
+            mediaUseCase: MockMediaUseCase(allPhotos: photoNodes,
+                                           allVideos: videoNodes),
             fileSearchRepo: MockFilesSearchRepository.newRepo,
             userAlbumRepo: MockUserAlbumRepository.newRepo
         )
-        let result = try await sut.nodes(forAlbum: AlbumEntity(id: 1, name: "Fav", coverNode: NodeEntity(handle: 2), count: 1, type: .favourite))
-        XCTAssertEqual(result, [expectedPhotoNode, expectedVideoNode])
+        let result = try await sut.photos(in: AlbumEntity(id: 1, name: "Fav", coverNode: NodeEntity(handle: 2), count: 1, type: .favourite))
+        XCTAssertEqual(result, [AlbumPhotoEntity(photo: expectedPhotoNode),
+                                AlbumPhotoEntity(photo: expectedVideoNode)])
     }
     
-    func testNodesForAlbum_onThumbnailPhotosReturned_onlyUserAlbumContentsShouldReturn() async throws {
+    func testPhotosForAlbum_onThumbnailPhotosReturned_onlyUserAlbumContentsShouldReturn() async throws {
         let handle1 = HandleEntity(1)
         let handle2 = HandleEntity(2)
         let name1 = "sample1.png"
-        let name2 = "sample2.png"
+        let name2 = "sample2.mp4"
         let albumId = HandleEntity(1)
         let albumName = "New Album"
         
@@ -85,20 +92,23 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let element2 = SetElementEntity(handle: handle2, ownerId: albumId, order: 2, nodeId: handle2, modificationTime: Date(), name: name2)
         
         let album = AlbumEntity(id: albumId, name: albumName, coverNode: NodeEntity(handle: 1), count: 1, type: .user)
-        let node1 = NodeEntity(name: name1, handle: handle1, hasThumbnail: true)
-        let node2 = NodeEntity(name: name2, handle: handle2, hasThumbnail: true)
+        let node1 = NodeEntity(name: name1, handle: handle1, hasThumbnail: true, mediaType: .image)
+        let node2 = NodeEntity(name: name2, handle: handle2, hasThumbnail: true, mediaType: .video)
         
         let userAlbumRepo = MockUserAlbumRepository(albums: [set], albumContent: [1 : [element1, element2]])
         
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(isGifImage: true),
+            mediaUseCase: MockMediaUseCase(),
             fileSearchRepo: MockFilesSearchRepository(photoNodes: [node1, node2]),
             userAlbumRepo: userAlbumRepo
         )
         
-        let result = try await sut.nodes(forAlbum: album)
-        XCTAssertEqual(result.count, 2)
+        let result = try await sut.photos(in: album)
+        XCTAssertEqual(result, [
+            AlbumPhotoEntity(photo: node1, albumPhotoId: handle1),
+            AlbumPhotoEntity(photo: node2, albumPhotoId: handle2),
+        ])
     }
     
     func testAlbumReloadPublisher_onNonUserAlbum_shouldOnlyReloadOnAlbumReloadPublisher() {
@@ -153,7 +163,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func testUserAlbumNodes_onAlbumContentLoaded_shouldReturnNodes() async {
+    func testUserAlbumPhotos_onAlbumContentLoaded_shouldReturnNodes() async {
         let albumId: HandleEntity = 5
         let handle1 = HandleEntity(1)
         let handle2 = HandleEntity(2)
@@ -162,20 +172,21 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let element2 = SetElementEntity(handle: handle2, ownerId: albumId,
                                         order: 2, nodeId: handle2, modificationTime: Date(), name: "")
         let setElements = [element1, element2]
-        let contents = [
-            NodeEntity(name: "Test.jpg", handle: handle1),
-            NodeEntity(name: "Test2.png", handle: handle2)
-        ]
+        let imageNode =  NodeEntity(name: "Test.jpg", handle: handle1, mediaType: .image)
+        let videoNode =   NodeEntity(name: "Test.mp4", handle: handle2, mediaType: .video)
         let userAlbumRepo = MockUserAlbumRepository(albumContent: [albumId: setElements])
         
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,
-            mediaUseCase: MockMediaUseCase(isGifImage: true),
-            fileSearchRepo: MockFilesSearchRepository(photoNodes: contents),
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: [imageNode, videoNode]),
             userAlbumRepo: userAlbumRepo
         )
-        
-        let result = await sut.userAlbumNodes(by: albumId)
-        XCTAssertEqual(result, contents)
+        let expectedResult = [
+            AlbumPhotoEntity(photo: imageNode, albumPhotoId: element1.id),
+            AlbumPhotoEntity(photo: videoNode, albumPhotoId: element2.id),
+        ]
+        let result = await sut.userAlbumPhotos(by: albumId)
+        XCTAssertEqual(result, expectedResult)
     }
 }

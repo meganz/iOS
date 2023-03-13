@@ -26,6 +26,7 @@
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
 		0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */; };
 		0E32FFB2293E896A004BB11D /* NodeUpdateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */; };
+		0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
@@ -2523,6 +2524,7 @@
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
 		0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepositoryTests.swift; sourceTree = "<group>"; };
 		0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepository.swift; sourceTree = "<group>"; };
+		0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEntityMapppingTests.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
@@ -10940,6 +10942,7 @@
 				9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */,
 				B6FB5F8329A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift */,
 				B6FB5F8529A437CE0023BA6A /* UserEntityMapperTests.swift */,
+				0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */,
 			);
 			path = "Model Mapping";
 			sourceTree = "<group>";
@@ -14089,6 +14092,7 @@
 				6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
+				0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				B622D8AA2966CEF400C265C4 /* ThumbnailTypeEntityMappingTests.swift in Sources */,

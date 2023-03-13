@@ -2,12 +2,12 @@ import Combine
 
 public protocol AlbumContentsUseCaseProtocol {
     func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
-    func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
-    func userAlbumNodes(by id: HandleEntity) async -> [NodeEntity]
+    func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity]
+    func userAlbumPhotos(by id: HandleEntity) async -> [AlbumPhotoEntity]
 }
 
-public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
-    private var albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol
+public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
+    private let albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol
     private let mediaUseCase: MediaUseCaseProtocol
     private let fileSearchRepo: FilesSearchRepositoryProtocol
     private let userAlbumRepo: UserAlbumRepositoryProtocol
@@ -36,26 +36,35 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         return albumContentsRepo.albumReloadPublisher
     }
     
-    public func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
+    public func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity] {
         if album.systemAlbum {
-            return try await filter(forAlbum: album)
+            return try await filter(forAlbum: album).compactMap {
+                guard $0.mediaType != nil else {
+                    return nil
+                }
+                return AlbumPhotoEntity(photo: $0)
+            }
         } else {
-            return await userAlbumNodes(by: album.id)
+            return await userAlbumPhotos(by: album.id)
         }
     }
     
-    public func userAlbumNodes(by id: HandleEntity) async -> [NodeEntity] {
-        await withTaskGroup(of: NodeEntity?.self) { group in
-            let nodeIds = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
-                .map { $0.nodeId }
-            nodeIds.forEach { handle in
-                group.addTask { [weak self] in
-                    await self?.fileSearchRepo.node(by: handle)
+    public func userAlbumPhotos(by id: HandleEntity) async -> [AlbumPhotoEntity] {
+        await withTaskGroup(of: AlbumPhotoEntity?.self) { group in
+            let albumContent = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
+            albumContent.forEach { setElement in
+                group.addTask {
+                    guard let photo = await fileSearchRepo.node(by: setElement.nodeId),
+                          photo.mediaType != nil else {
+                        return nil
+                    }
+                    return AlbumPhotoEntity(photo: photo,
+                                            albumPhotoId: setElement.id)
                 }
             }
             
-            return await group.reduce(into: [NodeEntity](), {
-                if let node = $1 { $0.append(node) }
+            return await group.reduce(into: [AlbumPhotoEntity](), {
+                if let photo = $1 { $0.append(photo) }
             })
         }
     }

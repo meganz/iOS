@@ -75,6 +75,7 @@ fileprivate extension NodeEntity {
             shortFormat                        : node.shortFormat,
             codecId                            : node.videoCodecId,
             duration                           : node.duration,
+            mediaType                          : node.name?.toMediaTypeEntity(),
 
             // MARK: - Photo
             latitude                           : node.latitude?.doubleValue,
@@ -83,5 +84,18 @@ fileprivate extension NodeEntity {
             // MARK: - Backup
             deviceId                           : node.deviceId
         )
+    }
+}
+
+fileprivate extension String {
+    func toMediaTypeEntity() -> MediaTypeEntity? {
+        let pathExtension = URL(fileURLWithPath: self).pathExtension.lowercased()
+        if ImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) ||
+            RawImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) {
+            return .image
+        } else if  VideoFileExtensionEntity().videoSupportedExtensions.contains(pathExtension) {
+            return .video
+        }
+        return nil
     }
 }
