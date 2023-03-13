@@ -233,6 +233,6 @@ extension NodeActionViewControllerGenericDelegate: NodeInfoViewControllerDelegat
     func nodeInfoViewController(
         _ nodeInfoViewController: NodeInfoViewController,
         presentParentNode node: MEGANode) {
-
+        node.navigateToParentAndPresent()
     }
 }
