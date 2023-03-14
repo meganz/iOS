@@ -13,6 +13,6 @@ final class ShareUseCaseTests: XCTestCase {
         let sut = ShareUseCase(repo: mockRepo)
         
         let nodeEntityResultHandles = try await sut.createShareKeys(forNodes: mockNodeEntities)
-        XCTAssertTrue(Set(nodeEntityResultHandles) == Set(mockRepo.sharedNodeHandles))
+        XCTAssertTrue(Set(nodeEntityResultHandles) == Set(mockNodeEntities.map(\.handle)))
     }
 }
