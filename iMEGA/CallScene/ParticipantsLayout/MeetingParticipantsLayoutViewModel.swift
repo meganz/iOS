@@ -162,7 +162,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     )
     
     private let tonePlayer = TonePlayer()
-    private var namesFetchingTask: Task<Void, Never>?
+    var namesFetchingTask: Task<Void, Never>?
 
     private var reconnecting1on1Subscription: AnyCancellable?
 

@@ -4,6 +4,10 @@ import MEGAPresentation
 
 extension XCTestCase {
     func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 1.0) where T.Command: Equatable {
+        test(viewModel: viewModel, actions: [action], expectedCommands: expectedCommands)
+    }
+    
+    func test<T: ViewModelType>(viewModel: T, actions: [T.Action], expectedCommands: [T.Command], timeout: TimeInterval = 1.0) where T.Command: Equatable {
         var expectedCommands = expectedCommands
         var viewModel = viewModel
         
@@ -27,8 +31,26 @@ extension XCTestCase {
             }
         }
         
-        // Dispatch action
-        viewModel.dispatch(action)
+        // Dispatch actions
+        for action in actions {
+            viewModel.dispatch(action)
+        }
+        
+        wait(for: [commandExpectation], timeout: timeout)
+    }
+    
+    func test<T: ViewModelType>(viewModel: T, actions: [T.Action], relaysCommand: T.Command, timeout: TimeInterval = 1.0) where T.Command: Equatable {
+        var viewModel = viewModel
+        let commandExpectation = expectation(description: "relays command")
+        viewModel.invokeCommand = { command in
+            if command == relaysCommand {
+                commandExpectation.fulfill()
+            }
+        }
+        
+        for action in actions {
+            viewModel.dispatch(action)
+        }
         
         wait(for: [commandExpectation], timeout: timeout)
     }

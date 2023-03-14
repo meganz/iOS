@@ -278,27 +278,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        
-        let addedParticipantResult: (addedParticipantCount: Int,
-                                     addedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
-                        continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
-                    default:
-                        break
-                    }
-                }
-                
-                handleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.addParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(addedParticipantResult.addedParticipantCount, handleNamePairArray.count, "Added participants count must match")
-        XCTAssertEqual(addedParticipantResult.addedParticipantNames, handleNamePairArray.map(\.name), "Added participants list must match")
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
+                                                      removedParticipantCount: 0 ,
+                                                      addedParticipantNames: handleNamePairArray.map(\.name),
+                                                      removedParticipantNames: [],
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_TwoParticipantsAdded() async throws {
@@ -327,27 +315,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        
-        let addedParticipantResult: (addedParticipantCount: Int,
-                                     addedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
-                        continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
-                    default:
-                        break
-                    }
-                }
-                
-                handleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.addParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(addedParticipantResult.addedParticipantCount, handleNamePairArray.count, "Added participants count must match")
-        XCTAssertEqual(addedParticipantResult.addedParticipantNames, handleNamePairArray.map(\.name), "Added participants list must match")
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
+                                                      removedParticipantCount: 0 ,
+                                                      addedParticipantNames: handleNamePairArray.map(\.name),
+                                                      removedParticipantNames: [],
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_MultipleParticipantsAdded() async throws {
@@ -376,27 +352,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        
-        let addedParticipantResult: (addedParticipantCount: Int,
-                                     addedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(let addedParticipantCount, _ , let addedParticipantNames, _, _):
-                        continuation.resume(returning: (addedParticipantCount: addedParticipantCount, addedParticipantNames: addedParticipantNames))
-                    default:
-                        break
-                    }
-                }
-                
-                handleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.addParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(addedParticipantResult.addedParticipantCount, handleNamePairArray.count, "Added participants count must match")
-        XCTAssertEqual(addedParticipantResult.addedParticipantNames, Array(handleNamePairArray.map(\.name).prefix(1)), "Only first participant name must be returned")
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
+                                                      removedParticipantCount: 0 ,
+                                                      addedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
+                                                      removedParticipantNames: [],
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_singleParticipantsRemoved() async throws {
@@ -425,26 +389,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        let removedParticipantResult: (removedParticipantCount: Int,
-                                       removedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
-                        continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
-                    default:
-                        break
-                    }
-                }
-                
-                handleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.removeParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(removedParticipantResult.removedParticipantCount, handleNamePairArray.count, "Removed participants count must match")
-        XCTAssertEqual(removedParticipantResult.removedParticipantNames, handleNamePairArray.map(\.name), "Removed participants list must match")
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: 0,
+                                                      removedParticipantCount: handleNamePairArray.count,
+                                                      addedParticipantNames: [],
+                                                      removedParticipantNames: handleNamePairArray.map(\.name),
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_TwoParticipantsRemoved() async throws {
@@ -473,26 +426,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        let removedParticipantResult: (removedParticipantCount: Int,
-                                       removedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
-                        continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
-                    default:
-                        break
-                    }
-                }
-                
-                handleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.removeParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(removedParticipantResult.removedParticipantCount, handleNamePairArray.count, "Removed participants count must match")
-        XCTAssertEqual(removedParticipantResult.removedParticipantNames, handleNamePairArray.map(\.name), "Removed participants list must match")
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: 0,
+                                                      removedParticipantCount: handleNamePairArray.count,
+                                                      addedParticipantNames: [],
+                                                      removedParticipantNames: handleNamePairArray.map(\.name),
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_MultipleParticipantsRemoved() async throws {
@@ -521,26 +463,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        let removedParticipantResult: (removedParticipantCount: Int,
-                                       removedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(_ , let removedParticipantCount , _, let removedParticipantNames, _):
-                        continuation.resume(returning: (removedParticipantCount: removedParticipantCount, removedParticipantNames: removedParticipantNames))
-                    default:
-                        break
-                    }
-                }
-                
-                handleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.removeParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(removedParticipantResult.removedParticipantCount, handleNamePairArray.count, "Removed participants count must match")
-        XCTAssertEqual(removedParticipantResult.removedParticipantNames, Array(handleNamePairArray.map(\.name).prefix(1)), "Only first participant name must be returned")
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: 0,
+                                                      removedParticipantCount: handleNamePairArray.count,
+                                                      addedParticipantNames: [],
+                                                      removedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_SingleParticipantsAddedAndRemovedAtTheSameTime() async throws {
@@ -553,7 +484,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase()
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
-
+        
         let viewModel = MeetingParticipantsLayoutViewModel(
             router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
@@ -570,43 +501,17 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        let participantResult: (addedParticipantCount: Int,
-                                removedParticipantCount: Int,
-                                addedParticipantNames: [String],
-                                removedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(let addedParticipantCount,
-                                                    let removedParticipantCount,
-                                                    let addedParticipantNames,
-                                                    let removedParticipantNames,
-                                                    _):
-                        continuation.resume(
-                            returning: (addedParticipantCount: addedParticipantCount,
-                                        removedParticipantCount: removedParticipantCount,
-                                        addedParticipantNames: addedParticipantNames,
-                                        removedParticipantNames: removedParticipantNames)
-                        )
-                    default:
-                        break
-                    }
-                }
-                
-                addedHandleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.addParticipant(withHandle: handleNamePair.handle))
-                }
-                
-                removedHandleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.removeParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(participantResult.addedParticipantCount, 1, "Added participants count must match")
-        XCTAssertEqual(participantResult.removedParticipantCount, 1, "Removed participants count must match")
-        XCTAssertEqual(participantResult.addedParticipantNames, addedHandleNamePairArray.map(\.name), "Participant name must be returned")
-        XCTAssertEqual(participantResult.removedParticipantNames, removedHandleNamePairArray.map(\.name), "Participant name must be returned")
+        let addActions = addedHandleNamePairArray.map { CallViewAction.addParticipant(withHandle: $0.handle) }
+        let removeActions = removedHandleNamePairArray.map { CallViewAction.removeParticipant(withHandle: $0.handle) }
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: addActions + removeActions,
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: 1,
+                                                      removedParticipantCount: 1,
+                                                      addedParticipantNames: addedHandleNamePairArray.map(\.name),
+                                                      removedParticipantNames: removedHandleNamePairArray.map(\.name),
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_TwoParticipantsAddedAndRemovedAtTheSameTime() async throws {
@@ -636,43 +541,17 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        let participantResult: (addedParticipantCount: Int,
-                                removedParticipantCount: Int,
-                                addedParticipantNames: [String],
-                                removedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(let addedParticipantCount,
-                                                    let removedParticipantCount,
-                                                    let addedParticipantNames,
-                                                    let removedParticipantNames,
-                                                    _):
-                        continuation.resume(
-                            returning: (addedParticipantCount: addedParticipantCount,
-                                        removedParticipantCount: removedParticipantCount,
-                                        addedParticipantNames: addedParticipantNames,
-                                        removedParticipantNames: removedParticipantNames)
-                        )
-                    default:
-                        break
-                    }
-                }
-                
-                addedHandleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.addParticipant(withHandle: handleNamePair.handle))
-                }
-                
-                removedHandleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.removeParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(participantResult.addedParticipantCount, addedHandleNamePairArray.count, "Added participants count must match")
-        XCTAssertEqual(participantResult.removedParticipantCount, removedHandleNamePairArray.count, "Removed participants count must match")
-        XCTAssertEqual(participantResult.addedParticipantNames, addedHandleNamePairArray.map(\.name), "Participant name must be returned")
-        XCTAssertEqual(participantResult.removedParticipantNames, removedHandleNamePairArray.map(\.name), "Participant name must be returned")
+        let addActions = addedHandleNamePairArray.map { CallViewAction.addParticipant(withHandle: $0.handle) }
+        let removeActions = removedHandleNamePairArray.map { CallViewAction.removeParticipant(withHandle: $0.handle) }
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: addActions + removeActions,
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: addedHandleNamePairArray.count,
+                                                      removedParticipantCount: removedHandleNamePairArray.count,
+                                                      addedParticipantNames: addedHandleNamePairArray.map(\.name),
+                                                      removedParticipantNames: removedHandleNamePairArray.map(\.name),
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testAction_MultipleParticipantsAddedAndRemovedAtTheSameTime() async throws {
@@ -702,43 +581,17 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         
         viewModel.dispatch(.onViewLoaded)
-        let participantResult: (addedParticipantCount: Int,
-                                removedParticipantCount: Int,
-                                addedParticipantNames: [String],
-                                removedParticipantNames: [String]) = try await TimeoutTask(duration: 10) {
-            await withCheckedContinuation { continuation in
-                viewModel.invokeCommand = { command in
-                    switch command {
-                    case .participantsStatusChanged(let addedParticipantCount,
-                                                    let removedParticipantCount,
-                                                    let addedParticipantNames,
-                                                    let removedParticipantNames,
-                                                    _ ):
-                        continuation.resume(
-                            returning: (addedParticipantCount: addedParticipantCount,
-                                        removedParticipantCount: removedParticipantCount,
-                                        addedParticipantNames: addedParticipantNames,
-                                        removedParticipantNames: removedParticipantNames)
-                        )
-                    default:
-                        break
-                    }
-                }
-                
-                addedHandleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.addParticipant(withHandle: handleNamePair.handle))
-                }
-                
-                removedHandleNamePairArray.forEach { handleNamePair in
-                    viewModel.dispatch(.removeParticipant(withHandle: handleNamePair.handle))
-                }
-            }
-        }.value
-        
-        XCTAssertEqual(participantResult.addedParticipantCount, addedHandleNamePairArray.count, "Added participants count must match")
-        XCTAssertEqual(participantResult.removedParticipantCount, removedHandleNamePairArray.count, "Removed participants count must match")
-        XCTAssertEqual(participantResult.addedParticipantNames, Array(addedHandleNamePairArray.map(\.name).prefix(1)), "Participant name must be returned")
-        XCTAssertEqual(participantResult.removedParticipantNames, Array(removedHandleNamePairArray.map(\.name).prefix(1)), "Participant name must be returned")
+        let addActions = addedHandleNamePairArray.map { CallViewAction.addParticipant(withHandle: $0.handle) }
+        let removeActions = removedHandleNamePairArray.map { CallViewAction.removeParticipant(withHandle: $0.handle) }
+        await verifyParticipantsStatus(
+            viewModel: viewModel,
+            actions: addActions + removeActions,
+            relaysCommand: .participantsStatusChanged(addedParticipantCount: addedHandleNamePairArray.count,
+                                                      removedParticipantCount: removedHandleNamePairArray.count,
+                                                      addedParticipantNames: Array(addedHandleNamePairArray.map(\.name).prefix(1)),
+                                                      removedParticipantNames: Array(removedHandleNamePairArray.map(\.name).prefix(1)),
+                                                      isOnlyMyselfRemainingInTheCall: false)
+        )
     }
     
     func testCallback_outgoingRingingStop_hangOneToOne() {
@@ -885,6 +738,24 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
         userUseCase.avatarChangePublisher.send([100])
         waitForExpectations(timeout: 20)
+    }
+    
+    private func verifyParticipantsStatus(viewModel: MeetingParticipantsLayoutViewModel, actions: [CallViewAction], relaysCommand: MeetingParticipantsLayoutViewModel.Command) async {
+        let nameExpectation = expectation(description: "Wait for names fetching task")
+        let commandExpectation = expectation(description: "Relays command")
+        viewModel.invokeCommand = { command in
+            if command == relaysCommand {
+                commandExpectation.fulfill()
+            }
+        }
+        
+        for action in actions {
+            viewModel.dispatch(action)
+        }
+        
+        _ = XCTWaiter.wait(for: [nameExpectation], timeout: 2)
+        await viewModel.namesFetchingTask?.value
+        wait(for: [commandExpectation], timeout: 1)
     }
 }
 
