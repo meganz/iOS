@@ -37,6 +37,11 @@ public protocol NodeActionUseCaseProtocol {
     ///   - toParent: new parent for the node
     /// - Returns: the node moved
     func move(node: NodeEntity, toParent: NodeEntity) async throws -> NodeEntity
+    
+    /// Remove the nodes link from the MEGA account
+    /// - Parameters:
+    ///   - nodes: nodes to remove its links
+    func removeLink(nodes: [NodeEntity]) async throws
 }
 
 public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProtocol {
@@ -72,5 +77,9 @@ public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseC
     
     public func move(node: NodeEntity, toParent: NodeEntity) async throws -> NodeEntity {
         try await repo.move(node: node, toParent: toParent)
+    }
+    
+    public func removeLink(nodes: [NodeEntity]) async throws {
+        try await repo.removeLink(nodes: nodes)
     }
 }

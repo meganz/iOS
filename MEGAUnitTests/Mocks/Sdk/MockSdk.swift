@@ -235,4 +235,16 @@ final class MockSdk: MEGASdk {
         let mockRequest = MockRequest(handle: 1)
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
+    
+    override func disableExport(_ node: MEGANode, delegate: MEGARequestDelegate) {
+        nodes = nodes.compactMap { currentNode in
+            if currentNode.handle == node.handle {
+                return MockNode(handle: node.handle, isNodeExported: false)
+            }
+            return currentNode
+        }
+        
+        let mockRequest = MockRequest(handle: 1)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
 }

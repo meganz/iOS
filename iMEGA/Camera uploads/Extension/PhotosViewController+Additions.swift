@@ -41,8 +41,17 @@ extension PhotosViewController {
     }
     
     func handleRemoveLinks(for nodes: [MEGANode]) {
-        nodes.publicLinkedNodes().mnz_removeLinks()
-        toggleEditing()
+        ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+            SVProgressHUD.show()
+        }, onActionFinish: { [weak self] result in
+            self?.toggleEditing()
+            switch result {
+            case .success(let message):
+                SVProgressHUD.showSuccess(withStatus: message)
+            case .failure:
+                SVProgressHUD.dismiss()
+            }
+        }).start()
     }
     
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {

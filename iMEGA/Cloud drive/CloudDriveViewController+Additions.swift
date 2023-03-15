@@ -96,10 +96,6 @@ extension CloudDriveViewController {
         
         toolbarActions(for: shareType, isBackupNode: isBackupNode)
     }
-    
-    @objc func removeLinksForNodes(_ nodes: [MEGANode]) {
-        nodes.publicLinkedNodes().mnz_removeLinks()
-    }
 
     @objc func updateParentNodeIfNeeded(_ updatedNodeList: MEGANodeList) {
         guard let updatedParentNode = updatedParentNodeIfBelongs(updatedNodeList) else { return }

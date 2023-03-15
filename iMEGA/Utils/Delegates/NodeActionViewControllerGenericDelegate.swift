@@ -55,7 +55,16 @@ final class NodeActionViewControllerGenericDelegate:
             showLink(for: node)
             
         case .removeLink:
-            node.mnz_removeLink()
+            ActionWarningViewRouter(presenter: viewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+                SVProgressHUD.show()
+            }, onActionFinish: {
+                switch $0 {
+                case .success(let message):
+                    SVProgressHUD.showSuccess(withStatus: message)
+                case .failure:
+                    SVProgressHUD.dismiss()
+                }
+            }).start()
             
         case .moveToRubbishBin:
             node.mnz_moveToTheRubbishBin { }

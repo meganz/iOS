@@ -26,8 +26,12 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             showSendToChat(nodes)
             setEditMode(false)
         case .removeLink:
-            removeLinksForNodes(nodes)
-            setEditMode(false)
+            ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+                SVProgressHUD.show()
+            }, onActionFinish: { [weak self] result in
+                self?.setEditMode(false)
+                self?.showRemoveLinkResultMessage(result)
+            }).start()
         case .saveToPhotos:
             saveToPhotos(nodes: nodes.toNodeEntities())
         default:
@@ -63,7 +67,11 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .rename:
             node.mnz_renameNode(in: self)
         case .removeLink:
-            node.mnz_removeLink()
+            ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+                SVProgressHUD.show()
+            }, onActionFinish: { [weak self] result in
+                self?.showRemoveLinkResultMessage(result)
+            }).start()
         case .moveToRubbishBin:
             moveToRubbishBin(for: node)
         case .remove:
@@ -129,6 +137,15 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
                     SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
                 }
             }
+        }
+    }
+    
+    private func showRemoveLinkResultMessage(_ result: Result<String, RemoveLinkErrorEntity>) {
+        switch result {
+        case .success(let message):
+            SVProgressHUD.showSuccess(withStatus: message)
+        case .failure:
+            SVProgressHUD.dismiss()
         }
     }
 }

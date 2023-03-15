@@ -1272,7 +1272,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
             
         case MegaNodeActionTypeRemoveLink:
-            [node mnz_removeLink];
+            [self showRemoveLinkWarning:node];
             break;
             
         case MegaNodeActionTypeSendToChat:

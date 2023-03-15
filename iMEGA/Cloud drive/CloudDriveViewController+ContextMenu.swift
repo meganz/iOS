@@ -144,7 +144,16 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 }
             }
         case .removeLink:
-            parentNode.mnz_removeLink()
+            ActionWarningViewRouter(presenter: self, nodes: [parentNode.toNodeEntity()], actionType: .removeLink, onActionStart: {
+                SVProgressHUD.show()
+            }, onActionFinish: {
+                switch $0 {
+                case .success(let message):
+                    SVProgressHUD.showSuccess(withStatus: message)
+                case .failure:
+                    SVProgressHUD.dismiss()
+                }
+            }).start()
         }
         
         if #available(iOS 14, *), needToRefreshMenu {

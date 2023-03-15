@@ -116,8 +116,18 @@ final class HomeRouter: HomeRouterProtocol {
         case .linkManagement(let node):
             nodeLinkManagementRouter.showLinkManagement(for: node)
         case .removeLink(let node):
-            nodeLinkManagementRouter.showRemoveLink(for: node)
-
+            
+            guard let navigationController else { return }
+            ActionWarningViewRouter(presenter: navigationController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+                SVProgressHUD.show()
+            }, onActionFinish: {
+                switch $0 {
+                case .success(let message):
+                    SVProgressHUD.showSuccess(withStatus: message)
+                case .failure:
+                    SVProgressHUD.dismiss()
+                }
+            }).start()
         // MARK: - Node Copy & Move & Delete & Edit
         case .copy(let node):
             nodeManageRouter.showCopyDestination(for: node)
