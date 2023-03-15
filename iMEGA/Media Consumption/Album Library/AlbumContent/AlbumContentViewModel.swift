@@ -7,6 +7,7 @@ enum AlbumContentAction: ActionType {
     case onViewReady
     case changeSortOrder(SortOrderType)
     case changeFilter(FilterType)
+    case showAlbumCoverPicker
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -17,7 +18,7 @@ final class AlbumContentViewModel: ViewModelType {
         case updateNavigationTitle
     }
     
-    private let album: AlbumEntity
+    private var album: AlbumEntity
     private let albumContentsUseCase: AlbumContentsUseCaseProtocol
     private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
@@ -37,6 +38,7 @@ final class AlbumContentViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     var renameAlbumTask: Task<Void, Never>?
+    var selectAlbumCoverTask: Task<Void, Never>?
     
     // MARK: - Init
     
@@ -75,6 +77,8 @@ final class AlbumContentViewModel: ViewModelType {
             updateSortOrder(sortOrder)
         case .changeFilter(let filter):
             updateFilter(filter)
+        case .showAlbumCoverPicker:
+            showAlbumCoverPicker()
         }
     }
     
@@ -264,5 +268,25 @@ final class AlbumContentViewModel: ViewModelType {
     private func onAlbumRenameSuccess(with newName: String) {
         albumName = newName
         invokeCommand?(.updateNavigationTitle)
+    }
+    
+    private func updateAlbumCover(photo: NodeEntity) {
+        selectAlbumCoverTask = Task { [weak self] in
+            do {
+                let _ = try await albumContentModificationUseCase.updateAlbumCover(album: album.id, withNode: photo.id)
+                album.coverNode = photo
+                
+                let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated
+                self?.invokeCommand?(.showHud(message))
+            } catch {
+                MEGALogError("Error updating user album cover: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func showAlbumCoverPicker()  {
+        router.showAlbumCoverPicker(album: album, completion: { [weak self] _, coverPhoto in
+            self?.updateAlbumCover(photo: coverPhoto)
+        })
     }
 }

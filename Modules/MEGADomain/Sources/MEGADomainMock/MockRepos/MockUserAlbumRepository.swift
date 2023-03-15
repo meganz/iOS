@@ -43,7 +43,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func updateAlbumName(_ name: String, _ id: HandleEntity) async throws -> String {
-        ""
+        name
     }
     
     public func deleteAlbum(by id: HandleEntity) async throws -> HandleEntity {
@@ -67,6 +67,6 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
-        HandleEntity(1)
+        elementId
     }
 }

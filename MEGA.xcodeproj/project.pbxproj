@@ -223,6 +223,7 @@
 		3296053E288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */; };
 		3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */; };
 		3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */; };
+		32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4350729C155FE00DB8581 /* SingleSelectionCheckmarkView.swift */; };
 		32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A9DECD28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift */; };
 		32B0722928A4E0B5002BAE34 /* SlideShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */; };
 		32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */; };
@@ -236,6 +237,13 @@
 		32D167EC294C555F008C5ED6 /* CreateAlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */; };
 		32EC27C429B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */; };
 		32EC27C629B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27C529B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift */; };
+		32EC27FD29B987D200D1D18D /* AlbumCoverPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27FC29B987D200D1D18D /* AlbumCoverPickerView.swift */; };
+		32EC27FF29B987E300D1D18D /* AlbumCoverPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27FE29B987E300D1D18D /* AlbumCoverPickerViewModel.swift */; };
+		32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC280029B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift */; };
+		32EC280329B9E62000D1D18D /* AlbumCoverPickerPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC280229B9E62000D1D18D /* AlbumCoverPickerPhotoCell.swift */; };
+		32EC280529B9F1BA00D1D18D /* AlbumCoverPickerPhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC280429B9F1BA00D1D18D /* AlbumCoverPickerPhotoCellViewModel.swift */; };
+		32EC280729B9FA2B00D1D18D /* AlbumCoverPickerPhotoSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC280629B9FA2B00D1D18D /* AlbumCoverPickerPhotoSelection.swift */; };
+		32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC282029BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift */; };
 		32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */; };
 		32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */; };
 		32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */; };
@@ -2725,6 +2733,7 @@
 		3296053D288A4AF0008E2A37 /* PhotoLibraryFilterViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterViewModelTest.swift; sourceTree = "<group>"; };
 		3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentViewModelTests.swift; sourceTree = "<group>"; };
 		3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellViewModelTests.swift; sourceTree = "<group>"; };
+		32A4350729C155FE00DB8581 /* SingleSelectionCheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSelectionCheckmarkView.swift; sourceTree = "<group>"; };
 		32A9DECD28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoBrowserDataProvider.swift; sourceTree = "<group>"; };
 		32B0722828A4E0B5002BAE34 /* SlideShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowViewModel.swift; sourceTree = "<group>"; };
 		32B0722B28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowPlaybackStatus.swift; sourceTree = "<group>"; };
@@ -2738,6 +2747,13 @@
 		32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlbumCellViewModel.swift; sourceTree = "<group>"; };
 		32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerToolbarProvider.swift; sourceTree = "<group>"; };
 		32EC27C529B6B61700D1D18D /* PhotoAlbumContainerToolbarConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerToolbarConfiguration.swift; sourceTree = "<group>"; };
+		32EC27FC29B987D200D1D18D /* AlbumCoverPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerView.swift; sourceTree = "<group>"; };
+		32EC27FE29B987E300D1D18D /* AlbumCoverPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerViewModel.swift; sourceTree = "<group>"; };
+		32EC280029B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerViewModelTests.swift; sourceTree = "<group>"; };
+		32EC280229B9E62000D1D18D /* AlbumCoverPickerPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerPhotoCell.swift; sourceTree = "<group>"; };
+		32EC280429B9F1BA00D1D18D /* AlbumCoverPickerPhotoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerPhotoCellViewModel.swift; sourceTree = "<group>"; };
+		32EC280629B9FA2B00D1D18D /* AlbumCoverPickerPhotoSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerPhotoSelection.swift; sourceTree = "<group>"; };
+		32EC282029BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerPhotoCellViewModelTests.swift; sourceTree = "<group>"; };
 		32F03D57287D225100C518A4 /* PhotosViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModelTests.swift; sourceTree = "<group>"; };
 		32F9E67B28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepository.swift; sourceTree = "<group>"; };
 		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -5462,6 +5478,7 @@
 		12BDD4DB28285EAF00009D73 /* AlbumContent */ = {
 			isa = PBXGroup;
 			children = (
+				32EC27FB29B987AB00D1D18D /* AlbumCover */,
 				12BDD4D928285C0700009D73 /* AlbumContentViewModel.swift */,
 				12E9105428247C5200FBC6DA /* AlbumContentViewController.swift */,
 				32B1150E298373DF00101622 /* AlbumContentViewController+ContextMenu.swift */,
@@ -5758,6 +5775,8 @@
 				3256C39429A8656C001B0280 /* AlbumSelectionTests.swift */,
 				328201A129AF071A00C0E841 /* AlbumNameValidatorTests.swift */,
 				0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */,
+				32EC280029B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift */,
+				32EC282029BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -5807,6 +5826,19 @@
 				32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */,
 			);
 			path = Photos;
+			sourceTree = "<group>";
+		};
+		32EC27FB29B987AB00D1D18D /* AlbumCover */ = {
+			isa = PBXGroup;
+			children = (
+				32EC27FC29B987D200D1D18D /* AlbumCoverPickerView.swift */,
+				32EC27FE29B987E300D1D18D /* AlbumCoverPickerViewModel.swift */,
+				32EC280229B9E62000D1D18D /* AlbumCoverPickerPhotoCell.swift */,
+				32EC280429B9F1BA00D1D18D /* AlbumCoverPickerPhotoCellViewModel.swift */,
+				32EC280629B9FA2B00D1D18D /* AlbumCoverPickerPhotoSelection.swift */,
+				32A4350729C155FE00DB8581 /* SingleSelectionCheckmarkView.swift */,
+			);
+			path = AlbumCover;
 			sourceTree = "<group>";
 		};
 		32F03D54287D222800C518A4 /* Photos */ = {
@@ -12508,6 +12540,7 @@
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
 				C4E78E9B272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
 				2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */,
+				32EC280329B9E62000D1D18D /* AlbumCoverPickerPhotoCell.swift in Sources */,
 				B699D585275853F2006132EF /* PhotoCardTitle.swift in Sources */,
 				12084048286120020079127B /* SearchOperation+Initialize.swift in Sources */,
 				B6FD64F5268AABC000988A17 /* MEGAShareList+Mapper.swift in Sources */,
@@ -12853,6 +12886,7 @@
 				83143BB62604E61B0033161A /* CallRemoteVideoUseCase.swift in Sources */,
 				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,
 				BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */,
+				32EC27FD29B987D200D1D18D /* AlbumCoverPickerView.swift in Sources */,
 				83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				2F879C6D2629291C00D2FA78 /* EncourageGuestUserToJoinMegaRouter.swift in Sources */,
@@ -13248,6 +13282,7 @@
 				BF08A9F525CA12A0009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */,
+				32EC27FF29B987E300D1D18D /* AlbumCoverPickerViewModel.swift in Sources */,
 				5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */,
 				BFAB114C23CEA5C300BCE72D /* Album.swift in Sources */,
 				943092F42913E26D0092B99A /* NodeActionsRepository.swift in Sources */,
@@ -13259,10 +13294,12 @@
 				32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */,
 				83BFDBD5291BE6A300FFFEA0 /* MeetingInfoViewController.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
+				32EC280729B9FA2B00D1D18D /* AlbumCoverPickerPhotoSelection.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
 				B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */,
 				B662B88D24FC3F990089376A /* RegionListSource.swift in Sources */,
 				3288949228EBF77A00F4BF63 /* SlideShowDataSource.swift in Sources */,
+				32EC280529B9F1BA00D1D18D /* AlbumCoverPickerPhotoCellViewModel.swift in Sources */,
 				32EC27C429B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
 				5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */,
@@ -13461,6 +13498,7 @@
 				12397E172820C3B100A30CCC /* PageTabView.swift in Sources */,
 				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
 				BFD2142328F7A2B90057150E /* ChatGeolocationEntity+Mapper.swift in Sources */,
+				32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				B6F6E8EC290FB7E400B319CB /* PhotoLibraryCollectionViewCoordinator.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
@@ -14020,6 +14058,7 @@
 				940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,
+				32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
 				6DD04A38292B07CF00B7E797 /* MockMEGASet.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
@@ -14068,6 +14107,7 @@
 				8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */,
 				6D0CA0EB2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift in Sources */,
 				B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */,
+				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				B6A6E19A287BCE3800179806 /* MockUser.swift in Sources */,
