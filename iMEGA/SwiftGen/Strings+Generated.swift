@@ -3745,6 +3745,18 @@ public enum Strings {
           public static func title(_ p1: Int) -> String {
             return Strings.tr("Localizable", "general.menuAction.removeLink.title", p1)
           }
+          public enum DoubleCheck {
+            public enum Warning {
+              /// Plural format key: "%#@link@"
+              public static func message(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "general.menuAction.removeLink.doubleCheck.warning.message", p1)
+              }
+              /// Plural format key: "%#@link@"
+              public static func title(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "general.menuAction.removeLink.doubleCheck.warning.title", p1)
+              }
+            }
+          }
           public enum Message {
             /// Plural format key: "%#@link@"
             public static func success(_ p1: Int) -> String {

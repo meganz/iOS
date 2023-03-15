@@ -477,7 +477,7 @@
         }
             
         case MegaNodeActionTypeRemoveLink: {
-            [node mnz_removeLink];
+            [self showRemoveLinkWarning:node];
             break;
         }
             

@@ -386,6 +386,38 @@
         <string>Links removed</string>
       </dict>
     </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Remove link?</string>
+        <key>other</key>
+        <string>Remove links?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you have shared this link with, will no longer be able to access it</string>
+        <key>other</key>
+        <string>People you have shared these links with, will no longer be able to access them</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolder.title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

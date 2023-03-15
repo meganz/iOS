@@ -228,8 +228,17 @@ class ExplorerBaseViewController: UIViewController {
     }
     
     fileprivate func handleRemoveLinks(for nodes: [MEGANode]) {
-        nodes.publicLinkedNodes().mnz_removeLinks()
-        endEditingMode()
+        ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+            SVProgressHUD.show()
+        }, onActionFinish: { [weak self] result in
+            self?.endEditingMode()
+            switch result {
+            case .success(let message):
+                SVProgressHUD.showSuccess(withStatus: message)
+            case .failure:
+                SVProgressHUD.dismiss()
+            }
+        }).start()
     }
     
     //MARK:- Methods needs to be overriden by the subclass

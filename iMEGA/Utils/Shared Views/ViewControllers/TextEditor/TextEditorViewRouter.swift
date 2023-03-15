@@ -221,10 +221,19 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func removeLink(from nodeHandle: HandleEntity) {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+        guard let baseViewController, let node = MEGASdk.shared.node(forHandle: nodeHandle) else {
             return
         }
         
-        node.mnz_removeLink()
+        ActionWarningViewRouter(presenter: baseViewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+            SVProgressHUD.show()
+        }, onActionFinish: {
+            switch $0 {
+            case .success(let message):
+                SVProgressHUD.showSuccess(withStatus: message)
+            case .failure:
+                SVProgressHUD.dismiss()
+            }
+        }).start()
     }
 }

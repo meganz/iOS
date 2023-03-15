@@ -11,6 +11,38 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
         self.sdk = sdk
     }
     
+    private func removeLink(for node: NodeEntity) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            
+            guard let megaNode = node.toMEGANode(in: sdk) else { return }
+            
+            sdk.disableExport(megaNode, delegate: RequestDelegate() { result in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
+                switch result {
+                case .failure(let error):
+                    switch error.type {
+                    case .apiEBusinessPastDue:
+                        continuation.resume(throwing: RemoveLinkErrorEntity.businessExpired)
+                    case .apiENoent:
+                        continuation.resume(throwing: RemoveLinkErrorEntity.notFound)
+                    default:
+                        continuation.resume(throwing: RemoveLinkErrorEntity.generic)
+                    }
+                case .success:
+                    continuation.resume(with: .success)
+                }
+            })
+        }
+    }
+    
     func fetchnodes() async throws {
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else {
@@ -234,6 +266,22 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                     }
                 }
             })
+        }
+    }
+    
+    func removeLink(nodes: [NodeEntity]) async throws {
+        try await withThrowingTaskGroup(of: Void.self) { taskGroup in
+            guard taskGroup.isCancelled == false else {
+                throw CancellationError()
+            }
+            
+            nodes.forEach { node in
+                taskGroup.addTask {
+                    try await removeLink(for: node)
+                }
+            }
+            
+            try await taskGroup.waitForAll()
         }
     }
 }

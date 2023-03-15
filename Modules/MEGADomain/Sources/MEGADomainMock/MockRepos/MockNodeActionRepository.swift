@@ -27,4 +27,6 @@ public struct MockNodeActionRepository: NodeActionRepositoryProtocol {
     public func move(node: NodeEntity, toParent: NodeEntity) async throws -> NodeEntity {
         NodeEntity(handle: node.handle, parentHandle: toParent.handle)
     }
+    
+    public func removeLink(nodes: [NodeEntity]) async throws {}
 }

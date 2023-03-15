@@ -861,12 +861,7 @@
 }
 
 - (IBAction)removeLinkAction:(UIBarButtonItem *)sender {
-    if (MEGAReachabilityManager.isReachableHUDIfNot) {
-        for (MEGANode *node in self.selectedNodesMutableArray) {
-            [node mnz_removeLink];
-        }
-        [self endEditingMode];
-    }
+    [self showRemoveLinkWarning:self.selectedNodesMutableArray];
 }
 
 - (void)disableSearchAndSelection {
@@ -1088,8 +1083,7 @@
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            [node mnz_removeLink];
-            [self endEditingMode];
+            [self showRemoveLinkWarning:@[node]];
         }];
         removeLinkAction.image = [[UIImage imageNamed:@"removeLink"] imageWithTintColor:UIColor.whiteColor];
         removeLinkAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
@@ -1263,7 +1257,7 @@
         }
             
         case MegaNodeActionTypeRemoveLink: {
-            [node mnz_removeLink];
+            [self showRemoveLinkWarning:@[node]];
             break;
         }
 

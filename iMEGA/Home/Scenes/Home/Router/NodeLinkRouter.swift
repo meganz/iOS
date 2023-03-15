@@ -13,8 +13,4 @@ final class NodeLinkRouter: NSObject {
     func showLinkManagement(for node: MEGANode) {
         CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: navigationController)
     }
-
-    func showRemoveLink(for node: MEGANode) {
-        MEGASdkManager.sharedMEGASdk().disableExport(node)
-    }
 }

@@ -6,4 +6,5 @@ public protocol NodeActionRepositoryProtocol: RepositoryProtocol {
     func untrash(node: NodeEntity) async throws -> NodeEntity
     func delete(node: NodeEntity) async throws
     func move(node: NodeEntity, toParent: NodeEntity) async throws -> NodeEntity
+    func removeLink(nodes: [NodeEntity]) async throws
 }
