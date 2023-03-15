@@ -14,6 +14,7 @@ enum DeeplinkPathKey: String {
     case contact = "/C"
     case openChatSection = "/fm/chat"
     case publicChat = "/chat"
+    case scheduleChat = "/chats-meetings"
     case loginrequired = "/loginrequired"
     case achievements = "/achievements"
     case newTextFile = "/newText"
@@ -180,6 +181,8 @@ extension NSURL {
             return .contactLink
         } else if path.hasPrefix(DeeplinkPathKey.openChatSection.rawValue) {
             return .openChatSectionLink
+        } else if path.hasPrefix(DeeplinkPathKey.scheduleChat.rawValue) {
+            return .scheduleChatLink
         } else if path.hasPrefix(DeeplinkPathKey.publicChat.rawValue) {
             return .publicChatLink
         } else if path.hasPrefix(DeeplinkPathKey.loginrequired.rawValue) {
