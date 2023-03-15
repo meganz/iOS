@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak, nonatomic) IBOutlet PDFView *pdfView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *thumbnailBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *outlineBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *exportFileBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
@@ -53,6 +54,7 @@
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @property (nonatomic) UIButton *openZipButton;
+@property (nonatomic) PDFOutlineView *outlineView;
 
 @end
 
@@ -70,6 +72,7 @@
     self.thumbnailCache = [[NSCache alloc] init];
     
     [self configureNavigation];
+    [self configureDocumentOutline];
     [self updateAppearance];
     
     self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
@@ -155,6 +158,31 @@
     }
     
     [self.navigationController.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
+}
+
+- (void)configureDocumentOutline {
+    PDFOutlineView *outlineView = [[PDFOutlineView alloc] initWithOutline:@[]];
+    self.outlineView = outlineView;
+    [self.view addSubview:outlineView];
+    outlineView.translatesAutoresizingMaskIntoConstraints = NO;
+    [outlineView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active = YES;
+    [outlineView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
+    [outlineView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
+    [outlineView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
+    [self hideOutlineView:YES];
+    outlineView.selectOutlineItemHandler = ^(PDFOutlineItem * _Nonnull outlineItem) {
+        [self.pdfView goToPage:[self.pdfView.document pageAtIndex:(outlineItem.pageNumber - 1)]];
+        [self hideOutlineView:YES];
+    };
+}
+
+- (void)hideOutlineView:(BOOL)hide {
+    self.outlineView.hidden = hide;
+    if (hide) {
+        self.outlineBarButtonItem.image = [[UIImage systemImageNamed:@"line.3.horizontal.circle"] imageByApplyingSymbolConfiguration:[UIImageSymbolConfiguration configurationWithScale:UIImageSymbolScaleLarge]];
+    } else {
+        self.outlineBarButtonItem.image = [[UIImage systemImageNamed:@"line.3.horizontal.circle.fill"] imageByApplyingSymbolConfiguration:[UIImageSymbolConfiguration configurationWithScale:UIImageSymbolScaleLarge]];
+    }
 }
 
 - (void)loadPreview {
@@ -302,6 +330,10 @@
 }
 
 - (IBAction)thumbnailTapped:(id)sender {
+    if (!self.outlineView.hidden) {
+        [self hideOutlineView:YES];
+        return;
+    }
     if (self.collectionView.hidden) {
         if (!self.thumbnailsPopulated) {
             [self.collectionView reloadData];
@@ -313,6 +345,11 @@
         self.collectionView.hidden = YES;
         self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
     }
+    
+}
+
+- (IBAction)outlineTapped:(id)sender {
+    [self hideOutlineView:!self.outlineView.hidden];
 }
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
@@ -534,12 +571,22 @@
         self.progressView.hidden = YES;
         self.imageView.hidden = YES;
         
+        self.pdfView.document = [[PDFDocument alloc] initWithURL:url];
+        self.pdfView.autoScales = YES;
+        self.pdfView.minScaleFactor = self.pdfView.scaleFactorForSizeToFit;
+        self.outlineView.outline = [PDFOutlineItem getOutline:self.pdfView.document];
+        [self.outlineView reload];
+        
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         if (self.node) {
             if (self.node.mnz_isInRubbishBin) {
                 [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem] animated:YES];
             } else {
-                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
+                if (self.pdfView.document.outlineRoot) {
+                    [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.outlineBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
+                } else {
+                    [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
+                }
             }
         } else {
             [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.exportFileBarButtonItem] animated:YES];
@@ -560,10 +607,6 @@
         singleTap.delegate = self;
         [singleTap requireGestureRecognizerToFail:doubleTap];
         [self.pdfView addGestureRecognizer:singleTap];
-        
-        self.pdfView.document = [[PDFDocument alloc] initWithURL:url];
-        self.pdfView.autoScales = YES;
-        self.pdfView.minScaleFactor = self.pdfView.scaleFactorForSizeToFit;
         
         NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
         if (fingerprint && ![fingerprint isEqualToString:@""]) {
