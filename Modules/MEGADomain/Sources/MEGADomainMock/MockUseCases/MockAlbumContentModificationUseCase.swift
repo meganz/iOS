@@ -21,4 +21,8 @@ public final class MockAlbumContentModificationUseCase: AlbumContentModification
     public func rename(album id: HandleEntity, with newName: String) async throws -> String {
         return newName
     }
+    
+    public func updateAlbumCover(album id: HandleEntity, withNode nodeId: HandleEntity) async throws -> HandleEntity {
+        return nodeId
+    }
 }

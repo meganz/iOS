@@ -5,6 +5,8 @@ import MEGAPresentation
 
 protocol AlbumContentRouting: Routing {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)
+    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, NodeEntity) -> Void)
+    func albumCoverPickerPhotoCell(photo: NodeEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell
 }
 
 struct AlbumContentRouter: AlbumContentRouting {
@@ -63,6 +65,36 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                     completion: completion)
         let content = AlbumContentPickerView(viewModel: viewModel)
         navigationController?.present(UIHostingController(rootView: content), animated: true)
+    }
+    
+    @MainActor
+    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, NodeEntity) -> Void) {
+        let filesSearchRepo = FilesSearchRepository.newRepo
+        let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
+        let albumContentsUseCase = AlbumContentsUseCase(
+            albumContentsRepo: AlbumContentsUpdateNotifierRepository.newRepo,
+            mediaUseCase: mediaUseCase,
+            fileSearchRepo: filesSearchRepo,
+            userAlbumRepo: UserAlbumRepository.newRepo
+        )
+        
+        let viewModel = AlbumCoverPickerViewModel(album: album,
+                                                  albumContentsUseCase: albumContentsUseCase, router: self,
+                                                    completion: completion)
+        let content = AlbumCoverPickerView(viewModel: viewModel)
+        navigationController?.present(UIHostingController(rootView: content), animated: true)
+    }
+    
+    func albumCoverPickerPhotoCell(photo: NodeEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
+        
+        let vm = AlbumCoverPickerPhotoCellViewModel(
+            photo: photo,
+            photoSelection: photoSelection,
+            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
+        
+        return AlbumCoverPickerPhotoCell(viewModel: vm)
     }
     
     func start() {}

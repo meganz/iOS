@@ -1,11 +1,7 @@
 import SwiftUI
 
-struct CheckMarkView: View {
+struct SingleSelectionCheckmarkView: View {
     let markedSelected: Bool
-    
-    private var imageName: String {
-        markedSelected ? "checkmark.circle.fill" : "circle"
-    }
     
     private var foregroundColor: Color {
         markedSelected ? .green : Color(Colors.Photos.photoSeletionBorder.color)
@@ -16,10 +12,10 @@ struct CheckMarkView: View {
     }
     
     var body: some View {
-        Image(
-            systemName: imageName)
+        Image(systemName: "checkmark.circle.fill")
             .font(.system(size: 23))
             .foregroundColor(foregroundColor)
             .background(backgroundView)
+            .opacity(markedSelected ? 1.0 : 0.0)
     }
 }

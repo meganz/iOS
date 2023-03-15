@@ -547,6 +547,33 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.alertViewModel.textString, "New Album")
     }
     
+    func testShowAlbumCoverPicker_onChangingNewCoverPic_shouldChangeTheCoverPic() {
+        let photos = [NodeEntity(name: "a.jpg", handle: 1)]
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 2, type: .user)
+        
+        let albumContentRouter = MockAlbumContentRouting(album: album, photos: photos)
+        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: MockAlbumContentUseCase(photos: photos.map {AlbumPhotoEntity(photo: $0)}),
+                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: albumContentRouter, alertViewModel: alertViewModel())
+        
+        let exp = expectation(description: "Should show a hud after updating cover pic successfully")
+        
+        sut.invokeCommand = {
+            switch $0 {
+            case .showHud:
+                exp.fulfill()
+            default:
+                XCTFail()
+            }
+        }
+        sut.dispatch(.showAlbumCoverPicker)
+        
+        wait(for: [exp], timeout: 1)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title, placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder, affirmativeButtonTitle: Strings.Localizable.rename, message: nil)
     }
@@ -565,6 +592,8 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
     let photos: [NodeEntity]
     
     var showAlbumContentPickerCalled = 0
+    var showAlbumCoverPickerCalled = 0
+    var albumCoverPickerPhotoCellCalled = 0
     
     init(album: AlbumEntity? = nil,
          photos: [NodeEntity] = []) {
@@ -575,5 +604,23 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
         showAlbumContentPickerCalled += 1
         completion(self.album ?? album, photos)
+    }
+    
+    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, NodeEntity) -> Void) {
+        showAlbumCoverPickerCalled += 1
+        completion(self.album ?? album, photos.first!)
+    }
+    
+    func albumCoverPickerPhotoCell(photo: NodeEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
+        albumCoverPickerPhotoCellCalled += 1
+        return AlbumCoverPickerPhotoCell(
+            viewModel: AlbumCoverPickerPhotoCellViewModel(
+                photo: photo,
+                photoSelection: AlbumCoverPickerPhotoSelection(),
+                viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
+                thumbnailUseCase: MockThumbnailUseCase(),
+                mediaUseCase: MockMediaUseCase()
+            )
+        )
     }
 }

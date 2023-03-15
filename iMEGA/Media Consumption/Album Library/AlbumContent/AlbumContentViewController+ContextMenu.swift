@@ -80,6 +80,8 @@ extension AlbumContentViewController: QuickActionsMenuDelegate {
 // MARK: - AlbumMenuDelegate
 extension AlbumContentViewController: AlbumMenuDelegate {
     func albumMenu(didSelect action: AlbumActionEntity) {
-        if action == .selectAlbumCover {  }
+        if action == .selectAlbumCover {
+            viewModel.dispatch(.showAlbumCoverPicker)
+        }
     }
 }

@@ -10,7 +10,7 @@ public enum AlbumEntityType: Sendable {
 public struct AlbumEntity: Identifiable, Hashable, Sendable {
     public let id: HandleEntity
     public let name: String
-    public let coverNode: NodeEntity?
+    public var coverNode: NodeEntity?
     public let count: Int
     public let type: AlbumEntityType
     public let modificationTime: Date?

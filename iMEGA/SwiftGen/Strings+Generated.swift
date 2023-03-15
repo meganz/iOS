@@ -2910,6 +2910,8 @@ public enum Strings {
         public static func addedItemTo(_ p1: Int) -> String {
           return Strings.tr("Localizable", "cameraUploads.albums.addedItemTo", p1)
         }
+        /// Album cover updated
+        public static let albumCoverUpdated = Strings.tr("Localizable", "cameraUploads.albums.albumCoverUpdated")
         /// Select album cover
         public static let selectAlbumCover = Strings.tr("Localizable", "cameraUploads.albums.selectAlbumCover")
         /// Albums

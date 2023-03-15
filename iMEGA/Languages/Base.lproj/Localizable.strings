@@ -548,6 +548,8 @@
 "cameraUploads.albums.empty.title"="Empty album";
 /* Used as a context menu item on album content screen. */
 "cameraUploads.albums.selectAlbumCover"="Select album cover";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="Album cover updated";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
