@@ -121,7 +121,7 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
         async let allVideos = try await allVideos()
         var allThumbnailPhotosAndVideos = try await [allPhotos, allVideos]
             .flatMap { $0 }
-            .filter { $0.hasThumbnail }
+            .filter { $0.hasThumbnail && $0.mediaType != nil }
         allThumbnailPhotosAndVideos.sort {
             if $0.modificationTime == $1.modificationTime {
                 return $0.handle > $1.handle

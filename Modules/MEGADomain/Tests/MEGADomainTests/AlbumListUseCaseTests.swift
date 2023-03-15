@@ -5,11 +5,11 @@ import MEGADomainMock
 
 final class AlbumListUseCaseTests: XCTestCase {
     private let photos = [
-        NodeEntity(name: "1.raw", handle: 1, hasThumbnail: true),
-        NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true),
-        NodeEntity(name: "3.cr2", handle: 3, hasThumbnail: false),
-        NodeEntity(name: "4.dng", handle: 4, hasThumbnail: false),
-        NodeEntity(name: "5.gif", handle: 5, hasThumbnail: true)]
+        NodeEntity(name: "1.raw", handle: 1, hasThumbnail: true, mediaType: .image),
+        NodeEntity(name: "2.nef", handle: 2, hasThumbnail: true, mediaType: .image),
+        NodeEntity(name: "3.cr2", handle: 3, hasThumbnail: false, mediaType: .image),
+        NodeEntity(name: "4.dng", handle: 4, hasThumbnail: false, mediaType: .image),
+        NodeEntity(name: "5.gif", handle: 5, hasThumbnail: true, mediaType: .image)]
     
     private let emptyFavouritesAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "", coverNode: nil, count: 0, type: .favourite)
     
@@ -58,7 +58,7 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     func testSystemAlbums_whenLoadingGifSystemAlbumMarkedAsFavourite_shouldReturnFavouriteAndGifAlbumEntity() async throws {
         let favouriteGifPhotos = [
-            NodeEntity(name: "1.gif", handle: 2, hasThumbnail: true, isFavourite: true),
+            NodeEntity(name: "1.gif", handle: 2, hasThumbnail: true, isFavourite: true, mediaType: .image),
         ]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
@@ -75,7 +75,8 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     func testSystemAlbums_whenLoadingRawSystemAlbumMarkedAsFavourite_shouldReturnFavouriteAndRawAlbumEntity() async throws {
         let favouriteRawPhotos = try (1...4).map {
-            NodeEntity(name: "\($0).raw", handle: $0, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-18T22:0\($0):04Z".date)
+            NodeEntity(name: "\($0).raw", handle: $0, hasThumbnail: true, isFavourite: true,
+                       modificationTime: try "2022-08-18T22:0\($0):04Z".date, mediaType: .image)
         }
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
@@ -91,17 +92,19 @@ final class AlbumListUseCaseTests: XCTestCase {
         XCTAssertEqual(albums.last?.type, AlbumEntityType.raw)
     }
     
-    func testSystemAlbums_whenLoadingFavouritePhotosAndVideos_shouldFilterThumbnailsAndSelectLatestCover() async throws {
-        let expectedCoverNode = NodeEntity(name: "a.mp4", handle: 4, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date)
+    func testSystemAlbums_whenLoadingFavouritePhotosAndVideos_shouldFilterThumbnailsAndInvalidMediaTypesThenSelectLatestCover() async throws {
+        let expectedCoverNode = NodeEntity(name: "a.mp4", handle: 4, hasThumbnail: true, isFavourite: true,
+                                           modificationTime: try "2022-08-19T20:01:04Z".date, mediaType: .video)
         let favouritePhotos = [
-            NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
-            NodeEntity(name: "1.png", handle: 1, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date)
+            NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date, mediaType: .image),
+            NodeEntity(name: "1.png", handle: 1, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date, mediaType: .image)
         ]
         let favouriteVideos = [
-            NodeEntity(name: "b.mp4", handle: 3, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date),
-            expectedCoverNode
+            NodeEntity(name: "b.mp4", handle: 3, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date, mediaType: .video),
+            expectedCoverNode,
+            NodeEntity(name: "c.mp4", handle: 5, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date),
         ]
-        let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.isFavourite }.count
+        let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.mediaType != nil && $0.isFavourite }.count
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
