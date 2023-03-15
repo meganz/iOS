@@ -25,6 +25,11 @@
     XCTAssertEqual([url mnz_type], URLTypeFileRequestLink);
 }
 
+- (void)testDeepLinkShouldReturnScheduleChatLinkType {
+    NSURL *url = [NSURL URLWithString:@"https://help.mega.io/chats-meetings/meetings/schedule-oneoff-recurring-meeting"];
+    XCTAssertEqual([url mnz_type], URLTypeScheduleChatLink);
+}
+
 - (void)testDeepLinkShouldReturnFolderLinkType {
     NSURL *url = [NSURL URLWithString:@"https://testbed.preview.mega.co.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A"];
     XCTAssertEqual([url mnz_type], URLTypeFolderLink);

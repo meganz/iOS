@@ -411,6 +411,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             break;
         }
             
+        case URLTypeScheduleChatLink:
+            [MEGALinkManager openBrowserBy:MEGALinkManager.linkURL.absoluteString];
+            break;
+            
         case URLTypePublicChatLink: {
             [MEGALinkManager handlePublicChatLink];
             [MEGALinkManager resetLinkAndURLType];
