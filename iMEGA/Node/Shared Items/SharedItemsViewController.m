@@ -27,7 +27,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -42,8 +42,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
 
-@property (nonatomic, strong) NSMutableArray *incomingNodesMutableArray;
-@property (nonatomic, strong) NSMutableArray *outgoingNodesMutableArray;
 @property (nonatomic, strong) NSMutableArray *outgoingSharesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
 
@@ -116,6 +114,7 @@
     self.navigationController.delegate = self;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -189,7 +188,6 @@
     return _viewModel;
 }
 
-#pragma mark - Private
 - (void)configSearchController {
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -200,6 +198,7 @@
     });
 }
 
+#pragma mark - Private
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
@@ -732,6 +731,10 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
+    [self showNodeActions:sender];
+}
+
+- (void)showNodeActions:(UIButton *)sender {
     if (self.tableView.isEditing) {
         return;
     }
@@ -925,12 +928,12 @@
         if (indexPath.section == 0) {
             return [self unverifiedIncomingSharedCellAtIndexPath:indexPath node:node];
         }
-        return [self incomingSharedCellAtIndexPath:indexPath forNode:node];
+        return [self isSharedItemsRootNode:node] ? [self incomingSharedCellAtIndexPath:indexPath forNode:node] : [self nodeCellAtIndexPath:indexPath node:node];
     } else if (self.outgoingButton.selected) {
         if (indexPath.section == 0) {
             return [self unverifiedOutgoingSharedCellAtIndexPath:indexPath node:node];
         }
-        return [self outgoingSharedCellAtIndexPath:indexPath forNode:node];
+        return [self isSharedItemsRootNode:node] ? [self outgoingSharedCellAtIndexPath:indexPath forNode:node] : [self nodeCellAtIndexPath:indexPath node:node];
     } else {
         return [self linkSharedCellAtIndexPath:indexPath forNode:node];
     }
@@ -964,11 +967,6 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
-        if (self.searchController.isActive) {
-            self.searchController.active = NO;
-            [self searchBarCancelButtonClicked:self.searchController.searchBar];
-        }
-        
         for (MEGANode *tempNode in self.selectedNodesMutableArray) {
             if (tempNode.handle == node.handle) {
                 return;
@@ -1102,20 +1100,6 @@
          animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
     [self willPerformPreviewActionForMenuWithAnimator:animator];
 }
-    
-#pragma mark - UISearchBarDelegate
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.searchNodesArray removeAllObjects];
-    [self.searchUnverifiedNodesArray removeAllObjects];
-    [self.searchUnverifiedSharesArray removeAllObjects];
-    
-    if (!MEGAReachabilityManager.isReachable) {
-        self.tableView.tableHeaderView = nil;
-    } else {
-        [self configSearchController];
-    }
-}
 
 #pragma mark - UISearchResultsUpdating
 
@@ -1123,32 +1107,38 @@
     NSString *searchString = searchController.searchBar.text;
     if (searchController.isActive) {
         if ([searchString isEqualToString:@""]) {
-            if (self.incomingButton.selected) {
-                [self searchUnverifiedNodesWithKey:searchString];
-                self.searchNodesArray = self.incomingNodesMutableArray;
-            } else if (self.outgoingButton.selected) {
-                [self searchUnverifiedNodesWithKey:searchString];
-                self.searchNodesArray = self.outgoingNodesMutableArray;
-            } else if (self.linksButton.selected) {
-                [self.searchUnverifiedNodesArray removeAllObjects];
-                self.searchNodesArray = self.publicLinksArray.mutableCopy;
-            }
+            [self loadDefaultSharedItems];
         } else {
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
+            if (self.searchNodeUseCaseOCWrapper == nil) {
+                self.searchNodeUseCaseOCWrapper = SearchNodeUseCaseOCWrapper.alloc.init;
+            }
+
             if (self.incomingButton.selected) {
                 [self searchUnverifiedNodesWithKey:searchString];
-                self.searchNodesArray = [[self.incomingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+                __weak __typeof__(self) weakSelf = self;
+                [self.searchNodeUseCaseOCWrapper searchOnInSharesWithText:searchString sortType:self.sortOrderType completionHandler:^(NSArray<MEGANode *> * _Nullable nodes, NSError * _Nullable error) {
+                    [weakSelf evaluateSearchResultWithNodeArray:nodes error:error];
+                }];
             } else if (self.outgoingButton.selected) {
                 [self searchUnverifiedNodesWithKey:searchString];
-                self.searchNodesArray = [[self.outgoingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+                __weak __typeof__(self) weakSelf = self;
+                [self.searchNodeUseCaseOCWrapper searchOnOutSharesWithText:searchString sortType:self.sortOrderType completionHandler:^(NSArray<MEGANode *> * _Nullable nodes, NSError * _Nullable error) {
+                    [weakSelf evaluateSearchResultWithNodeArray:nodes error:error];
+                }];
             } else if (self.linksButton.selected) {
                 [self.searchUnverifiedNodesArray removeAllObjects];
-                self.searchNodesArray = [self.publicLinksArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
+                __weak __typeof__(self) weakSelf = self;
+                [self.searchNodeUseCaseOCWrapper searchOnPublicLinksWithText:searchString sortType:self.sortOrderType completionHandler:^(NSArray<MEGANode *> * _Nullable nodes, NSError * _Nullable error) {
+                    [weakSelf evaluateSearchResultWithNodeArray:nodes error:error];
+                }];
             }
         }
+    } else {
+        if (self.searchNodeUseCaseOCWrapper != nil) {
+            [self.searchNodeUseCaseOCWrapper cancelSearch];
+        }
+        [self reloadUI];
     }
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - UISearchControllerDelegate

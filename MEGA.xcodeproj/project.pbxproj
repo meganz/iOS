@@ -1195,6 +1195,10 @@
 		9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */; };
 		9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009E2982EAA6005521C2 /* LogSettingRepository.swift */; };
 		9444D0DD28C74B2D001F681C /* AudioPlayerConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */; };
+		94485B5429B9F8BE006B919E /* SearchNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */; };
+		94485B5B29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5A29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift */; };
+		94485B5C29B9FBE5006B919E /* SearchNodeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5529B9F8EC006B919E /* SearchNodeRepositoryTests.swift */; };
+		94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */; };
 		9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */; };
 		9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */; };
 		9449939328BD41CC001AE14B /* MockFolderSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449939228BD41CC001AE14B /* MockFolderSdk.swift */; };
@@ -1223,6 +1227,7 @@
 		946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC6299C0B3500E6C0F5 /* MEGAPresentation */; };
 		946ACCC9299C0B5700E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC8299C0B5700E6C0F5 /* MEGAPresentation */; };
 		946B2D191F46E5B9009ED32C /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
+		946E783529C0F79800BB3FE6 /* SharedItemsSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */; };
 		9470003929B77BCF00827E04 /* ActionWarningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */; };
 		9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */; };
 		9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02628BFA4C3008578BE /* ContextMenuModel.swift */; };
@@ -3729,6 +3734,10 @@
 		9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepository.swift; sourceTree = "<group>"; };
 		9442009E2982EAA6005521C2 /* LogSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSettingRepository.swift; sourceTree = "<group>"; };
 		9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntity.swift; sourceTree = "<group>"; };
+		94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNodeRepository.swift; sourceTree = "<group>"; };
+		94485B5529B9F8EC006B919E /* SearchNodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNodeRepositoryTests.swift; sourceTree = "<group>"; };
+		94485B5A29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsUseCaseOCWrapper.swift; sourceTree = "<group>"; };
+		94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Search.swift"; sourceTree = "<group>"; };
 		9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewController+Additions.swift"; sourceTree = "<group>"; };
 		9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepositoryTests.swift; sourceTree = "<group>"; };
 		9449939228BD41CC001AE14B /* MockFolderSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFolderSdk.swift; sourceTree = "<group>"; };
@@ -3756,6 +3765,7 @@
 		946ACCC1299C099900E6C0F5 /* MEGAPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPresentation; sourceTree = "<group>"; };
 		946B2D171F46E5B9009ED32C /* CopyrightWarningViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyrightWarningViewController.h; sourceTree = "<group>"; };
 		946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyrightWarningViewController.m; sourceTree = "<group>"; };
+		946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsSearchOperation.swift; sourceTree = "<group>"; };
 		9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWarningViewRouter.swift; sourceTree = "<group>"; };
 		9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DNDTurnOnOptionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9479F02628BFA4C3008578BE /* ContextMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuModel.swift; sourceTree = "<group>"; };
@@ -5187,6 +5197,7 @@
 				0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */,
 				944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */,
 				A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */,
+				94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -5252,6 +5263,7 @@
 				B5CC2A632994A22800A966A0 /* ShareRepositoryTests.swift */,
 				0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */,
 				A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */,
+				94485B5529B9F8EC006B919E /* SearchNodeRepositoryTests.swift */,
 				9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */,
 			);
 			path = Repos;
@@ -6051,6 +6063,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				94485B5729B9FA1E006B919E /* SharedItems */,
 				940D8018298AC6170041A7C0 /* API */,
 				940DB9122924D77F004E7349 /* AudioSession */,
 				9464C2EB28C5EF1900F8B082 /* SortOrder */,
@@ -8928,6 +8941,15 @@
 			path = ReportIssue;
 			sourceTree = "<group>";
 		};
+		94485B5729B9FA1E006B919E /* SharedItems */ = {
+			isa = PBXGroup;
+			children = (
+				94485B5A29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift */,
+				946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */,
+			);
+			path = SharedItems;
+			sourceTree = "<group>";
+		};
 		9448662529AF7F3400CE3228 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -11448,6 +11470,7 @@
 				942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */,
 				94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */,
 				BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */,
+				94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */,
 				A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */,
 				A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */,
 			);
@@ -12318,6 +12341,7 @@
 				0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */,
 				5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */,
 				32B0722C28A4E0FA002BAE34 /* SlideshowPlaybackStatus.swift in Sources */,
+				94485B5429B9F8BE006B919E /* SearchNodeRepository.swift in Sources */,
 				940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */,
 				9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */,
 				BFD2141328F61EC60057150E /* ChatMessageEndCallReason+Mapper.swift in Sources */,
@@ -12675,6 +12699,7 @@
 				839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */,
+				946E783529C0F79800BB3FE6 /* SharedItemsSearchOperation.swift in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
 				0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
@@ -13007,6 +13032,7 @@
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */,
 				943092F7291438200092B99A /* NodeDataRepository.swift in Sources */,
+				94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */,
 				7271895827FF030600B2DB08 /* FeedbackRepository.swift in Sources */,
 				BF7EBD46245277EB0015255F /* AddToChatMenuItemsView.swift in Sources */,
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
@@ -13621,6 +13647,7 @@
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
 				A8A716EA2639A8EC00DDC8E2 /* TurnOnNotificationsViewRouter.swift in Sources */,
 				B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */,
+				94485B5B29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift in Sources */,
 				9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */,
 				77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */,
 				2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */,
@@ -14178,6 +14205,7 @@
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
+				94485B5C29B9FBE5006B919E /* SearchNodeRepositoryTests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionBuilderTests.swift in Sources */,
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				5D52C74C250C4FA700286A43 /* ContactRequest.swift in Sources */,

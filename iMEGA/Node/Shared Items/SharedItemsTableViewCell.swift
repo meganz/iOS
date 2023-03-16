@@ -40,7 +40,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
     
     func updateAppearance() {
         infoLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
-        backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
     }
 
 }

@@ -78,6 +78,21 @@ extension SharedItemsViewController {
         return cell
     }
     
+    @objc func nodeCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> NodeTableViewCell {
+        guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
+            return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
+        }
+        
+        cell.configureCell(for: node, api: MEGASdk.shared)
+        
+        cell.moreButtonAction = { [weak self] moreButton in
+            guard let moreButton else { return }
+            self?.showNodeActions(moreButton)
+        }
+        
+        return cell
+    }
+    
     func userContactFromShareAtIndexPath(_ indexPath: IndexPath) -> MEGAUser? {
         guard let share = shareAtIndexPath(indexPath) else { return nil }
         return MEGASdk.shared.contact(forEmail: share.user)
@@ -240,6 +255,18 @@ extension SharedItemsViewController {
         incomingButton?.setBadgeCount(value: badgeValue(shares.count))
          
         addInShareSearcBarIfNeeded()
+    }
+    
+    @objc func isSharedItemsRootNode(_ node: MEGANode) -> Bool {
+        if incomingButton?.isSelected ?? false {
+            return incomingNodesMutableArray.contains {($0 as? MEGANode)?.handle == node.handle}
+        } else if outgoingButton?.isSelected ?? false {
+            return outgoingNodesMutableArray.contains {($0 as? MEGANode)?.handle == node.handle}
+        } else if linksButton?.isSelected ?? false {
+            return publicLinksArray.contains {($0 as? MEGANode)?.handle == node.handle}
+        }
+        
+        return false
     }
     
     @objc func showRemoveLinkWarning(_ nodes: [MEGANode]) {
