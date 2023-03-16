@@ -167,7 +167,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         presentMoreOptionsForChat_calledTimes += 1
     }
     
-    func showGroupChatInfo(forChatId chatId: MEGADomain.HandleEntity) {
+    func showGroupChatInfo(forChatRoom chatRoom: ChatRoomEntity) {
         showGroupChatInfo_calledTimes += 1
     }
     
@@ -179,7 +179,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showMeetingOccurrences_calledTimes += 1
     }
 
-    func showContactDetailsInfo(forUseHandle userHandle: MEGADomain.HandleEntity, userEmail: String) {
+    func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String) {
         showContactDetailsInfo_calledTimes += 1
     }
     
@@ -191,7 +191,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         openChatRoom_calledTimes += 1
     }
     
-    func openCallView(for call: MEGADomain.CallEntity, in chatRoom: MEGADomain.ChatRoomEntity) {
+    func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity) {
         openCallView_calledTimes += 1
     }
     

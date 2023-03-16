@@ -22,7 +22,6 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @interface GroupChatDetailsViewController : UIViewController
 
 @property (nonatomic, strong) MEGAChatRoom *chatRoom;
-@property (nonatomic, assign) UInt64 chatId;
 @property (nonatomic, strong) EndCallDialog *endCallDialog;
 @property (nonatomic, strong) ChatNotificationControl *chatNotificationControl;
 @property (nonatomic, strong) NSArray<NSNumber *> *groupDetailsSections;

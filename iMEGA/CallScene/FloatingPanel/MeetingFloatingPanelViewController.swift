@@ -45,15 +45,18 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let userImageUseCase: UserImageUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     
     init(viewModel: MeetingFloatingPanelViewModel,
          userImageUseCase: UserImageUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol) {
+         chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -266,13 +269,16 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
-        cell.viewModel = MeetingParticipantViewModel(participant: callParticipants[indexPath.row],
-                                                     userImageUseCase: userImageUseCase,
-                                                     accountUseCase: accountUseCase,
-                                                     chatRoomUseCase: chatRoomUseCase) { [weak self] participant, button in
-            guard let self = self else { return }
-            self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
-        }
+        cell.viewModel = MeetingParticipantViewModel(
+            participant: callParticipants[indexPath.row],
+            userImageUseCase: userImageUseCase,
+            accountUseCase: accountUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase) {
+                [weak self] participant, button in
+                guard let self = self else { return }
+                self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
+            }
         return cell
     }
 }

@@ -1,7 +1,7 @@
 import Combine
 
 public protocol AlbumContentsUseCaseProtocol {
-    var updatePublisher: AnyPublisher<Void, Never> { get }
+    func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
     func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity]
 }
 
@@ -11,9 +11,6 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     private let fileSearchRepo: FilesSearchRepositoryProtocol
     private let userAlbumRepo: UserAlbumRepositoryProtocol
     
-    public let updatePublisher: AnyPublisher<Void, Never>
-    private let updateSubject = PassthroughSubject<Void, Never>()
-    
     public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol,
                 mediaUseCase: MediaUseCaseProtocol,
                 fileSearchRepo: FilesSearchRepositoryProtocol,
@@ -22,15 +19,21 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo
         self.userAlbumRepo = userAlbumRepo
-        
-        updatePublisher = AnyPublisher(updateSubject)
-        
-        self.albumContentsRepo.onAlbumReload = { [weak self] in
-            self?.updateSubject.send()
-        }
     }
     
     // MARK: Protocols
+    
+    public func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never> {
+        if album.type == .user {
+            return userAlbumRepo.setElemetsUpdatedPublisher
+                .filter { $0.contains(where: { $0.ownerId == album.id }) }
+                .map { _ in ()}
+                .eraseToAnyPublisher()
+                .merge(with: albumContentsRepo.albumReloadPublisher)
+                .eraseToAnyPublisher()
+        }
+        return albumContentsRepo.albumReloadPublisher
+    }
     
     public func nodes(forAlbum album: AlbumEntity) async throws -> [NodeEntity] {
         if album.systemAlbum {
@@ -62,7 +65,8 @@ public final class AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     private func userAlbumContent(by id: HandleEntity) async -> [NodeEntity] {
         await withTaskGroup(of: NodeEntity?.self) { group in
-            let nodeIds = await userAlbumRepo.albumContent(by: id).map { $0.nodeId }
+            let nodeIds = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
+                .map { $0.nodeId }
             nodeIds.forEach { handle in
                 group.addTask { [weak self] in
                     await self?.fileSearchRepo.node(by: handle)

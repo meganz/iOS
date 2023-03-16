@@ -1,23 +1,28 @@
 import XCTest
+import Combine
 import MEGADomain
 @testable import MEGA
 
 final class UserAlbumRepositoryTests: XCTestCase {
+    private var subscriptions = Set<AnyCancellable>()
+    
     func testLoadingAlbums_onRetrieved_shouldReturnAlbums() async throws {
         let megaSets = sampleSets()
         let megaSetCounts: [MEGAHandle: UInt] = Dictionary(uniqueKeysWithValues: megaSets.map {
             ($0.handle, UInt.random(in: 0...100))
         })
+        let expectedSets = megaSets.toSetEntities()
+            .map {
+                var set = $0
+                set.size = megaSetCounts[set.handle] ?? 0
+                return set
+            }
         let sdk = MockSdk(megaSets:megaSets, megaSetElementCounts: megaSetCounts)
         let repo = UserAlbumRepository(sdk: sdk)
         
         let sets = await repo.albums()
         
-        XCTAssertEqual(sets.count, megaSets.count)
-        
-        for set in sets {
-            XCTAssertEqual(set.size, megaSetCounts[set.handle])
-        }
+        XCTAssertEqual(sets, expectedSets)
     }
     
     func testLoadingAlbumContent_onRetrieved_shouldReturnAlbumElements() async throws {
@@ -25,9 +30,9 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let sdk = MockSdk(megaSetElements: megaSetElements)
         let repo = UserAlbumRepository(sdk: sdk)
         
-        let setElements = await repo.albumContent(by: 1)
+        let setElements = await repo.albumContent(by: 1, includeElementsInRubbishBin: false)
         
-        XCTAssertEqual(setElements.count, megaSetElements.count)
+        XCTAssertEqual(setElements, megaSetElements.toSetElementsEntities())
     }
     
     func testCreateAlbum_onFinished_shouldReturnNewAlbum() async throws {
@@ -105,6 +110,49 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertTrue(coverId == eid)
     }
     
+    func testAlbumElement_onFinish_shouldReturnSetElement() async {
+        let albumId: UInt64 = 5
+        let elementId: UInt64 = 3
+        let expected = MockMEGASetElement(handle: elementId, ownerId: albumId,
+                                          order: 4, nodeId: 1)
+        let sdk = MockSdk(megaSetElements: sampleSetElements() + [expected])
+        let repo = UserAlbumRepository(sdk: sdk)
+        
+        let albumElement = await repo.albumElement(by: albumId, elementId: elementId)
+        XCTAssertEqual(albumElement, expected.toSetElementEntity())
+    }
+    
+    func testSetsUpdatedPublisher_onSetsUpdate_sendsUpdatedSets() {
+        let sdk = MockSdk()
+        let repo = UserAlbumRepository(sdk: sdk)
+        let expectedSets = sampleSets()
+        
+        let exp = expectation(description: "Should receive set update")
+        repo.setsUpdatedPublisher
+            .sink {
+                XCTAssertEqual($0, expectedSets.toSetEntities())
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        repo.onSetsUpdate(sdk, sets: expectedSets)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testSetElementsUpdatedPublisher_onSetElementsUpdate_sendsUpdatedSetElements() {
+        let sdk = MockSdk()
+        let repo = UserAlbumRepository(sdk: sdk)
+        let expectedSetElements = sampleSetElements()
+        
+        let exp = expectation(description: "Should receive set elements update")
+        repo.setElemetsUpdatedPublisher
+            .sink {
+                XCTAssertEqual($0, expectedSetElements.toSetElementsEntities())
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        repo.onSetElementsUpdate(sdk, setElements: expectedSetElements)
+        wait(for: [exp], timeout: 1)
+    }
+    
     // MARK: Private
     
     private func sampleSets() -> [MockMEGASet] {
@@ -116,8 +164,8 @@ final class UserAlbumRepositoryTests: XCTestCase {
     }
     
     private func sampleSetElements() -> [MockMEGASetElement] {
-        let setElement1 = MockMEGASetElement(handle: 1, order: 0, nodeId: 1)
-        let setElement2 = MockMEGASetElement(handle: 2, order: 0, nodeId: 2)
+        let setElement1 = MockMEGASetElement(handle: 1, ownerId: 3, order: 0, nodeId: 1)
+        let setElement2 = MockMEGASetElement(handle: 2, ownerId: 3, order: 0, nodeId: 2)
         
         return [setElement1,setElement2]
     }

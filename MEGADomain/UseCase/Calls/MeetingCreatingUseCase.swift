@@ -2,15 +2,7 @@ import MEGADomain
 
 // MARK: - Use case protocol -
 protocol MeetingCreatingUseCaseProtocol {
-    func startCall(
-        meetingName: String,
-        enableVideo: Bool,
-        enableAudio: Bool,
-        speakRequest: Bool,
-        waitingRoom: Bool,
-        allowNonHostToAddParticipants: Bool,
-        completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void
-    )
+    func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func getUsername() -> String
     func getCall(forChatId chatId: UInt64) -> CallEntity?
@@ -28,24 +20,8 @@ struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol>: MeetingCrea
         self.repository = repository
     }
     
-    func startCall(
-        meetingName: String,
-        enableVideo: Bool,
-        enableAudio: Bool,
-        speakRequest: Bool,
-        waitingRoom: Bool,
-        allowNonHostToAddParticipants: Bool,
-        completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void
-    ) {
-        repository.startCall(
-            meetingName: meetingName,
-            enableVideo: enableVideo,
-            enableAudio: enableAudio,
-            speakRequest: speakRequest,
-            waitingRoom: waitingRoom,
-            allowNonHostToAddParticipants: allowNonHostToAddParticipants,
-            completion: completion
-        )
+    func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+        repository.startCall(startCall, completion: completion)
     }
     
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {

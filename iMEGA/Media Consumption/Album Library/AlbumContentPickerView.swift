@@ -49,7 +49,7 @@ struct AlbumContentPickerView: View {
                         .foregroundColor(textColor)
                 }.padding(10)
                 
-                Text(viewModel.photoSourceLocation.localization)
+                Text(viewModel.photoSourceLocationNavigationTitle)
                     .font(.headline)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)
@@ -59,9 +59,9 @@ struct AlbumContentPickerView: View {
                 } label: {
                     Text(Strings.Localizable.done)
                         .font(.body.bold())
-                        .foregroundColor(textColor)
-                    
+                        .foregroundColor(textColor.opacity(viewModel.isDoneButtonDisabled ? 0.5 : 1))
                 }.padding(10)
+                .disabled(viewModel.isDoneButtonDisabled)
             }.padding(.bottom, 10)
         }
     }

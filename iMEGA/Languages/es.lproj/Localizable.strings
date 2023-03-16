@@ -45,15 +45,15 @@
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
 "The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="La cuenta que creó este enlace ha sido cerrada debido a múltiples infracciones de nuestros [A]Términos de Servicio[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="Introducir la clave de cifrado";
+"decryptionKeyAlertTitle"="Introducir la clave de descifrado";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Para acceder a esta carpeta o archivo, necesitas la clave de cifrado. Si no la tienes, contacta con el creador del enlace.";
+"decryptionKeyAlertMessage"="Para acceder a esta carpeta o archivo, necesitas la clave de descifrado. Si no la tienes, contacta con el creador del enlace.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Clave de cifrado";
+"decryptionKey"="Clave de descifrado";
 /* Button title to try to decrypt the link */
 "decrypt"="Descifrar";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="La clave de cifrado no es válida";
+"decryptionKeyNotValid"="La clave de descifrado no es válida";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
 "To access this link, you will need its password."="Para acceder a este enlace, necesitarás su contraseña.";
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
@@ -361,7 +361,7 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Generando enlaces…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Enlace copiado";
+"linkCopied"="Link copiado";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Enlaces copiados";
 /* Text of the button after the links were copied to the clipboard */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Archivos enviados al chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="Se han enviado %d archivos";
+"xfilesSentSuccesfully"="%d archivos enviados";
 /* Title show when a file is being downloaded */
 "downloading"="Descargando";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Carpeta compartida";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="Se han compartido %d carpetas.";
+"sharedFolders_success"="%d carpetas compartidas";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importar";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Este es el último paso para eliminar tu cuenta. Perderás de forma permanente todos los datos almacenados en la nube. Por favor, introduce tu contraseña a continuación.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Tu cuenta ha sido eliminada correctamente.";
+"accountCanceledSuccessfully"="Tu cuenta ha sido eliminada";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Cancelar cuenta";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Tu Clave de recuperación se utilizará para establecer una nueva contraseña. Introduce tu nueva contraseña.";
 /*  */
-"yourPasswordHasBeenReset"="Has restablecido tu contraseña. Por favor accede a tu cuenta.";
+"yourPasswordHasBeenReset"="Has restablecido tu contraseña. Accede a tu cuenta.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Enviar";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Crear una cuenta nueva";
 /*  */
-"yourAccounHasBeenParked"="Has aparcado tu cuenta antigua. Ahora puedes acceder a tu nueva cuenta.";
+"yourAccounHasBeenParked"="Has aparcado tu cuenta antigua. Accede a tu cuenta nueva.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuevo correo electrónico";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Cambiar nombre";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Has modificado tu perfil correctamente.";
+"youHaveSuccessfullyChangedYourProfile"="Has modificado tu perfil";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nombre";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[B] ha eliminado a [A] del grupo.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] ha abandonado el grupo.";
+"leftTheGroupChat"="[A] ha abandonado el grupo";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] se unió al grupo por invitación de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="No se han podido compartir algunos elementos con MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Compartido correctamente";
+"Shared successfully"="Compartido";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Error en la transferencia:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Mensajes enviados";
 /* Title of archived chats button */
-"archivedChats"="Chats archivados";
+"archivedChats"="Archivado";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="¿Confirma que quieres archivar esta conversación?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="¿Confirmas que quieres restaurar esta conversación?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Restaurar chat";
+"unarchiveChat"="Restaurar";
 /* Title of button to archive chats. */
-"archiveChat"="Archivar chat";
+"archiveChat"="Archivar";
 /* Title of flag of archived chats. */
 "archived"="Archivado";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No hay chats archivados";
+"noArchivedChats"="No hay reuniones ni chats archivados";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Autenticación de dos factores";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ se ha unido a la llamada.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ ha abandonado la llamada.";
+"%@ left the call."="%@ ha abandonado la llamada";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Llamada de grupo en curso. Toca para unirte.";
 /* Message shown in a chat room when there is an active call */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Se eliminará tu número de teléfono actual y empezará el proceso para vincular el nuevo número de teléfono a tu cuenta.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Tu número de teléfono se ha eliminado.";
+"Your phone number has been removed successfully."="Tu número de teléfono se ha eliminado";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="No se ha podido eliminar el número de teléfono, inténtalo más tarde.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2369,7 +2369,7 @@
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="CLAVE";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Enviar clave de cifrado por separado";
+"Send Decryption Key Separately"="Enviar clave de descifrado por separado";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="Fecha de caducidad";
 /* Text for options in Get Link View to activate password protection */
@@ -2387,7 +2387,7 @@
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="Copiar todo";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opciones como “Enviar clave de cifrado por separado”, “Establecer fecha de caducidad” o “Establecer contraseña” solo están disponible al seleccionar un solo elemento.";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opciones como “Enviar clave de descifrado por separado”, “Establecer fecha de caducidad” o “Establecer contraseña” solo están disponible al seleccionar un solo elemento.";
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Enlace copiado al portapapeles";
 /* Message shown when some links have been copied to the Clipboard */
@@ -2397,7 +2397,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Contraseña copiada al portapapeles";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nuestro sistema de cifrado punto a punto requiere una clave única generada automáticamente para este archivo. El enlace se crea por defecto con esta clave pero puedes exportala por separado para más seguridad.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nuestro sistema de cifrado punto a punto requiere una clave única generada automáticamente para este archivo. El enlace se crea por defecto con esta clave pero puedes exportarla por separado para más seguridad.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Eliminar contraseña";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2481,7 +2481,7 @@
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Documentos";
 /* Message shown when a link is shared with separated key */
-"This link was shared without a decryption key. Do you want to share its key?"="Vas a compartir el enlace sin clave de cifrado. ¿Quieres compartir la clave?";
+"This link was shared without a decryption key. Do you want to share its key?"="Vas a compartir el enlace sin clave de descifrado. ¿Quieres compartir la clave?";
 /* Title for password protect link alert */
 "Link Password"="Contraseña del enlace";
 /* Message shown when a link is shared having a password */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Sirven para entender cómo utilizas nuestros servicios y nos proporcionan datos que podemos utilizar para realizar mejoras. No aceptar estas Cookies significará que tendremos menos datos disponibles para mejorar el servicio.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="La versión se ha creado como un nuevo archivo.";
+"Version created as a new file successfully."="La versión se ha creado como un nuevo archivo";
 /* Text shown for the action create new file */
 "Create new file"="Crear nuevo archivo";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ se ha unido";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ ha abandonado";
+"meetings.notification.singleUserLeft"="%@ ha abandonado la llamada";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ y %@ se han unido";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ y %@ han abandonado";
+"meetings.notification.twoUsersLeft"="%@ y %@ han abandonado la llamada";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ y otros %@ se han unido";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ y otros %@ han abandonado";
+"meetings.notification.moreThanTwoUsersLeft"="%@ y otros %@ han abandonado la llamada";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Mover a la Papelera";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3177,7 +3177,7 @@
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Tus credenciales";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
-"sharedItems.tab.incoming.undecryptedFolderName"="[Carpeta no descifrada]";
+"sharedItems.tab.incoming.undecryptedFolderName"="[Carpeta sin descifrar]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
 "sharedItems.tab.outgoing.sharedToContact"="Compartido con %@";
 /* Chat Listing - row description for the created meeting */
@@ -3221,7 +3221,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]te ha invitado[/B] a una reunión programada para:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]ha modificado[/B] los detalles de la reunión programada para:";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]ha actualizado[/B] la descripción de la reunión";
 /* In app notification description for one off cancelled meeting */
@@ -3237,7 +3237,7 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]te ha invitado a una reunión programada para:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]ha modificado[/B] los detalles de la reunión periódica programada para:";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email]ha actualizado[/B] la descripción de la reunión periódica";
 /* In app notification description when date field is updated for recurring meeting. */
@@ -3257,9 +3257,9 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay][StartDate][/B] de [B][StartTime] a [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Cada día desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Cada día desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]ha cancelado[/B] el evento programado para:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="No se puede verificar el contacto";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="No se puede verificar %@ porque no está en tu lista de contactos. Espera a que acepte tu invitación primero.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

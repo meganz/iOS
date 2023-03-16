@@ -10,7 +10,7 @@ class MEGAChatResultDelegate: NSObject, MEGAChatDelegate {
         self.completion = completion
     }
     
-    func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
+    func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
         guard let intNewState = MEGAChatConnection(rawValue: Int(newState)) else {
             return
         }

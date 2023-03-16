@@ -1,6 +1,9 @@
 import MEGADomain
+import Combine
 
 final class SDKNodesUpdateListenerRepository: NSObject, NodesUpdateListenerProtocol {
+    static var newRepo = SDKNodesUpdateListenerRepository(sdk: MEGASdk.shared)
+    
     var onNodesUpdateHandler: (([NodeEntity]) -> Void)?
     
     private let sdk: MEGASdk

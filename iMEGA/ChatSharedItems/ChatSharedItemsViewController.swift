@@ -521,7 +521,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
 // MARK: - MEGAChatRequestDelegate
 
 extension ChatSharedItemsViewController: MEGAChatRequestDelegate {
-    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         chatRoom = api.chatRoom(forChatId: chatRoom.chatId) ?? chatRoom
         
         if error.type != .MEGAChatErrorTypeOk {

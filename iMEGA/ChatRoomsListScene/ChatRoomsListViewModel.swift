@@ -31,7 +31,7 @@ protocol ChatRoomsListRouting {
         infoAction: @escaping () -> Void,
         archiveAction: @escaping () -> Void
     )
-    func showGroupChatInfo(forChatId chatId: HandleEntity)
+    func showGroupChatInfo(forChatRoom chatRoom: ChatRoomEntity)
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
     func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity)
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
@@ -357,14 +357,16 @@ final class ChatRoomsListViewModel: ObservableObject {
                 let key = self.formatedDateString(date)
                 
                 var result = partialResult
-                let futureMeetingViewModel = self.constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting)
+                let futureMeetingViewModel = self.constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting, nextOccurrenceDate: date)
                 
                 if let index = result.firstIndex(where: { $0.title == key }) {
                     let futureMeetingSection = result[index]
+                    var futureMeetingsViewModel = futureMeetingSection.items + [futureMeetingViewModel]
+                    futureMeetingsViewModel = futureMeetingsViewModel.sorted { $0.nextOccurrenceDate < $1.nextOccurrenceDate }
                     result[index] = FutureMeetingSection(
                         title: futureMeetingSection.title,
                         date: futureMeetingSection.date,
-                        items: futureMeetingSection.items + [futureMeetingViewModel]
+                        items: futureMeetingsViewModel
                     )
                 } else {
                     result.append(FutureMeetingSection(title: key, date: date, items: [futureMeetingViewModel]))
@@ -390,8 +392,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
 
     private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
+                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
@@ -403,6 +406,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             chatListItem: chatListItem,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
             chatUseCase: ChatUseCase(
                 chatRepo: ChatRepository(
@@ -416,9 +420,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity) -> FutureMeetingRoomViewModel {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                                              userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+    private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity, nextOccurrenceDate: Date) -> FutureMeetingRoomViewModel {
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
+                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
@@ -428,8 +433,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         
         return FutureMeetingRoomViewModel(
             scheduledMeeting: scheduledMeetingEntity,
+            nextOccurrenceDate: nextOccurrenceDate,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
             chatUseCase: ChatUseCase(
                 chatRepo: ChatRepository(

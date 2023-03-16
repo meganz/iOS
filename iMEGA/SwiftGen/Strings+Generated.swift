@@ -57,7 +57,7 @@ public enum Strings {
     public static func joinedTheGroupChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ joined the group chat.", String(describing: p1))
     }
-    /// %@ left the call.
+    /// %@ left the call
     public static func leftTheCall(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ left the call.", String(describing: p1))
     }
@@ -123,7 +123,7 @@ public enum Strings {
     public static let accountAlreadyConfirmed = Strings.tr("Localizable", "accountAlreadyConfirmed")
     /// Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.
     public static let accountBlocked = Strings.tr("Localizable", "accountBlocked")
-    /// Your account has been deleted successfully.
+    /// Your account has been deleted
     public static let accountCanceledSuccessfully = Strings.tr("Localizable", "accountCanceledSuccessfully")
     /// Please check your email and follow the link to confirm your account.
     public static let accountNotConfirmed = Strings.tr("Localizable", "accountNotConfirmed")
@@ -239,13 +239,13 @@ public enum Strings {
     public static let appPurchaseDisabled = Strings.tr("Localizable", "appPurchaseDisabled")
     /// Approve
     public static let approve = Strings.tr("Localizable", "approve")
-    /// Archive chat
+    /// Archive
     public static let archiveChat = Strings.tr("Localizable", "archiveChat")
     /// Are you sure you want to archive this conversation?
     public static let archiveChatMessage = Strings.tr("Localizable", "archiveChatMessage")
     /// Archived
     public static let archived = Strings.tr("Localizable", "archived")
-    /// Archived chats
+    /// Archived
     public static let archivedChats = Strings.tr("Localizable", "archivedChats")
     /// Are you sure you want to change to a test server? Your account may suffer irrecoverable problems.
     public static let areYouSureYouWantToChangeToATestServerYourAccountMaySufferIrrecoverableProblems = Strings.tr("Localizable", "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems")
@@ -1091,13 +1091,13 @@ public enum Strings {
     public static let leaveSharesAlertMessage = Strings.tr("Localizable", "leaveSharesAlertMessage")
     /// Leaving…
     public static let leaving = Strings.tr("Localizable", "Leaving...")
-    /// [A] left the group chat.
+    /// [A] left the group chat
     public static let leftTheGroupChat = Strings.tr("Localizable", "leftTheGroupChat")
     /// Line up the QR code to scan it with your device’s camera
     public static let lineCodeWithCamera = Strings.tr("Localizable", "lineCodeWithCamera")
     /// Link
     public static let link = Strings.tr("Localizable", "LINK")
-    /// Link copied to clipboard
+    /// Copied link to clipboard
     public static let linkCopiedToClipboard = Strings.tr("Localizable", "Link Copied to Clipboard")
     /// Link creation
     public static let linkCreation = Strings.tr("Localizable", "Link Creation")
@@ -1107,15 +1107,15 @@ public enum Strings {
     }
     /// Link password
     public static let linkPassword = Strings.tr("Localizable", "Link Password")
-    /// Link copied
+    /// Copied link
     public static let linkCopied = Strings.tr("Localizable", "linkCopied")
     /// Invalid link
     public static let linkNotValid = Strings.tr("Localizable", "linkNotValid")
     /// Links
     public static let links = Strings.tr("Localizable", "Links")
-    /// Links copied to clipboard
+    /// Copied links to clipboard
     public static let linksCopiedToClipboard = Strings.tr("Localizable", "Links Copied to Clipboard")
-    /// Links copied
+    /// Copied links
     public static let linksCopied = Strings.tr("Localizable", "linksCopied")
     /// Unavailable link
     public static let linkUnavailable = Strings.tr("Localizable", "linkUnavailable")
@@ -1315,7 +1315,7 @@ public enum Strings {
     public static let noSharedFiles = Strings.tr("Localizable", "No Shared Files")
     /// No videos found
     public static let noVideosFound = Strings.tr("Localizable", "No videos found")
-    /// No archived chats
+    /// No archived chats or meetings
     public static let noArchivedChats = Strings.tr("Localizable", "noArchivedChats")
     /// No camera available
     public static let noCamera = Strings.tr("Localizable", "noCamera")
@@ -1913,13 +1913,13 @@ public enum Strings {
     public static let sharedAlbumsFromYourDeviceSPhotosAppWillNotBeUploaded = Strings.tr("Localizable", "Shared Albums from your device's Photos app will not be uploaded.")
     /// Shared files
     public static let sharedFiles = Strings.tr("Localizable", "Shared Files")
-    /// Shared successfully
+    /// Shared
     public static let sharedSuccessfully = Strings.tr("Localizable", "Shared successfully")
     /// Folder shared
     public static let sharedFolderSuccess = Strings.tr("Localizable", "sharedFolder_success")
     /// Shared folders
     public static let sharedFolders = Strings.tr("Localizable", "sharedFolders")
-    /// %d folders shared successfully.
+    /// %d folders shared
     public static func sharedFoldersSuccess(_ p1: Int) -> String {
       return Strings.tr("Localizable", "sharedFolders_success", p1)
     }
@@ -2161,7 +2161,7 @@ public enum Strings {
     public static let unableToStartACallBecauseTheParticipantsLimitWasExceeded = Strings.tr("Localizable", "Unable to start a call because the participants limit was exceeded.")
     /// Unable to reach MEGA. Please check your connectivity or try again later.
     public static let unableToReachMega = Strings.tr("Localizable", "unableToReachMega")
-    /// Unarchive chat
+    /// Unarchive
     public static let unarchiveChat = Strings.tr("Localizable", "unarchiveChat")
     /// Are you sure you want to unarchive this conversation?
     public static let unarchiveChatMessage = Strings.tr("Localizable", "unarchiveChatMessage")
@@ -2257,7 +2257,7 @@ public enum Strings {
     public static let verifyCredentials = Strings.tr("Localizable", "verifyCredentials")
     /// Please enter your password to verify your email address
     public static let verifyYourEmailAddressDescription = Strings.tr("Localizable", "verifyYourEmailAddress_description")
-    /// Version was created as a new file successfully.
+    /// Version was created as a new file
     public static let versionCreatedAsANewFileSuccessfully = Strings.tr("Localizable", "Version created as a new file successfully.")
     /// Versions
     public static let versions = Strings.tr("Localizable", "versions")
@@ -2333,7 +2333,7 @@ public enum Strings {
     }
     /// [X] contacts
     public static let xContactsSelected = Strings.tr("Localizable", "XContactsSelected")
-    /// %d files sent successfully
+    /// %d files sent
     public static func xfilesSentSuccesfully(_ p1: Int) -> String {
       return Strings.tr("Localizable", "xfilesSentSuccesfully", p1)
     }
@@ -2381,7 +2381,7 @@ public enum Strings {
     public static let youIgnoredAContactRequest = Strings.tr("Localizable", "You ignored a contact request")
     /// You have new messages
     public static let youMayHaveNewMessages = Strings.tr("Localizable", "You may have new messages")
-    /// You have successfully changed your profile.
+    /// You have changed your profile
     public static let youHaveSuccessfullyChangedYourProfile = Strings.tr("Localizable", "youHaveSuccessfullyChangedYourProfile")
     /// We’re sorry, two-factor authentication cannot be enabled on your device. Please open the App Store to install an authenticator app.
     public static let youNeedATwoFactorAuthenticationApp = Strings.tr("Localizable", "youNeedATwoFactorAuthenticationApp")
@@ -2405,9 +2405,9 @@ public enum Strings {
     public static let yourPaymentForThe1PlanWasUnsuccessful = Strings.tr("Localizable", "Your payment for the %1 plan was unsuccessful.")
     /// Your phone number
     public static let yourPhoneNumber = Strings.tr("Localizable", "Your phone number")
-    /// Your phone number has been removed successfully.
+    /// Your phone number has been removed
     public static let yourPhoneNumberHasBeenRemovedSuccessfully = Strings.tr("Localizable", "Your phone number has been removed successfully.")
-    /// Your phone number has been verified successfully
+    /// Your phone number has been verified
     public static let yourPhoneNumberHasBeenVerifiedSuccessfully = Strings.tr("Localizable", "Your phone number has been verified successfully")
     /// Your photos in the Cloud
     public static let yourPhotosInTheCloud = Strings.tr("Localizable", "Your Photos in the Cloud")
@@ -2421,11 +2421,11 @@ public enum Strings {
     public static let yourPROMembershipPlanWillExpireIn1Day = Strings.tr("Localizable", "Your PRO membership plan will expire in 1 day.")
     /// Your upload(s) cannot proceed because your account is full
     public static let yourUploadSCannotProceedBecauseYourAccountIsFull = Strings.tr("Localizable", "Your upload(s) cannot proceed because your account is full")
-    /// Your old account has been parked successfully. You can now log in to your new account.
+    /// Your old account has been parked. You can now log in to your new account.
     public static let yourAccounHasBeenParked = Strings.tr("Localizable", "yourAccounHasBeenParked")
     /// Your Recovery key is going to be used to reset your password. Please enter your new password.
     public static let youRecoveryKeyIsGoingTo = Strings.tr("Localizable", "youRecoveryKeyIsGoingTo")
-    /// Your password has been reset successfully. Please log in to your account now.
+    /// Your password has been reset. Please log in to your account now.
     public static let yourPasswordHasBeenReset = Strings.tr("Localizable", "yourPasswordHasBeenReset")
     /// You will lose all data associated with this account. Are you sure you want to proceed?
     public static let youWillLooseAllData = Strings.tr("Localizable", "youWillLooseAllData")
@@ -2462,7 +2462,7 @@ public enum Strings {
       public static let onlyHistoricVersionsOfYourFilesWillBeDeleted = Strings.tr("Localizable", "All current files will remain. Only historic versions of your files will be deleted.")
     }
     public enum AnErrorHasOccurred {
-      /// An error has occurred. The chat history has not been successfully cleared
+      /// An error has occurred. The chat history hasn’t been cleared
       public static let theChatHistoryHasNotBeenSuccessfullyCleared = Strings.tr("Localizable", "An error has occurred. The chat history has not been successfully cleared")
     }
     public enum CameraUploadsIsAnEssentialFeatureForAnyMobileDeviceAndWeHaveGotYouCovered {
@@ -4271,7 +4271,7 @@ public enum Strings {
         public static func moreThanTwoUsersJoined(_ p1: Any, _ p2: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersJoined", String(describing: p1), String(describing: p2))
         }
-        /// %@ and %@ others left
+        /// %@ and %@ others left the call
         public static func moreThanTwoUsersLeft(_ p1: Any, _ p2: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.moreThanTwoUsersLeft", String(describing: p1), String(describing: p2))
         }
@@ -4279,7 +4279,7 @@ public enum Strings {
         public static func singleUserJoined(_ p1: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.singleUserJoined", String(describing: p1))
         }
-        /// %@ left
+        /// %@ left the call
         public static func singleUserLeft(_ p1: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.singleUserLeft", String(describing: p1))
         }
@@ -4287,7 +4287,7 @@ public enum Strings {
         public static func twoUsersJoined(_ p1: Any, _ p2: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.twoUsersJoined", String(describing: p1), String(describing: p2))
         }
-        /// %@ and %@ left
+        /// %@ and %@ left the call
         public static func twoUsersLeft(_ p1: Any, _ p2: Any) -> String {
           return Strings.tr("Localizable", "meetings.notification.twoUsersLeft", String(describing: p1), String(describing: p2))
         }
@@ -4351,9 +4351,9 @@ public enum Strings {
           /// weekly
           public static let weekly = Strings.tr("Localizable", "meetings.scheduled.recurring.weekly")
           public enum Daily {
-            /// Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
+            /// Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
             public static let forever = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever")
-            /// Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]
+            /// Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]
             public static let until = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until")
           }
           public enum Frequency {
@@ -4847,6 +4847,16 @@ public enum Strings {
       public enum Navigation {
         /// Photos
         public static let title = Strings.tr("Localizable", "photo.navigation.title")
+      }
+    }
+    public enum Picker {
+      public enum Disable {
+        public enum Passcode {
+          /// To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.
+          public static let description = Strings.tr("Localizable", "picker.disable.passcode.description")
+          /// Disable MEGA passcode
+          public static let title = Strings.tr("Localizable", "picker.disable.passcode.title")
+        }
       }
     }
     public enum Recents {

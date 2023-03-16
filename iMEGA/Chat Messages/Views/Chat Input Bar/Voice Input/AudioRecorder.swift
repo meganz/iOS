@@ -102,7 +102,7 @@ class AudioRecorder: NSObject {
         }
         
         let timeDifference = Date().timeIntervalSince1970 - recordStartDate.timeIntervalSince1970
-        let timeString = NSString.mnz_string(fromTimeInterval: timeDifference)
+        let timeString = timeDifference.timeString
         
         recorder.updateMeters()
         let decibels = recorder.averagePower(forChannel: 0)

@@ -7,15 +7,15 @@ struct PageTabView: View {
     @Environment(\.colorScheme) var colorScheme
     
     private let textForgroundRedColor = Color(Colors.General.Red.f7363D.color)
-    private var albumForgroundColor: Color {
+    private var tabForgroundColor: Color {
         if !viewModel.isEditing {
-            return timelineForgroundColor
+            return tabTextColor
         } else {
             return Color(Colors.General.Gray._515151.color)
         }
     }
     
-    private var timelineForgroundColor: Color {
+    private var tabTextColor: Color {
         colorScheme == .dark ? .white : .black
     }
     
@@ -36,7 +36,7 @@ struct PageTabView: View {
                         Text(viewModel.timeLineTitle)
                             .font(Font.system(size: 15, weight: .semibold, design: Font.Design.default))
                             .frame(maxWidth: proxy.size.width, alignment: .center)
-                            .foregroundColor(viewModel.selectedTab == .timeline ? textForgroundRedColor : timelineForgroundColor)
+                            .foregroundColor(viewModel.selectedTab == .timeline ? textForgroundRedColor : tabForgroundColor)
                     }
                     
                     Button {
@@ -49,7 +49,7 @@ struct PageTabView: View {
                         Text(viewModel.albumsTitle)
                             .font(Font.system(size: 15, weight: .semibold, design: Font.Design.default))
                             .frame(maxWidth: proxy.size.width, alignment: .center)
-                            .foregroundColor(viewModel.selectedTab == .album ? textForgroundRedColor : albumForgroundColor)
+                            .foregroundColor(viewModel.selectedTab == .album ? textForgroundRedColor : tabForgroundColor)
                     }
                 }
                 .padding(.vertical, 10)

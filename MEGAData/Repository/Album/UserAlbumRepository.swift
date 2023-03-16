@@ -1,15 +1,31 @@
 import MEGADomain
+import Combine
 
-struct UserAlbumRepository: UserAlbumRepositoryProtocol {
+final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
-    static var newRepo: UserAlbumRepository {
-        UserAlbumRepository(sdk: MEGASdkManager.sharedMEGASdk())
-    }
+    static var newRepo: UserAlbumRepository = UserAlbumRepository(sdk: MEGASdk.shared)
+    
+    private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
+    private let setElemetsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     
     private let sdk: MEGASdk
     
+    var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
+        setsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
+    
+    var setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
+        setElemetsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
+    
     init(sdk: MEGASdk) {
         self.sdk = sdk
+        super.init()
+        sdk.add(self)
+    }
+    
+    deinit {
+        sdk.remove(self)
     }
     
     // MARK: - Albums
@@ -27,11 +43,16 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
         return results
     }
     
-    func albumContent(by id: HandleEntity) async -> [SetElementEntity] {
-        let megaSetElements = sdk.megaSetElements(bySid: id, includeElementsInRubbishBin: true)
+    func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
+        let megaSetElements = sdk.megaSetElements(bySid: id,
+                                                  includeElementsInRubbishBin: includeElementsInRubbishBin)
         let elements = megaSetElements.toSetElementsEntities()
         
         return elements
+    }
+    
+    func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
+        return sdk.megaSetElement(bySid: id, eid: elementId)?.toSetElementEntity()
     }
     
     func createAlbum(_ name: String?) async throws -> SetEntity {
@@ -173,5 +194,15 @@ struct UserAlbumRepository: UserAlbumRepositoryProtocol {
                 }
             })
         }
+    }
+}
+
+extension UserAlbumRepository: MEGAGlobalDelegate {
+    func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]) {
+        setsUpdatedSourcePublisher.send(sets.toSetEntities())
+    }
+    
+    func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
+        setElemetsUpdatedSourcePublisher.send(setElements.toSetElementsEntities())
     }
 }

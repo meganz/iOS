@@ -347,6 +347,13 @@ public final class ContextMenuBuilder {
         }
     }
     
+    private func userAlbumMenu() -> CMEntity {
+        var children: [CMElement] = [rename]
+        children.append(contentsOf: selectMenu().children)
+        
+        return CMEntity(displayInline: true, children: children)
+    }
+    
     private func displayMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         
@@ -371,10 +378,17 @@ public final class ContextMenuBuilder {
         if let albumType = albumType {
             if albumType == .user && isEmptyState {
                 return CMEntity(displayInline: true,
-                                       children: [])
+                                       children: [rename])
             }
             
-            displayActionsMenuChildren = [selectMenu()]
+            displayActionsMenuChildren = []
+            
+            if albumType == .user {
+                displayActionsMenuChildren.append(userAlbumMenu())
+            } else {
+                displayActionsMenuChildren.append(selectMenu())
+            }
+            
             if !isEmptyState {
                 displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [sortMenu()]))
             }

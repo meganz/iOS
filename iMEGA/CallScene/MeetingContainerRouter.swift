@@ -35,10 +35,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?
     private var endCallDialog: EndCallDialog?
-    private var chatRoomUseCase: ChatRoomUseCase<ChatRoomRepository, UserStoreRepository> {
-        return ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo,
-                               userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
-    }
+    private lazy var chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
     
     private var createCallUseCase: CallUseCase<CallRepository> {
         let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)

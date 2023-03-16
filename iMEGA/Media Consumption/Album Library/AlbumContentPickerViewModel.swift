@@ -6,16 +6,17 @@ final class AlbumContentPickerViewModel: ObservableObject {
    
     private let album: AlbumEntity
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
-    private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
-    private let completion: (String, AlbumEntity) -> Void
+    private let completion: (AlbumEntity, [NodeEntity]) -> Void
     private var subscriptions = Set<AnyCancellable>()
     var photosLoadingTask: Task<Void, Never>?
     
     @Published private(set) var photoSourceLocation: PhotosFilterLocation = .allLocations
     @Published var navigationTitle: String = ""
+    @Published var photoSourceLocationNavigationTitle: String = ""
     @Published var isDismiss = false
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
     @Published var shouldRemoveFilter = true
+    @Published var isDoneButtonDisabled = true
     
     private var normalNavigationTitle: String {
         Strings.Localizable.CameraUploads.Albums.Create.addItemsTo(album.name)
@@ -24,16 +25,16 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @MainActor
     init(album: AlbumEntity,
          photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-         albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
-         completion: @escaping (String, AlbumEntity) -> Void) {
+         completion: @escaping (AlbumEntity, [NodeEntity]) -> Void,
+         isNewAlbum: Bool = false) {
         self.album = album
         self.photoLibraryUseCase = photoLibraryUseCase
-        self.albumContentModificationUseCase = albumContentModificationUseCase
         self.completion = completion
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .album)
         navigationTitle = normalNavigationTitle
-        setupSubscriptions()
+        isDoneButtonDisabled = !isNewAlbum
+        setupSubscriptions(isNewAlbum: isNewAlbum)
     }
     
     deinit {
@@ -47,19 +48,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
             isDismiss.toggle()
             return
         }
-        
-        photosLoadingTask = Task(priority: .userInitiated) {
-            do {
-                let result = try await albumContentModificationUseCase.addPhotosToAlbum(by: album.id, nodes: nodes)
-                if result.success > 0 {
-                    let successMsg = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
-                    completion(successMsg, album)
-                }
-            } catch {
-                MEGALogError("Error occurred when adding photos to an album. \(error.localizedDescription)")
-            }
-        }
-        
+        completion(album, nodes)   
         isDismiss.toggle()
     }
     
@@ -72,7 +61,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     // MARK: - Private
-    private func setupSubscriptions() {
+    private func setupSubscriptions(isNewAlbum: Bool) {
         photoLibraryContentViewModel.selection.$photos
             .compactMap { [weak self] photos in
                 guard let self = self else { return nil }
@@ -80,6 +69,14 @@ final class AlbumContentPickerViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$navigationTitle)
+        
+        if !isNewAlbum {
+            photoLibraryContentViewModel.selection.$photos
+                .map { $0.isEmpty }
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$isDoneButtonDisabled)
+        }
         
         photoLibraryContentViewModel.filterViewModel.$appliedFilterLocation
             .removeDuplicates()
@@ -99,6 +96,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
                 await updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
                                                           isCloudDriveEmpty: cloudDrivePhotos.isEmpty,
                                                           isCameraUploadsEmpty: cameraUploadPhotos.isEmpty)
+                await updatePhotoSourceLocationNavigationTitleIfRequired()
                 await updatePhotoLibraryContent(cloudDrivePhotos: cloudDrivePhotos, cameraUploadPhotos: cameraUploadPhotos)
             } catch {
                 MEGALogError("Error occurred when loading photos. \(error.localizedDescription)")
@@ -153,7 +151,11 @@ final class AlbumContentPickerViewModel: ObservableObject {
         num == 1 ? Strings.Localizable.oneItemSelected(1): Strings.Localizable.itemsSelected(num)
     }
     
-    private func successMessage(forAlbumName name: String, withNumberOfItmes num: UInt) -> String {
-        Strings.Localizable.CameraUploads.Albums.addedItemTo(Int(num)).replacingOccurrences(of: "[A]", with: "\(name)")
+    @MainActor
+    private func updatePhotoSourceLocationNavigationTitleIfRequired() {
+        guard photoSourceLocationNavigationTitle != photoSourceLocation.localization else {
+            return
+        }
+        photoSourceLocationNavigationTitle = photoSourceLocation.localization
     }
 }

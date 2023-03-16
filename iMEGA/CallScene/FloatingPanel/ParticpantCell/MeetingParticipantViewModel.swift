@@ -19,6 +19,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     private var userImageUseCase: UserImageUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private var chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
     private var subscriptions = Set<AnyCancellable>()
@@ -41,16 +42,19 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
+    var loadNameTask: Task<Void, Never>?
     
     init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          contextMenuTappedHandler: @escaping (CallParticipantEntity, UIButton) -> Void) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.contextMenuTappedHandler = contextMenuTappedHandler
     }
     
@@ -78,19 +82,22 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
-        chatRoomUseCase.userDisplayName(forPeerId: participant.participantId, chatId: participant.chatId) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let name):
-                self.invokeCommand?(
-                    .updateName(
-                        name: self.isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name
-                    )
-                )
-                completion(name)
-            case .failure(let error):
-                MEGALogDebug("ChatRoom: failed to get the user display name for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name") - \(error)")
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else {
+            MEGALogDebug("ChatRoom not found for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
+            return
+        }
+        
+        loadNameTask = Task { @MainActor in
+            guard let name = try? await chatRoomUserUseCase.userDisplayName(forPeerId: participant.participantId, in: chatRoom) else {
+                return
             }
+            
+            self.invokeCommand?(
+                .updateName(
+                    name: self.isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name
+                )
+            )
+            completion(name)
         }
     }
 
@@ -165,10 +172,11 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func createAvatarUsingName(forParticipant participant: CallParticipantEntity) async throws -> UIImage? {
-        guard let name = try await chatRoomUseCase.userDisplayNames(
-            forPeerIds: [participant.participantId],
-            chatId: participant.chatId
-        ).first else {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) ,
+              let name = try await chatRoomUserUseCase.userDisplayNames(
+                forPeerIds: [participant.participantId],
+                in: chatRoom
+              ).first else {
             MEGALogDebug("Unable to find the name for handle \(participant.participantId)")
             return nil
         }

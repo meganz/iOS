@@ -320,13 +320,12 @@
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
-    DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModePreviewDocument;
+    DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : self.collectionView.hidden ? DisplayModePreviewPdfPage :  DisplayModePreviewDocument;
     BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc
                                              initWithNode:self.node
                                              delegate:self
                                              isLink:self.isLink
-                                             isPageView:self.collectionView.hidden
                                              displayMode:displayMode
                                              isInVersionsView:[self isPreviewingVersion]
                                              isBackupNode:isBackupNode

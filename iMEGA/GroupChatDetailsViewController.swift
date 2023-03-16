@@ -12,12 +12,10 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func addChatRoomDelegate() {
-        guard let chatRoom else { return }
         MEGASdkManager.sharedMEGAChatSdk().addChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func removeChatRoomDelegate() {
-        guard let chatRoom else { return }
         MEGASdkManager.sharedMEGAChatSdk().removeChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
@@ -27,10 +25,12 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
-        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatId: chatId) {
-            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
+        guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
+        
+        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {
+            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: delegate)
         }
-        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)
+        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatRoom.chatId, delegate: delegate)
     }
     
     @objc func showEndCallForAll() {
@@ -58,13 +58,10 @@ extension GroupChatDetailsViewController {
     }
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
-            userStoreRepo: UserStoreRepository(store: .shareInstance()))
-        return ParticipantsAddingViewFactory(
+        ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoom: chatRoom.toChatRoomEntity()
         )
     }
     
@@ -74,7 +71,6 @@ extension GroupChatDetailsViewController {
     }
     
     private func changeChatNotificationStatus(sender: UISwitch) {
-        guard let chatRoom else { return }
         if sender.isOn {
             chatNotificationControl.turnOffDND(chatId: ChatIdEntity(chatRoom.chatId))
         } else {
@@ -124,7 +120,7 @@ extension GroupChatDetailsViewController {
 }
 
 extension GroupChatDetailsViewController: MEGAChatCallDelegate {
-    public func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         guard call.chatId == self.chatRoom.chatId else { return }
         
         let statusToReload: [MEGAChatCallStatus] = [.inProgress,
@@ -137,7 +133,7 @@ extension GroupChatDetailsViewController: MEGAChatCallDelegate {
 }
 
 extension GroupChatDetailsViewController: MEGAChatRoomDelegate {
-    public func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+    public func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         if chat.hasChanged(for: .openInvite) {
             DispatchQueue.main.async {
                 self.chatRoom = chat

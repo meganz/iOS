@@ -15,39 +15,19 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isDismiss)
     }
     
-    func testOnDone_whenSomeImagesSelected_shouldDismissTheScreenAndReturnTheAlbumAndPluralSuccessMsg() async {
-        let exp = XCTestExpectation(description: "Adding content to album should be successful")
+    func testOnDone_whenItemsSelected_completionShouldReturnSelectedPhotos() async {
+        let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
+        let expectedSelectedPhotos = [node1]
         
-        let resultEntity = AlbumElementsResultEntity(success: 2, failure: 0)
-        let sut = makeAlbumContentPickerViewModel(resultEntity: resultEntity, completion: { msg, album in
-            XCTAssertEqual(msg, "Added 2 items to “\(album.name)”")
+        let exp = XCTestExpectation(description: "Adding content to album should be successful")
+        let sut = makeAlbumContentPickerViewModel(completion: { album, photos in
             XCTAssertNotNil(album)
+            XCTAssertEqual(photos, expectedSelectedPhotos)
             exp.fulfill()
         })
         await sut.photosLoadingTask?.value
         
-        let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
-        let node2 = NodeEntity(name: "b.png", handle: HandleEntity(2))
-        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([node1, node2])
-        sut.onDone()
-        await sut.photosLoadingTask?.value
-        XCTAssertTrue(sut.isDismiss)
-        wait(for: [exp], timeout: 2.0)
-    }
-    
-    func testOnDone_whenOneImageSelected_shouldDismissTheScreenAndReturnTheAlbumAndSingularSuccessMsg() async {
-        let exp = XCTestExpectation(description: "Adding content to album should be successful")
-        
-        let resultEntity = AlbumElementsResultEntity(success: 1, failure: 0)
-        let sut = makeAlbumContentPickerViewModel(resultEntity: resultEntity, completion: { msg, album in
-            XCTAssertEqual(msg, "Added 1 item to “\(album.name)”")
-            XCTAssertNotNil(album)
-            exp.fulfill()
-        })
-        await sut.photosLoadingTask?.value
-        
-        let node1 = NodeEntity(name: "a.png", handle: HandleEntity(1))
-        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([node1])
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(expectedSelectedPhotos)
         sut.onDone()
         await sut.photosLoadingTask?.value
         XCTAssertTrue(sut.isDismiss)
@@ -113,23 +93,32 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     func testPhotoSourceLocation_onContentLoadForAllLocations_shouldChangeToCloudDriveIfOnlyCloudDriveItemsLoaded() async {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, "")
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoSourceLocation, .cloudDrive)
+        let expectedLocation: PhotosFilterLocation = .cloudDrive
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testPhotoSourceLocation_onContentLoadForAllLocations_shouldChangeToCameraUploadIfOnlyCameraUploadItemsLoaded() async {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCameraUpload: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)])
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, "")
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoSourceLocation, .cameraUploads)
+        let expectedLocation: PhotosFilterLocation = .cameraUploads
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testPhotoSourceLocation_onContentLoadForAllLocations_shouldNotChangeIfCloudDriveAndCameraUploadItemsLoaded() async {
         let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
                                                   allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
-        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, "")
+        let expectedLocation: PhotosFilterLocation = .allLocations
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
         await sut.photosLoadingTask?.value
-        XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testPhotoSourceLocation_onContentLoad_shouldNotChangeSourceLocationIfItsTheSame() async {
@@ -150,6 +139,28 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         await sut.photosLoadingTask?.value
         wait(for: [exp], timeout: 1.0)
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
+    }
+    
+    func testPhotoSourceLocationNavigationTitle_onContentLoad_shouldNotChangeNavTitleIfItsTheSame() async {
+        let sut = makeAlbumContentPickerViewModel(allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+                                                  allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
+        let expectedLocation: PhotosFilterLocation = .allLocations
+        sut.photoSourceLocationNavigationTitle = expectedLocation.localization
+        XCTAssertEqual(sut.photoSourceLocation, expectedLocation)
+        await sut.photosLoadingTask?.value
+        let exp = expectation(description: "Should not change if the same")
+        exp.isInverted = true
+        sut.$photoSourceLocationNavigationTitle
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = expectedLocation
+        await sut.photosLoadingTask?.value
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
     func testContentLibrary_onContentLocationCloudDrive_shouldDisplaySortedCloudDrivePhotos() async throws {
@@ -223,11 +234,62 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertTrue(sut.shouldRemoveFilter)
     }
     
-    private func makeAlbumContentPickerViewModel(resultEntity: AlbumElementsResultEntity? = nil,
-                                               allPhotos: [NodeEntity] = [],
-                                               allPhotosFromCloudDriveOnly: [NodeEntity] = [],
-                                               allPhotosFromCameraUpload: [NodeEntity] = [],
-                                               completion: @escaping ((String, AlbumEntity) -> Void) = {_, _ in }) -> AlbumContentPickerViewModel {
+    func testIsDoneButtonDisabled_onItemsSelected_shouldChangeButNotEmitDuplicates() {
+        let sut = makeAlbumContentPickerViewModel()
+        XCTAssertTrue(sut.isDoneButtonDisabled)
+        XCTAssertTrue(sut.photoLibraryContentViewModel.selection.photos.isEmpty)
+        
+        let exp = expectation(description: "Should change disabled state")
+        exp.expectedFulfillmentCount = 4
+        var result = [Bool]()
+        sut.$isDoneButtonDisabled
+            .dropFirst()
+            .sink {
+                result.append($0)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let selectedPhoto = NodeEntity(name: "photo1.jpg", handle: 1)
+        let selectedPhotos = [selectedPhoto.handle: selectedPhoto]
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        sut.photoLibraryContentViewModel.selection.photos = [:]
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(result, [true, false, true, false])
+    }
+    
+    func testIsDoneButtonDisabled_onItemsSelectedWithNewAlbum_shouldNotChangeOnItemSelection() {
+        let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
+        let sut = AlbumContentPickerViewModel(album: album,
+                                              photoLibraryUseCase:
+                                                MockPhotoLibraryUseCase(),
+                                              completion: { _, _ in
+        }, isNewAlbum: true)
+        XCTAssertFalse(sut.isDoneButtonDisabled)
+        
+        let exp = expectation(description: "Should not change disabled state")
+        exp.isInverted = true
+        sut.$isDoneButtonDisabled
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let selectedPhoto = NodeEntity(name: "photo1.jpg", handle: 1)
+        let selectedPhotos = [selectedPhoto.handle: selectedPhoto]
+        sut.photoLibraryContentViewModel.selection.photos = selectedPhotos
+        sut.photoLibraryContentViewModel.selection.photos = [:]
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertFalse(sut.isDoneButtonDisabled)
+    }
+    
+    private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
+                                                 allPhotosFromCloudDriveOnly: [NodeEntity] = [],
+                                                 allPhotosFromCameraUpload: [NodeEntity] = [],
+                                                 completion: @escaping ((AlbumEntity, [NodeEntity]) -> Void) = {_, _ in }) -> AlbumContentPickerViewModel {
         let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
         return AlbumContentPickerViewModel(album: album,
                                            photoLibraryUseCase:
@@ -235,7 +297,6 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                 allPhotos: allPhotos,
                                                 allPhotosFromCloudDriveOnly: allPhotosFromCloudDriveOnly,
                                                 allPhotosFromCameraUpload: allPhotosFromCameraUpload),
-                                           albumContentModificationUseCase: MockAlbumContentModificationUseCase(resultEntity: resultEntity),
                                            completion: completion )
     }
     

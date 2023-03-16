@@ -11,7 +11,7 @@ struct TransferRepository: TransferRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func download(node: NodeEntity, to localUrl: URL) async throws -> TransferEntity {
+    func download(node: NodeEntity, to localUrl: URL, startHandler: ((TransferEntity) -> Void)?, progressHandler: ((TransferEntity) -> Void)?) async throws -> TransferEntity {
         guard let megaNode = sdk.node(forHandle: node.handle) else {
             throw TransferErrorEntity.couldNotFindNodeByHandle
         }
@@ -20,7 +20,7 @@ struct TransferRepository: TransferRepositoryProtocol {
                 continuation.resume(throwing: CancellationError())
                 return
             }
-            sdk.startDownloadNode(megaNode, localPath: localUrl.path, fileName: nil, appData: nil, startFirst: true, cancelToken: nil, delegate: TransferDelegate { result in
+            sdk.startDownloadNode(megaNode, localPath: localUrl.path, fileName: nil, appData: nil, startFirst: true, cancelToken: nil, delegate: TransferDelegate(start: startHandler, progress: progressHandler) { result in
                 guard Task.isCancelled == false else {
                     continuation.resume(throwing: CancellationError())
                     return
@@ -35,7 +35,7 @@ struct TransferRepository: TransferRepositoryProtocol {
         }
     }
     
-    func uploadFile(at fileUrl: URL, to parent: NodeEntity) async throws -> TransferEntity {
+    func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)?, progressHandler: ((TransferEntity) -> Void)?) async throws -> TransferEntity {
         guard let parentNode = sdk.node(forHandle: parent.handle) else {
             throw TransferErrorEntity.couldNotFindNodeByHandle
         }
@@ -44,7 +44,7 @@ struct TransferRepository: TransferRepositoryProtocol {
                 continuation.resume(throwing: CancellationError())
                 return
             }
-            sdk.startUpload(withLocalPath: fileUrl.path, parent: parentNode, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: true, cancelToken: nil, delegate: TransferDelegate { result in
+            sdk.startUpload(withLocalPath: fileUrl.path, parent: parentNode, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: true, cancelToken: nil, delegate: TransferDelegate(start: startHandler, progress: progressHandler) { result in
                 guard Task.isCancelled == false else {
                     continuation.resume(throwing: CancellationError())
                     return

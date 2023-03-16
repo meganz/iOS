@@ -1,65 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="J6p-g8-CHO">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="J6p-g8-CHO">
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Document Picker View Controller-->
+        <!--Document Action View Controller-->
         <scene sceneID="Q8I-MS-tKG">
             <objects>
-                <viewController id="J6p-g8-CHO" customClass="DocumentPickerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hST-wJ-eYy"/>
-                        <viewControllerLayoutGuide type="bottom" id="UQD-kz-Mfv"/>
-                    </layoutGuides>
+                <viewController id="J6p-g8-CHO" customClass="DocumentActionViewController" customModule="MEGAPicker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vdh-Gp-eV6">
-                        <rect key="frame" x="0.0" y="0.0" width="350" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o3h-jK-Dvh">
-                                <rect key="frame" x="90" y="134" width="170" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-5n-s33">
-                                <rect key="frame" x="34" y="414" width="282" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <state key="normal" title="Open"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="openMegaTouchUpInside:" destination="J6p-g8-CHO" eventType="touchUpInside" id="wr0-65-Chd"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Open MEGA and sign in to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW6-dG-glE">
-                                <rect key="frame" x="83" y="273" width="184" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3d-ww-edX">
+                                <rect key="frame" x="0.0" y="59" width="430" height="44"/>
+                                <items>
+                                    <navigationItem id="pjI-tQ-M63">
+                                        <barButtonItem key="rightBarButtonItem" title="Close" id="040-To-EsJ">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="J6p-g8-CHO" id="C9u-gM-wU9"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oMN-D6-5Ml">
+                                <rect key="frame" x="20" y="344.33333333333331" width="390" height="243.33333333333331"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreenMEGALogo" translatesAutoresizingMaskIntoConstraints="NO" id="ioa-Ax-uzw">
+                                        <rect key="frame" x="132.66666666666666" y="0.0" width="124.99999999999997" height="125"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="125" id="W4F-QB-SNY"/>
+                                            <constraint firstAttribute="height" constant="125" id="vxU-UW-afU"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to MEGA" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgh-QI-X2F">
+                                        <rect key="frame" x="126.33333333333333" y="169.00000000000006" width="137.33333333333337" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open MEGA and sign in to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAl-Ey-XDZ">
+                                        <rect key="frame" x="60.333333333333343" y="223.00000000000006" width="269.33333333333326" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="ioa-Ax-uzw" firstAttribute="centerX" secondItem="oMN-D6-5Ml" secondAttribute="centerX" id="0h2-Bk-lu8"/>
+                                    <constraint firstItem="ioa-Ax-uzw" firstAttribute="top" secondItem="oMN-D6-5Ml" secondAttribute="top" id="3Y4-B9-Sm6"/>
+                                    <constraint firstAttribute="bottom" secondItem="lAl-Ey-XDZ" secondAttribute="bottom" id="90g-M3-LdJ"/>
+                                    <constraint firstItem="rgh-QI-X2F" firstAttribute="centerX" secondItem="oMN-D6-5Ml" secondAttribute="centerX" id="McR-TQ-Nm3"/>
+                                    <constraint firstItem="lAl-Ey-XDZ" firstAttribute="top" secondItem="rgh-QI-X2F" secondAttribute="bottom" constant="30" id="PNE-02-0kw"/>
+                                    <constraint firstItem="rgh-QI-X2F" firstAttribute="top" secondItem="ioa-Ax-uzw" secondAttribute="bottom" constant="44" id="XmQ-5g-u2l"/>
+                                    <constraint firstItem="rgh-QI-X2F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oMN-D6-5Ml" secondAttribute="leading" id="knt-9n-vlW"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rgh-QI-X2F" secondAttribute="trailing" id="oxW-88-LOC"/>
+                                    <constraint firstItem="lAl-Ey-XDZ" firstAttribute="centerX" secondItem="oMN-D6-5Ml" secondAttribute="centerX" id="rFC-qA-13J"/>
+                                    <constraint firstItem="lAl-Ey-XDZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oMN-D6-5Ml" secondAttribute="leading" id="sbR-HS-UsV"/>
+                                </constraints>
+                            </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="zTo-CZ-ppy"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="g3d-ww-edX" firstAttribute="top" secondItem="zTo-CZ-ppy" secondAttribute="top" id="5he-P5-XCR"/>
+                            <constraint firstItem="oMN-D6-5Ml" firstAttribute="centerY" secondItem="Vdh-Gp-eV6" secondAttribute="centerY" id="6mc-Qj-Npy"/>
+                            <constraint firstItem="oMN-D6-5Ml" firstAttribute="leading" secondItem="zTo-CZ-ppy" secondAttribute="leading" constant="20" id="Fro-Of-dxJ"/>
+                            <constraint firstItem="oMN-D6-5Ml" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="Shk-BY-aVA"/>
+                            <constraint firstItem="g3d-ww-edX" firstAttribute="leading" secondItem="zTo-CZ-ppy" secondAttribute="leading" id="cg6-49-PCi"/>
+                            <constraint firstItem="zTo-CZ-ppy" firstAttribute="trailing" secondItem="g3d-ww-edX" secondAttribute="trailing" id="m7P-LN-IWv"/>
+                        </constraints>
                     </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="350" height="480"/>
                     <connections>
-                        <outlet property="loginLabel" destination="cW6-dG-glE" id="AnH-TJ-Vdb"/>
-                        <outlet property="megaLogoImageView" destination="o3h-jK-Dvh" id="OCC-sY-Nhu"/>
-                        <outlet property="openButton" destination="UF4-5n-s33" id="Hss-zN-5DJ"/>
+                        <outlet property="cancelBarButtonItem" destination="040-To-EsJ" id="UwH-gI-nWW"/>
+                        <outlet property="messageLabel" destination="lAl-Ey-XDZ" id="Jg6-kY-STZ"/>
+                        <outlet property="titleLabel" destination="rgh-QI-X2F" id="cc3-uS-c2U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UoZ-ya-W3e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.456521739130437" y="39.130434782608695"/>
+            <point key="canvasLocation" x="859.20000000000005" y="63.868065967016499"/>
         </scene>
     </scenes>
+    <color key="tintColor" systemColor="systemGrayColor"/>
     <resources>
-        <image name="megaThePrivacyCompanyLogo" width="170" height="54"/>
+        <image name="splashScreenMEGALogo" width="125" height="125"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

@@ -82,6 +82,17 @@ extension SharedItemsViewController {
         guard let share = shareAtIndexPath(indexPath) else { return nil }
         return MEGASdk.shared.contact(forEmail: share.user)
     }
+
+    @objc func addInShareSearcBarIfNeeded() {
+        let inShareSize = incomingShareList?.size.intValue ?? 0
+        let unverifiedInShareSize = incomingUnverifiedShareList?.size.intValue ?? 0
+        
+        guard inShareSize > 0 || unverifiedInShareSize > 0 else {
+            tableView?.tableHeaderView = nil
+            return
+        }
+        addSearchBar()
+    }
     
     @objc func searchUnverifiedNodes(key: String) {
         searchUnverifiedNodesArray.removeAllObjects()
@@ -216,6 +227,7 @@ extension SharedItemsViewController {
     
     @objc func incomingUnverifiedNodes() {
         let shareList = MEGASdk.shared.getUnverifiedInShares(sortOrderType)
+        incomingUnverifiedShareList = shareList
         incomingUnverifiedSharesMutableArray?.removeAllObjects()
         incomingUnverifiedNodesMutableArray?.removeAllObjects()
         
@@ -226,6 +238,8 @@ extension SharedItemsViewController {
         incomingUnverifiedNodesMutableArray?.addObjects(from: nodes)
         
         incomingButton?.setBadgeCount(value: badgeValue(shares.count))
+         
+        addInShareSearcBarIfNeeded()
     }
 }
 

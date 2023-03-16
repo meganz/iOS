@@ -22,6 +22,7 @@ public extension TransferEntity {
          updateTime: Date? = nil,
          publicNode: NodeEntity? = nil,
          isStreamingTransfer: Bool = false,
+         isFinished: Bool = false,
          isForeignOverquota: Bool = false,
          lastErrorExtended: TransferErrorEntity? = nil,
          isFolderTransfer: Bool = false,
@@ -31,6 +32,6 @@ public extension TransferEntity {
          priority: UInt64 = 0,
          stage: TransferStageEntity = .none,
          isTesting: Bool = true) {
-        self.init(type: type, transferString: transferString, startTime: startTime, transferredBytes: transferredBytes, totalBytes: totalBytes, path: path, parentPath: parentPath, nodeHandle: nodeHandle, parentHandle: parentHandle, startPos: startPos, endPos: endPos, fileName: fileName, numRetry: numRetry, maxRetries: maxRetries, tag: tag, speed: speed, deltaSize: deltaSize, updateTime: updateTime, publicNode: publicNode, isStreamingTransfer: isStreamingTransfer, isForeignOverquota: isForeignOverquota, lastErrorExtended: lastErrorExtended, isFolderTransfer: isFolderTransfer, folderTransferTag: folderTransferTag, appData: appData, state: state, priority: priority, stage: stage)
+        self.init(type: type, transferString: transferString, startTime: startTime, transferredBytes: transferredBytes, totalBytes: totalBytes, path: path, parentPath: parentPath, nodeHandle: nodeHandle, parentHandle: parentHandle, startPos: startPos, endPos: endPos, fileName: fileName, numRetry: numRetry, maxRetries: maxRetries, tag: tag, speed: speed, deltaSize: deltaSize, updateTime: updateTime, publicNode: publicNode, isStreamingTransfer: isStreamingTransfer, isFinished: isFinished, isForeignOverquota: isForeignOverquota, lastErrorExtended: lastErrorExtended, isFolderTransfer: isFolderTransfer, folderTransferTag: folderTransferTag, appData: appData, state: state, priority: priority, stage: stage)
     }
 }

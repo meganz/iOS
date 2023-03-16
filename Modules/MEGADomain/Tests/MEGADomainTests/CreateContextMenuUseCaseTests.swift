@@ -55,6 +55,26 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
+    func testMenuItemsForAlbumContentScreen_whenUserOpenAnAlbum_shouldReturnTheRightMenuItems() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        sortType: .creationDesc,
+                                                                        filterType: .allMedia,
+                                                                        albumType: .user,
+                                                                        isFilterEnabled: true,
+                                                                        isEmptyState: false))
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+        menuActionsArray = [.quickActions(actionType: .rename),
+                            .display(actionType: .select),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .filter(actionType: .allMedia),
+                            .filter(actionType: .images),
+                            .filter(actionType: .videos),
+        ]
+        
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
     func testCreateContextMenuRubbishBin_Display() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         isRubbishBinFolder: true,
@@ -203,7 +223,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
 
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
 
-        menuActionsArray = []
+        menuActionsArray = [.quickActions(actionType: .rename)]
 
         XCTAssertEqual(menuActions, menuActionsArray)
     }

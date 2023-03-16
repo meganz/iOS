@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="جاري إنشاء روابط…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="تم نسخ الرابط";
+"linkCopied"="Copied link";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="‏تم نسخ الروابط";
+"linksCopied"="Copied links";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="تم النسخ إلى الحافظة";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="تم إرسال الملفات للمحادثة";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d ملفات أرسلت بنجاح";
+"xfilesSentSuccesfully"="%d files sent";
 /* Title show when a file is being downloaded */
 "downloading"="جارى التنزيل";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="تم مشاركة المجلد";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d مجلدات تم مشاركتها بنجاح.";
+"sharedFolders_success"="%d folders shared";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="استيراد";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="هذه هي الخطوة الأخيرة لحذف حسابك. ستفقد بشكل دائم جميع البيانات المخزنة في السحابة. الرجاء إدخال كلمة المرور الخاصة بك أدناه.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="تم حذف حسابك بنجاح.";
+"accountCanceledSuccessfully"="Your account has been deleted";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="إغلاق الحساب";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="مفتاح الاستعادة الخاص بك سيستخدم لإعادة تعيين كلمة مرورك. الرجاء ادخال كلمة مرورك الجديدة.";
 /*  */
-"yourPasswordHasBeenReset"="تم إعادة تعيين كلمة المرور الخاصة بك بنجاح. يرجى تسجيل الدخول إلى حسابك.";
+"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="إرسال";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="بدء حساب جديد";
 /*  */
-"yourAccounHasBeenParked"="لقد تم ركن حسابك القديم بنجاح. يمكنك الآن تسجيل الدخول إلى حسابك الجديد.";
+"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="عنوان البريد الإلكتروني الجديد";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="تغيير الاسم";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="لقد قمت بتغيير ملفك الشخصي بنجاح.";
+"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
 /* Hint text for the first name (Placeholder) */
 "firstName"="الاسم الأول";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="تم حذف [A] من المجموعة من قبل [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="غادر [A] المحادثة الجماعية.";
+"leftTheGroupChat"="[A] left the group chat";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="انضم [A] إلى المحادثة الجماعية بدعوة من [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="تم مسح سجل المحادثة";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="حدث خطأ. لم يتم مسح سجل المحادثة بنجاح";
+"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
 /* 'Next' button in a dialog */
 "continue"="تابع";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="بعض العناصر لا يمكن مشاركتها مع ميغا MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="تمت المشاركة بنجاح";
+"Shared successfully"="مشاركة";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="فشل التراسل:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="تم ارسال الرسائل";
 /* Title of archived chats button */
-"archivedChats"="محادثات مأرشفة";
+"archivedChats"="تمت الارشفة";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="هل أنت متأكد أنك تريد أرشفة هذه المحادثة؟";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="هل أنت متأكد أنك تريد إلغاء أرشفة هذه المحادثة؟";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="إعادة المحادثة من الارشيف";
+"unarchiveChat"="اعادة من الارشفة";
 /* Title of button to archive chats. */
-"archiveChat"="أرشفة المحادثة";
+"archiveChat"="الأرشيف";
 /* Title of flag of archived chats. */
 "archived"="تمت الارشفة";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="لا توجد محادثات مؤرشفة";
+"noArchivedChats"="No archived chats or meetings";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="المصادقة المزدوجة Two-Factor";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ انضم الى المكالمة.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ غادر المكالمة.";
+"%@ left the call."="%@ غادر المكالمة";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام.";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="لم تتلقى الرمز؟";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="تم التحقق من رقم هاتفك بنجاح";
+"Your phone number has been verified successfully"="Your phone number has been verified";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="تم قفل حسابك مؤقتاً لضمان أمنك.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="ستؤدي هذه العملية إلى إزالة رقم هاتفك الحالي وبدء عملية ربط رقم هاتف جديد بحسابك.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="تمت إزالة رقم هاتفك بنجاح.";
+"Your phone number has been removed successfully."="Your phone number has been removed";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="أخفقت إزالة رقم هاتفك، يرجى إعادة المحاولة لاحقاً.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2389,9 +2389,9 @@
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="خيارات مثل إرسال مفتاح فك التشفير بشكل منفصل أو تعيين تاريخ انتهاء الصلاحية أو كلمات مرور متاحة لعنصر واحد فقط.";
 /* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="تم نسخ الرابط إلى الحافظة";
+"Link Copied to Clipboard"="تم النسخ الى حافظة النصوص";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="تم نسخ الروابط إلى الحافظة";
+"Links Copied to Clipboard"="Copied links to clipboard";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="تم نسخ المفتاح إلى الحافظة";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="ساعدنا في فهم كيفية استخدامك لخدماتنا وتزويدنا بالبيانات التي يمكننا استخدامها لإجراء تحسينات. يعني عدم قبول ملفات تعريف الارتباط Cookies هذه أننا سنحصل على بيانات متاحة أقل لنقوم بالمساعدة في تحسينات التصميم.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="تم إنشاء النسخة كملف جديد بنجاح.";
+"Version created as a new file successfully."="Version was created as a new file";
 /* Text shown for the action create new file */
 "Create new file"="إنشاء ملف جديد";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ انضم";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ غادر";
+"meetings.notification.singleUserLeft"="%@ غادر المكالمة";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ و %@ انضما";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ و%@ غادرا";
+"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="انضم %@ و %@ آخرون";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="غادر %@ و %@ آخرون";
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="نقل إلى سلة المحذوفات";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3247,19 +3247,19 @@
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Occurrences";
 /* Label to indicate the daily recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.daily"="Occurs daily";
+"meetings.scheduled.recurring.frequency.daily"="يتكرر يومياً";
 /* Label to indicate the weekly recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.weekly"="Occurs weekly";
+"meetings.scheduled.recurring.frequency.weekly"="يتكرر أسبوعياً";
 /* Label to indicate the monthly recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.monthly"="Occurs monthly";
+"meetings.scheduled.recurring.frequency.monthly"="يتكرر شهرياً";
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="شاهد المزيد";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

@@ -1,39 +1,70 @@
 import UIKit
+import SwiftUI
 import MEGADomain
 import MEGAPresentation
 
-struct AlbumContentRouter: Routing {
+protocol AlbumContentRouting: Routing {
+    func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)
+}
+
+struct AlbumContentRouter: AlbumContentRouting {
+    private weak var navigationController: UINavigationController?
     private let album: AlbumEntity
-    private let messageForNewAlbum: String?
-    
-    init(album: AlbumEntity, messageForNewAlbum: String?) {
+    private let newAlbumPhotos: [NodeEntity]?
+    private let existingAlbumNames: () -> [String]
+        
+    init(navigationController: UINavigationController?, album: AlbumEntity, newAlbumPhotos: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) {
+        self.navigationController = navigationController
         self.album = album
-        self.messageForNewAlbum = messageForNewAlbum
+        self.newAlbumPhotos = newAlbumPhotos
+        self.existingAlbumNames = existingAlbumNames
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
-        let nodesUpdateRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
-        let albumContentsRepo = AlbumContentsUpdateNotifierRepository(
-            sdk: sdk,
-            nodesUpdateListenerRepo: nodesUpdateRepo
-        )
+        let albumContentsUpdateRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let filesSearchRepo = FilesSearchRepository.newRepo
+        let userAlbumRepo = UserAlbumRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let albumContentsUseCase = AlbumContentsUseCase(
-            albumContentsRepo: albumContentsRepo,
+            albumContentsRepo: albumContentsUpdateRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
-            userAlbumRepo: UserAlbumRepository.newRepo
+            userAlbumRepo: userAlbumRepo
         )
+        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo,
+                                                      searchRepository: FilesSearchRepository.newRepo)
+        
+        let alertViewModel = TextFieldAlertViewModel(textString: album.name,
+                                                     title: Strings.Localizable.rename,
+                                                     placeholderText: "",
+                                                     affirmativeButtonTitle: Strings.Localizable.rename,
+                                                     affirmativeButtonInitiallyEnabled: false,
+                                                     message: Strings.Localizable.renameNodeMessage,
+                                                     validator: AlbumNameValidator(existingAlbumNames: existingAlbumNames).rename)
         
         let viewModel = AlbumContentViewModel(
             album: album,
-            messageForNewAlbum: self.messageForNewAlbum,
             albumContentsUseCase: albumContentsUseCase,
             mediaUseCase: mediaUseCase,
-            router: self)
+            albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: userAlbumRepo),
+            photoLibraryUseCase: photoLibraryUseCase,
+            router: self,
+            newAlbumPhotosToAdd: newAlbumPhotos,
+            alertViewModel: alertViewModel)
         return AlbumContentViewController(viewModel: viewModel)
+    }
+    
+    @MainActor
+    func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
+        let photoLibraryRepository = PhotoLibraryRepository.newRepo
+        let fileSearchRepository = FilesSearchRepository.newRepo
+        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
+                                                      searchRepository: fileSearchRepository)
+        let viewModel = AlbumContentPickerViewModel(album: album,
+                                                    photoLibraryUseCase: photoLibraryUseCase,
+                                                    completion: completion)
+        let content = AlbumContentPickerView(viewModel: viewModel)
+        navigationController?.present(UIHostingController(rootView: content), animated: true)
     }
     
     func start() {}

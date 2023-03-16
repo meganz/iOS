@@ -6,6 +6,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private let initialParticipantsLoad: Int = 4
     
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private var chatUseCase: ChatUseCaseProtocol
     private let router: MeetingInfoRouting
     private var chatRoom: ChatRoomEntity
@@ -20,17 +21,20 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
 
     init(router: MeetingInfoRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          chatRoom: ChatRoomEntity)
     {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.chatUseCase = chatUseCase
         self.chatRoom = chatRoom
         
         self.myUserParticipant = ChatRoomParticipantViewModel(
             router: router,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             chatUseCase: chatUseCase,
             chatParticipantId: chatUseCase.myUserHandle(),
             chatRoom: chatRoom)
@@ -68,14 +72,24 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private func loadAllParticipants() {
         chatRoomParticipants = chatRoom.peers
             .map {
-                ChatRoomParticipantViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatParticipantId: $0.handle, chatRoom: chatRoom)
+                ChatRoomParticipantViewModel(router: router,
+                                             chatRoomUseCase: chatRoomUseCase,
+                                             chatRoomUserUseCase: chatRoomUserUseCase,
+                                             chatUseCase: chatUseCase,
+                                             chatParticipantId: $0.handle,
+                                             chatRoom: chatRoom)
             }
     }
     
     private func loadInitialParticipants() {
         chatRoomParticipants =  chatRoom.peers[0..<(initialParticipantsLoad - 1)]
             .map {
-                ChatRoomParticipantViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, chatParticipantId: $0.handle, chatRoom: chatRoom)
+                ChatRoomParticipantViewModel(router: router,
+                                             chatRoomUseCase: chatRoomUseCase,
+                                             chatRoomUserUseCase: chatRoomUserUseCase,
+                                             chatUseCase: chatUseCase,
+                                             chatParticipantId: $0.handle,
+                                             chatRoom: chatRoom)
             }
     }
     
@@ -105,7 +119,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoom: chatRoom
         )
     }
     
@@ -114,7 +128,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func listenToInviteChanges() {
-        chatRoomUseCase.ownPrivilegeChanged(forChatId: chatRoom.chatId)
+        chatRoomUseCase.ownPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
@@ -128,7 +142,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
         
-        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatId: chatRoom.chatId)
+        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching allow host to add participants with error \(error)")
@@ -144,7 +158,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func listenToParticipantsUpdate() {
-        chatRoomUseCase.participantsUpdated(forChatId: chatRoom.chatId)
+        chatRoomUseCase.participantsUpdated(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")

@@ -71,15 +71,34 @@ extension ChatViewController {
     }
 
     private func pushGroupDetailsViewController() {
-        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-        if let groupDetailsViewController = storyboard.instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController {
-            groupDetailsViewController.chatRoom = chatRoom
-            navigationController?.pushViewController(groupDetailsViewController, animated: true)
+        guard let navigationController else { return }
+        if let scheduledMeeting = chatHasFutureScheduledMeeting() {
+            MeetingInfoRouter(presenter: navigationController, scheduledMeeting: scheduledMeeting).start()
         } else {
-            MEGALogError("ChatViewController: Could not GroupChatDetailsViewController")
+            let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+            if let groupDetailsViewController = storyboard.instantiateViewController(withIdentifier: "GroupChatDetailsViewControllerID") as? GroupChatDetailsViewController {
+                groupDetailsViewController.chatRoom = chatRoom
+                navigationController.pushViewController(groupDetailsViewController, animated: true)
+            } else {
+                MEGALogError("ChatViewController: Could not GroupChatDetailsViewController")
+            }
         }
     }
 
+    private func chatHasFutureScheduledMeeting() -> ScheduledMeetingEntity? {
+        let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared))
+        let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId)
+        
+        return scheduledMeetings.first(where: {
+            $0.parentScheduledId == .invalid &&
+            (
+                ($0.rules.frequency == .invalid && $0.endDate >= Date())
+                ||
+                ($0.rules.frequency != .invalid && $0.rules.until ?? Date() >= Date())
+            )
+        })
+    }
+    
     func pushContactDetailsViewController(withPeerHandle peerHandle: UInt64) {
         guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
             return
@@ -133,13 +152,10 @@ extension ChatViewController {
     }
     
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
-            userStoreRepo: UserStoreRepository(store: .shareInstance()))
-        return ParticipantsAddingViewFactory(
+        ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            chatRoomUseCase: chatRoomUseCase,
-            chatId: chatRoom.chatId
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoom: chatRoom.toChatRoomEntity()
         )
     }
 }
