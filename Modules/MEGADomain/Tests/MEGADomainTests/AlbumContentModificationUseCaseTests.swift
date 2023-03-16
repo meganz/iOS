@@ -38,4 +38,23 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
 
         XCTAssertEqual(nodeId, HandleEntity(2))
     }
+    
+    func testDeletePhotos_onAlbumPhotoEntityWithNoValidIds_shouldReturnZeroAlbumResultEntity() async throws {
+        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let album = AlbumEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let photosToRemove = [AlbumPhotoEntity(photo: NodeEntity(handle: 1), albumPhotoId: nil)]
+        let result = try await sut.deletePhotos(in: album.id, photos: photosToRemove)
+        XCTAssertEqual(result.success, 0)
+        XCTAssertEqual(result.failure, 0)
+    }
+    
+    func testDeletePhotos_onAlbumPhotoEntityWithValidPhotoIds_shouldReturnAlbumResultEntityWithIdCount() async throws {
+        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let album = AlbumEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        let photosToRemove = [AlbumPhotoEntity(photo: NodeEntity(handle: 1), albumPhotoId: 1),
+                              AlbumPhotoEntity(photo: NodeEntity(handle: 2), albumPhotoId: 2)]
+        let result = try await sut.deletePhotos(in: album.id, photos: photosToRemove)
+        XCTAssertEqual(result.success, UInt(photosToRemove.count))
+        XCTAssertEqual(result.failure, 0)
+    }
 }

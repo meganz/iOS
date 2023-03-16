@@ -31,7 +31,7 @@ extension AlbumContentViewController {
             cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
-            if FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu) {
+            if shouldUseAlbumContextMenu {
                 var rightBarButtonItems = [UIBarButtonItem]()
                 if let contextMenuBarButton = makeContextMenuBarButton() {
                     rightBarButtonItems.append(contextMenuBarButton)

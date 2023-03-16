@@ -3,7 +3,7 @@ import MEGADomain
 import Combine
 
 public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
-    private let photos: [AlbumPhotoEntity]
+    public var photos: [AlbumPhotoEntity]
     private let albumReloadPublisher: AnyPublisher<Void, Never>
 
     public init(photos: [AlbumPhotoEntity] = [],

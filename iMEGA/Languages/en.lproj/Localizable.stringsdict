@@ -706,6 +706,22 @@
         <string>Added %d items to “[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@count@</string>
+        <key>count</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Removed %d item from “[A]”</string>
+            <key>other</key>
+            <string>Removed %d items from “[A]”</string>
+        </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

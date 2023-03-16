@@ -108,23 +108,14 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     
     func deleteButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty,
-              let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode else {
-                  return
-              }
-        
-        let moveRequestDelegate = MEGAMoveRequestDelegate(
-            toMoveToTheRubbishBinWithFiles: UInt(selectedNodes.count),
-            folders: 0) { [weak self] in
-                self?.endEditingMode()
-            }
-        
-        selectedNodes.forEach {
-            MEGASdkManager.sharedMEGASdk().move(
-                $0,
-                newParent: rubbishBinNode,
-                delegate: moveRequestDelegate
-            ) }
+              !selectedNodes.isEmpty else {
+            return
+        }
+        if FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum) {
+            deleteAlbumPhotos(selectedNodes.toNodeEntities())
+        } else {
+            movePhotosToRubbishBin(photos: selectedNodes)
+        }
     }
     
     func moreButtonPressed(_ button: UIBarButtonItem) {
@@ -219,6 +210,36 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     }
     
     // MARK: - Private
+    private func deleteAlbumPhotos(_ photos: [NodeEntity]) {
+        let alertController = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.RemovePhotos.Alert.title,
+                                                message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.remove, style: .destructive) { [weak self] _ in
+            self?.viewModel.dispatch(.deletePhotos(photos))
+        })
+        alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.removeToRubbishBinItem
+        present(alertController, animated: true)
+        endEditingMode()
+    }
+    
+    private func movePhotosToRubbishBin(photos: [MEGANode]) {
+        guard let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode else {
+            return
+        }
+        let moveRequestDelegate = MEGAMoveRequestDelegate(
+            toMoveToTheRubbishBinWithFiles: UInt(photos.count),
+            folders: 0) { [weak self] in
+                self?.endEditingMode()
+            }
+        
+        photos.forEach {
+            MEGASdkManager.sharedMEGASdk().move(
+                $0,
+                newParent: rubbishBinNode,
+                delegate: moveRequestDelegate
+            ) }
+    }
+    
     private func openBrowserViewController(withAction action: BrowserAction) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty,

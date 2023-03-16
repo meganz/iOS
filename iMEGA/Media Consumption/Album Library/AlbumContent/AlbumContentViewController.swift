@@ -6,6 +6,7 @@ import MEGAPresentation
 
 final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
     let viewModel: AlbumContentViewModel
+    let shouldUseAlbumContextMenu = FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu)
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
@@ -123,9 +124,14 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
             }
         case .dismissAlbum:
             dismiss(animated: true)
-        case .showHud(let msg):
+        case .showHud(let messageType):
             SVProgressHUD.dismiss(withDelay: 3)
-            SVProgressHUD.showSuccess(withStatus: msg)
+            switch messageType {
+            case .success(let message):
+                SVProgressHUD.showSuccess(withStatus: message)
+            case .custom(let image, let message):
+                SVProgressHUD.show(image, status: message)
+            }
         case .updateNavigationTitle:
             buildNavigationBar()
         }

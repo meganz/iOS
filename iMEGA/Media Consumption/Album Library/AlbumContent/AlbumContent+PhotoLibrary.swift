@@ -3,7 +3,7 @@ import MEGADomain
 
 extension AlbumContentViewController: PhotoLibraryProvider {
     func hideNavigationEditBarButton(_ hide: Bool) {
-        if hide {
+        if hide && !shouldUseAlbumContextMenu {
             navigationItem.rightBarButtonItem = nil
         } else {
             configureRightBarButtons()
