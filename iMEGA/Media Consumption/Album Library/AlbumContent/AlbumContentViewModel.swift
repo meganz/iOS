@@ -8,14 +8,20 @@ enum AlbumContentAction: ActionType {
     case changeSortOrder(SortOrderType)
     case changeFilter(FilterType)
     case showAlbumCoverPicker
+    case deletePhotos([NodeEntity])
 }
 
 final class AlbumContentViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case showAlbumPhotos(photos: [NodeEntity], sortOrder: SortOrderType)
         case dismissAlbum
-        case showHud(String)
+        case showHud(MessageType)
         case updateNavigationTitle
+        
+        enum MessageType: Equatable {
+            case success(String)
+            case custom(UIImage, String)
+        }
     }
     
     private var album: AlbumEntity
@@ -31,6 +37,7 @@ final class AlbumContentViewModel: ViewModelType {
     private var addAdditionalPhotosTask: Task<Void, Never>?
     private var newAlbumPhotosToAdd: [NodeEntity]?
     private var doesPhotoLibraryContainPhotos: Bool = false
+    private var deletePhotosTask: Task<Void, Never>?
     
     private(set) var alertViewModel: TextFieldAlertViewModel
     
@@ -79,6 +86,10 @@ final class AlbumContentViewModel: ViewModelType {
             updateFilter(filter)
         case .showAlbumCoverPicker:
             showAlbumCoverPicker()
+        case .deletePhotos(let photos):
+            deletePhotosTask = Task {
+                await deletePhotos(photos)
+            }
         }
     }
     
@@ -156,10 +167,14 @@ final class AlbumContentViewModel: ViewModelType {
         case .videos:
             return photos.contains(where: { $0.photo.mediaType == .image })
         default:
-            let containsImage = photos.contains(where: { $0.photo.mediaType == .image })
-            let containsVideo = photos.contains(where: { $0.photo.mediaType == .video })
-            return containsImage && containsVideo
+            return containsImageAndVideoPhotos
         }
+    }
+    
+    private var containsImageAndVideoPhotos: Bool {
+        let containsImage = photos.contains(where: { $0.photo.mediaType == .image })
+        let containsVideo = photos.contains(where: { $0.photo.mediaType == .video })
+        return containsImage && containsVideo
     }
     
     private var filteredPhotos: [AlbumPhotoEntity] {
@@ -212,7 +227,7 @@ final class AlbumContentViewModel: ViewModelType {
             let result = try await albumContentModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photosToAdd)
             if result.success > 0 {
                 let message = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
-                invokeCommand?(.showHud(message))
+                invokeCommand?(.showHud(.success(message)))
             }
         } catch {
             MEGALogError("Error occurred when adding photos to an album. \(error.localizedDescription)")
@@ -220,6 +235,9 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func showAlbumPhotos() {
+        if selectedFilter != .allMedia && !containsImageAndVideoPhotos {
+            selectedFilter = .allMedia
+        }
         invokeCommand?(.showAlbumPhotos(photos: filteredPhotos.map { $0.photo }, sortOrder: selectedSortOrder))
     }
         
@@ -277,7 +295,7 @@ final class AlbumContentViewModel: ViewModelType {
                 album.coverNode = photo
                 
                 let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated
-                self?.invokeCommand?(.showHud(message))
+                self?.invokeCommand?(.showHud(.success(message)))
             } catch {
                 MEGALogError("Error updating user album cover: \(error.localizedDescription)")
             }
@@ -288,5 +306,23 @@ final class AlbumContentViewModel: ViewModelType {
         router.showAlbumCoverPicker(album: album, completion: { [weak self] _, coverPhoto in
             self?.updateAlbumCover(photo: coverPhoto)
         })
+    }
+
+    @MainActor
+    private func deletePhotos(_ photos: [NodeEntity]) async {
+        let photosToDelete = self.photos.filter { albumPhoto in photos.contains(where: { albumPhoto.id == $0.handle }) }
+        guard photosToDelete.isNotEmpty else {
+            return
+        }
+        do {
+            let result = try await albumContentModificationUseCase.deletePhotos(in: album.id, photos: photosToDelete)
+            if result.success > 0 {
+                let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(result.success))
+                    .replacingOccurrences(of: "[A]", with: "\(albumName)")
+                invokeCommand?(.showHud(.custom(Asset.Images.Hud.hudMinus.image, message)))
+            }
+        } catch {
+            MEGALogError("Error occurred when deleting photos for the album. \(error.localizedDescription)")
+        }
     }
 }

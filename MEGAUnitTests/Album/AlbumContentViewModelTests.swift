@@ -73,9 +73,14 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTAssertEqual(nodes, nodesToAdd)
                 XCTAssertEqual(sortOrder, .newest)
                 exp.fulfill()
-            case .showHud(let message):
-                XCTAssertEqual(message, "Added 2 items to “\(self.albumEntity.name)”")
-                exp.fulfill()
+            case .showHud(let iconTypeMessage):
+                switch iconTypeMessage {
+                case .success(let message):
+                    XCTAssertEqual(message, "Added 2 items to “\(self.albumEntity.name)”")
+                    exp.fulfill()
+                default:
+                    XCTFail("Invalid message type")
+                }
             default:
                 XCTFail("Unexpected command")
             }
@@ -435,9 +440,14 @@ final class AlbumContentViewModelTests: XCTestCase {
         let exp = expectation(description: "Should show completion message after items added")
         sut.invokeCommand = {
             switch $0 {
-            case .showHud(let message):
-                XCTAssertEqual(message, "Added 1 item to “\(album.name)”")
-                exp.fulfill()
+            case .showHud(let iconTypeMessage):
+                switch iconTypeMessage {
+                case .success(let message):
+                    XCTAssertEqual(message, "Added 1 item to “\(album.name)”")
+                    exp.fulfill()
+                default:
+                    XCTFail("Invalid message type")
+                }
             default:
                 XCTFail()
             }
@@ -558,20 +568,88 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentModificationUseCase: albumContentModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
+        test(viewModel: sut, action: .showAlbumCoverPicker,
+             expectedCommands: [.showHud(.success(Strings.Localizable.CameraUploads.Albums.albumCoverUpdated))])
+    }
+    
+    func testDispatchDeletePhotos_onSuccessfulRemovalOfPhotos_shouldShowHudOfNumberOfRemovedItems() {
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
+        let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
+        let albumPhotos = nodesToRemove.enumerated().map { AlbumPhotoEntity(photo: $0.element, albumPhotoId: UInt64($0.offset + 1))}
+        let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToRemove.count), failure: 0)
+        let albumContentModificationUseCase = MockAlbumContentModificationUseCase(resultEntity: resultEntity)
+      
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos),
+                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router, alertViewModel: alertViewModel())
+        test(viewModel: sut, action: .onViewReady,
+             expectedCommands: [.showAlbumPhotos(photos: nodesToRemove, sortOrder: .newest)])
         
-        let exp = expectation(description: "Should show a hud after updating cover pic successfully")
+        let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(resultEntity.success))
+            .replacingOccurrences(of: "[A]", with: "\(album.name)")
+        test(viewModel: sut, action: .deletePhotos(nodesToRemove),
+             expectedCommands: [.showHud(.custom(Asset.Images.Hud.hudMinus.image, message))])
+        XCTAssertEqual(albumContentModificationUseCase.deletedPhotos, albumPhotos)
+    }
+    
+    func testDispatchDeletePhotos_onPhotosAlreadyRemoved_shouldDoNothing() {
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
+        let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
+        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: MockAlbumContentUseCase(photos: []),
+                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router, alertViewModel: alertViewModel())
+        test(viewModel: sut, action: .onViewReady,
+             expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
+        let exp = expectation(description: "Should not invoke any commands")
+        exp.isInverted = true
+        sut.invokeCommand = { _ in
+            exp.fulfill()
+        }
+        sut.dispatch(.deletePhotos(nodesToRemove))
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertNil(albumContentModificationUseCase.deletedPhotos)
+    }
+    
+    func testShowAlbumPhotos_onImagesRemovedWithImageFilter_shouldSwitchToShowVideos() {
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
+        let expectedImages = [NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)]
+        let expectedVideos = [NodeEntity(name: "sample1.mp4", handle: 1, mediaType: .video)]
+        let allPhotos = expectedImages + expectedVideos
+        let albumReloadPublisher = PassthroughSubject<Void, Never>()
+        var albumContentsUseCase = MockAlbumContentUseCase(photos: allPhotos.toAlbumPhotoEntities(),
+                                                           albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: albumContentsUseCase,
+                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router, alertViewModel: alertViewModel())
         
-        sut.invokeCommand = {
-            switch $0 {
-            case .showHud:
+        test(viewModel: sut, action: .onViewReady,
+             expectedCommands: [.showAlbumPhotos(photos: allPhotos, sortOrder: .newest)])
+        
+        test(viewModel: sut, action: .changeFilter(.images),
+             expectedCommands: [.showAlbumPhotos(photos: expectedImages, sortOrder: .newest)],
+             timeout: 0.25)
+        
+        albumContentsUseCase.photos = expectedVideos.toAlbumPhotoEntities()
+        let exp = expectation(description: "should show only videos")
+        sut.invokeCommand = { command in
+            switch command {
+            case .showAlbumPhotos(let nodes, let sortOrder):
+                XCTAssertEqual(nodes, expectedVideos)
+                XCTAssertEqual(sortOrder, .newest)
                 exp.fulfill()
             default:
-                XCTFail()
+                XCTFail("Unexpected command")
             }
         }
-        sut.dispatch(.showAlbumCoverPicker)
-        
-        wait(for: [exp], timeout: 1)
+        albumReloadPublisher.send()
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {

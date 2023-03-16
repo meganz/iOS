@@ -2912,6 +2912,10 @@ public enum Strings {
         }
         /// Album cover updated
         public static let albumCoverUpdated = Strings.tr("Localizable", "cameraUploads.albums.albumCoverUpdated")
+        /// Plural format key: "%#@count@"
+        public static func removedItemFrom(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.removedItemFrom", p1)
+        }
         /// Select album cover
         public static let selectAlbumCover = Strings.tr("Localizable", "cameraUploads.albums.selectAlbumCover")
         /// Albums
@@ -2959,6 +2963,12 @@ public enum Strings {
         public enum Raw {
           /// RAW
           public static let title = Strings.tr("Localizable", "cameraUploads.albums.raw.title")
+        }
+        public enum RemovePhotos {
+          public enum Alert {
+            /// Remove from album?
+            public static let title = Strings.tr("Localizable", "cameraUploads.albums.removePhotos.alert.title")
+          }
         }
         public enum SharedAlbum {
           /// Shared albums
