@@ -24,6 +24,18 @@ public final class Debouncer {
             self.execute(action)
         }
     }
+    
+    public func debounce() async throws {
+        cancel()
+        
+        try await withUnsafeThrowingContinuation { continuation in
+            let workItem = DispatchWorkItem {
+                continuation.resume()
+            }
+            self.dispatchWork = workItem
+            dispatchQueue.asyncAfter(deadline: .now() + delay, execute: workItem)
+        }
+    }
 
     public func cancel() {
         dispatchWork?.cancel()

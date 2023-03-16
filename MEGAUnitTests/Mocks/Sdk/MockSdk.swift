@@ -20,6 +20,9 @@ final class MockSdk: MEGASdk {
     private let shareList: MEGAShareList
     private let isSharedFolderOwnerVerified: Bool
     private let sharedFolderOwner: MEGAUser?
+    private let incomingNodes: MEGANodeList
+    private let outgoingNodes: MEGANodeList
+    private let publicLinkNodes: MEGANodeList
     
     var hasGlobalDelegate = false
     var apiURL: String?
@@ -28,6 +31,9 @@ final class MockSdk: MEGASdk {
     init(nodes: [MEGANode] = [],
          rubbishNodes: [MEGANode] = [],
          syncDebrisNodes: [MEGANode] = [],
+         incomingNodes: MEGANodeList = MEGANodeList(),
+         outgoingNodes: MEGANodeList = MEGANodeList(),
+         publicLinkNodes: MEGANodeList = MEGANodeList(),
          myContacts: MEGAUserList = MEGAUserList(),
          myUser: MEGAUser? = nil,
          myEmail: String? = nil,
@@ -56,6 +62,9 @@ final class MockSdk: MEGASdk {
         self.shareList = shareList
         self.isSharedFolderOwnerVerified = isSharedFolderOwnerVerified
         self.sharedFolderOwner = sharedFolderOwner
+        self.incomingNodes = incomingNodes
+        self.outgoingNodes = outgoingNodes
+        self.publicLinkNodes = publicLinkNodes
         super.init()
     }
     
@@ -236,6 +245,25 @@ final class MockSdk: MEGASdk {
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
+    override func nodeListSearchOnInShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
+        filterNodeList(incomingNodes, by: searchString)
+    }
+    
+    override func nodeListSearchOnOutShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
+        filterNodeList(outgoingNodes, by: searchString)
+    }
+    
+    override func nodeListSearchOnPublicLinks(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
+        filterNodeList(publicLinkNodes, by: searchString)
+    }
+    
+    private func filterNodeList(_ nodeList: MEGANodeList, by searchString: String) -> MEGANodeList {
+        let nodeArray = nodeList.toNodeArray()
+            .filter { $0.name?.contains(searchString) ?? false }
+        
+        return MockNodeList(nodes: nodeArray)
+    }
+        
     override func disableExport(_ node: MEGANode, delegate: MEGARequestDelegate) {
         nodes = nodes.compactMap { currentNode in
             if currentNode.handle == node.handle {

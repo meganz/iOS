@@ -1,4 +1,4 @@
-public enum SortOrderEntity: CaseIterable {
+public enum SortOrderEntity: CaseIterable, Sendable {
     case none
     case defaultAsc
     case defaultDesc
