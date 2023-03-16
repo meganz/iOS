@@ -3,8 +3,10 @@ import Combine
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     let scheduledMeeting: ScheduledMeetingEntity
+    let nextOccurrenceDate: Date
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private let chatUseCase: ChatUseCaseProtocol
     private var chatNotificationControl: ChatNotificationControl
     private let callUseCase: CallUseCaseProtocol
@@ -59,14 +61,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     }
 
     private let router: ChatRoomsListRouting
-    private var futureMeetingSearchStringTask: Task<Void, Never>?
 
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
 
     init(scheduledMeeting: ScheduledMeetingEntity,
+         nextOccurrenceDate: Date,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
@@ -76,8 +79,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
+        self.nextOccurrenceDate = nextOccurrenceDate
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.chatUseCase = chatUseCase
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
@@ -92,6 +97,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 peerHandle: chatRoomEntity.peers.first?.handle ?? .invalid,
                 chatRoomEntity: chatRoomEntity,
                 chatRoomUseCase: chatRoomUseCase,
+                chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
                 accountUseCase: accountUseCase
@@ -102,8 +108,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
             self.chatRoomAvatarViewModel = nil
         }
         
-        self.futureMeetingSearchStringTask = createFutureMeetingSearchStringTask()
-        
+        loadFutureMeetingSearchString()
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: scheduledMeeting.chatId)
         monitorActiveCallChanges()
         self.contextMenuOptions = constructContextMenuOptions()
@@ -137,27 +142,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     
     //MARK: - Private methods.
     
-    private func createFutureMeetingSearchStringTask() -> Task<Void, Never> {
+    private func loadFutureMeetingSearchString() {
         Task { [weak self] in
-            guard let self,
-                    let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
+            guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
                 return
             }
             
-            async let fullNamesTask = self.chatRoomUseCase.userFullNames(forPeerIds: chatRoom.peers.map(\.handle), chatId: self.scheduledMeeting.chatId).joined(separator: " ")
-            
-            async let userNickNamesTask = self.chatRoomUseCase.userNickNames(forChatId: chatRoom.chatId).values.joined(separator: " ")
-            
-            async let userEmailsTask = self.chatRoomUseCase.userEmails(forChatId: chatRoom.chatId).values.joined(separator: " ")
-            
             do {
-                let (fullNames, userNickNames, userEmails) = try await (fullNamesTask, userNickNamesTask, userEmailsTask)
-                
-                if let title = chatRoom.title {
-                    self.searchString = title + " " + fullNames + " " + userNickNames + " " + userEmails
-                } else {
-                    self.searchString = fullNames + " " + userNickNames + " " + userEmails
-                }
+                self.searchString = try await self.chatRoomUserUseCase.chatRoomUsersDescription(for: chatRoom)
             } catch {
                 MEGALogDebug("Unable to populate search string for \(scheduledMeeting.chatId) with error \(error.localizedDescription)")
             }
@@ -225,7 +217,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     }
     
     private func archiveChat() {
-        chatRoomUseCase.archive(true, chatId: scheduledMeeting.chatId)
+        guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
+        chatRoomUseCase.archive(true, chatRoom: chatRoom)
     }
     
     private func monitorActiveCallChanges() {

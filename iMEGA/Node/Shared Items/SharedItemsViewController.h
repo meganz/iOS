@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)configureAccessibilityForCell:(SharedItemsTableViewCell *)cell;
 - (void)reloadUI;
 - (void)showNodeContextMenu:(UIButton *)sender;
+- (void)addSearchBar;
 
 @end
 

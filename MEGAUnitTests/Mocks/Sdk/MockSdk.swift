@@ -119,6 +119,16 @@ final class MockSdk: MEGASdk {
         return mockNode.nodePath
     }
     
+    override func numberChildren(forParent parent: MEGANode?) -> Int {
+        var numberChildren = 0
+        for node in nodes {
+            if node.parentHandle == parent?.handle {
+                numberChildren += 1
+            }
+        }
+        return numberChildren
+    }
+    
     //MARK: - Sets
     
     override func megaSets() -> [MEGASet] {
@@ -131,6 +141,10 @@ final class MockSdk: MEGASdk {
     
     override func megaSetElementCount(_ sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> UInt {
         megaSetElementCounts[sid] ?? 0
+    }
+    
+    override func megaSetElement(bySid sid: MEGAHandle, eid: MEGAHandle) -> MEGASetElement? {
+        setElements.first(where: { $0.handle == eid})
     }
     
     override func createSet(_ name: String?, delegate: MEGARequestDelegate) {

@@ -2,10 +2,14 @@ import UIKit
 import SwiftUI
 import Combine
 import MEGADomain
+import MEGAUIKit
 
-final class PhotoAlbumContainerViewController: UIViewController {
+final class PhotoAlbumContainerViewController: UIViewController, TraitEnviromentAware {
     var photoViewController: PhotosViewController?
     var numberOfPages: Int = PhotoLibraryTab.allCases.count
+    
+    lazy var toolbar = UIToolbar()
+    var albumToolbarConfigurator: PhotoAlbumContainerToolbarConfiguration?
     
     override var isEditing: Bool {
         willSet {
@@ -19,10 +23,14 @@ final class PhotoAlbumContainerViewController: UIViewController {
         PhotosPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
     
-    private let pageTabViewModel = PagerTabViewModel()
+    let pageTabViewModel = PagerTabViewModel()
+    let viewModel = PhotoAlbumContainerViewModel()
+    
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
+    
+    var leftBarButton: UIBarButtonItem?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -86,6 +94,24 @@ final class PhotoAlbumContainerViewController: UIViewController {
         pageTabViewModel.selectedTab == .timeline
     }
     
+    // MARK: - TraitEnviromentAware
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            if pageTabViewModel.selectedTab == .album {
+                updateBarButtons()
+            }
+        }
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        if pageTabViewModel.selectedTab == .album {
+            AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: traitCollection)
+        }
+    }
+    
     // MARK: - Private
     
     private func setUpPhotosAndAlbumsControllers() {
@@ -105,7 +131,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
             photoViewController.photoUpdatePublisher = photoUpdatePublisher
         }
 
-        albumHostingController = AlbumListViewRouter().build()
+        albumHostingController = AlbumListViewRouter(photoAlbumContainerViewModel: viewModel).build()
         
         photoViewController?.parentPhotoAlbumsController = self
         photoViewController?.configureMyAvatarManager()
@@ -156,9 +182,25 @@ final class PhotoAlbumContainerViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
-        pageController.$currentPage
+        pageTabViewModel.$selectedTab
+            .filter { $0 == .album }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateRightBarButton()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$shouldShowSelectBarButton
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateRightBarButton()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$editMode
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.photoViewController?.hideRightBarButtonItem($0 != .timeline)
+                self?.isEditing = $0 == .active
             }
             .store(in: &subscriptions)
     }

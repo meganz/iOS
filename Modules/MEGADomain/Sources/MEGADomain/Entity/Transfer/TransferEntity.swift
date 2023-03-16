@@ -27,6 +27,7 @@ public struct TransferEntity {
     public let updateTime: Date?
     public let publicNode: NodeEntity?
     public let isStreamingTransfer: Bool
+    public let isFinished: Bool
     public let isForeignOverquota: Bool
     public let lastErrorExtended: TransferErrorEntity?
     public let isFolderTransfer: Bool
@@ -36,7 +37,7 @@ public struct TransferEntity {
     public let priority: UInt64
     public let stage: TransferStageEntity
     
-    public init(type: TransferTypeEntity, transferString: String?, startTime: Date?, transferredBytes: Int, totalBytes: Int, path: String?, parentPath: String?, nodeHandle: HandleEntity, parentHandle: HandleEntity, startPos: Int?, endPos: Int?, fileName: String?, numRetry: Int, maxRetries: Int, tag: Int, speed: Int, deltaSize: Int?, updateTime: Date?, publicNode: NodeEntity?, isStreamingTransfer: Bool, isForeignOverquota: Bool, lastErrorExtended: TransferErrorEntity?, isFolderTransfer: Bool, folderTransferTag: Int, appData: String?, state: TransferStateEntity, priority: UInt64, stage: TransferStageEntity) {
+    public init(type: TransferTypeEntity, transferString: String?, startTime: Date?, transferredBytes: Int, totalBytes: Int, path: String?, parentPath: String?, nodeHandle: HandleEntity, parentHandle: HandleEntity, startPos: Int?, endPos: Int?, fileName: String?, numRetry: Int, maxRetries: Int, tag: Int, speed: Int, deltaSize: Int?, updateTime: Date?, publicNode: NodeEntity?, isStreamingTransfer: Bool, isFinished: Bool, isForeignOverquota: Bool, lastErrorExtended: TransferErrorEntity?, isFolderTransfer: Bool, folderTransferTag: Int, appData: String?, state: TransferStateEntity, priority: UInt64, stage: TransferStageEntity) {
         self.type = type
         self.transferString = transferString
         self.startTime = startTime
@@ -57,6 +58,7 @@ public struct TransferEntity {
         self.updateTime = updateTime
         self.publicNode = publicNode
         self.isStreamingTransfer = isStreamingTransfer
+        self.isFinished = isFinished
         self.isForeignOverquota = isForeignOverquota
         self.lastErrorExtended = lastErrorExtended
         self.isFolderTransfer = isFolderTransfer

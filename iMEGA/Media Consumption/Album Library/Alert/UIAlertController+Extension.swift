@@ -18,22 +18,23 @@ extension UIAlertController {
             alert.action?(textField?.text?.trim ?? "")
         }
         addAction(affirmativeAction)
+        affirmativeAction.isEnabled = alert.affirmativeButtonInitiallyEnabled ?? true
         
         func actionFor(textField: UITextField, within alert: UIAlertController, viewModel: TextFieldAlertViewModel) -> UIAction {
             UIAction(handler: { _ in
                 var isEnabled = true
                 if let errorItem = viewModel.validator?(textField.text) {
-                    alert.title = errorItem.title
+                    alert.title = errorItem.title.isEmpty ? viewModel.title : errorItem.title
                     if errorItem.description.isNotEmpty {
                         alert.message = errorItem.description
                         textField.textColor = UIColor.mnz_redError()
                     } else {
-                        alert.message = nil
+                        alert.message = viewModel.message
                     }
                     isEnabled = false
                 } else {
                     alert.title = viewModel.title
-                    alert.message = nil
+                    alert.message = viewModel.message
                     textField.textColor = UIColor.mnz_label()
                     isEnabled = true
                 }

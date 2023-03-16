@@ -1,6 +1,8 @@
+import MEGADomain
+
 extension PhotosViewController {
     @IBAction func moreAction(_ sender: UIBarButtonItem) {
-        let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .selectionToolBar, isPhotosTimeline: true, sender: sender)
+        let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .photosTimeline, sender: sender)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     
@@ -61,6 +63,21 @@ extension PhotosViewController {
         toggleEditing()
     }
     
+    private func handleSaveToPhotos(for nodes: [MEGANode]) {
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            }
+            toggleEditing()
+        }
+    }
+    
     @objc func isTimelineActive() -> Bool {
         parentPhotoAlbumsController?.isTimelineActive() ?? false
     }
@@ -94,6 +111,8 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
             handleSendToChat(for: nodes)
         case .removeLink:
             handleRemoveLinks(for: nodes)
+        case .saveToPhotos:
+            handleSaveToPhotos(for: nodes)
         default:
             break
         }

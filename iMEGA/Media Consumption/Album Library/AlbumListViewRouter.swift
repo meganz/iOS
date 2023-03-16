@@ -1,24 +1,27 @@
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import Combine
 
 protocol AlbumListViewRouting {
-    func cell(album: AlbumEntity) -> AlbumCell
-    func albumContainer(album: AlbumEntity, messageForNewAlbum: String?) -> AlbumContainerWrapper
+    func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell
+    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
-    
-    func cell(album: AlbumEntity) -> AlbumCell {
+    weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
+
+    func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell {
         let vm = AlbumCellViewModel(
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            album: album
+            album: album,
+            selection: selection
         )
         return AlbumCell(viewModel: vm)
     }
     
-    func albumContainer(album: AlbumEntity, messageForNewAlbum: String?) -> AlbumContainerWrapper {
-        return AlbumContainerWrapper(album: album, messageForNewAlbum: messageForNewAlbum)
+    func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper {
+        return AlbumContainerWrapper(album: album, newAlbumPhotos: newAlbumPhotosToAdd, existingAlbumNames: existingAlbumNames)
     }
     
     @MainActor
@@ -29,11 +32,13 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 albumRepository: AlbumRepository.newRepo,
                 userAlbumRepository: UserAlbumRepository.newRepo,
                 fileSearchRepository: filesSearchRepo,
-                mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo)
+                mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
+                albumContentsUpdateRepository: AlbumContentsUpdateNotifierRepository.newRepo
             ), alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,
-                                                       message: nil)
+                                                       message: nil),
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel
         )
         
         let content = AlbumListView(viewModel: vm,

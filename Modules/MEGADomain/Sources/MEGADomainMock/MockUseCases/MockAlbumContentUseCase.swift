@@ -3,14 +3,19 @@ import MEGADomain
 import Combine
 
 public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
-    public var updatePublisher: AnyPublisher<Void, Never>
-    private var nodes = [NodeEntity]()
+    private let nodes: [NodeEntity]
+    private let albumReloadPublisher: AnyPublisher<Void, Never>
 
-    public init(nodes: [NodeEntity], updatePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()) {
+    public init(nodes: [NodeEntity] = [],
+                albumReloadPublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()) {
         self.nodes = nodes
-        self.updatePublisher = updatePublisher
+        self.albumReloadPublisher = albumReloadPublisher
     }
-
+    
+    public func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never> {
+        albumReloadPublisher
+    }
+    
     public func favouriteAlbumNodes() async throws -> [NodeEntity] {
         nodes
     }

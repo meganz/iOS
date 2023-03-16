@@ -258,7 +258,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: CallEntity())
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -269,6 +270,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -305,7 +307,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: CallEntity())
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1"), (102, "User2")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -316,6 +319,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -352,7 +356,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1"), (102, "User2"), (103, "User3"), (104, "User4")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -363,6 +368,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -399,7 +405,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -410,6 +417,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -445,7 +453,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1"), (102, "User2")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -456,6 +465,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -491,7 +501,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let handleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1"), (102, "User2"), (103, "User3"), (104, "User4"), (105, "User5")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(handleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -502,6 +513,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -538,9 +550,10 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let addedHandleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1")]
         let removedHandleNamePairArray: [(handle: HandleEntity, name: String)] = [(103, "User1")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedHandleNamePairArray + removedHandleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
-        
+
         let viewModel = MeetingParticipantsLayoutViewModel(
             router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
@@ -549,6 +562,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -602,7 +616,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let addedHandleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1"), (102, "User2")]
         let removedHandleNamePairArray: [(handle: HandleEntity, name: String)] = [(103, "User1"), (104, "User2")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedHandleNamePairArray + removedHandleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -613,6 +628,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -666,7 +682,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let addedHandleNamePairArray: [(handle: HandleEntity, name: String)] = [(101, "User1"), (102, "User2"), (103, "User1"), (104, "User2")]
         let removedHandleNamePairArray: [(handle: HandleEntity, name: String)] = [(105, "User1"), (106, "User2"), (107, "User1"), (108, "User2")]
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNamesCompletion: .success(addedHandleNamePairArray + removedHandleNamePairArray))
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
@@ -677,6 +694,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
@@ -808,8 +826,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.chatRoom = chatRoom
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("test"), userDisplayNamesCompletion: .success([(handle: 100, name: "test")]))
-        
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
         let expectation = expectation(description: "Awaiting publisher")
         let userUseCase = MockUserImageUseCase(result: .success(UIImage()), createAvatarCompletion: { handle in
             XCTAssert(handle == 100, "handle should match")
@@ -824,6 +842,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
             chatRoom: chatRoom,
@@ -841,8 +860,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.chatRoom = chatRoom
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let chatRoomUseCase = MockChatRoomUseCase(userDisplayNameCompletion: .success("test"), userDisplayNamesCompletion: .success([(handle: 100, name: "test")]))
-        
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let chatRoomuserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
         let expectation = expectation(description: "Awaiting publisher")
         let userUseCase = MockUserImageUseCase(result: .success(UIImage()), downloadAvatarCompletion: { handle in
             XCTAssert(handle == 100, "handle should match")
@@ -857,6 +876,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomuserUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
             chatRoom: chatRoom,

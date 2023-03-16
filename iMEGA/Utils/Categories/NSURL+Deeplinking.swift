@@ -2,6 +2,7 @@ import Foundation
 
 enum DeeplinkPathKey: String {
     case file = "/file"
+    case fileRequest = "/filerequest"
     case folder = "/folder"
     case confirmation = "/confirm"
     case newSignUp = "/newsignup"
@@ -65,7 +66,6 @@ enum DeeplinkSchemeKey: String {
 
 extension NSURL {
     @objc func mnz_type() -> URLType {
-        
         guard let scheme = scheme else { return .default }
         
         switch DeeplinkSchemeKey(rawValue: scheme) {
@@ -80,7 +80,6 @@ extension NSURL {
         case .none:
             return .default
         }
-        
     }
     
     private func parseFragmentType() -> URLType {
@@ -157,7 +156,9 @@ extension NSURL {
             return .default
         }
         
-        if path.hasPrefix(DeeplinkPathKey.file.rawValue) {
+        if path.hasPrefix(DeeplinkPathKey.fileRequest.rawValue) {
+            return .fileRequestLink
+        } else if path.hasPrefix(DeeplinkPathKey.file.rawValue) {
             return .fileLink
         } else if path.hasPrefix(DeeplinkPathKey.folder.rawValue) {
             return .folderLink

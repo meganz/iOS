@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MessageKit
 
 class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate {
@@ -40,7 +41,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
     // MARK: - MEGAChatRequestDelegate
 
-    func onChatRequestFinish(_ api: MEGAChatSdk!, request: MEGAChatRequest!, error: MEGAChatError!) {
+    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         switch error.type {
         case .MEGAChatErrorTooMany:
             switch ReactionErrorType(rawValue: Int(request.number)) {
@@ -67,7 +68,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
 
     // MARK: - MEGAChatRoomDelegate methods
 
-    func onReactionUpdate(_: MEGAChatSdk!, messageId: UInt64, reaction _: String!, count _: Int) {
+    func onReactionUpdate(_: MEGAChatSdk, messageId: UInt64, reaction _: String, count _: Int) {
         guard let index = messages.firstIndex(where: { (message) -> Bool in
             guard let message = message as? ChatMessage else {
                 return false
@@ -90,12 +91,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
 
-    func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
+    func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
-        
-        if (chat == nil) {
-            return
-        }
         
         chatViewController?.update(chatRoom: chat)
         chatRoom = chat
@@ -139,7 +136,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.updateJoinView()
                 SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
             } else {
-                ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chat.chatId) { _ in }
+                guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chat.chatId) else { return }
+                ChatRoomRepository.sharedRepo.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
                 chatViewController?.navigationController?.popViewController(animated: true)
             }
         case .updatePreviewers:
@@ -151,10 +149,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
 
-    func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+    func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
         if let chatMessage = message {
             if !chatMessage.isDeleted {
-                if supportedMessage(message) {
+                if supportedMessage(chatMessage) {
                     if chatMessage.status == .sending || chatMessage.status == .sendingManual {
                         historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
                     } else {
@@ -163,8 +161,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 }
             }
 
-            if message.userHandle != api.myUserHandle, let chatViewController = chatViewController, !chatViewController.previewMode {
-                api.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+            if chatMessage.userHandle != api.myUserHandle, let chatViewController = chatViewController, !chatViewController.previewMode {
+                api.setMessageSeenForChat(chatRoom.chatId, messageId: chatMessage.messageId)
             }
         } else {
             awaitingLoad = false
@@ -207,13 +205,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
 
-    func onMessageReceived(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        MEGALogInfo("ChatRoomDelegate: onMessageReceived")
-
-        guard let chatMessage = message else {
-            MEGALogError("ChatRoomDelegate: onMessageReceived - message is nil")
-            return
-        }
+    func onMessageReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
+        MEGALogInfo("ChatRoomDelegate: onMessageReceived \(message)")
         
         guard supportedMessage(message) else {
             MEGALogError("ChatRoomDelegate: onMessageReceived - message not supported")
@@ -234,10 +227,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             updateUnreadMessagesLabel(unreads: 0)
             chatViewController?.messagesCollectionView.reloadData()
         }
-        insertMessage(chatMessage)
+        insertMessage(message)
     }
 
-    func onMessageUpdate(_: MEGAChatSdk!, message: MEGAChatMessage!) {
+    func onMessageUpdate(_: MEGAChatSdk, message: MEGAChatMessage) {
         MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
         message.chatId = chatRoom.chatId
         if message.hasChanged(for: .status) {
@@ -374,7 +367,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         chatViewController?.messagesCollectionView.reloadEmptyDataSet()
     }
 
-    func onHistoryReloaded(_: MEGAChatSdk!, chat _: MEGAChatRoom!) {
+    func onHistoryReloaded(_: MEGAChatSdk, chat _: MEGAChatRoom) {
         MEGALogInfo("ChatRoomDelegate: onHistoryReloaded")
     }
 

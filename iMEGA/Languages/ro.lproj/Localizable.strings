@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Se generează linkurile…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copiat";
+"linkCopied"="Copied link";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Linkuri copiate";
+"linksCopied"="Copied links";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiat în clipboard";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Fișiere trimise în chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d fișiere trimise cu succes";
+"xfilesSentSuccesfully"="%d files sent";
 /* Title show when a file is being downloaded */
 "downloading"="Se descarcă";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folderul a fost partajat";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d foldere partajate cu succes.";
+"sharedFolders_success"="%d folders shared";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importă";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ți șterge contul. Vei pierde definitiv toate datele stocate în unitatea cloud. Te rugăm să introduci parola mai jos.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Contul tău a fost șters cu succes.";
+"accountCanceledSuccessfully"="Your account has been deleted";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Închide contul";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci noua parolă.";
 /*  */
-"yourPasswordHasBeenReset"="Parola ți-a fost resetată cu succes. Te rugăm să te autentifici în cont acum.";
+"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Trimite";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Începe un cont nou";
 /*  */
-"yourAccounHasBeenParked"="Contul tău vechi a fost parcat cu succes. Poți acum să te autentifici în contul nou.";
+"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Adresă de e-mail nouă";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Schimbă numele";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Ți-ai modificat cu succes profilul.";
+"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Prenume";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] a fost eliminat din chatul de grup de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] a părăsit chatul de grup.";
+"leftTheGroupChat"="[A] left the group chat";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] s-a alăturat chatului de grup prin invitație de la [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Istoricul chatului a fost șters";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="A apărut o eroare. Istoricul chatului nu a fost șters cu succes";
+"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
 /* 'Next' button in a dialog */
 "continue"="Continuă";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Unele elemente nu au putut fi partajate cu MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Partajat cu succes";
+"Shared successfully"="Partajate";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Transfer eșuat:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1639,25 +1639,25 @@
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Fișier nesuportat";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="Poți salva fișierul în Offline și să-l deschizi într-o aplicație compatibilă.";
+"message_fileNotSupported"="Poți să-l salvezi pentru Offline și să-l deschizi într-o aplicație compatibilă.";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Redirecționează";
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Mesaje trimise";
 /* Title of archived chats button */
-"archivedChats"="Chaturi arhivate";
+"archivedChats"="Arhivate";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="Sigur vrei să arhivezi această conversație?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Sigur vrei să dezarhivezi această conversație?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Dezarhivează chatul";
+"unarchiveChat"="Dezarhivează";
 /* Title of button to archive chats. */
-"archiveChat"="Arhivează chatul";
+"archiveChat"="Arhivează";
 /* Title of flag of archived chats. */
 "archived"="Arhivate";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Niciun chat arhivat";
+"noArchivedChats"="No archived chats or meetings";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Autentificare cu doi factori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ s-a alăturat apelului.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ a părăsit apelul.";
+"%@ left the call."="%@ a părăsit apelul";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
 /* Message shown in a chat room when there is an active call */
@@ -2079,7 +2079,7 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Cont dezactivat";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Contul tău Business a fost dezactivat din cauza unei plăți nereușite. Nu vei putea accesa datele stocate în contul tău. Pentru a efectua o plată și a-ți reactiva abonamentul, autentifică-te în MEGA printr-un browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Contul tău Business a fost dezactivat din cauza unei plăți nereușite. Nu vei putea accesa datele stocate în contul tău. Pentru a efectua o plată și a-ți reactiva abonamentul, autentifică-te pe MEGA printr-un browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Nu ai primit un cod?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Numărul tău de telefon a fost verificat cu succes";
+"Your phone number has been verified successfully"="Your phone number has been verified";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Contul tău a fost blocat temporar pentru siguranța ta.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Această operație îți va elimina numărul de telefon actual și va începe procesul de asociere a unui nou număr de telefon cu contul tău.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Numărul tău de telefon a fost eliminat cu succes.";
+"Your phone number has been removed successfully."="Your phone number has been removed";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2391,7 +2391,7 @@
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Link copiat în clipboard";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Linkuri copiate în clipboard";
+"Links Copied to Clipboard"="Copied links to clipboard";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Cheie copiată în clipboard";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Ajută-ne să înțelegem modul în care folosești serviciile noastre și furnizează-ne date pe care le putem folosi pentru a face îmbunătățiri. Neacceptarea acestor cookie-uri va însemna că vom avea mai puține date disponibile pentru a ajuta la îmbunătățiri ale designului.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Versiunea a fost creată cu succes ca un fișier nou.";
+"Version created as a new file successfully."="Version was created as a new file";
 /* Text shown for the action create new file */
 "Create new file"="Creează un fișier nou";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ joined";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ left";
+"meetings.notification.singleUserLeft"="%@ a părăsit apelul";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ and %@ joined";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left";
+"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left";
+"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Mută în Coșul de gunoi";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3145,11 +3145,11 @@
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Cont desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor celorlalți; partajarea și importarea de date ilegale; ori abuzul de sistem.";
 /* Text shown in extensions to notify users that they have to open the application first */
-"extensions.OpenApp.Message"="Open the MEGA app and log in to continue.";
+"extensions.OpenApp.Message"="Deschide aplicația MEGA și autentifică-te pentru a continua";
 /* Account Storage title label of used storage size */
-"account.storage.storageUsed.title"="Storage used";
+"account.storage.storageUsed.title"="Spațiu de stocare folosit";
 /* Account Storage title label of used transfer size */
-"account.storage.transferUsed.title"="Transfer used";
+"account.storage.transferUsed.title"="Transfer folosit";
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Cont dezactivat";
 /* Content message of expired Pro Flexi account view */
@@ -3185,7 +3185,7 @@
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="See all";
 /* Button title to leave the meeting in info view */
-"meetings.info.leaveMeeting"="Leave meeting";
+"meetings.info.leaveMeeting"="Părăsește întâlnirea";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="Notificări de chat";
 /* Title for shared files option in meeting info */
@@ -3257,9 +3257,9 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3308,3 +3308,7 @@
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

@@ -42,7 +42,7 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
 }
 
 extension MeetingNoUserJoinedRepository: MEGAChatCallDelegate {
-    func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         if call.status == .inProgress,
            call.callCompositionChange == .peerAdded,
            call.chatId == chatId,

@@ -100,7 +100,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
                 guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
                 self.currentNode = currentNode
                 let duration = max(currentNode.duration, 0)
-                durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+                durationLabel.text = TimeInterval(duration).timeString
                 if transfer.state.rawValue < MEGATransferState.complete.rawValue {
                     configureLoadingView()
                 } else {
@@ -112,13 +112,13 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
                     return
                 }
                 let asset = AVAsset(url: URL(fileURLWithPath: path))
-                durationLabel.text = NSString.mnz_string(fromTimeInterval: CMTimeGetSeconds(asset.duration))
+                durationLabel.text = CMTimeGetSeconds(asset.duration).timeString
             }
         } else {
             guard let nodeList = megaMessage.nodeList, let currentNode = nodeList.node(at: 0) else { return }
             self.currentNode = currentNode
             let duration = max(currentNode.duration, 0)
-            durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+            durationLabel.text = TimeInterval(duration).timeString
             let nodePath = currentNode.mnz_voiceCachePath()
             if !FileManager.default.fileExists(atPath: nodePath) {
                 let appData = NSString().mnz_appDataToDownloadAttach(toMessageID: megaMessage.messageId)

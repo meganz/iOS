@@ -2,6 +2,15 @@ import XCTest
 @testable import MEGASwift
 
 final class MEGASwiftTests: XCTestCase {
-    func testExample() throws {
+    func testBase64Encoded() throws {
+        let string = "Hello, MEGA!"
+        let base64Encoded = try XCTUnwrap(string.base64Encoded)
+        XCTAssertEqual(base64Encoded, "SGVsbG8sIE1FR0Eh")
+    }
+    
+    func testBase64Decoded() throws {
+        let base64Encoded = "SGVsbG8sIE1FR0Eh"
+        let string = try XCTUnwrap(base64Encoded.base64Decoded)
+        XCTAssertEqual(string, "Hello, MEGA!")
     }
 }

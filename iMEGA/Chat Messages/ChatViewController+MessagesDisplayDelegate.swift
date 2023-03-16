@@ -155,7 +155,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
     
     func audioProgressTextFormat(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String {
-        return NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+        return TimeInterval(duration).timeString
     }
     
     // MARK: - Private methods

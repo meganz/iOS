@@ -110,6 +110,26 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
+    fileprivate func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
+        guard let selectedNodes = selectedNodes(),
+              !selectedNodes.isEmpty else {
+            return
+        }
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                }
+            }
+            
+            endEditingMode()
+        }
+    }
+    
     fileprivate func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
@@ -176,7 +196,7 @@ class ExplorerBaseViewController: UIViewController {
         
         let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let containsABackupNode = myBackupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: .selectionToolBar, containsABackupNode: containsABackupNode, isMediaDiscovery: isKind(of: MediaDiscoveryViewController.self), sender: button)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: isKind(of: MediaDiscoveryViewController.self) ? .mediaDiscovery : .unknown, containsABackupNode: containsABackupNode, sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }
     
@@ -269,6 +289,8 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             didPressedSendToChat(sender)
         case .removeLink:
             handleRemoveLinks(for: nodes)
+        case .saveToPhotos:
+            saveToPhotosButtonPressed(sender)
         default:
             break
         }

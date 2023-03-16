@@ -27,7 +27,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate, SharedItemsTableViewCellDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -274,11 +274,7 @@
         [self.incomingNodesMutableArray addObject:node];
     }
     
-    if (self.incomingNodesMutableArray.count == 0) {
-        self.tableView.tableHeaderView = nil;
-    } else {
-        [self addSearchBar];
-    }
+    [self addInShareSearcBarIfNeeded];
 }
 
 - (void)allOutgoingNodes {
@@ -1304,12 +1300,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - SharedItemsTableViewCellDelegate
-
-- (void)didTapInfoButtonWithSender:(UIButton *)sender {
-    [self showNodeContextMenu:sender];
 }
 
 - (void)showNodeContextMenu:(UIButton *)sender {

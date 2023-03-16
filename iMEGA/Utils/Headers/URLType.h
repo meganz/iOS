@@ -34,5 +34,6 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeCookiePolicy,
     URLTypeTermsOfService,
     URLTypeAppSettings,
-    URLTypeTotal
+    URLTypeTotal,
+    URLTypeFileRequestLink
 };

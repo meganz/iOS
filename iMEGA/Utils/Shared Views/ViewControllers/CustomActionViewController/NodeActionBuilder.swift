@@ -10,7 +10,6 @@ final class NodeActionBuilder {
     private var isRestorable = false
     private var isPdf = false
     private var isLink = false
-    private var isPageView = true
     private var isIncomingShareChildView = false
     private var isExported = false
     private var linkedNodeCount = 0
@@ -25,8 +24,6 @@ final class NodeActionBuilder {
     private var isTakedown = false
     private var isVerifyContact = false
     private var areMediaFiles = false
-    private var isMediaDiscovery = false
-    private var isPhotosTimeline = false
     private var sharedFolderContact: MEGAUser = MEGAUser()
     private var sharedFolderReceiverDetail = ""
 
@@ -82,11 +79,6 @@ final class NodeActionBuilder {
     
     func setIsLink(_ isLink: Bool) -> NodeActionBuilder {
         self.isLink = isLink
-        return self
-    }
-    
-    func setIsPageView(_ isPageView: Bool) -> NodeActionBuilder {
-        self.isPageView = isPageView
         return self
     }
     
@@ -160,16 +152,6 @@ final class NodeActionBuilder {
         return self
     }
     
-    func setIsMediaDiscovery(_ isMediaDiscovery: Bool) -> NodeActionBuilder {
-        self.isMediaDiscovery = isMediaDiscovery
-        return self
-    }
-    
-    func setIsPhotosTimeline(_ isPhotosTimeline: Bool) -> NodeActionBuilder {
-        self.isPhotosTimeline = isPhotosTimeline
-        return self
-    }
-    
     func build() -> [NodeAction] {
         var nodeActions = [NodeAction]()
         
@@ -187,6 +169,14 @@ final class NodeActionBuilder {
     }
     
     func multiselectBuild() -> [NodeAction] {
+        switch displayMode {
+        case .photosAlbum:
+            return normalAlbumActions()
+        case .photosFavouriteAlbum:
+            return favouriteAlbumActions()
+        default: break
+        }
+        
         switch nodeSelectionType {
         case .single:
             return []
@@ -197,14 +187,6 @@ final class NodeActionBuilder {
         case .filesAndFolders:
             return multiselectFoldersAndFilesActions()
         }
-    }
-    
-    func multiSelectFavouriteAlbumBuild() -> [NodeAction] {
-        favouriteAlbumActions()
-    }
-    
-    func multiSelectNormalAlbumBuild() -> [NodeAction] {
-        normalAlbumActions()
     }
     
     // MARK: - Private methods
@@ -291,7 +273,7 @@ final class NodeActionBuilder {
         nodeActions.append(.sendToChatAction())
         if isPdf {
             nodeActions.append(.searchAction())
-            if isPageView {
+            if displayMode == .previewPdfPage {
                 nodeActions.append(.pdfThumbnailViewAction())
             } else {
                 nodeActions.append(.pdfPageViewAction())
@@ -404,10 +386,6 @@ final class NodeActionBuilder {
             }
             
             if !isBackupNode {
-                if displayMode == .favouriteAlbumSelectionToolBar {
-                    nodeActions.append(.favouriteAction(isFavourite: isFavourite))
-                }
-                
                 nodeActions.append(.labelAction(label: label))
             }
         }
@@ -453,7 +431,7 @@ final class NodeActionBuilder {
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
             
-        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .textEditor, .selectionToolBar: break
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .previewPdfPage, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery: break
             
         case .nodeVersions:
             nodeActions = nodeVersionsNodeActions()
@@ -463,12 +441,6 @@ final class NodeActionBuilder {
 
         case .backup:
             nodeActions = backupsNodeActions()
-            
-        case .favouriteAlbumSelectionToolBar:
-            nodeActions = favouriteAlbumActions()
-            
-        case .albumSelectionToolBar:
-            nodeActions = normalAlbumActions()
             
         @unknown default: break
         }
@@ -492,7 +464,7 @@ final class NodeActionBuilder {
             return transfersFailedNodeActions()
         case .chatSharedFiles, .chatAttachment:
             return chatNodeActions()
-        case .previewDocument:
+        case .previewDocument, .previewPdfPage:
             return previewDocumentNodeActions()
         case .textEditor:
             return textEditorActions()
@@ -709,7 +681,7 @@ final class NodeActionBuilder {
                        .exportFileAction(nodeCount: selectedNodeCount),
                        .sendToChatAction()]
         
-        if areMediaFiles && !(displayMode == .favouriteAlbumSelectionToolBar || displayMode == .albumSelectionToolBar || isMediaDiscovery || isPhotosTimeline) {
+        if areMediaFiles {
             actions.append(.saveToPhotosAction())
         }
         
@@ -746,6 +718,7 @@ final class NodeActionBuilder {
          .shareLinkAction(nodeCount: selectedNodeCount),
          .exportFileAction(nodeCount: selectedNodeCount),
          .sendToChatAction(),
+         .saveToPhotosAction(),
          .favouriteAction(isFavourite: isFavourite),
          .copyAction(),
          .moveToRubbishBinAction()]
@@ -756,8 +729,9 @@ final class NodeActionBuilder {
          .shareLinkAction(nodeCount: selectedNodeCount),
          .exportFileAction(nodeCount: selectedNodeCount),
          .sendToChatAction(),
+         .saveToPhotosAction(),
          .moveAction(),
-         .copyAction(),]
+         .copyAction()]
     }
     
     private func takedownNodeActions() -> [NodeAction] {

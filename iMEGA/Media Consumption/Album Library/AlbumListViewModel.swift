@@ -16,45 +16,43 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
     }
    
+    lazy var selection = AlbumSelection()
+    
     var albumCreationAlertMsg: String?
     var albumLoadingTask: Task<Void, Never>?
     var createAlbumTask: Task<Void, Never>?
     var isCreateAlbumFeatureFlagEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     }
+    var newAlbumContent: (AlbumEntity, [NodeEntity]?)?
+    
+    var albumNames: [String] {
+        albums.map { $0.name }
+    }
     
     private let usecase: AlbumListUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private let featureFlagProvider: FeatureFlagProviderProtocol
+    private var subscriptions = Set<AnyCancellable>()
+    
+    private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
     init(usecase: AlbumListUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
+         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
          featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.usecase = usecase
         self.alertViewModel = alertViewModel
+        self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.featureFlagProvider = featureFlagProvider
         super.init()
+        setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in
             self?.createUserAlbum(with: newAlbumName)
         }
         
-        self.alertViewModel.validator = { name in
-            guard let name = name, name.isNotEmpty else { return nil }
-            guard let name = name.trim, name.isNotEmpty else {
-                return TextFieldAlertError(title: alertViewModel.title, description: "")
-            }
-            
-            if name.mnz_containsInvalidChars() {
-                return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
-            }
-            if self.isReservedAlbumName(name: name) {
-                return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.albumNameNotAllowed, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
-            }
-            if self.albums.first(where: { $0.name == name }) != nil {
-                return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.userAlbumExists, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)
-            }
-            return nil
-        }
+        assignAlbumNameValidator()
+        subscribeToEditMode()
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -72,14 +70,15 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     func loadAlbums() {
-        loadAllAlbums()
-        usecase.startMonitoringNodesUpdate { [weak self] in
-            self?.loadAllAlbums()
+        albumLoadingTask = Task {
+            async let systemAlbums = systemAlbums()
+            async let userAlbums = userAlbums()
+            albums = await systemAlbums + userAlbums
+            shouldLoad = false
         }
     }
     
     func cancelLoading() {
-        usecase.stopMonitoringNodesUpdate()
         albumLoadingTask?.cancel()
         createAlbumTask?.cancel()
     }
@@ -102,6 +101,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                     albums.append(newAlbum)
                 }
                 newlyAddedAlbum = await usecase.hasNoPhotosAndVideos() ? nil : newAlbum
+                photoAlbumContainerViewModel?.shouldShowSelectBarButton = true
             } catch {
                 MEGALogError("Error creating user album: \(error.localizedDescription)")
             }
@@ -109,16 +109,12 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
     }
     
-    // MARK: - Private
-    private func loadAllAlbums() {
-        albumLoadingTask = Task {
-            async let systemAlbums = systemAlbums()
-            async let userAlbums = userAlbums()
-            albums = await systemAlbums + userAlbums
-            shouldLoad = false
-        }
+    func onCreateAlbum() {
+        guard selection.editMode.isEditing == false else { return }
+        showCreateAlbumAlert.toggle()
     }
     
+    // MARK: - Private
     private func systemAlbums() async -> [AlbumEntity] {
         do {
             return try await usecase.systemAlbums().map({ album in
@@ -148,8 +144,16 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     private func userAlbums() async -> [AlbumEntity] {
         var userAlbums = await usecase.userAlbums()
+        photoAlbumContainerViewModel?.shouldShowSelectBarButton = userAlbums.isNotEmpty
         userAlbums.sort { ($0.modificationTime ?? .distantPast) > ($1.modificationTime ?? .distantPast) }
         return userAlbums
+    }
+    
+    private func assignAlbumNameValidator() {
+        alertViewModel.validator = AlbumNameValidator(
+            existingAlbumNames: { [weak self] in
+                self?.albumNames ?? []
+            }).create
     }
     
 
@@ -169,18 +173,38 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         return newAlbumName
     }
     
-    func onAlbumContentAdded(_ msg: String, _ album: AlbumEntity) {
-        self.album = album
-        albumCreationAlertMsg = msg
-        loadAlbums()
+    func onNewAlbumContentAdded(_ album: AlbumEntity, photos: [NodeEntity]) {
+        newAlbumContent = (album, photos)
     }
     
-    private func isReservedAlbumName(name: String) -> Bool {
-        let reservedNames = [Strings.Localizable.CameraUploads.Albums.Favourites.title,
-                             Strings.Localizable.CameraUploads.Albums.Gif.title,
-                             Strings.Localizable.CameraUploads.Albums.Raw.title,
-                             Strings.Localizable.CameraUploads.Albums.MyAlbum.title,
-                             Strings.Localizable.CameraUploads.Albums.SharedAlbum.title]
-        return reservedNames.reduce(false) { $0 || name.caseInsensitiveCompare($1) == .orderedSame }
+    func navigateToNewAlbum() {
+        album = newAlbumContent?.0
+    }
+    
+    @MainActor
+    func onAlbumTap(_ album: AlbumEntity) {
+        guard selection.editMode.isEditing == false else { return }
+        
+        albumCreationAlertMsg = nil
+        self.album = album
+    }
+    
+    // MARK: - Private
+    
+    private func setupSubscription() {
+        usecase.albumsUpdatedPublisher
+            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+            .sink { [weak self] in
+                self?.loadAlbums()
+            }.store(in: &subscriptions)
+    }
+    
+    private func subscribeToEditMode() {
+        photoAlbumContainerViewModel?.$editMode
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] in
+                self?.selection.editMode = $0
+            })
+            .store(in: &subscriptions)
     }
 }

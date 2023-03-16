@@ -1,6 +1,17 @@
 import Foundation
+import Combine
 
 public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
+    // MARK: - Album Updates
+    
+    /// Returns a publisher that emits album updates.
+    /// - Returns: A publisher that emits album updates.
+    var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> { get }
+    
+    /// Returns a publisher that emits album content updates.
+    /// - Returns: A publisher that emits album content updates.
+    var setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> { get }
+    
     // MARK: - Album
     
     /// Fetch all user albums
@@ -8,9 +19,18 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     func albums() async -> [SetEntity]
     
     /// Fetch particular user album content
-    /// - Parameter id: User album id
+    /// - Parameters:
+    ///   - id: User album id
+    ///   - includeElementsInRubbishBin: Filter out Elements in Rubbish Bin
     /// - Returns: The particular user album content
-    func albumContent(by id: HandleEntity) async -> [SetElementEntity]
+    func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity]
+    
+    /// Fetch particular user album content item
+    /// - Parameters:
+    ///   - id: User album id
+    ///   - elementId: The album element id
+    /// - Returns: User album element, or nil if not found
+    func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity?
     
     /// Create a user album
     /// - Parameter name: The user album name, can be nil

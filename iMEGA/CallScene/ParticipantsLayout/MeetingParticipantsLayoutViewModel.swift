@@ -136,6 +136,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
@@ -175,6 +176,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
          remoteVideoUseCase: CallRemoteVideoUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
@@ -189,6 +191,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.localVideoUseCase = localVideoUseCase
         self.remoteVideoUseCase = remoteVideoUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatRoomUserUseCase = chatRoomUserUseCase
         self.accountUseCase = accountUseCase
         self.userImageUseCase = userImageUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
@@ -210,7 +213,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             let callDurationInfo = CallDurationInfo(initDuration: duration, baseDate: Date())
             let timer = Timer(timeInterval: 1, repeats: true, block: { [weak self] (timer) in
                 let duration = Int(Date().timeIntervalSince1970) - Int(callDurationInfo.baseDate.timeIntervalSince1970) + callDurationInfo.initDuration
-                self?.invokeCommand?(.updateDuration(NSString.mnz_string(fromTimeInterval: TimeInterval(duration))))
+                self?.invokeCommand?(.updateDuration(TimeInterval(duration).timeString))
             })
             RunLoop.main.add(timer, forMode: .common)
             self.timer = timer
@@ -302,14 +305,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func participantName(for userHandle: HandleEntity, completion: @escaping (String?) -> Void) {
-        chatRoomUseCase.userDisplayName(forPeerId: userHandle, chatId: chatRoom.chatId) { result in
-            switch result {
-            case .success(let displayName):
-                completion(displayName)
-            case .failure(let error):
-                MEGALogDebug("ParticipantViewModel: failed to get the user display name for \(MEGASdk.base64Handle(forUserHandle: userHandle) ?? "No name") - \(error)")
-                completion(nil)
-            }
+        Task { @MainActor in
+            let name = try? await chatRoomUserUseCase.userDisplayName(forPeerId: userHandle, in: chatRoom)
+            completion(name)
         }
     }
     
@@ -350,20 +348,22 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
                 
                 self.namesFetchingTask?.cancel()
-                self.namesFetchingTask = Task { [weak self] in
+                self.namesFetchingTask = Task { [weak self,
+                                                 chatRoomUserUseCase = self.chatRoomUserUseCase,
+                                                 chatRoom = self.chatRoom] in
                     guard let self = self else { return }
                     
                     let addedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.addedHandlers)
                     let removedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.removedHandlers)
 
                     do {
-                        async let addedParticipantNamesAsyncTask = self.chatRoomUseCase.userDisplayNames(
+                        async let addedParticipantNamesAsyncTask = chatRoomUserUseCase.userDisplayNames(
                             forPeerIds: addedParticipantHandlersSubset,
-                            chatId: self.chatRoom.chatId)
+                            in: chatRoom)
                         
-                        async let removedParticipantNamesAsyncTask = self.chatRoomUseCase.userDisplayNames(
+                        async let removedParticipantNamesAsyncTask = chatRoomUserUseCase.userDisplayNames(
                             forPeerIds: removedParticipantHandlersSubset,
-                            chatId: self.chatRoom.chatId)
+                            in: chatRoom)
                         
                         let participantNamesResult = try await [addedParticipantNamesAsyncTask, removedParticipantNamesAsyncTask]
                         
@@ -449,7 +449,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .showRenameChatAlert:
             invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
         case .setNewTitle(let newTitle):
-            chatRoomUseCase.renameChatRoom(chatId: chatRoom.chatId, title: newTitle) { [weak self] result in
+            chatRoomUseCase.renameChatRoom(chatRoom, title: newTitle) { [weak self] result in
                 switch result {
                 case .success(let title):
                     self?.invokeCommand?(.updateName(title))
@@ -694,10 +694,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func createRefetchAvatarTask(forHandle handle: HandleEntity, chatId: HandleEntity) -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self = self else { return }
+            guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
             
             do {
-                guard let name = try await self.chatRoomUseCase.userDisplayNames(forPeerIds: [handle], chatId: chatId).first else {
+                guard let name = try await self.chatRoomUserUseCase.userDisplayNames(forPeerIds: [handle], in: chatRoom).first else {
                     MEGALogDebug("Unable to find the name for handle \(handle)")
                     return
                 }

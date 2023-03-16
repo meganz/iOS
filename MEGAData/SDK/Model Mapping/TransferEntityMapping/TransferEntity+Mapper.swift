@@ -23,6 +23,7 @@ extension TransferEntity {
             updateTime: transfer.updateTime,
             publicNode: transfer.publicNode?.toNodeEntity(),
             isStreamingTransfer: transfer.isStreamingTransfer,
+            isFinished: transfer.isFinished,
             isForeignOverquota: transfer.isForeignOverquota,
             lastErrorExtended: transfer.lastErrorExtended?.toTransferErrorEntity(),
             isFolderTransfer: transfer.isFolderTransfer,

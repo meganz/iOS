@@ -1,4 +1,5 @@
 import XCTest
+import Combine
 import MEGADomain
 import MEGADomainMock
 
@@ -12,12 +13,15 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     private let emptyFavouritesAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "", coverNode: nil, count: 0, type: .favourite)
     
+    private var subscriptions = Set<AnyCancellable>()
+    
     func testLoadCameraUploadNode_whenLoadingFavouriteAlbum_shouldReturnOneRootNode() async throws {
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository.newRepo,
-            mediaUseCase: MockMediaUseCase())
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let rootNode = try await sut.loadCameraUploadNode()
         XCTAssertNotNil(rootNode)
     }
@@ -27,7 +31,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
-            mediaUseCase: MockMediaUseCase(isRawImage: true))
+            mediaUseCase: MockMediaUseCase(isRawImage: true),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = try await sut.systemAlbums()
         XCTAssert(albums.count == 2)
         XCTAssertEqual(albums.first, emptyFavouritesAlbum)
@@ -39,7 +44,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
-            mediaUseCase: MockMediaUseCase(isGifImage: true))
+            mediaUseCase: MockMediaUseCase(isGifImage: true),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = try await sut.systemAlbums()
         XCTAssert(albums.count == 2)
         XCTAssertEqual(albums.first, emptyFavouritesAlbum)
@@ -54,7 +60,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteGifPhotos),
-            mediaUseCase: MockMediaUseCase(isGifImage: true))
+            mediaUseCase: MockMediaUseCase(isGifImage: true),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = try await sut.systemAlbums()
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first?.type, AlbumEntityType.favourite)
@@ -69,7 +76,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteRawPhotos),
-            mediaUseCase: MockMediaUseCase(isRawImage: true))
+            mediaUseCase: MockMediaUseCase(isRawImage: true),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = try await sut.systemAlbums()
         XCTAssertTrue(albums.count == 2)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
@@ -92,7 +100,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
-            mediaUseCase: MockMediaUseCase())
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = try await sut.systemAlbums()
         XCTAssertTrue(albums.count == 1)
         XCTAssertEqual(albums.first, AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: "",
@@ -108,13 +117,14 @@ final class AlbumListUseCaseTests: XCTestCase {
             SetEntity(handle: albumId, userId: HandleEntity(2), coverId: albumSetCoverId,
                       modificationTime: Date(), name: "Album 1"),
         ]
-        let expectedAlbumContents = [albumId:
-                                        [SetElementEntity(handle: albumSetCoverId, order: 2, nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")]]
+        let albumElement = SetElementEntity(handle: albumSetCoverId, ownerId: albumId, order: 2,
+                                            nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumContent: expectedAlbumContents),
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumElement: albumElement),
             fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
-            mediaUseCase: MockMediaUseCase())
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
         XCTAssertFalse(albums.contains { $0.type != .user})
@@ -130,10 +140,43 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
             fileSearchRepository: MockFilesSearchRepository(),
-            mediaUseCase: MockMediaUseCase())
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let albums = await sut.userAlbums()
         XCTAssertEqual(albums.count, expectedAlbums.count)
         XCTAssertNil(albums.first?.coverNode)
+    }
+    
+    func testUserAlbum_withInvalidCoverId_shouldUseLatestModifiedAlbumElementAsCover() async throws {
+        let albumId = HandleEntity(1)
+        let expectedAlbums = [
+            SetEntity(handle: albumId, userId: HandleEntity(2), coverId: HandleEntity.invalid,
+                      modificationTime: Date(), name: "Album 1"),
+        ]
+        let expectedAlbumCoverNodeId = HandleEntity(6)
+        let albumElements = [
+            SetElementEntity(handle: 1, ownerId: albumId, order: 1, nodeId: .invalid,
+                             modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 1"),
+            SetElementEntity(handle: 2, ownerId: albumId, order: 2, nodeId: 4,
+                             modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 2"),
+            SetElementEntity(handle: 3, ownerId: albumId, order: 3, nodeId: 4,
+                             modificationTime: try "2022-08-18T22:01:04Z".date, name: "Test 3"),
+            SetElementEntity(handle: 4, ownerId: albumId, order: 4, nodeId: expectedAlbumCoverNodeId,
+                             modificationTime: try "2023-03-01T06:01:04Z".date, name: "Test 4")
+        ]
+        let expectedAlbumCover = NodeEntity(handle: expectedAlbumCoverNodeId)
+        let userRepo = MockUserAlbumRepository(albums: expectedAlbums,
+                                               albumContent: [albumId: albumElements],
+                                               albumElement: nil)
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: userRepo,
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
+        let albums = await sut.userAlbums()
+        XCTAssertEqual(albums.count, expectedAlbums.count)
+        XCTAssertEqual(albums.first?.coverNode, expectedAlbumCover)
     }
     
     func testCreateUserAlbum_shouldCreateAlbumWithName() async throws {
@@ -150,7 +193,8 @@ final class AlbumListUseCaseTests: XCTestCase {
             albumRepository: MockAlbumRepository.newRepo,
             userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
-            mediaUseCase: MockMediaUseCase())
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         let result = try await sut.createUserAlbum(with: "Custom Album")
         XCTAssertEqual(result.name, "Custom Album")
         XCTAssertNotNil(result.modificationTime)
@@ -166,9 +210,58 @@ final class AlbumListUseCaseTests: XCTestCase {
                     NodeEntity(name: "1.png", handle: 1, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:04:04Z".date)
                 ]
             ),
-            mediaUseCase: MockMediaUseCase())
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
         
         let hasNoPhotosAndVideos = await sut.hasNoPhotosAndVideos()
         XCTAssertTrue(hasNoPhotosAndVideos)
+    }
+    
+    func testAlbumsUpdatedPublisher_onAlbumReload_shouldEmitToPublisher() {
+        let albumReloadPublisher = PassthroughSubject<Void, Never>()
+        let albumContentRepo = MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
+            fileSearchRepository: MockFilesSearchRepository.newRepo,
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: albumContentRepo)
+        
+        let exp = expectation(description: "album update publisher should emit")
+        sut.albumsUpdatedPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        albumReloadPublisher.send()
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testAlbumsUpdatedPublisher_onAnySetUpdates_shouldEmitToPublisher() {
+        let setsUpdatedPublisher = PassthroughSubject<[SetEntity], Never>()
+        let setElementsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
+        let userRepo = MockUserAlbumRepository(setsUpdatedPublisher: setsUpdatedPublisher.eraseToAnyPublisher(),
+                                               setElemetsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: userRepo,
+            fileSearchRepository: MockFilesSearchRepository.newRepo,
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo)
+        
+        let exp = expectation(description: "album update publisher should emit multiple times")
+        exp.expectedFulfillmentCount = 2
+        sut.albumsUpdatedPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        setsUpdatedPublisher.send([])
+        setsUpdatedPublisher.send([SetEntity(handle: 1, userId: 1, coverId: 1,
+                                             modificationTime: Date(), name: "Test")])
+        setElementsUpdatedPublisher.send([])
+        setElementsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: 2, order: 1, nodeId: 1,
+                                                           modificationTime: Date(), name: "Test")])
+        wait(for: [exp], timeout: 1.0)
     }
 }

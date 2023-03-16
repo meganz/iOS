@@ -26,6 +26,7 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         }
     }
     
+    @MainActor
     func executeCommand(_ command: MeetingParticipantViewModel.Command) {
         switch command {
         case .configView(let isModerator, let isMicMuted, let isVideoOn, let shouldHideContextMenu):

@@ -21,8 +21,8 @@ extension MeetingsAnalyticsEventEntity: AnalyticsEventProtocol {
             var value: String
             switch self {
             case .endCallForAll: value = "Meeting End Call For All Tapped"
-            case .endCallInNoParticipantsPopup: value = "Meeting End Call In No Empty Participants Popup"
-            case .stayOnCallInNoParticipantsPopup: value = "Meeting End Call When Empty Call Scenario"
+            case .endCallInNoParticipantsPopup: value = "Meeting End Call Tapped In No Participants Popup"
+            case .stayOnCallInNoParticipantsPopup: value = "Meeting Stay On Call Tapped In No Participants Popup"
             case .enableCallSoundNotifications: value = "Meeting Enable Sound Notification"
             case .disableCallSoundNotifications: value = "Meeting Disable Sound Notification"
             case .endCallWhenEmptyCallTimeout: value = "Meeting Ended when Empty Call Timeout"

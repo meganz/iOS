@@ -131,7 +131,7 @@ final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
         self.remoteVideoListener = remoteVideoListener
     }
     
-    func onChatVideoData(_ api: MEGAChatSdk!, chatId: UInt64, width: Int, height: Int, buffer: Data!) {
+    func onChatVideoData(_ api: MEGAChatSdk, chatId: UInt64, width: Int, height: Int, buffer: Data) {
         remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer)
     }
 }

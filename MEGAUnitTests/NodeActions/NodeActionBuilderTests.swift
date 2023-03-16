@@ -644,9 +644,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testDocumentPreviewPdfPageViewLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .setIsLink(true)
             .build()
         
@@ -658,7 +657,6 @@ class NodeActionBuilderTests: XCTestCase {
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsLink(true)
-            .setIsPageView(false)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
@@ -683,9 +681,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdfPageViewDocument() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfThumbnailView]))
@@ -693,9 +690,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdfPageViewDocumentLink() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .setIsLink(true)
             .build()
         
@@ -704,9 +700,8 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdfPageViewDocumentOwner() {
         actions = NodeActionBuilder()
-            .setDisplayMode(.previewDocument)
+            .setDisplayMode(.previewPdfPage)
             .setIsPdf(true)
-            .setIsPageView(true)
             .setAccessLevel(.accessOwner)
             .build()
         
@@ -717,7 +712,6 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
-            .setIsPageView(false)
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView]))
@@ -727,7 +721,6 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
-            .setIsPageView(false)
             .setIsLink(true)
             .build()
         
@@ -738,7 +731,6 @@ class NodeActionBuilderTests: XCTestCase {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
-            .setIsPageView(false)
             .setAccessLevel(.accessOwner)
             .build()
         
@@ -1028,45 +1020,45 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
-    func testMultiselectMediaFiles_albumSelectionToolbar() {
+    func testMultiselectMediaFiles_PhotosAlbum() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.albumSelectionToolBar)
             .setAreMediaFiles(true)
-            .multiSelectNormalAlbumBuild()
+            .setDisplayMode(.photosAlbum)
+            .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy]))
     }
     
-    func testMultiselectMediaFiles_favouriteAlbumSelectionToolbar() {
+    func testMultiselectMediaFiles_PhotosFavouriteAlbum() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
-            .setDisplayMode(.favouriteAlbumSelectionToolBar)
             .setIsFavourite(true)
             .setAreMediaFiles(true)
-            .multiSelectFavouriteAlbumBuild()
+            .setDisplayMode(.photosFavouriteAlbum)
+            .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .favourite, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos  , .favourite, .copy, .moveToRubbishBin]))
     }
     
     func testMultiselectMediaFiles_PhotosTimeline() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setAreMediaFiles(true)
-            .setIsPhotosTimeline(true)
+            .setDisplayMode(.photosTimeline)
             .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
     func testMultiselectMediaFiles_MediaDiscovery() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setAreMediaFiles(true)
-            .setIsMediaDiscovery(true)
+            .setDisplayMode(.mediaDiscovery)
             .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .move, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy, .moveToRubbishBin]))
     }
     
     func testExportedNodeActions_nodeExported() {
@@ -1086,5 +1078,28 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectFavoriteAlbum() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 3)
+            .setDisplayMode(.photosFavouriteAlbum)
+            .setIsFavourite(true)
+            .setIsBackupNode(false)
+            .setAreMediaFiles(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .favourite, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectNormalAlbum() {        
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.photosAlbum)
+            .setIsBackupNode(false)
+            .setAreMediaFiles(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy]))
     }
 }

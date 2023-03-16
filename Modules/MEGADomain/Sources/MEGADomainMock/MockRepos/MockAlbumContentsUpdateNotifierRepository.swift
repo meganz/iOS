@@ -1,7 +1,14 @@
+import Combine
 import MEGADomain
 
 public final class MockAlbumContentsUpdateNotifierRepository: AlbumContentsUpdateNotifierRepositoryProtocol {
-    public var onAlbumReload: (() -> Void)?
+    public static var newRepo: MockAlbumContentsUpdateNotifierRepository {
+        MockAlbumContentsUpdateNotifierRepository()
+    }
     
-    public init() {}
+    public var albumReloadPublisher: AnyPublisher<Void, Never>
+    
+    public init(albumReloadPublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()) {
+        self.albumReloadPublisher = albumReloadPublisher
+    }
 }

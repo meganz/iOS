@@ -363,7 +363,7 @@
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link skopiowany";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Linki zostały skopiowane";
+"linksCopied"="Linki skopiowane";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Skopiowana do schowka";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="PlikI wysłane do czatu";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d plików zostało wysłane";
+"xfilesSentSuccesfully"="%d plików wysłanych";
 /* Title show when a file is being downloaded */
 "downloading"="Pobieranie";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Katalog został zapisany";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d katalogów zostało udostępnionych.";
+"sharedFolders_success"="%d katalogów udostępnionych";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importować";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Jest to ostatni krok do usunięcia konta. W ten sposób trwale utracisz wszystkie dane przechowywane w chmurze. Wpisz swoje hasło poniżej.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Twoje konto zostało pomyślnie usunięte.";
+"accountCanceledSuccessfully"="Twoje konto zostało usunięte";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Zamknij konto";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Twój klucz zapasowy zostanie użyty do zresetowania hasła. Proszę podać nowe hasło.";
 /*  */
-"yourPasswordHasBeenReset"="Hasło zostało zresetowane pomyślnie. Zaloguj się teraz do konta.";
+"yourPasswordHasBeenReset"="Twoje hasło zostało zresetowane. Proszę się teraz zalogować na swoje konto.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Wyślij";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Uruchom nowe konto";
 /*  */
-"yourAccounHasBeenParked"="Twoje poprzednie konto została zaparkowane. Teraz możesz zalogować się do nowego konta.";
+"yourAccounHasBeenParked"="Twoje stare konto zostało zaparkowane. Możesz teraz zalogować się na swoje nowe konto.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nowy adres e-mail";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Zmień imię";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Twój profil został zmieniony.";
+"youHaveSuccessfullyChangedYourProfile"="Zmieniłeś swój profil";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Imię";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] został usunięty z czatu przez [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] opuścił czat.";
+"leftTheGroupChat"="[A] opuścił/a czat";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] dołączył do czatu przez zaproszenie od [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Historia czatu została wyczyszczona";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="Wystąpił błąd. Historia czatów nie została pomyślnie wyczyszczona";
+"An error has occurred. The chat history has not been successfully cleared"="Wystąpił błąd. Historia czatu nie została wyczyszczona";
 /* 'Next' button in a dialog */
 "continue"="Kontynuuj";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Niektóre elementy nie mogą być udostępnione na MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Poprawnie udostępniono";
+"Shared successfully"="Udostępnione";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Operacja nie powiodła się:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Wiadomość wysłana";
 /* Title of archived chats button */
-"archivedChats"="Zarchiwizowane czaty";
+"archivedChats"="Zarchiwizowane";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="Czy na pewno chcesz zarchiwizować tę rozmowę?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Czy na pewno chcesz cofnąć archiwizację tej rozmowy?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Odarchiwizuj czat";
+"unarchiveChat"="Rozpakuj archiwum";
 /* Title of button to archive chats. */
-"archiveChat"="Archiwum czatu";
+"archiveChat"="Archiwum";
 /* Title of flag of archived chats. */
 "archived"="Zarchiwizowane";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Brak zarchiwizowanych czatów";
+"noArchivedChats"="Brak archiwalnych czatów i spotkań";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Uwierzytelnianie dwuetapowe";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ dołączył do połączenia.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ opuścił połączenie.";
+"%@ left the call."="%@ opuścił połączenie";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Istnieje aktywne połączenie grupowe. Kliknij, aby dołączyć.";
 /* Message shown in a chat room when there is an active call */
@@ -2185,7 +2185,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Nie otrzymałeś kodu?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Twój numer telefonu został pomyślnie zweryfikowany";
+"Your phone number has been verified successfully"="Twój numer telefonu został zweryfikowany";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Twoje konto zostało tymczasowo zablokowane dla twojego bezpieczeństwa.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Ta operacja usunie bieżący numer telefonu i rozpocznie proces powiązania nowego numeru telefonu z kontem.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Twój numer telefonu został pomyślnie usunięty.";
+"Your phone number has been removed successfully."="Twój numer telefonu został usunięty";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Nie udało się usunąć Twojego numeru telefonu, spróbuj ponownie później.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Pomóż nam zrozumieć, w jaki sposób korzystasz z naszych usług i podaj nam dane, których możemy użyć do wprowadzenia ulepszeń. Brak akceptacji tych plików cookie oznacza, że będziemy mieć mniej dostępnych danych, aby pomóc w projektowaniu ulepszeń.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Wersja została pomyślnie utworzona jako nowy plik.";
+"Version created as a new file successfully."="Wersja została utworzona jako nowy plik";
 /* Text shown for the action create new file */
 "Create new file"="Utwórz nowy plik";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ dołączył";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ opuścił";
+"meetings.notification.singleUserLeft"="%@ opuścił połączenie";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ i %@ dołączyli";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ i %@ opuścili";
+"meetings.notification.twoUsersLeft"="%@ i %@ opuścili rozmowę";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ i %@ inni dołączyli";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ i %@ inni opuścili";
+"meetings.notification.moreThanTwoUsersLeft"="%@ i %@ inni opuścili rozmowę";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Przenieś do Kosza";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3221,7 +3221,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] zaprosił[/B] cię na spotkanie zaplanowane na:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] zaktualizował[/B] szczegóły spotkania zaplanowane na:";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] zaktualizował[/B] opis spotkania";
 /* In app notification description for one off cancelled meeting */
@@ -3231,19 +3231,19 @@
 /* In app notification description representing the time was changed for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] zaktualizował[/B] czas spotkania";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] zaktualizował[/B] nazwę spotkania z “[PreviousTitle]” na [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
 "inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] odwołał[/B] spotkanie i wszystkie jego wystąpienia";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] invited you to a recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email] zaprosił[/B] cię na cykliczne spotkanie zaplanowane na:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] zaktualizował[/B] szczegóły cyklicznego spotkania zaplanowane na:";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] updated[/B] the recurring meeting description";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] zaktualizował[/B] opis cyklicznego potkania";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] zaktualizował[/B] datę cyklicznego spotkania";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] zaktualizował[/B] czas cyklicznego spotkania";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Występowanie";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3255,15 +3255,15 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Zobacz więcej";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] od [B][StartTime] do [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Everyday effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Codziennie zaczynając [B][StartDate][/B] od [B][StartTime] do [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Everyday effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Codziennie zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] odwołał[/B] spotkanie zaplanowane na:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] zaktualizował[/B] wystąpienie na:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Aktualizacja bezpieczeństwa";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3299,12 +3299,16 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="sob";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="daily";
+"meetings.scheduled.recurring.daily"="codziennie";
 /* Text description for a meeting showing that is a weekly recurring meeting */
-"meetings.scheduled.recurring.weekly"="weekly";
+"meetings.scheduled.recurring.weekly"="co tydzień";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="miesięcznie";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Nie można zweryfikować kontaktu";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Nie możesz zweryfikować %@, ponieważ nie ma ich na Twojej liście kontaktów. Poczekaj, aż zaakceptują Twoje zaproszenie.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";

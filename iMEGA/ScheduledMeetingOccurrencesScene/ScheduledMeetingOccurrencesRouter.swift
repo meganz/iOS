@@ -11,8 +11,10 @@ final class ScheduledMeetingOccurrencesRouter: NSObject {
     }
     
     func build() -> UIViewController {
-        let chatRoomUseCase = ChatRoomUseCase(
-            chatRoomRepo: ChatRoomRepository.sharedRepo,
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        
+        let chatRoomUserUseCase = ChatRoomUserUseCase(
+            chatRoomRepo: ChatRoomUserRepository.newRepo,
             userStoreRepo: UserStoreRepository(store: .shareInstance())
         )
         
@@ -30,6 +32,7 @@ final class ScheduledMeetingOccurrencesRouter: NSObject {
                 peerHandle: .invalid,
                 chatRoomEntity: chatRoom,
                 chatRoomUseCase: chatRoomUseCase,
+                chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: ChatUseCase(
                     chatRepo: ChatRepository(

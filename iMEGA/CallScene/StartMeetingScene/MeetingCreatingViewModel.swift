@@ -287,13 +287,15 @@ final class MeetingCreatingViewModel: ViewModelType {
             dispatch(.updateMeetingName(defaultMeetingName))
         }
         
-        meetingUseCase.startCall(
+        let startCall = StartCallEntity(
             meetingName: meetingName,
             enableVideo: isVideoEnabled,
             enableAudio: isMicrophoneEnabled,
             speakRequest: isSpeakRequestEnabled,
             waitingRoom: isWaitingRoomEnabled,
-            allowNonHostToAddParticipants: doesAllowNonHostToAddParticipants) { [weak self] in
+            allowNonHostToAddParticipants: doesAllowNonHostToAddParticipants)
+        
+        meetingUseCase.startCall(startCall) { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .success(let chatRoom):

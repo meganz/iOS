@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Links werden erstellt…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Links kopiert";
+"linkCopied"="Link kopiert";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Die Links wurden kopiert";
+"linksCopied"="Links kopiert";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="In die Zwischenablage kopiert";
 /* A title for the Copyright Warning dialog. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Ordner freigegeben";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d Ordner erfolgreich freigegeben.";
+"sharedFolders_success"="%d Ordner freigegeben";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importieren";
 /* Message shown when a file has been imported */
@@ -847,7 +847,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Dies ist die letzte Stufe der Accountlöschung. Sie werden Ihre online gespeicherten Daten verlieren. Bitte geben Sie Ihr Passwort ein.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Ihr Account wurde erfolgreich storniert.";
+"accountCanceledSuccessfully"="Ihr Account wurde gelöscht";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Account schließen";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +907,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Ihr Passwort wird unter Zuhilfenahme Ihres Rettungsschlüssels neu gesetzt. Bitte geben Sie das neue Passwort ein.";
 /*  */
-"yourPasswordHasBeenReset"="Ihr Passwort wurde erfolgreich zurückgesetzt. Bitte loggen Sie sich nun ein.";
+"yourPasswordHasBeenReset"="Ihr Passwort wurde zurückgesetzt. Bitte melden Sie sich jetzt an.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Absenden";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +917,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Neuen Account erstellen";
 /*  */
-"yourAccounHasBeenParked"="Ihr bestehender Account wurde erfolgreich geparkt. Sie können sich nun in Ihren neuen Account einloggen.";
+"yourAccounHasBeenParked"="Ihr alter Account wurde geparkt. Sie können sich jetzt bei Ihrem neuen Account anmelden.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Neue E-Mail-Adresse";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1089,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Namen ändern";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Sie haben Ihr Profil aktualisiert.";
+"youHaveSuccessfullyChangedYourProfile"="Sie haben Ihr Profil geändert";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Vorname(n)";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1225,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] wurde von [B] auf dem Gruppenchat entfernt.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] hat den Gruppenchat verlassen.";
+"leftTheGroupChat"="[A] hat den Gruppenchat verlassen";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] hat den Gruppenchat auf Einladung von [B] betreten.";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1281,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Der Chatverlauf wurde gelöscht";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="Beim Löschen des Chatverlaufs ist ein Fehler aufgetreten";
+"An error has occurred. The chat history has not been successfully cleared"="Ein Fehler ist aufgetreten. Der Chatverlauf wurde nicht gelöscht";
 /* 'Next' button in a dialog */
 "continue"="Fortfahren";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1423,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Einige Elemente konnten nicht mit MEGA geteilt werden";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Freigabe erfolgreich";
+"Shared successfully"="Freigegeben";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Übertragungsfehler:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1645,19 +1645,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Nachrichten gesendet";
 /* Title of archived chats button */
-"archivedChats"="Archivierte Chats";
+"archivedChats"="Archiviert";
 /* Confirmation message on archive chat dialog for user to confirm. */
 "archiveChatMessage"="Wollen Sie diesen Chat archivieren?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Wollen Sie diesen Chat dearchivieren?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Chat dearchivieren";
+"unarchiveChat"="Dearchivieren";
 /* Title of button to archive chats. */
-"archiveChat"="Chat archivieren";
+"archiveChat"="Archivieren";
 /* Title of flag of archived chats. */
 "archived"="Archiviert";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Keine archivierten Chats";
+"noArchivedChats"="No archived chats or meetings";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Zwei-Faktor-Authentifizierung";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1783,7 +1783,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ ist nun in der Konferenz.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ hat die Konferenz verlassen.";
+"%@ left the call."="%@ hat die Konferenz verlassen";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Eine Konferenz ist aktiv. Teilnehmen….";
 /* Message shown in a chat room when there is an active call */
@@ -2317,7 +2317,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Hiermit entfernen Sie die aktuelle Mobilnummer aus Ihrem Account und ersetzen Sie durch eine neue.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Ihre Mobilnummer wurde erfolgreich entfernt.";
+"Your phone number has been removed successfully."="Ihre Telefonnummer wurde entfernt";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Die Entfernung Ihrer Mobilnummer ist fehlgeschlagen - bitte versuchen Sie es später noch einmal.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Sie können uns dabei helfen, unsere Produkte zu verbessern, indem Sie diese Cookies zulassen.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version erfolgreich als neue Datei gespeichert.";
+"Version created as a new file successfully."="Version wurde als neue Datei gespeichert";
 /* Text shown for the action create new file */
 "Create new file"="Neue Datei erstellen";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2989,15 +2989,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ ist beigetreten";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ hat aufgelegt";
+"meetings.notification.singleUserLeft"="%@ hat die Konferenz verlassen";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ und %@ sind beigetreten";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ und %@ haben aufgelegt";
+"meetings.notification.twoUsersLeft"="%@ und %@ haben die Konferenz verlassen";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ und %@ weitere Personen sind beigetreten";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ und %@ weitere Personen haben aufgelegt";
+"meetings.notification.moreThanTwoUsersLeft"="%@ und %@ weitere Personen haben die Konferenz verlassen";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="In den Papierkorb verschieben";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3221,7 +3221,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] hat Sie zu einem Meeting am folgenden Datum eingeladen:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email][/B] hat die Details des Meetings für das folgende Datum geändert:";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email][/B] hat die Meetingbeschreibung geändert";
 /* In app notification description for one off cancelled meeting */
@@ -3237,7 +3237,7 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] hat Sie zu einem wiederkehrenden Meeting eingeladen. Termine:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email][/B] hat die Details des wiederkehrenden Meetings mit den folgenden Terminen geändert:";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email][/B] hat die Beschreibung des wiederkehrenden Meetings geändert";
 /* In app notification description when date field is updated for recurring meeting. */
@@ -3305,6 +3305,10 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="jeden Monat";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Kontakt kann nicht verifiziert werden";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Sie können %@ nicht verifizieren, da diese Person nicht in Ihrer Kontaktliste steht. Warten Sie, bis Ihre Einladung angenommen wird.";
+/* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
+"picker.disable.passcode.title"="Disable MEGA passcode";
+/* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
