@@ -87,6 +87,7 @@
     [self.view setNeedsLayout];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self configureSnackBarPresenter];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -96,6 +97,7 @@
     
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
     [self removeSnackBarPresenter];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -360,4 +362,11 @@
         [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
     }
 }
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    [self updateSharedItemsTabBadgeIfNeeded:nodeList];
+}
+
 @end

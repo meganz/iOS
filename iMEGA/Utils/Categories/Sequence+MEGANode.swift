@@ -19,6 +19,10 @@ extension Sequence where Element: MEGANode {
         nodes(for: [.removed, .parent])
     }
     
+    func shareChangeTypeNodes() -> [MEGANode] {
+        nodes(for: [.inShare, .outShare, .pendingShare])
+    }
+    
     func publicLinkedNodes() -> [MEGANode] {
         filter({ $0.isExported() })
     }
