@@ -15,7 +15,7 @@
 #import "NSObject+Debounce.h"
 @import PureLayout;
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGANavigationControllerDelegate>
+@interface MainTabBarController () <UITabBarControllerDelegate, MEGANavigationControllerDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, assign) NSInteger unreadMessages;
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
