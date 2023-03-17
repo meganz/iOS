@@ -24,7 +24,6 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
     }
     
     func testUpdateAlbumCover_onAlbumCoverUpdate_shouldReturnUpdatedCoverNode() async throws {
-        
         let setElem1 = SetElementEntity(handle: HandleEntity(1), ownerId: HandleEntity(1), order: HandleEntity(1), nodeId: HandleEntity(1), modificationTime: Date.distantPast, name: "1")
         let setElem2 = SetElementEntity(handle: HandleEntity(2), ownerId: HandleEntity(2), order: HandleEntity(2), nodeId: HandleEntity(2), modificationTime: Date.distantPast, name: "2")
         
@@ -34,9 +33,26 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
         
         let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
         
-        let nodeId = try await sut.updateAlbumCover(album: HandleEntity(1), withNode: HandleEntity(2))
+        let nodeId = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: HandleEntity(2)))
 
         XCTAssertEqual(nodeId, HandleEntity(2))
+    }
+    
+    func testUpdateAlbumCover_onAlbumCoverUpdate_shouldThrowErrorForMissingPhotoId() async throws {
+        let setElem1 = SetElementEntity(handle: HandleEntity(1), ownerId: HandleEntity(1), order: HandleEntity(1), nodeId: HandleEntity(1), modificationTime: Date.distantPast, name: "1")
+        let setElem2 = SetElementEntity(handle: HandleEntity(2), ownerId: HandleEntity(2), order: HandleEntity(2), nodeId: HandleEntity(2), modificationTime: Date.distantPast, name: "2")
+        
+        let albumContents: [HandleEntity: [SetElementEntity]] = [
+            HandleEntity(1): [setElem1, setElem2]
+        ]
+        
+        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
+        
+        do {
+            let _ = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: nil))
+        } catch let errorEntity as AlbumPhotoErrorEntity {
+            XCTAssertTrue(errorEntity == .photoIdDoesNotExist)
+        }
     }
     
     func testDeletePhotos_onAlbumPhotoEntityWithNoValidIds_shouldReturnZeroAlbumResultEntity() async throws {

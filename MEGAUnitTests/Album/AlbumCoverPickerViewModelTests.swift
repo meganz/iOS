@@ -9,7 +9,7 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
     func testOnSave_whenUserSelectACoverPic_shouldSetTheNewPicAsCoverPic() {
         let exp = expectation(description: "Should call completion handler and set isDismiss to true")
         
-        let photo = NodeEntity(handle: 1)
+        let photo = AlbumPhotoEntity(photo: NodeEntity(handle: 1))
         let sut = albumCoverPickerViewModel { album, node in
             XCTAssertEqual(node, photo)
             exp.fulfill()
@@ -19,7 +19,7 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         sut.onSave()
         XCTAssertFalse(sut.isDismiss)
         
-        sut.photoSelection.selectedPhoto = NodeEntity(handle: 1)
+        sut.photoSelection.selectedPhoto = photo
         sut.onSave()
         wait(for: [exp], timeout: 1.0)
         XCTAssertTrue(sut.isDismiss)
@@ -42,11 +42,15 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photos.count, 2)
     }
     
-    func testSelectedCoverPicFromLoadedAlbum_whenUserOpenTheSelectCoverPicScreen_shouldSelectNodeFromAlbumCoverNode() {
+    func testSelectedCoverPicFromLoadedAlbum_whenUserOpenTheSelectCoverPicScreen_shouldSelectNodeFromAlbumCoverNode() async {
         let coverNode = NodeEntity(handle: 10)
-        let sut = albumCoverPickerViewModel(coverNode: coverNode)
+        let coverPhoto = AlbumPhotoEntity(photo: coverNode)
+        let sut = albumCoverPickerViewModel(coverNode: coverNode, photos: [AlbumPhotoEntity(photo: coverNode)])
         
-        XCTAssertEqual(sut.photoSelection.selectedPhoto, coverNode)
+        sut.loadAlbumContents()
+        await sut.loadingTask?.value
+        
+        XCTAssertEqual(sut.photoSelection.selectedPhoto, coverPhoto)
     }
     
     func testSelectedCoverPicFromLoadedAlbumContents_whenUserOpenTheSelectCoverPicScreen_shouldSelectNodeFromAlbumContents() async {
@@ -57,21 +61,21 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         sut.loadAlbumContents()
         await sut.loadingTask?.value
         
-        XCTAssertEqual(sut.photoSelection.selectedPhoto, node4.photo)
+        XCTAssertEqual(sut.photoSelection.selectedPhoto, AlbumPhotoEntity(photo: node4.photo))
     }
     
     func testIsSaveButtonDisabled_whenSelectedNodeChange_shouldSelectTheRightValues(){
         let sut = albumCoverPickerViewModel()
         
         XCTAssertTrue(sut.isSaveButtonDisabled)
-        sut.photoSelection.selectedPhoto = NodeEntity(handle: 2)
+        sut.photoSelection.selectedPhoto = AlbumPhotoEntity(photo: NodeEntity(handle: 2))
         XCTAssertFalse(sut.isSaveButtonDisabled)
     }
     
     private func albumCoverPickerViewModel(
         coverNode: NodeEntity? = nil,
         photos: [AlbumPhotoEntity] = [AlbumPhotoEntity(photo: NodeEntity(handle: 2)), AlbumPhotoEntity(photo: NodeEntity(handle: 3))],
-        completion: ((AlbumEntity, NodeEntity) -> Void)? = nil ) -> AlbumCoverPickerViewModel {
+        completion: ((AlbumEntity, AlbumPhotoEntity) -> Void)? = nil ) -> AlbumCoverPickerViewModel {
         let album = AlbumEntity(id: 1, name: "User album", coverNode: coverNode, count: 2, type: .user, modificationTime: nil)
         let router = AlbumContentRouter(navigationController: nil, album: album, newAlbumPhotos: [], existingAlbumNames: {[]})
         

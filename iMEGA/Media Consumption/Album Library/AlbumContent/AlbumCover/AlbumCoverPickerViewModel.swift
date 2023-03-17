@@ -13,20 +13,18 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     
     private let album: AlbumEntity
     private let albumContentsUseCase: AlbumContentsUseCaseProtocol
-    private let completion: (AlbumEntity, NodeEntity) -> Void
+    private let completion: (AlbumEntity, AlbumPhotoEntity) -> Void
     private var subscriptions = Set<AnyCancellable>()
     var loadingTask: Task<Void, Never>?
     
     init(album: AlbumEntity,
          albumContentsUseCase: AlbumContentsUseCaseProtocol,
          router: AlbumContentRouting,
-         completion: @escaping (AlbumEntity, NodeEntity) -> Void) {
+         completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void) {
         self.album = album
         self.albumContentsUseCase = albumContentsUseCase
         self.router = router
         self.completion = completion
-        
-        photoSelection.selectedPhoto = album.coverNode
         
         setupSubscriptions()
     }
@@ -68,7 +66,7 @@ final class AlbumCoverPickerViewModel: ObservableObject {
         photoSelection.$selectedPhoto
             .dropFirst()
             .sink { [weak self] selectedPhoto in
-                if self?.album.coverNode != selectedPhoto {
+                if self?.album.coverNode != selectedPhoto?.photo {
                     self?.isSaveButtonDisabled = false
                 }
             }
@@ -79,6 +77,9 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     private func loadNodes() async {
         do {
             photos = try await albumContentsUseCase.photos(in: album)
+            photos.sort {
+                $0.photo.modificationTime > $1.photo.modificationTime
+            }
             selectCoverNode()
         } catch {
             MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
@@ -86,12 +87,11 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     }
     
     private func selectCoverNode() {
-        guard photoSelection.selectedPhoto == nil else { return }
-        
-        let sortedPhotos: [AlbumPhotoEntity] = photos.sorted {
-            $0.photo.modificationTime > $1.photo.modificationTime
+        if let coverNode = album.coverNode,
+           let coverPhoto = photos.first(where: { $0.id == coverNode.handle } ) {
+            photoSelection.selectedPhoto = coverPhoto
+        } else {
+            photoSelection.selectedPhoto = photos.first
         }
-        
-        photoSelection.selectedPhoto = sortedPhotos.first?.photo
     }
 }

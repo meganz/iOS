@@ -14,7 +14,7 @@ struct AlbumCoverPickerView: View {
             ScrollView {
                 LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 4) {
                     ForEach(viewModel.photos, id: \.self) { albumPhoto in
-                        viewModel.router.albumCoverPickerPhotoCell(photo: albumPhoto.photo, photoSelection: viewModel.photoSelection)
+                        viewModel.router.albumCoverPickerPhotoCell(albumPhoto: albumPhoto, photoSelection: viewModel.photoSelection)
                             .clipped()
                     }
                 }

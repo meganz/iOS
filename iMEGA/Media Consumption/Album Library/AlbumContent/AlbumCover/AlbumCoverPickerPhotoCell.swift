@@ -15,6 +15,12 @@ struct AlbumCoverPickerPhotoCell: View {
         .onTapGesture(count: 1) {
             viewModel.onPhotoSelect()
         }
+        .onAppear {
+            viewModel.startLoadingThumbnail()
+        }
+        .onDisappear {
+            viewModel.cancelLoadingThumbnail()
+        }
     }
     
     @ViewBuilder

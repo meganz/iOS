@@ -288,11 +288,11 @@ final class AlbumContentViewModel: ViewModelType {
         invokeCommand?(.updateNavigationTitle)
     }
     
-    private func updateAlbumCover(photo: NodeEntity) {
+    private func updateAlbumCover(albumPhoto: AlbumPhotoEntity) {
         selectAlbumCoverTask = Task { [weak self] in
             do {
-                let _ = try await albumContentModificationUseCase.updateAlbumCover(album: album.id, withNode: photo.id)
-                album.coverNode = photo
+                let _ = try await albumContentModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
+                album.coverNode = albumPhoto.photo
                 
                 let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated
                 self?.invokeCommand?(.showHud(.success(message)))
@@ -304,7 +304,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     private func showAlbumCoverPicker()  {
         router.showAlbumCoverPicker(album: album, completion: { [weak self] _, coverPhoto in
-            self?.updateAlbumCover(photo: coverPhoto)
+            self?.updateAlbumCover(albumPhoto: coverPhoto)
         })
     }
 
