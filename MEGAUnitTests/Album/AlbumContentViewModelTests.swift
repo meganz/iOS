@@ -561,7 +561,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let photos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 2, type: .user)
         
-        let albumContentRouter = MockAlbumContentRouting(album: album, photos: photos)
+        let albumContentRouter = MockAlbumContentRouting(album: album, albumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(1))), photos: photos)
         let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photos.map {AlbumPhotoEntity(photo: $0)}),
@@ -667,6 +667,7 @@ private extension Sequence where Element == NodeEntity {
 
 private final class MockAlbumContentRouting: AlbumContentRouting {
     let album: AlbumEntity?
+    let albumPhoto: AlbumPhotoEntity?
     let photos: [NodeEntity]
     
     var showAlbumContentPickerCalled = 0
@@ -674,8 +675,10 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
     var albumCoverPickerPhotoCellCalled = 0
     
     init(album: AlbumEntity? = nil,
+         albumPhoto: AlbumPhotoEntity? = nil,
          photos: [NodeEntity] = []) {
         self.album = album
+        self.albumPhoto = albumPhoto
         self.photos = photos
     }
     
@@ -684,16 +687,19 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
         completion(self.album ?? album, photos)
     }
     
-    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, NodeEntity) -> Void) {
+    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void) {
         showAlbumCoverPickerCalled += 1
-        completion(self.album ?? album, photos.first!)
+        
+        guard let albumPhoto else { return }
+        
+        completion(album, AlbumPhotoEntity(photo: albumPhoto.photo))
     }
     
-    func albumCoverPickerPhotoCell(photo: NodeEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
+    func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
         albumCoverPickerPhotoCellCalled += 1
         return AlbumCoverPickerPhotoCell(
             viewModel: AlbumCoverPickerPhotoCellViewModel(
-                photo: photo,
+                albumPhoto: albumPhoto,
                 photoSelection: AlbumCoverPickerPhotoSelection(),
                 viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
                 thumbnailUseCase: MockThumbnailUseCase(),

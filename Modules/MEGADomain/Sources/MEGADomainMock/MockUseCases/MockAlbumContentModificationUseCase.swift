@@ -22,12 +22,12 @@ public final class MockAlbumContentModificationUseCase: AlbumContentModification
         return newName
     }
     
+    public func updateAlbumCover(album id: HandleEntity, withAlbumPhoto albumPhoto: AlbumPhotoEntity) async throws -> HandleEntity {
+        return albumPhoto.id
+    }
+
     public func deletePhotos(in albumId: HandleEntity, photos: [AlbumPhotoEntity]) async throws -> AlbumElementsResultEntity {
         deletedPhotos = photos
         return resultEntity
-    }
-    
-    public func updateAlbumCover(album id: HandleEntity, withNode nodeId: HandleEntity) async throws -> HandleEntity {
-        return nodeId
     }
 }

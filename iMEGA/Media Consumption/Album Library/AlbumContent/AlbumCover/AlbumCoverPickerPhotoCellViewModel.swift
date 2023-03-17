@@ -6,28 +6,28 @@ final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {
     
     let photoSelection: AlbumCoverPickerPhotoSelection
     
-    private let photo: NodeEntity
+    private let albumPhoto: AlbumPhotoEntity
     
-    init(photo: NodeEntity,
+    init(albumPhoto: AlbumPhotoEntity,
          photoSelection: AlbumCoverPickerPhotoSelection,
          viewModel: PhotoLibraryModeAllViewModel,
          thumbnailUseCase: ThumbnailUseCaseProtocol,
          mediaUseCase: MediaUseCaseProtocol) {
-        self.photo = photo
+        self.albumPhoto = albumPhoto
         self.photoSelection = photoSelection
         
-        super.init(photo: photo, viewModel: viewModel, thumbnailUseCase: thumbnailUseCase, mediaUseCase: mediaUseCase)
+        super.init(photo: albumPhoto.photo, viewModel: viewModel, thumbnailUseCase: thumbnailUseCase, mediaUseCase: mediaUseCase)
         
         setupSubscription()
     }
     
     func onPhotoSelect() {
-        photoSelection.selectedPhoto = photo
+        photoSelection.selectedPhoto = albumPhoto
     }
     
     func setupSubscription() {
         photoSelection.$selectedPhoto
-            .map { [weak self] in $0 == self?.photo }
+            .map { [weak self] in $0 == self?.albumPhoto }
             .assign(to: &$isSelected)
     }
 }

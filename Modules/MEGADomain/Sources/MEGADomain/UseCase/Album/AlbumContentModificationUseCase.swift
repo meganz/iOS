@@ -3,8 +3,8 @@ import Combine
 public protocol AlbumContentModificationUseCaseProtocol {
     func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity
     func rename(album id: HandleEntity, with newName: String) async throws -> String
+    func updateAlbumCover(album id: HandleEntity, withAlbumPhoto albumPhoto: AlbumPhotoEntity) async throws -> HandleEntity
     func deletePhotos(in albumId: HandleEntity, photos: [AlbumPhotoEntity]) async throws -> AlbumElementsResultEntity
-    func updateAlbumCover(album id: HandleEntity, withNode nodeId: HandleEntity) async throws -> HandleEntity
 }
 
 public final class AlbumContentModificationUseCase: AlbumContentModificationUseCaseProtocol {
@@ -24,20 +24,16 @@ public final class AlbumContentModificationUseCase: AlbumContentModificationUseC
         try await userAlbumRepo.updateAlbumName(newName, id)
     }
     
+    public func updateAlbumCover(album id: HandleEntity, withAlbumPhoto albumPhoto: AlbumPhotoEntity) async throws -> HandleEntity {
+        guard let albumPhotoId = albumPhoto.albumPhotoId else { throw AlbumPhotoErrorEntity.photoIdDoesNotExist }
+        return try await userAlbumRepo.updateAlbumCover(for: id, elementId: albumPhotoId)
+    }
+
     public func deletePhotos(in albumId: HandleEntity, photos: [AlbumPhotoEntity]) async throws -> AlbumElementsResultEntity {
         let photoIds = photos.compactMap(\.albumPhotoId)
         guard photoIds.isNotEmpty else {
             return AlbumElementsResultEntity(success: 0, failure: 0)
         }
         return try await userAlbumRepo.deleteAlbumElements(albumId: albumId, elementIds: photoIds)
-    }
-    
-    public func updateAlbumCover(album id: HandleEntity, withNode nodeId: HandleEntity) async throws -> HandleEntity {
-        let content = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
-        
-        guard let coverId = content.first(where: { $0.nodeId == nodeId })?.id else { return .invalid }
-        
-        let _ = try await userAlbumRepo.updateAlbumCover(for: id, elementId: coverId)
-        return nodeId
     }
 }

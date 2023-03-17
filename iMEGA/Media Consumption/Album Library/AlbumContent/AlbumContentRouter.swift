@@ -5,8 +5,8 @@ import MEGAPresentation
 
 protocol AlbumContentRouting: Routing {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)
-    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, NodeEntity) -> Void)
-    func albumCoverPickerPhotoCell(photo: NodeEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell
+    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void)
+    func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell
 }
 
 struct AlbumContentRouter: AlbumContentRouting {
@@ -68,7 +68,7 @@ struct AlbumContentRouter: AlbumContentRouting {
     }
     
     @MainActor
-    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, NodeEntity) -> Void) {
+    func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void) {
         let filesSearchRepo = FilesSearchRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
         let albumContentsUseCase = AlbumContentsUseCase(
@@ -85,10 +85,10 @@ struct AlbumContentRouter: AlbumContentRouting {
         navigationController?.present(UIHostingController(rootView: content), animated: true)
     }
     
-    func albumCoverPickerPhotoCell(photo: NodeEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
+    func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
         
         let vm = AlbumCoverPickerPhotoCellViewModel(
-            photo: photo,
+            albumPhoto: albumPhoto,
             photoSelection: photoSelection,
             viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
