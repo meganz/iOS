@@ -128,6 +128,7 @@
         
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.previewController.view.frame = self.view.bounds;
+        [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     } completion:nil];
     
 }
