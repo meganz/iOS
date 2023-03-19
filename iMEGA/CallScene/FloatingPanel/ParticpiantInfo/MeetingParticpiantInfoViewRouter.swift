@@ -45,11 +45,14 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
 
         let userInviteUseCase = UserInviteUseCase(repo: UserInviteRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+        
         let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
                                                         userInviteUseCase: userInviteUseCase,
+                                                        megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: isMyselfModerator,
                                                         router: self)
         let participantInfoViewController = MeetingParticipantInfoViewController(viewModel: viewModel, sender: sender)

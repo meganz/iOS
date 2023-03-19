@@ -43,6 +43,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let authUseCase: AuthUseCaseProtocol
     private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
 
@@ -62,7 +63,8 @@ final class MeetingContainerViewModel: ViewModelType {
          accountUseCase: AccountUseCaseProtocol,
          authUseCase: AuthUseCaseProtocol,
          noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol,
-         analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
+         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -72,6 +74,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callCoordinatorUseCase.addCallRemoved { [weak self] uuid in
@@ -190,8 +193,8 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func endCallForAll() {
         if let call = call {
-            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
-               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+            if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
+               let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Container view model - End call for all - for call id \(callId) and chat id \(chatId)")
             } else {
                 MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
@@ -207,8 +210,8 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func dismissCall(completion: (() -> Void)?) {
         if let call = call {
-            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
-               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+            if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
+               let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
             } else {
                 MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")

@@ -39,7 +39,8 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo)
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         )
         let viewController = MeetingInfoViewController(viewModel: viewModel)
         

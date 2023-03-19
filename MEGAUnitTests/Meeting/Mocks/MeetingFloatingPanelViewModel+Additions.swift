@@ -16,6 +16,7 @@ extension MeetingFloatingPanelViewModel {
         localVideoUseCase: CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
         accountUseCase: AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -30,7 +31,8 @@ extension MeetingFloatingPanelViewModel {
             captureDeviceUseCase: captureDeviceUseCase,
             localVideoUseCase: localVideoUseCase,
             accountUseCase: accountUseCase,
-            chatRoomUseCase: chatRoomUseCase
+            chatRoomUseCase: chatRoomUseCase,
+            megaHandleUseCase: megaHandleUseCase
         )
     }
 }

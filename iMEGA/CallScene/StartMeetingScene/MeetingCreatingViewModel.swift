@@ -53,6 +53,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = true
@@ -84,6 +85,7 @@ final class MeetingCreatingViewModel: ViewModelType {
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol,
          link: String?,
          userHandle: UInt64) {
         self.router = router
@@ -96,6 +98,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.devicePermissionUseCase = devicePermissionUseCase
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         self.userHandle = userHandle
         
         appDidBecomeActiveSubscription = NotificationCenter.default
@@ -197,7 +200,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             lastName = name
         case .loadAvatarImage:
             guard let myHandle = accountUseCase.currentUser?.handle,
-                  let base64Handle = MEGASdk.base64Handle(forUserHandle: myHandle),
+                  let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: myHandle),
                   let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
                 return
             }

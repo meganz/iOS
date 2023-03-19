@@ -24,6 +24,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private let userInviteUseCase: UserInviteUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private let isMyselfModerator: Bool
     private let router: MeetingParticpiantInfoViewRouting
     
@@ -32,6 +33,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          userInviteUseCase: UserInviteUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol,
          isMyselfModerator: Bool,
          router: MeetingParticpiantInfoViewRouting) {
         self.participant = participant
@@ -39,6 +41,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.userInviteUseCase = userInviteUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         self.isMyselfModerator = isMyselfModerator
         self.router = router
     }
@@ -109,7 +112,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     }
 
     private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
-        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return
         }

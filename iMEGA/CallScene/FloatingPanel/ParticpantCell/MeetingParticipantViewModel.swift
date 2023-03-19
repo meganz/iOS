@@ -20,6 +20,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     private let accountUseCase: AccountUseCaseProtocol
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private var chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
     private var subscriptions = Set<AnyCancellable>()
@@ -49,12 +50,14 @@ final class MeetingParticipantViewModel: ViewModelType {
          accountUseCase: AccountUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol,
          contextMenuTappedHandler: @escaping (CallParticipantEntity, UIButton) -> Void) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         self.contextMenuTappedHandler = contextMenuTappedHandler
     }
     
@@ -83,7 +86,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else {
-            MEGALogDebug("ChatRoom not found for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
+            MEGALogDebug("ChatRoom not found for \(megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
             return
         }
         
@@ -102,7 +105,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
 
     private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
-        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             MEGALogDebug("ChatRoom: base64 handle not found for handle \(participant.participantId)")
             return
@@ -117,7 +120,7 @@ final class MeetingParticipantViewModel: ViewModelType {
             case .success(let image):
                 self.invokeCommand?(.updateAvatarImage(image: image))
             case .failure(let error):
-                MEGALogDebug("ChatRoom: failed to fetch avatar for \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name") - \(error)")
+                MEGALogDebug("ChatRoom: failed to fetch avatar for \(base64Handle) - \(error)")
             }
         }
     }
@@ -130,7 +133,7 @@ final class MeetingParticipantViewModel: ViewModelType {
             }, receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 
-                if let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId) {
+                if let base64Handle = self.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) {
                     self.userImageUseCase.clearAvatarCache(withUserHandle: participant.participantId, base64Handle: base64Handle)
                 }
                 
@@ -162,7 +165,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func downloadAndUpdateAvatar(forParticipant participant: CallParticipantEntity) async throws {
-        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId) else {
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
@@ -182,7 +185,7 @@ final class MeetingParticipantViewModel: ViewModelType {
         }
         try Task.checkCancellation()
         
-        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return nil
         }

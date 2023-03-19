@@ -69,6 +69,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         )
         let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,
                                                   callUseCase: createCallUseCase,
@@ -77,7 +78,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                   authUseCase: authUseCase,
                                                   noUserJoinedUseCase: meetingNoUserJoinedUseCase,
-                                                  analyticsEventUseCase: analyticsEventUseCase)
+                                                  analyticsEventUseCase: analyticsEventUseCase,
+                                                  megaHandleUseCase: megaHandleUseCase)
         let vc = MeetingContainerViewController(viewModel: viewModel)
         baseViewController = vc
         containerViewModel = viewModel

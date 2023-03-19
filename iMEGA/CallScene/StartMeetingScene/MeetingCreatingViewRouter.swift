@@ -43,6 +43,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
             userImageUseCase: userImageUseCase,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             link: link,
             userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)

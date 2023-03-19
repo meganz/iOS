@@ -16,6 +16,7 @@ extension MeetingParticipantsLayoutViewModel {
         userImageUseCase: UserImageUseCaseProtocol = MockUserImageUseCase(),
         analyticsEventUseCase: AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
+        megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         call: CallEntity = CallEntity(),
         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
         isTesting: Bool = true
@@ -32,6 +33,7 @@ extension MeetingParticipantsLayoutViewModel {
             accountUseCase: accountUseCase,
             userImageUseCase: userImageUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
+            megaHandleUseCase: megaHandleUseCase,
             chatRoom: chatRoom,
             call: call
         )

@@ -56,6 +56,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
@@ -90,7 +91,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol) {
+         chatRoomUseCase: ChatRoomUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
@@ -103,6 +105,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.isSpeakerEnabled = isSpeakerEnabled
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.megaHandleUseCase = megaHandleUseCase
     }
     
     deinit {
@@ -395,8 +398,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func manageHangCall(_ presenter: UIViewController, _ sender: UIButton) {
         if let call = call {
-            if let callId = MEGASdk.base64Handle(forUserHandle: call.callId),
-               let chatId = MEGASdk.base64Handle(forUserHandle: call.chatId) {
+            if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
+               let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Floating panel - Hang call for call id \(callId) and chat id \(chatId)")
             } else {
                 MEGALogDebug("Meeting: Floating panel - Hang call - cannot get the call id and chat id string")

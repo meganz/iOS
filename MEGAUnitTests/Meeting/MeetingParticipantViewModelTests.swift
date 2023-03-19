@@ -11,11 +11,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -31,11 +33,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -51,11 +55,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -71,11 +77,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -91,11 +99,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -111,11 +121,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -136,7 +148,8 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in completionBlockCalled = true }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: MockMEGAHandleUseCase()) { _,_ in completionBlockCalled = true }
         test(viewModel: viewModel, action: .contextMenuTapped(button: UIButton()), expectedCommands: [])
         XCTAssert(completionBlockCalled, "Context menu completion block not called")
     }
@@ -151,11 +164,13 @@ final class MeetingParticipantViewModelTests: XCTestCase {
             XCTAssert(handle == 100, "Handle should match")
             expectation.fulfill()
         })
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: userUseCase) { _,_ in }
+                                                    chatRoomUserUseCase: userUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
         viewModel.dispatch(.onViewReady)
         await viewModel.loadNameTask?.value
         userImageUseCase.avatarChangePublisher.send([100])
