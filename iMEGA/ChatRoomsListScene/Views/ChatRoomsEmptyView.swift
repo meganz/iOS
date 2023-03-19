@@ -5,6 +5,16 @@ struct ChatRoomsEmptyView: View {
     
     var body: some View {
         VStack {
+            if let archivedChatsViewState = emptyViewState.archivedChats {
+                ChatRoomsTopRowView(state: archivedChatsViewState)
+                    .onTapGesture {
+                        archivedChatsViewState.action()
+                    }
+                    .padding(8)
+                Divider()
+                    .padding(.leading)
+            }
+            
             if let contactsOnMega = emptyViewState.contactsOnMega {
                 ChatRoomsTopRowView(state: contactsOnMega)
                     .onTapGesture {
