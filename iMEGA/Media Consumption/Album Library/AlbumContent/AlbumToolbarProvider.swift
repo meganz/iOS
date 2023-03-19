@@ -216,10 +216,10 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         alertController.addAction(UIAlertAction(title: Strings.Localizable.remove, style: .destructive) { [weak self] _ in
             self?.viewModel.dispatch(.deletePhotos(photos))
+            self?.endEditingMode()
         })
         alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.removeToRubbishBinItem
         present(alertController, animated: true)
-        endEditingMode()
     }
     
     private func movePhotosToRubbishBin(photos: [MEGANode]) {
