@@ -22,11 +22,9 @@ struct ChatRoomsListView: View {
                 if viewModel.chatViewMode == .chats {
                     if let chatRooms = viewModel.displayChatRooms {
                         List {
-                            SearchBarView(
-                                text: $viewModel.searchText,
-                                isEditing: $viewModel.isSearchActive,
-                                placeholder: Strings.Localizable.search,
-                                cancelTitle: Strings.Localizable.cancel)
+                            if viewModel.shouldShowSearchBar {
+                                searchBarView()
+                            }
                             
                             if chatRooms.isNotEmpty {
                                 if let archivedChatsViewState = viewModel.archiveChatsViewState(), !viewModel.isSearchActive {
@@ -58,7 +56,7 @@ struct ChatRoomsListView: View {
                         .overlay(
                             VStack {
                                 if viewModel.isChatRoomEmpty {
-                                    ChatRoomsEmptyView(emptyViewState: viewModel.searchEmptyViewState())
+                                    ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
                                 }
                             }
                             , alignment: .center
@@ -73,19 +71,8 @@ struct ChatRoomsListView: View {
                     if let futureMeetings = viewModel.displayFutureMeetings,
                        let pastMeetings = viewModel.displayPastMeetings {
                             List {
-                                if #available(iOS 15.0, *) {
-                                    SearchBarView(
-                                        text: $viewModel.searchText,
-                                        isEditing: $viewModel.isSearchActive,
-                                        placeholder: Strings.Localizable.search,
-                                        cancelTitle: Strings.Localizable.cancel)
-                                    .listRowSeparator(.hidden)
-                                } else {
-                                    SearchBarView(
-                                        text: $viewModel.searchText,
-                                        isEditing: $viewModel.isSearchActive,
-                                        placeholder: Strings.Localizable.search,
-                                        cancelTitle: Strings.Localizable.cancel)
+                                if viewModel.shouldShowSearchBar {
+                                    searchBarView()
                                 }
                                 
                                 if pastMeetings.isNotEmpty || futureMeetings.isNotEmpty {
@@ -110,7 +97,7 @@ struct ChatRoomsListView: View {
                             .overlay(
                                 VStack {
                                     if viewModel.isChatRoomEmpty {
-                                        ChatRoomsEmptyView(emptyViewState: viewModel.searchEmptyViewState())
+                                        ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
                                     }
                                 }
                                 , alignment: .center
@@ -132,6 +119,24 @@ struct ChatRoomsListView: View {
         }
         .onDisappear {
             viewModel.cancelLoading()
+        }
+    }
+    
+    @ViewBuilder
+    private func searchBarView() -> some View {
+        if #available(iOS 15.0, *) {
+            SearchBarView(
+                text: $viewModel.searchText,
+                isEditing: $viewModel.isSearchActive,
+                placeholder: Strings.Localizable.search,
+                cancelTitle: Strings.Localizable.cancel)
+            .listRowSeparator(.hidden)
+        } else {
+            SearchBarView(
+                text: $viewModel.searchText,
+                isEditing: $viewModel.isSearchActive,
+                placeholder: Strings.Localizable.search,
+                cancelTitle: Strings.Localizable.cancel)
         }
     }
 }

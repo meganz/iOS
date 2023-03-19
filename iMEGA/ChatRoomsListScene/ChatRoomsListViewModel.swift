@@ -60,19 +60,16 @@ final class ChatRoomsListViewModel: ObservableObject {
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
     
     var isChatRoomEmpty: Bool {
-        if let displayChatRooms, displayChatRooms.isNotEmpty {
-            return false
+        switch chatViewMode {
+        case .chats:
+            return displayChatRooms?.isEmpty ?? true
+        case .meetings:
+            return displayFutureMeetings?.isEmpty ?? true && displayPastMeetings?.isEmpty ?? true
         }
-        
-        if let displayPastMeetings, displayPastMeetings.isNotEmpty {
-            return false
-        }
-        
-        if let displayFutureMeetings, displayFutureMeetings.isNotEmpty {
-            return false
-        }
-        
-        return true
+    }
+    
+    var shouldShowSearchBar: Bool {
+        return isSearchActive || !isChatRoomEmpty
     }
 
     @Published var chatViewMode: ChatViewMode
@@ -233,6 +230,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     func searchEmptyViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
             contactsOnMega: nil,
+            archivedChats: nil,
             centerImageAsset: Asset.Images.EmptyStates.searchEmptyState,
             centerTitle: Strings.Localizable.noResults,
             centerDescription: nil,
@@ -244,7 +242,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     func noNetworkEmptyViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
-            contactsOnMega: contactsOnMegaViewState(),
+            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState() : nil,
+            archivedChats: archiveChatsViewState(),
             centerImageAsset: Asset.Images.EmptyStates.noInternetEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
@@ -256,7 +255,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     func emptyChatRoomsViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
-            contactsOnMega: contactsOnMegaViewState(),
+            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState() : nil,
+            archivedChats: archiveChatsViewState(),
             centerImageAsset: chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
