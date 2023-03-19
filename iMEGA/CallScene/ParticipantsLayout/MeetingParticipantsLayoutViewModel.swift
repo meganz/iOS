@@ -140,6 +140,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let accountUseCase: AccountUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
     private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
     
@@ -180,6 +182,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          accountUseCase: AccountUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
          analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
          preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
@@ -195,6 +198,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.accountUseCase = accountUseCase
         self.userImageUseCase = userImageUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         self.chatRoom = chatRoom
         self.call = call
 
@@ -286,7 +290,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func fetchAvatar(for participant: CallParticipantEntity, name: String, completion: @escaping ((UIImage) -> Void)) {
-        guard let base64Handle = MEGASdk.base64Handle(forUserHandle: participant.participantId),
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return
         }
@@ -294,12 +298,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
                                          base64Handle: base64Handle,
                                          avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: name) { result in
+                                         name: name) { [weak self] result in
             switch result {
             case .success(let image):
                 completion(image)
             case .failure(_):
-                MEGALogError("Error fetching avatar for participant \(MEGASdk.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
+                MEGALogError("Error fetching avatar for participant \(self?.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
             }
         }
     }
@@ -702,7 +706,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     return
                 }
                 
-                guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else { return }
+                guard let base64Handle = self.megaHandleUseCase.base64Handle(forUserHandle: handle) else { return }
                 
                 if let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) {
                     let image = try await self.userImageUseCase.createAvatar(withUserHandle: handle,

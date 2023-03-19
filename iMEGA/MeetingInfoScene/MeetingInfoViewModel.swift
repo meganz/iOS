@@ -28,6 +28,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private let chatUseCase: ChatUseCaseProtocol
     private let accountUseCase: AccountUseCaseProtocol
     private var chatLinkUseCase: ChatLinkUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private let router: MeetingInfoRouting
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
@@ -61,7 +62,8 @@ final class MeetingInfoViewModel: ObservableObject {
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
-         chatLinkUseCase: ChatLinkUseCaseProtocol
+         chatLinkUseCase: ChatLinkUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol
     ) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
@@ -71,6 +73,7 @@ final class MeetingInfoViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.accountUseCase = accountUseCase
         self.chatLinkUseCase = chatLinkUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
         
         if let chatRoom {
@@ -231,7 +234,7 @@ extension MeetingInfoViewModel{
             router.closeMeetingInfoView()
         } else {
             router.showLeaveChatAlert { [weak self] in
-                guard let self = self, let stringChatId = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) else {
+                guard let self = self, let stringChatId = self.megaHandleUseCase.base64Handle(forUserHandle: chatRoom.chatId) else {
                     return
                 }
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.add(stringChatId)

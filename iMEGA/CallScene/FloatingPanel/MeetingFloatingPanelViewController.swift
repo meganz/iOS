@@ -46,17 +46,20 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let accountUseCase: AccountUseCaseProtocol
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     
     init(viewModel: MeetingFloatingPanelViewModel,
          userImageUseCase: UserImageUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol) {
+         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -274,7 +277,8 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
             userImageUseCase: userImageUseCase,
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: chatRoomUserUseCase) {
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: megaHandleUseCase) {
                 [weak self] participant, button in
                 guard let self = self else { return }
                 self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))

@@ -50,6 +50,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         
         let viewModel = MeetingFloatingPanelViewModel(router: self,
                                                       containerViewModel: containerViewModel,
@@ -62,7 +63,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
                                                       localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
                                                       accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                      chatRoomUseCase: chatRoomUseCase)
+                                                      chatRoomUseCase: chatRoomUseCase,
+                                                      megaHandleUseCase: megaHandleUseCase)
         
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
@@ -70,12 +72,13 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
-
+        
         let vc = MeetingFloatingPanelViewController(viewModel: viewModel,
                                                     userImageUseCase: userImageUseCase,
                                                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                     chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: chatRoomUserUseCase)
+                                                    chatRoomUserUseCase: chatRoomUserUseCase,
+                                                    megaHandleUseCase: megaHandleUseCase)
         baseViewController = vc
         self.viewModel = viewModel
         return vc
