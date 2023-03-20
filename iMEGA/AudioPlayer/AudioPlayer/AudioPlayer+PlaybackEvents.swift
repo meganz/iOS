@@ -151,6 +151,16 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func playNext(_ completion: @escaping () -> Void) {
         if queuePlayer?.items().count ?? 0 > 1 {
             queuePlayer?.advanceToNextItem()
+            guard let currentItem = queuePlayer?.currentItem as? AudioPlayerItem else {
+                return
+            }
+            if let startTime = currentItem.startTimeStamp {
+                let time = CMTime(seconds: startTime, preferredTimescale: 1)
+                if CMTIME_IS_VALID(time)  {
+                    currentItem.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
+                    currentItem.configuredTimeOffsetFromLive = time
+                }
+            }
         } else {
             if queuePlayer?.items().count ?? 0 == tracks.count {
                 guard let currentItem = queuePlayer?.currentItem as? AudioPlayerItem else {

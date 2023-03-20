@@ -20,9 +20,9 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
         guard let player = queuePlayer else { return }
         
         if currentNode != nil, let currentItem = currentItem() {
-            observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail, url: currentItem.url.absoluteString)
+            observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", album: currentAlbum ?? "", thumbnail: currentThumbnail, url: currentItem.url.absoluteString)
         } else {
-            observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail)
+            observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", album: currentAlbum ?? "", thumbnail: currentThumbnail)
         }
     }
     

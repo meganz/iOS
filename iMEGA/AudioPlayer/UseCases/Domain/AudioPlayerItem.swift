@@ -3,12 +3,14 @@ import Foundation
 final class AudioPlayerItem: AVPlayerItem {
     var name: String
     var url: URL
+    var title: String?
     var artist: String?
     var album: String?
     var nodeHasThumbnail: Bool
     var artwork: UIImage?
     var node: MEGANode?
     var loadedMetadata = false
+    var startTimeStamp: Double?
     
     let requiredAssetKeys = [
             "playable",
@@ -35,6 +37,7 @@ final class AudioPlayerItem: AVPlayerItem {
             guard let `self` = self else { return }
             if let title = title {
                 self.name = title
+                self.title = title
             }
             
             if let artist = artist {

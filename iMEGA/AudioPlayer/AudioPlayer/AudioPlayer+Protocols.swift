@@ -72,8 +72,8 @@ protocol AudioPlayerObservedEventsProtocol {
 //MARK: - Audio Player Observers Functions
 @objc protocol AudioPlayerObserversProtocol: AudioPlayerProtocol {
     @objc optional func audio(player: AVQueuePlayer, showLoading: Bool)
-    @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?)
-    @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String)
+    @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, album: String, thumbnail: UIImage?)
+    @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, album: String, thumbnail: UIImage?, url: String)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?)
     @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?)
     @objc optional func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool)

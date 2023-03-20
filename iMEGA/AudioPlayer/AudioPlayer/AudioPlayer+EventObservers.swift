@@ -88,6 +88,15 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     }
     
     func audio(player: AVQueuePlayer, didStartPlayingCurrentItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
+        player.pause()
+        if let nextPlayerItem = player.currentItem as? AudioPlayerItem {
+            if nextPlayerItem.startTimeStamp != nil {
+                self.seekPlayerItem(nextPlayerItem, to: nextPlayerItem.startTimeStamp!)
+            }
+            if isAutoPlayEnabled {
+                player.play()
+            }
+        }
         refreshNowPlayingInfo()
     }
     
