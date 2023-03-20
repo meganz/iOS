@@ -13,7 +13,7 @@
         <!--Preview Document View Controller-->
         <scene sceneID="Rad-Bz-MUx">
             <objects>
-                <viewController storyboardIdentifier="previewDocumentID" hidesBottomBarWhenPushed="YES" id="zUo-yM-mbH" customClass="PreviewDocumentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="previewDocumentID" hidesBottomBarWhenPushed="YES" id="zUo-yM-mbH" customClass="PreviewDocumentViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="be2-KZ-HQH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,7 +102,7 @@
                     <navigationItem key="navigationItem" id="HWB-rp-yxf">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="uL1-bJ-jlX">
                             <connections>
-                                <action selector="doneTapped:" destination="zUo-yM-mbH" id="hdo-Vw-jfA"/>
+                                <action selector="doneTapped:" destination="zUo-yM-mbH" id="2hu-oq-VIr"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="export" id="vj5-kf-txr">
@@ -113,7 +113,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
-                        <outlet property="closeBarButtonItem" destination="uL1-bJ-jlX" id="rFw-EA-UYI"/>
+                        <outlet property="closeBarButtonItem" destination="uL1-bJ-jlX" id="T8P-D8-Aii"/>
                         <outlet property="collectionView" destination="xcl-UM-x0L" id="syf-l2-XOd"/>
                         <outlet property="downloadBarButtonItem" destination="r08-LH-yXr" id="vnS-8m-Jzk"/>
                         <outlet property="exportFileBarButtonItem" destination="zhj-Kc-zZm" id="6SY-XO-WHe"/>

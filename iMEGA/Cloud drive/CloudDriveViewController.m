@@ -43,11 +43,10 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "SearchOperation.h"
 #import "SharedItemsViewController.h"
 #import "UIViewController+MNZCategory.h"
-
+#import "MEGA-Swift.h"
 @import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;

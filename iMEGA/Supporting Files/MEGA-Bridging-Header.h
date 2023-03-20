@@ -99,7 +99,6 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "ChatRoomsViewController.h"
 #import "TransfersWidgetViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAChatPeerList.h"
 #import "MEGAChatRoom.h"
@@ -183,3 +182,4 @@
 #import "VideoUploadsTableViewController.h"
 #import "MEGALogger.h"
 #import "ChangeNameViewController.h"
+#import "SearchInPdfViewController.h"
