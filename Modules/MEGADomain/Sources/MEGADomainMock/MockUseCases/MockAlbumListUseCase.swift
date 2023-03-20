@@ -41,4 +41,8 @@ public struct MockAlbumListUseCase: AlbumListUseCaseProtocol {
     public func hasNoPhotosAndVideos() async -> Bool {
         false
     }
+    
+    public func delete(albums ids: [HandleEntity]) async -> [HandleEntity] {
+        albums.map { $0.id }
+    }
 }

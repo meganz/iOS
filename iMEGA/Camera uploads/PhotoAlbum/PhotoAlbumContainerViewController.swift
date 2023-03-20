@@ -9,7 +9,6 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
     var numberOfPages: Int = PhotoLibraryTab.allCases.count
     
     lazy var toolbar = UIToolbar()
-    var albumToolbarConfigurator: PhotoAlbumContainerToolbarConfiguration?
     
     override var isEditing: Bool {
         willSet {
@@ -201,6 +200,16 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.isEditing = $0 == .active
+                if !$0.isEditing {
+                    self?.updateBarButtons()
+                }
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$numOfSelectedAlbums
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.updateToolbarDeleteButton($0)
             }
             .store(in: &subscriptions)
     }

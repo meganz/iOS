@@ -47,7 +47,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func deleteAlbum(by id: HandleEntity) async throws -> HandleEntity {
-        HandleEntity()
+        id
     }
     
     public func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
