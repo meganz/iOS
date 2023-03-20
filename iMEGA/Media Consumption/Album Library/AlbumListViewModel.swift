@@ -9,18 +9,22 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
     @Published var newlyAddedAlbum: AlbumEntity?
+    @Published var albumDeletedSuccessMsg: String?
 
     @Published var showCreateAlbumAlert = false {
         willSet {
             self.alertViewModel.placeholderText = newAlbumName()
         }
     }
+    
+    @Published var showDeleteAlbumAlert = false
    
     lazy var selection = AlbumSelection()
     
     var albumCreationAlertMsg: String?
     var albumLoadingTask: Task<Void, Never>?
     var createAlbumTask: Task<Void, Never>?
+    var deleteAlbumTask: Task<Void, Never>?
     var isCreateAlbumFeatureFlagEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     }
@@ -116,6 +120,24 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         showCreateAlbumAlert.toggle()
     }
     
+    func deleteAlbumAlertView() -> Alert {
+        Alert(
+            title: Text(Strings.Localizable.CameraUploads.Albums.deleteAlbumTitle(selection.albums.count)),
+            message: Text(Strings.Localizable.CameraUploads.Albums.deleteAlbumMessage(selection.albums.count)),
+            primaryButton: .default(Text(Strings.Localizable.delete)) { [weak self] in
+                self?.onAlbumListDeleteConfirm()
+            },
+            secondaryButton: .cancel(Text(Strings.Localizable.cancel))
+        )
+    }
+    
+    func onAlbumListDeleteConfirm() {
+        deleteAlbumTask = Task {
+            let albumIds = await usecase.delete(albums: Array(selection.albums.keys))
+            onAlbumDeleteSuccess(albumIds)
+        }
+    }
+    
     // MARK: - Private
     private func systemAlbums() async -> [AlbumEntity] {
         do {
@@ -158,6 +180,22 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             }).create
     }
     
+    private func onAlbumDeleteSuccess(_ albumIds: [HandleEntity]) {
+        guard albumIds.count > 0 else {
+            photoAlbumContainerViewModel?.editMode = .inactive
+            return
+        }
+        
+        if albumIds.count == 1,
+           let albumId = albumIds.first,
+           let albumName = Array(selection.albums.values).first(where: {$0.id == albumId} )?.name {
+            albumDeletedSuccessMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
+                    .replacingOccurrences(of: "[A]", with: albumName)
+        } else {
+            albumDeletedSuccessMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albumIds.count)
+        }
+        photoAlbumContainerViewModel?.editMode = .inactive
+    }
 
     func newAlbumName() -> String {
         let newAlbumName = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder
@@ -199,6 +237,19 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             .sink { [weak self] in
                 self?.loadAlbums()
             }.store(in: &subscriptions)
+        
+        selection.$albums
+            .sink { [weak self] in
+                self?.photoAlbumContainerViewModel?.numOfSelectedAlbums = $0.count
+            }
+            .store(in: &subscriptions)
+        
+        photoAlbumContainerViewModel?.$showDeleteAlbumAlert
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.showDeleteAlbumAlert = true
+            }
+            .store(in: &subscriptions)
     }
     
     private func subscribeToEditMode() {

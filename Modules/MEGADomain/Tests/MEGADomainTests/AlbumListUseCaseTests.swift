@@ -282,4 +282,19 @@ final class AlbumListUseCaseTests: XCTestCase {
                                                            modificationTime: Date(), name: "Test")])
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func testAlbumDelete_whenUserWantToDelete_shouldDeleteAlbum() async {
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository(),
+            fileSearchRepository: MockFilesSearchRepository.newRepo,
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
+            albumContentsUseCase: MockAlbumContentUseCase())
+        
+        let deletedAlbumIds = [HandleEntity(1), HandleEntity(2)]
+        
+        let ids = await sut.delete(albums: deletedAlbumIds)
+        XCTAssertEqual(ids, deletedAlbumIds)
+    }
 }

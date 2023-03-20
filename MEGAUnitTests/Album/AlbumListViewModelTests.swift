@@ -368,6 +368,97 @@ final class AlbumListViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
+    func testShowDeleteAlbumAlert_whenUserTapOnDeleteButton_shouldSetShowDeleteAlbumAlertToTrue() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        XCTAssertFalse(sut.showDeleteAlbumAlert)
+        photoAlbumContainerViewModel.showDeleteAlbumAlert = true
+        XCTAssertTrue(sut.showDeleteAlbumAlert)
+    }
+    
+    func testOnAlbumListDeleteConfirm_whenAlbumDeletedSuccessfully_shouldDeleteMultipleAlbums() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user),
+                      AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user)]
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        
+        sut.onAlbumListDeleteConfirm()
+        
+        await sut.deleteAlbumTask?.value
+        
+        let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
+        
+        XCTAssertEqual(sut.albumDeletedSuccessMsg, targetMsg)
+        XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
+    }
+    
+    func testOnAlbumListDeleteConfirm_whenAlbumDeletedSuccessfully_shouldDeleteSingleAlbum() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        
+        sut.onAlbumListDeleteConfirm()
+        await sut.deleteAlbumTask?.value
+        
+        let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
+        
+        XCTAssertEqual(sut.albumDeletedSuccessMsg, targetMsg)
+        XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
+    }
+    
+    func testOnAlbumListDeleteConfirm_whenAlbumDeletedFailed_shouldDoNothing() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        sut.selection.setSelectedAlbums(albums)
+        
+        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        
+        sut.onAlbumListDeleteConfirm()
+        await sut.deleteAlbumTask?.value
+        
+        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
+    }
+    
+    func testNumOfSelectedAlbums_whenAlbumSelectionChanged_shouldSetNumOfSelectedAlbumsToTheRightValue() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        XCTAssertEqual(photoAlbumContainerViewModel.numOfSelectedAlbums, 0)
+        
+        sut.selection.setSelectedAlbums(albums)
+        await sut.albumLoadingTask?.value
+        XCTAssertEqual(photoAlbumContainerViewModel.numOfSelectedAlbums, albums.count)
+    }
+    
+    func testShowDeleteAlbumAlert_whenUserTapDeleteButton_shouldSetShowDeleteAlbumAlertToTrue() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        photoAlbumContainerViewModel.showDeleteAlbumAlert = true
+        XCTAssertTrue(sut.showDeleteAlbumAlert)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                    placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,

@@ -2913,6 +2913,22 @@ public enum Strings {
         /// Album cover updated
         public static let albumCoverUpdated = Strings.tr("Localizable", "cameraUploads.albums.albumCoverUpdated")
         /// Plural format key: "%#@count@"
+        public static func delete(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.delete", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func deleteAlbumMessage(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.deleteAlbumMessage", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func deleteAlbumSuccess(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.deleteAlbumSuccess", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func deleteAlbumTitle(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.deleteAlbumTitle", p1)
+        }
+        /// Plural format key: "%#@count@"
         public static func removedItemFrom(_ p1: Int) -> String {
           return Strings.tr("Localizable", "cameraUploads.albums.removedItemFrom", p1)
         }
