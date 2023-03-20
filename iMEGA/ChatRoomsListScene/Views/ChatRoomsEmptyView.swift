@@ -39,7 +39,10 @@ struct ChatRoomsEmptyView: View {
                         action: emptyViewState.bottomButtonAction
                     )
                     .padding(.horizontal, 70)
-                    .padding(.bottom, 35)
+                    
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(maxWidth: .infinity, maxHeight: 35)
                 }
             }
         }
