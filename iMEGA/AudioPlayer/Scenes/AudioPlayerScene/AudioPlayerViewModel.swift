@@ -281,7 +281,12 @@ final class AudioPlayerViewModel: ViewModelType {
                     group.leave()
                 }
                 group.wait()
-                self.initialize(tracks: childrenInPlaylist, currentTrack: currentTrack!)
+                if childrenInPlaylist.isEmpty {
+                    dismissBlock()
+                    return
+                } else {
+                    self.initialize(tracks: childrenInPlaylist, currentTrack: currentTrack!)
+                }
             } else {
                 if let allChildrenNode = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
                     nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle) {
@@ -299,7 +304,6 @@ final class AudioPlayerViewModel: ViewModelType {
                         return
                     }
                     initialize(tracks: [track], currentTrack: track)
-                    return
                 }
             }
         }

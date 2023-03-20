@@ -358,12 +358,11 @@ class PreviewDocumentViewController: UIViewController, SearchInPdfViewController
             self.node = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle)
         }
         
-        let displayMode = node.mnz_isInRubbishBin() ? DisplayMode.rubbishBin : DisplayMode.previewDocument
+        let displayMode = node.mnz_isInRubbishBin() ? DisplayMode.rubbishBin : (self.collectionView.isHidden ? DisplayMode.previewPdfPage :  DisplayMode.previewDocument)
         let isBackupNode = MyBackupsOCWrapper().isBackupNode(node)
         let nodeActions = NodeActionViewController(node: node,
                                                    delegate: self,
                                                    isLink: self.isLink,
-                                                   isPageView: self.collectionView.isHidden,
                                                    displayMode: displayMode,
                                                    isInVersionsView: self.isPreviewingVersion(),
                                                    isBackupNode: isBackupNode,
