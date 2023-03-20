@@ -102,6 +102,9 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		222224EE29C2A75D00F3D03A /* CUEPlaylistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222224ED29C2A75D00F3D03A /* CUEPlaylistParser.swift */; };
+		222224F129C2C6BF00F3D03A /* CUEPlaylistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222224F029C2C6BF00F3D03A /* CUEPlaylistTests.swift */; };
+		222224F329C3107A00F3D03A /* MegaNode+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222224F229C3107A00F3D03A /* MegaNode+Text.swift */; };
 		229FD89329C078BC002114F1 /* PDFOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229FD89229C078BC002114F1 /* PDFOutlineView.swift */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
 		2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */; };
@@ -2599,6 +2602,9 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		222224ED29C2A75D00F3D03A /* CUEPlaylistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CUEPlaylistParser.swift; sourceTree = "<group>"; };
+		222224F029C2C6BF00F3D03A /* CUEPlaylistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CUEPlaylistTests.swift; sourceTree = "<group>"; };
+		222224F229C3107A00F3D03A /* MegaNode+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MegaNode+Text.swift"; sourceTree = "<group>"; };
 		229FD89229C078BC002114F1 /* PDFOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFOutlineView.swift; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
 		2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManagmentTypeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -5573,6 +5579,22 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		222224EC29C2A74500F3D03A /* PlaylistParser */ = {
+			isa = PBXGroup;
+			children = (
+				222224ED29C2A75D00F3D03A /* CUEPlaylistParser.swift */,
+			);
+			path = PlaylistParser;
+			sourceTree = "<group>";
+		};
+		222224EF29C2C6A300F3D03A /* Playlist */ = {
+			isa = PBXGroup;
+			children = (
+				222224F029C2C6BF00F3D03A /* CUEPlaylistTests.swift */,
+			);
+			path = Playlist;
+			sourceTree = "<group>";
+		};
 		2F28019D24455A4900C160D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -6295,6 +6317,7 @@
 				5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */,
 				5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */,
 				C4C6A49527A4632600873165 /* MegaNode+Display.swift */,
+				222224F229C3107A00F3D03A /* MegaNode+Text.swift */,
 				B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */,
 				B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */,
 				411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */,
@@ -10998,6 +11021,7 @@
 			isa = PBXGroup;
 			children = (
 				C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */,
+				222224EF29C2C6A300F3D03A /* Playlist */,
 				C47E7C0025D18FC800DB6FF5 /* Repository */,
 				C45A2E3625D2F7F100915A83 /* UseCases */,
 				C45A2E0625D2B9C200915A83 /* Routers */,
@@ -11211,6 +11235,7 @@
 		C49F8610255ABD6A0074A054 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				222224EC29C2A74500F3D03A /* PlaylistParser */,
 				C49F8617255ABE810074A054 /* AudioPlayer.storyboard */,
 				C453AB73256E5F9E005E4E1B /* Repository */,
 				C453AB74256E5FB6005E4E1B /* UseCases */,
@@ -12826,6 +12851,7 @@
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
+				222224F329C3107A00F3D03A /* MegaNode+Text.swift in Sources */,
 				5B8DE74C27A00F3700B265EB /* MockExportNodeUseCase.swift in Sources */,
 				BF46B7F225A68316008641BB /* PSARepository.swift in Sources */,
 				BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */,
@@ -12968,6 +12994,7 @@
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
+				222224EE29C2A75D00F3D03A /* CUEPlaylistParser.swift in Sources */,
 				942578062824312800D1E17D /* SharedItemsViewController+EmptyStates.swift in Sources */,
 				9D7E601128DA854A00055875 /* SlideShowOptionDetailCellView.swift in Sources */,
 				BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */,
@@ -14075,6 +14102,7 @@
 				B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
+				222224F129C2C6BF00F3D03A /* CUEPlaylistTests.swift in Sources */,
 				B6A6E19A287BCE3800179806 /* MockUser.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,

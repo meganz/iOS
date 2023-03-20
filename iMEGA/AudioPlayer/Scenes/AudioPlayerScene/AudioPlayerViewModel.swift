@@ -52,7 +52,7 @@ enum PlayerType: String {
 
 final class AudioPlayerViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case reloadNodeInfo(name: String, artist: String, thumbnail: UIImage?, size: String?)
+        case reloadNodeInfo(name: String, artist: String, album: String, thumbnail: UIImage?, size: String?)
         case reloadThumbnail(thumbnail: UIImage)
         case reloadPlayerStatus(currentTime: String, remainingTime: String, percentage: Float, isPlaying: Bool)
         case showLoading(_ show: Bool)
@@ -216,29 +216,92 @@ final class AudioPlayerViewModel: ViewModelType {
 
     // MARK: - Node Initialize
     private func initialize(with node: MEGANode) {
+        let dismissBlock: () -> Void = {
+            DispatchQueue.main.async { [weak self] in
+                self?.router.dismiss()
+            }
+        }
         if configEntity.fileLink != nil {
             guard let track = streamingInfoUseCase?.info(from: node) else {
-                DispatchQueue.main.async { [weak self] in
-                    self?.router.dismiss()
-                }
+                dismissBlock()
                 return
             }
             initialize(tracks: [track], currentTrack: track)
         } else {
-            guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
-                                                nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
+            if node.name != nil && node.name!.mnz_isAudioPlayListPathExtension {
+                var childrenInPlaylist: [AudioPlayerItem] = []
+                var currentTrack: AudioPlayerItem?
+                let group = DispatchGroup()
+                group.enter()
                 
-                guard let track = streamingInfoUseCase?.info(from: node) else {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.router.dismiss()
+                node.readTextBasedFileContent { content in
+                    if content == nil {
+                        dismissBlock()
+                        group.leave()
+                        return
                     }
+                    let parser = CUEPlaylistParser(cueContent: content!)
+                    if parser.tracks.isEmpty {
+                        dismissBlock()
+                        group.leave()
+                        return
+                    }
+                    guard let children = self.configEntity.isFolderLink ? self.nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
+                            self.nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle) else {
+                        dismissBlock()
+                        group.leave()
+                        return
+                    }
+                    childrenInPlaylist = parser.tracks.filter({ track in
+                        children.contains { audioPlayerItem in
+                            track.fileName == audioPlayerItem.name
+                        }
+                    }).map({ track in
+                        let audioPlayerItems = children.filter { $0.name == track.fileName }
+                        let audioPlayerItem = audioPlayerItems[0]
+                        let newAudioPlayerItem = AudioPlayerItem(name: audioPlayerItem.name, url: audioPlayerItem.url, node: audioPlayerItem.node)
+                        newAudioPlayerItem.title = track.title
+                        newAudioPlayerItem.artist = track.artist
+                        newAudioPlayerItem.album = track.album
+                        newAudioPlayerItem.startTimeStamp = track.startTime
+                        newAudioPlayerItem.configuredTimeOffsetFromLive = CMTime(seconds: track.startTime, preferredTimescale: 1)
+                        newAudioPlayerItem.forwardPlaybackEndTime = track.endTime == nil ? CMTime.invalid : CMTime(seconds: track.endTime!, preferredTimescale: 1)
+                        newAudioPlayerItem.reversePlaybackEndTime = CMTime(seconds: track.startTime, preferredTimescale: 1)
+                        if !track.title.isEmpty {
+                            newAudioPlayerItem.name = track.title
+                        }
+                        return newAudioPlayerItem
+                    })
+                    if childrenInPlaylist.isEmpty {
+                        dismissBlock()
+                        group.leave()
+                        return
+                    }
+                    currentTrack = childrenInPlaylist.first!
+                    group.leave()
+                }
+                group.wait()
+                self.initialize(tracks: childrenInPlaylist, currentTrack: currentTrack!)
+            } else {
+                if let allChildrenNode = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
+                    nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle) {
+                    let childrenNodeWithoutPlaylist = allChildrenNode.filter({ !$0.name.mnz_isAudioPlayListPathExtension })
+                    let currentTrack = childrenNodeWithoutPlaylist.first(where: { $0.node?.handle == node.handle })
+                    if currentTrack != nil {
+                        initialize(tracks: childrenNodeWithoutPlaylist, currentTrack: currentTrack!)
+                    } else {
+                        dismissBlock()
+                        return
+                    }
+                } else {
+                    guard let track = streamingInfoUseCase?.info(from: node) else {
+                        dismissBlock()
+                        return
+                    }
+                    initialize(tracks: [track], currentTrack: track)
                     return
                 }
-                initialize(tracks: [track], currentTrack: track)
-                return
             }
-            initialize(tracks: children, currentTrack: currentTrack)
         }
     }
     
@@ -262,6 +325,7 @@ final class AudioPlayerViewModel: ViewModelType {
         guard let currentItem = configEntity.playerHandler.playerCurrentItem() else { return }
         invokeCommand?(.reloadNodeInfo(name: currentItem.name,
                                        artist: currentItem.artist ?? "",
+                                       album: currentItem.album ?? "",
                                        thumbnail: currentItem.artwork,
                                        size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
         
@@ -382,15 +446,15 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
         invokeCommand?(.reloadPlayerStatus(currentTime: currentTime.timeString, remainingTime: String(describing: "-\(remainingTime.timeString)"), percentage: percentageCompleted, isPlaying: isPlaying))
     }
     
-    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {
-        invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: nil))
+    func audio(player: AVQueuePlayer, name: String, artist: String, album: String, thumbnail: UIImage?) {
+        invokeCommand?(.reloadNodeInfo(name: name, artist: artist, album: album, thumbnail: thumbnail, size: nil))
     }
     
-    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
+    func audio(player: AVQueuePlayer, name: String, artist: String, album: String, thumbnail: UIImage?, url: String) {
         if configEntity.fileLink != nil, !configEntity.isFolderLink {
-            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
+            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, album: album, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
         } else {
-            self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
+            self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, album: album, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
         }
     }
     

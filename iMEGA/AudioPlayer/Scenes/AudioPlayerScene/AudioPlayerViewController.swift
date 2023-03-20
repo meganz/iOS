@@ -100,9 +100,10 @@ final class AudioPlayerViewController: UIViewController {
         }
     }
     
-    private func updateCurrentItem(name: String, artist: String, thumbnail: UIImage?, nodeSize: String?) {
+    private func updateCurrentItem(name: String, artist: String, album: String, thumbnail: UIImage?, nodeSize: String?) {
         titleLabel.text = name
         subtitleLabel.text = artist
+        detailLabel.text = album
         
         if let thumbnailImage = thumbnail {
             imageView.image = thumbnailImage
@@ -110,9 +111,9 @@ final class AudioPlayerViewController: UIViewController {
             imageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
         }
         
-        if let nodeSize = nodeSize {
-            detailLabel.text = nodeSize
-        }
+//        if let nodeSize = nodeSize {
+//            detailLabel.text = nodeSize
+//        }
     }
     
     private func updateRepeat(_ status: RepeatMode) {
@@ -226,7 +227,7 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func compactPlayer(active: Bool) {
-        detailLabel.isHidden = !active
+//        detailLabel.isHidden = !active
         shuffleButton.alpha = active ? 0.0 : 1.0
         repeatButton.alpha = active ? 0.0 : 1.0
         gotoplaylistButton.isHidden = active
@@ -378,8 +379,8 @@ final class AudioPlayerViewController: UIViewController {
         switch command {
         case .reloadPlayerStatus(let currentTime, let remainingTime, let percentage, let isPlaying):
             updatePlayerStatus(currentTime: currentTime, remainingTime: remainingTime, percentage: percentage, isPlaying: isPlaying)
-        case .reloadNodeInfo(let name, let artist, let thumbnail, let nodeSize):
-            updateCurrentItem(name: name, artist: artist, thumbnail: thumbnail, nodeSize: nodeSize)
+        case .reloadNodeInfo(let name, let artist, let album, let thumbnail, let nodeSize):
+            updateCurrentItem(name: name, artist: artist, album: album, thumbnail: thumbnail, nodeSize: nodeSize)
         case .reloadThumbnail(let thumbnail):
             imageView.image = thumbnail
         case .showLoading(let enabled):
