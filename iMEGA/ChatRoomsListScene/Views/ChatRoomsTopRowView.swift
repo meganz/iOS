@@ -29,5 +29,6 @@ struct ChatRoomsTopRowView: View {
                 .foregroundColor(.gray.opacity(0.6))
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
+        .contentShape(Rectangle())
     }
 }
