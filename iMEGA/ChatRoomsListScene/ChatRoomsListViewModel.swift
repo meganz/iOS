@@ -267,7 +267,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     self.addChatButtonTapped()
                 }
             },
-            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
+            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu()] : nil
         )
     }
     
