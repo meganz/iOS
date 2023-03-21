@@ -39,6 +39,7 @@ NSString * const MEGAAudioPlayerInterruptionNotification = @"nz.mega.audioPlayer
 NSString * const MEGASQLiteDiskFullNotification = @"nz.mega.sqliteDiskFull";
 NSString * const MEGATransferFinishedNotification = @"nz.mega.transferFinished";
 NSString * const MEGAShareCreatedNotification = @"nz.mega.ShareCreated";
+NSString * const MEGAEmailHasChangedNotification = @"nz.mega.emailHasChanged";
 
 #pragma mark - global notification keys
 

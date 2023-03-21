@@ -38,6 +38,7 @@ extern NSString * const MEGAAudioPlayerInterruptionNotification;
 extern NSString * const MEGASQLiteDiskFullNotification;
 extern NSString * const MEGATransferFinishedNotification;
 extern NSString * const MEGAShareCreatedNotification;
+extern NSString * const MEGAEmailHasChangedNotification;
 
 #pragma mark - global notification keys
 

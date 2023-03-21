@@ -1232,6 +1232,8 @@
                 } else {
                     [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:nil nickname:nil email:user.email];
                 }
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:MEGAEmailHasChangedNotification object:nil];
             }
             
             if (user.isOwnChange == 0) { //If the change is external
