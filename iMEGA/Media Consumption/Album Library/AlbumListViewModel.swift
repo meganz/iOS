@@ -76,8 +76,12 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     func loadAlbums() {
         albumLoadingTask = Task {
             async let systemAlbums = systemAlbums()
-            async let userAlbums = userAlbums()
-            albums = await systemAlbums + userAlbums
+            if isCreateAlbumFeatureFlagEnabled {
+                async let userAlbums = userAlbums()
+                albums = await systemAlbums + userAlbums
+            } else {
+                albums = await systemAlbums
+            }
             shouldLoad = false
         }
     }
