@@ -89,6 +89,8 @@ enum SessionSectionRow: Int {
         updateAppearance()
         
         $offlineLogOutWarningDismissed.useCase = PreferenceUseCase.default
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(emailHasChanged), name: Notification.Name.MEGAEmailHasChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -189,6 +191,11 @@ enum SessionSectionRow: Int {
                 }
             }
         }
+    }
+    
+    @objc
+    private func emailHasChanged() {
+        emailLabel.text = MEGASdkManager.sharedMEGASdk().myEmail
     }
     
     private func collapseAvatarView() {

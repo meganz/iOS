@@ -132,7 +132,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:MEGAEmailHasChangedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -258,7 +258,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (void)emailHasChanged {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"emailHasChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEGAEmailHasChangedNotification object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -273,6 +273,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     awaitingEmailConfirmationView.descriptionLabel.text = NSLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
     awaitingEmailConfirmationView.frame = self.view.bounds;
     self.view = awaitingEmailConfirmationView;
+    
+    self.confirmButton.enabled = NO;
 }
 
 - (void)hideKeyboard {
@@ -539,7 +541,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle && user.changes == MEGAUserChangeTypeEmail) {
             NSString *emailChangedString = [NSLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
             [SVProgressHUD showSuccessWithStatus:emailChangedString];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
 }

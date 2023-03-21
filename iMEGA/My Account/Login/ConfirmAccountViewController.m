@@ -316,7 +316,7 @@
         case MEGARequestTypeConfirmChangeEmailLink: {
             [SVProgressHUD dismiss];
             [self.passwordView.passwordTextField resignFirstResponder];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"emailHasChanged" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MEGAEmailHasChangedNotification object:nil];
             [self dismissViewControllerAnimated:YES completion:^{
                 NSString *alertMessage = [NSLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
                 UIAlertController *newEmailAddressAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
