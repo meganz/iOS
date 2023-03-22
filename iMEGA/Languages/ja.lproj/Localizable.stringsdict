@@ -338,6 +338,34 @@
         <string>リンクが削除されました</string>
       </dict>
     </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>リンクを削除しますか？</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>これらのリンクを共有したユーザーは、それらのリンクにアクセスできなくなります</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolder.title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -588,6 +616,76 @@
         <string>d</string>
         <key>other</key>
         <string>%d項目を「[A]」に追加しました</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>削除 (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>アルバムを削除しますか？</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>アルバムは削除されますが、その内容はタイムラインに残ります。</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のアルバムが削除されました</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>「[A]」から%d個の項目を削除しました</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

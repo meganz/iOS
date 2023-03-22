@@ -121,7 +121,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 heure</string>
+        <string>%d heure</string>
         <key>many</key>
         <string>%d d’heures</string>
         <key>other</key>
@@ -139,7 +139,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 jour</string>
+        <string>%d jour</string>
         <key>many</key>
         <string>%d de jours</string>
         <key>other</key>
@@ -157,7 +157,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 semaine</string>
+        <string>%d semaine</string>
         <key>many</key>
         <string>%d de semaines</string>
         <key>other</key>
@@ -175,7 +175,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mois</string>
+        <string>%d mois</string>
         <key>many</key>
         <string>%d de mois</string>
         <key>other</key>
@@ -193,7 +193,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 an</string>
+        <string>%d an</string>
         <key>many</key>
         <string>%d d’années</string>
         <key>other</key>
@@ -432,6 +432,42 @@
         <string>Les liens ont été supprimés</string>
         <key>other</key>
         <string>Les liens ont été supprimés</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Supprimer le lien ?</string>
+        <key>many</key>
+        <string>Supprimer les liens ?</string>
+        <key>other</key>
+        <string>Supprimer les liens ?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder</string>
+        <key>many</key>
+        <string>Les personnes avec qui vous avez partagé ces liens ne pourront plus y accéder</string>
+        <key>other</key>
+        <string>Les personnes avec qui vous avez partagé ces liens ne pourront plus y accéder</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -756,6 +792,96 @@
         <string>%d d’éléments ont été ajoutés dans « [A] »</string>
         <key>other</key>
         <string>%d éléments ont été ajoutés dans « [A] »</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Supprimer (%d)</string>
+        <key>many</key>
+        <string>Supprimer (%d)</string>
+        <key>other</key>
+        <string>Supprimer (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Supprimer l’album ?</string>
+        <key>many</key>
+        <string>Supprimer les albums ?</string>
+        <key>other</key>
+        <string>Supprimer les albums ?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>L’album sera supprimé, mais son contenu restera dans votre Vue chronologique.</string>
+        <key>many</key>
+        <string>Les albums seront supprimés, mais leur contenu restera dans votre Vue chronologique.</string>
+        <key>other</key>
+        <string>Les albums seront supprimés, mais leur contenu restera dans votre Vue chronologique.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>« [A] » a été supprimé</string>
+        <key>many</key>
+        <string>%d d’albums ont été supprimés</string>
+        <key>other</key>
+        <string>%d albums ont été supprimés</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d élément a été supprimé de « [A] »</string>
+        <key>many</key>
+        <string>%d d’éléments ont été supprimés de « [A] »</string>
+        <key>other</key>
+        <string>%d éléments ont été supprimés de « [A] »</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

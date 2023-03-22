@@ -338,6 +338,34 @@
         <string>เอาลิงก์ออกแล้ว</string>
       </dict>
     </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ลบลิงก์หรือไม่</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>คนที่คุณแบ่งปันลิงก์เหล่านี้ด้วยจะไม่สามารถเข้าถึงได้อีกต่อไป</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolder.title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -588,6 +616,78 @@
         <string>d</string>
         <key>other</key>
         <string>เพิ่ม %d รายการไปยัง “[A]” แล้ว</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Delete (%d)</string>
+        <key>other</key>
+        <string>Delete (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ลบอัลบั้มหรือไม่</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>อัลบั้มจะถูกลบออก แต่เนื้อหายังคงอยู่ในไทม์ไลน์ของคุณ</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ลบออก %d อัลบั้มแล้ว</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ลบ %d รายการออกจาก “[A]” แล้ว</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="กำลังสร้างลิงก์…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Copied link";
+"linkCopied"="คัดลอกลิงก์แล้ว";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Copied links";
+"linksCopied"="คัดลอกลิงก์แล้ว";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="คัดลอกไปที่คลิปบอร์ดแล้ว";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d files sent";
+"xfilesSentSuccesfully"="ส่งไฟล์ %d รายการแล้ว";
 /* Title show when a file is being downloaded */
 "downloading"="กำลังดาวน์โหลด";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="โฟลเดอร์ที่แชร์";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d folders shared";
+"sharedFolders_success"="แชร์โฟลเดอร์ %d รายการแล้ว";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="นำเข้า";
 /* Message shown when a file has been imported */
@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="เพิ่มรายการไปที่ “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="อัลบั้มว่างเปล่า";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="นำออกจากอัลบั้มหรือไม่";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="เลือกปกอัลบั้ม";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="อัปเดตปกอัลบั้มแล้ว";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="ตัวกรอง";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="ใช้รูปแบบที่เข้ากันได้มากที่สุด";
 /* Title for custom settings */
 "Custom Settings"="การตั้งค่าที่กำหนดเอง";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="พื้นที่จัดเก็บข้อมูลของ %@ เต็มแล้ว";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="ที่เก็บอุปกรณ์ใกล้จะเต็ม";
 /* Detail for local storage full situation */
@@ -847,7 +851,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ คุณจะสูญเสียข้อมูลทั้งหมดที่เก็บไว้ในคลาวด์อย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Your account has been deleted";
+"accountCanceledSuccessfully"="บัญชีของคุณถูกลบออกแล้ว";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="ปิดบัญชี";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +911,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="คีย์การกู้คืนของคุณจะถูกใช้เพื่อรีเซ็ตรหัสผ่านของคุณ กรุณากรอกรหัสผ่านใหม่ของคุณ";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
+"yourPasswordHasBeenReset"="รหัสผ่านของคุณถูกรีเซ็ตแล้ว กรุณาเข้าสู่บัญชีของคุณได้ในตอนนี้";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="ส่ง";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +921,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="เริ่มบัญชีใหม่";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
+"yourAccounHasBeenParked"="บัญชีเดิมของคุณถูกเก็บสำเร็จแล้ว ขณะนี้คุณสามารถเข้าสู่บัญชีใหม่ได้แล้ว";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="ที่อยู่อีเมลใหม่";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1093,7 @@
 /* Button title that allows the user change his name */
 "changeName"="เปลี่ยนชื่อ";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
+"youHaveSuccessfullyChangedYourProfile"="โปรไฟล์ของคุณถูกเปลี่ยนแล้ว";
 /* Hint text for the first name (Placeholder) */
 "firstName"="ชื่อ";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1229,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] ถูกลบออกจากแชทกลุ่มโดย [B]";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat";
+"leftTheGroupChat"="[A] ออกจากแชทกลุ่ม";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] เข้าร่วมการแชทกลุ่มตามคำเชิญจาก [B]";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1285,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="ล้างประวัติการแชทแล้ว";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
+"An error has occurred. The chat history has not been successfully cleared"="เกิดข้อผิดพลาด ประวัติแชทยังไม่ถูกล้างออก";
 /* 'Next' button in a dialog */
 "continue"="ดำเนินการต่อ";
 /* Title of the incoming shared folders of a user. */
@@ -1657,7 +1661,7 @@
 /* Title of flag of archived chats. */
 "archived"="จัดเก็บ";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No archived chats or meetings";
+"noArchivedChats"="ไม่มีแชทหรือการประชุมที่จัดเก็บไว้";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="การรับรองความถูกต้องด้วยสองปัจจัย (2FA)";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -2185,7 +2189,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="คุณไม่ได้รับรหัสใช่ไหม";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Your phone number has been verified";
+"Your phone number has been verified successfully"="หมายเลขโทรศัพท์ของคุณถูกตรวจสอบเรียบร้อยแล้ว";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="บัญชีถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2321,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="การดําเนินการนี้จะลบหมายเลขโทรศัพท์ปัจจุบันของคุณและเริ่มกระบวนการเชื่อมโยงหมายเลขโทรศัพท์ใหม่กับบัญชีของคุณอีกครั้ง";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Your phone number has been removed";
+"Your phone number has been removed successfully."="หมายเลขโทรศัพท์ของคุณถูกนำออกแล้ว";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="ไม่สามารถลบหมายเลขโทรศัพท์ของคุณได้";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2391,7 +2395,7 @@
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="คัดลอกลิงก์ไปไว้ที่คลิปบอร์ดแล้ว";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Copied links to clipboard";
+"Links Copied to Clipboard"="คัดลอกลิงก์ไปไว้ที่คลิปบอร์ดแล้ว";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="คัดลอกคีย์ไปยังคลิปบอร์ดแล้ว";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2513,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="ช่วยให้เราเข้าใจว่าคุณใช้บริการของเราอย่างไร และให้ข้อมูลที่เราสามารถใช้เพื่อปรับปรุง การไม่ยอมรับคุกกี้เหล่านี้จะทำให้เรามีข้อมูลเพื่อช่วยในการออกแบบการปรับปรุงผลิตภัณฑ์ของเราน้อยลง";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version was created as a new file";
+"Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่แล้ว";
 /* Text shown for the action create new file */
 "Create new file"="สร้างไฟล์ใหม่";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2993,11 +2997,11 @@
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ และ %@ เข้าร่วมสายแล้ว";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
+"meetings.notification.twoUsersLeft"="%@ และ %@ วางสายแล้ว";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ และคนอื่น ๆ อีก %@ คน เข้าร่วมสายแล้ว";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
+"meetings.notification.moreThanTwoUsersLeft"="%@ และคนอื่น ๆ อีก %@ คน วางสายแล้ว";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="ย้ายไปถังขยะ";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="การประชุมที่ผ่านมา";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="ตรวจสอบ %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="เราปกป้องข้อมูลของคุณด้วยกระบวนการเข้ารหัส zero-knowledge และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณแชร์ข้อมูลอยู่ด้วยนั้น ก่อนที่จะให้สิทธิ์ในการเข้าถึงโฟลเดอร์ที่แชร์ได้";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3257,9 +3259,9 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="ทุกวัน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="ทุกวัน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] ยกเลิก[/B]เหตุการณ์ตามเวลาที่กำหนดไว้แล้ว:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3305,10 +3307,10 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="ทุกเดือน";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="ไม่สามารถตรวจสอบผู้ติดต่อได้";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="คุณไม่สามารถตรวจสอบ %@ ได้เนื่องจากไม่ได้อยู่ในรายชื่อผู้ติดต่อของคุณ รอให้พวกเขาตอบรับคำเชิญของคุณก่อน";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="ปิดใช้งานรหัส";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="หากต้องการใช้ MEGA ในแอป Files ให้ปิดใช้รหัส MEGA ของคุณ ไปที่การตั้งค่าในแอป MEGA แตะความปลอดภัย > รหัส";

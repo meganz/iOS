@@ -121,7 +121,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 hora</string>
+        <string>%d hora</string>
         <key>many</key>
         <string>%d de horas</string>
         <key>other</key>
@@ -139,7 +139,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 día </string>
+        <string>%d día</string>
         <key>many</key>
         <string>%d de días</string>
         <key>other</key>
@@ -157,7 +157,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 semana</string>
+        <string>%d semana</string>
         <key>many</key>
         <string>%d de semanas</string>
         <key>other</key>
@@ -175,7 +175,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mes</string>
+        <string>%d mes</string>
         <key>many</key>
         <string>%d de meses</string>
         <key>other</key>
@@ -193,7 +193,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 año</string>
+        <string>%d año</string>
         <key>many</key>
         <string>%d años</string>
         <key>other</key>
@@ -432,6 +432,42 @@
         <string>Enlaces eliminados</string>
         <key>other</key>
         <string>Enlaces eliminados</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>¿Eliminar enlace?</string>
+        <key>many</key>
+        <string>¿Eliminar enlaces?</string>
+        <key>other</key>
+        <string>¿Eliminar enlaces?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Las personas con quien hayas compartido este enlace perderán acceso a él.</string>
+        <key>many</key>
+        <string>Las personas con quien hayas compartido estos enlaces perderán acceso a ellos.</string>
+        <key>other</key>
+        <string>Las personas con quien hayas compartido estos enlaces perderán acceso a ellos.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -758,6 +794,90 @@
         <string>Se han añadido %d elementos a “[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Delete (%d)</string>
+        <key>other</key>
+        <string>Delete (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>¿Eliminar el álbum?</string>
+        <key>many</key>
+        <string>¿Eliminar los álbumes?</string>
+        <key>other</key>
+        <string>¿Eliminar los álbumes?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>El álbum se eliminará, pero su contenido permanecerá en tu Cronología.</string>
+        <key>many</key>
+        <string>Los álbumes se eliminarán, pero su contenido permanecerá en tu Cronología.</string>
+        <key>other</key>
+        <string>Los álbumes se eliminarán, pero su contenido permanecerá en tu Cronología.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” deleted</string>
+        <key>other</key>
+        <string>%d albums deleted</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed %d item from “[A]”</string>
+        <key>other</key>
+        <string>Removed %d items from “[A]”</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -805,11 +925,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], y [LastWeekDay] cada semana desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]</string>
+        <string>[WeekDaysList] y [LastWeekDay] cada semana desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDaysList], y [LastWeekDay] cada %d semanas desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]</string>
+        <string>[WeekDaysList] y [LastWeekDay] cada %d semanas desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], y [LastWeekDay] cada %d semanas desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]</string>
+        <string>[WeekDaysList] y [LastWeekDay] cada %d semanas desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -823,11 +943,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], y [LastWeekDay] cada semana desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]</string>
+        <string>[WeekDaysList] y [LastWeekDay] cada semana desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDaysList], y [LastWeekDay] cada %d semanas desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]</string>
+        <string>[WeekDaysList] y [LastWeekDay] cada %d semanas desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], y [LastWeekDay] cada %d semanas desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]</string>
+        <string>[WeekDaysList] y [LastWeekDay] cada %d semanas desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>

@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="Adicionar itens a “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Álbum vazio";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="Você quer eliminar do álbum?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Selecionar a capa do álbum";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="A capa do álbum foi atualizada";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Use os formatos mais compatíveis";
 /* Title for custom settings */
 "Custom Settings"="Ajustes personalizados";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="Armazenamento do %@ cheio";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Armazenamento do dispositivo quase cheio";
 /* Detail for local storage full situation */
@@ -1227,7 +1231,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] saiu do grupo de chat";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] juntou-se ao grupo de chat por convite de [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] entrou no grupo de chat por convite de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] deletou o histórico do chat.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -2109,13 +2113,13 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Silenciar as notificações de chat por";
+"Mute chat Notifications for"="Silenciar as notificações do chat por";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="As notificações permanecerão silenciadas até as %@ de amanhã";
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="As notificações permanecerão silenciadas até as %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Notificações de chat";
+"Chat Notifications"="Notificações do chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Não perturbe";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Reuniões anteriores";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Confirmar %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos com os quais compartilha informações antes que eles possam acessar as pastas compartilhadas.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3187,7 +3189,7 @@
 /* Button title to leave the meeting in info view */
 "meetings.info.leaveMeeting"="Sair da reunião";
 /* Title for chat notifications option in meeting info */
-"meetings.info.chatNotifications"="Notificações de chat";
+"meetings.info.chatNotifications"="Notificações do chat";
 /* Title for shared files option in meeting info */
 "meetings.info.sharedFiles"="Arquivos compartilhados";
 /* Title for manage chat history option in meeting info */
@@ -3309,6 +3311,6 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Você não pode verificar %@ porque ele não está na sua lista de contatos. Espere que ele aceite o seu convite.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Desativar o código de acesso do MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Para usar o MEGA no aplicativo Arquivos, desative a sua senha do MEGA. Acesse as Configurações no aplicativo do MEGA e selecione Segurança - Senha.";

@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="Добавление элементов в «%@»";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Альбом пуст";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="Удалить из альбома?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Выбрать обложку альбома";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="Обложка альбома обновлена";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Фильтр";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Использовать наиболее совместимые форматы";
 /* Title for custom settings */
 "Custom Settings"="Пользовательские настройки";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="Хранилище %@ заполнено";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Память устройства почти заполнена";
 /* Detail for local storage full situation */
@@ -827,7 +831,7 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Очистить Корзину";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Все элементы в Корзине удалены";
+"emptyRubbishBinAlertTitle"="Все элементы в Корзине будут удалены";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Не использовать HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Прошедшие встречи";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Подтвердить %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, с которыми вы делитесь информацией, прежде чем они смогут получить доступ к общим папкам.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3309,6 +3311,6 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете подтвердить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Отключите код доступа MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Чтобы использовать MEGA в приложении «Файлы», отключите свой код доступа MEGA. В приложении MEGA откройте «Настройки», выберите «Безопасность» > «Код доступа».";

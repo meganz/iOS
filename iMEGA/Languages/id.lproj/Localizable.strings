@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Album kosong";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="Hapus dari album?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Pilih sampul album";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="Sampul album diperbarui";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filter";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Gunakan Format Paling Kompatibel";
 /* Title for custom settings */
 "Custom Settings"="Pengaturan Kustom";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="%@ Penyimpanan Penuh";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Penyimpanan Perangkat Hampir Penuh";
 /* Detail for local storage full situation */
@@ -809,7 +813,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Mengapa saya butuh Kunci pemulihan?";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Recovery key copied to clipboard. Save it to a safe place where you can easily access later.";
+"recoveryKeyCopiedToClipboard"="Kunci pemulihan disalin ke papan klip. Simpan ke tempat yang aman di mana anda dapat dengan mudah mengaksesnya nanti.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Kunci pemulihan terekspor";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -917,7 +921,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Mulai akun baru";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
+"yourAccounHasBeenParked"="Akun lama anda telah sukses diparkir. Anda sekarang dapat masuk ke akun baru anda.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Alamat email baru";
 /* Button text for the user to confirm their change of email address. */
@@ -1281,7 +1285,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Riwayat obrolan telah dihapus";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
+"An error has occurred. The chat history has not been successfully cleared"="Sebuah kesalahan telah terjadi. Riwayat obrolan belum dihapus";
 /* 'Next' button in a dialog */
 "continue"="Lanjutkan";
 /* Title of the incoming shared folders of a user. */
@@ -2185,7 +2189,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Anda tidak menerima kode?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Your phone number has been verified";
+"Your phone number has been verified successfully"="Nomor telepon anda telah diverifikasi";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Akun anda telah dikunci sementara untuk keselamatan anda.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2391,7 +2395,7 @@
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Tautan disalin ke papan klip";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Copied links to clipboard";
+"Links Copied to Clipboard"="Tautan disalin ke papan klip";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Kunci Disalin ke Papan Klip";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2513,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version was created as a new file";
+"Version created as a new file successfully."="Versi dibuat sebagai file baru";
 /* Text shown for the action create new file */
 "Create new file"="Buat file baru";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Pertemuan sebelumnya";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verifikasi %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="Kami melindungi data anda dengan enkripsi tanpa pengetahuan. Untuk memastikan keamanan ekstra, kami meminta anda untuk memverifikasi kontak yang anda bagikan informasi sebelum mereka dapat mengakses folder bersama.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3245,7 +3247,7 @@
 /* In app notification description when time field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
-"meetings.scheduled.contextMenu.occurrences"="Occurrences";
+"meetings.scheduled.contextMenu.occurrences"="Kejadian";
 /* Label to indicate the daily recurrence of an scheduled meeting */
 "meetings.scheduled.recurring.frequency.daily"="Terjadi setiap hari";
 /* Label to indicate the weekly recurrence of an scheduled meeting */
@@ -3305,7 +3307,7 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="bulanan";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Tidak dapat memverifikasi kontak";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */

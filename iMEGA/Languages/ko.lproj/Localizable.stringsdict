@@ -338,6 +338,34 @@
         <string>링크 제거됨</string>
       </dict>
     </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>링크를 제거할까요?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>당신이 이 링크를 공유한 가진 사람들이 더 이상 접근하지 못하게 됩니다.</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolder.title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -590,6 +618,78 @@
         <string>“[A]”에 %d개의 항목 추가함</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Delete (%d)</string>
+        <key>other</key>
+        <string>Delete (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>사진첩을 삭제할까요?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>사진첩이 삭제되지만 항목들은 연표에 남게 됩니다.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>사진첩 %d개 삭제됨</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>“[A]”에서 %d개 항목 제거함</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -629,7 +729,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[B][StartDate]부터 [UntilDate]까지[/B] 매 %d주마다 [WeekDaysList], 그리고 [LastWeekDay] [B][StartTime]부터 [EndTime][/B]까지</string>
+        <string>[B][StartDate]부터 [UntilDate]까지[/B] 매 %d주마다 [WeekDaysList] 그리고 [LastWeekDay] [B][StartTime]부터 [EndTime][/B]까지</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -643,7 +743,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[B][StartDate]부터[/B] 매 %d주마다 [WeekDaysList], 그리고 [LastWeekDay] [B][StartTime]부터 [EndTime][/B]까지</string>
+        <string>[B][StartDate]부터[/B] 매 %d주마다 [WeekDaysList] 그리고 [LastWeekDay] [B][StartTime]부터 [EndTime][/B]까지</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>

@@ -338,6 +338,38 @@
         <string>Tautan dihapus</string>
       </dict>
     </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Remove link?</string>
+        <key>other</key>
+        <string>Remove links?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you have shared this link with, will no longer be able to access it</string>
+        <key>other</key>
+        <string>People you have shared these links with, will no longer be able to access them</string>
+      </dict>
+    </dict>
     <key>general.menuAction.shareFolder.title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -590,6 +622,82 @@
         <string>Telah ditambahkan %d item ke “[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Delete (%d)</string>
+        <key>other</key>
+        <string>Delete (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Hapus album?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Album akan dihapus tetapi kontennya akan tetap ada di Timeline anda.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” deleted</string>
+        <key>other</key>
+        <string>%d albums deleted</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed %d item from “[A]”</string>
+        <key>other</key>
+        <string>Removed %d items from “[A]”</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -633,9 +741,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -649,9 +757,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -1816,10 +1924,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[Undecrypted file]</string>
         <key>other</key>
-        <string>[Undecrypted files]</string>
+        <string>[File tidak terdekripsi]</string>
       </dict>
     </dict>
     <key>account.upgradeSecurity.message.sharedFolderNames</key>

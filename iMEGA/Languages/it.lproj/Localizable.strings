@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Generando i link…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Copied link";
+"linkCopied"="Link copiato";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Copied links";
+"linksCopied"="Link copiati";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiato negli appunti";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="I file sono stati inviati alla chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d files sent";
+"xfilesSentSuccesfully"="%d file inviati";
 /* Title show when a file is being downloaded */
 "downloading"="Scaricando";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Cartella condivisa";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d folders shared";
+"sharedFolders_success"="%d cartelle condivise";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importare";
 /* Message shown when a file has been imported */
@@ -535,17 +535,23 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="Nuovo album";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
+"cameraUploads.albums.create.alert.userAlbumExists"="Un album con questo nome già esiste.";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="Il nome di questo album non è permesso";
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Inserisci un nome differente.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Enter a new name.";
+"cameraUploads.albums.create.alert.enterNewName"="Inserisci un nuovo nome";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
+"cameraUploads.albums.create.addItemsTo"="Aggiungi oggetti in “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Svuota album";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="Rimuovere dall'album?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Seleziona copertina dell'album";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="Copertina dell'album aggiornata";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Utilizza i formati più compatibili";
 /* Title for custom settings */
 "Custom Settings"="Impostazioni personalizzate";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="%@ archiviazione piena";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Spazio sul dispositivo quasi pieno";
 /* Detail for local storage full situation */
@@ -847,7 +851,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Questo è l’ultimo step prima di eliminare il tuo account. Perderai in modo permanente tutti i tuoi dati salvati nel cloud. Inserisci la tua password qui sotto.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Your account has been deleted";
+"accountCanceledSuccessfully"="Il tuo account è stato eliminato";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Chiudi account";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +911,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="La tua Chiave di recupero sarà usata per resettare la tua password. Per favore, inserisci la tua nuova password.";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
+"yourPasswordHasBeenReset"="La tua password è stata resettata. Per favore, effettua il login nel tuo account ora.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Invia";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +921,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Inizia un nuovo account";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
+"yourAccounHasBeenParked"="Il tuo vecchio account è stato parcheggiato. Ora puoi effettuare il login nel tuo nuovo account.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuovo indirizzo email";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1093,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Cambia nome";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
+"youHaveSuccessfullyChangedYourProfile"="Hai cambiato il tuo profilo";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nome";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1229,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] è stato rimosso dal gruppo da [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat";
+"leftTheGroupChat"="[A] ha abbandonato la chat di gruppo";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] è stato invitato da [B] ad unirsi al gruppo.";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1657,7 +1661,7 @@
 /* Title of flag of archived chats. */
 "archived"="Archiviate";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No archived chats or meetings";
+"noArchivedChats"="Nessuna chat o meeting archiviato";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Autenticazione a due fattori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1989,7 +1993,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificato da %@";
 /* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s and %2$s more";
+"home.recent.multipleFileTitle"="%1$s e altri %2$s";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Creato da %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2317,7 +2321,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Questa operazione rimuoverà il tuo numero di telefono corrente e inizierà il processo di associare un nuovo numero di telefono con il tuo account.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Your phone number has been removed";
+"Your phone number has been removed successfully."="Il tuo numero di telefono è stato rimosso";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Rimozione del numero di telefono fallita, per favore riprova più tardi.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2993,11 +2997,11 @@
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ e %@ sono in chiamata";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
+"meetings.notification.twoUsersLeft"="%@ e %@ hanno abbandonato la chiamata";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ e altri %@ utenti sono in chiamata";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
+"meetings.notification.moreThanTwoUsersLeft"="%@ e altri %@ hanno abbandonato la chiamata";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Sposta nel Cestino";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3045,7 +3049,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Il file verrà aggiornato con una nuova versione.";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Apply to all %@ duplicates";
+"nameCollision.applyToAll"="Applica a tutti i %@ duplicati";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ci sei solo tu qui";
 /* Meetings end call dialog description */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Meeting passati";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verifica %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="Verifica del contatto";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="Proteggiamo i tuoi dati tramite criptazione a conoscenza zero. Per assicurare una sicurezza extra, ti chiediamo di verificare i contatti con cui condividi informazioni prima che possano accedere alle cartelle condivise.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3219,31 +3221,31 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Meeting";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] invited[/B] you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] ti ha invitato[/B] ad un meeting programmato per:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] ha aggiornato[/B] i dettagli del meeting programmato per:";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] updated[/B] the meeting description";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] ha aggiornato[/B] la descrizione del meeting";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] ha annullato[/B] il meeting programmato per:";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] ha aggiornato[/B] la data del meeting";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] ha aggiornato[/B] l'orario del meeting";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] ha aggiornato[/B] il nome del meeting da “[PreviousTitle]” a [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
+"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] ha annullato[/B] il meeting e tutti i suoi eventi";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] invited you to a recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] ti ha invitato ad un meeting ricorrente programmato per:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] ha aggiornato[/B] i dettagli del meeting ricorrente programmato per:";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] updated[/B] the recurring meeting description";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] ha aggiornato[/B] la descrizione del meeting ricorrente";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] ha aggiornato[/B] la data del meeting ricorrente";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] ha aggiornato[/B] l'orario del meeting ricorrente";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Ricorrenze";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3255,15 +3257,15 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Vedi di più";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] dalle [B][StartTime] alle [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Ogni giorno a partire dal [B][StartDate][/B] dalle [B][StartTime] alle [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Ogni giorno a partire dal [B][StartDate] fino al [UntilDate][/B] dalle [B][StartTime] alle [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] ha annullato[/B] l'evento programmato per:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] ha aggiornato[/B] un evento a:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Aggiornamento di sicurezza";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3299,16 +3301,16 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="sab";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="daily";
+"meetings.scheduled.recurring.daily"="ogni giorno";
 /* Text description for a meeting showing that is a weekly recurring meeting */
-"meetings.scheduled.recurring.weekly"="weekly";
+"meetings.scheduled.recurring.weekly"="ogni settimana";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="mese";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Impossibile verificare il contatto";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Non puoi verificare %@ perché non è nella tua lista dei contatti. Attendi che accetti prima il tuo invito.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Disabilita il passcode di MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Per utilizzare MEGA nella tua app File, disabilita il passcode di MEGA. Vai nelle Impostazioni nell'app di MEGA e clicca Sicurezza > Passcode.";

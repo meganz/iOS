@@ -121,7 +121,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 hora</string>
+        <string>%d hora</string>
         <key>many</key>
         <string>%d horas</string>
         <key>other</key>
@@ -139,7 +139,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 dia</string>
+        <string>%d dia</string>
         <key>many</key>
         <string>%d dias</string>
         <key>other</key>
@@ -157,7 +157,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 semana</string>
+        <string>%d semana</string>
         <key>many</key>
         <string>%d semanas</string>
         <key>other</key>
@@ -175,7 +175,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mês</string>
+        <string>%d mês</string>
         <key>many</key>
         <string>%d meses</string>
         <key>other</key>
@@ -193,7 +193,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 ano</string>
+        <string>%d ano</string>
         <key>many</key>
         <string>%d anos</string>
         <key>other</key>
@@ -432,6 +432,42 @@
         <string>Links removidos</string>
         <key>other</key>
         <string>Links removidos</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Remover o link?</string>
+        <key>many</key>
+        <string>Remover os links?</string>
+        <key>other</key>
+        <string>Remover os links?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>As pessoas com as quais você compartilhou este link já não poderão acessá-lo</string>
+        <key>many</key>
+        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los</string>
+        <key>other</key>
+        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -756,6 +792,96 @@
         <string>%d de itens foram adicionados a “[A]”</string>
         <key>other</key>
         <string>%d itens foram adicionados a “[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deletar (%d)</string>
+        <key>many</key>
+        <string>Deletar (%d)</string>
+        <key>other</key>
+        <string>Deletar (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deletar o álbum?</string>
+        <key>many</key>
+        <string>Deletar os álbuns?</string>
+        <key>other</key>
+        <string>Deletar os álbuns?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>O álbum será deletado, mas o conteúdo dele permanecerá na sua linha do tempo.</string>
+        <key>many</key>
+        <string>Os álbuns serão deletados, mas o conteúdo deles permanecerá na sua linha do tempo.</string>
+        <key>other</key>
+        <string>Os álbuns serão deletados, mas o conteúdo deles permanecerá na sua linha do tempo.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” foi deletado</string>
+        <key>many</key>
+        <string>%d de álbuns foram deletados</string>
+        <key>other</key>
+        <string>%d álbuns foram deletados</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item foi eliminado de “[A]”</string>
+        <key>many</key>
+        <string>%d de itens foram eliminados de “[A]”</string>
+        <key>other</key>
+        <string>%d itens foram eliminados de “[A]”</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2137,11 +2263,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[Arquivo não criptografado]</string>
+        <string>[Arquivo não decodificado]</string>
         <key>many</key>
-        <string>[Arquivos não criptografados]</string>
+        <string>[Arquivos não decodificados]</string>
         <key>other</key>
-        <string>[Arquivos não criptografados]</string>
+        <string>[Arquivos não decodificados]</string>
       </dict>
     </dict>
     <key>account.upgradeSecurity.message.sharedFolderNames</key>
