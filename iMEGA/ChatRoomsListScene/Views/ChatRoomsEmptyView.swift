@@ -116,15 +116,17 @@ fileprivate struct ChatRoomsEmptyBottomButtonView: View {
                     .font(font)
             }
         } else {
-            Button(name) {
+            Button {
                 action?()
+            } label: {
+                Text(name)
+                    .frame(maxWidth: maxWidth)
+                    .frame(height: height)
+                    .background(backgroundColor)
+                    .foregroundColor(textColor)
+                    .cornerRadius(cornerRadius)
+                    .font(font)
             }
-            .frame(maxWidth: maxWidth)
-            .frame(height: height)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .cornerRadius(cornerRadius)
-            .font(font)
         }
     }
 }
