@@ -231,11 +231,10 @@
         case 1: { //Remove files older than
             if (indexPath.row == 1) {
                 if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    NSInteger defaultNumberOfDays = 14;
                     UIAlertController *scheduleRubbishBinClearingAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [scheduleRubbishBinClearingAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                         textField.keyboardType = UIKeyboardTypeNumberPad;
-                        textField.placeholder = [NSString stringWithFormat:NSLocalizedString(@"general.format.rubbishBin.days", @"Rubbish bin items to be removed in days placeholder"), defaultNumberOfDays];
+                        textField.placeholder = [NSString stringWithFormat:NSLocalizedString(@"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days", @"Rubbish bin items to be removed in days placeholder")];
                         [textField addTarget:self action:@selector(scheduleRubbishBinClearingTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                             return textField.text.mnz_isDecimalNumber;
