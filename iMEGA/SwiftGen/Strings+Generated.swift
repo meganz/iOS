@@ -4956,6 +4956,12 @@ public enum Strings {
         public enum RubbishBin {
           /// For a longer retention period [S]Upgrade to Pro[/S]
           public static let longerRetentionUpgrade = Strings.tr("Localizable", "settings.fileManagement.rubbishBin.longerRetentionUpgrade")
+          public enum CleanScheduler {
+            public enum Placeholder {
+              /// days
+              public static let days = Strings.tr("Localizable", "settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days")
+            }
+          }
         }
         public enum UseMobileData {
           /// Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.
