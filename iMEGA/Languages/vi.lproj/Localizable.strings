@@ -159,7 +159,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA cần ít nhất thêm %@. Xin xóa bớt ứng dụng ít dùng tới hoặc các videos có kích thước lớn trong kho ảnh. Kiểm tra các nội dung đã được lưu lại từ MEGA vào trong máy nếu cần thiết.";
 /* Title for the file link view */
-"fileLink"="Đường liên kết Tệp Tin";
+"fileLink"="Đường liên kết tệp tin";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Mở";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -179,7 +179,7 @@
 /* Message shown when a download starts */
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
-"folderLink"="Đường liên kết Thư Mục";
+"folderLink"="Đường liên kết thư mục";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -203,7 +203,7 @@
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Thêm tệp tin";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="Không Có Kết Quả";
+"noResults"="Không có kết quả";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Dọn Thùng Rác";
 /* Slideshow Menu Option */
@@ -231,13 +231,13 @@
 /* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="Bao gồm các thư mục con";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Không có tệp tin nào trong Lưu về Ngoại Tuyến";
+"offlineEmptyState_title"="Không có tệp tin nào trong Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Không Có Tên Liên Lạc Nào";
+"contactsEmptyState_title"="Không có tên liên lạc";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ nào được gửi tới cho bạn";
+"noIncomingSharedItemsEmptyState_text"="Không có thư mục chia sẻ nào được gửi tới cho bạn";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ nào được gửi đi từ bạn";
+"noOutgoingSharedItemsEmptyState_text"="Không có thư mục chia sẻ nào được gửi đi từ bạn";
 /* Title of Contacts requests section */
 "contactRequests"="Các yêu cầu thêm liên lạc";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -247,7 +247,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Tên liên lạc [X] không có trên MEGA. Để có thể gọi điện và chát thông qua MEGA, bạn cần phải mời người này đăng ký tài khoản";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Lời Mời Đã Gửi";
+"inviteSent"="Lời mời đã gửi đi";
 /* Button title to allow the user postpone an action */
 "later"="Lúc khác";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -263,13 +263,13 @@
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="Không có lời yêu cầu nào đang chờ";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Các Truyền Tải Bị Dừng";
+"transfersEmptyState_titlePaused"="Các truyền tải tạm dừng";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Không Có Phiên Truyền Tải";
+"transfersEmptyState_titleAll"="Không có phiên truyền tải";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="Không có phiên tải xuống";
+"transfersEmptyState_titleDownload"="Không có phiên tải xuống";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="Không có Phiên Tải Lên";
+"transfersEmptyState_titleUpload"="Không có phiên tải lên";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Ổ Mây";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -307,7 +307,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Chụp Ảnh";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
-"Scan Document"="Quét Tài Liệu";
+"Scan Document"="Quét tài liệu";
 /* Menu option from the `Add` section that allows the user to make voice call. */
 "Voice"="Gọi Thoại";
 /* Menu option from the `Add` section that allows the user to share contact. */
@@ -355,15 +355,15 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Hộp thư được bảo lưu cho Apple sử dụng.";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="Lưu Hình Ảnh";
+"saveImage"="Lưu hình ảnh";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Đang tạo đường liên kết…";
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Đang tạo các đường liên kết…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Copied link";
+"linkCopied"="Đã sao chép liên kết";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Copied links";
+"linksCopied"="Đã sao chép các liên kết";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Đã lưu vào bộ ghi nhớ";
 /* A title for the Copyright Warning dialog. */
@@ -385,17 +385,17 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(CHỈ CHO HẠNG PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="Chọn Ngày Hết Hạn";
+"setExpiryDate"="Đặt ngày hết hạn";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="Đặt bảo vệ bằng mật khẩu";
+"setPasswordProtection"="Đặt bảo vệ bằng mật khẩu";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="Mã hóa";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypted"="Mã hoá";
 /* Title for a button to copy the link to the clipboard */
-"copyLink"="Sao chép liên kết";
+"copyLink"="Sao chép liên kết";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Sao chép mã khóa";
+"copyKey"="Sao chép chìa khóa";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Mở với…";
 /*  */
@@ -403,7 +403,7 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Chạm vào tệp để đổi tên";
 /* Title for a button to send a file to a chat */
-"general.sendToChat"="Gửi đến Chát";
+"general.sendToChat"="Gửi đến chát";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Các cuộc chát";
 /* Toast text upon sending a single file to chat */
@@ -413,9 +413,9 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Các tệp tin được gửi tới chát";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d files sent";
+"xfilesSentSuccesfully"="%d tệp tin đã được gửi đi";
 /* Title show when a file is being downloaded */
-"downloading"="Đang tải xuống";
+"downloading"="Đang tải xuống";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Chọn vị trí đích";
 /* Text of the button for user to select files in MEGA. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Đã chia sẻ thư mục";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d folders shared";
+"sharedFolders_success"="%d thư mục đã được chia sẻ";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Chuyển nhập";
 /* Message shown when a file has been imported */
@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="Thêm mục vào “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Album trống";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="Loại bỏ khỏi album?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Chọn ảnh bìa album";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="Đã cập nhật ảnh bìa album";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Lọc";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Dùng Các Định Dạng Thông Dụng Nhất";
 /* Title for custom settings */
 "Custom Settings"="Thiết Đặt Tùy Chỉnh";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="Dung Lượng của %@ Bị Đầy";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Dung Lượng Của Thiết Bị Sắp Hết";
 /* Detail for local storage full situation */
@@ -847,7 +851,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu vào dưới đây.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Your account has been deleted";
+"accountCanceledSuccessfully"="Tài khoản của bạn đã bị xóa";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Đóng tài khoản";
 /* Title for the action that allows to remove a file or folder */
@@ -907,17 +911,17 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Chìa Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin nhập mật khẩu mới bạn muốn dùng.";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
+"yourPasswordHasBeenReset"="Mật khẩu của bạn đã được đặt lại xong. Bạn có thể đăng nhập vào tài khoản ngay bây giờ.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Gửi";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Thay mới tài khoản";
+"parkAccount"="Thay mới tài khoản";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="Tôi biết rằng tôi sẽ bắt đầu lại một tài khoản mới, hoàn toàn trống và tôi biết rằng tôi sẽ mất mọi dữ liệu tôi đang có trong tài khoản hiện tại. Trong vòng 60 ngày nếu tôi tìm được Chìa Khóa Phục Hồi hay mật khẩu, tôi sẽ lấy lại được dữ liệu.";
 /* Caption of the button to proceed */
 "startNewAccount"="Bắt đầu tài khoản mới";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
+"yourAccounHasBeenParked"="Tài khoản cũ của bạn đã được đặt thay mới. Bây giờ bạn có thể đăng nhập vào vào tài khoản mới này.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Địa chỉ email mới";
 /* Button text for the user to confirm their change of email address. */
@@ -995,9 +999,9 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Nâng Cấp";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Xem và sửa thông tin cá nhân";
+"viewAndEditProfile"="Xem và sửa hồ sơ cá nhân";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
-"profile"="Cá Nhân";
+"profile"="Hồ Sơ";
 /* Title of the Achievements section */
 "achievementsTitle"="Thành Tích";
 /* Cell title shown on the achievements view for referral achievement */
@@ -1089,7 +1093,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Đổi Tên";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
+"youHaveSuccessfullyChangedYourProfile"="Bạn đã thay đổi hồ sơ cá nhân của mình";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Tên";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1229,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] đã bị xóa khỏi nhóm chát bởi [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat";
+"leftTheGroupChat"="[A] đã rời khỏi nhóm chát";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chát từ lời mời của [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1275,19 +1279,19 @@
 /* Button title */
 "verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Dọn Lịch Sử Chát";
+"clearChatHistory"="Dọn lịch sử chát";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
+"clearTheFullMessageHistory"="Bạn có chắc muốn dọn toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Lịch sử tin nhắn chát đã được dọn sạch";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
+"An error has occurred. The chat history has not been successfully cleared"="Có lỗi phát sinh. Lịch sử cuộc chát chưa xóa sạch được";
 /* 'Next' button in a dialog */
 "continue"="Tiếp tục";
 /* Title of the incoming shared folders of a user. */
-"sharedFolders"="Thư Mục Được Chia Sẻ";
+"sharedFolders"="Thư mục được chia sẻ";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Chứng Thực của Tên Liên Lạc";
+"contactCredentials"="Chứng thực của tên liên lạc";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Đây là cách tốt nhất để tạo các buổi meeting người thật với nhau. Nếu bạn đã có phương thức xác minh khác như OTR hay PGP, bạn cũng có thể dùng được.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -1297,11 +1301,11 @@
 /* Button title */
 "approve"="Chấp nhận";
 /* start a chat/conversation */
-"startConversation"="Bắt Đầu Cuộc Chát";
+"startConversation"="Bắt đầu cuộc trò chuyện";
 /* Label title for a group chat */
 "groupChat"="Nhóm chát";
 /* The title of a menu button which allows users to rename a group chat. */
-"renameGroup"="Đổi Tên Nhóm";
+"renameGroup"="Đổi tên nhóm";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Rời khỏi";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1311,7 +1315,7 @@
 /* A button label. The button allows the user to unmute a conversation. */
 "unmute"="Bỏ tắt tiếng";
 /* A button label. The button allows the user to mark a conversation as read. */
-"Mark as Read"="Đánh dấu Đã Đọc";
+"Mark as Read"="Đánh dấu là đã đọc";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Thông tin";
 /* A button label. The button allows the user to close the conversation. */
@@ -1319,7 +1323,7 @@
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="Bạn không còn quyền hạn truy cập cuộc trò chuyện này";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Rời Nhóm";
+"leaveGroup"="Rời nhóm";
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Các Thành Viên";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
@@ -1327,7 +1331,7 @@
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Thường";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="Loại Bỏ Thành Viên";
+"removeParticipant"="Loại bỏ thành viên";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Đang chát với";
 /* Explanation when loading voice message error */
@@ -1363,9 +1367,9 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Bật hiển thị xem trước nội dung tóm tắt của URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"alwaysAllow"="Luôn Luôn Thực Hiện";
+"alwaysAllow"="Luôn luôn cho phép";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
-"notNow"="Không Phải Lúc Này";
+"notNow"="Không phải lúc này";
 /* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
 "Manage"="Quản lý";
 /*  */
@@ -1387,7 +1391,7 @@
 /* Content of the notification when there is unknown activity on the Chat */
 "You may have new messages"="Bạn có tin nhắn mới";
 /* Notification text body shown when you have received a contact request */
-"contactRequest"="Có lời mời thêm vào Sổ Liên Lạc";
+"contactRequest"="Lời mời thêm liên lạc";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nhận đuợc một thư mục chia sẻ mới";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1423,7 +1427,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Một số tệp tin không thể chia sẻ lên được MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Mục Chia Sẻ";
+"Shared successfully"="Đã chia sẻ";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Truyền tải thất bại:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1457,7 +1461,7 @@
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
 "Invalid key/Decryption error"="Lỗi giải mã";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
-"Bad session ID"="Bad session ID";
+"Bad session ID"="Số ID phiên hỏng";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bị chặn";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
@@ -1473,11 +1477,11 @@
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Application key không hợp lệ";
 /* Error shown when terms of service are breached during download. */
-"Terms of Service breached"="Phát hiện vi phạm Điều Khoản Dịch Vụ";
+"Terms of Service breached"="Bị vi phạm Điều Khoản Dịch Vụ";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Truyền tải bị thất bại do cấu trúc đệ quy của thư mục";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Vi phạm Điều Khoản Dịch Vụ";
+"transfer.error.termsOfServiceViolation"="Bị vi phạm Điều Khoản Dịch Vụ";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Xác thực SSL bị thất bại";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1485,7 +1489,7 @@
 /* SDK error returned when a MFA is required to perform an operation */
 "Multi-factor authentication required"="Cần sử dụng xác thực 2 yếu tố";
 /* SDK error returned for operations only allowed for business master users */
-"Access denied for users"="Truy cập bị từ chối cho tất cả thành viên dưới hạng admin";
+"Access denied for users"="Truy cập bị từ chối cho thành viên dưới hạng quản trị";
 /* SDK error returned when a business account has expired */
 "Business account has expired"="Tài khoản bị vô hiệu hóa";
 /* SDK error returned when the credit card has been rejected */
@@ -1509,9 +1513,9 @@
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Chất lượng hình ảnh của video khi đăng tải lên chát";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Chất Lượng Video";
+"videoQuality"="Chất lượng video";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
-"preparing..."="Đang chuẩn bị…";
+"preparing..."="Đang chuẩn bị…";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Mã QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1519,11 +1523,11 @@
 /* Footer that explains the way Auto-Accept works for QR codes */
 "autoAcceptFooter"="Bất cứ ai có tài khoản MEGA quét mã ảnh QR này sẽ được tự động thêm vào danh sách tên liên lạc của bạn.";
 /* Action to reset the current valid QR code of the user */
-"resetQrCode"="Đổi mã qr mới";
+"resetQrCode"="Đổi mã QR mới";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Các mã QR cũ sẽ bị vô hiệu hóa.";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
-"My QR code"="Mã QR của TK";
+"My QR code"="Mã QR của tôi";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Quét mã";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1571,11 +1575,11 @@
 /* Label to desing a file matching */
 "chat.match.file"="Tệp";
 /* Title of section to display information of the current version of a file. */
-"currentVersion"="Phiên Bản Hiện Hành";
+"currentVersion"="Phiên bản hiện tại";
 /* A button label which opens a dialog to display the full version history of the selected file. */
-"previousVersions"="Các Phiên Bản Trước";
+"previousVersions"="Các phiên bản trước";
 /* Title of section to display information of all current versions of files. */
-"currentVersions"="Phiên Bản Lưu Hiện Có";
+"currentVersions"="Các phiên bản hiện có";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Bạn có còn nhớ mật khẩu của mình không?";
 /* Text that describes why the user should test his/her password */
@@ -1585,7 +1589,7 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Không hiện nữa";
 /* Label for test password button and titles */
-"testPassword"="Kiểm tra mật khẩu";
+"testPassword"="Kiểm tra mật khẩu";
 /* Label for recovery key button */
 "backupRecoveryKey"="Sao lưu Chìa Khóa Phục Hồi";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
@@ -1617,7 +1621,7 @@
 /*  */
 "resume"="Tiếp tục truyền";
 /* Title to preview document */
-"previewContent"="Xem Trước Nội Dung";
+"previewContent"="Xem trước nội dung";
 /* Title of the notification for a missed call */
 "missedCall"="Cuộc gọi nhỡ";
 /* When an outgoing call of user A with user B had been rejected by user B */
@@ -1645,23 +1649,23 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Tin nhắn đã được chuyển đi";
 /* Title of archived chats button */
-"archivedChats"="Bảo lưu";
+"archivedChats"="Đã bảo lưu";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Có chắc muốn chuyển cuộc trò chuyện này thư viện bảo lưu hay không?";
+"archiveChatMessage"="Bạn có chắc muốn chuyển cuộc trò chuyện này vào bảo lưu hay không?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Có chắc muốn chuyển cuộc trò chuyện ra khỏi thư viện bảo lưu hay không?";
+"unarchiveChatMessage"="Bạn có chắc muốn chuyển cuộc trò chuyện này ra khỏi bảo lưu hay không?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Chuyển Khỏi Bảo Lưu";
+"unarchiveChat"="Chuyển ra khỏi bảo lưu";
 /* Title of button to archive chats. */
-"archiveChat"="Bảo lưu";
+"archiveChat"="Bảo lưu";
 /* Title of flag of archived chats. */
 "archived"="Bảo lưu";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No archived chats or meetings";
+"noArchivedChats"="Không có cuộc chát hoặc cuộc họp nào được bảo lưu";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Xác thực 2 yếu tố";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
-"beginSetup"="Bắt Đầu Thiết Lập";
+"beginSetup"="Bắt đầu thiết lập";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
 "pleaseEnterTheSixDigitCode"="Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
@@ -1713,15 +1717,15 @@
 /* Description shown in a page of the onboarding screens explaining the chat feature */
 "Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Toàn bộ chát, tin nhắn, thoại hay video đều được mã hóa hoàn toàn và hoạt động với khả năng chia sẻ thông qua Ổ Mây.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Tạo Kết Nối";
+"Create your Network"="Tạo kết nối của riêng bạn";
 /* Description shown in a page of the onboarding screens explaining contacts */
 "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Thêm tên liên lạc, tạo kết nối, cộng tác với nhau, trao đổi qua gọi thoại và video ngay trong MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Hình Ảnh được gửi lên Ổ Mây";
+"Your Photos in the Cloud"="Hình ảnh được gửi lên Mây";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng Tải Camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho người dùng. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Thiếp Lập MEGA";
+"Setup MEGA"="Thiếp lập MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="Để tận dụng sức mạnh của MEGA, ứng dụng cần phải xin phép một số quyền truy cập.";
 /* Message warning the user about the risk of not setting up permissions */
@@ -1729,7 +1733,7 @@
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 trong tổng %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Cho phép Truy cập vào Ảnh";
+"Allow Access to Photos"="Cho phép truy cập vào Ảnh";
 /* Detailed explanation of why the user should give permission to access to the photos */
 "Please give the MEGA App permission to access Photos to share photos and videos."="Xin cấp MEGA quyền truy cập vào Ảnh để chia sẻ hình ảnh và videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
@@ -1737,17 +1741,17 @@
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Để có thể thực hiện cuộc gọi thoại hay gọi video, xin cho phép MEGA truy cập vào Camêra và Micrô";
 /* Title label that explains that the user is going to be asked for the notifications permission */
-"Enable Notifications"="Bật Thông Báo";
+"Enable Notifications"="Bật thông báo";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Ứng dụng MEGA muốn gửi thông báo để báo hiệu ngay tức thì cho khi bạn có tin nhắn.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Cho Phép Quyền Hạn";
+"Allow Access"="Cho phép quyền hạn";
 /* Title of the Settings section where you can configure security details of your MEGA account */
 "settings.section.security"="Bảo Mật";
 /* Title of one of the Settings sections where you can see MEGA's 'Terms and Policies' */
-"settings.section.termsAndPolicies"="Điều Khoản và Chính Sách";
+"settings.section.termsAndPolicies"="Điều Khoản và Chính Sách";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
-"File Management"="Quản Lý Tệp Tin";
+"File Management"="Quản lý tệp tin";
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Nhớ phiên bản tệp tin";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
@@ -1783,7 +1787,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ tham gia vào cuộc gọi.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ đã rời khỏi cuội gọi";
+"%@ left the call."="%@ đã rời khỏi cuội gọi";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Có một cuộc gọi nhóm đang diễn ra. Chạm để tham gia.";
 /* Message shown in a chat room when there is an active call */
@@ -1795,7 +1799,7 @@
 /* Text shown when starting the process to save a photo or video to Photos app */
 "Saving to Photos…"="Đang lưu vào Ảnh…";
 /* Text shown for switching from preview view to all media view. */
-"All Media"="Tất Cả Phương Tiện Số";
+"All Media"="Tất cả phương tiện số";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="Đang tải xuống %@";
 /* Text shown when a photo or video is saved to Photos app */
@@ -2155,7 +2159,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Không có hình ảnh hoặc video";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Đi vào thư mục chứa tệp này";
+"View in Folder"="Xem trong thư mục chứa";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Đường liên kết này không thuộc sở hữu của tài khoản hiện tại. Xin đăng nhập vào tài khoản phù hợp.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2185,7 +2189,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Không có nhận được mã?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Your phone number has been verified";
+"Your phone number has been verified successfully"="Số điện thoại của bạn đã được xác thực";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Tài khoản đã tạm thời bị khóa để đảm bảo an toàn.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2321,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Thao tác này sẽ xóa số điện thoại hiện tại và bắt đầu quy trình gắn kết số điện thoại mới cho tài khoản này.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Your phone number has been removed";
+"Your phone number has been removed successfully."="Số điện thoại của bạn đã được loại bỏ";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Xóa bỏ số điện thoại đã thất bại, xin thử lại sau.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2391,7 +2395,7 @@
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="Đã sao chép đường liên kết vào bảng nhớ tạm";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Copied links to clipboard";
+"Links Copied to Clipboard"="Đã sao chép các đường liên kết vào bảng nhớ tạm";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Chìa Khóa Được Ghi vào Bảng Nhớ Tạm";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2513,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Giúp chúng tôi hiểu cách quý khách sử dụng dịch vụ và cung cấp cho chúng tôi dữ liệu có thể sử dụng để cải tiến. Việc không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ nhận ít dữ liệu để giúp cải tiến thiết kế sau này.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version was created as a new file";
+"Version created as a new file successfully."="Phiên bản đã được chuyển thành một tệp tin mới toàn vẹn";
 /* Text shown for the action create new file */
 "Create new file"="Tạo tệp mới";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2633,23 +2637,23 @@
 /* Message to inform the local user that someone has left the current group call */
 "meetings.message.leftCall"="%@ đã rời khỏi cuội gọi";
 /* Title for Enter Meeting Link. */
-"meetings.enterMeetingLink.title"="Nhập Đường Liên Kết Họp Mặt";
+"meetings.enterMeetingLink.title"="Nhập đường liên kết cuộc họp";
 /* Text button for init a Meeting. */
-"meetings.create.newMeeting"="Cuộc Họp Mới";
+"meetings.create.newMeeting"="Cuộc họp mới";
 /* Meeting Title */
 "meetings.createMeeting.defaultMeetingName"="Họp Mặt %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Bắt đầu cuộc họp";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end"="Cuộc Họp Chấm Dứt";
+"meetings.alert.end"="Cuộc họp đã chấm dứt";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Xem Tin Nhắn Cuộc Họp";
+"meetings.alert.meetingchat"="Xem tin nhắn cuộc chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="Cuộc họp mặt bạn đang muốn tham gia đã kết thúc. Bạn vẫn có thể xem các tin nhắn của của họp trong lịch sử chát.";
 /* Contacts selection screen header: Invite contacts to meetings */
-"meetings.panel.InviteParticipants"="Mời Thành Viên";
+"meetings.panel.InviteParticipants"="Mời thêm thành viên";
 /* Meetings: Floating panel share link option */
-"meetings.panel.shareLink"="Chia Sẻ Đường Liên Kết";
+"meetings.panel.shareLink"="Chia sẻ đường liên kết";
 /* Meetings: Floating panel participants count header */
 "meetings.panel.ParticipantsCount"="Thành viên (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -2659,15 +2663,15 @@
 /* Meetings: Action on a meeting that remove participant's moderator role */
 "meetings.participant.removeModerator"="Loại bỏ chức người chủ trì";
 /* Action of a call/meeting to rename it */
-"meetings.action.rename"="Đổi Tên Cuộc Họp";
+"meetings.action.rename"="Đổi tên cuộc họp";
 /* Action of a call/meeting to share its link */
-"meetings.action.shareLink"="Chia Sẻ Cuộc Họp Mặt";
+"meetings.action.shareLink"="Chia sẻ đường liên kết cuộc họp";
 /* Message shown when a meeting starts and user is waiting other users to join */
 "meetings.message.waitingOthers"="Đang chờ người khác tham gia…";
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="Bạn là người duy nhất ở đây…";
 /* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="URL Cuộc Họp Không Đúng";
+"meetings.joinMeeting.header"="URL cuộc họp không hợp lệ";
 /* Message description when the user enters a invalid meeting URL */
 "meetings.joinMeeting.description"="Không thể tham gia vào cuộc họp mặt. Xin kiểm tra lại đường liên kết cho đúng.";
 /* Message shown when the meeting link cannot be generated */
@@ -2989,15 +2993,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ đã tham gia";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ đã rời khỏi cuội gọi";
+"meetings.notification.singleUserLeft"="%@ đã rời khỏi cuội gọi";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ và %@ đã tham gia";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
+"meetings.notification.twoUsersLeft"="%@ và %@ đã rời khỏi cuội gọi";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ và %@ người khác đã tham gia";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
+"meetings.notification.moreThanTwoUsersLeft"="%@ và %@ người khác đã rời khỏi cuội gọi";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Chuyển vào Thùng Rác";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3164,14 +3168,12 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Các cuộc họp trước đây";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Xác thực %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="Xác thực liên lạc";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô nhận thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn chia sẻ thông tin trước khi họ được cấp quyền truy cập vào các thư mục chia sẻ.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn chia sẻ thông tin trước khi họ được cấp quyền truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
 "sharedItems.contactVerification.section.myCredentials.message"="Để xác thực tên liên lạc, đảm bảo rằng chứng thực bạn thấy dưới đây trùng khớp với chứng thực tài khoản của họ. Bạn có thể hỏi người đó chia sẻ chứng thực cho bạn.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô nhận thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Để có thể truy cập thư mục này, người chia sẻ thư mục này cho bạn cũng cần phải xác thực bạn.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3257,9 +3259,9 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] từ [B][StartTime] đến [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Mỗi ngày, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Mỗi ngày, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] đã hủy[/B] một thời điểm tái diễn của cuộc họp được lên lịch vào:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3309,6 +3311,6 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Bạn không thể xác thực %@ vì họ không có trong sổ liên lạc của bạn. Hãy chờ đến khi họ chấp nhận lời mời của bạn trước.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Tắt mật mã MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Để sử dụng MEGA trong ứng dụng Tệp, hãy tắt mật mã MEGA của bạn. Đi đến Thiết Đặt trong ứng dụng MEGA, chạm vào Bảo mật > Mật mã";

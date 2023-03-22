@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="Añadir elementos a “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Álbum vacío";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="¿Eliminar del álbum?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Seleccionar la portada del álbum";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="Portada del álbum actualizada";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtro";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Utilizar los formatos más compatibles";
 /* Title for custom settings */
 "Custom Settings"="Ajustes personalizados";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="Almacenamiento %@ lleno";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Almacenamiento del dispositivo casi lleno";
 /* Detail for local storage full situation */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Reuniones anteriores";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verificar %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="Verificación de contacto";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos tus datos con cifrado de conocimiento cero. Para garantizar una mayor seguridad, te pedimos que verifiques los contactos con los que compartes información antes de que puedan acceder a las carpetas compartidas.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3309,6 +3311,6 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="No se puede verificar %@ porque no está en tu lista de contactos. Espera a que acepte tu invitación primero.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Desactivar código de acceso de MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Para usar MEGA en la aplicación Files, desactiva tu código de acceso de MEGA. Ve a Ajustes en la aplicación de MEGA, toca en Seguridad > Código de acceso.";

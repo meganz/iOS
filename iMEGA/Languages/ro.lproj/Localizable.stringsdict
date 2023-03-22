@@ -121,7 +121,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 oră</string>
+        <string>%d oră</string>
         <key>few</key>
         <string>%d ore</string>
         <key>other</key>
@@ -139,7 +139,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 zi</string>
+        <string>%d zi</string>
         <key>few</key>
         <string>%d zile</string>
         <key>other</key>
@@ -157,7 +157,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 săptămână</string>
+        <string>%d săptămână</string>
         <key>few</key>
         <string>%d săptămâni</string>
         <key>other</key>
@@ -175,7 +175,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 lună</string>
+        <string>%d lună</string>
         <key>few</key>
         <string>%d luni</string>
         <key>other</key>
@@ -193,7 +193,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 an</string>
+        <string>%d an</string>
         <key>few</key>
         <string>%d ani</string>
         <key>other</key>
@@ -432,6 +432,38 @@
         <string>Linkuri eliminate</string>
         <key>other</key>
         <string>Linkuri eliminate</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Remove link?</string>
+        <key>other</key>
+        <string>Remove links?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you have shared this link with, will no longer be able to access it</string>
+        <key>other</key>
+        <string>People you have shared these links with, will no longer be able to access them</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -758,6 +790,90 @@
         <string>%d de elemente au fost adăugate în „[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Delete (%d)</string>
+        <key>other</key>
+        <string>Delete (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ștergi albumul?</string>
+        <key>few</key>
+        <string>Ștergi albumele?</string>
+        <key>other</key>
+        <string>Ștergi albumele?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Albumul va fi șters, însă conținutul lui va rămâne în Cronologie.</string>
+        <key>few</key>
+        <string>Albumele vor fi șterse, însă conținutul lor va rămâne în Cronologie.</string>
+        <key>other</key>
+        <string>Albumele vor fi șterse, însă conținutul lor va rămâne în Cronologie.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” deleted</string>
+        <key>other</key>
+        <string>%d albums deleted</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed %d item from “[A]”</string>
+        <key>other</key>
+        <string>Removed %d items from “[A]”</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -805,11 +921,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
-        <key>few</key>
-        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -823,11 +937,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
-        <key>few</key>
-        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>

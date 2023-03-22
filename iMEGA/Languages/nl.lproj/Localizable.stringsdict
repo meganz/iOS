@@ -109,7 +109,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 uur</string>
+        <string>%d uur</string>
         <key>other</key>
         <string>%d uren</string>
       </dict>
@@ -125,7 +125,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 dag</string>
+        <string>%d dag</string>
         <key>other</key>
         <string>%d dagen</string>
       </dict>
@@ -141,7 +141,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 week</string>
+        <string>%d week</string>
         <key>other</key>
         <string>%d weken</string>
       </dict>
@@ -157,7 +157,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 maand</string>
+        <string>%d maand</string>
         <key>other</key>
         <string>%d maanden</string>
       </dict>
@@ -173,7 +173,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 jaar</string>
+        <string>%d jaar</string>
         <key>other</key>
         <string>%d jaren</string>
       </dict>
@@ -384,6 +384,38 @@
         <string>Link verwijderd</string>
         <key>other</key>
         <string>Links verwijderd</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link verwijderen?</string>
+        <key>other</key>
+        <string>Links verwijderen?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Personen met wie u deze link heeft gedeeld, hebben er geen toegang meer toe</string>
+        <key>other</key>
+        <string>Personen met wie u deze links heeft gedeeld, hebben er geen toegang meer toe</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -674,6 +706,86 @@
         <string>%d items toegevoegd tot “[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>(%d) verwijderen</string>
+        <key>other</key>
+        <string>(%d) verwijderen</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Album verwijderen?</string>
+        <key>other</key>
+        <string>Albums verwijderen?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Album wordt verwijderd maar de inhoud blijft in uw Tijdlijn.</string>
+        <key>other</key>
+        <string>Albums worden verwijderd maar de inhoud blijft in uw Tijdlijn.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” verwijderd</string>
+        <key>other</key>
+        <string>%d albums verwijderd</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item verwijderd van “[A]”</string>
+        <key>other</key>
+        <string>%d items verwijderd van “[A]”</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -717,9 +829,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
+        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht op [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], en [LastWeekDay] elke %d weken van kracht [B][StartDate] tot en met [UntilDate][/B] van[B][StartTime] tot[EndTime][/B]</string>
+        <string>[WeekDaysList], en [LastWeekDay] elke %d weken van kracht op[B][StartDate] tot en met [UntilDate][/B] van[B][StartTime] tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -733,9 +845,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht [B][StartDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
+        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht op [B][StartDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList], en [LastWeekDay] elke %d weken van kracht [B][StartDate] [/B] van[B][StartTime] tot[EndTime][/B]</string>
+        <string>[WeekDaysList], en [LastWeekDay] elke %d weken van kracht op [B][StartDate] [/B] van[B][StartTime] tot[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>

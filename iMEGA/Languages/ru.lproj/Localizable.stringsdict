@@ -133,7 +133,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 час</string>
+        <string>%d час</string>
         <key>few</key>
         <string>%d часа</string>
         <key>many</key>
@@ -153,7 +153,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 день</string>
+        <string>%d день</string>
         <key>few</key>
         <string>%d дня</string>
         <key>many</key>
@@ -173,7 +173,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 неделя</string>
+        <string>%d неделя</string>
         <key>few</key>
         <string>%d недели</string>
         <key>many</key>
@@ -193,7 +193,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 месяц</string>
+        <string>%d месяц</string>
         <key>few</key>
         <string>%d месяца</string>
         <key>many</key>
@@ -213,7 +213,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 год</string>
+        <string>%d год</string>
         <key>few</key>
         <string>%d года</string>
         <key>many</key>
@@ -480,6 +480,46 @@
         <string>Ссылки удалены</string>
         <key>other</key>
         <string>Ссылки удалены</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Удалить ссылку?</string>
+        <key>few</key>
+        <string>Удалить ссылки?</string>
+        <key>many</key>
+        <string>Удалить ссылки?</string>
+        <key>other</key>
+        <string>Удалить ссылки?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Люди, с которыми вы поделились этой ссылкой, больше не смогут получить к ней доступ</string>
+        <key>few</key>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ</string>
+        <key>many</key>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ</string>
+        <key>other</key>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -842,6 +882,106 @@
         <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Удалить (%d)</string>
+        <key>few</key>
+        <string>Удалить (%d)</string>
+        <key>many</key>
+        <string>Удалить (%d)</string>
+        <key>other</key>
+        <string>Удалить (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Удалить альбом?</string>
+        <key>few</key>
+        <string>Удалить альбомы?</string>
+        <key>many</key>
+        <string>Удалить альбомы?</string>
+        <key>other</key>
+        <string>Удалить альбомы?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Альбом будет удалён, но его содержимое останется на «Временной шкале».</string>
+        <key>few</key>
+        <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
+        <key>many</key>
+        <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
+        <key>other</key>
+        <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Альбом «[A]» удалён</string>
+        <key>few</key>
+        <string>Удалено %d альбома</string>
+        <key>many</key>
+        <string>Удалено %d альбомов</string>
+        <key>other</key>
+        <string>Удалено %d альбома</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Из «[A]» удалён %d элемент</string>
+        <key>few</key>
+        <string>Из «[A]» удалено %d элемента</string>
+        <key>many</key>
+        <string>Из «[A]» удалено %d элементов</string>
+        <key>other</key>
+        <string>Из «[A]» удалено %d элемента</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -893,13 +1033,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Каждую неделю в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждую неделю в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string>Каждые %d недель в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d недель в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -913,13 +1053,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Каждую неделю в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждую неделю в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string>Каждые %d недель в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d недель в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string>Каждые %d недели в [WeekDaysList], и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>

@@ -415,7 +415,7 @@
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
 "xfilesSentSuccesfully"="%d fichiers ont été envoyés";
 /* Title show when a file is being downloaded */
-"downloading"="Téléchargement en cours";
+"downloading"="Téléchargement";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Sélectionner la destination";
 /* Text of the button for user to select files in MEGA. */
@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="Ajouter des éléments dans « %@ »";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="L’album est vide";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="Supprimer de l’album ?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="Sélectionner la couverture de l’album";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="La couverture de l’album a été mise à jour";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrer";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="Utiliser les formats les plus compatibles";
 /* Title for custom settings */
 "Custom Settings"="Paramètres personnalisés";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="L’espace de stockage du %@ est saturé";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="La mémoire de l’appareil est presque saturée";
 /* Detail for local storage full situation */
@@ -1077,9 +1081,9 @@
 /*  */
 "days"="jours";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Déconnexion";
+"logoutLabel"="Me déconnecter";
 /* String shown when you are logging out of your account. */
-"loggingOut"="Déconnexion en cours";
+"loggingOut"="Déconnexion";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Supprimer la photo";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Réunions antérieures";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Confirmer %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="Confirmation du contact";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="Grâce au chiffrement à divulgation nulle de connaissance, nous protégeons vos données. Pour garantir une protection supplémentaire, nous vous demandons de confirmer les contacts avec qui vous partagez des renseignements avant qu’ils n’accèdent aux dossiers partagés.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3309,6 +3311,6 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Vous ne pouvez pas vérifier %@, car cette personne n’est pas dans votre liste de contacts. Attendez qu’elle accepte d’abord votre invitation.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Désactiver le code d’accès à MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Pour utiliser MEGA dans l’appli Fichiers, désactivez votre code d’accès à MEGA. Accédez aux Paramètres dans l'appli MEGA, touchez Sécurité > Code d'accès.";

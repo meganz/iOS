@@ -764,8 +764,6 @@
 "Use Most Compatible Formats"="Use most compatible formats";
 /* Title for custom settings */
 "Custom Settings"="Custom settings";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="%@ storage full";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Device storage almost full";
 /* Detail for local storage full situation */
@@ -3170,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="Past meetings";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verify %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="Contact verification";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */

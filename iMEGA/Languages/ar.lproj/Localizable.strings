@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="جاري إنشاء روابط…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Copied link";
+"linkCopied"="الرابط المنسوخ";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Copied links";
+"linksCopied"="الرابط المنسوخ";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="تم النسخ إلى الحافظة";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="تم إرسال الملفات للمحادثة";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d files sent";
+"xfilesSentSuccesfully"="تم ارسال %d ملفات";
 /* Title show when a file is being downloaded */
 "downloading"="جارى التنزيل";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="تم مشاركة المجلد";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d folders shared";
+"sharedFolders_success"="%d مجلدات مشاركة";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="استيراد";
 /* Message shown when a file has been imported */
@@ -543,9 +543,15 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="أدخل اسمًا جديدًا.";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
+"cameraUploads.albums.create.addItemsTo"="إضافة عناصر إلى ”%@“";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="إفراغ الألبوم ";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="إزالة من الألبوم؟";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="اختر غلاف الألبوم ";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="تم تحديث غلاف الألبوم";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="فلتر";
 /* Choose type headline within filter UI */
@@ -705,9 +711,9 @@
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="حول";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="أرسل رأيك";
+"sendFeedbackLabel"="أرسل ملاحظاتك";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="يرجى إعطاء رأيك هنا:";
+"pleaseWriteYourFeedback"="يرجى إعطاء ملاحظاتك هنا:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="ليس لديك حساب بريد إلكتروني مربوط على جهازك";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="استخدم التنسيقات الأكثر توافقاً";
 /* Title for custom settings */
 "Custom Settings"="إعدادات مخصصة";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="%@ مساحة التخزين ممتلئة";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="مساحة تخزين الجهاز ممتلئة تقريباً";
 /* Detail for local storage full situation */
@@ -847,7 +851,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="هذه هي الخطوة الأخيرة لحذف حسابك. ستفقد بشكل دائم جميع البيانات المخزنة في السحابة. الرجاء إدخال كلمة المرور الخاصة بك أدناه.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Your account has been deleted";
+"accountCanceledSuccessfully"="لقد تم حذف حسابك";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="إغلاق الحساب";
 /* Title for the action that allows to remove a file or folder */
@@ -907,7 +911,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="مفتاح الاستعادة الخاص بك سيستخدم لإعادة تعيين كلمة مرورك. الرجاء ادخال كلمة مرورك الجديدة.";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
+"yourPasswordHasBeenReset"="تم إعادة تعيين كلمة المرور الخاصة بك. يرجى تسجيل الدخول إلى حسابك.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="إرسال";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -917,7 +921,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="بدء حساب جديد";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked. You can now log in to your new account.";
+"yourAccounHasBeenParked"="لقد تم ركن حسابك القديم بنجاح. يمكنك الآن تسجيل الدخول إلى حسابك الجديد.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="عنوان البريد الإلكتروني الجديد";
 /* Button text for the user to confirm their change of email address. */
@@ -1089,7 +1093,7 @@
 /* Button title that allows the user change his name */
 "changeName"="تغيير الاسم";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
+"youHaveSuccessfullyChangedYourProfile"="لقد قمت بتغيير ملفك الشخصي.";
 /* Hint text for the first name (Placeholder) */
 "firstName"="الاسم الأول";
 /* Hint text for the last name (Placeholder) */
@@ -1225,7 +1229,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="تم حذف [A] من المجموعة من قبل [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat";
+"leftTheGroupChat"="غادر [A] المحادثة الجماعية.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="انضم [A] إلى المحادثة الجماعية بدعوة من [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1281,7 +1285,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="تم مسح سجل المحادثة";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
+"An error has occurred. The chat history has not been successfully cleared"="حدث خطأ. لم يتم مسح سجل المحادثة";
 /* 'Next' button in a dialog */
 "continue"="تابع";
 /* Title of the incoming shared folders of a user. */
@@ -1423,7 +1427,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="بعض العناصر لا يمكن مشاركتها مع ميغا MEGA";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="مشاركة";
+"Shared successfully"="تمت المشاركة";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="فشل التراسل:";
 /* Label to show that an SDK operation has been complete successfully. */
@@ -1657,7 +1661,7 @@
 /* Title of flag of archived chats. */
 "archived"="تمت الارشفة";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No archived chats or meetings";
+"noArchivedChats"="لا توجد محادثات أو اجتماعات مؤرشفة";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="المصادقة المزدوجة Two-Factor";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1989,7 +1993,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="تم التعديل من قبل %@";
 /* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s and %2$s more";
+"home.recent.multipleFileTitle"="%1$s و %2$s أخر";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="انشأ من قبل %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2185,7 +2189,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="لم تتلقى الرمز؟";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Your phone number has been verified";
+"Your phone number has been verified successfully"="تم التحقق من رقم هاتفك";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="تم قفل حسابك مؤقتاً لضمان أمنك.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -2317,7 +2321,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="ستؤدي هذه العملية إلى إزالة رقم هاتفك الحالي وبدء عملية ربط رقم هاتف جديد بحسابك.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Your phone number has been removed";
+"Your phone number has been removed successfully."="تمت إزالة رقم هاتفك.";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="أخفقت إزالة رقم هاتفك، يرجى إعادة المحاولة لاحقاً.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2391,7 +2395,7 @@
 /* Message shown when the link has been copied to the Clipboard */
 "Link Copied to Clipboard"="تم النسخ الى حافظة النصوص";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Copied links to clipboard";
+"Links Copied to Clipboard"="تم نسخ الرابط الى الحافظة";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="تم نسخ المفتاح إلى الحافظة";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2509,7 +2513,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="ساعدنا في فهم كيفية استخدامك لخدماتنا وتزويدنا بالبيانات التي يمكننا استخدامها لإجراء تحسينات. يعني عدم قبول ملفات تعريف الارتباط Cookies هذه أننا سنحصل على بيانات متاحة أقل لنقوم بالمساعدة في تحسينات التصميم.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version was created as a new file";
+"Version created as a new file successfully."="تم إنشاء النسخة كملف جديد.";
 /* Text shown for the action create new file */
 "Create new file"="إنشاء ملف جديد";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2993,11 +2997,11 @@
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ و %@ انضما";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
+"meetings.notification.twoUsersLeft"="غادر %@ و %@ المكالمة";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="انضم %@ و %@ آخرون";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
+"meetings.notification.moreThanTwoUsersLeft"="غادر %@ و %@ آخرون المكالمة";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="نقل إلى سلة المحذوفات";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3045,7 +3049,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="سيتم استبدال الملف بالنسخة الجديدة.";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Apply to all %@ duplicates";
+"nameCollision.applyToAll"="طبق على كل الـ %@ المكررين";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="انت الوحيد هنا";
 /* Meetings end call dialog description */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="الاجتماعات السابقة";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="تحقق من %@";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تشارك المعلومات معها قبل أن يتمكنوا من الوصول إلى المجلدات المشاركة.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3179,7 +3181,7 @@
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[مجلد غير مشفر]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
-"sharedItems.tab.outgoing.sharedToContact"="Shared with %@";
+"sharedItems.tab.outgoing.sharedToContact"="مشارك مع %@";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@ : قام بإنشاء الاجتماع";
 /* Button title to load more participants in meeting info view */
@@ -3219,33 +3221,33 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="الاجتماعات";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] invited[/B] you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] قام بدعوتك[/B] إلي اجتماع مجدول بتاريخ:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] تفاصيل الاجتماع المجدول بتاريخ:";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] updated[/B] the meeting description";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] قام بتحديث[/B] وصف الاجتماع";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] قام بإلغاء[/B] الاجتماع المجدول بتاريخ:";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] قام بتحديث[/B] تاريخ الاجتماع";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] قام بتحديث[/B] وقت الاجتماع";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] قام بتحديث[/B] اسم الاجتماع من”[PreviousTitle]“ إلى [B]”[UpdatedTitle]“[/B]";
 /* In app notification description for cancelled recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
+"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] قام بإلغاء[/B] الاجتماع و كل التكرارات";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] invited you to a recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] قام بدعوتك لي اجتماع متكرر مجدول بتاريخ:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] تفاصيل الاجتماع المتكرر المجدول بتاريخ:";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] updated[/B] the recurring meeting description";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] قام بتحديث[/B] وصف الاجتماع المتكرر";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] قام بتحديث[/B] تاريخ الاجتماع المتكرر";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] قام بتحديث[/B] وقت الاجتماع المتكرر";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
-"meetings.scheduled.contextMenu.occurrences"="Occurrences";
+"meetings.scheduled.contextMenu.occurrences"="التكرارات";
 /* Label to indicate the daily recurrence of an scheduled meeting */
 "meetings.scheduled.recurring.frequency.daily"="يتكرر يومياً";
 /* Label to indicate the weekly recurrence of an scheduled meeting */
@@ -3255,15 +3257,15 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="شاهد المزيد";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay]،[StartDate][/B] من [B][StartTime] إلى [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="كل يوم اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="كل يوم اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] قام بإلغاء[/B] التكرار المجدول بتاريخ:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] قام بتحديث[/B] التكرار إلى: ";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="ترقية الأمان";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3299,16 +3301,16 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="السبت";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="daily";
+"meetings.scheduled.recurring.daily"="يومياً";
 /* Text description for a meeting showing that is a weekly recurring meeting */
-"meetings.scheduled.recurring.weekly"="weekly";
+"meetings.scheduled.recurring.weekly"="أسبوعياً";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="شهرياً";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="لا يمكن التحقق من جهة الاتصال";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="لا يمكنك التحقق من %@ لأنه ليس في قائمة جهات الاتصال الخاصة بك. انتظر حتى يقبل دعوتك أولاً.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="تعطيل رمز مرور ميغا MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="لاستخدام ميغا MEGA في تطبيق الملفات قم بتعطيل رمز مرور ميغا MEGA الخاص بك. انتقل إلى الإعدادات في تطبيق ميغا MEGA وانقر فوق الأمان > رمز المرور.";

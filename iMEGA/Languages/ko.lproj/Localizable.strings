@@ -546,6 +546,12 @@
 "cameraUploads.albums.create.addItemsTo"="“%@”에 항목 추가";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="빈 사진첩";
+/* Used as a alert title when removing album photos. */
+"cameraUploads.albums.removePhotos.alert.title"="사진첩에서 제거할까요?";
+/* Used as a context menu item on album content screen. */
+"cameraUploads.albums.selectAlbumCover"="사진첩 표지 선택";
+/* Used as a hud message in album content screen. */
+"cameraUploads.albums.albumCoverUpdated"="사진첩 표지 업데이트됨";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="필터";
 /* Choose type headline within filter UI */
@@ -758,8 +764,6 @@
 "Use Most Compatible Formats"="가장 잘 호환되는 형식 사용";
 /* Title for custom settings */
 "Custom Settings"="개별 설정";
-/* Title to show when device local storage is full */
-"%@ Storage Full"="%@ storage full";
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="기기 저장소가 거의 가득 참";
 /* Detail for local storage full situation */
@@ -2317,7 +2321,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="이 행동은 현재 전화 번호를 삭제하고 새 전화번호를 계정과 연결하는 과정을 시작합니다.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="전화 번호가 삭제되었습니다";
+"Your phone number has been removed successfully."="전화번호가 삭제되었습니다";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="전화번호 삭제를 실패하였습니다, 다시 시도하세요.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2673,9 +2677,9 @@
 /* Message shown when the meeting link cannot be generated */
 "meetings.sharelink.Error"="회의 링크가 생성되지 않았습니다. 다시 시도하세요.";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.loggedInUser.joinButtonText"="회의 참가";
+"meetings.link.loggedInUser.joinButtonText"="회의 참여";
 /* Button text to join a meeting for the logged in user */
-"meetings.link.guest.joinButtonText"="손님으로 참가";
+"meetings.link.guest.joinButtonText"="손님으로 참여";
 /* Encourage Guest User to Join Mega Screen Navigation Bar Title */
 "meetings.joinMega.title"="MEGA 가입";
 /* Guest user join Mega: paragraph 1 title */
@@ -3105,7 +3109,7 @@
 /* Meeting - start converstion context menu text for starting a meeting */
 "meetings.startConversation.contextMenu.startMeeting"="지금 회의 시작";
 /* Meeting - start conversation context menu text for joining a meeting */
-"meetings.startConversation.contextMenu.joinMeeting"="회의 참가";
+"meetings.startConversation.contextMenu.joinMeeting"="회의 참여";
 /* Title of the Settings section where you can configure calls options of your MEGA account */
 "settings.section.calls.title"="통화";
 /* Title of the sound notifications choice for calls when users join or left a call */
@@ -3164,8 +3168,6 @@
 "chat.listing.sectionHeader.pastMeetings.title"="지난 회의";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="%@님 확인";
-/* On fingerprint verification screen for Shared Items. Title of fingerprint verification screen */
-"sharedItems.contactVerification.title"="Contact verification";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 인증할 것을 요청합니다.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3209,7 +3211,7 @@
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="회의 시작";
 /* Button title to join an scheduled meeting */
-"meetings.scheduled.buttonOverlay.joinMeeting"="회의 참가";
+"meetings.scheduled.buttonOverlay.joinMeeting"="회의 참여";
 /* Button title to start an scheduled meeting before the start date from context menu */
 "meetings.scheduled.contextMenu.startMeeting"="시작";
 /* Button title to join an scheduled meeting from context menu */
@@ -3261,9 +3263,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="[B][StartDate]부터 [UntilDate]까지[/B] 매일 [B][StartTime]부터 [EndTime][/B]까지";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] 님이 반복 회의 중 다음의 일부를 취소[/B]하였습니다:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] 님이 다음의 예약된 되풀이 항목을 취소[/B]하였습니다:";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 님이 반복 회의를 수정[/B]하였습니다:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 님이 되풀이 항목을 수정[/B]하였습니다:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="보안 업그레이드";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3309,6 +3311,6 @@
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="당신의 연락처 목록에 %@님이 없기 때문에 인증할 수 없습니다. 그들이 초대를 수락할 때까지 기다리세요.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="MEGA 암호 비활성화";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="MEGA를 파일 앱에서 사용하려면, MEGA 암호를 비활성화 하여야 합니다. MEGA 앱의 설정으로 가서, 보안 > 암호를 탭하세요.";

@@ -65,10 +65,6 @@ public enum Strings {
     public static func removedAPublicLinkForTheChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ removed a public link for the chat.", String(describing: p1))
     }
-    /// %@ storage full
-    public static func storageFull(_ p1: Any) -> String {
-      return Strings.tr("Localizable", "%@ Storage Full", String(describing: p1))
-    }
     /// %d days
     public static func dDays(_ p1: Int) -> String {
       return Strings.tr("Localizable", "%d days", p1)
@@ -4997,8 +4993,6 @@ public enum Strings {
     }
     public enum SharedItems {
       public enum ContactVerification {
-        /// Contact verification
-        public static let title = Strings.tr("Localizable", "sharedItems.contactVerification.title")
         public enum Section {
           public enum MyCredentials {
             /// To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.
