@@ -168,10 +168,6 @@
 		2FA619A7261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */; };
 		2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */; };
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
-		2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */; };
-		2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
-		2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
-		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
 		2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
@@ -691,24 +687,10 @@
 		7794AEDF231E54120039C1D2 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEE3231E65570039C1D2 /* libKarere.a */; };
-		7794AEE6231E65570039C1D2 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEE5231E65570039C1D2 /* libMEGASDK.a */; };
-		7794AEE9231E6BF90039C1D2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
 		7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
-		7794AEEC231E6C610039C1D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229101EDD82E2007DB542 /* UIKit.framework */; };
-		7794AEED231E6C8C0039C1D2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
-		7794AEEF231E6CE10039C1D2 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
-		7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
-		7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
-		7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
-		7794AEFC231E76900039C1D2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
-		7794AF0F231E7D340039C1D2 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
-		7794AF10231E7D4E0039C1D2 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
-		7794AF11231E7D7B0039C1D2 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
-		7794AF15231E7EF00039C1D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
 		7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
 		7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7794AF1F2320F52F0039C1D2 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
-		7794AF21232100F30039C1D2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
 		7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677621C80CDF002B6227 /* OnboardingViewController.m */; };
 		7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7795677821C80D36002B6227 /* Onboarding.storyboard */; };
 		7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677C21C81C6E002B6227 /* OnboardingView.m */; };
@@ -772,8 +754,6 @@
 		831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */; };
 		831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */; };
 		8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */; };
-		83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1225556CD900344531 /* WidgetKit.framework */; };
-		83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83199F1425556CDA00344531 /* SwiftUI.framework */; };
 		83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83199F592555780300344531 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */; };
@@ -881,23 +861,8 @@
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
 		835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */; };
-		835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A824455A4900C160D0 /* libMEGASDK.a */; };
 		835EE3B32582430700D8E3B8 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
-		835EE3EF2582494F00D8E3B8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
-		835EE3F82582498500D8E3B8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		835EE401258249D900D8E3B8 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
-		835EE40A2582511200D8E3B8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
-		835EE4132582513700D8E3B8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCBC2476C4CE002FCD98 /* CoreServices.framework */; };
-		835EE41C2582515F00D8E3B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
-		835EE425258251A600D8E3B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
-		835EE4382582562300D8E3B8 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
-		835EE4392582562C00D8E3B8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
-		835EE43B2582564300D8E3B8 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A61FA0B60B006172CE /* Metal.framework */; };
-		835EE43C2582565300D8E3B8 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262A31FA0B5CD006172CE /* CoreVideo.framework */; };
-		835EE43D2582565B00D8E3B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
-		835EE43E2582566D00D8E3B8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
-		835EE43F2582567700D8E3B8 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
-		835EE44825825F3A00D8E3B8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
 		835EE45125825FFE00D8E3B8 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A124455A4900C160D0 /* libKarere.a */; };
 		8361086325AF156800CAC6E1 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
@@ -1164,21 +1129,7 @@
 		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
-		943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
-		943F8B2C1EF2865600AFD89F /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
-		943F8B2D1EF2865F00AFD89F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		943F8B2E1EF2866A00AFD89F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
-		943F8B2F1EF2869700AFD89F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
-		943F8B301EF286A800AFD89F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290C1EDD829F007DB542 /* CoreGraphics.framework */; };
-		943F8B311EF286AC00AFD89F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
-		943F8B321EF286B100AFD89F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229101EDD82E2007DB542 /* UIKit.framework */; };
-		943F8B331EF286C000AFD89F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
-		943F8B341EF286C700AFD89F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
-		943F8B361EF286D200AFD89F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229241EDD8479007DB542 /* CoreData.framework */; };
-		943F8B371EF286D600AFD89F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
-		943F8B3A1EF286EA00AFD89F /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292F1EDD862F007DB542 /* LocalAuthentication.framework */; };
-		943F8B3B1EF286EE00AFD89F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229321EDD86C3007DB542 /* SystemConfiguration.framework */; };
-		943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432293A1EDD88E3007DB542 /* MediaPlayer.framework */; };
 		943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
 		943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		943FF9EF292FA33E00B744C8 /* MainTabBarController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943FF9EE292FA33E00B744C8 /* MainTabBarController+SnackBar.swift */; };
@@ -1239,7 +1190,6 @@
 		949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C231F0E464C000331E6 /* libKarere.a */; };
-		94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C241F0E464C000331E6 /* libMEGASDK.a */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
@@ -1291,13 +1241,6 @@
 		A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FC2955DB790056C9F0 /* SAMKeychain */; };
 		A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */; };
 		A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2B22EAFB1700B24E76 /* SearchOperation.m */; };
-		A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
-		A811DCBA2476C47F002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
-		A811DCBB2476C4BC002FCD98 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCB72476C460002FCD98 /* MetalKit.framework */; };
-		A811DCBE2476C4E0002FCD98 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCBC2476C4CE002FCD98 /* CoreServices.framework */; };
-		A811DCBF2476C4EB002FCD98 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCBC2476C4CE002FCD98 /* CoreServices.framework */; };
-		A811DCC02476C4F7002FCD98 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A811DCBC2476C4CE002FCD98 /* CoreServices.framework */; };
-		A811DCC22476C51C002FCD98 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292D1EDD85CE007DB542 /* Photos.framework */; };
 		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
@@ -1318,9 +1261,6 @@
 		A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81F9BB327EA023A00D47C0D /* CookieSettingsViewModelTests.swift */; };
 		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		A821A5902862257400DB7017 /* IntentPersonProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A58F2862257400DB7017 /* IntentPersonProvider.swift */; };
-		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
-		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
-		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
 		A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */; };
 		A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E680286B3112004CED9E /* FirebaseCrashlytics */; };
@@ -1337,28 +1277,7 @@
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
-		A836B9F628D46C090083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
-		A836B9F728D46C090083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
-		A836B9F828D46C090083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
-		A836B9F928D46C090083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
-		A836B9FA28D46C090083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
-		A836BA0528D46C310083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
-		A836BA0628D46C310083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
-		A836BA0728D46C310083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
-		A836BA0828D46C310083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
-		A836BA0928D46C310083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
-		A836BA0A28D46C440083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
-		A836BA0B28D46C440083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
-		A836BA0C28D46C440083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
-		A836BA0D28D46C440083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
-		A836BA0E28D46C440083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
-		A836BA0F28D46C550083039B /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F228D46C080083039B /* libnative_api.xcframework */; };
-		A836BA1028D46C550083039B /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F528D46C090083039B /* libnative_video.xcframework */; };
-		A836BA1128D46C550083039B /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F428D46C090083039B /* libvideocapture_objc.xcframework */; };
-		A836BA1228D46C550083039B /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F328D46C080083039B /* libvideoframebuffer_objc.xcframework */; };
-		A836BA1328D46C550083039B /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
-		A8399F44296C40060062B6BC /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8399F43296C40060062B6BC /* UniformTypeIdentifiers.framework */; };
 		A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F46296C40070062B6BC /* FileProviderExtension.swift */; };
 		A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F48296C40070062B6BC /* FileProviderItem.swift */; };
 		A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */; };
@@ -1368,11 +1287,7 @@
 		A8399F63296C43F90062B6BC /* MEGAPicker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A8399F59296C43F80062B6BC /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A8399F71296C53180062B6BC /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		A8399F72296C54A30062B6BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		A8399F8B296D71980062B6BC /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A824455A4900C160D0 /* libMEGASDK.a */; };
 		A8399F93296D72A90062B6BC /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
-		A8399F95296D72F90062B6BC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
-		A8399F96296D73000062B6BC /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
-		A8399F99296D73670062B6BC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		A8399F9E296D7D720062B6BC /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		A8399F9F296D7D920062B6BC /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		A8399FA0296D81200062B6BC /* MEGAError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88024F8CB490089376A /* MEGAError+Mapper.swift */; };
@@ -1399,13 +1314,6 @@
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
-		A85C3C1F29B63F3100FF2D17 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
-		A85C3C2029B63F3100FF2D17 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
-		A85C3C2129B63F3100FF2D17 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
-		A85C3C2229B63F3100FF2D17 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
-		A85C3C2329B63F3100FF2D17 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
-		A85C3C2429B63F4200FF2D17 /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
-		A85C3C3D29B6408D00FF2D17 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
 		A85CC10329CB32650012F98D /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */; };
 		A85CC10429CB35A30012F98D /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
@@ -1439,17 +1347,17 @@
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
-		A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
 		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */; };
 		A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */; };
 		A88E7FED2549FD8A001B0A66 /* Recents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE82549FD8A001B0A66 /* Recents.storyboard */; };
 		A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */; };
-		A88FF24A29A38CA300CC51F4 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88FF24929A38CA300CC51F4 /* QuickLookThumbnailing.framework */; };
-		A88FF24C29A394BF00CC51F4 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88FF24929A38CA300CC51F4 /* QuickLookThumbnailing.framework */; };
-		A88FF24D29A394E700CC51F4 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88FF24929A38CA300CC51F4 /* QuickLookThumbnailing.framework */; };
-		A88FF24E29A3950A00CC51F4 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88FF24929A38CA300CC51F4 /* QuickLookThumbnailing.framework */; };
 		A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */; };
+		A891E8A329C1E07C0020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A229C1E07C0020072A /* MEGASdk */; };
+		A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A429C1E09D0020072A /* MEGASdk */; };
+		A891E8A729C1E0A70020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A629C1E0A70020072A /* MEGASdk */; };
+		A891E8A929C1E0B00020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A829C1E0B00020072A /* MEGASdk */; };
+		A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8AA29C1E0C40020072A /* MEGASdk */; };
 		A893322A24127B1B0088E588 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
@@ -1487,11 +1395,26 @@
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
-		A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
-		A8C2AD2528D0D4F600F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
-		A8C2AD2628D0D4F900F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
-		A8C2AD2728D0D4FE00F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
-		A8C2AD2A28D0D50E00F656C9 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1028CFA2610045BF15 /* libwebsockets.xcframework */; };
+		A8C3CF1029BB898400891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
+		A8C3CF1129BB898400891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
+		A8C3CF1229BB898400891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
+		A8C3CF1729BB898400891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
+		A8C3CF1829BB898400891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
+		A8C3CF1C29BB898900891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
+		A8C3CF1D29BB898900891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
+		A8C3CF2029BB898900891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
+		A8C3CF2129BB898900891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
+		A8C3CF2329BB898900891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
+		A8C3CF2829BB898D00891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
+		A8C3CF2929BB898D00891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
+		A8C3CF2C29BB898D00891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
+		A8C3CF2D29BB898D00891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
+		A8C3CF2F29BB898D00891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
+		A8C3CF3429BB899200891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
+		A8C3CF3529BB899200891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
+		A8C3CF3829BB899200891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
+		A8C3CF3929BB899200891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
+		A8C3CF3B29BB899200891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
 		A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8A5A42990F964008518BE /* TransferRepository.swift */; };
 		A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BA146B29927784004389FE /* NodeActionRepository.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
@@ -1505,30 +1428,6 @@
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
-		A8D09CFD28CF9E300045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
-		A8D09CFF28CF9E710045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
-		A8D09D0028CF9E980045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
-		A8D09D0128CF9EF50045BF15 /* libcurl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09CFB28CF9E270045BF15 /* libcurl.xcframework */; };
-		A8D09D0428CF9F980045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
-		A8D09D0628CF9FC70045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
-		A8D09D0728CFA0130045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
-		A8D09D0828CFA0730045BF15 /* libuv.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0228CF9F7C0045BF15 /* libuv.xcframework */; };
-		A8D09D0B28CFA13A0045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
-		A8D09D0D28CFA15E0045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
-		A8D09D0E28CFA1680045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
-		A8D09D0F28CFA1980045BF15 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
-		A8D09D1A28CFA3770045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
-		A8D09D1B28CFA37E0045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
-		A8D09D1C28CFA3830045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
-		A8D09D1E28CFA39C0045BF15 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
-		A8D09D2028CFA4880045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
-		A8D09D2228CFA4A80045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
-		A8D09D2328CFA4AE0045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
-		A8D09D2528CFA5160045BF15 /* libmediainfo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1F28CFA4880045BF15 /* libmediainfo.xcframework */; };
-		A8D09D2D28CFADB80045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
-		A8D09D2E28CFADC00045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
-		A8D09D2F28CFADC80045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
-		A8D09D3228CFADD80045BF15 /* libcryptopp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D2C28CFADB80045BF15 /* libcryptopp.xcframework */; };
 		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
 		A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */; };
@@ -1559,10 +1458,8 @@
 		A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5158827F6FF4F00AEE4D6 /* FlexLayoutYogaKit */; };
 		A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
-		A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */; };
 		A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F71FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m */; };
-		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B51977C62942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */; };
 		B51977C92942DC27008770CD /* VerifyCredentialsViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C82942DC27008770CD /* VerifyCredentialsViewProvider.swift */; };
@@ -2447,13 +2344,6 @@
 			remoteGlobalIDString = A838B1F81E96855400875D96;
 			remoteInfo = Karere;
 		};
-		2F2801A724455A4900C160D0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9472044319ED916F00F6805F;
-			remoteInfo = MEGASDK;
-		};
 		7794AED9231E4E0A0039C1D2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 137361821A6664C300B740E8 /* Project object */;
@@ -2639,7 +2529,6 @@
 		2F26B3272578396E00486C40 /* PasteImagePreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewViewModel.swift; sourceTree = "<group>"; };
 		2F26B3312578467E00486C40 /* PasteImagePreviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteImagePreviewRouter.swift; sourceTree = "<group>"; };
 		2F28019C24455A4900C160D0 /* Karere.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Karere.xcodeproj; path = "Vendor/Karere/bindings/Objective-C/Karere.xcodeproj"; sourceTree = "<group>"; };
-		2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MEGASDK.xcodeproj; path = Vendor/SDK/bindings/ios/MEGASDK.xcodeproj; sourceTree = "<group>"; };
 		2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPreviewContentView.swift; sourceTree = "<group>"; };
 		2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichPreviewContentView.xib; sourceTree = "<group>"; };
@@ -3969,6 +3858,19 @@
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		A8C3CEF629BB661D00891CE1 /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDK; sourceTree = "<group>"; };
+		A8C3CF0129BB898200891CE1 /* libzen.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libzen.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libzen.xcframework; sourceTree = "<group>"; };
+		A8C3CF0229BB898200891CE1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcurl.xcframework; sourceTree = "<group>"; };
+		A8C3CF0329BB898200891CE1 /* libuv.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libuv.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libuv.xcframework; sourceTree = "<group>"; };
+		A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideocapture_objc.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libvideocapture_objc.xcframework; sourceTree = "<group>"; };
+		A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_api.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_api.xcframework; sourceTree = "<group>"; };
+		A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideoframebuffer_objc.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.xcframework; sourceTree = "<group>"; };
+		A8C3CF0729BB898300891CE1 /* libsodium.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libsodium.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libsodium.xcframework; sourceTree = "<group>"; };
+		A8C3CF0829BB898300891CE1 /* libmediainfo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libmediainfo.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libmediainfo.xcframework; sourceTree = "<group>"; };
+		A8C3CF0929BB898300891CE1 /* libcryptopp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcryptopp.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcryptopp.xcframework; sourceTree = "<group>"; };
+		A8C3CF0A29BB898300891CE1 /* libwebrtc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebrtc.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebrtc.xcframework; sourceTree = "<group>"; };
+		A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebsockets.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebsockets.xcframework; sourceTree = "<group>"; };
+		A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_video.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_video.xcframework; sourceTree = "<group>"; };
 		A8C47591299D02B70074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C47593299D02E60074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAccountType+Mapper.swift"; sourceTree = "<group>"; };
@@ -4929,39 +4831,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A836B9F628D46C090083039B /* libwebrtc.xcframework in Frameworks */,
-				A836B9F728D46C090083039B /* libnative_api.xcframework in Frameworks */,
-				A836B9F828D46C090083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A836B9F928D46C090083039B /* libvideocapture_objc.xcframework in Frameworks */,
-				A836B9FA28D46C090083039B /* libnative_video.xcframework in Frameworks */,
+				A8C3CF1729BB898400891CE1 /* libwebsockets.xcframework in Frameworks */,
+				A8C3CF1029BB898400891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
+				A8C3CF1129BB898400891CE1 /* libnative_api.xcframework in Frameworks */,
+				A8C3CF1229BB898400891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A8C3CF1829BB898400891CE1 /* libnative_video.xcframework in Frameworks */,
 				946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */,
-				A8C2AD2A28D0D50E00F656C9 /* libwebsockets.xcframework in Frameworks */,
-				A8D09D3228CFADD80045BF15 /* libcryptopp.xcframework in Frameworks */,
-				A8D09D2528CFA5160045BF15 /* libmediainfo.xcframework in Frameworks */,
-				A8D09D1E28CFA39C0045BF15 /* libzen.xcframework in Frameworks */,
-				A8D09D0F28CFA1980045BF15 /* libsodium.xcframework in Frameworks */,
-				A8D09D0828CFA0730045BF15 /* libuv.xcframework in Frameworks */,
-				A8D09D0128CF9EF50045BF15 /* libcurl.xcframework in Frameworks */,
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
 				A8F5156B27F6F58300AEE4D6 /* FLEX in Frameworks */,
-				A8F6A88D2716D3AA00AF7D92 /* LinkPresentation.framework in Frameworks */,
-				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
+				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
-				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
-				2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */,
-				2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
-				2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */,
-				2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */,
 				BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */,
-				A811DCC02476C4F7002FCD98 /* CoreServices.framework in Frameworks */,
-				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 				A863223F29091456004FED9B /* Settings in Frameworks */,
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
@@ -4971,16 +4858,13 @@
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
-				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
-				A811DCB82476C460002FCD98 /* MetalKit.framework in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
 				BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
-				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
@@ -4995,44 +4879,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A836BA0A28D46C440083039B /* libnative_api.xcframework in Frameworks */,
-				A836BA0B28D46C440083039B /* libnative_video.xcframework in Frameworks */,
-				A836BA0C28D46C440083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A8C3CF2829BB898D00891CE1 /* libnative_api.xcframework in Frameworks */,
+				A8C3CF2929BB898D00891CE1 /* libnative_video.xcframework in Frameworks */,
+				A8C3CF2C29BB898D00891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
+				A8C3CF2D29BB898D00891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A8C3CF2F29BB898D00891CE1 /* libwebsockets.xcframework in Frameworks */,
 				946ACCC3299C0ADD00E6C0F5 /* MEGAPresentation in Frameworks */,
-				A836BA0D28D46C440083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A836BA0E28D46C440083039B /* libwebrtc.xcframework in Frameworks */,
-				A8C2AD2628D0D4F900F656C9 /* libwebsockets.xcframework in Frameworks */,
-				A8D09D2E28CFADC00045BF15 /* libcryptopp.xcframework in Frameworks */,
-				A8D09D2228CFA4A80045BF15 /* libmediainfo.xcframework in Frameworks */,
-				A88FF24C29A394BF00CC51F4 /* QuickLookThumbnailing.framework in Frameworks */,
-				A8D09D1B28CFA37E0045BF15 /* libzen.xcframework in Frameworks */,
-				A8D09D0B28CFA13A0045BF15 /* libsodium.xcframework in Frameworks */,
-				A8D09D0428CF9F980045BF15 /* libuv.xcframework in Frameworks */,
-				A8D09D0028CF9E980045BF15 /* libcurl.xcframework in Frameworks */,
 				7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */,
+				A891E8A929C1E0B00020072A /* MEGASdk in Frameworks */,
 				B63D341C2898A9E90059DE66 /* MEGASwift in Frameworks */,
-				7794AEE6231E65570039C1D2 /* libMEGASDK.a in Frameworks */,
-				A811DCBB2476C4BC002FCD98 /* MetalKit.framework in Frameworks */,
-				7794AEE9231E6BF90039C1D2 /* AudioToolbox.framework in Frameworks */,
-				7794AEED231E6C8C0039C1D2 /* AVFoundation.framework in Frameworks */,
-				7794AEFC231E76900039C1D2 /* CoreMedia.framework in Frameworks */,
-				7794AF0F231E7D340039C1D2 /* CoreVideo.framework in Frameworks */,
 				A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */,
-				7794AEEF231E6CE10039C1D2 /* ImageIO.framework in Frameworks */,
-				7794AF10231E7D4E0039C1D2 /* Metal.framework in Frameworks */,
-				7794AF15231E7EF00039C1D2 /* QuartzCore.framework in Frameworks */,
-				7794AF21232100F30039C1D2 /* Security.framework in Frameworks */,
-				7794AEEC231E6C610039C1D2 /* UIKit.framework in Frameworks */,
-				7794AF11231E7D7B0039C1D2 /* VideoToolbox.framework in Frameworks */,
 				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
 				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
-				7794AEFB231E76740039C1D2 /* libresolv.tbd in Frameworks */,
 				BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */,
 				A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */,
 				B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */,
-				7794AEF8231E757E0039C1D2 /* libsqlite3.tbd in Frameworks */,
-				7794AEF6231E753F0039C1D2 /* libz.tbd in Frameworks */,
-				A811DCBF2476C4EB002FCD98 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5040,44 +4901,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A836BA0F28D46C550083039B /* libnative_api.xcframework in Frameworks */,
-				A836BA1028D46C550083039B /* libnative_video.xcframework in Frameworks */,
-				A836BA1128D46C550083039B /* libvideocapture_objc.xcframework in Frameworks */,
+				A8C3CF3429BB899200891CE1 /* libnative_api.xcframework in Frameworks */,
+				A8C3CF3529BB899200891CE1 /* libnative_video.xcframework in Frameworks */,
+				A8C3CF3829BB899200891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
+				A8C3CF3929BB899200891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A8C3CF3B29BB899200891CE1 /* libwebsockets.xcframework in Frameworks */,
 				946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */,
-				A836BA1228D46C550083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A836BA1328D46C550083039B /* libwebrtc.xcframework in Frameworks */,
-				A8C2AD2528D0D4F600F656C9 /* libwebsockets.xcframework in Frameworks */,
-				A8D09D2D28CFADB80045BF15 /* libcryptopp.xcframework in Frameworks */,
-				A8D09D2028CFA4880045BF15 /* libmediainfo.xcframework in Frameworks */,
-				A88FF24D29A394E700CC51F4 /* QuickLookThumbnailing.framework in Frameworks */,
-				A8D09D1C28CFA3830045BF15 /* libzen.xcframework in Frameworks */,
-				A8D09D0E28CFA1680045BF15 /* libsodium.xcframework in Frameworks */,
-				A8D09D0628CF9FC70045BF15 /* libuv.xcframework in Frameworks */,
-				A8D09CFD28CF9E300045BF15 /* libcurl.xcframework in Frameworks */,
 				835EE45125825FFE00D8E3B8 /* libKarere.a in Frameworks */,
-				835EE3F82582498500D8E3B8 /* libresolv.tbd in Frameworks */,
-				835EE3EF2582494F00D8E3B8 /* libz.tbd in Frameworks */,
 				B6A01BAE289A61E000B503FD /* MEGAFoundation in Frameworks */,
-				835EE4132582513700D8E3B8 /* CoreServices.framework in Frameworks */,
-				835EE4382582562300D8E3B8 /* VideoToolbox.framework in Frameworks */,
-				835EE4392582562C00D8E3B8 /* ImageIO.framework in Frameworks */,
+				A891E8A329C1E07C0020072A /* MEGASdk in Frameworks */,
 				835EE401258249D900D8E3B8 /* libc++.tbd in Frameworks */,
-				835EE41C2582515F00D8E3B8 /* Security.framework in Frameworks */,
-				835EE425258251A600D8E3B8 /* QuartzCore.framework in Frameworks */,
-				835EE43B2582564300D8E3B8 /* Metal.framework in Frameworks */,
-				835EE43C2582565300D8E3B8 /* CoreVideo.framework in Frameworks */,
-				835EE44825825F3A00D8E3B8 /* CoreMedia.framework in Frameworks */,
-				835EE43D2582565B00D8E3B8 /* AVFoundation.framework in Frameworks */,
 				A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */,
-				835EE43E2582566D00D8E3B8 /* AudioToolbox.framework in Frameworks */,
-				835EE43F2582567700D8E3B8 /* MetalKit.framework in Frameworks */,
-				835EE40A2582511200D8E3B8 /* libsqlite3.tbd in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
 				B63D341E2898AE3B0059DE66 /* MEGASwift in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
-				835EE3B2258242F800D8E3B8 /* libMEGASDK.a in Frameworks */,
-				83199F1525556CDA00344531 /* SwiftUI.framework in Frameworks */,
-				83199F1325556CDA00344531 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5095,54 +4932,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A836BA0528D46C310083039B /* libnative_api.xcframework in Frameworks */,
-				A836BA0628D46C310083039B /* libnative_video.xcframework in Frameworks */,
-				A836BA0728D46C310083039B /* libvideocapture_objc.xcframework in Frameworks */,
-				A836BA0828D46C310083039B /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A836BA0928D46C310083039B /* libwebrtc.xcframework in Frameworks */,
-				A8C2AD2728D0D4FE00F656C9 /* libwebsockets.xcframework in Frameworks */,
-				A8D09D2F28CFADC80045BF15 /* libcryptopp.xcframework in Frameworks */,
-				A8D09D2328CFA4AE0045BF15 /* libmediainfo.xcframework in Frameworks */,
-				A8D09D1A28CFA3770045BF15 /* libzen.xcframework in Frameworks */,
-				A8D09D0D28CFA15E0045BF15 /* libsodium.xcframework in Frameworks */,
-				A8D09D0728CFA0130045BF15 /* libuv.xcframework in Frameworks */,
-				A8D09CFF28CF9E710045BF15 /* libcurl.xcframework in Frameworks */,
+				A891E8A729C1E0A70020072A /* MEGASdk in Frameworks */,
+				A8C3CF1C29BB898900891CE1 /* libnative_api.xcframework in Frameworks */,
+				A8C3CF1D29BB898900891CE1 /* libnative_video.xcframework in Frameworks */,
+				A8C3CF2029BB898900891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
+				A8C3CF2129BB898900891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A8C3CF2329BB898900891CE1 /* libwebsockets.xcframework in Frameworks */,
 				BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				B63995442898D03400EA88F1 /* MEGASwiftUI in Frameworks */,
 				B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */,
-				A88FF24E29A3950A00CC51F4 /* QuickLookThumbnailing.framework in Frameworks */,
 				BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */,
-				A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */,
-				A811DCC22476C51C002FCD98 /* Photos.framework in Frameworks */,
 				94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */,
-				94B28C261F0E464C000331E6 /* libMEGASDK.a in Frameworks */,
-				943F8B331EF286C000AFD89F /* AVFoundation.framework in Frameworks */,
-				943F8B361EF286D200AFD89F /* CoreData.framework in Frameworks */,
 				B63D341A2898A9E20059DE66 /* MEGASwift in Frameworks */,
-				943F8B301EF286A800AFD89F /* CoreGraphics.framework in Frameworks */,
-				943F8B371EF286D600AFD89F /* CoreMedia.framework in Frameworks */,
-				943F8B341EF286C700AFD89F /* ImageIO.framework in Frameworks */,
 				A8ABA36E292FA40000487D3A /* MEGAData in Frameworks */,
 				BF0CB93E2803AF4A00C21F11 /* SAMKeychain in Frameworks */,
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
-				943F8B3A1EF286EA00AFD89F /* LocalAuthentication.framework in Frameworks */,
-				943F8B3C1EF286F600AFD89F /* MediaPlayer.framework in Frameworks */,
 				B610447228979E9B00AAECF4 /* MEGADomain in Frameworks */,
-				943F8B2F1EF2869700AFD89F /* QuartzCore.framework in Frameworks */,
 				BF1164CA27F6A81F00E5C5A4 /* PureLayout in Frameworks */,
-				943F8B311EF286AC00AFD89F /* Security.framework in Frameworks */,
 				B65D17D12899E19600D5AD33 /* MEGAUIKit in Frameworks */,
-				943F8B3B1EF286EE00AFD89F /* SystemConfiguration.framework in Frameworks */,
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
-				943F8B321EF286B100AFD89F /* UIKit.framework in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
-				943F8B2C1EF2865600AFD89F /* libresolv.tbd in Frameworks */,
-				943F8B2D1EF2865F00AFD89F /* libsqlite3.tbd in Frameworks */,
 				943F8B2E1EF2866A00AFD89F /* libstdc++.tbd in Frameworks */,
 				946ACCC9299C0B5700E6C0F5 /* MEGAPresentation in Frameworks */,
-				A811DCBA2476C47F002FCD98 /* MetalKit.framework in Frameworks */,
-				A811DCBE2476C4E0002FCD98 /* CoreServices.framework in Frameworks */,
-				943F8B2B1EF2864D00AFD89F /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5150,22 +4961,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A85C3C3D29B6408D00FF2D17 /* libsodium.xcframework in Frameworks */,
-				A85C3C2429B63F4200FF2D17 /* libwebrtc.xcframework in Frameworks */,
-				A85C3C1F29B63F3100FF2D17 /* libcryptopp.xcframework in Frameworks */,
-				A85C3C2029B63F3100FF2D17 /* libcurl.xcframework in Frameworks */,
-				A85C3C2129B63F3100FF2D17 /* libmediainfo.xcframework in Frameworks */,
-				A85C3C2229B63F3100FF2D17 /* libuv.xcframework in Frameworks */,
-				A85C3C2329B63F3100FF2D17 /* libzen.xcframework in Frameworks */,
-				A88FF24A29A38CA300CC51F4 /* QuickLookThumbnailing.framework in Frameworks */,
+				A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */,
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
-				A8399F99296D73670062B6BC /* libz.tbd in Frameworks */,
-				A8399F96296D73000062B6BC /* libresolv.tbd in Frameworks */,
-				A8399F95296D72F90062B6BC /* libsqlite3.tbd in Frameworks */,
 				A8399F93296D72A90062B6BC /* libc++.tbd in Frameworks */,
 				A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */,
-				A8399F8B296D71980062B6BC /* libMEGASDK.a in Frameworks */,
-				A8399F44296C40060062B6BC /* UniformTypeIdentifiers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5622,14 +5421,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2F2801A424455A4900C160D0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2F2801A824455A4900C160D0 /* libMEGASDK.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		2F7B67DA24AEDD6B008291D7 /* ReactionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -5906,7 +5697,6 @@
 			isa = PBXGroup;
 			children = (
 				2F28019C24455A4900C160D0 /* Karere.xcodeproj */,
-				2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */,
 				B695B5F4264B43160050DF09 /* SVProgressHUD */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
 			);
@@ -6147,6 +5937,18 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A8C3CF0929BB898300891CE1 /* libcryptopp.xcframework */,
+				A8C3CF0229BB898200891CE1 /* libcurl.xcframework */,
+				A8C3CF0829BB898300891CE1 /* libmediainfo.xcframework */,
+				A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */,
+				A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */,
+				A8C3CF0729BB898300891CE1 /* libsodium.xcframework */,
+				A8C3CF0329BB898200891CE1 /* libuv.xcframework */,
+				A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */,
+				A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */,
+				A8C3CF0A29BB898300891CE1 /* libwebrtc.xcframework */,
+				A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */,
+				A8C3CF0129BB898200891CE1 /* libzen.xcframework */,
 				A88FF24929A38CA300CC51F4 /* QuickLookThumbnailing.framework */,
 				A836B9F228D46C080083039B /* libnative_api.xcframework */,
 				A836B9F528D46C090083039B /* libnative_video.xcframework */,
@@ -9548,6 +9350,7 @@
 		B6061FE528978B040094087E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				A8C3CEF629BB661D00891CE1 /* MEGASDK */,
 				A861B8332907F5DB00AB06D4 /* Features */,
 				A89CE55328B7D23F002802BC /* MEGAData */,
 				B6061FE82897909C0094087E /* MEGADomain */,
@@ -11551,6 +11354,7 @@
 				A89CE55428B7D573002802BC /* MEGAData */,
 				A863223E29091456004FED9B /* Settings */,
 				946ACCC4299C0B0000E6C0F5 /* MEGAPresentation */,
+				A891E8A429C1E09D0020072A /* MEGASdk */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -11577,6 +11381,7 @@
 				A86280BB291E8D510010D6E0 /* MEGADomain */,
 				A82A5CAC292E6AEE00EF700A /* MEGAData */,
 				946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */,
+				A891E8A829C1E0B00020072A /* MEGASdk */,
 			);
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
@@ -11602,6 +11407,7 @@
 				B63D341D2898AE3B0059DE66 /* MEGASwift */,
 				B6A01BAD289A61E000B503FD /* MEGAFoundation */,
 				946ACCC6299C0B3500E6C0F5 /* MEGAPresentation */,
+				A891E8A229C1E07C0020072A /* MEGASdk */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -11656,6 +11462,7 @@
 				B65D17D02899E19600D5AD33 /* MEGAUIKit */,
 				B6A01BAF289A623C00B503FD /* MEGAFoundation */,
 				A8ABA36D292FA40000487D3A /* MEGAData */,
+				A891E8A629C1E0A70020072A /* MEGASdk */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -11677,6 +11484,7 @@
 			packageProductDependencies = (
 				A8399FB8296DD5A70062B6BC /* SAMKeychain */,
 				A8399FBA296DD5F10062B6BC /* MEGADomain */,
+				A891E8AA29C1E0C40020072A /* MEGASdk */,
 			);
 			productName = MEGAPickerFileProvider;
 			productReference = A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */;
@@ -11861,10 +11669,6 @@
 					ProductGroup = 2F28019D24455A4900C160D0 /* Products */;
 					ProjectRef = 2F28019C24455A4900C160D0 /* Karere.xcodeproj */;
 				},
-				{
-					ProductGroup = 2F2801A424455A4900C160D0 /* Products */;
-					ProjectRef = 2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -11886,13 +11690,6 @@
 			fileType = archive.ar;
 			path = libKarere.a;
 			remoteRef = 2F2801A024455A4900C160D0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2F2801A824455A4900C160D0 /* libMEGASDK.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMEGASDK.a;
-			remoteRef = 2F2801A724455A4900C160D0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -14594,7 +14391,6 @@
 					iMEGA/Vendor/PureLayout/PureLayout,
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/FrameAccessor,
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
@@ -14604,7 +14400,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 9.10;
@@ -14621,9 +14416,8 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC,
+					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -14667,7 +14461,6 @@
 					iMEGA/Vendor/PureLayout/PureLayout,
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/FrameAccessor,
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -14676,7 +14469,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 9.10;
@@ -14693,9 +14485,8 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC,
+					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -14740,7 +14531,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MARKETING_VERSION = 9.10;
@@ -14759,7 +14549,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -14805,7 +14594,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MARKETING_VERSION = 9.10;
@@ -14822,7 +14610,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -14868,7 +14655,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MARKETING_VERSION = 9.10;
@@ -14882,7 +14668,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -14929,7 +14714,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MARKETING_VERSION = 9.10;
@@ -14941,7 +14725,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -15072,7 +14855,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 9.10;
@@ -15085,7 +14867,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -15136,7 +14917,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 9.10;
@@ -15149,7 +14929,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -15183,10 +14962,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 9.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -15201,7 +14977,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/**";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -15234,10 +15010,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 9.10;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -15251,7 +15024,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/**";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -15284,10 +15057,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 9.10;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -15301,7 +15071,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/**";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = QA;
 		};
@@ -15470,7 +15240,6 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
@@ -15484,9 +15253,9 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
+					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = Debug;
@@ -15527,7 +15296,6 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
@@ -15540,9 +15308,9 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
+					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = Release;
@@ -15642,7 +15410,6 @@
 					iMEGA/Vendor/PureLayout/PureLayout,
 					iMEGA/Vendor/Import,
 					iMEGA/Vendor/FrameAccessor,
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -15651,7 +15418,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 9.10;
@@ -15668,9 +15434,8 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC,
+					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -15721,7 +15486,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 9.10;
@@ -15734,7 +15498,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -15780,7 +15543,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MARKETING_VERSION = 9.10;
@@ -15797,7 +15559,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -15840,7 +15601,6 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
@@ -15853,9 +15613,9 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
-					"iMEGA/Vendor/SDK/bindings/ios/**",
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
+					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = QA;
@@ -15900,7 +15660,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MARKETING_VERSION = 9.10;
@@ -15912,7 +15671,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/SDK/bindings/ios,
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
 				);
@@ -16288,6 +16046,26 @@
 		A863223E29091456004FED9B /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		A891E8A229C1E07C0020072A /* MEGASdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASdk;
+		};
+		A891E8A429C1E09D0020072A /* MEGASdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASdk;
+		};
+		A891E8A629C1E0A70020072A /* MEGASdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASdk;
+		};
+		A891E8A829C1E0B00020072A /* MEGASdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASdk;
+		};
+		A891E8AA29C1E0C40020072A /* MEGASdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASdk;
 		};
 		A89CE55428B7D573002802BC /* MEGAData */ = {
 			isa = XCSwiftPackageProductDependency;
