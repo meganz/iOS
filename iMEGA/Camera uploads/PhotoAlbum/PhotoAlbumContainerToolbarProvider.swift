@@ -21,13 +21,14 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)
         
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
         toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         
-        toolbar.topAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor, constant: 0).isActive = true
-        toolbar.leadingAnchor.constraint(equalTo: tabBarController.tabBar.leadingAnchor, constant: 0).isActive = true
-        toolbar.trailingAnchor.constraint(equalTo: tabBarController.tabBar.trailingAnchor, constant: 0).isActive = true
-    
+        toolbar.autoPinEdge(.top, to: .top, of: tabBarController.tabBar)
+        let bottomAnchor = tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor
+        toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        toolbar.autoPinEdge(.leading, to: .leading, of: tabBarController.tabBar)
+        toolbar.autoPinEdge(.trailing, to: .trailing, of: tabBarController.tabBar)
+        
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 1.0
         }
