@@ -34,7 +34,7 @@ git submodule update --init --recursive
 
 #### Download 3rdparty packages
 1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/AENVGYjC#HhUgIOBY69zVZZtOa4e6vdySpHefnUo4GcoQYElmEo4
-2. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
+2. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`.
 
 #### Open and Run the project
 5. Open `iMEGA.xcworkspace`.
@@ -43,7 +43,7 @@ git submodule update --init --recursive
 
 ## Build 3rdparty packages manually
 If you want to build the third party dependencies by yourself: 
-1. Open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. 
+1. Open a terminal in the directory `Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`. 
 2. Run sh build-all.sh --enable-chat (Wait until the process ends, it will take some time, ~30 minutes). 
 
 - To build all third party dependencies, you need to have installed: `autoconf`, `automake`, `cmake` and `libtool`. 
