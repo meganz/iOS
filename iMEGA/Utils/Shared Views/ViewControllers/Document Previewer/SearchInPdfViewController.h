@@ -3,11 +3,7 @@
 
 @class PDFDocument, PDFSelection;
 
-@protocol SearchInPdfViewControllerProtocol
-
-- (void)didSelectSearchResult:(PDFSelection *)result;
-
-@end
+@protocol SearchInPdfViewControllerProtocol;
 
 @interface SearchInPdfViewController : UIViewController
 

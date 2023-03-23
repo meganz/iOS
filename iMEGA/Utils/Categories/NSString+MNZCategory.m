@@ -96,12 +96,19 @@ static NSString* const B = @"[B]";
     return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
+- (BOOL)mnz_isAudioPlayListPathExtension {
+    // plan to add m3u support
+    NSArray<NSString *> *supportedExtensions = @[@"cue"];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
 - (BOOL)mnz_isVisualMediaPathExtension {
     return self.mnz_isImagePathExtension || self.mnz_isVideoPathExtension;
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
+    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension || self.mnz_isAudioPlayListPathExtension;
 }
 
 - (BOOL)mnz_isEditableTextFilePathExtension {

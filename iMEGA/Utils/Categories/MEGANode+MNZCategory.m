@@ -17,7 +17,6 @@
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
-#import "MEGA-Swift.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -29,12 +28,11 @@
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "MEGAQLPreviewController.h"
 #import "OnboardingViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGA-Swift.h"
 
 @implementation MEGANode (MNZCategory)
 

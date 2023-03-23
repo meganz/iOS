@@ -64,6 +64,10 @@ final class AudioPlayer: NSObject {
         currentItem()?.artist
     }
     
+    var currentAlbum: String? {
+        currentItem()?.album
+    }
+    
     var currentThumbnail: UIImage? {
         currentItem()?.artwork
     }
@@ -151,7 +155,7 @@ final class AudioPlayer: NSObject {
         setAudioPlayerSession(active: true)
         
         queuePlayer = AVQueuePlayer(items: tracks)
-        
+        queuePlayer?.actionAtItemEnd = .none
         queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
         queuePlayer?.volume = 1.0
         
@@ -187,6 +191,13 @@ final class AudioPlayer: NSObject {
     }
     
     private func configurePlayer() {
+        guard let currentItem = queuePlayer?.currentItem as? AudioPlayerItem else {
+            return
+        }
+        if let startTime = currentItem.startTimeStamp {
+            seekPlayerItem(currentItem, to: startTime)
+        }
+        
         isAutoPlayEnabled ? play() : pause()
         
         opQueue.cancelAllOperations()
@@ -300,6 +311,14 @@ final class AudioPlayer: NSObject {
         tracks.compactMap{$0.url}
             .contains(url)
     }
+    
+    func seekPlayerItem( _ playerItem: AVPlayerItem, to time: Double) {
+        let cmTime = CMTime(seconds: time, preferredTimescale: 1)
+        if CMTIME_IS_VALID(cmTime)  {
+            playerItem.seek(to: cmTime, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
+        }
+    }
+    
 }
 
 extension AudioPlayer: AudioPlayerTimerProtocol {

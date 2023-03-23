@@ -59,25 +59,98 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Node Init
     private func initialize(with node: MEGANode) {
+        
         if configEntity.isFileLink {
+            // play audio file link
             guard let track = streamingInfoUseCase?.info(from: node) else {
                 router.dismiss()
                 return
             }
             initialize(tracks: [track], currentTrack: track)
-        } else {
-            guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
-                                                nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
-                
-                guard let track = streamingInfoUseCase?.info(from: node) else {
-                    router.dismiss()
+            return
+        }
+        
+        let isNodePlaylist = node.name != nil && node.name!.mnz_isAudioPlayListPathExtension
+        if isNodePlaylist {
+            // play cloud audio playlist
+            var childrenInPlaylist: [AudioPlayerItem] = []
+            var currentTrack: AudioPlayerItem?
+            let group = DispatchGroup()
+            group.enter()
+            
+            node.readTextBasedFileContent { content in
+                if content == nil {
+                    self.router.dismiss()
+                    group.leave()
                     return
                 }
-                initialize(tracks: [track], currentTrack: track)
+                let parser = CUEPlaylistParser(cueContent: content!)
+                if parser.tracks.isEmpty {
+                    self.router.dismiss()
+                    group.leave()
+                    return
+                }
+                guard let children = self.configEntity.isFolderLink ? self.nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
+                        self.nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle) else {
+                    self.router.dismiss()
+                    group.leave()
+                    return
+                }
+                childrenInPlaylist = parser.tracks.filter({ track in
+                    children.contains { audioPlayerItem in
+                        track.fileName == audioPlayerItem.name
+                    }
+                }).map({ track in
+                    let audioPlayerItems = children.filter { $0.name == track.fileName }
+                    let audioPlayerItem = audioPlayerItems[0]
+                    let newAudioPlayerItem = AudioPlayerItem(name: audioPlayerItem.name, url: audioPlayerItem.url, node: audioPlayerItem.node)
+                    newAudioPlayerItem.title = track.title
+                    newAudioPlayerItem.artist = track.artist
+                    newAudioPlayerItem.album = track.album
+                    newAudioPlayerItem.startTimeStamp = track.startTime
+                    newAudioPlayerItem.configuredTimeOffsetFromLive = CMTime(seconds: track.startTime, preferredTimescale: 1)
+                    newAudioPlayerItem.forwardPlaybackEndTime = track.endTime == nil ? CMTime.invalid : CMTime(seconds: track.endTime!, preferredTimescale: 1)
+                    newAudioPlayerItem.reversePlaybackEndTime = CMTime(seconds: track.startTime, preferredTimescale: 1)
+                    if !track.title.isEmpty {
+                        newAudioPlayerItem.name = track.title
+                    }
+                    return newAudioPlayerItem
+                })
+                if childrenInPlaylist.isEmpty {
+                    self.router.dismiss()
+                    group.leave()
+                    return
+                }
+                currentTrack = childrenInPlaylist.first!
+                group.leave()
+            }
+            group.wait()
+            if childrenInPlaylist.isEmpty {
+                router.dismiss()
+                return
+            } else {
+                self.initialize(tracks: childrenInPlaylist, currentTrack: currentTrack!)
+            }
+            return
+        }
+        
+        // play cloud audio file
+        if let allChildrenNode = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
+            nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle) {
+            let childrenNodeWithoutPlaylist = allChildrenNode.filter({ !$0.name.mnz_isAudioPlayListPathExtension })
+            let currentTrack = childrenNodeWithoutPlaylist.first(where: { $0.node?.handle == node.handle })
+            if currentTrack != nil {
+                initialize(tracks: childrenNodeWithoutPlaylist, currentTrack: currentTrack!)
+            } else {
+                router.dismiss()
                 return
             }
-            initialize(tracks: children, currentTrack: currentTrack)
+        } else {
+            guard let track = streamingInfoUseCase?.info(from: node) else {
+                router.dismiss()
+                return
+            }
+            initialize(tracks: [track], currentTrack: track)
         }
     }
     
