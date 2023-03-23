@@ -80,6 +80,11 @@ final class AlbumCellViewModel: ObservableObject {
         loadingTask?.cancel()
     }
     
+    func onAlbumTap() {
+        guard !album.systemAlbum else { return }
+        isSelected.toggle()
+    }
+    
     // MARK: Private
     
     @MainActor

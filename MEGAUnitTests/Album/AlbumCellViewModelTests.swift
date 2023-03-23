@@ -238,4 +238,28 @@ final class AlbumCellViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         XCTAssertEqual(result, [1.0, 0.5])
     }
+    
+    func testOnAlbumTap_whenUserTapOnAlbumCell_ShouldToggleForCustomAlbums() {
+        let sut = AlbumCellViewModel(
+            thumbnailUseCase: MockThumbnailUseCase(),
+            album: AlbumEntity(id: 4, name: "User", coverNode: NodeEntity(handle: 3),
+                               count: 1, type: .user, modificationTime: nil),
+            selection: AlbumSelection())
+        
+        XCTAssertFalse(sut.isSelected)
+        sut.onAlbumTap()
+        XCTAssertTrue(sut.isSelected)
+    }
+    
+    func testOnAlbumTap_whenUserTapOnAlbumCell_ShouldNotToggleForSystemAlbums() {
+        let sut = AlbumCellViewModel(
+            thumbnailUseCase: MockThumbnailUseCase(),
+            album: AlbumEntity(id: 4, name: "Gif", coverNode: NodeEntity(handle: 3),
+                               count: 1, type: .gif, modificationTime: nil),
+            selection: AlbumSelection())
+        
+        XCTAssertFalse(sut.isSelected)
+        sut.onAlbumTap()
+        XCTAssertFalse(sut.isSelected)
+    }
 }
