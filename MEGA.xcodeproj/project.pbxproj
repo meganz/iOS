@@ -1406,6 +1406,8 @@
 		A85C3C2329B63F3100FF2D17 /* libzen.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D1828CFA36F0045BF15 /* libzen.xcframework */; };
 		A85C3C2429B63F4200FF2D17 /* libwebrtc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A836B9F128D46C080083039B /* libwebrtc.xcframework */; };
 		A85C3C3D29B6408D00FF2D17 /* libsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D09D0928CFA10F0045BF15 /* libsodium.xcframework */; };
+		A85CC10329CB32650012F98D /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */; };
+		A85CC10429CB35A30012F98D /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A85EB25C2975724300AEDA05 /* NodeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */; };
 		A85EB25D2975728800AEDA05 /* MEGANodeLabel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */; };
@@ -3893,6 +3895,7 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
+		A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
@@ -7982,6 +7985,7 @@
 			children = (
 				B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */,
 				831B4912256FED6F0086002B /* Info.plist */,
+				A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -12011,6 +12015,7 @@
 				5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
+				A85CC10429CB35A30012F98D /* AppIntentVocabulary.plist in Resources */,
 				BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */,
 				BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */,
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
@@ -12094,6 +12099,7 @@
 				B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */,
 				B5A9963D282CF625008B8ADD /* Localizable.stringsdict in Resources */,
 				8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */,
+				A85CC10329CB32650012F98D /* AppIntentVocabulary.plist in Resources */,
 				B6873AF725A6C86100BBD15A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
