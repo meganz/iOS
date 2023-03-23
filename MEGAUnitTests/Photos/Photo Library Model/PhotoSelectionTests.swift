@@ -13,6 +13,7 @@ class PhotoSelectionTests: XCTestCase {
     }
 
     func testEditMode_status() {
+        let exp = expectation(description: "Should change statuses")
         let statuses: [EditMode] = [.active, .inactive, .transient]
         
         sut.$editMode
@@ -21,12 +22,14 @@ class PhotoSelectionTests: XCTestCase {
             .first()
             .sink {
                 XCTAssertEqual($0, statuses)
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.editMode = .active
         sut.editMode = .inactive
         sut.editMode = .transient
+        wait(for: [exp], timeout: 1.0)
     }
     
     func testEditMode_deselectAll() throws {
@@ -58,5 +61,29 @@ class PhotoSelectionTests: XCTestCase {
         
         sut.allSelected = false
         XCTAssertTrue(sut.photos.isEmpty)
+    }
+    
+    func testIsSelectionLimitReachedPublisher_onNoLimitSet_shouldReturnNil() {
+        XCTAssertNil(sut.isSelectionLimitReachedPublisher)
+    }
+    
+    func testIsSelectionLimitReacheched_onLimitReached_publisherShouldEmitTrue() throws {
+        let limit = 3
+        let selection = PhotoSelection(selectLimit: limit)
+        let exp = expectation(description: "Should change based on selection limit")
+        
+        try XCTUnwrap(selection.isSelectionLimitReachedPublisher)
+            .collect(3)
+            .sink {
+                XCTAssertEqual($0, [false, true, false])
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        selection.setSelectedPhotos([NodeEntity(handle: 1)])
+        let maxPhotos = (1...limit).map { NodeEntity(handle: HandleEntity($0)) }
+        selection.setSelectedPhotos(maxPhotos)
+        selection.setSelectedPhotos([])
+        
+        wait(for: [exp], timeout: 1.0)
     }
 }

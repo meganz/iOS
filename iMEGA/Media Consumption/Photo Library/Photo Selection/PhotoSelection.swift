@@ -4,6 +4,22 @@ import SwiftUI
 import MEGADomain
 
 final class PhotoSelection: ObservableObject {
+    private let selectLimit: Int?
+    
+    init(selectLimit: Int? = nil) {
+        self.selectLimit = selectLimit
+    }
+    
+    var isSelectionLimitReachedPublisher: AnyPublisher<Bool, Never>? {
+        guard let selectLimit else {
+            return nil
+        }
+        return $photos
+            .map { $0.count >= selectLimit }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
     @Published var editMode: EditMode = .inactive {
         willSet {
             if !newValue.isEditing {

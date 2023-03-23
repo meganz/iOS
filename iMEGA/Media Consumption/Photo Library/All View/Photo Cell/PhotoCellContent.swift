@@ -5,7 +5,7 @@ struct PhotoCellContent: View {
     var isSelfSizing = true
     
     private var tap: some Gesture { TapGesture().onEnded { _ in
-        viewModel.isSelected.toggle()
+        viewModel.select()
     }}
     
     var body: some View {
@@ -18,6 +18,7 @@ struct PhotoCellContent: View {
         }
         .favorite(viewModel.shouldShowFavorite)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
+        .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .onAppear {
             viewModel.startLoadingThumbnail()
