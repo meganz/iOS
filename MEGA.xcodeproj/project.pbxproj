@@ -1417,6 +1417,9 @@
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
 		A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */; };
+		A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */; };
+		A868537A29CA16BB006C7A58 /* AppGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665A6A2283755AA00A251C3 /* AppGroupContainer.swift */; };
+		A868537B29CA1707006C7A58 /* MEGARequest+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
@@ -14049,6 +14052,7 @@
 				A8399FB7296DD5550062B6BC /* CredentialRepository.swift in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */,
+				A868537A29CA16BB006C7A58 /* AppGroupContainer.swift in Sources */,
 				A86FB61F297AF40500561DF8 /* TransferStageEntity+Mapper.swift in Sources */,
 				A8399F9F296D7D920062B6BC /* RequestDelegate.swift in Sources */,
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
@@ -14060,6 +14064,8 @@
 				A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */,
 				A899466F29716A69008448C4 /* AuthRepository.swift in Sources */,
 				A85EB25E297572BE00AEDA05 /* NodeTypeEntity+Mapper.swift in Sources */,
+				A868537B29CA1707006C7A58 /* MEGARequest+Mapper.swift in Sources */,
+				A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */,
 				A86FB61D297AF3D500561DF8 /* TransferErrorEntity+Mapper.swift in Sources */,
 				A86FB61B297AF30A00561DF8 /* TransferEntity+Mapper.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstance.swift in Sources */,

@@ -3,7 +3,7 @@ import MEGADomain
 
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     static var newRepo: ThumbnailRepository {
-        ThumbnailRepository(sdk: MEGASdkManager.sharedMEGASdk(), fileManager: .default)
+        ThumbnailRepository(sdk: MEGASdk.shared, fileManager: .default)
     }
     
     private enum Constants {

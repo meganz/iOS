@@ -8,6 +8,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     private lazy var nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
     private lazy var transferUseCase = TransferUseCase(repo: TransferRepository.newRepo)
     private lazy var nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
+    private var thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
     
     override init() {
         super.init()
@@ -227,6 +228,47 @@ final class FileProviderExtension: NSFileProviderExtension {
         }
         
         return FileProviderItem(node: node.toNodeEntity())
+    }
+    
+    
+    // MARK: - Accesing thumbnails
+    
+    override func fetchThumbnails(for itemIdentifiers: [NSFileProviderItemIdentifier],
+                                  requestedSize size: CGSize,
+                                  perThumbnailCompletionHandler: @escaping (NSFileProviderItemIdentifier, Data?, Error?) -> Void,
+                                  completionHandler: @escaping (Error?) -> Void) -> Progress {
+        
+        let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))
+        
+        for identifier in itemIdentifiers {
+            let node = node(for: identifier)
+            guard let node else {
+                perThumbnailCompletionHandler(identifier, nil, nil)
+                continue
+            }
+            
+            Task {
+                var error: Error?
+                var data: Data?
+                do {
+                    let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
+                    guard progress.isCancelled != true else {
+                        return
+                    }
+                    
+                    data = try Data(contentsOf:thumbnailEntity.url, options: Data.ReadingOptions.alwaysMapped)
+                } catch let mappingError {
+                    error = mappingError
+                }
+                progress.completedUnitCount += 1
+                perThumbnailCompletionHandler(identifier, data, error)
+                if progress.isFinished {
+                    completionHandler(error)
+                }
+            }
+        }
+        
+        return progress
     }
     
     // MARK: - Private
