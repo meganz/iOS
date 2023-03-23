@@ -921,4 +921,77 @@ final class PhotoCellViewModelTests: XCTestCase {
             XCTAssertFalse(sut.shouldShowFavorite)
         }
     }
+    
+    func testSelect_onEditModeNoLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase(),
+                                     mediaUseCase: MockMediaUseCase())
+        allViewModel.libraryViewModel.selection.editMode = .active
+        XCTAssertFalse(sut.isSelected)
+        sut.select()
+        XCTAssertTrue(sut.isSelected)
+    }
+    
+    func testSelect_onEditModeAndLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
+        let selectionLimit = 3
+        let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, selectLimit: selectionLimit)
+        libraryViewModel.selectedMode = .all
+        
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
+            thumbnailUseCase: MockThumbnailUseCase(),
+            mediaUseCase: MockMediaUseCase()
+        )
+        libraryViewModel.selection.editMode = .active
+        XCTAssertFalse(sut.isSelected)
+        sut.select()
+        XCTAssertTrue(sut.isSelected)
+    }
+    
+    func testSelect_onEditModeItemNotSelectedAndLimitReached_shouldNotChangeIsSelectedOnCellTap() throws {
+        let selectionLimit = 3
+        let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, selectLimit: selectionLimit)
+        libraryViewModel.selectedMode = .all
+        
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
+            thumbnailUseCase: MockThumbnailUseCase(),
+            mediaUseCase: MockMediaUseCase()
+        )
+        libraryViewModel.selection.editMode = .active
+        XCTAssertFalse(sut.isSelected)
+        let photosToSelect = Array(library.allPhotos.filter { $0 != photo }.prefix(selectionLimit))
+        libraryViewModel.selection.setSelectedPhotos(photosToSelect)
+        sut.select()
+        XCTAssertFalse(sut.isSelected)
+    }
+    
+    func testShouldApplyContentOpacity_onEditModeItemIsNotSelectedAndLimitReached_shouldChangeContentOpacity() throws {
+        let selectionLimit = 3
+        let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, selectLimit: selectionLimit)
+        libraryViewModel.selectedMode = .all
+        
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
+            thumbnailUseCase: MockThumbnailUseCase(),
+            mediaUseCase: MockMediaUseCase()
+        )
+        XCTAssertFalse(sut.shouldApplyContentOpacity)
+        sut.editMode = .active
+        sut.isSelected = false
+        libraryViewModel.selection.setSelectedPhotos(Array(try testNodes.suffix(selectionLimit)))
+        XCTAssertTrue(sut.shouldApplyContentOpacity)
+        sut.editMode = .inactive
+        XCTAssertFalse(sut.shouldApplyContentOpacity)
+    }
 }

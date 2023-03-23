@@ -8,6 +8,11 @@ import MEGADomainMock
 final class AlbumContentPickerViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
+    func testInit_selectionLimit_isSetTo150() {
+        let sut = makeAlbumContentPickerViewModel()
+        XCTAssertEqual(sut.selectLimit, 150)
+    }
+    
     func testOnDone_whenNoImagesSelected_shouldDismissTheScreen() async {
         let sut = makeAlbumContentPickerViewModel()
         await sut.photosLoadingTask?.value

@@ -35,6 +35,7 @@ class PhotoCellViewModel: ObservableObject {
     
     @Published var isFavorite: Bool = false
     @Published var editMode: EditMode = .inactive
+    @Published private(set) var isSelectionLimitReached: Bool = false
     
     var shouldShowEditState: Bool {
         editMode.isEditing && currentZoomScaleFactor != .thirteen
@@ -42,6 +43,10 @@ class PhotoCellViewModel: ObservableObject {
     
     var shouldShowFavorite: Bool {
         isFavorite && currentZoomScaleFactor != .thirteen
+    }
+    
+    var shouldApplyContentOpacity: Bool {
+        editMode.isEditing && isSelectionLimitReached && !isSelected
     }
     
     init(photo: NodeEntity,
@@ -88,6 +93,12 @@ class PhotoCellViewModel: ObservableObject {
     
     func cancelLoadingThumbnail() {
         thumbnailLoadingTask?.cancel()
+    }
+    
+    func select() {
+        if editMode.isEditing && (isSelected || !isSelectionLimitReached) {
+            isSelected.toggle()
+        }
     }
     
     // MARK: Private
@@ -154,6 +165,11 @@ class PhotoCellViewModel: ObservableObject {
         
         if selection.editMode.isEditing {
             isSelected = selection.isPhotoSelected(photo)
+        }
+        
+        if let isSelectionLimitReachedPublisher = selection.isSelectionLimitReachedPublisher {
+            isSelectionLimitReachedPublisher
+                .assign(to: &$isSelectionLimitReached)
         }
     }
     
