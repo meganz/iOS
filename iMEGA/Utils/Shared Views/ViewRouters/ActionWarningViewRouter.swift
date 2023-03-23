@@ -45,7 +45,7 @@ final class ActionWarningViewRouter: NSObject, Routing {
     func configureWarning() {
         switch actionType {
         case .removeLink:
-            let nodesCount = nodes.count
+            let nodesCount = nodes.filter{$0.isExported}.count
 
             title = Strings.Localizable.General.MenuAction.RemoveLink.DoubleCheck.Warning.title(nodesCount)
             message = Strings.Localizable.General.MenuAction.RemoveLink.DoubleCheck.Warning.message(nodesCount)
