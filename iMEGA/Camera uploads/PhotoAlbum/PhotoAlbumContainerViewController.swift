@@ -162,6 +162,8 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
         addChild(pageController)
         view.addSubview(pageController.view)
         
+        leftBarButton = navigationItem.leftBarButtonItem
+        
         pageController.dataSource = self
         pageController.delegate = self
         

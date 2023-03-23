@@ -4,7 +4,7 @@ struct AlbumCell: View {
     @StateObject var viewModel: AlbumCellViewModel
     
     private var tap: some Gesture { TapGesture().onEnded { _ in
-        viewModel.isSelected.toggle()
+        viewModel.onAlbumTap()
     }}
     
     var body: some View {
