@@ -8,33 +8,36 @@ if ! type "megacmd" > /dev/null; then
 	exit 1
 fi
 
+echo "${PWD}"
+
 file="AENVGYjC"
 key="HhUgIOBY69zVZZtOa4e6vdySpHefnUo4GcoQYElmEo4"
-fileUrl="https://mega.nz/#!${file}!${key}"
-filePath="./../download_3rdparty/${file}"
+fileLinkUrl="https://mega.nz/#!${file}!${key}"
+downloadFilePath="./../download_3rdparty/${file}"
+unzipPath="./Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty"
 
-mkdir -p $filePath
+mkdir -p $downloadFilePath
 echo "downloading the 3rd party libraries"
-mega-get $fileUrl $filePath 
+mega-get $fileLinkUrl $downloadFilePath 
 
 
 # Sometimes the submodules might take time to run, so the folder might not exists.
 # We have 5 attemps to check if the folder exists with 20 seconds apart.
 attempt=0
-until [ ! $attempt -lt 5 ] || [ -d "./Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty" ]
+until [ ! $attempt -lt 5 ] || [ -d $unzipPath ]
 do
    attempt=`expr $attempt + 1`
    echo "Attempt number: $attempt. The folder does not exists. Waiting for 20 seconds and trying it again."
    sleep 20 
 done
 
-if [ ! -d "./Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty" ] 
+if [ ! -d $unzipPath ] 
 then
-   echo "Could not unzip the 3rd party libraries"
+   echo "Could not unzip the 3rd party libraries as the folder doesn't exist"
    exit 1 
 else
    echo "Unzipping the 3rd party libraries"
-   unzip -o ${filePath}/3rdparty.zip -d ./Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/
+   unzip -o ${downloadFilePath}/3rdparty.zip -d $unzipPath
    echo "Unzip 3rd party libraries complete"
    exit 0
 fi

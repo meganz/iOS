@@ -380,4 +380,17 @@ platform :ios do
     )
   end
 
+  desc "setup your development environment"
+  lane :setup do |options|
+    setup_git
+  end
+
+  private_lane :setup_git do |options|
+    hooksPath = '../../scripts'
+    gitHooksPath = '../.git/hooks'
+    FileUtils.mkdir_p(gitHooksPath) unless File.exist?(File.expand_path(gitHooksPath))
+    sh("ln -s -f #{hooksPath}/pre-commit #{gitHooksPath}/pre-commit")
+    UI.message('Your pre-commit is hooked ✅')
+  end
+
 end
