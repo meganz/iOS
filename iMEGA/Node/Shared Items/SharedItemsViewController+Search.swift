@@ -18,18 +18,36 @@ extension SharedItemsViewController: UISearchBarDelegate {
         tableView?.reloadData()
     }
     
-    @objc func evaluateSearchResult(nodeArray: [MEGANode]?, error: Error?) {
-        DispatchQueue.main.async {
-            if let error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            } else if let nodeArray {
-                if let mutableNodeArray = (nodeArray as NSArray).mutableCopy() as? NSMutableArray {
-                    self.searchNodesArray = mutableNodeArray
+    func evaluateSearchResult(searchText: String, sortType: MEGASortOrderType, asyncSearchClosure: @escaping (String, MEGASortOrderType) async throws -> [MEGANode]?) async {
+        do {
+            SVProgressHUD.show()
+            if let nodes = try await asyncSearchClosure(searchText, sortType) {
+                if let mutableNodeArray = (nodes as NSArray).mutableCopy() as? NSMutableArray {
+                    searchNodesArray = mutableNodeArray
                 }
-            } else {
-                self.searchNodesArray.removeAllObjects()
+            }  else {
+                searchNodesArray.removeAllObjects()
             }
-            self.tableView?.reloadData()
+            await SVProgressHUD.dismiss()
+        } catch {
+            SVProgressHUD.showError(withStatus: error.localizedDescription)
+        }
+        self.tableView?.reloadData()
+    }
+
+    @objc func search(by searchText: String) {
+        guard let searchNodeUseCaseOCWrapper else { return }
+        Task { @MainActor in
+            if incomingButton?.isSelected ?? false {
+                searchUnverifiedNodes(key: searchText)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnInShares)
+            } else if outgoingButton?.isSelected ?? false {
+                searchUnverifiedNodes(key: searchText)
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnOutShares)
+            } else if linksButton?.isSelected ?? false {
+                searchUnverifiedNodesArray.removeAllObjects()
+                await evaluateSearchResult(searchText: searchText, sortType: sortOrderType, asyncSearchClosure: searchNodeUseCaseOCWrapper.searchOnPublicLinks)
+            }
         }
     }
     
