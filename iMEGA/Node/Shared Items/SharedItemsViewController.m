@@ -1106,32 +1106,17 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
     if (searchController.isActive) {
-        if ([searchString isEqualToString:@""]) {
+        if (self.searchController.searchBar.text.length < kMinimumLettersToStartTheSearch) {
+            if (self.searchNodeUseCaseOCWrapper != nil) {
+                [self.searchNodeUseCaseOCWrapper cancelSearch];
+            }
             [self loadDefaultSharedItems];
         } else {
             if (self.searchNodeUseCaseOCWrapper == nil) {
                 self.searchNodeUseCaseOCWrapper = SearchNodeUseCaseOCWrapper.alloc.init;
             }
 
-            if (self.incomingButton.selected) {
-                [self searchUnverifiedNodesWithKey:searchString];
-                __weak __typeof__(self) weakSelf = self;
-                [self.searchNodeUseCaseOCWrapper searchOnInSharesWithText:searchString sortType:self.sortOrderType completionHandler:^(NSArray<MEGANode *> * _Nullable nodes, NSError * _Nullable error) {
-                    [weakSelf evaluateSearchResultWithNodeArray:nodes error:error];
-                }];
-            } else if (self.outgoingButton.selected) {
-                [self searchUnverifiedNodesWithKey:searchString];
-                __weak __typeof__(self) weakSelf = self;
-                [self.searchNodeUseCaseOCWrapper searchOnOutSharesWithText:searchString sortType:self.sortOrderType completionHandler:^(NSArray<MEGANode *> * _Nullable nodes, NSError * _Nullable error) {
-                    [weakSelf evaluateSearchResultWithNodeArray:nodes error:error];
-                }];
-            } else if (self.linksButton.selected) {
-                [self.searchUnverifiedNodesArray removeAllObjects];
-                __weak __typeof__(self) weakSelf = self;
-                [self.searchNodeUseCaseOCWrapper searchOnPublicLinksWithText:searchString sortType:self.sortOrderType completionHandler:^(NSArray<MEGANode *> * _Nullable nodes, NSError * _Nullable error) {
-                    [weakSelf evaluateSearchResultWithNodeArray:nodes error:error];
-                }];
-            }
+            [self searchBy:searchString];
         }
     } else {
         if (self.searchNodeUseCaseOCWrapper != nil) {
