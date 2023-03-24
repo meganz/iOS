@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo "[PRE-COMMIT] Sorting project files if changed"
+
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+# Sort script source: https://github.com/WebKit/WebKit/blob/main/Tools/Scripts/sort-Xcode-project-file
+sorter="$GIT_ROOT/scripts/sort-Xcode-project-file"
+
+modifiedProjectFiles=( $(git diff --name-only --cached | grep "project.pbxproj") )
+
+for filePath in ${modifiedProjectFiles[@]}; do
+  fullFilePath="$GIT_ROOT/$filePath"
+  perl $sorter $fullFilePath
+  git add $fullFilePath
+  echo "Project file is sorted now - $fullFilePath"
+done
+
+exit 0
