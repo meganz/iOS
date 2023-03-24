@@ -16,7 +16,8 @@ import MEGADomain
     }
     
     @objc func cancelSearch() {
-        searchUC.cancelSearch() 
+        searchUC.cancelSearch()
+        SVProgressHUD.dismiss()
     }
     
     private func search(type: SearchNodeTypeEntity, text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
