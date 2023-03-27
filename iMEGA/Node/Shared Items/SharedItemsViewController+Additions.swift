@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 extension SharedItemsViewController: ContatctsViewControllerDelegate {
     @objc func shareFolder() {
@@ -12,7 +13,12 @@ extension SharedItemsViewController: ContatctsViewControllerDelegate {
 //MARK: - Unverified outgoing and incoming nodes
 extension SharedItemsViewController {
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
-        SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+        SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+                             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo,
+                                                        videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)),
+                             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository.newRepo,
+                                                                                fileCacheRepository: FileCacheRepository.newRepo,
+                                                                                nodeRepository: NodeRepository.newRepo))
     }
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode,
@@ -257,6 +263,17 @@ extension SharedItemsViewController {
         addInShareSearcBarIfNeeded()
     }
     
+    @objc func updateToolbarItemsIfNeeded() {
+        guard let toolbarItems = toolbar?.items, let saveToPhotosBarButtonItem, let nodes = selectedNodesMutableArray as? [MEGANode], nodes.isNotEmpty else { return }
+        let areSelectedNodesMediaNodes = viewModel.areMediaNodes(nodes)
+        let shouldUpdateToolbarItems = !areSelectedNodesMediaNodes && toolbarItems.contains(saveToPhotosBarButtonItem) ||
+        areSelectedNodesMediaNodes && !toolbarItems.contains(saveToPhotosBarButtonItem)
+        
+        if shouldUpdateToolbarItems {
+            configToolbarItemsForSharedItems()
+        }
+    }
+    
     @objc func isSharedItemsRootNode(_ node: MEGANode) -> Bool {
         if incomingButton?.isSelected ?? false {
             return incomingNodesMutableArray.contains {($0 as? MEGANode)?.handle == node.handle}
@@ -282,6 +299,14 @@ extension SharedItemsViewController {
                     SVProgressHUD.dismiss()
                 }
             }).start()
+        }
+    }
+    
+    @objc func saveSelectedNodesToPhotos() {
+        guard let nodes = selectedNodesMutableArray as? [MEGANode], nodes.isNotEmpty else { return }
+        Task { @MainActor in
+            await self.viewModel.saveNodesToPhotos(nodes)
+            self.endEditingMode()
         }
     }
 }

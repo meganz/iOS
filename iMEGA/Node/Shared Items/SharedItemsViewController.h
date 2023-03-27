@@ -6,7 +6,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedItemsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveToPhotosBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
@@ -60,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showNodeContextMenu:(UIButton *)sender;
 - (void)endEditingMode;
 - (void)addSearchBar;
+- (void)configToolbarItemsForSharedItems;
 - (void)configSearchController;
 - (void)showNodeActions:(UIButton *)sender;
 

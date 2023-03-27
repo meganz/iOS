@@ -1,16 +1,22 @@
 import MEGADomain
+import MEGAData
 
+@MainActor
 @objc final class SharedItemsViewModel: NSObject {
     
     private let router = SharedItemsViewRouter()
     private let shareUseCase: ShareUseCaseProtocol
+    private let mediaUseCase: MediaUseCaseProtocol
+    private let saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol
     
-    init(shareUseCase: ShareUseCaseProtocol) {
+    init(shareUseCase: ShareUseCaseProtocol, mediaUseCase: MediaUseCaseProtocol, saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol) {
         self.shareUseCase = shareUseCase
+        self.mediaUseCase = mediaUseCase
+        self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
-        Task { @MainActor [shareUseCase] in
+        Task {
             do {
                 let _ = try await shareUseCase.createShareKeys(forNodes: nodes.toNodeEntities())
                 router.showShareFoldersContactView(withNodes: nodes)
@@ -22,5 +28,22 @@ import MEGADomain
     
     @objc func showPendingOutShareModal(for email: String) {
         router.showPendingOutShareModal(for: email)
+    }
+    
+    @objc func areMediaNodes(_ nodes: [MEGANode]) -> Bool {
+        guard nodes.isNotEmpty else { return false }
+        return nodes.allSatisfy { mediaUseCase.isPlayableMediaFile($0.toNodeEntity()) }
+    }
+    
+    @objc func saveNodesToPhotos(_ nodes: [MEGANode]) async {
+        guard areMediaNodes(nodes) else { return }
+        do {
+            try await saveMediaToPhotosUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
+        } catch {
+            if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                await SVProgressHUD.dismiss()
+                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+            }
+        }
     }
 }

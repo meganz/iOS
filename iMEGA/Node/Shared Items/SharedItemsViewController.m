@@ -31,8 +31,6 @@
     BOOL allNodesSelected;
 }
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
@@ -242,6 +240,7 @@
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
     self.removeLinkBarButtonItem.enabled = boolValue;
+    self.saveToPhotosBarButtonItem.enabled = boolValue;
 }
 
 - (void)addSearchBar {
@@ -338,7 +337,11 @@
     } else if (self.outgoingButton.selected) {
         [toolbarItemsMutableArray addObjectsFromArray:@[self.shareLinkBarButtonItem, flexibleItem, self.shareFolderBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.removeShareBarButtonItem]];
     } else if (self.linksButton.selected) {
-        [toolbarItemsMutableArray addObjectsFromArray:@[self.shareLinkBarButtonItem, flexibleItem, self.downloadBarButtonItem, flexibleItem, self.removeLinkBarButtonItem]];
+        [toolbarItemsMutableArray addObjectsFromArray:@[self.shareLinkBarButtonItem, flexibleItem, self.downloadBarButtonItem]];
+        if ([self.viewModel areMediaNodes:self.selectedNodesMutableArray]) {
+            [toolbarItemsMutableArray addObjectsFromArray:@[flexibleItem, self.saveToPhotosBarButtonItem]];
+        }
+        [toolbarItemsMutableArray addObjectsFromArray:@[flexibleItem, self.removeLinkBarButtonItem]];
     }
     
     [_toolbar setItems:toolbarItemsMutableArray];
@@ -719,6 +722,7 @@
     }
     
     [self updateNavigationBarTitle];
+    [self updateToolbarItemsIfNeeded];
     
     [self.tableView reloadData];
 }
@@ -867,6 +871,10 @@
     [self showRemoveLinkWarning:self.selectedNodesMutableArray];
 }
 
+- (IBAction)saveToPhotosAction:(UIBarButtonItem *)sender {
+    [self saveSelectedNodesToPhotos];
+}
+
 - (void)disableSearchAndSelection {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
@@ -978,6 +986,7 @@
         }
         
         [self updateNavigationBarTitle];
+        [self updateToolbarItemsIfNeeded];
         [self toolbarItemsSetEnabled:YES];
         
         NSUInteger nodeListSize = 0;
@@ -1045,6 +1054,8 @@
         [self updateNavigationBarTitle];
         if (self.selectedNodesMutableArray.count == 0) {
             [self toolbarItemsSetEnabled:NO];
+        } else {
+            [self updateToolbarItemsIfNeeded];
         }
         
         allNodesSelected = NO;
