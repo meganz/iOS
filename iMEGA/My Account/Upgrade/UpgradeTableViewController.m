@@ -167,6 +167,14 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 
 #pragma mark - Private
 
+- (UpgradeAccountViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self createUpgradeAccountViewModel];
+    }
+    
+    return _viewModel;
+}
+
 - (void)updateAppearance {
     self.navigationController.toolbarHidden = YES;
     self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
@@ -513,7 +521,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     NSNumber *accountTypeNumber = [self.proLevelsMutableArray objectOrNilAtIndex:indexPath.row];
     MEGAAccountType accountType = accountTypeNumber.integerValue;
     [self pushProductDetailWithAccountType:accountType];
-    
+    [self.viewModel sendAccountPlanTapStats:accountType];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
