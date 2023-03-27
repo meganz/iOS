@@ -109,7 +109,7 @@ fileprivate struct ChatRoomContentView: View {
             viewModel.showDetails()
         }
         .onAppear {
-            viewModel.loadChatRoomInfo()
+            viewModel.onViewAppear()
         }
         .onDisappear {
             viewModel.cancelLoading()

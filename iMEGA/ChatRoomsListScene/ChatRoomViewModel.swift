@@ -14,11 +14,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
-
+    
     private let router: ChatRoomsListRouting
     private var chatNotificationControl: ChatNotificationControl
     private let notificationCenter: NotificationCenter
-
+    
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
     @Published var chatStatus: ChatStatusEntity = .invalid
@@ -27,22 +27,22 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
-
+    
     private(set) var displayDateString: String?
-
+    
     private var subscriptions = Set<AnyCancellable>()
     private var loadingChatRoomInfoTask: Task<Void, Never>?
     
     private var isViewOnScreen = false
     private var loadingChatRoomInfoSubscription: AnyCancellable?
     private var searchString = ""
-
+    
     private var isInfoLoaded = false
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     let shouldShowUnreadCount: Bool
     let unreadCountString: String
-
+    
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
@@ -84,7 +84,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         } else {
             self.chatRoomAvatarViewModel = nil
         }
-
+        
         self.displayDateString = formattedLastMessageSentDate()
         
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
@@ -94,20 +94,23 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatListItem.peerHandle)
             self.listeningForChatStatusUpdate()
         }
-
-        self.loadingChatRoomInfoTask = createLoadingChatRoomInfoTask()
+        
+        contextMenuOptions = constructContextMenuOptions()
         loadChatRoomSearchString()
-        self.contextMenuOptions = constructContextMenuOptions()
     }
     
     //MARK: - Interface methods
     
-    func loadChatRoomInfo() {
+    func onViewAppear() {
         isViewOnScreen = true
+        
+        loadChatRoomInfo()
     }
     
     func cancelLoading() {
         isViewOnScreen = false
+        
+        loadingChatRoomInfoTask?.cancel()
     }
     
     func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
@@ -124,7 +127,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             return nil
         }
     }
-
+    
     func contains(searchText: String) -> Bool {
         searchString.localizedCaseInsensitiveContains(searchText)
     }
@@ -191,7 +194,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         case .alterParticipants:
             try await updateDescriptionForAlertParticipants()
         case .setRetentionTime:
-           try await updateDescriptionForRententionTime()
+            try await updateDescriptionForRententionTime()
         case .chatTitle:
             try await updateDesctiptionWithChatTitleChange()
         case .callEnded:
@@ -212,7 +215,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     //MARK: - Private methods
-
+    
     private func formattedLastMessageSentDate() -> String? {
         guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
         
@@ -236,7 +239,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                         self?.startOrJoinMeetingTapped()
                     }))
         }
-
+        
         if chatListItem.unreadCount > 0 {
             options.append(
                 ChatRoomContextMenuOption(
@@ -280,10 +283,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         
         return options
     }
-        
-    private func createLoadingChatRoomInfoTask() -> Task<Void, Never> {
-        Task { [weak self] in
+    
+    private func loadChatRoomInfo() {
+        loadingChatRoomInfoTask = Task { [weak self] in
             let chatId = chatListItem.chatId
+            
             do {
                 try await self?.updateDescription()
             } catch {
@@ -314,7 +318,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             }
         }
     }
-
+    
     @MainActor
     private func sendObjectChangeNotification() {
         objectWillChange.send()
@@ -343,7 +347,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         } else {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId),
                   let userHandle = chatRoomUseCase.peerHandles(forChatRoom: chatRoom).first,
-                    let userEmail = chatRoomUserUseCase.contactEmail(forUserHandle: userHandle) else {
+                  let userEmail = chatRoomUserUseCase.contactEmail(forUserHandle: userHandle) else {
                 return
             }
             
@@ -416,13 +420,13 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         
         let endCallReason: ChatMessageEndCallReasonEntity
         if let components,
-            components.count >= 2,
-            let secondComponentIntValue = Int(components[1]) {
+           components.count >= 2,
+           let secondComponentIntValue = Int(components[1]) {
             endCallReason = ChatMessageEndCallReasonEntity(secondComponentIntValue) ?? .ended
         } else {
             endCallReason = .ended
         }
-
+        
         let message = message(forEndCallReason: endCallReason,
                               userHandle: chatListItem.lastMessageSender,
                               duration: duration)
@@ -633,7 +637,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             let message = chatRoomUseCase.message(forChatRoom: chatRoom, messageId: chatListItem.lastMessageId)
             
             if message?.containsMeta?.type == .geolocation,
-                let image = UIImage(named: chatListItem.unreadCount > 0 ? "locationMessage" : "locationMessageGrey") {
+               let image = UIImage(named: chatListItem.unreadCount > 0 ? "locationMessage" : "locationMessageGrey") {
                 if let sender {
                     updateHybridDescription(with: "\(sender):", image: image, duration: Strings.Localizable.pinnedLocation)
                 } else {
@@ -645,7 +649,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         if let message = chatListItem.lastMessage {
             if let sender {
                 updateDescription(withMessage: sender + ": " + message)
-
+                
             } else {
                 updateDescription(withMessage: message)
             }
