@@ -1,3 +1,4 @@
+import MEGADomain
 
 extension UpgradeTableViewController {
     
@@ -5,6 +6,10 @@ extension UpgradeTableViewController {
         super.viewDidLayoutSubviews()
         
         tableView.sizeFooterToFit()
+    }
+    
+    @objc func createUpgradeAccountViewModel() -> UpgradeAccountViewModel {
+        UpgradeAccountViewModel(accountPlanAnalyticsUsecase: AccountPlanAnalyticsUseCase(repository: AnalyticsRepository.newRepo))
     }
 }
 

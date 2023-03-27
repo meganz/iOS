@@ -194,4 +194,50 @@ final class AnalyticsEventUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .download(.exportFile))
     }
     
+    //MARK: - Account Plan
+    
+    func testSendEvent_accountPlan_tappedFreePlan() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.accountPlans(.tapAccountPlanFreePlan))
+        
+        XCTAssertTrue(repo.type == .accountPlans(.tapAccountPlanFreePlan))
+    }
+    
+    func testSendEvent_accountPlan_tappedProLite() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.accountPlans(.tapAccountPlanProLite))
+        
+        XCTAssertTrue(repo.type == .accountPlans(.tapAccountPlanProLite))
+    }
+    
+    func testSendEvent_accountPlan_tappedProI() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.accountPlans(.tapAccountPlanProI))
+        
+        XCTAssertTrue(repo.type == .accountPlans(.tapAccountPlanProI))
+    }
+    
+    func testSendEvent_accountPlan_tappedProII() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.accountPlans(.tapAccountPlanProII))
+        
+        XCTAssertTrue(repo.type == .accountPlans(.tapAccountPlanProII))
+    }
+    
+    func testSendEvent_accountPlan_tappedProIII() {
+        let repo = MockAnalyticsRepository.newRepo
+        let sut = AnalyticsEventUseCase(repository: repo)
+        
+        sut.sendAnalyticsEvent(.accountPlans(.tapAccountPlanProIII))
+        
+        XCTAssertTrue(repo.type == .accountPlans(.tapAccountPlanProIII))
+    }
 }

@@ -5,4 +5,5 @@ public enum AnalyticsEventEntity: Equatable {
     case nse(NSEAnalyticsEventEntity)
     case extensions(ExtensionsAnalyticsEventEntity)
     case download(DownloadAnalyticsEventEntity)
+    case accountPlans(AccountPlanAnalyticsEventEntity)
 }
