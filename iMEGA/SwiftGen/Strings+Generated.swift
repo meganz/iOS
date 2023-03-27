@@ -2932,6 +2932,18 @@ public enum Strings {
         public static let selectAlbumCover = Strings.tr("Localizable", "cameraUploads.albums.selectAlbumCover")
         /// Albums
         public static let title = Strings.tr("Localizable", "cameraUploads.albums.title")
+        public enum AddItems {
+          public enum Alert {
+            public enum LimitReached {
+              /// Plural format key: "%#@count@"
+              public static func message(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "cameraUploads.albums.addItems.alert.limitReached.message", p1)
+              }
+              /// Cannot select more
+              public static let title = Strings.tr("Localizable", "cameraUploads.albums.addItems.alert.limitReached.title")
+            }
+          }
+        }
         public enum Create {
           /// Add items to “%@”
           public static func addItemsTo(_ p1: Any) -> String {

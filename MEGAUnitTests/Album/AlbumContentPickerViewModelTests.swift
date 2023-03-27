@@ -291,6 +291,13 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isDoneButtonDisabled)
     }
     
+    func testShowSelectionLimitReachedAlert_onIsItemSelectedAfterLimitReached_shouldToggleAlert() {
+        let sut = makeAlbumContentPickerViewModel()
+        XCTAssertFalse(sut.showSelectionLimitReachedAlert)
+        sut.photoLibraryContentViewModel.selection.isItemSelectedAfterLimitReached = true
+        XCTAssertTrue(sut.showSelectionLimitReachedAlert)
+    }
+    
     private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
                                                  allPhotosFromCloudDriveOnly: [NodeEntity] = [],
                                                  allPhotosFromCameraUpload: [NodeEntity] = [],

@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Timeline";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="No media found";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="Cannot select more";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */

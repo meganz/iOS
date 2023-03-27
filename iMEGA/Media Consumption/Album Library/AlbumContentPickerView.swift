@@ -22,6 +22,11 @@ struct AlbumContentPickerView: View {
                 footer
             }
         }
+        .alert(isPresented: $viewModel.showSelectionLimitReachedAlert) {
+            Alert(title: Text(Strings.Localizable.CameraUploads.Albums.AddItems.Alert.LimitReached.title),
+                  message: Text(Strings.Localizable.CameraUploads.Albums.AddItems.Alert.LimitReached.message(viewModel.selectLimit)),
+                  dismissButton: .default(Text(Strings.Localizable.ok)))
+        }
         .onChange(of: viewModel.isDismiss, perform: { newValue in
             if newValue {
                 presentationMode.wrappedValue.dismiss()
