@@ -18,6 +18,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
     @Published var shouldRemoveFilter = true
     @Published var isDoneButtonDisabled = true
+    @Published var showSelectionLimitReachedAlert = true
     
     private var normalNavigationTitle: String {
         Strings.Localizable.CameraUploads.Albums.Create.addItemsTo(album.name)
@@ -86,6 +87,9 @@ final class AlbumContentPickerViewModel: ObservableObject {
                 self?.loadPhotos(forPhotoLocation: appliedPhotoFilterLocation)
             }
             .store(in: &subscriptions)
+        
+        photoLibraryContentViewModel.selection.$isItemSelectedAfterLimitReached
+            .assign(to: &$showSelectionLimitReachedAlert)
     }
     
     private func loadPhotos(forPhotoLocation filterLocation: PhotosFilterLocation) {
