@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *firstButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 
@@ -100,6 +101,7 @@
         self.linkView.hidden = YES;
     }
     
+    self.closeButton.hidden = self.isCloseButtonHidden;
     [self updateAppearance];
 }
 
@@ -173,7 +175,15 @@
     if (self.firstCompletion) self.firstCompletion();
 }
 
+- (IBAction)closeButtonTouchUpInside:(UIButton *)sender {
+    [self dismissView];
+}
+
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {
+    [self dismissView];
+}
+
+- (void)dismissView {
     if (self.dismissCompletion) {
         self.dismissCompletion();
     } else {

@@ -583,6 +583,7 @@ internal enum Asset {
       internal static let qrCodeIcon = ImageAsset(name: "qrCodeIcon")
       internal static let scanQRCode = ImageAsset(name: "scanQRCode")
       internal static let upgradeSecurity = ImageAsset(name: "upgradeSecurity")
+      internal static let upgradeSecurityClose = ImageAsset(name: "upgradeSecurityClose")
       internal static let viewAndEditProfile = ImageAsset(name: "viewAndEditProfile")
     }
     internal enum NavigationBar {

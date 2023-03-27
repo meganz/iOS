@@ -2845,14 +2845,20 @@ public enum Strings {
         }
       }
       public enum UpgradeSecurity {
-        /// Security upgrade
+        /// Account security upgrade
         public static let title = Strings.tr("Localizable", "account.upgradeSecurity.title")
+        public enum Button {
+          /// OK, got it
+          public static let title = Strings.tr("Localizable", "account.upgradeSecurity.button.title")
+        }
         public enum Message {
           /// Plural format key: "%#@folderNames@"
           public static func sharedFolderNames(_ p1: Int) -> String {
             return Strings.tr("Localizable", "account.upgradeSecurity.message.sharedFolderNames", p1)
           }
-          /// Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap on Cancel.
+          /// We’re upgrading your account’s security. You should see this message only once. If you’ve seen it before, first make sure it has been for this account and not for another MEGA account you have.
+          /// 
+          /// If you’re sure and it’s the second time you’re seeing this message for this account, stop using this account.
           public static let upgrade = Strings.tr("Localizable", "account.upgradeSecurity.message.upgrade")
         }
       }
