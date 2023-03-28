@@ -3,23 +3,31 @@ import MEGADomain
 
 public final class MockAlbumModificationUseCase: AlbumModificationUseCaseProtocol {
     private var resultEntity = AlbumElementsResultEntity(success: 0, failure: 0)
-    
+    private let addPhotosResult: Result<AlbumElementsResultEntity, Error>
     public private(set) var addedPhotosToAlbum: [NodeEntity]?
     public private(set) var deletedPhotos: [AlbumPhotoEntity]?
     public private(set) var deletedAlbumsIds: [HandleEntity]?
     
     private let albums: [AlbumEntity]
     
-    public init(resultEntity: AlbumElementsResultEntity? = nil, albums: [AlbumEntity] = []) {
+    public init(resultEntity: AlbumElementsResultEntity? = nil,
+                albums: [AlbumEntity] = [],
+                addPhotosResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity())) {
         if let resultEntity = resultEntity {
             self.resultEntity = resultEntity
         }
         self.albums = albums
+        self.addPhotosResult = addPhotosResult
     }
 
     public func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
-        addedPhotosToAlbum = nodes
-        return resultEntity
+        switch addPhotosResult {
+        case .success(let albumElementsResult):
+            addedPhotosToAlbum = nodes
+            return albumElementsResult
+        case .failure(let error):
+            throw error
+        }
     }
     
     public func rename(album id: HandleEntity, with newName: String) async throws -> String {

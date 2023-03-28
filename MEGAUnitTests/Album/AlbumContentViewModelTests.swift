@@ -53,10 +53,10 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
     }
     
-    func testDispatchViewReady_onNewPhotosToAdd_shouldAddPhotosThenLoadAlbumContent() {
+    func testDispatchViewReady_onNewPhotosToAdd_shouldShowAlbumsToShowEmptyAlbumsThenAddPhotosThenLoadAlbumContent() {
         let nodesToAdd = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
         let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToAdd.count), failure: 0)
-        let albumModificationUseCase = MockAlbumModificationUseCase(resultEntity: resultEntity)
+        let albumModificationUseCase = MockAlbumModificationUseCase(addPhotosResult: .success(resultEntity))
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: nodesToAdd.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
@@ -64,30 +64,12 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         router: router,
                                         newAlbumPhotosToAdd: nodesToAdd, alertViewModel: alertViewModel())
         
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest),
+                                                                      .startLoading,
+                                                                      .finishLoading,
+                                                                      .showHud(.success("Added 2 items to “\(self.albumEntity.name)”")),
+                                                                      .showAlbumPhotos(photos: nodesToAdd, sortOrder: .newest)])
         
-        let exp = expectation(description: "Show photos added then loaded contents")
-        exp.expectedFulfillmentCount = 2
-        sut.invokeCommand = { command in
-            switch command {
-            case .showAlbumPhotos(let nodes, let sortOrder):
-                XCTAssertEqual(nodes, nodesToAdd)
-                XCTAssertEqual(sortOrder, .newest)
-                exp.fulfill()
-            case .showHud(let iconTypeMessage):
-                switch iconTypeMessage {
-                case .success(let message):
-                    XCTAssertEqual(message, "Added 2 items to “\(self.albumEntity.name)”")
-                    exp.fulfill()
-                default:
-                    XCTFail("Invalid message type")
-                }
-            default:
-                XCTFail("Unexpected command")
-            }
-        }
-        sut.dispatch(.onViewReady)
-        
-        wait(for: [exp], timeout: 2.0)
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, nodesToAdd)
     }
     
@@ -430,7 +412,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
         let result = AlbumElementsResultEntity(success: UInt(expectedAddedPhotos.count), failure: 0)
-        let albumModificationUseCase = MockAlbumModificationUseCase(resultEntity: result)
+        let albumModificationUseCase = MockAlbumModificationUseCase(addPhotosResult: .success(result))
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedAddedPhotos.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
@@ -438,8 +420,13 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
         let exp = expectation(description: "Should show completion message after items added")
+        exp.expectedFulfillmentCount = 3
         sut.invokeCommand = {
             switch $0 {
+            case .startLoading:
+                exp.fulfill()
+            case .finishLoading:
+                exp.fulfill()
             case .showHud(let iconTypeMessage):
                 switch iconTypeMessage {
                 case .success(let message):
@@ -485,6 +472,38 @@ final class AlbumContentViewModelTests: XCTestCase {
         sut.showAlbumContentPicker()
         
         wait(for: [exp], timeout: 1)
+        XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
+    }
+    
+    func testShowAlbumContentPicker_onErrorThrown_shouldFinishLoading() {
+        let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
+        let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
+        let albumModificationUseCase = MockAlbumModificationUseCase(addPhotosResult: .failure(AlbumErrorEntity.generic))
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: MockAlbumContentUseCase(photos: []),
+                                        albumModificationUseCase: albumModificationUseCase,
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: albumContentRouter, alertViewModel: alertViewModel())
+        
+        test(viewModel: sut, action: .onViewReady,
+             expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
+        
+        let exp = expectation(description: "Should only show loading then finish loading")
+        exp.expectedFulfillmentCount = 2
+        sut.invokeCommand = {
+            switch $0 {
+            case .startLoading:
+                exp.fulfill()
+            case .finishLoading:
+                exp.fulfill()
+            default:
+                XCTFail()
+            }
+        }
+        sut.showAlbumContentPicker()
+        
+        wait(for: [exp], timeout: 2)
         XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
     }
     
