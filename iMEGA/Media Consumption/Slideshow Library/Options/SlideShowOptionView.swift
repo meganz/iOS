@@ -18,12 +18,14 @@ struct SlideShowOptionView: View {
         .sheet(isPresented: $viewModel.shouldShowDetail) {
             detailView()
         }
+        .onDisappear {
+            preference.restart(withConfig: viewModel.configuration())
+        }
     }
     
     var navBarButton: some View {
         Button {
             dismissal()
-            preference.restart(withConfig: viewModel.configuration())
         } label: {
             Text(viewModel.doneButtonTitle)
                 .font(.body.bold())
