@@ -231,7 +231,7 @@ extension ContextMenuModel {
         case .selectAlbumCover:
             return ContextMenuDataModel(identifier: "selectAlbumCover", title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover, image: Asset.Images.Album.selectAlbumCover.image)
         case .delete:
-            return ContextMenuDataModel(identifier: "delete", title: Strings.Localizable.delete, image: Asset.Images.Album.delete.image)
+            return ContextMenuDataModel(identifier: "delete", title: Strings.Localizable.delete, image: Asset.Images.Album.deleteAlbum.image)
         }
     }
 }
