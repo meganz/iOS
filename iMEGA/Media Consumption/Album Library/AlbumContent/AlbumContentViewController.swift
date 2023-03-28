@@ -113,6 +113,10 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     
     func executeCommand(_ command: AlbumContentViewModel.Command) {
         switch command {
+        case .startLoading:
+            SVProgressHUD.show()
+        case .finishLoading:
+            SVProgressHUD.dismiss()
         case .showAlbumPhotos(let nodes, let sortOrder):
             updatePhotoLibrary(by: nodes, withSortType: sortOrder)
             

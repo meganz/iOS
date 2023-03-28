@@ -14,6 +14,8 @@ enum AlbumContentAction: ActionType {
 
 final class AlbumContentViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
+        case startLoading
+        case finishLoading
         case showAlbumPhotos(photos: [NodeEntity], sortOrder: SortOrderType)
         case dismissAlbum
         case showHud(MessageType)
@@ -213,6 +215,7 @@ final class AlbumContentViewModel: ViewModelType {
     @MainActor
     private func addNewAlbumPhotosIfNeeded() async {
         if let newAlbumPhotosToAdd {
+            showAlbumPhotos()
             await addPhotos(newAlbumPhotosToAdd)
             self.newAlbumPhotosToAdd = nil
         }
@@ -230,13 +233,16 @@ final class AlbumContentViewModel: ViewModelType {
         guard photosToAdd.isNotEmpty else {
             return
         }
+        invokeCommand?(.startLoading)
         do {
             let result = try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photosToAdd)
+            invokeCommand?(.finishLoading)
             if result.success > 0 {
                 let message = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
                 invokeCommand?(.showHud(.success(message)))
             }
         } catch {
+            invokeCommand?(.finishLoading)
             MEGALogError("Error occurred when adding photos to an album. \(error.localizedDescription)")
         }
     }
