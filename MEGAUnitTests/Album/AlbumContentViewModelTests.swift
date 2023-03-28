@@ -15,7 +15,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample2.gif", handle: 2)]
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
@@ -28,7 +28,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample2.gif", handle: 1, modificationTime: try "2022-08-19T20:01:04Z".date)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
@@ -37,7 +37,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
@@ -47,7 +47,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
@@ -56,10 +56,10 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testDispatchViewReady_onNewPhotosToAdd_shouldAddPhotosThenLoadAlbumContent() {
         let nodesToAdd = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
         let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToAdd.count), failure: 0)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase(resultEntity: resultEntity)
+        let albumModificationUseCase = MockAlbumModificationUseCase(resultEntity: resultEntity)
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: nodesToAdd.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router,
                                         newAlbumPhotosToAdd: nodesToAdd, alertViewModel: alertViewModel())
@@ -88,7 +88,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         sut.dispatch(.onViewReady)
         
         wait(for: [exp], timeout: 2.0)
-        XCTAssertEqual(albumContentModificationUseCase.addedPhotosToAlbum, nodesToAdd)
+        XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, nodesToAdd)
     }
     
     func testSubscription_onAlbumContentUpdated_shouldShowAlbumWithNewNodes() throws {
@@ -98,7 +98,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                               albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: useCase,
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let exp = expectation(description: "show album nodes after update publisher triggered")
@@ -120,7 +120,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testIsFavouriteAlbum_isEqualToAlbumEntityType() {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         XCTAssertTrue(sut.isFavouriteAlbum)
@@ -132,7 +132,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let expectedNodes = [image, video]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
@@ -147,7 +147,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let images = [NodeEntity(name: "test.jpg", handle: 1)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: images.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: images, sortOrder: .newest)])
@@ -161,7 +161,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let videos = [NodeEntity(name: "test.mp4", handle: 1)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: videos.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: videos, sortOrder: .newest)])
@@ -177,7 +177,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let expectedNodes = [image, video]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [image, video], sortOrder: .newest)])
@@ -193,7 +193,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample2.nef", handle: 2)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
@@ -208,7 +208,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample2.gif", handle: 2)]
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady,
@@ -226,7 +226,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         }
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedImages.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedImages, sortOrder: .newest)])
@@ -247,7 +247,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         }
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedVideos.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
@@ -266,7 +266,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testDispatchChangeSortOrder_onSortOrderTheSame_shouldDoNothing() throws {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -284,7 +284,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testDispatchChangeSortOrder_onSortOrderDifferent_shouldShowAlbumWithNewSortedValue() throws {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -301,7 +301,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                              NodeEntity(name: "sample2.gif", handle: 2)]
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -334,7 +334,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testDispatchChangeFilter_onFilterTheSame_shouldDoNothing() throws {
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -363,7 +363,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let allMedia = expectedImages + expectedVideo
         let sut = AlbumContentViewModel(album: albumEntity,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: loadedImages + loadedVideos),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -394,7 +394,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testShouldShowAddToAlbumButton_onPhotoLibraryNotEmptyOnUserAlbum_shouldReturnTrue() {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)]),
                                         router: router, alertViewModel: alertViewModel())
         
@@ -406,7 +406,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testShouldShowAddToAlbumButton_onPhotoLibraryEmptyOnUserAlbum_shouldReturnFalse() {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
@@ -418,7 +418,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     func testOnDispatchAddItemsToAlbum_routeToShowAlbumContentPicker() {
         let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user),
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         sut.showAlbumContentPicker()
@@ -430,10 +430,10 @@ final class AlbumContentViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
         let result = AlbumElementsResultEntity(success: UInt(expectedAddedPhotos.count), failure: 0)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase(resultEntity: result)
+        let albumModificationUseCase = MockAlbumModificationUseCase(resultEntity: result)
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedAddedPhotos.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
@@ -455,17 +455,17 @@ final class AlbumContentViewModelTests: XCTestCase {
         sut.showAlbumContentPicker()
         
         wait(for: [exp], timeout: 2)
-        XCTAssertEqual(albumContentModificationUseCase.addedPhotosToAlbum, expectedAddedPhotos)
+        XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, expectedAddedPhotos)
     }
     
     func testShowAlbumContentPicker_onCompletionWithExistingItems_shouldNotAddExistingItems() {
         let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let albumModificationUseCase = MockAlbumModificationUseCase()
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedAddedPhotos.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
@@ -485,17 +485,17 @@ final class AlbumContentViewModelTests: XCTestCase {
         sut.showAlbumContentPicker()
         
         wait(for: [exp], timeout: 1)
-        XCTAssertNil(albumContentModificationUseCase.addedPhotosToAlbum)
+        XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
     }
     
     func testRenameAlbum_whenUserRenameAlbum_shouldUpdateAlbumName() async {
         let photo = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let albumModificationUseCase = MockAlbumModificationUseCase()
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
@@ -511,10 +511,10 @@ final class AlbumContentViewModelTests: XCTestCase {
         let photo = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let albumModificationUseCase = MockAlbumModificationUseCase()
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
@@ -540,13 +540,13 @@ final class AlbumContentViewModelTests: XCTestCase {
         let photo = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let albumModificationUseCase = MockAlbumModificationUseCase()
         let alertViewModel = TextFieldAlertViewModel(textString: "Old Album", title: "Hey there", placeholderText: "",
                                                      affirmativeButtonTitle: "Rename", affirmativeButtonInitiallyEnabled: true,
                                                      message: "", action: nil, validator: nil)
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter,
                                         alertViewModel: alertViewModel)
@@ -562,10 +562,10 @@ final class AlbumContentViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 2, type: .user)
         
         let albumContentRouter = MockAlbumContentRouting(album: album, albumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(1))), photos: photos)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let albumModificationUseCase = MockAlbumModificationUseCase()
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photos.map {AlbumPhotoEntity(photo: $0)}),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .showAlbumCoverPicker,
@@ -577,11 +577,11 @@ final class AlbumContentViewModelTests: XCTestCase {
         let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
         let albumPhotos = nodesToRemove.enumerated().map { AlbumPhotoEntity(photo: $0.element, albumPhotoId: UInt64($0.offset + 1))}
         let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToRemove.count), failure: 0)
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase(resultEntity: resultEntity)
+        let albumModificationUseCase = MockAlbumModificationUseCase(resultEntity: resultEntity)
       
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady,
@@ -591,16 +591,16 @@ final class AlbumContentViewModelTests: XCTestCase {
             .replacingOccurrences(of: "[A]", with: "\(album.name)")
         test(viewModel: sut, action: .deletePhotos(nodesToRemove),
              expectedCommands: [.showHud(.custom(Asset.Images.Hud.hudMinus.image, message))])
-        XCTAssertEqual(albumContentModificationUseCase.deletedPhotos, albumPhotos)
+        XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
     }
     
     func testDispatchDeletePhotos_onPhotosAlreadyRemoved_shouldDoNothing() {
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
-        let albumContentModificationUseCase = MockAlbumContentModificationUseCase()
+        let albumModificationUseCase = MockAlbumModificationUseCase()
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                        albumContentModificationUseCase: albumContentModificationUseCase,
+                                        albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady,
@@ -612,7 +612,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         }
         sut.dispatch(.deletePhotos(nodesToRemove))
         wait(for: [exp], timeout: 1.0)
-        XCTAssertNil(albumContentModificationUseCase.deletedPhotos)
+        XCTAssertNil(albumModificationUseCase.deletedPhotos)
     }
     
     func testShowAlbumPhotos_onImagesRemovedWithImageFilter_shouldSwitchToShowVideos() {
@@ -625,7 +625,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                                            albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
         let sut = AlbumContentViewModel(album: album,
                                         albumContentsUseCase: albumContentsUseCase,
-                                        albumContentModificationUseCase: MockAlbumContentModificationUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
@@ -650,6 +650,28 @@ final class AlbumContentViewModelTests: XCTestCase {
         }
         albumReloadPublisher.send()
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testDispatchDeleteAlbum_onSuccessfulRemovalOfAlbum_shouldShowHudOfRemoveAlbum() {
+        let album = AlbumEntity(id: 1, name: "User Album", coverNode: nil, count: 1, type: .user)
+        let albumModificationUseCase = MockAlbumModificationUseCase(albums: [album])
+
+        let sut = AlbumContentViewModel(album: album,
+                                        albumContentsUseCase: MockAlbumContentUseCase(),
+                                        albumModificationUseCase: albumModificationUseCase,
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router, alertViewModel: alertViewModel())
+        
+
+        let message = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
+            .replacingOccurrences(of: "[A]", with: album.name)
+        
+        test(viewModel: sut, action: .deleteAlbum, expectedCommands: [
+            .dismissAlbum,
+            .showHud(.custom(Asset.Images.Hud.hudMinus.image, message))
+        ])
+        
+        XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {

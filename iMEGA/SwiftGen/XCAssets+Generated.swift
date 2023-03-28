@@ -75,6 +75,7 @@ internal enum Asset {
       internal static let activityShareFolder = ImageAsset(name: "activity_shareFolder")
     }
     internal enum Album {
+      internal static let delete = ImageAsset(name: "delete")
       internal static let placeholder = ImageAsset(name: "placeholder")
       internal static let selectAlbumCover = ImageAsset(name: "selectAlbumCover")
     }

@@ -46,7 +46,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let viewModel = AlbumContentViewModel(
             album: album,
             albumContentsUseCase: albumContentsUseCase,
-            albumContentModificationUseCase: AlbumContentModificationUseCase(userAlbumRepo: userAlbumRepo),
+            albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             photoLibraryUseCase: photoLibraryUseCase,
             router: self,
             newAlbumPhotosToAdd: newAlbumPhotos,

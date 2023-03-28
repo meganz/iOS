@@ -82,6 +82,8 @@ extension AlbumContentViewController: AlbumMenuDelegate {
     func albumMenu(didSelect action: AlbumActionEntity) {
         if action == .selectAlbumCover {
             viewModel.dispatch(.showAlbumCoverPicker)
+        } else if action == .delete {
+            executeCommand(.showDeleteAlbumAlert)
         }
     }
 }

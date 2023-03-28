@@ -71,6 +71,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                             .filter(actionType: .allMedia),
                             .filter(actionType: .images),
                             .filter(actionType: .videos),
+                            .album(actionType: .delete)
         ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
@@ -224,7 +225,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
 
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
 
-        menuActionsArray = [.quickActions(actionType: .rename)]
+        menuActionsArray = [.quickActions(actionType: .rename), .album(actionType: .delete)]
 
         XCTAssertEqual(menuActions, menuActionsArray)
     }
@@ -399,7 +400,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let cmEntity2 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .user, isEmptyState: true))
         let menuActions2 = decomposeMenuIntoActions(menu: cmEntity2)
-        XCTAssertEqual(menuActions2, [.quickActions(actionType: .rename)])
+        XCTAssertEqual(menuActions2, [.quickActions(actionType: .rename), .album(actionType: .delete)])
         
         let cmEntity3 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .user))
         let menuActions3 = decomposeMenuIntoActions(menu: cmEntity3)
@@ -407,7 +408,8 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                                       .album(actionType: .selectAlbumCover),
                                       .display(actionType: .select),
                                       .sort(actionType: .modificationDesc),
-                                      .sort(actionType: .modificationAsc)])
+                                      .sort(actionType: .modificationAsc),
+                                      .album(actionType: .delete)])
 
         let cmEntity4 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album), albumType: .favourite, isEmptyState: true))
         let menuActions4 = decomposeMenuIntoActions(menu: cmEntity4)

@@ -41,7 +41,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                                                            mediaUseCase: mediaUseCase,
                                                            fileSearchRepo: filesSearchRepo,
                                                            userAlbumRepo: userAlbumRepo)
-            ), alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
+            ),
+            albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
+            alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,
                                                        message: nil),

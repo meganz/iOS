@@ -2,9 +2,9 @@ import XCTest
 import MEGADomain
 import MEGADomainMock
 
-final class AlbumContentModificationUseCaseTests: XCTestCase {
+final class AlbumModificationUseCaseTests: XCTestCase {
     func testAddPhotosToAlbum_onAlbumCreated_shouldReturnPhotosAddedToAlbum() async throws {
-        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
         
         let nodes = [
             NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true),
@@ -16,7 +16,7 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
     }
     
     func testRename_onAlbumRename_shouldReturnNewName() async throws {
-        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
         
         let newName = try await sut.rename(album: HandleEntity(1), with: "Hey There")
 
@@ -31,7 +31,7 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
             HandleEntity(1): [setElem1, setElem2]
         ]
         
-        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
         
         let nodeId = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: HandleEntity(2)))
 
@@ -46,7 +46,7 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
             HandleEntity(1): [setElem1, setElem2]
         ]
         
-        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
         
         do {
             let _ = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: nil))
@@ -56,7 +56,7 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
     }
     
     func testDeletePhotos_onAlbumPhotoEntityWithNoValidIds_shouldReturnZeroAlbumResultEntity() async throws {
-        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
         let album = AlbumEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
         let photosToRemove = [AlbumPhotoEntity(photo: NodeEntity(handle: 1), albumPhotoId: nil)]
         let result = try await sut.deletePhotos(in: album.id, photos: photosToRemove)
@@ -65,12 +65,21 @@ final class AlbumContentModificationUseCaseTests: XCTestCase {
     }
     
     func testDeletePhotos_onAlbumPhotoEntityWithValidPhotoIds_shouldReturnAlbumResultEntityWithIdCount() async throws {
-        let sut = AlbumContentModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
         let album = AlbumEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
         let photosToRemove = [AlbumPhotoEntity(photo: NodeEntity(handle: 1), albumPhotoId: 1),
                               AlbumPhotoEntity(photo: NodeEntity(handle: 2), albumPhotoId: 2)]
         let result = try await sut.deletePhotos(in: album.id, photos: photosToRemove)
         XCTAssertEqual(result.success, UInt(photosToRemove.count))
         XCTAssertEqual(result.failure, 0)
+    }
+    
+    func testAlbumDelete_whenUserWantToDelete_shouldDeleteAlbum() async {
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+
+        let deletedAlbumIds = [HandleEntity(1), HandleEntity(2)]
+
+        let ids = await sut.delete(albums: deletedAlbumIds)
+        XCTAssertEqual(ids, deletedAlbumIds)
     }
 }

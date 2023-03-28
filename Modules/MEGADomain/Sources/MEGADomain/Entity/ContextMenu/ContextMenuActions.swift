@@ -71,5 +71,5 @@ public enum MeetingActionEntity: CaseIterable  {
 }
 
 public enum AlbumActionEntity: CaseIterable {
-    case selectAlbumCover
+    case selectAlbumCover, delete
 }
