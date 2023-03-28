@@ -134,6 +134,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
             }
         case .updateNavigationTitle:
             buildNavigationBar()
+        case .showDeleteAlbumAlert:
+            showAlbumDeleteConfirmation()
         }
     }
     
@@ -175,6 +177,18 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     
     private func removeEmptyView() {
         emptyView.removeFromSuperview()
+    }
+    
+    private func showAlbumDeleteConfirmation() {
+        let alert = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.deleteAlbumTitle(1),
+                                      message: Strings.Localizable.CameraUploads.Albums.deleteAlbumMessage(1),
+                                      preferredStyle: .alert)
+        alert.addAction(.init(title: Strings.Localizable.cancel, style: .cancel) { _ in })
+        alert.addAction(.init(title: Strings.Localizable.delete, style: .default) { [weak self] _ in
+            self?.viewModel.dispatch(.deleteAlbum)
+        })
+        
+        present(alert, animated: true)
     }
     
     // MARK: - Action

@@ -35,6 +35,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     private let usecase: AlbumListUseCaseProtocol
+    private let albumModificationUseCase: AlbumModificationUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private let featureFlagProvider: FeatureFlagProviderProtocol
     private var subscriptions = Set<AnyCancellable>()
@@ -42,10 +43,12 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
     init(usecase: AlbumListUseCaseProtocol,
+         albumModificationUseCase: AlbumModificationUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
          featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.usecase = usecase
+        self.albumModificationUseCase = albumModificationUseCase
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.featureFlagProvider = featureFlagProvider
@@ -137,7 +140,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     func onAlbumListDeleteConfirm() {
         deleteAlbumTask = Task {
-            let albumIds = await usecase.delete(albums: Array(selection.albums.keys))
+            let albumIds = await albumModificationUseCase.delete(albums: Array(selection.albums.keys))
             onAlbumDeleteSuccess(albumIds)
         }
     }

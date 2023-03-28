@@ -8,7 +8,6 @@ public protocol AlbumListUseCaseProtocol {
     func userAlbums() async -> [AlbumEntity]
     func createUserAlbum(with name: String?) async throws -> AlbumEntity
     func hasNoPhotosAndVideos() async -> Bool
-    func delete(albums ids: [HandleEntity]) async -> [HandleEntity]
 }
 
 public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRepositoryProtocol,
@@ -191,23 +190,5 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
             .flatMap { $0 }
             .filter { $0.hasThumbnail }
         return allPhotosAndVideos?.isEmpty ?? true
-    }
-    
-    public func delete(albums ids: [HandleEntity]) async -> [HandleEntity] {
-        await withTaskGroup(of: HandleEntity?.self) { group in
-            guard group.isCancelled == false else {
-                return []
-            }
-            
-            ids.forEach { albumId in
-                group.addTask {
-                    try? await userAlbumRepository.deleteAlbum(by: albumId)
-                }
-            }
-            
-            return await group.reduce(into: [HandleEntity](), {
-                if let id = $1 { $0.append(id) }
-            })
-        }
     }
 }

@@ -9,6 +9,7 @@ enum AlbumContentAction: ActionType {
     case changeFilter(FilterType)
     case showAlbumCoverPicker
     case deletePhotos([NodeEntity])
+    case deleteAlbum
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -17,6 +18,7 @@ final class AlbumContentViewModel: ViewModelType {
         case dismissAlbum
         case showHud(MessageType)
         case updateNavigationTitle
+        case showDeleteAlbumAlert
         
         enum MessageType: Equatable {
             case success(String)
@@ -26,7 +28,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     private var album: AlbumEntity
     private let albumContentsUseCase: AlbumContentsUseCaseProtocol
-    private let albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol
+    private let albumModificationUseCase: AlbumModificationUseCaseProtocol
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     private let router: AlbumContentRouting
     private var loadingTask: Task<Void, Never>?
@@ -38,6 +40,7 @@ final class AlbumContentViewModel: ViewModelType {
     private var newAlbumPhotosToAdd: [NodeEntity]?
     private var doesPhotoLibraryContainPhotos: Bool = false
     private var deletePhotosTask: Task<Void, Never>?
+    private var deleteAlbumTask: Task<Void, Never>?
     
     private(set) var alertViewModel: TextFieldAlertViewModel
     
@@ -52,7 +55,7 @@ final class AlbumContentViewModel: ViewModelType {
     init(
         album: AlbumEntity,
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
-        albumContentModificationUseCase: AlbumContentModificationUseCaseProtocol,
+        albumModificationUseCase: AlbumModificationUseCaseProtocol,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
         router: AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
@@ -61,7 +64,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd
         self.albumContentsUseCase = albumContentsUseCase
-        self.albumContentModificationUseCase = albumContentModificationUseCase
+        self.albumModificationUseCase = albumModificationUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
         self.router = router
         self.albumName = album.name
@@ -89,6 +92,10 @@ final class AlbumContentViewModel: ViewModelType {
         case .deletePhotos(let photos):
             deletePhotosTask = Task {
                 await deletePhotos(photos)
+            }
+        case .deleteAlbum:
+            deleteAlbumTask = Task {
+                await deleteAlbum()
             }
         }
     }
@@ -142,7 +149,7 @@ final class AlbumContentViewModel: ViewModelType {
     func renameAlbum(with name: String) {
         renameAlbumTask = Task { [weak self] in
             do {
-                let newName = try await albumContentModificationUseCase.rename(album: album.id, with: name)
+                let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
                 await self?.onAlbumRenameSuccess(with: newName)
             } catch {
                 MEGALogError("Error renaming user album: \(error.localizedDescription)")
@@ -224,7 +231,7 @@ final class AlbumContentViewModel: ViewModelType {
             return
         }
         do {
-            let result = try await albumContentModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photosToAdd)
+            let result = try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photosToAdd)
             if result.success > 0 {
                 let message = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
                 invokeCommand?(.showHud(.success(message)))
@@ -291,7 +298,7 @@ final class AlbumContentViewModel: ViewModelType {
     private func updateAlbumCover(albumPhoto: AlbumPhotoEntity) {
         selectAlbumCoverTask = Task { [weak self] in
             do {
-                let _ = try await albumContentModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
+                let _ = try await albumModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
                 album.coverNode = albumPhoto.photo
                 
                 let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated
@@ -315,7 +322,7 @@ final class AlbumContentViewModel: ViewModelType {
             return
         }
         do {
-            let result = try await albumContentModificationUseCase.deletePhotos(in: album.id, photos: photosToDelete)
+            let result = try await albumModificationUseCase.deletePhotos(in: album.id, photos: photosToDelete)
             if result.success > 0 {
                 let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: "\(albumName)")
@@ -323,6 +330,22 @@ final class AlbumContentViewModel: ViewModelType {
             }
         } catch {
             MEGALogError("Error occurred when deleting photos for the album. \(error.localizedDescription)")
+        }
+    }
+    
+    @MainActor
+    private func deleteAlbum() async {
+        deleteAlbumTask = Task {
+            let albumIds = await albumModificationUseCase.delete(albums: [album.id])
+            
+            if albumIds.first == album.id {
+                let successMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
+                    .replacingOccurrences(of: "[A]", with: albumName)
+                invokeCommand?(.dismissAlbum)
+                invokeCommand?(.showHud(.custom(Asset.Images.Hud.hudMinus.image, successMsg)))
+            } else {
+                MEGALogError("Error occurred when deleting the album id: \(album.id)")
+            }
         }
     }
 }

@@ -220,4 +220,8 @@ extension ContextMenuBuilder {
     var selectAlbumCover: CMActionEntity {
         CMActionEntity(type: .album(actionType: .selectAlbumCover))
     }
+    
+    var delete: CMActionEntity {
+        CMActionEntity(type: .album(actionType: .delete))
+    }
 }

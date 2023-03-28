@@ -1,13 +1,14 @@
 import Combine
 
-public protocol AlbumContentModificationUseCaseProtocol {
+public protocol AlbumModificationUseCaseProtocol {
     func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity
     func rename(album id: HandleEntity, with newName: String) async throws -> String
     func updateAlbumCover(album id: HandleEntity, withAlbumPhoto albumPhoto: AlbumPhotoEntity) async throws -> HandleEntity
     func deletePhotos(in albumId: HandleEntity, photos: [AlbumPhotoEntity]) async throws -> AlbumElementsResultEntity
+    func delete(albums ids: [HandleEntity]) async -> [HandleEntity]
 }
 
-public final class AlbumContentModificationUseCase: AlbumContentModificationUseCaseProtocol {
+public struct AlbumModificationUseCase: AlbumModificationUseCaseProtocol {
     private let userAlbumRepo: UserAlbumRepositoryProtocol
 
     public init(userAlbumRepo: UserAlbumRepositoryProtocol) {
@@ -35,5 +36,23 @@ public final class AlbumContentModificationUseCase: AlbumContentModificationUseC
             return AlbumElementsResultEntity(success: 0, failure: 0)
         }
         return try await userAlbumRepo.deleteAlbumElements(albumId: albumId, elementIds: photoIds)
+    }
+    
+    public func delete(albums ids: [HandleEntity]) async -> [HandleEntity] {
+        await withTaskGroup(of: HandleEntity?.self) { group in
+            guard group.isCancelled == false else {
+                return []
+            }
+            
+            ids.forEach { albumId in
+                group.addTask {
+                    try? await userAlbumRepo.deleteAlbum(by: albumId)
+                }
+            }
+            
+            return await group.reduce(into: [HandleEntity](), {
+                if let id = $1 { $0.append(id) }
+            })
+        }
     }
 }

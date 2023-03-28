@@ -500,7 +500,8 @@ public final class ContextMenuBuilder {
         var displayActionsMenuChildren = [CMElement]()
         
         if albumType == .user && isEmptyState {
-            return CMEntity(displayInline: true, children: [rename])
+            return CMEntity(displayInline: true,
+                            children: [rename, CMEntity(displayInline: true, children: [delete])])
         }
         
         displayActionsMenuChildren = []
@@ -516,6 +517,10 @@ public final class ContextMenuBuilder {
         }
         if isFilterEnabled {
             displayActionsMenuChildren.append(filterMenu())
+        }
+        
+        if albumType == .user {
+            displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [delete]))
         }
         
         return CMEntity(displayInline: true, children: displayActionsMenuChildren)
