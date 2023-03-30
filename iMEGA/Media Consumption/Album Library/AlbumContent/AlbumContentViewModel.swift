@@ -133,6 +133,7 @@ final class AlbumContentViewModel: ViewModelType {
             filterType: selectedFilter.toFilterEntity(),
             albumType: album.type,
             isFilterEnabled: isFilterEnabled,
+            isSelectHidden: false,
             isEmptyState: photos.isEmpty
         )
     }

@@ -10,6 +10,7 @@ public final class ContextMenuBuilder {
     private var isViewInFolder = false
     private var isRestorable: Bool = false
     private var isInVersionsView: Bool = false
+    private var isSelectHidden: Bool = false
     private var isSharedItems: Bool = false
     private var isIncomingShareChild: Bool = false
     private var isHome: Bool = false
@@ -90,6 +91,11 @@ public final class ContextMenuBuilder {
     
     public func setIsInVersionsView(_ isInVersionsView: Bool) -> ContextMenuBuilder {
         self.isInVersionsView = isInVersionsView
+        return self
+    }
+    
+    public func setIsSelectHidden(_ isSelectHidden: Bool) -> ContextMenuBuilder {
+        self.isSelectHidden = isSelectHidden
         return self
     }
     
@@ -236,6 +242,8 @@ public final class ContextMenuBuilder {
                 return meetingMenu()
             case .album:
                 return albumMenu()
+            case .timeline:
+                return timelineMenu()
             default:
                 return nil
             }
@@ -490,7 +498,9 @@ public final class ContextMenuBuilder {
     
     private func userAlbumMenu() -> CMEntity {
         var children: [CMElement] = [rename, selectAlbumCover]
-        children.append(contentsOf: selectMenu().children)
+        if !isSelectHidden {
+            children.append(contentsOf: selectMenu().children)
+        }
         
         return CMEntity(displayInline: true, children: children)
     }
@@ -508,7 +518,7 @@ public final class ContextMenuBuilder {
         
         if albumType == .user {
             displayActionsMenuChildren.append(userAlbumMenu())
-        } else {
+        } else if !isSelectHidden {
             displayActionsMenuChildren.append(selectMenu())
         }
         
@@ -524,5 +534,21 @@ public final class ContextMenuBuilder {
         }
         
         return CMEntity(displayInline: true, children: displayActionsMenuChildren)
+    }
+    
+    private func timelineMenu() -> CMEntity {
+        var displayActionsMenuChildren: [CMElement] = []
+        if !isSelectHidden {
+            displayActionsMenuChildren.append(selectMenu())
+        }
+        if isCameraUploadExplorer {
+            displayActionsMenuChildren.append(sortMenu())
+            if isFilterEnabled {
+                displayActionsMenuChildren.append(filterMenu())
+            }
+        }
+        
+        return CMEntity(displayInline: true,
+                        children: displayActionsMenuChildren)
     }
 }

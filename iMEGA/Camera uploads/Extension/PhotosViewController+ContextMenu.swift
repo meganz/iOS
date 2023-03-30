@@ -5,10 +5,11 @@ import MEGASwift
 extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         return CMConfigEntity(
-            menuType: .menu(type: .display),
+            menuType: .menu(type: .timeline),
             sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
             isCameraUploadExplorer: true,
             isFilterEnabled: true,
+            isSelectHidden: false,
             isEmptyState: viewModel.mediaNodes.isEmpty
         )
     }

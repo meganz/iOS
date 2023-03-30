@@ -476,4 +476,36 @@ final class ContextMenuActionsTests: XCTestCase {
         XCTAssertTrue(filterMeetingActions(from: decomposeMenuIntoActions(menu: menuEntity)) == MeetingActionEntity
                                                                                                                 .allCases)
     }
+    
+    func testTimelineMenu_onSortTypeFitlerEnabledAndSelectNotHidden_shouldShowAllOptions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+            .setType(.menu(type: .timeline))
+            .setSortType(.modificationDesc)
+            .setIsCameraUploadExplorer(true)
+            .setIsFilterEnabled(true)
+            .setIsSelectHidden(false)
+            .setIsEmptyState(false)
+            .build())
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterDisplayActions(from: actions),
+                       [.select, .filter])
+        XCTAssertEqual(filterSortActions(from: actions),
+                       [.modificationDesc, .modificationAsc])
+    }
+    
+    func testTimelineMenu_onEmptyState_shouldDisableSelectAndSortEnableFilter() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+            .setType(.menu(type: .timeline))
+            .setSortType(.modificationDesc)
+            .setIsCameraUploadExplorer(true)
+            .setIsFilterEnabled(true)
+            .setIsSelectHidden(false)
+            .setIsEmptyState(true)
+            .build())
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterDisplayActions(from: actions),
+                       [.select, .sort, .filter])
+    }
 }

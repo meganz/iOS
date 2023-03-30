@@ -17,6 +17,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .setIsRestorable(config.isRestorable)
                         .setIsInVersionsView(config.isInVersionsView)
                         .setVersionsCount(config.versionsCount)
+                        .setIsSelectHidden(config.isSelectHidden)
                         .setIsSharedItems(config.isSharedItems)
                         .setIsIncomingShareChild(config.isIncomingShareChild)
                         .setIsFavouritesExplorer(config.isFavouritesExplorer)
