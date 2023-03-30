@@ -14,12 +14,13 @@ let package = Package(
             targets: ["MEGAData"]),
     ],
     dependencies: [
-        .package(path: "../MEGADomain")
+        .package(path: "../MEGADomain"),
+        .package(path: "../MEGASdk")
     ],
     targets: [
         .target(
             name: "MEGAData",
-            dependencies: ["MEGADomain"]),
+            dependencies: ["MEGADomain", "MEGASdk"]),
         .testTarget(
             name: "MEGADataTests",
             dependencies: ["MEGAData"]),

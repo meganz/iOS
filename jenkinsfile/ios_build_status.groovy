@@ -125,16 +125,6 @@ pipeline {
             }
         }
 
-        stage('MEGAData - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGAData - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGAData"
-                    })
-                }
-            }
-        }
-
         stage('MEGASwift - Run unit tests and generate code coverage') {
             steps {
                 gitlabCommitStatus(name: 'MEGASwift - Run unit tests and generate code coverage') {
