@@ -230,6 +230,17 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertEqual(menuActions, menuActionsArray)
     }
     
+    func testCreateContextMenu_onAlbumsIsSelectHidden_shouldNotShowSelectActions() throws {
+        try [AlbumEntityType.favourite, .user].forEach {
+            let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
+                                                                            albumType: $0,
+                                                                            isSelectHidden: true))
+            
+            let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+            XCTAssertTrue(!menuActions.contains(.display(actionType: .select)))
+        }
+    }
+    
     func testCreateContextMenu_UploadAdd() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .uploadAdd),
                                                                         showMediaDiscovery: true))

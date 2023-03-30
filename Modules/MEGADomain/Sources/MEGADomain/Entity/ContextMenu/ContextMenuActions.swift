@@ -34,7 +34,7 @@ public enum CMElementTypeEntity: Equatable {
 
 //MARK: - Context Menu types
 public enum ContextMenuTypeEntity {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline
 }
 
 //MARK: - Context Menu grouped actions
