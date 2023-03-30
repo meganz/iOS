@@ -9,4 +9,6 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func images(for parentNode: NodeEntity) -> [NodeEntity]
     func images(for parentHandle: HandleEntity) -> [NodeEntity]
     func rubbishNode() -> NodeEntity?
+    func rootNode() -> NodeEntity?
+    func parents(of node: NodeEntity) async -> [NodeEntity]
 }

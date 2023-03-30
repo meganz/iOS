@@ -56,9 +56,7 @@
 @property (nonatomic) UISearchController *searchController;
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
-@property (weak, nonatomic) IBOutlet UIButton *cloudDriveButton;
 @property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
-@property (weak, nonatomic) IBOutlet UIButton *incomingButton;
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
 
 @end
@@ -80,6 +78,8 @@
     self.navigationController.presentationController.delegate = self;
     self.cloudDriveButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.incomingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+    
+    [self navigateToCurrentTargetActionBrowser];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -454,16 +454,7 @@
 }
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode {
-    BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
-    browserVC.browserAction = self.browserAction;
-    browserVC.childBrowser = YES;
-    browserVC.childBrowserFromIncoming = (self.incomingButton.selected || self.isChildBrowserFromIncoming) ? YES : NO;
-    browserVC.localpath = self.localpath;
-    browserVC.parentNode = parentNode;
-    browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
-    browserVC.selectedNodesArray = self.selectedNodesArray;
-    browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
-    
+    BrowserViewController *browserVC = [self browserControllerFor:parentNode isCurrentTargetNode:NO];
     [self.navigationController pushViewController:browserVC animated:YES];
 }
 
@@ -544,6 +535,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
         [self dismissAndSelectNodesIfNeeded:NO completion:^{
+            [self updateActionTargetNode:self.parentNode];
             [[NameCollisionRouterOCWrapper.alloc init] moveNodes:self.selectedNodesArray to:self.parentNode presenter:UIApplication.mnz_presentingViewController];
         }];
     }
@@ -557,12 +549,14 @@
         if (self.browserAction == BrowserActionImport && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.selectedNodesArray[0]] == MEGAShareTypeAccessUnknown) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
+            [self updateActionTargetNode:self.parentNode];
             for (MEGANode *node in self.selectedNodesArray) {
                 self.remainingOperations++;
                 [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode];
             }
         } else {
             [self dismissAndSelectNodesIfNeeded:NO completion:^{
+                [self updateActionTargetNode:self.parentNode];
                 [[NameCollisionRouterOCWrapper.alloc init] copyNodes:self.selectedNodesArray to:self.parentNode isFolderLink:self.browserAction == BrowserActionImportFromFolderLink presenter:UIApplication.mnz_presentingViewController];
             }];
         }
