@@ -27,6 +27,7 @@ final class MockSdk: MEGASdk {
     var hasGlobalDelegate = false
     var apiURL: String?
     var disablepkp: Bool?
+    var shareAccessLevel: MEGAShareType = .accessUnknown
     
     init(nodes: [MEGANode] = [],
          rubbishNodes: [MEGANode] = [],
@@ -69,6 +70,10 @@ final class MockSdk: MEGASdk {
     }
     
     func setNodes(_ nodes: [MEGANode]) { self.nodes = nodes }
+    
+    func setShareAccessLevel(_ shareAccessLevel: MEGAShareType) {
+        self.shareAccessLevel = shareAccessLevel
+    }
     
     override var myUser: MEGAUser? { user }
     
@@ -274,5 +279,9 @@ final class MockSdk: MEGASdk {
         
         let mockRequest = MockRequest(handle: 1)
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+    }
+    
+    override func accessLevel(for node: MEGANode) -> MEGAShareType {
+        shareAccessLevel
     }
 }

@@ -25,6 +25,10 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 @interface BrowserViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *cloudDriveButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *incomingButton;
+
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) NSArray *selectedNodesArray;
 
@@ -38,6 +42,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (nonatomic, strong) NSMutableDictionary *selectedNodesMutableDictionary;
 
 @property (nonatomic, weak) id<BrowserViewControllerDelegate> browserViewControllerDelegate;
+
+- (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 
 @end
 

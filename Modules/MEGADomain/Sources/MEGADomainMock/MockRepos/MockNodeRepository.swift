@@ -6,15 +6,17 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     
     private let node: NodeEntity?
     private let rubbisNode: NodeEntity?
+    private let nodeRoot: NodeEntity?
     private let nodeAccessLevel:NodeAccessTypeEntity
     private let childNodeNamed: NodeEntity?
     private let childNode: NodeEntity?
     private let images: [NodeEntity]
     private let fileLinkNode: NodeEntity?
 
-    public init(node: NodeEntity? = nil, rubbishNode: NodeEntity? = nil, nodeAccessLevel:NodeAccessTypeEntity = .unknown, childNodeNamed: NodeEntity? = nil, childNode: NodeEntity? = nil, images: [NodeEntity] = [], fileLinkNode: NodeEntity? = nil) {
+    public init(node: NodeEntity? = nil, rubbishNode: NodeEntity? = nil, nodeRoot: NodeEntity? = nil, nodeAccessLevel:NodeAccessTypeEntity = .unknown, childNodeNamed: NodeEntity? = nil, childNode: NodeEntity? = nil, images: [NodeEntity] = [], fileLinkNode: NodeEntity? = nil) {
         self.node = node
         self.rubbisNode = rubbishNode
+        self.nodeRoot = nodeRoot
         self.nodeAccessLevel = nodeAccessLevel
         self.childNodeNamed = childNodeNamed
         self.childNode = childNode
@@ -59,5 +61,13 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     
     public func rubbishNode() -> NodeEntity? {
         rubbisNode
+    }
+    
+    public func rootNode() -> NodeEntity? {
+        nodeRoot
+    }
+    
+    public func parents(of node: NodeEntity) async -> [NodeEntity] {
+        []
     }
 }

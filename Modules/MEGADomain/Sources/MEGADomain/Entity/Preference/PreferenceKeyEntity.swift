@@ -23,4 +23,8 @@ public enum PreferenceKeyEntity: String {
     case logging
     case apiEnvironment = "MEGAAPIEnv"
     case secureFingerprintVerification
+    case lastMoveActionTargetPath
+    case lastMoveActionTargetDate
+    case lastCopyActionTargetPath
+    case lastCopyActionTargetDate
 }

@@ -85,7 +85,49 @@ struct NodeRepository: NodeRepositoryProtocol {
     }
     
     func rubbishNode() -> NodeEntity? {
-        MEGASdkManager.sharedMEGASdk().rubbishNode?.toNodeEntity()
+        sdk.rubbishNode?.toNodeEntity()
+    }
+    
+    func rootNode() -> NodeEntity? {
+        sdk.rootNode?.toNodeEntity()
+    }
+    
+    func parents(of node: NodeEntity) async -> [NodeEntity] {
+        let parentTreeTask = Task.detached { () -> [NodeEntity] in
+            guard let node = node.toMEGANode(in: sdk) else { return [] }
+            var parentTreeArray = [NodeEntity]()
+            
+             if sdk.accessLevel(for: node) == .accessOwner {
+                var rootHandle: HandleEntity?
+                if sdk.nodePath(for: node)?.hasPrefix("//bin") == true {
+                    rootHandle = rubbishNode()?.parentHandle
+                } else {
+                    rootHandle = rootNode()?.handle
+                }
+                
+                var tempHandle = node.parentHandle
+                if node.isFolder(), let nodeEntity = nodeForHandle(node.handle) {
+                    parentTreeArray.append(nodeEntity)
+                }
+                repeat {
+                    if let tempNode = nodeForHandle(tempHandle), tempHandle != rootHandle {
+                        parentTreeArray.insert(tempNode, at: 0)
+                        tempHandle = tempNode.parentHandle
+                    } else {
+                        break
+                    }
+                } while tempHandle != rootHandle
+            } else {
+                var tempNode = sdk.node(forHandle: node.parentHandle)?.toNodeEntity()
+                while tempNode != nil {
+                    if let tempNode, tempNode.handle != sdk.rootNode?.handle { parentTreeArray.insert(tempNode, at: 0) }
+                    tempNode = sdk.node(forHandle: tempNode!.parentHandle)?.toNodeEntity()
+                }
+            }
+            
+            return parentTreeArray
+        }
+        return await parentTreeTask.value
     }
     
     // MARK: - Private
