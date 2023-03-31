@@ -531,6 +531,13 @@
     //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
     cell.linkImageView.hidden = YES;
     
+    __weak typeof(self) weakself = self;
+    cell.moreButtonAction = ^(UIButton * moreButton) {
+        if (moreButton) {
+            [weakself showNodeActions:moreButton];
+        }
+    };
+    
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     
     return cell;
