@@ -42,6 +42,27 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
+    func testLoadingPhotos_withAllMediaAllLocations_shouldExcludeThumbnailLessPhotos() async throws {
+        let photos = [
+            NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true),
+            NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true),
+            NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 2, hasThumbnail: false),
+            NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 3, hasThumbnail: false),
+            NodeEntity(nodeType:.file, name:"TestImage1.png", handle:5, parentHandle: 4, hasThumbnail: true),
+        ]
+        
+        let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
+        let usecase = MockPhotoLibraryUseCase(allPhotos: photos,
+                                              allPhotosFromCloudDriveOnly: [],
+                                              allPhotosFromCameraUpload: [])
+        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
+        
+        sut.filterType = .allMedia
+        sut.filterLocation = . allLocations
+        await sut.loadPhotos()
+        XCTAssertEqual(sut.mediaNodes, photos.filter { $0.hasThumbnail })
+    }
+    
     func testLoadingPhotos_withImagesAllLocations_shouldReturnTrue() async throws {
         let expectedImages = sampleNodesForAllLocations().filter({ $0.name.mnz_isImagePathExtension == true })
         sut.filterType = .images
