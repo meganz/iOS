@@ -139,4 +139,12 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         sut.zoomState.zoom(.out)
         try testZoomState_zoomOutOneTime_monthSection()
     }
+    
+    func testZoomState_onChangeToThirteenScaleFactor_shouldChangeSelectionIsHidden() {
+        let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+        let viewModel = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+        XCTAssertFalse(libraryViewModel.selection.isHidden)
+        viewModel.zoomState.scaleFactor = .thirteen
+        XCTAssertTrue(libraryViewModel.selection.isHidden)
+    }
 }

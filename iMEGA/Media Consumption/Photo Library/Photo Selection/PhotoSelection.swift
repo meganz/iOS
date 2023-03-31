@@ -40,6 +40,8 @@ final class PhotoSelection: ObservableObject {
     
     @Published var isItemSelectedAfterLimitReached = false
     
+    @Published var isHidden = false
+    
     func setSelectedPhotos(_ photos: [NodeEntity]) {
         self.photos = Dictionary(uniqueKeysWithValues: photos.map { ($0.handle, $0) })
     }

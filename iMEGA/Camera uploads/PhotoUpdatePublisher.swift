@@ -35,6 +35,13 @@ import Combine
             self?.photosVC?.selection.setSelectedNodes(Array($0.values))
             self?.photosVC?.didSelectedPhotoCountChange($0.count)
         }
+        
+        photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] isPhotoSelectionHidden in
+            DispatchQueue.main.async {
+                self?.photosVC?.viewModel.isSelectHidden = isPhotoSelectionHidden
+                self?.photosVC?.setupRightNavigationBarButtons()
+            }
+        }
     }
     
     @objc func cancelSubscriptions() {

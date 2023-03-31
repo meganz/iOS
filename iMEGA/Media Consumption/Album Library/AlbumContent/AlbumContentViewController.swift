@@ -140,6 +140,8 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
             buildNavigationBar()
         case .showDeleteAlbumAlert:
             showAlbumDeleteConfirmation()
+        case .rebuildContextMenu:
+            configureRightBarButtons()
         }
     }
     

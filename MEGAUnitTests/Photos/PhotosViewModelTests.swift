@@ -110,6 +110,13 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedVideos)
     }
     
+    
+    func testIsSelectHidden_onToggle_changesInitialFalseValueToTrue() {
+        XCTAssertFalse(sut.isSelectHidden)
+        sut.isSelectHidden.toggle()
+        XCTAssertTrue(sut.isSelectHidden)
+    }
+    
     private func sampleNodesForAllLocations() ->[NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)

@@ -31,6 +31,16 @@ final class PhotoLibraryPublisher {
             .store(in: &subscriptions)
     }
     
+    func subscribeToPhotoSelectionHidden(observer: @escaping (Bool) -> Void) {
+        viewModel
+            .selection
+            .$isHidden
+            .sink {
+                observer($0)
+            }
+            .store(in: &subscriptions)
+    }
+    
     func cancelSubscriptions() {
         subscriptions.removeAll()
     }

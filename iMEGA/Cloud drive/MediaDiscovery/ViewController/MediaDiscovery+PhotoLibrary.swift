@@ -19,6 +19,10 @@ extension MediaDiscoveryViewController: PhotoLibraryProvider {
             self?.selection.setSelectedNodes(Array($0.values))
             self?.didSelectedPhotoCountChange($0.count)
         }
+        
+        photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] in
+            self?.hideNavigationEditBarButton($0)
+        }
     }
     
     func hideNavigationEditBarButton(_ hide: Bool) {

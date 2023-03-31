@@ -27,6 +27,10 @@ extension AlbumContentViewController: PhotoLibraryProvider {
             self?.selection.setSelectedNodes(Array($0.values))
             self?.didSelectedPhotoCountChange($0.count)
         }
+        
+        photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] in
+            self?.viewModel.dispatch(.configureContextMenu(isSelectHidden: $0))
+        }
     }
     
     func didSelectedPhotoCountChange(_ count: Int) {
