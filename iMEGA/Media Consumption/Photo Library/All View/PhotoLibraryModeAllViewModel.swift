@@ -7,5 +7,12 @@ class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> 
         super.init(libraryViewModel: libraryViewModel)
         
         photoCategoryList = libraryViewModel.library.photoMonthSections
+        subscribeToZoomScaleFactorChange()
+    }
+    
+    private func subscribeToZoomScaleFactorChange() {
+        $zoomState.map { $0.scaleFactor == .thirteen }
+            .removeDuplicates()
+            .assign(to: &libraryViewModel.selection.$isHidden)
     }
 }

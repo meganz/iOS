@@ -33,6 +33,7 @@ final class PhotosViewModel: NSObject {
     var isFilterActive: Bool {
         filterType != .allMedia || filterLocation != .allLocations
     }
+    var isSelectHidden: Bool = false
     
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,

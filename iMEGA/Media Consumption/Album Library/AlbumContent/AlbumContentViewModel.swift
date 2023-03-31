@@ -10,6 +10,7 @@ enum AlbumContentAction: ActionType {
     case showAlbumCoverPicker
     case deletePhotos([NodeEntity])
     case deleteAlbum
+    case configureContextMenu(isSelectHidden: Bool)
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -21,6 +22,7 @@ final class AlbumContentViewModel: ViewModelType {
         case showHud(MessageType)
         case updateNavigationTitle
         case showDeleteAlbumAlert
+        case rebuildContextMenu
         
         enum MessageType: Equatable {
             case success(String)
@@ -48,6 +50,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     var albumName: String
     var invokeCommand: ((Command) -> Void)?
+    var isPhotoSelectionHidden = false
     
     var renameAlbumTask: Task<Void, Never>?
     var selectAlbumCoverTask: Task<Void, Never>?
@@ -99,6 +102,9 @@ final class AlbumContentViewModel: ViewModelType {
             deleteAlbumTask = Task {
                 await deleteAlbum()
             }
+        case .configureContextMenu(let isSelectHidden):
+            isPhotoSelectionHidden = isSelectHidden
+            invokeCommand?(.rebuildContextMenu)
         }
     }
     
@@ -133,7 +139,7 @@ final class AlbumContentViewModel: ViewModelType {
             filterType: selectedFilter.toFilterEntity(),
             albumType: album.type,
             isFilterEnabled: isFilterEnabled,
-            isSelectHidden: false,
+            isSelectHidden: isPhotoSelectionHidden,
             isEmptyState: photos.isEmpty
         )
     }

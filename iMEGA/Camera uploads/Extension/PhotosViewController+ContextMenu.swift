@@ -9,7 +9,7 @@ extension PhotosViewController {
             sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
             isCameraUploadExplorer: true,
             isFilterEnabled: true,
-            isSelectHidden: false,
+            isSelectHidden: viewModel.isSelectHidden,
             isEmptyState: viewModel.mediaNodes.isEmpty
         )
     }

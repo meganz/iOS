@@ -41,7 +41,7 @@ extension AlbumContentViewController {
                 }
                 navigationItem.rightBarButtonItems = rightBarButtonItems
             } else {
-                navigationItem.rightBarButtonItem = rightBarButtonItem
+                navigationItem.rightBarButtonItem = viewModel.isPhotoSelectionHidden ? nil : rightBarButtonItem
             }
         }
     }

@@ -693,6 +693,19 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])
     }
     
+    func testDispatchConfigureContextMenu_onReceived_shouldRebuildContextMenuWithNewSelectHiddenValue() {
+        let sut = AlbumContentViewModel(album: albumEntity,
+                                        albumContentsUseCase: MockAlbumContentUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel())
+        let expectedContextConfigurationSelectHidden = true
+        test(viewModel: sut, action: .configureContextMenu(isSelectHidden: expectedContextConfigurationSelectHidden),
+             expectedCommands: [.rebuildContextMenu])
+        XCTAssertEqual(sut.contextMenuConfiguration?.isSelectHidden, expectedContextConfigurationSelectHidden)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title, placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder, affirmativeButtonTitle: Strings.Localizable.rename, message: nil)
     }
