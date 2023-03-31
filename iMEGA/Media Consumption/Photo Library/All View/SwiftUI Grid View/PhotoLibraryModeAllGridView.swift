@@ -25,6 +25,7 @@ struct PhotoLibraryModeAllGridView: View {
             }
             
             PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
+                .offset(y: 5)
         }
         .onReceive(viewModel.$selectedNode) { photo in
             guard let photo = photo else { return }
