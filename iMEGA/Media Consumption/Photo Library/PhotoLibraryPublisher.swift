@@ -11,15 +11,6 @@ final class PhotoLibraryPublisher {
         self.viewModel = viewModel
     }
     
-    func subscribeToSelectedModeChange(observer: @escaping (PhotoLibraryViewMode) -> Void) {
-        viewModel
-            .$selectedMode
-            .sink {
-                observer($0)
-            }
-            .store(in: &subscriptions)
-    }
-    
     func subscribeToSelectedPhotosChange(observer: @escaping ([HandleEntity: NodeEntity]) -> Void) {
         viewModel
             .selection
@@ -32,9 +23,15 @@ final class PhotoLibraryPublisher {
     }
     
     func subscribeToPhotoSelectionHidden(observer: @escaping (Bool) -> Void) {
-        viewModel
-            .selection
-            .$isHidden
+        viewModel.$selectedMode
+            .combineLatest(viewModel.selection.$isHidden)
+            .map {
+                if $0.0 != .all {
+                    return true
+                }
+                return $0.1
+            }
+            .removeDuplicates()
             .sink {
                 observer($0)
             }

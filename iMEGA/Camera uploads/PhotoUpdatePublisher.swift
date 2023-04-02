@@ -25,12 +25,6 @@ import Combine
         subscribleToCameraUploadStatsChange()
         subscribleToPhotoLibraryUpdate()
         
-        photoLibraryPublisher.subscribeToSelectedModeChange { [weak self] _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self?.photosVC?.setupNavigationBarButtons()
-            }
-        }
-        
         photoLibraryPublisher.subscribeToSelectedPhotosChange { [weak self] in
             self?.photosVC?.selection.setSelectedNodes(Array($0.values))
             self?.photosVC?.didSelectedPhotoCountChange($0.count)
@@ -39,7 +33,7 @@ import Combine
         photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] isPhotoSelectionHidden in
             DispatchQueue.main.async {
                 self?.photosVC?.viewModel.isSelectHidden = isPhotoSelectionHidden
-                self?.photosVC?.setupRightNavigationBarButtons()
+                self?.photosVC?.setupNavigationBarButtons()
             }
         }
     }
