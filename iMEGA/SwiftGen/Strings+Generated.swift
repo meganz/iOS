@@ -3184,6 +3184,10 @@ public enum Strings {
       public enum Message {
         /// Message…
         public static let placeholder = Strings.tr("Localizable", "chat.message.placeholder")
+        /// Plural format key: "%#@count@"
+        public static func unreadMessage(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "chat.message.unreadMessage", p1)
+        }
         public enum ChangedRole {
           /// [A] was changed to [S]host role[/S] by [B]
           public static let host = Strings.tr("Localizable", "chat.message.changedRole.host")

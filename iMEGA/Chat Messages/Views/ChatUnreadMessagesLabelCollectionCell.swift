@@ -5,13 +5,7 @@ class ChatUnreadMessagesLabelCollectionCell: UICollectionViewCell {
 
     var unreadMessageCount: Int = 0 {
         didSet {
-            if unreadMessageCount <= 0 {
-                label.text = ""
-            } else if unreadMessageCount == 1 {
-                label.text = Strings.Localizable.unreadMessage(unreadMessageCount).localizedUppercase
-            } else {
-                label.text = Strings.Localizable.unreadMessages(unreadMessageCount).localizedUppercase
-            }
+            label.text = unreadMessageCount > 0 ? Strings.Localizable.Chat.Message.unreadMessage(unreadMessageCount) : ""
         }
     }
 }
@@ -23,7 +17,7 @@ class ChatUnreadMessagesLabelCollectionCellSizeCalculator: MessageSizeCalculator
     lazy var calculateTitleLabel: MEGALabel = {
         let titleLabel = MEGALabel(frame: .zero)
         titleLabel.apply(style: .body)
-        titleLabel.text = Strings.Localizable.unreadMessage(1).localizedUppercase
+        titleLabel.text = Strings.Localizable.Chat.Message.unreadMessage(1)
         return titleLabel
     }()
     
