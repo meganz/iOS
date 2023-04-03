@@ -9343,6 +9343,22 @@
 			path = ViewRouters;
 			sourceTree = "<group>";
 		};
+		B5D777E029DA6C6100329801 /* Account Hall */ = {
+			isa = PBXGroup;
+			children = (
+				E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */,
+				94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */,
+				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
+				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
+				9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */,
+				94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */,
+				94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */,
+				5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */,
+				5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */,
+			);
+			path = "Account Hall";
+			sourceTree = "<group>";
+		};
 		B5E411A528AB658600D05719 /* FeatureFlags */ = {
 			isa = PBXGroup;
 			children = (
@@ -11218,6 +11234,7 @@
 		E889C9DE1B55652B00ECEFDF /* My Account */ = {
 			isa = PBXGroup;
 			children = (
+				B5D777E029DA6C6100329801 /* Account Hall */,
 				5B48F8001F4C73D0001E3A29 /* Achievements */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
@@ -11233,15 +11250,6 @@
 				5B5FBDDD20BD8C76000EE35B /* Two Factor Authentication */,
 				41A66D031AE78FF9007D7E20 /* Upgrade */,
 				5BB8A851243DF3DA009FE957 /* Usage */,
-				E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */,
-				94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */,
-				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
-				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
-				9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */,
-				94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */,
-				94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */,
-				5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */,
-				5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */,
 			);
 			path = "My Account";
 			sourceTree = "<group>";
