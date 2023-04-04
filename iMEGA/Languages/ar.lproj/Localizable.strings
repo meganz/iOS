@@ -2498,10 +2498,12 @@
 "message sending cancelled"="تم إلغاء إرسال الرسالة";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="خصوصيتك";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="نحن نستخدم ملفات تعريف الارتباط Cookies والتقنيات المماثلة (“Cookies”) لتقديم وتعزيز تجربتك مع خدماتنا، وتخصيص الإعلانات التي تراها، بما في ذلك من خلال جهات خارجية. اقبل استخدامنا لملفات تعريف الارتباط Cookies من بداية زيارتك أو قم بتخصيص ملفات تعريف الارتباط في إعدادات ملفات تعريف الارتباط. اقرأ المزيد في [A]سياسة ملفات تعريف الارتباط Cookies[/A] الخاصة بنا.";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="قبول ملفات تعريف الارتباط Cookies";
+/* Cookie dialog footer description*/
+"settings.accept.cookies.footer"="Cookies aren't used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="ملفات تعريف الارتباط Cookies الأساسية";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */

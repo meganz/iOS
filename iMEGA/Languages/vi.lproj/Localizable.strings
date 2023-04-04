@@ -2498,10 +2498,12 @@
 "message sending cancelled"="đã hủy gửi đi tin nhắn";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Quản lý quyền riêng tư";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Chúng tôi sử dụng Cookie và các công nghệ tương tự (“Cookies”) để cung cấp và nâng cao trải nghiệm dịch vụ cho  người sử dụng. Chấp nhận việc sử dụng Cookies của chúng tôi trước khi sử dụng hoặc tùy chỉnh theo ý thích trong phần Cài Đặt Cookie. Đọc thêm về [A]Chính Sách Cookie[/A].";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Chấp Nhận Cookies";
+/* Cookie dialog footer description*/
+"settings.accept.cookies.footer"="Cookies aren't used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies Thiết Yếu";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */

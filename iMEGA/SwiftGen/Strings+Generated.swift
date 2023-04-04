@@ -3310,7 +3310,7 @@ public enum Strings {
       public enum Cookies {
         /// Accept Cookies
         public static let accept = Strings.tr("Localizable", "dialog.cookies.accept")
-        /// We use Cookies and similar technologies (“Cookies”) to provide and enhance your experience with our services. Accept our use of Cookies from the beginning of your visit or customise Cookies in Cookie Settings. Read more in our [A]Cookie Policy[/A].
+        /// We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.
         public static let description = Strings.tr("Localizable", "dialog.cookies.description")
         public enum Title {
           /// Your privacy
@@ -4932,6 +4932,12 @@ public enum Strings {
       }
     }
     public enum Settings {
+      public enum Accept {
+        public enum Cookies {
+          /// Cookies aren't used for ad tracking or sharing any personal information with third parties
+          public static let footer = Strings.tr("Localizable", "settings.accept.cookies.footer")
+        }
+      }
       public enum Cookies {
         /// Essential Cookies
         public static let essential = Strings.tr("Localizable", "settings.cookies.essential")

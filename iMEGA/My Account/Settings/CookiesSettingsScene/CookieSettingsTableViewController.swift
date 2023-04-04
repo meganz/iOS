@@ -158,7 +158,8 @@ class CookieSettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {        
         switch section {
-        case CookieSettingsSection.acceptCookies.rawValue: return ""
+        case CookieSettingsSection.acceptCookies.rawValue:
+            return footersArray[CookieSettingsSection.acceptCookies.rawValue]
             
         case CookieSettingsSection.essentialCookies.rawValue:
             return footersArray[CookieSettingsSection.essentialCookies.rawValue]
