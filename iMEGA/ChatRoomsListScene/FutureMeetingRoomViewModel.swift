@@ -17,6 +17,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     private var subscriptions = Set<AnyCancellable>()
+    private var callDurationTotal: TimeInterval?
+    private var callDurationCapturedTime: TimeInterval?
+    private var timerSubscription: AnyCancellable?
 
     var title: String {
         scheduledMeeting.title
@@ -65,6 +68,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
 
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
+    @Published var totalCallDuration: TimeInterval = 0
 
     init(scheduledMeeting: ScheduledMeetingEntity,
          nextOccurrenceDate: Date,
@@ -114,6 +118,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         
         loadFutureMeetingSearchString()
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: scheduledMeeting.chatId)
+        if let call = callUseCase.call(for: scheduledMeeting.chatId) {
+            configureCallInProgress(for: call)
+        }
         monitorActiveCallChanges()
         self.contextMenuOptions = constructContextMenuOptions()
     }
@@ -230,9 +237,41 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
             .sink { [weak self] call in
                 guard let self, call.chatId == self.scheduledMeeting.chatId else { return }
                 self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
+                self.configureCallInProgress(for: call)
                 self.contextMenuOptions = self.constructContextMenuOptions()
             }
             .store(in: &subscriptions)
+    }
+    
+    private func configureCallInProgress(for call: CallEntity) {
+        guard call.duration > 0 else {
+            timerSubscription?.cancel()
+            timerSubscription = nil
+            return
+        }
+        
+        callDurationTotal = TimeInterval(call.duration)
+        callDurationCapturedTime = Date().timeIntervalSince1970
+        
+        populateTotalCallDuration()
+        
+        timerSubscription?.cancel()
+        timerSubscription = Timer
+            .publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.populateTotalCallDuration()
+            }
+
+    }
+    
+    private func populateTotalCallDuration() {
+        guard let callDurationTotal = callDurationTotal,
+              let callDurationCapturedTime = callDurationCapturedTime else {
+            return
+        }
+        
+        totalCallDuration = Date().timeIntervalSince1970 - callDurationCapturedTime + callDurationTotal
     }
     
     private func startOrJoinMeetingTapped() {

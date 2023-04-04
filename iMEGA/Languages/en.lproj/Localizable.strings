@@ -3322,3 +3322,7 @@
 "picker.disable.passcode.title"="Disable MEGA passcode";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Meeting in progress";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
