@@ -21,7 +21,7 @@ extension Array where Element == NodeEntity {
             if $0.modificationTime == $1.modificationTime {
                 return $0.handle > $1.handle
             } else {
-                return $0.modificationTime > $1.modificationTime
+                return type == .oldest ? $0.modificationTime < $1.modificationTime : $0.modificationTime > $1.modificationTime
             }
         }
         
