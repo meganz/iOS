@@ -9,6 +9,8 @@ struct TurnOnNotificationsModel: Equatable {
     let stepTwo: String
     let stepThreeImageName: String
     let stepThree: String
+    let stepFourImageName: String
+    let stepFour: String
     let openSettingsTitle: String
     let dismissTitle: String
 }

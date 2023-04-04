@@ -64,6 +64,7 @@ final class TurnOnNotificationsViewModel: ViewModelType {
             let stepOne = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepOne
             let stepTwo = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepTwo
             let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
+            let stepFour = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepFour
             
             let notificationsModel = TurnOnNotificationsModel(headerImageName: Asset.Images.Chat.groupChat.name,
                                                               title: title,
@@ -72,8 +73,10 @@ final class TurnOnNotificationsViewModel: ViewModelType {
                                                               stepOne: stepOne,
                                                               stepTwoImageName: Asset.Images.WarningTurnonNotifications.tapNotifications.name,
                                                               stepTwo: stepTwo,
-                                                              stepThreeImageName: Asset.Images.WarningTurnonNotifications.allowNotifications.name,
+                                                              stepThreeImageName: Asset.Images.WarningTurnonNotifications.tapMega.name,
                                                               stepThree: stepThree,
+                                                              stepFourImageName: Asset.Images.WarningTurnonNotifications.allowNotifications.name,
+                                                              stepFour: stepFour,
                                                               openSettingsTitle: Strings.Localizable.Dialog.TurnOnNotifications.Button.primary,
                                                               dismissTitle: Strings.Localizable.dismiss)
             invokeCommand?(.configView(notificationsModel))

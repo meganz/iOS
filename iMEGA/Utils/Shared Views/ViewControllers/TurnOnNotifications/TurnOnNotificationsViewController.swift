@@ -63,6 +63,21 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         label.font = .preferredFont(forTextStyle: .body)
         return label
     }()
+
+    private lazy var tapMegaImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private lazy var tapMegaLabel: UILabel = {
+        let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        label.textColor = UIColor.mnz_label()
+        label.font = .preferredFont(forTextStyle: .body)
+        return label
+    }()
     
     private lazy var turnOnAllowNotificationsImageView: UIImageView = {
         let imageView = UIImageView()
@@ -133,9 +148,10 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         addContentStack(
             withStepsStack:
                 createStepsStack(
-                    withStepOneStack: createStepOneStack(),
-                    stepTwoStack: createStepTwoStack(),
-                    stepThreeStack: createStepThreeStack()
+                    withStepOneStack: createStepStack(with: [openSettingsImageView, openSettingsLabel]),
+                    stepTwoStack: createStepStack(with: [tapNotificationsImageView, tapNotificationsLabel]),
+                    stepThreeStack: createStepStack(with: [tapMegaImageView, tapMegaLabel]),
+                    stepFourStack: createStepStack(with: [turnOnAllowNotificationsImageView, turnOnAllowNotificationsLabel])
                 )
         )
     }
@@ -170,12 +186,18 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
                                                                              originalFont: .preferredFont(forTextStyle: .body))
             tapNotificationsLabel.attributedText = stepTwoAttributed
             
-            turnOnAllowNotificationsImageView.image = UIImage(named: turnOnNotificationsModel.stepThreeImageName)
-            
+            tapMegaImageView.image = UIImage(named: turnOnNotificationsModel.stepThreeImageName)
             let stepThreeAttributed = turnOnNotificationsModel.stepThree.replace(tag: "b",
                                                                              withFont: .preferredFont(forTextStyle: .headline),
                                                                              originalFont: .preferredFont(forTextStyle: .body))
-            turnOnAllowNotificationsLabel.attributedText = stepThreeAttributed
+            tapMegaLabel.attributedText = stepThreeAttributed
+
+            turnOnAllowNotificationsImageView.image = UIImage(named: turnOnNotificationsModel.stepFourImageName)
+
+            let stepFourAttributed = turnOnNotificationsModel.stepFour.replace(tag: "b",
+                                                                             withFont: .preferredFont(forTextStyle: .headline),
+                                                                             originalFont: .preferredFont(forTextStyle: .body))
+            turnOnAllowNotificationsLabel.attributedText = stepFourAttributed
             
             openSettingsButton.setTitle(turnOnNotificationsModel.openSettingsTitle, for: .normal)
             dismissButton.setTitle(turnOnNotificationsModel.dismissTitle, for: .normal)
@@ -190,39 +212,19 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         [headerImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topAnchorConstant),
          headerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)].activate()
     }
-    
-    private func createStepOneStack() -> UIStackView {
-        let stepOneStack = UIStackView(arrangedSubviews: [openSettingsImageView, openSettingsLabel])
-        stepOneStack.axis = .horizontal
-        stepOneStack.alignment = .center
-        stepOneStack.distribution = .fillProportionally
-        stepOneStack.translatesAutoresizingMaskIntoConstraints = false
-        stepOneStack.spacing = 16
-        return stepOneStack
+
+    private func createStepStack(with views: [UIView]) -> UIStackView {
+        let stepStack = UIStackView(arrangedSubviews: views)
+        stepStack.axis = .horizontal
+        stepStack.alignment = .center
+        stepStack.distribution = .fillProportionally
+        stepStack.translatesAutoresizingMaskIntoConstraints = false
+        stepStack.spacing = 16
+        return stepStack
     }
     
-    private func createStepTwoStack() -> UIStackView {
-        let stepTwoStack = UIStackView(arrangedSubviews: [tapNotificationsImageView, tapNotificationsLabel])
-        stepTwoStack.axis = .horizontal
-        stepTwoStack.alignment = .center
-        stepTwoStack.distribution = .fillProportionally
-        stepTwoStack.translatesAutoresizingMaskIntoConstraints = false
-        stepTwoStack.spacing = 16
-        return stepTwoStack
-    }
-    
-    private func createStepThreeStack() -> UIStackView {
-        let stepThreeStack = UIStackView(arrangedSubviews: [turnOnAllowNotificationsImageView, turnOnAllowNotificationsLabel])
-        stepThreeStack.axis = .horizontal
-        stepThreeStack.alignment = .center
-        stepThreeStack.distribution = .fillProportionally
-        stepThreeStack.translatesAutoresizingMaskIntoConstraints = false
-        stepThreeStack.spacing = 16
-        return stepThreeStack
-    }
-    
-    private func createStepsStack(withStepOneStack stepOneStack: UIStackView, stepTwoStack: UIStackView, stepThreeStack: UIStackView) -> UIStackView {
-        let stepsStack = UIStackView(arrangedSubviews: [stepOneStack, stepTwoStack, stepThreeStack])
+    private func createStepsStack(withStepOneStack stepOneStack: UIStackView, stepTwoStack: UIStackView, stepThreeStack: UIStackView, stepFourStack: UIStackView) -> UIStackView {
+        let stepsStack = UIStackView(arrangedSubviews: [stepOneStack, stepTwoStack, stepThreeStack, stepFourStack])
         stepsStack.axis = .vertical
         stepsStack.translatesAutoresizingMaskIntoConstraints = false
         stepsStack.spacing = 16
