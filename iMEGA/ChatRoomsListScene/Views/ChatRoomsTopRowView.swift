@@ -8,12 +8,10 @@ struct ChatRoomsTopRowView: View {
     
     var body: some View {
         HStack {
-            if let image = Image(uiImage: state.image) {
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-            }
+            Image(uiImage: state.image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40, height: 40)
             
             Text(state.description)
                 .font(.subheadline)
