@@ -2498,10 +2498,12 @@
 "message sending cancelled"="메시지 발송 취소";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="당신의 사생활";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="우리는 제3자를 통한 것을 포함하여, 당신에게 서비스를 제공하고, 당신의 경험을 향상시키기 위하여 쿠키 그리고 이와 유사한 기술(“쿠키”)을 사용합니다. 방문 초기에 우리의 쿠키 사용에 동의하거나 쿠키 설정에서 쿠키를 개인화 할 수 있습니다. 자세한 내용은 우리의 [A]쿠키 정책[/A]에서 읽어보세요.";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="쿠키 허용";
+/* Cookie dialog footer description*/
+"settings.accept.cookies.footer"="Cookies aren't used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="필수 쿠키";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */

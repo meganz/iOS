@@ -2498,10 +2498,12 @@
 "message sending cancelled"="ยกเลิกการส่งข้อความแล้ว";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="ความเป็นส่วนตัวของคุณ";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="เราใช้คุกกี้และเทคโนโลยีที่คล้ายกัน (“คุกกี้”) เพื่อมอบและปรับปรุงประสบการณ์ของคุณกับบริการของเรา ยอมรับการใช้คุกกี้ของเราตั้งแต่เริ่มต้นการเยี่ยมชมของคุณ หรือปรับแต่งคุกกี้ในการตั้งค่าคุกกี้ อ่านเพิ่มเติมใน[A]นโยบายคุกกี้[/A]ของเรา";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="ยอมรับการใช้งานคุกกี้";
+/* Cookie dialog footer description*/
+"settings.accept.cookies.footer"="Cookies aren't used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="คุกกี้สำคัญ";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */

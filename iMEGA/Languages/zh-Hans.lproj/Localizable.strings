@@ -2498,10 +2498,12 @@
 "message sending cancelled"="消息发送已取消";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="您的隐私";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="我们使用Cookie和类似技术（“Cookie”）来提供并增强您对我们服务的体验。在您开始访问时就接受我们对Cookie的使用或在Cookie设置中个性化设置Cookie。您可以在我们的[A]Cookie政策[/A]中阅读更多信息。";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="接受Cookie";
+/* Cookie dialog footer description*/
+"settings.accept.cookies.footer"="Cookies aren't used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="必要Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
