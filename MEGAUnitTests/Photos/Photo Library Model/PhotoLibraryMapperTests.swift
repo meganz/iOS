@@ -37,15 +37,27 @@ class PhotoLibraryMapperTests: XCTestCase {
             NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date),
             NodeEntity(name: "l.jpg", handle: 20, modificationTime: try "2016-03-15T10:01:04Z".date),
             NodeEntity(name: "l.jpg", handle: 13, modificationTime: try "2016-03-15T10:01:04Z".date),
+            NodeEntity(name: "m.jpg", handle: 14, modificationTime: try "2015-04-13T17:15:00Z".date),
+            NodeEntity(name: "o.jpg", handle: 15, modificationTime: try "2015-04-13T17:14:00Z".date),
+            NodeEntity(name: "p.jpg", handle: 16, modificationTime: try "2015-04-13T17:12:00Z".date),
         ]
     }
     
     func testMapping_sort_oldest() throws {
         let photoLibrary = nodes.toPhotoLibrary(withSortType: .oldest, in: .GMT)
         XCTAssertEqual(Set(photoLibrary.allPhotos), Set(nodes))
-        XCTAssertEqual(photoLibrary.photoByYearList.count, 5)
+        XCTAssertEqual(photoLibrary.photoByYearList.count, 6)
         
         let expectedPhotoLibrary = PhotoLibrary(photoByYearList: [
+            PhotoByYear(categoryDate: try "2015-01-01T00:00:00Z".date.year, contentList: [
+                PhotoByMonth(categoryDate: try "2015-04-01T00:00:00Z".date.month, contentList: [
+                    PhotoByDay(categoryDate: try "2015-04-13T17:12:00Z".date.day, contentList: [
+                        NodeEntity(name: "p.jpg", handle: 16, modificationTime: try "2015-04-13T17:12:00Z".date),
+                        NodeEntity(name: "o.jpg", handle: 15, modificationTime: try "2015-04-13T17:14:00Z".date),
+                        NodeEntity(name: "m.jpg", handle: 14, modificationTime: try "2015-04-13T17:15:00Z".date),
+                    ])
+                ])
+            ]),
             PhotoByYear(categoryDate: try "2016-03-01T00:00:00Z".date.year, contentList: [
                 PhotoByMonth(categoryDate: try "2016-03-01T00:00:00Z".date.month, contentList: [
                     PhotoByDay(categoryDate: try "2016-03-15T10:01:04Z".date.day, contentList: [
@@ -54,8 +66,8 @@ class PhotoLibraryMapperTests: XCTestCase {
                         NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date),
                     ]),
                     PhotoByDay(categoryDate: try "2016-03-18T17:01:04Z".date.day, contentList: [
-                        NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2016-03-18T22:01:04Z".date),
                         NodeEntity(name: "k.jpg", handle: 11, modificationTime: try "2016-03-18T20:01:04Z".date),
+                        NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2016-03-18T22:01:04Z".date)
                     ])
                 ])
             ]),
@@ -119,7 +131,7 @@ class PhotoLibraryMapperTests: XCTestCase {
     func testMapping_sort_newest() throws {
         let photoLibrary = nodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
         XCTAssertEqual(Set(photoLibrary.allPhotos), Set(nodes))
-        XCTAssertEqual(photoLibrary.photoByYearList.count, 5)
+        XCTAssertEqual(photoLibrary.photoByYearList.count, 6)
         
         let expectedPhotoLibrary = PhotoLibrary(photoByYearList: [
             PhotoByYear(categoryDate: try "2022-01-01T00:00:00Z".date.year, contentList: [
@@ -187,6 +199,15 @@ class PhotoLibraryMapperTests: XCTestCase {
                     ]),
                 ])
             ]),
+            PhotoByYear(categoryDate: try "2015-01-01T00:00:00Z".date.year, contentList: [
+                PhotoByMonth(categoryDate: try "2015-04-01T00:00:00Z".date.month, contentList: [
+                    PhotoByDay(categoryDate: try "2015-04-13T17:12:00Z".date.day, contentList: [
+                        NodeEntity(name: "m.jpg", handle: 14, modificationTime: try "2015-04-13T17:15:00Z".date),
+                        NodeEntity(name: "o.jpg", handle: 15, modificationTime: try "2015-04-13T17:14:00Z".date),
+                        NodeEntity(name: "p.jpg", handle: 16, modificationTime: try "2015-04-13T17:12:00Z".date)
+                    ])
+                ])
+            ])
         ])
         
         XCTAssertEqual(photoLibrary, expectedPhotoLibrary)
