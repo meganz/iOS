@@ -2551,11 +2551,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Open <b>Settings</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tap <b>Notifications</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Open settings";
 /* Dialog title for the change launch tab screen */

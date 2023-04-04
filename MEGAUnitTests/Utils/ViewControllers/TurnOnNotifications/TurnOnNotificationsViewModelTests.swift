@@ -17,7 +17,8 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         let stepOne = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepOne
         let stepTwo = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepTwo
         let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
-        
+        let stepFour = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepFour
+
         let expectedNotificationsModel = TurnOnNotificationsModel(headerImageName: "groupChat",
                                                           title: title,
                                                           description: description,
@@ -25,8 +26,10 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
                                                           stepOne: stepOne,
                                                           stepTwoImageName: Asset.Images.WarningTurnonNotifications.tapNotifications.name,
                                                           stepTwo: stepTwo,
-                                                          stepThreeImageName: Asset.Images.WarningTurnonNotifications.allowNotifications.name,
+                                                          stepThreeImageName: Asset.Images.WarningTurnonNotifications.tapMega.name,
                                                           stepThree: stepThree,
+                                                          stepFourImageName: Asset.Images.WarningTurnonNotifications.allowNotifications.name,
+                                                          stepFour: stepFour,
                                                           openSettingsTitle: Strings.Localizable.Dialog.TurnOnNotifications.Button.primary,
                                                           dismissTitle: Strings.Localizable.dismiss)
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedNotificationsModel)])

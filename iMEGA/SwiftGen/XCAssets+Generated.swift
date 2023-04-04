@@ -768,6 +768,7 @@ internal enum Asset {
     internal enum WarningTurnonNotifications {
       internal static let allowNotifications = ImageAsset(name: "allowNotifications")
       internal static let openSettings = ImageAsset(name: "openSettings")
+      internal static let tapMega = ImageAsset(name: "tapMega")
       internal static let tapNotifications = ImageAsset(name: "tapNotifications")
     }
   }
