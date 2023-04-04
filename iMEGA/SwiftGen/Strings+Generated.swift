@@ -4405,6 +4405,16 @@ public enum Strings {
           /// Start
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
         }
+        public enum Listing {
+          public enum InProgress {
+            /// Meeting in progress
+            public static let description = Strings.tr("Localizable", "meetings.scheduled.listing.inProgress.description")
+            /// Meeting in progress · %@
+            public static func descriptionWithDuration(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.listing.inProgress.descriptionWithDuration", String(describing: p1))
+            }
+          }
+        }
         public enum Recurring {
           /// daily
           public static let daily = Strings.tr("Localizable", "meetings.scheduled.recurring.daily")

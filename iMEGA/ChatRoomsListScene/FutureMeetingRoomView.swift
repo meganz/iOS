@@ -31,13 +31,24 @@ struct FutureMeetingRoomView: View {
                         Image(uiImage: Asset.Images.Chat.mutedChat.image)
                     }
                 }
-                HStack(spacing: 3) {
-                    Text(viewModel.time)
-                        .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
-                        .font(.caption)
-                    Text(viewModel.recurrence)
-                        .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
-                        .font(.caption)
+                
+                if viewModel.existsInProgressCallInChatRoom {
+                    Text(
+                        viewModel.totalCallDuration > 0
+                        ? Strings.Localizable.Meetings.Scheduled.Listing.InProgress.descriptionWithDuration(viewModel.totalCallDuration.timeString)
+                        : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
+                    )
+                    .font(.caption)
+                    .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+                } else {
+                    HStack(spacing: 3) {
+                        Text(viewModel.time)
+                            .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
+                            .font(.caption)
+                        Text(viewModel.recurrence)
+                            .foregroundColor(Color(Colors.Chat.Listing.meetingTimeTextColor.color))
+                            .font(.caption)
+                    }
                 }
             }
             
@@ -47,7 +58,7 @@ struct FutureMeetingRoomView: View {
                 VStack(alignment: .trailing, spacing: 0) {
                     if let lastMessageTimestamp = viewModel.lastMessageTimestamp {
                         Text(lastMessageTimestamp)
-                            .font(.caption2.bold())
+                            .font(.caption2)
                     }
                     
                     HStack(spacing: 4) {
