@@ -184,8 +184,7 @@ fileprivate struct ChatRoomContentTitleView: View {
                 .font(viewModel.shouldShowUnreadCount ? .subheadline.bold() : .subheadline)
                 .lineLimit(1)
             
-            if let chatStatus = viewModel.chatStatus,
-               let color = viewModel.chatStatusColor(forChatStatus: chatStatus) {
+            if let color = viewModel.chatStatusColor(forChatStatus: viewModel.chatStatus) {
                 Color(color)
                     .frame(width: 6, height: 6)
                     .clipShape(Circle())
