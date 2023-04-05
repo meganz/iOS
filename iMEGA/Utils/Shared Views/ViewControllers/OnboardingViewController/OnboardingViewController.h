@@ -10,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (OnboardingViewController *)instanciateOnboardingWithType:(OnboardingType)type;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIButton *tertiaryButton;
+
 @property (nonatomic, copy) void (^completion)(void);
 
 - (void)presentLoginViewController;

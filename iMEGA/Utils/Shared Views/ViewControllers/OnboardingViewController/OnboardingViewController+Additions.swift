@@ -1,5 +1,4 @@
 extension OnboardingViewController {
-    
     @objc func setSecureFingerprintVerificationTapToToggle() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                           action: #selector(toggleSecureFingerprintFlag))
@@ -7,8 +6,13 @@ extension OnboardingViewController {
         scrollView?.isUserInteractionEnabled = true
         scrollView?.addGestureRecognizer(tapGestureRecognizer)
     }
-    
+
     @objc func toggleSecureFingerprintFlag() {
         SharedSecureFingerprintManager().toggleSecureFingerprintFlag()
+    }
+
+    @objc func setupTertiaryButton() {
+        tertiaryButton?.titleLabel?.numberOfLines = 0
+        tertiaryButton?.titleLabel?.textAlignment = .center
     }
 }
