@@ -395,6 +395,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
@@ -414,6 +415,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     chatSDK: MEGASdkManager.sharedMEGAChatSdk())
             ),
             accountUseCase: accountUseCase,
+            megaHandleUseCase: megaHandleUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl
@@ -424,6 +426,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
@@ -447,6 +450,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
+            megaHandleUseCase: megaHandleUseCase,
             chatNotificationControl: chatNotificationControl
         )
     }

@@ -5,14 +5,14 @@ struct UserImageRepository: UserImageRepositoryProtocol {
     static var newRepo: UserImageRepository {
         UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }
-   
+    
     private let sdk: MEGASdk
     private var userAvatarChangeSubscriber: UserAvatarChangeSubscriber?
-
+    
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
-  
+    
     func loadUserImage(withUserHandle handle: String?,
                        destinationPath: String,
                        completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
@@ -33,6 +33,11 @@ struct UserImageRepository: UserImageRepositoryProtocol {
     func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> UIImage {
         try await withCheckedThrowingContinuation { continuation in
             let thumbnailRequestDelegate = AvatarRequestDelegate { request in
+                guard Task.isCancelled == false else {
+                    continuation.resume(throwing: CancellationError())
+                    return
+                }
+                
                 if let filePath = request.file, let image = UIImage(contentsOfFile: filePath) {
                     continuation.resume(returning: image)
                 } else {
@@ -74,7 +79,7 @@ fileprivate final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
 fileprivate final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
     private let handles: [HandleEntity]
     private let source: PassthroughSubject<[HandleEntity], Never>
-
+    
     var monitor: AnyPublisher<[HandleEntity], Never> {
         source.eraseToAnyPublisher()
     }

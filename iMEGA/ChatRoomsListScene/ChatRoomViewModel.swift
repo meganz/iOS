@@ -50,6 +50,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
          userImageUseCase: UserImageUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
@@ -79,7 +80,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
-                accountUseCase: accountUseCase
+                accountUseCase: accountUseCase,
+                megaHandleUseCase: megaHandleUseCase
             )
         } else {
             self.chatRoomAvatarViewModel = nil

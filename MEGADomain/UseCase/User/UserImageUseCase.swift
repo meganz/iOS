@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAUI
 
 protocol UserImageUseCaseProtocol {
+    func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String?
     func fetchUserAvatar(withUserHandle handle: HandleEntity,
                          base64Handle: Base64HandleEntity,
                          avatarBackgroundHexColor: String,
@@ -42,6 +43,10 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         self.userStoreRepo = userStoreRepo
         self.thumbnailRepo = thumbnailRepo
         self.fileSystemRepo = fileSystemRepo
+    }
+    
+    func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String? {
+        userImageRepo.avatarColorHex(forBase64UserHandle: handle)
     }
     
     func fetchUserAvatar(withUserHandle handle: HandleEntity,
@@ -124,7 +129,6 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
     
     // MARK: - Private methods
     
-    @MainActor
     private func createAvatarImage(usingName name: String,
                                    base64Handle: Base64HandleEntity?,
                                    avatarBackgroundHexColor: String,
@@ -148,6 +152,8 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         if let base64Handle {
             let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
             if let image = fetchImage(fromPath: destinationURL.path) {
+                try Task.checkCancellation()
+                
                 return image
             }
         }
@@ -171,6 +177,8 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
                 try imageData.write(to: destinationURL, options: .atomic)
             }
         }
+        
+        try Task.checkCancellation()
         
         if let image = image {
             return image

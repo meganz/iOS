@@ -10,6 +10,11 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
     var clearAvatarCache = false
     var avatarChangePublisher = PassthroughSubject<[HandleEntity], Never>()
     
+    
+    func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String? {
+        ""
+    }
+    
     func fetchUserAvatar(withUserHandle handle: HandleEntity,
                          base64Handle: Base64HandleEntity,
                          avatarBackgroundHexColor: String,

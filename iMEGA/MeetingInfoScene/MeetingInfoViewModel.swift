@@ -85,7 +85,8 @@ final class MeetingInfoViewModel: ObservableObject {
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
-                accountUseCase: accountUseCase
+                accountUseCase: accountUseCase,
+                megaHandleUseCase: megaHandleUseCase
             )
             self.isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
         } else {
