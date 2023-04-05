@@ -12,6 +12,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
+    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private var searchString = ""
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
@@ -76,6 +77,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
+         megaHandleUseCase: MEGAHandleUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
@@ -87,6 +89,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.megaHandleUseCase = megaHandleUseCase
         self.chatNotificationControl = chatNotificationControl
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         self.isRecurring = scheduledMeeting.rules.frequency != .invalid
@@ -100,7 +103,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
-                accountUseCase: accountUseCase
+                accountUseCase: accountUseCase,
+                megaHandleUseCase: megaHandleUseCase
             )
             self.shouldShowUnreadCount = chatRoomEntity.unreadCount != 0
             self.unreadCountString = chatRoomEntity.unreadCount > 0 ? "\(chatRoomEntity.unreadCount)" : "\(-chatRoomEntity.unreadCount)+"

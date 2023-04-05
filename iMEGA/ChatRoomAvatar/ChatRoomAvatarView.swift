@@ -49,7 +49,10 @@ struct ChatRoomAvatarView: View {
         .frame(width: size.width + totalOffset, height: size.height + totalOffset)
         .padding(8)
         .onAppear {
-            viewModel.loadData(isRightToLeftLanguage: layoutDirection == .rightToLeft)
+            viewModel.loadAvatar(isRightToLeftLanguage: layoutDirection == .rightToLeft)
+        }
+        .onDisappear {
+            viewModel.cancelLoading()
         }
     }
 }

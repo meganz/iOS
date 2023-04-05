@@ -73,7 +73,7 @@ struct ChatRoomView: View {
 fileprivate struct ChatRoomContentView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     @Environment(\.layoutDirection) private var layoutDirection
-
+    
     private enum Constants {
         static let viewPadding: CGFloat = 10
         static let viewHeight: CGFloat = 65
