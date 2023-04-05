@@ -1200,6 +1200,7 @@
 		94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */; };
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */; };
+		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -1492,7 +1493,6 @@
 		B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
-		B58F7BF8298A68610046F0FA /* OnboardingViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */; };
 		B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
 		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
 		B58F7BFE298A8B670046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
@@ -3681,6 +3681,7 @@
 		94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryTests.swift; sourceTree = "<group>"; };
 		94E71806283D24D3000EDDDF /* ChatStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStatus.swift; sourceTree = "<group>"; };
 		94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+Additions.swift"; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
@@ -3953,7 +3954,6 @@
 		B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAHandleRepository.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
-		B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+SecureFlag.swift"; sourceTree = "<group>"; };
 		B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSecureFingerprintManager.swift; sourceTree = "<group>"; };
 		B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+SecureFlag.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
@@ -7661,7 +7661,7 @@
 			children = (
 				7795677A21C81C5C002B6227 /* OnboardingView */,
 				7795677821C80D36002B6227 /* Onboarding.storyboard */,
-				B58F7BF7298A68610046F0FA /* OnboardingViewController+SecureFlag.swift */,
+				94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */,
 				7795677521C80CDF002B6227 /* OnboardingViewController.h */,
 				7795677621C80CDF002B6227 /* OnboardingViewController.m */,
 			);
@@ -12958,6 +12958,7 @@
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
+				94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */,
 				B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */,
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
@@ -13271,7 +13272,6 @@
 				A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
-				B58F7BF8298A68610046F0FA /* OnboardingViewController+SecureFlag.swift in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,

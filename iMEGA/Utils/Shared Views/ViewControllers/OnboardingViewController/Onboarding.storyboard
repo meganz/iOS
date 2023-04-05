@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,22 +17,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBY-vN-fzC" userLabel="Horizontal Scroll View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="390"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpX-eg-QwU" userLabel="Top Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="1500" height="410"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1500" height="390"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVy-xX-412" customClass="OnboardingView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="390"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ImP-Id-dP6" customClass="OnboardingView">
-                                                <rect key="frame" x="375" y="0.0" width="375" height="410"/>
+                                                <rect key="frame" x="375" y="0.0" width="375" height="390"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Woe-ab-ywv" customClass="OnboardingView">
-                                                <rect key="frame" x="750" y="0.0" width="375" height="410"/>
+                                                <rect key="frame" x="750" y="0.0" width="375" height="390"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQr-6h-yp1" customClass="OnboardingView">
-                                                <rect key="frame" x="1125" y="0.0" width="375" height="410"/>
+                                                <rect key="frame" x="1125" y="0.0" width="375" height="390"/>
                                             </view>
                                         </subviews>
                                         <constraints>
@@ -117,7 +117,7 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="thirdButtonTapped:" destination="ULD-EF-zT0" eventType="touchUpInside" id="Cno-Fy-avL"/>
+                                                    <action selector="tertiaryButtonTapped:" destination="ULD-EF-zT0" eventType="touchUpInside" id="UHW-fY-DhO"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -144,7 +144,7 @@
                         <outlet property="primaryButton" destination="Hj1-cN-Wxd" id="btg-DF-ESN"/>
                         <outlet property="scrollView" destination="xBY-vN-fzC" id="cw1-7N-plp"/>
                         <outlet property="secondaryButton" destination="TZS-mp-L0Q" id="Pbh-W6-hiG"/>
-                        <outlet property="thirdButton" destination="dI3-2b-Nn1" id="JXP-Qf-aR0"/>
+                        <outlet property="tertiaryButton" destination="dI3-2b-Nn1" id="KKb-wp-hyD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0B0-gT-DzY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -154,13 +154,13 @@
     </scenes>
     <designables>
         <designable name="Hj1-cN-Wxd">
-            <size key="intrinsicContentSize" width="46" height="29"/>
+            <size key="intrinsicContentSize" width="54" height="33"/>
         </designable>
         <designable name="TZS-mp-L0Q">
-            <size key="intrinsicContentSize" width="46" height="29"/>
+            <size key="intrinsicContentSize" width="54" height="33"/>
         </designable>
         <designable name="dI3-2b-Nn1">
-            <size key="intrinsicContentSize" width="46" height="29"/>
+            <size key="intrinsicContentSize" width="54" height="33"/>
         </designable>
     </designables>
 </document>
