@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Atención";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Permite a MEGA que acceda a tu Cámara en Ajustes";
+"cameraPermissions"="Permite a MEGA que acceda a tu Cámara en Configuración";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Permite a MEGA que acceda a tu Micrófono en Ajustes";
+"microphonePermissions"="Permite a MEGA que acceda a tu Micrófono en Configuración";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Permite a MEGA que acceda a tus Fotos en Ajustes";
+"photoLibraryPermissions"="Permite a MEGA que acceda a tus Fotos en Configuración";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Tu cuenta está activa. Por favor, inicia sesión.";
 /*  */
@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Cronología";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="No hay ni imágenes ni vídeos";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="No es posible seleccionar más elementos";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Álbumes";
 /* Favourites album title */
@@ -1153,13 +1155,13 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="Compra incorrecta %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en los Ajustes de iOS";
+"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en la aplicación Configuración de iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Producto %@ no encontrado, por favor contacta con ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Permitir compras";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="Debes activar las compras en la App Store en los Ajustes de iOS antes de restaurar una compra.";
+"allowPurchase_message"="Debes activar las compras en la App Store en la Configuración de iOS antes de restaurar una compra.";
 /* Button title to restore failed purchases */
 "restore"="Restaurar";
 /* "Monthly" subscriptions */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="No hay conversaciones";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Chatea de forma segura con tus contactos mediante el cifrado punto a punto";
+"Start chatting securely with your contacts using end-to-end encryption"="Chatea de forma segura con tus contactos mediante el cifrado de conocimiento cero";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activar";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Mejora tu experiencia con MEGA chat. El contenido del enlace se recuperará sin cifrado punto a punto.";
+"richPreviewsFooter"="Mejora tu experiencia con MEGA Chat. El contenido del enlace se recuperará sin cifrado de conocimiento cero.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="No se ha enviado. [RED]Toca para reintentar[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protege tus comunicaciones con cifrado punto a punto (controlado por el usuario), proporcionando sólidas garantías de seguridad:";
+"chatIntroductionMessage"="MEGA protege tu conversación con el cifrado de conocimiento cero, que proporciona sólidas garantías de seguridad:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidencialidad.[/S] Solo el autor y los destinatarios receptores pueden descifrar y leer el contenido.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="Eliminar archivos con más de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Para un período de retención más largo, [S]amplia tu cuenta a Pro[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="días";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La Papelera se vacía automáticamente. El período mínimo es de 7 días y el máximo es de 30 días.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Tu pago para el plan %1 ha sido recibido.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Tu pago para el plan %1 no se ha completado.";
+"Your payment for the %1 plan was unsuccessful."="No hemos recibido tu pago por el plan %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Tu plan Pro caducará mañana.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2013,7 +2017,7 @@
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Permitir acceso";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ve a la sección Privacidad en los Ajustes de tu dispositivo. Activa la Localización y configura MEGA en “Cuando se use la app” o “Siempre”.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ve a la sección Privacidad en la Configuración de tu dispositivo. Activa la Localización y configura MEGA en “Cuando se use la app” o “Siempre”.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="MEGA accede a tu ubicación cuando la compartes con tus contactos en el chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
@@ -2021,7 +2025,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Activar datos móviles";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Puede activar los datos móviles para esta aplicación en los ajustes del dispositivo.";
+"You can turn on mobile data for this app in Settings."="Puede activar los datos móviles para esta aplicación en la Configuración del dispositivo.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="¿Cambiar a un servidor de prueba?";
 /* text of the alert dialog when the user is changing the API URL to staging */
@@ -2039,7 +2043,7 @@
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contacto encontrado en MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Abrir los ajustes";
+"Open Settings"="Abrir Configuración";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invita a contactos y chatea de forma segura con el chat cifrado de MEGA.";
 /* Text showing the user how many contacts would be invited */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Contraseña copiada al portapapeles";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nuestro sistema de cifrado punto a punto requiere una clave única generada automáticamente para este archivo. El enlace se crea por defecto con esta clave pero puedes exportarla por separado para más seguridad.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nuestro sistema de cifrado de conocimiento cero requiere una clave única generada automáticamente para este archivo o carpeta. El enlace se crea por defecto con esta clave pero puedes exportarla por separado para más seguridad.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Eliminar contraseña";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="El envío del mensaje se ha cancelado";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Tu privacidad";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Utilizamos cookies y tecnologías similares (“Cookies”) para ofrecerte nuestros servicios y mejorar tu experiencia al usarlos. Acepta el uso de Cookies o personalizalo en los ajustes. Encuentra más información al respecto en nuestra [A]Política de cookies[/A].";
+/* Cookie dialog text. */
+"dialog.cookies.description"="Usamos cookies y tecnologías similares únicamente con el fin de ofrecerte los servicios que solicitas de MEGA, o para análisis y recopilación de datos de rendimiento. No utilizamos cookies para el seguimiento de anuncios ni para compartir tu información personal con terceros.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Aceptar Cookies";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Las cookies no se utilizan para el seguimiento de anuncios ni para compartir información personal con terceros";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies esenciales";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,8 +2558,10 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b>Pulsa en <b>Notificaciones</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Activa <b>Permitir Notificaciones</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
-"dialog.turnOnNotifications.button.primary"="Abrir los Ajustes";
+"dialog.turnOnNotifications.button.primary"="Abrir Configuración";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Cambiar la pestaña de inicio";
 /* Dialog description for the change launch tab screen */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Ver menos";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA protege tus comunicaciones con cifrado punto a punto (controlado por el usuario), proporcionando sólidas garantías de seguridad:";
+"chat.introductionHeader.privacy.description"="MEGA protege tus comunicaciones con cifrado de conocimiento cero, proporcionando sólidas garantías de seguridad:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Empezar reunión";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]ha actualizado[/B] un evento al:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="Actualización de seguridad";
+"account.upgradeSecurity.title"="Actualización de seguridad de la cuenta";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="La seguridad de tu cuenta se está actualizando. Este proceso solo se realizará una vez. Si has visto este mensaje antes para esta misma cuenta, pulsa Cancelar.";
+"account.upgradeSecurity.message.upgrade"="Estamos mejorando la seguridad de tu cuenta. Deberías ver este mensaje solo una vez. Si lo has visto antes, primero asegúrate de que haya sido para esta cuenta y no para otra cuenta  que tengas en MEGA. \n\nSi estás seguro que es la segunda vez que ves este mensaje para esta cuenta, deja de usarla.";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="Entendido";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Descripción";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="Desactivar código de acceso de MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Para usar MEGA en la aplicación Files, desactiva tu código de acceso de MEGA. Ve a Ajustes en la aplicación de MEGA, toca en Seguridad > Código de acceso.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Reunión en curso";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Reunión en curso · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Programar reunión";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Nombre de la reunión";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Empieza el";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Finaliza el";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Repetir";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Enlace de la reunión";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Los que tengan este enlace podrán unirse a la reunión y ver el chat de la reunión.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Añadir participantes";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Enviar invitación al evento";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Permitir a los no anfitriones añadir participantes";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Añadir descripción";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Introducir menos de 30 caracteres";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Introducir menos de 4 000 caracteres";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Cancelar";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Crear";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="¿Descartar los cambios o seguir editando?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Descartar los cambios";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Seguir editando";

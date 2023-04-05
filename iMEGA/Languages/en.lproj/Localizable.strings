@@ -1219,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="No conversations";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Start chatting securely with your contacts using end-to-end encryption";
+"Start chatting securely with your contacts using end-to-end encryption"="Start chatting securely with your contacts using zero-knowledge encryption";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Enable";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1247,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rich URL previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Enhance the MEGA Chat experience. URL content will be retrieved without end-to-end encryption.";
+"richPreviewsFooter"="Enhance the MEGA Chat experience. URL content will be retrieved without zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and video calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1339,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Couldn’t load. [RED]Tap to retry[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances:";
+"chatIntroductionMessage"="MEGA protects your chat with zero-knowledge encryption providing essential safety assurances:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1917,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Your payment for the %1 plan was received.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Your payment for the %1 plan was unsuccessful.";
+"Your payment for the %1 plan was unsuccessful."="We didn’t receive your payment for the %1 plan.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Your Pro membership plan will expire tomorrow.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2025,7 +2025,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Turn mobile data on";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in the device’s Settings.";
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this app in the device’s Settings.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Change to a test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
@@ -2215,7 +2215,7 @@
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
 "Pause All"="Pause all";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Resume All";
+"Resume All"="Resume all";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Clear All";
 /* Alert header for asking permission to resume transfers */
@@ -2405,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Password copied to clipboard";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our zero-knowledge encryption system requires a unique key automatically generated for this file or folder. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Remove password";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Your privacy";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accept Cookies";
-/* Cookie dialog footer description*/
-"settings.accept.cookies.footer"="Cookies aren't used for ad tracking or sharing any personal information with third parties";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Essential Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,15 +2553,15 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
+"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Open <b>Settings</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
+"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
+"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Turn on <b>Allow notifications</b>";
 /* Fourth step to turn on notifications */
 "dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
-"dialog.turnOnNotifications.button.primary"="Open settings";
+"dialog.turnOnNotifications.button.primary"="Open Settings";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Change launch tab";
 /* Dialog description for the change launch tab screen */
@@ -3215,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="See less";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:";
+"chat.introductionHeader.privacy.description"="MEGA protects your communications with our zero-knowledge encryption system providing essential safety assurances:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Start meeting";
 /* Button title to join an scheduled meeting */
@@ -3328,7 +3328,6 @@
 "meetings.scheduled.listing.inProgress.description"="Meeting in progress";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Schedule meeting";
 /* Schedule meeting name field placeholder */
@@ -3352,9 +3351,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Add description";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter fewer than 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Enter fewer than 30 characters";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter fewer than 4000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="Enter fewer than 4,000 characters";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Cancel";
 /* Schedule meeting create button */
@@ -3365,4 +3364,3 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Discard changes";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Keep editing";
-

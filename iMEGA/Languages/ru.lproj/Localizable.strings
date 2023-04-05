@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Временная шкала";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Медиафайлы не найдены";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="Нельзя выбрать больше";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Альбомы";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="Нет разговоров";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Начните безопасное общение со своими контактами благодаря сквозному шифрованию";
+"Start chatting securely with your contacts using end-to-end encryption"="Начните безопасное общение со своими контактами благодаря шифрованию с нулевым разглашением";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Включить";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Превью URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Расширьте возможности MEGA chat. Содержимое URL-адреса будет извлекаться без сквозного шифрования.";
+"richPreviewsFooter"="Расширьте возможности MEGA chat. Содержимое URL-адреса будет извлекаться без шифрования с нулевым разглашением.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосовые и видеозвонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Не удалось загрузить. [RED]Побробовать ещё раз[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA защищает ваши разговоры сквозным (контролируемым пользователем) шифрованием, предоставляя необходимые гарантии безопасности:";
+"chatIntroductionMessage"="MEGA защищает чат шифрованием с нулевым разглашением, обеспечивающим основные гарантии безопасности:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Конфиденциальность.[/S] Только автор и выбранные получатели могут расшифровать и прочитать содержимое.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="Удалять файлы старше";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Для большего периода хранения [S]улучшите аккаунт до Pro[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="д.";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Корзина очищается автоматически. Минимальный срок составляет 7 дней, максимальный — 30 дней.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1787,7 +1791,7 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ присоединился к вызову.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ покинул звонок";
+"%@ left the call."="%@ отключился";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room when there is an active call */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Ваша оплата плана %1 получена.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Ваша оплата плана %1 не удалась.";
+"Your payment for the %1 plan was unsuccessful."="Мы не получили ваш платёж по подписке %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Ваша Pro-подписка истекает завтра.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Пароль скопирован в буфер обмена";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Наша система сквозного шифрования требует уникальный ключ, автоматически сгенерированный для этого файла. Ссылка с этим ключом создается по умолчанию, но вы можете экспортировать ключ дешифрования отдельно для дополнительного уровня безопасности.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Наша система шифрования с нулевым разглашением требует, чтобы для этого файла или папки автоматически генерировался уникальный ключ. Ссылка с этим ключом создаётся по умолчанию, но вы можете экспортировать ключ дешифрования отдельно для дополнительного уровня безопасности.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Удалить пароль";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="отправка сообщения отменена";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Ваша конфиденциальность";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Мы используем куки-файлы и аналогичные технологии («Cookies»), чтобы предоставить вам возможность пользоваться нашими услугами и сделать их более удобными. Согласитесь с использованием куки-файлов с самого начала вашего посещения или настройте куки в настройках файлов куки. Подробнее читайте в нашей [A]политике в отношении куки-файлов[/A].";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Принять куки";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Основные куки-файлы";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,8 +2558,10 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Выберите <b>уведомления</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Включите <b>«Разрешить уведомления»</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
-"dialog.turnOnNotifications.button.primary"="Открыть настройки";
+"dialog.turnOnNotifications.button.primary"="Открыть Настройки";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Изменить стартовый раздел";
 /* Dialog description for the change launch tab screen */
@@ -2993,15 +3001,15 @@
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ присоединился";
 /* Meetings: Notification message to be shown when one person leaves the call. */
-"meetings.notification.singleUserLeft"="%@ покинул звонок";
+"meetings.notification.singleUserLeft"="%@ отключился";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ и %@ присоединились";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ и %@ покинули звонок";
+"meetings.notification.twoUsersLeft"="%@ и %@ отключились";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ и ещё %@ присоединились";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ и ещё %@ покинули звонок";
+"meetings.notification.moreThanTwoUsersLeft"="%@ и ещё %@ отключились";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Переместить в Корзину";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Показать меньше";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA защищает ваше общение сквозной (контролируемой пользователем) системой шифрования, предоставляя необходимые гарантии безопасности:";
+"chat.introductionHeader.privacy.description"="MEGA защищает ваше общение системой шифрования с нулевым разглашением, предоставляя необходимые гарантии безопасности:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Начать встречу";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] изменил[/B] повторение на:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="Обновление параметров безопасности";
+"account.upgradeSecurity.title"="Повышение безопасности аккаунта";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="Параметры безопасности вашего аккаунта сейчас обновляются. Это произойдёт только один раз. Если вы уже видели это сообщение для этого аккаунта, нажмите «Отмена».";
+"account.upgradeSecurity.message.upgrade"="Мы повышаем безопасность вашего аккаунта. Это сообщение должно появиться только один раз. Если вы видели его раньше, сначала убедитесь, что оно появлялось для этого аккаунта MEGA, а не для другого.\n\nЕсли вы уверены и видите это сообщение для этого аккаунта во второй раз, прекратите использовать этот аккаунт.";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="Понятно";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Описание";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="Отключите код доступа MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Чтобы использовать MEGA в приложении «Файлы», отключите свой код доступа MEGA. В приложении MEGA откройте «Настройки», выберите «Безопасность» > «Код доступа».";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Идёт встреча";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Запланировать встречу";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Название встречи";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Starts";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Ends";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Повторение";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Ссылка на встречу";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Любой пользователь с этой ссылкой может присоединиться к встрече и просмотреть чат встречи.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Добавить участников";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Отправить приглашение в календарь";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Разрешить не организаторам добавлять участников";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Добавить описание";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Введите меньше 30 символов";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Введите меньше 4 000 символов";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Отмена";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Создать";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Отменить изменения";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Продолжить редактирование";

@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="時間軸";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="未找到影片";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="無法選擇更多。";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="相簿";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="沒有對話";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="使用點對點加密安全的與您的聯絡人對話";
+"Start chatting securely with your contacts using end-to-end encryption"="開始使用零知識加密安全地與您的聯絡人對卜口竹口十";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="啟用";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="網址連結預覽";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="讓MEGA chat使用更順暢。系統將會對連結內容進行索引，此動作將不會使用點對點加密處理。";
+"richPreviewsFooter"="提升MEGA Chat使用體驗。為了顯示內容預覽，系統將在沒有零知識的加密情況下對連結進行檢索。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="語音與視訊通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="無法載入。 [RED]點此重試[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA透過點對點（用戶控制）加密保護您的對話並提供必要的安全保證：";
+"chatIntroductionMessage"="MEGA使用零知識加密保護您的對話，提供必要的安全保障：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]保密性。[/S] 只有作者和設定的接收者才能解譯和讀取內容。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1679,7 +1681,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="很抱歉，您的裝置無法啟用雙重驗證。請打開App Store來安裝Authenticator應用程式。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要2FA身份驗證應用程式才能在MEGA上啟用雙重驗證。您可以在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要身份驗證應用程式才能在MEGA上啟用雙重驗證。您可以在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="已啟用雙重驗證";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1687,7 +1689,7 @@
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="請將您的還原金鑰儲存在安全的位置";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="如果您在啟用2FA雙重驗證後無法登入自己的帳戶，並且尚未備份還原金鑰，則MEGA無法幫助您再次存取帳戶。";
+"twoFactorAuthenticationEnabledWarning"="如果您在啟用雙重驗證後無法登入自己的帳戶，並且尚未備份還原金鑰，則MEGA無法幫助您再次存取帳戶。";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="已停用雙重驗證";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="刪除早於…的檔案";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="想要更長的保留期限，請[S]升級到Pro帳戶[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="天";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾筒會自動為您清空。最短期限為7天，最長期限為30天。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="已收到您%1方案的付款。";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="您的%1方案付款不成功。";
+"Your payment for the %1 plan was unsuccessful."="我們尚未收到您%1方案的付款。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="您的Pro會員將在明天到期。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="密碼已複製到剪貼簿";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我們的點對點加密系統需要有為此檔案自動生成的唯一金鑰才能開啟。預設情況下會自動產生帶有此金鑰的連結，但為了多一層安全的考量，您可以將解密金鑰個別匯出。";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我們的零知識加密系統需要有為此檔案或資料夾自動生成的唯一金鑰才能開啟。預設情況下會自動產生帶有此金鑰的連結，但為了更加安全考量，您可以將解密金鑰個別匯出。";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="移除密碼";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="訊息發送已取消";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="您的隱私";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="我們使用Cookies和類似技術（Cookies）來提供並增強您對我們服務的體驗。在您開始到訪時就接受我們所使用的Cookies或在Cookie設定中自訂Cookies選項。您可以在我們的[A]Cookie政策[/A]瞭解更多訊息。";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="接受Cookies";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="必要的Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> 點擊<b>通知</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> 啟用<b>允許通知</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="開啟設定";
 /* Dialog title for the change launch tab screen */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="顯示較少";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA透過我們的點對點（用戶控制的）加密系統保護您的對話，提供基本的安全保證：";
+"chat.introductionHeader.privacy.description"="MEGA透過我們的零知識加密系統保護您的通話，提供必要的安全保障：";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="開始會議";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 更新[/B]事件為：";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="安全性升級";
+"account.upgradeSecurity.title"="帳戶安全性升級";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="您帳戶的安全性現在已升級。這只會發生一次。如果您之前在此帳戶看過這個訊息，請按取消。";
+"account.upgradeSecurity.message.upgrade"="我們正在升級您帳戶的安全性。您應該只會看到此訊息一次。如果您之前看過，首先請確認訊息是此帳戶的，而不是您所擁有的另一個MEGA帳戶的。\n\n如果您確定並且這是您第二次在這個帳戶看到此訊息，請停止使用此帳戶。";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="好的，明白了";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="說明";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="停用MEGA密碼";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="要在檔案應用程式中使用MEGA，請停用您的MEGA密碼。請前往MEGA應用程式中的設定，點擊安全性＞密碼。";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="會議進行中";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="安排會議";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="會議名稱";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Starts";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Ends";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="定期";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="會議連結";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="知道此連結的任何人都可以加入會議並檢視會議對話。";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="新增與會者";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="發送行事曆邀請";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="允許非主持人新增參與者";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="加入描述";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="輸入少於30個字元數";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="輸入少於4000個字元數";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="取消";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="建立";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="捨棄變更";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="繼續編輯";

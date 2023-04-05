@@ -445,9 +445,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Remove link?</string>
+        <string>Elimini linkul?</string>
+        <key>few</key>
+        <string>Elimini linkurile?</string>
         <key>other</key>
-        <string>Remove links?</string>
+        <string>Elimini linkurile?</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
@@ -461,9 +463,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you have shared this link with, will no longer be able to access it</string>
+        <string>Persoanele cu care ai partajat acest link nu vor mai putea să îl acceseze</string>
+        <key>few</key>
+        <string>Persoanele cu care ai partajat aceste linkuri nu vor mai putea să le acceseze</string>
         <key>other</key>
-        <string>People you have shared these links with, will no longer be able to access them</string>
+        <string>Persoanele cu care ai partajat aceste linkuri nu vor mai putea să le acceseze</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -772,6 +776,38 @@
         <string>de minute</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d unread message</string>
+        <key>other</key>
+        <string>%d unread messages</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>You can add only up to %d item at a time to an album.</string>
+        <key>other</key>
+        <string>You can add only up to %d items at a time to an album.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -801,9 +837,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Delete (%d)</string>
+        <string>Șterge(%d)</string>
+        <key>few</key>
+        <string>Șterge(%d)</string>
         <key>other</key>
-        <string>Delete (%d)</string>
+        <string>Șterge(%d)</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumTitle</key>
@@ -853,9 +891,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>“[A]” deleted</string>
+        <string>„[A]” șters</string>
+        <key>few</key>
+        <string>%d albume șterse</string>
         <key>other</key>
-        <string>%d albums deleted</string>
+        <string>%d de albume șterse</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removedItemFrom</key>
@@ -869,9 +909,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Removed %d item from “[A]”</string>
+        <string>%d element eliminat din „[A]”</string>
+        <key>few</key>
+        <string>%d elemente eliminate din „[A]”</string>
         <key>other</key>
-        <string>Removed %d items from “[A]”</string>
+        <string>%d de elemente eliminate din „[A]”</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

@@ -776,6 +776,42 @@
         <string>minutes</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d message non lu</string>
+        <key>many</key>
+        <string>%d de messages non lus</string>
+        <key>other</key>
+        <string>%d messages non lus</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Vous ne pouvez ajouter que %d élément à la fois dans un album.</string>
+        <key>many</key>
+        <string>Vous ne pouvez ajouter que %d d’éléments à la fois dans un album.</string>
+        <key>other</key>
+        <string>Vous ne pouvez ajouter que %d éléments à la fois dans un album.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

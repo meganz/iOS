@@ -776,6 +776,42 @@
         <string>minutos</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d mensaje no leído</string>
+        <key>many</key>
+        <string>%d de mensajes no leídos</string>
+        <key>other</key>
+        <string>%d mensajes no leídos</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Puedes añadir un máximo de %d elemento a la vez a un álbum.</string>
+        <key>many</key>
+        <string>Puedes añadir un máximo de %d de elementos a la vez a un álbum.</string>
+        <key>other</key>
+        <string>Puedes añadir un máximo de %d elementos a la vez a un álbum.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -805,9 +841,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Delete (%d)</string>
+        <string>Eliminar (%d)</string>
+        <key>many</key>
+        <string>Eliminar (%d)</string>
         <key>other</key>
-        <string>Delete (%d)</string>
+        <string>Eliminar (%d)</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumTitle</key>
@@ -857,9 +895,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>“[A]” deleted</string>
+        <string>“[A]” ha sido eliminado</string>
+        <key>many</key>
+        <string>Se han eliminado %d de álbumes</string>
         <key>other</key>
-        <string>%d albums deleted</string>
+        <string>Se han eliminado %d álbumes</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removedItemFrom</key>
@@ -873,9 +913,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Removed %d item from “[A]”</string>
+        <string>Se ha eliminado %d elemento de “[A]”</string>
+        <key>many</key>
+        <string>Se han eliminado %d de elementos de “[A]”</string>
         <key>other</key>
-        <string>Removed %d items from “[A]”</string>
+        <string>Se han eliminado %d elementos de “[A]”</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

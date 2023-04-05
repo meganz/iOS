@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="الجدول الزمني";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="لم يتم العثور على أي وسائط";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="لا يمكن تحديد المزيد";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="ألبومات";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="لا توجد محادثات";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="ابدأ بالمحادثة مع جهات الاتصال خاصتك باستخدام التشفير من طرف الى طرف";
+"Start chatting securely with your contacts using end-to-end encryption"="ابدأ بالمحادثة بأمان مع جهات الاتصال الخاصة بك باستخدام تشفير المعرفة الصفرية";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="تمكين";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="عرض الروابط الإلكترونية المعززة URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="قم بجعل تجربة المحادثة على MEGA chat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف.";
+"richPreviewsFooter"="تعزيز تجربة محادثات ميغا MEGA Chat. سيتم إظهار محتوى الرابط لكن دون تشفير المعرفة الصفرية";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="اتصالات فيديو وصوت";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="تعذر الترفيع. [RED]انقر لإعادة المحاولة[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="تحمي ميغا MEGA محادثاتك بتشفير من طرف إلى طرف (متحكم به من قبل المستخدم)، وتزودك بضمانات السلامة الأساسية:";
+"chatIntroductionMessage"="تحمي ميغا MEGA محادثاتك مع تشفير المعرفة الصفرية التي توفر ضمانات أمان أساسية:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]السرية[/S]. فقط المؤلف والمستلمون المستهدفون قادرون على فك تشفير المحتوى وقراءته.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="أزل الملفات الأكبر من";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="لفترة احتفاظ أطول [S]قم بالترقية إلى برو Pr[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="يوم";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="سيتم افراغ سلة المحذوفات الخاص بك بشكل أتوماتيكي. أقصر مدة يمكن تحديدها هي 7 أيام وأطول مدة هي 30 يوم.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="تم استلام دفعتك للباقة %1.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="لم تنجح دفعتك للباقة %1.";
+"Your payment for the %1 plan was unsuccessful."="لم نتسلم دفعتك مقابل باقة %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="ستنتهي صلاحية اشتراك برو Pro الخاص بك غداً.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="تم نسخ كلمة المرور إلى الحافظة";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="يتطلب نظام التشفير من طرف إلى طرف الخاص بنا مفتاحاً فريداً يتم إنشاؤه تلقائياً لهذا الملف. يتم إنشاء رابط لهذا المفتاح بشكل تلقائي، ولكن يمكنك تصدير مفتاح فك التشفير بشكل منفصل لإضافة طبقة أمان آخرى.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="يتطلب نظام تشفير المعرفة الصفرية الخاص بنا مفتاحًا فريدًا يتم إنشاؤه تلقائيًا لهذا الملف أو المجلد. يتم إنشاء رابط بهذا المفتاح تلقائياً ولكن يمكنك تصدير مفتاح فك التشفير بشكل منفصل للحصول على طبقة أمان إضافية.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="إزالة كلمة المرور";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="تم إلغاء إرسال الرسالة";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="خصوصيتك";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="نحن نستخدم ملفات تعريف الارتباط Cookies والتقنيات المماثلة (“Cookies”) لتقديم وتعزيز تجربتك مع خدماتنا، وتخصيص الإعلانات التي تراها، بما في ذلك من خلال جهات خارجية. اقبل استخدامنا لملفات تعريف الارتباط Cookies من بداية زيارتك أو قم بتخصيص ملفات تعريف الارتباط في إعدادات ملفات تعريف الارتباط. اقرأ المزيد في [A]سياسة ملفات تعريف الارتباط Cookies[/A] الخاصة بنا.";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="قبول ملفات تعريف الارتباط Cookies";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="ملفات تعريف الارتباط Cookies الأساسية";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> انقر <b>الإشعارات</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> قم بتشغيل <b> السماح للإشعارات</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="أفتح الإعدادات";
 /* Dialog title for the change launch tab screen */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="مشاهدة أقل";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="تحمي ميغا MEGA طرق تواصلك بنظام تشفير من طرف إلى طرف (متحكم به من قبل المستخدم) الذي يقدم ضمانات السلامة الأساسية:";
+"chat.introductionHeader.privacy.description"="تحمي ميغا MEGA اتصالاتك من خلال نظام تشفير المعرفة الصفرية لدينا الذي يوفر ضمانات السلامة الأساسية:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="ابدأ الاجتماع";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] قام بتحديث[/B] التكرار إلى: ";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="ترقية الأمان";
+"account.upgradeSecurity.title"="ترقية أمان الحساب";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="يتم الآن ترقية الأمان في حسابك. هذا سيحدث مرة واحدة فقط. إذا كنت قد رأيت هذه الرسالة لهذا الحساب من قبل، فانقر فوق إلغاء.";
+"account.upgradeSecurity.message.upgrade"="نحن بصدد ترقية أمان حسابك. يجب أن ترى هذه الرسالة مرة واحدة فقط. إذا كنت قد شاهدتها من قبل، فتأكد أولاً من أنها مخصصة لهذا الحساب وليس لحساب ميغا MEGA آخر لديك.\n\nإذا كنت متأكدًا وهذه هي المرة الثانية التي ترى فيها هذه الرسالة لهذا الحساب فتوقف عن استخدام هذا الحساب .";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="حسنًا، فهمت ذلك";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="الوصف";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="تعطيل رمز مرور ميغا MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="لاستخدام ميغا MEGA في تطبيق الملفات قم بتعطيل رمز مرور ميغا MEGA الخاص بك. انتقل إلى الإعدادات في تطبيق ميغا MEGA وانقر فوق الأمان > رمز المرور.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="الاجتماع جارٍ الآن";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="جدول اجتماع";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="اسم الاجتماع";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="يبدأ";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="ينتهي";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="التكرار";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="رابط الاجتماع";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="يمكن لأي شخص لديه هذا الرابط الانضمام إلى الاجتماع و الاطلاع على محادثة الاجتماع.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="إضافة مشاركين";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="إرسال دعوة للتقويم ";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="السماح لغير المضيفين بإضافة مشاركين";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="إضافة وصف";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="أدخل أقل من 30 محرفاً";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="أدخل أقل من 4000 محرفاً";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="إلغاء";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="إنشاء";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="تجاهل التغييرات أو مواصلة التعديل؟";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="تجاهل التغييرات";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="استمر في التعديل";

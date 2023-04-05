@@ -5801,8 +5801,8 @@
 				415DCF221BF48EFA00914A1E /* ContactRequestsViewController.h */,
 				415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */,
 				415226731A692ECC00EC7BB6 /* Contacts.storyboard */,
-				94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */,
 				8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */,
+				94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */,
 				415226741A692ECC00EC7BB6 /* ContactsViewController.h */,
 				415226751A692ECC00EC7BB6 /* ContactsViewController.m */,
 				A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */,
@@ -6332,8 +6332,8 @@
 				B69AF65928A1E5180022B094 /* ManageHistoryScene */,
 				83BFDBD1291BE66000FFFEA0 /* MeetingInfoScene */,
 				41C736BD1DBE6CCE00F1F38A /* Model */,
-				83DBDDD229D2DA4B00CF433B /* ScheduleMeetingScene */,
 				83669E952987F9A1003E8F74 /* ScheduledMeetingOccurrencesScene */,
+				83DBDDD229D2DA4B00CF433B /* ScheduleMeetingScene */,
 				41136FB91E1692650031C516 /* Views */,
 				2F3083BB2428169E0058DF91 /* Chat.storyboard */,
 				5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */,
@@ -8597,9 +8597,9 @@
 			isa = PBXGroup;
 			children = (
 				83DBDDDF29D726A300CF433B /* Views */,
-				83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */,
-				83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */,
 				83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */,
+				83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */,
+				83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */,
 				83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */,
 			);
 			path = ScheduleMeetingScene;
@@ -8608,11 +8608,11 @@
 		83DBDDDF29D726A300CF433B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */,
-				83DBDDE229D730C800CF433B /* TextFieldView.swift */,
-				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
-				83DBDDE629D730EC00CF433B /* ErrorView.swift */,
 				83DBDDE829D7310500CF433B /* DatePickerView.swift */,
+				83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */,
+				83DBDDE629D730EC00CF433B /* ErrorView.swift */,
+				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
+				83DBDDE229D730C800CF433B /* TextFieldView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -12652,7 +12652,6 @@
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */,
-				83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */,
 				83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */,
 				83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */,
 				83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */,
@@ -12663,7 +12662,6 @@
 				5D3AD46F252C370C006986AF /* CellConfiguration.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */,
-				83DBDDD429D2DA7B00CF433B /* ScheduleMeetingViewController.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
@@ -12728,7 +12726,6 @@
 				8358333029487FEA00394F1A /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */,
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
 				BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */,
-				83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */,
 				BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */,
 				83DE9D0828EC376F00F24DF4 /* ChatRoomsListRouter.swift in Sources */,
 				836A783028E2F2B500B6849F /* ChatRoomsListView.swift in Sources */,
@@ -12740,7 +12737,6 @@
 				83B71A6428F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift in Sources */,
 				83B71A6428F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift in Sources */,
 				94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */,
-				83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */,
 				94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */,
 				C45F9807264AA88C0004DCA5 /* ChatRoomsViewController+MyAvatar.swift in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
@@ -12753,7 +12749,6 @@
 				BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */,
-				83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */,
 				9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
@@ -12865,6 +12860,7 @@
 				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
 				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
+				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
@@ -12923,10 +12919,12 @@
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
 				5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */,
 				BFB463ED2433FD9C00FB90B9 /* Date+Additions.swift in Sources */,
+				83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */,
 				837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */,
 				0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */,
 				9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */,
 				9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */,
+				83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */,
 				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
 				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
 				5DC016DE24F286FE00BE309A /* DevicePermission.swift in Sources */,
@@ -13003,6 +13001,7 @@
 				5D31674024FC97810032492F /* ErrorHandling.swift in Sources */,
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */,
+				83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */,
 				5DC4DE0B24DB7DF900D9AD16 /* ExploreButtonView.swift in Sources */,
 				BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */,
 				BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */,
@@ -13159,7 +13158,6 @@
 				5D166B8D252198EF004F4F4A /* HomeSearchHintViewModel.swift in Sources */,
 				5D166B89252198A7004F4F4A /* HomeSearchResultFileViewModel.swift in Sources */,
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
-				83DBDDEB29D7312E00CF433B /* ScheduleMeetingView.swift in Sources */,
 				5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */,
 				5D166B7725219650004F4F4A /* HomeSearchResultViewModel.swift in Sources */,
 				5D166B7B25219762004F4F4A /* HomeSearchState.swift in Sources */,
@@ -13348,7 +13346,6 @@
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
-				94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */,
 				B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */,
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
@@ -13506,7 +13503,6 @@
 				B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */,
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				B65AC8E321F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m in Sources */,
-				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				B65AC8E421F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m in Sources */,
 				B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
@@ -13663,6 +13659,7 @@
 				A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
+				94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
@@ -13722,7 +13719,6 @@
 				B699D585275853F2006132EF /* PhotoCardTitle.swift in Sources */,
 				B6D7FB1A2762A534003D9570 /* PhotoCardViewModel.swift in Sources */,
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
-				83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */,
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
 				BFAB114623CEA5C300BCE72D /* PhotoCarouselDataSource.swift in Sources */,
 				BFAB114B23CEA5C300BCE72D /* PhotoCarouselDelegate.swift in Sources */,
@@ -13864,7 +13860,6 @@
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
-				83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
@@ -13958,6 +13953,10 @@
 				BF7D2FB329669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */,
 				83DE6D1F2989410E000503CC /* ScheduleMeetingOccurence.swift in Sources */,
 				BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */,
+				83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */,
+				83DBDDEB29D7312E00CF433B /* ScheduleMeetingView.swift in Sources */,
+				83DBDDD429D2DA7B00CF433B /* ScheduleMeetingViewController.swift in Sources */,
+				83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */,
 				5D6D0F562527044D002A777D /* SDKAvatarClient.swift in Sources */,
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
@@ -14044,7 +14043,6 @@
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
-				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
 				328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */,
 				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
@@ -14119,6 +14117,7 @@
 				5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
+				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
 				12466830275DBE0500C94335 /* TextEditorViewController.swift in Sources */,
 				12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */,
@@ -14127,6 +14126,7 @@
 				9DD2E84D295558D0000983A3 /* TextFieldAlertViewModel.swift in Sources */,
 				9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */,
 				5D7D53472551263C00D3582E /* TextFieldStyleFactory.swift in Sources */,
+				83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */,
 				1246682E275DBE0500C94335 /* TextFile.swift in Sources */,
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
@@ -15214,7 +15214,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -15282,7 +15282,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -15343,7 +15343,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -15405,7 +15405,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -15465,7 +15465,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAWidget;
@@ -15523,7 +15523,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15566,7 +15566,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAIntent;
@@ -15607,7 +15607,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15661,7 +15661,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15722,7 +15722,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15764,7 +15764,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -15809,7 +15809,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
@@ -15853,7 +15853,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPickerFileProvider;
@@ -15893,7 +15893,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPicker;
@@ -15933,7 +15933,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15972,7 +15972,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16207,7 +16207,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -16274,7 +16274,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16330,7 +16330,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -16446,7 +16446,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16490,7 +16490,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 9.10;
+				MARKETING_VERSION = 9.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";

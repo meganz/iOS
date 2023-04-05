@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Vue chronologique";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Aucun média n’a été trouvé";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="Impossible d’en sélectionner davantage";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
@@ -999,7 +1001,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Afficher ou modifier le profil";
+"viewAndEditProfile"="Visualiser ou modifier le profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="Aucune conversation";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Commencez à discuter en toute sécurité avec vos contacts grâce au chiffrement de bout en bout";
+"Start chatting securely with your contacts using end-to-end encryption"="Commencez à discuter en toute sécurité avec vos contacts grâce au chiffrement à divulgation nulle de connaissance";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activer";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Aperçus d’URL enrichis";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Améliorez l’expérience du dialogue en ligne MEGA Chat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
+"richPreviewsFooter"="Améliorez l’expérience du dialogue en ligne MEGA Chat. Le contenu des URL sera récupéré sans chiffrement à divulgation nulle de connaissance.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Appels vocaux et vidéo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Chargement impossible. [RED]Touchez pour réessayer[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protège votre conversation grâce au chiffrement de bout en bout (contrôlé par l’utilisateur) apportant ainsi une garantie de sécurité essentielle :";
+"chatIntroductionMessage"="MEGA protège votre conversation grâce au chiffrement à divulgation nulle de connaissance, apportant ainsi une garantie de sécurité essentielle :";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidentialité.[/S] Seuls l’auteur et les destinataires visés peuvent déchiffrer et lire le contenu.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1419,7 +1421,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu messages non lus";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, touchez simplement l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et touchez Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
+"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, touchez simplement l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et touchez Visualiser l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous afin de poursuivre";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="Supprimer les fichiers de plus de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Pour une période de conservation plus longue, [S]Passez à un compte Pro[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="jours";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La corbeille est vidée pour vous automatiquement, au minimum tous les 7 jours et au maximum tous les 30 jours.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Votre paiement pour l’abonnement %1 a été reçu.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Votre paiement pour l’abonnement %1 a échoué.";
+"Your payment for the %1 plan was unsuccessful."="Nous n’avons pas reçu votre paiement pour l’abonnement %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Votre abonnement Pro arrivera à expiration demain.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2159,7 +2163,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Aucune photo ni vidéo";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Afficher dans le dossier";
+"View in Folder"="Visualiser dans le dossier";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Ce lien n’est pas associé à ce compte. Veuillez vous connecter avec le bon compte.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Le mot de passe a été copié dans le presse-papiers";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Notre système de chiffrement de bout en bout exige une clé unique générée automatiquement pour ce fichier. Un lien qui comprend cette clé est créé par défaut, mais par mesure supplémentaire de sécurité, vous pouvez exporter séparément la clé de chiffrement.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Notre système de chiffrement à divulgation nulle de connaissance exige une clé unique générée automatiquement pour ce fichier ou ce dossier. Un lien qui comprend cette clé est créé par défaut, mais par mesure supplémentaire de sécurité, vous pouvez exporter la clé de chiffrement séparément.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Supprimer le mot de passe";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2497,11 +2501,13 @@
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="L’envoi du message a été annulé";
 /* Cookie dialog title */
-"dialog.cookies.title.yourPrivacy"="Votre vie privée";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Nous utilisons des Témoins de connexion et des technologies semblables (« Témoins ») pour vous fournir nos services et améliorer votre expérience d’utilisation de nos services. Acceptez notre utilisation de Témoins dès le début de votre visite ou personnalisez les Témoins dans les paramètres des Témoins. Apprenez-en davantage dans notre [A]Politique d’utilisation des Témoins[/A].";
+"dialog.cookies.title.yourPrivacy"="Protection de vos renseignements personnels";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accepter les témoins";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Témoins essentiels";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2527,7 +2533,7 @@
 /* Text describing that there is not any node marked as favourite */
 "No Favourites"="Aucun favori";
 /* Text indicating to the user that can perform an action to view more results */
-"VIEW MORE"="Afficher davantage";
+"VIEW MORE"="Visualiser davantage";
 /* Title for the QuickAccess widget */
 "Quick Access"="Accès rapide";
 /* Text description for the QuickAccess widget */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Touchez <b>Notifications</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Activez <b>Autoriser les notifications</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="3. Activez <b>Autoriser les notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Ouvrir Réglages";
 /* Dialog title for the change launch tab screen */
@@ -2683,7 +2691,7 @@
 /* Encourage Guest User to Join Mega Screen Navigation Bar Title */
 "meetings.joinMega.title"="Joignez-vous à MEGA";
 /* Guest user join Mega: paragraph 1 title */
-"meetings.joinMega.paragraph1.title"="Votre vie privée compte";
+"meetings.joinMega.paragraph1.title"="La protection de vos renseignements personnels est importante";
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="Joignez-vous à la plus grande plateforme de stockage nuagique et de collaboration sécurisée au monde.";
 /* Guest user join Mega: paragraph 2 title */
@@ -2985,7 +2993,7 @@
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Impossible de se connecter à Internet. Veuillez vérifier votre connexion et réessayer.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
-"meetings.displayInMainView.title"="Afficher dans la vue principale";
+"meetings.displayInMainView.title"="Visualiser dans la vue principale";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Le quota d’espace de stockage a été dépassé";
 /* Title of section Next on Audio Playlist */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Afficher moins";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA protège vos communications grâce à notre système de chiffrement de bout en bout (contrôlé par l’utilisateur) apportant ainsi une garantie de sécurité essentielle :";
+"chat.introductionHeader.privacy.description"="MEGA protège vos communications grâce à notre système de chiffrement à divulgation nulle de connaissance apportant ainsi une garantie de sécurité essentielle :";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Commencer la réunion";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] a mis à jour[/B] une occurrence :";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="Mise à niveau de sécurité";
+"account.upgradeSecurity.title"="Mise à niveau de sécurité du compte";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="La sécurité de votre compte est en cours de mise à niveau. Cela n’arriva qu’une fois. Si vous avez vu ce message pour ce compte auparavant, touchez Annuler.";
+"account.upgradeSecurity.message.upgrade"="Nous mettons à jour la sécurité de votre compte. Vous ne devriez voir ce message qu’une seule fois. Si vous l’avez vu auparavant, assurez-vous d’abord qu’il concernait ce compte et non un autre compte MEGA que vous auriez.\n\nAprès confirmation et si vous voyez ce message pour ce compte pour la seconde fois cessez d’utiliser le compte.";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="J’ai compris";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Description";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="Désactiver le code d’accès à MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Pour utiliser MEGA dans l’appli Fichiers, désactivez votre code d’accès à MEGA. Accédez aux Paramètres dans l'appli MEGA, touchez Sécurité > Code d'accès.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Réunion en cours";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Planifier une réunion";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Nom de la réunion";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Commence";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Se termine";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Récurrence";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Lien de la réunion";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Quiconque a ce lien peut se joindre à la réunion et lire la conversation de la réunion.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Ajouter des participants";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Envoyer une invitation pour agenda";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Permettre aux non-hôtes d’ajouter des participants";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Ajoutez une description";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Saisir moins de 30 caractères";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Saisir moins de 4 000 caractères";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Annuler";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Créer";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Abandonner les changements ou poursuivre la modification ?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Abandonner les changements";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Poursuivre la modification";

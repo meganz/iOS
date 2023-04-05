@@ -604,6 +604,36 @@
         <string>분</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d unread message</string>
+        <key>other</key>
+        <string>%d unread messages</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>사진첩에 한번에 최대 %d개의 항목만 추가할 수 있습니다.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -628,10 +658,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Delete (%d)</string>
         <key>other</key>
-        <string>Delete (%d)</string>
+        <string>삭제 (%d)</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumTitle</key>

@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="연표";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="발견된 미디어 없음";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="더 이상 선택할 수 없습니다";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="사진첩";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="대화 없음";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="종단간 암호화를 통하여 당신의 연락처와 안전하게 대화를 시작하세요";
+"Start chatting securely with your contacts using end-to-end encryption"="영지식 암호화를 통하여 당신의 연락처와 안전하게 대화를 시작하세요";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="활성화";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="고급 URL 미리 보기";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="MEGA chat 경험을 향상하세요. URL 컨텐츠가 종단간 암호화 없이 수신됩니다.";
+"richPreviewsFooter"="MEGA Chat 경험을 향상하세요. URL 컨텐츠가 영지식 암호화 없이 수신됩니다.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="불러올 수 없습니다. [RED]탭하여 다시 시도하세요[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA는 당신의 대화 근본적 안전 보증을 제공하는 종단간(이용자가 제어하는)암호화를 통해 보호합니다:";
+"chatIntroductionMessage"="MEGA는 당신의 대화에 필수적인 안전 보증을 제공하는 영지식 암호화를 통해 보호합니다:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]기밀성.[/S] 오직 작성자와 의도된 수신자만 항목을 복호화하고 읽을 수 있습니다.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="다음 날짜보다 오래된 파일 삭제";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="더 긴 보존 기간은 [S]Pro로 업그레이드 하세요[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="일";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="휴지통은 자동으로 비워집니다. 최단 기간은 7일이며 최장 기간은 30일입니다.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="%1 요금제에 대한 지불이 수신되었습니다.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="%1 요금제에 대한 지불이 처리되지 않았습니다.";
+"Your payment for the %1 plan was unsuccessful."="%1 요금제에 대한 결제를 받지 못 했습니다.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="당신의 Pro 회원권이 내일 만료됩니다.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="암호가 클립보드에 복사되었습니다";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="우리의 종단간 암호화 시스템은 이 파일을 위해 자동으로 생성된 고유의 키를 필요로 합니다. 이 키에 대한 링크는 자동으로 생성되지만, 보안을 위해 복호화 키를 별도로 내보낼 수 있습니다.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="우리의 영지식 암호화 시스템은 이 파일 또는 폴더를 위해 자동으로 생성된 고유의 키를 필요로 합니다. 이 키에 대한 링크는 자동으로 생성되지만, 보안을 위해 복호화 키를 별도로 내보낼 수 있습니다.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="암호 제거";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="메시지 발송 취소";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="당신의 사생활";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="우리는 제3자를 통한 것을 포함하여, 당신에게 서비스를 제공하고, 당신의 경험을 향상시키기 위하여 쿠키 그리고 이와 유사한 기술(“쿠키”)을 사용합니다. 방문 초기에 우리의 쿠키 사용에 동의하거나 쿠키 설정에서 쿠키를 개인화 할 수 있습니다. 자세한 내용은 우리의 [A]쿠키 정책[/A]에서 읽어보세요.";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="쿠키 허용";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="필수 쿠키";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> <b>알림</b> 탭하기";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> <b>알림 허용</b> 켜기";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="설정 열기";
 /* Dialog title for the change launch tab screen */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="적게 보기";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA는 당신의 소통을 근본적 안전 보증을 제공하는 종단간 (이용자가 제어하는) 암호화를 통해 보호합니다:";
+"chat.introductionHeader.privacy.description"="MEGA는 당신의 소통을 필수적인 안전 보증을 제공하는 영지식 암호화를 통해 보호합니다:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="회의 시작";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 님이 되풀이 항목을 수정[/B]하였습니다:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="보안 업그레이드";
+"account.upgradeSecurity.title"="계정 보안 업그레이드";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="계정의 보안이 업그레이드 되는 중입니다. 이것은 한번만 실행됩니다. 만약 이 계정에서 이 메시지를 본 적이 있다면, 취소를 탭하세요.";
+"account.upgradeSecurity.message.upgrade"="우리가 당신 계정의 보안을 업그레이드 하고 있습니다. 당신은 이 메시지를 한번만 보아야 합니다. 만약 이전에 본 적이 있다면, 이 계정이 아니라 다른 MEGA 계정에서 본 것이 아닌지 확인하세요.\n\n만약 이 계정에서 이 메시지를 두번째 보는 것이 확실하다면, 이 계정의 이용을 멈추세요.";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="예, 알겠습니다";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="설명";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="MEGA 암호 비활성화";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="MEGA를 파일 앱에서 사용하려면, MEGA 암호를 비활성화 하여야 합니다. MEGA 앱의 설정으로 가서, 보안 > 암호를 탭하세요.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="회의가 진행 중입니다";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="회의 예약";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="회의 이름";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Starts";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Ends";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="되풀이";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="회의 링크";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="참여자 추가";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="달력 초대 보내기";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="주최자가 아닌 사람이 참여자를 추가하는 것을 허용";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="설명 추가";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="30자 이하로 입력하세요";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="4,000자 이하로 입력하세요";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="취소";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="생성";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="변경 취소";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="계속 편집";
