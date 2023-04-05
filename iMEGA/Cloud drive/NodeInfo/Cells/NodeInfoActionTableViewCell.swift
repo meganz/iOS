@@ -27,7 +27,7 @@ class NodeInfoActionTableViewCell: UITableViewCell {
         iconImageView.image = Asset.Images.Generic.versions.image
         iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
         titleLabel.text = Strings.Localizable.versions
-        subtitleLabel.text = String(node.mnz_numberOfVersions())
+        subtitleLabel.text = String(node.mnz_numberOfVersions() - 1)
         subtitleLabel.isHidden = false
         separatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
         separatorView.isHidden = true
