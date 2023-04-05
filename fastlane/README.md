@@ -95,13 +95,37 @@ Delete the temporary created keychain
 
 Upload to iTunesConnect
 
-### ios sync_all_code_signing
+### ios all_certs
 
 ```sh
-[bundle exec] fastlane ios sync_all_code_signing
+[bundle exec] fastlane ios all_certs
 ```
 
 
+
+### ios cert_dev
+
+```sh
+[bundle exec] fastlane ios cert_dev
+```
+
+Sync development signing certificates
+
+### ios cert_qa
+
+```sh
+[bundle exec] fastlane ios cert_qa
+```
+
+Sync QA (adhoc) signing certificates
+
+### ios cert_appstore
+
+```sh
+[bundle exec] fastlane ios cert_appstore
+```
+
+Sync appstore signing certificates
 
 ### ios run_tests_app
 

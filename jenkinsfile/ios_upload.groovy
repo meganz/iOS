@@ -284,10 +284,20 @@ pipeline {
                         }
                     }
                     steps {
-                        gitlabCommitStatus(name: 'Upload symbols to crashlytics') {
-                            injectEnvironments({
-                                sh "bundle exec fastlane upload_symbols"
-                            })
+                        script {
+                            if (env.gitlabTriggerPhrase.startsWith("deliver_appStore")) {
+                                gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
+                                    injectEnvironments({
+                                        sh "bundle exec fastlane upload_symbols configuration:Release"
+                                    })
+                                }
+                            } else {
+                                gitlabCommitStatus(name: 'Upload QA symbols to crashlytics') {
+                                    injectEnvironments({
+                                        sh "bundle exec fastlane upload_symbols configuration:QA"
+                                    })
+                                }
+                            }
                         }
                     }
                 }
@@ -305,7 +315,7 @@ pipeline {
                             injectEnvironments({
                                 withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
                                     sh "cp \$firebase_credentials service_credentials_file.json"
-                                    sh "bundle exec fastlane upload_build_to_firebase"
+                                    sh "bundle exec fastlane upload_build_to_firebase configuration:QA"
                                 } 
                             })
                         }
