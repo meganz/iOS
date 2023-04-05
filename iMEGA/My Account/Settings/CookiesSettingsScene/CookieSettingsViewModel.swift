@@ -118,7 +118,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     private func setFooters() {
         var footersArray: Array<String> = []
         
-        footersArray.append("")
+        footersArray.append(Strings.Localizable.Settings.Accept.Cookies.footer)
         footersArray.append(Strings.Localizable.Settings.Cookies.Essential.footer)
         footersArray.append(Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer)
         

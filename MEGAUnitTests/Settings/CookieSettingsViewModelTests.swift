@@ -6,7 +6,7 @@ import MEGADomainMock
 
 class CookieSettingsViewModelTests: XCTestCase {
     private let mockRouter = MockCookieSettingsRouter()
-    private let footersArray: Array<String> = ["",
+    private let footersArray: Array<String> = [Strings.Localizable.Settings.Accept.Cookies.footer,
                                                Strings.Localizable.Settings.Cookies.Essential.footer,
                                                Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer]
     
