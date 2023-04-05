@@ -18,7 +18,7 @@ protocol ChatRoomsListRouting {
     func presentMeetingAlreayExists()
     func presentCreateMeeting()
     func presentEnterMeeting()
-    func presentScheduleMeetingScreen()
+    func presentScheduleMeeting()
     func showInviteContactScreen()
     func showContactsOnMegaScreen()
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
@@ -490,7 +490,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             image: Asset.Images.Meetings.scheduleMeeting
         ) { [weak self] in
             guard let self else { return }
-            self.router.presentScheduleMeetingScreen()
+            self.router.presentScheduleMeeting()
         }
     }
     
@@ -619,7 +619,7 @@ extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
         case .joinMeeting:
             router.presentEnterMeeting()
         case .scheduleMeeting:
-            break
+            router.presentScheduleMeeting()
         }
     }
 }

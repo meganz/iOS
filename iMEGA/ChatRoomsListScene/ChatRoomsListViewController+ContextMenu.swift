@@ -14,7 +14,7 @@ extension ChatRoomsListViewController {
         addBarButtonItem.menu = viewModel.contextMenuManager.contextMenu(
             with: CMConfigEntity(
                 menuType: .menu(type: .meeting),
-                shouldScheduleMeeting: false
+                shouldScheduleMeeting: FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting)
             )
         )
         addBarButtonItem.target = nil

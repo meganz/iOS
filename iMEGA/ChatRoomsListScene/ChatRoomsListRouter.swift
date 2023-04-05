@@ -74,8 +74,9 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         ).start()
     }
     
-    func presentScheduleMeetingScreen() {
-        
+    func presentScheduleMeeting() {
+        guard let navigationController else { return }
+        ScheduleMeetingRouter(presenter: navigationController).start()
     }
         
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
