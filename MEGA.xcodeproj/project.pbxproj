@@ -1423,8 +1423,6 @@
 		A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8A5A42990F964008518BE /* TransferRepository.swift */; };
 		A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BA146B29927784004389FE /* NodeActionRepository.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
-		A8C47596299D07020074511F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8C47593299D02E60074511F /* GoogleService-Info.plist */; };
-		A8C47597299D07080074511F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A8C47591299D02B70074511F /* GoogleService-Info.plist */; };
 		A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */; };
 		A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
@@ -1671,10 +1669,6 @@
 		B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */ = {isa = PBXBuildFile; productRef = B6826B672898F4E900B2B8D0 /* MEGAUI */; };
 		B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
-		B6873A9D25A6C63800BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873A9C25A6C63800BBD15A /* GoogleService-Info.plist */; };
-		B6873AD925A6C75400BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AD825A6C75300BBD15A /* GoogleService-Info.plist */; };
-		B6873AE425A6C7DD00BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */; };
-		B6873AF725A6C86100BBD15A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */; };
 		B6880C2728C495750089D2A2 /* PhotoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880C2628C495750089D2A2 /* PhotoCellViewModelTests.swift */; };
 		B6880DAC298394390072AF7D /* MEGASdk+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */; };
 		B6880DAE298394390072AF7D /* MEGASdk+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6880DAB298394390072AF7D /* MEGASdk+Sendable.swift */; };
@@ -1781,7 +1775,6 @@
 		B6C9CB0D27FBC2220073BA1A /* PHAsset+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */; };
 		B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CA26DB28F7FCB4007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift */; };
 		B6CA26DE28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CA26DD28F8C0E5007D5B57 /* PhotoLibraryCollectionLayoutBuilder.swift */; };
-		B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */; };
 		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
 		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
@@ -3184,7 +3177,7 @@
 		7794AEE3231E65570039C1D2 /* libKarere.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libKarere.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7794AEE5231E65570039C1D2 /* libMEGASDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMEGASDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7794AEEA231E6C330039C1D2 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		7794AF202320FDD50039C1D2 /* MEGANotifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGANotifications.entitlements; path = iMEGA/Extensions/MEGANotifications/MEGANotifications.entitlements; sourceTree = SOURCE_ROOT; };
+		7794AF202320FDD50039C1D2 /* MEGANotifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGANotifications.entitlements; path = "iMEGA/Extensions/MEGANotifications/Supporting Files/MEGANotifications.entitlements"; sourceTree = SOURCE_ROOT; };
 		7795677521C80CDF002B6227 /* OnboardingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewController.h; sourceTree = "<group>"; };
 		7795677621C80CDF002B6227 /* OnboardingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OnboardingViewController.m; sourceTree = "<group>"; };
 		7795677821C80D36002B6227 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -4141,6 +4134,8 @@
 		B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileSystemImageCacheClient+Additions.swift"; sourceTree = "<group>"; };
 		B67B18EF25CB80690022D6C0 /* MEGA.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MEGA.xctestplan; sourceTree = "<group>"; };
 		B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoneNumberViewController.swift; sourceTree = "<group>"; };
+		B67FFF8E29D51EE400E830FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B67FFF9129D52F9400E830FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6826B662898F43900B2B8D0 /* MEGAUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAUI; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
 		B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRequestDelegate.m; sourceTree = "<group>"; };
@@ -4291,6 +4286,18 @@
 		B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadOperation.m; sourceTree = "<group>"; };
 		B6D11AE321A24C7700446B86 /* PutNodeOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PutNodeOperation.h; sourceTree = "<group>"; };
 		B6D11AE421A24C7700446B86 /* PutNodeOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PutNodeOperation.m; sourceTree = "<group>"; };
+		B6D16A5E29DCFD6000402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A5F29DCFD8B00402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A6529DCFE4400402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A6629DCFE7400402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A6B29DD03AC00402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A6C29DD03D100402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A7129DD041C00402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A7229DD043900402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A7829DD04B000402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A7929DD04D500402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A7E29DD052E00402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6D16A7F29DD055000402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6D176852236F16600098084 /* ImageExporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageExporter.h; sourceTree = "<group>"; };
 		B6D176862236F16600098084 /* ImageExporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageExporter.m; sourceTree = "<group>"; };
 		B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFirstLaunchSecurityCheckerTests.swift; sourceTree = "<group>"; };
@@ -5409,7 +5416,9 @@
 			isa = PBXGroup;
 			children = (
 				5B72738F240D32EA005816AB /* App Icons */,
-				B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */,
+				B67FFF9629D53D2400E830FA /* Debug */,
+				B67FFF9529D53D1A00E830FA /* QA */,
+				B67FFF9429D53D1400E830FA /* Release */,
 				1373618E1A6664C300B740E8 /* Info.plist */,
 				E803CB661D5336F100F81A36 /* InfoPlist.strings */,
 				415227411A692F8D00EC7BB6 /* Localizable.strings */,
@@ -7647,7 +7656,7 @@
 		7794AED5231E4E0A0039C1D2 /* MEGANotifications */ = {
 			isa = PBXGroup;
 			children = (
-				77F416372330F1C2004714B6 /* Supporting Files */,
+				B6D16A6129DCFE0100402828 /* Supporting Files */,
 				7794AED8231E4E0A0039C1D2 /* Info.plist */,
 				7794AEE0231E54680039C1D2 /* MEGANotifications-Bridging-Header.h */,
 				7794AEE2231E5C2F0039C1D2 /* MEGANotifications-PrefixHeader.pch */,
@@ -7705,15 +7714,6 @@
 				B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */,
 			);
 			path = "Photo browser";
-			sourceTree = "<group>";
-		};
-		77F416372330F1C2004714B6 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B6873AD825A6C75300BBD15A /* GoogleService-Info.plist */,
-				7794AF202320FDD50039C1D2 /* MEGANotifications.entitlements */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		830C266F25DFC70B00E9B56E /* Favourites */ = {
@@ -7801,8 +7801,10 @@
 		831B4942256FEE270086002B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B6D16A7B29DD050300402828 /* Debug */,
+				B6D16A7C29DD050700402828 /* QA */,
+				B6D16A7D29DD050A00402828 /* Release */,
 				A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */,
-				B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */,
 				831B4912256FED6F0086002B /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -7973,7 +7975,9 @@
 		83422B562559861600D46907 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */,
+				B6D16A6929DD00E900402828 /* Debug */,
+				B6D16A6829DD00E500402828 /* QA */,
+				B6D16A6A29DD00ED00402828 /* Release */,
 				83AB5A8125598CE200A04232 /* Info.plist */,
 				836924A12582662700658F6C /* MEGAWidget-Bridging-Header.h */,
 				A89EEC3325599FA6009FBF33 /* MEGAWidget-PrefixHeader.pch */,
@@ -8722,7 +8726,9 @@
 		942FD0791EF3EE8800E99FB1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B6873A9C25A6C63800BBD15A /* GoogleService-Info.plist */,
+				B6D16A5C29DCFCBE00402828 /* Debug */,
+				B6D16A5B29DCFCBA00402828 /* QA */,
+				B6D16A5D29DCFCD100402828 /* Release */,
 				943F8B241EF2708E00AFD89F /* Info.plist */,
 				5B716E3123741AC900925E18 /* MEGAShare-Bridging-Header.h */,
 				943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */,
@@ -8933,10 +8939,10 @@
 		A8399F45296C40070062B6BC /* MEGAPickerFileProvider */ = {
 			isa = PBXGroup;
 			children = (
+				B6D16A6D29DD03E400402828 /* Supporting Files */,
 				A8399F4A296C40070062B6BC /* FileProviderEnumerator.swift */,
 				A8399F46296C40070062B6BC /* FileProviderExtension.swift */,
 				A8399F48296C40070062B6BC /* FileProviderItem.swift */,
-				A8C47593299D02E60074511F /* GoogleService-Info.plist */,
 				A8399F4C296C40070062B6BC /* Info.plist */,
 				A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */,
 				A8399F4D296C40070062B6BC /* MEGAPickerFileProvider.entitlements */,
@@ -8948,8 +8954,8 @@
 		A8399F5A296C43F90062B6BC /* MEGAPicker */ = {
 			isa = PBXGroup;
 			children = (
+				B6D16A7429DD048100402828 /* Supporting Files */,
 				A8399F5B296C43F90062B6BC /* DocumentActionViewController.swift */,
-				A8C47591299D02B70074511F /* GoogleService-Info.plist */,
 				A8399F60296C43F90062B6BC /* Info.plist */,
 				A8399F5D296C43F90062B6BC /* MainInterface.storyboard */,
 			);
@@ -9857,6 +9863,30 @@
 			path = RepositoryProtocol;
 			sourceTree = "<group>";
 		};
+		B67FFF9429D53D1400E830FA /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				B6CB4E33253EF8D90009E87F /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B67FFF9529D53D1A00E830FA /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B67FFF8E29D51EE400E830FA /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B67FFF9629D53D2400E830FA /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B67FFF9129D52F9400E830FA /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
 		B688C015293ED95800976CE9 /* Timeline All View */ = {
 			isa = PBXGroup;
 			children = (
@@ -10258,6 +10288,181 @@
 				B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */,
 			);
 			path = UploadUtils;
+			sourceTree = "<group>";
+		};
+		B6D16A5B29DCFCBA00402828 /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A5E29DCFD6000402828 /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B6D16A5C29DCFCBE00402828 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A5F29DCFD8B00402828 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		B6D16A5D29DCFCD100402828 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				B6873A9C25A6C63800BBD15A /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B6D16A6129DCFE0100402828 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A6329DCFE1400402828 /* Debug */,
+				B6D16A6229DCFE1000402828 /* QA */,
+				B6D16A6429DCFE1900402828 /* Release */,
+				7794AF202320FDD50039C1D2 /* MEGANotifications.entitlements */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6D16A6229DCFE1000402828 /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A6629DCFE7400402828 /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B6D16A6329DCFE1400402828 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A6529DCFE4400402828 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		B6D16A6429DCFE1900402828 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				B6873AD825A6C75300BBD15A /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B6D16A6829DD00E500402828 /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A6C29DD03D100402828 /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B6D16A6929DD00E900402828 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A6B29DD03AC00402828 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		B6D16A6A29DD00ED00402828 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B6D16A6D29DD03E400402828 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A6F29DD03ED00402828 /* Debug */,
+				B6D16A6E29DD03E900402828 /* QA */,
+				B6D16A7029DD03F400402828 /* Release */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6D16A6E29DD03E900402828 /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7229DD043900402828 /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B6D16A6F29DD03ED00402828 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7129DD041C00402828 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		B6D16A7029DD03F400402828 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				A8C47593299D02E60074511F /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B6D16A7429DD048100402828 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7529DD048B00402828 /* Debug */,
+				B6D16A7629DD049000402828 /* QA */,
+				B6D16A7729DD049300402828 /* Release */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6D16A7529DD048B00402828 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7829DD04B000402828 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		B6D16A7629DD049000402828 /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7929DD04D500402828 /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B6D16A7729DD049300402828 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				A8C47591299D02B70074511F /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B6D16A7B29DD050300402828 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7E29DD052E00402828 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		B6D16A7C29DD050700402828 /* QA */ = {
+			isa = PBXGroup;
+			children = (
+				B6D16A7F29DD055000402828 /* GoogleService-Info.plist */,
+			);
+			path = QA;
+			sourceTree = "<group>";
+		};
+		B6D16A7D29DD050A00402828 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */,
+			);
+			path = Release;
 			sourceTree = "<group>";
 		};
 		B6D176842235E69400098084 /* AttributeOperations */ = {
@@ -11329,6 +11534,7 @@
 				137361881A6664C300B740E8 /* Resources */,
 				942254FF1EDC03150074C51A /* Embed Foundation Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
+				B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11388,6 +11594,7 @@
 				7794AED0231E4E0A0039C1D2 /* Sources */,
 				7794AED1231E4E0A0039C1D2 /* Frameworks */,
 				7794AED2231E4E0A0039C1D2 /* Resources */,
+				B6D16A6029DCFDB000402828 /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11415,6 +11622,7 @@
 				83199F0D25556CD900344531 /* Sources */,
 				83199F0E25556CD900344531 /* Frameworks */,
 				83199F0F25556CD900344531 /* Resources */,
+				B6D16A6729DD006200402828 /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11441,6 +11649,7 @@
 				831B490A256FED6F0086002B /* Sources */,
 				831B490B256FED6F0086002B /* Frameworks */,
 				831B490C256FED6F0086002B /* Resources */,
+				B6D16A8029DD056700402828 /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11463,6 +11672,7 @@
 				943F8B0B1EF26E9C00AFD89F /* Sources */,
 				943F8B0C1EF26E9C00AFD89F /* Frameworks */,
 				943F8B0D1EF26E9C00AFD89F /* Resources */,
+				B6D16A5A29DCFAB700402828 /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11496,6 +11706,7 @@
 				A8399F3E296C40060062B6BC /* Sources */,
 				A8399F3F296C40060062B6BC /* Frameworks */,
 				A8399F40296C40060062B6BC /* Resources */,
+				B6D16A7329DD045300402828 /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11518,6 +11729,7 @@
 				A8399F55296C43F70062B6BC /* Sources */,
 				A8399F56296C43F70062B6BC /* Frameworks */,
 				A8399F57296C43F70062B6BC /* Resources */,
+				B6D16A7A29DD04E300402828 /* Run Script: Copy GoogleService-Info */,
 			);
 			buildRules = (
 			);
@@ -11800,7 +12012,6 @@
 				5B9CC937269DA6A8006342FC /* GenericNodeTableViewCell.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
-				B6CB4E34253EF8D90009E87F /* GoogleService-Info.plist in Resources */,
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				5D038F092511D5AF00DAA2E6 /* HomeSearchResultViewController.xib in Resources */,
 				BFAFAF0F2519595300C92887 /* HomeViewController.xib in Resources */,
@@ -11894,7 +12105,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5925B7D279115FA00170CD6 /* Colors.xcassets in Resources */,
-				B6873AD925A6C75400BBD15A /* GoogleService-Info.plist in Resources */,
 				77BE2FEF24000CB600514DB8 /* Localizable.strings in Resources */,
 				B5A9963B282CF625008B8ADD /* Localizable.stringsdict in Resources */,
 			);
@@ -11906,7 +12116,6 @@
 			files = (
 				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
 				B5925B7E279115FA00170CD6 /* Colors.xcassets in Resources */,
-				B6873AE425A6C7DD00BBD15A /* GoogleService-Info.plist in Resources */,
 				83199F592555780300344531 /* Images.xcassets in Resources */,
 				837DC5592565605100CA289E /* Localizable.strings in Resources */,
 				B5A9963C282CF625008B8ADD /* Localizable.stringsdict in Resources */,
@@ -11919,7 +12128,6 @@
 			files = (
 				A85CC10329CB32650012F98D /* AppIntentVocabulary.plist in Resources */,
 				B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */,
-				B6873AF725A6C86100BBD15A /* GoogleService-Info.plist in Resources */,
 				8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */,
 				B5A9963D282CF625008B8ADD /* Localizable.stringsdict in Resources */,
 			);
@@ -11936,7 +12144,6 @@
 				B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
 				5B74365226D78CBE00EEF758 /* GenericHeaderFooterView.xib in Resources */,
-				B6873A9D25A6C63800BBD15A /* GoogleService-Info.plist in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				5B45D2C2260A0FA600DDD076 /* ItemListViewController.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
@@ -11953,7 +12160,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8C47596299D07020074511F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11961,7 +12167,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8C47597299D07080074511F /* GoogleService-Info.plist in Resources */,
 				A8399F72296C54A30062B6BC /* Images.xcassets in Resources */,
 				A8A3D3742980383300037036 /* Localizable.strings in Resources */,
 				A8399F5F296C43F90062B6BC /* MainInterface.storyboard in Resources */,
@@ -12015,6 +12220,139 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PROJECT_DIR}/swiftgen/swiftgen-6.5.1/bin/swiftgen\" config run --config ./SwiftGen/swiftgen.yml\n";
+		};
+		B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
+		};
+		B6D16A5A29DCFAB700402828 /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGAShare/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
+		};
+		B6D16A6029DCFDB000402828 /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGANotifications/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
+		};
+		B6D16A6729DD006200402828 /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGAWidget/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
+		};
+		B6D16A7329DD045300402828 /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGAPickerFileProvider/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
+		};
+		B6D16A7A29DD04E300402828 /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGAPicker/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
+		};
+		B6D16A8029DD056700402828 /* Run Script: Copy GoogleService-Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Copy GoogleService-Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGAIntent/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -14776,11 +15114,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = DevBuildAppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -14827,10 +15164,10 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -14851,7 +15188,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -14899,7 +15235,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -14922,9 +15258,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGANotifications/MEGANotifications.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGANotifications/Supporting Files/MEGANotifications.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -14960,9 +15295,9 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGANotifications";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGANotifications";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
@@ -14984,9 +15319,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGANotifications/MEGANotifications.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGANotifications/Supporting Files/MEGANotifications.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -15024,7 +15358,7 @@
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGANotifications";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGANotifications";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -15049,7 +15383,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -15079,9 +15412,9 @@
 				MARKETING_VERSION = 9.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAWidget";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAWidget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
@@ -15106,8 +15439,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidgetExtension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -15139,7 +15471,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAWidget";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAWidget";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -15161,7 +15493,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAIntent/MEGAIntent.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -15182,9 +15513,9 @@
 				MARKETING_VERSION = 9.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAIntent";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAIntent";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
@@ -15201,8 +15532,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAIntent/MEGAIntent.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -15225,7 +15555,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAIntent";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAIntent";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -15241,7 +15571,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -15278,9 +15607,9 @@
 				);
 				MARKETING_VERSION = 9.10;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.MEGAShare";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAShare";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
@@ -15301,8 +15630,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -15342,7 +15670,7 @@
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAShare";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAShare";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
@@ -15365,11 +15693,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
@@ -15386,10 +15712,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development mega.ios.MEGAPickerFileProvider";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -15411,13 +15736,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
@@ -15435,8 +15758,7 @@
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc mega.ios.MEGAPickerFileProvider";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-Bridging-Header.h";
@@ -15458,13 +15780,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
@@ -15480,10 +15800,9 @@
 				MARKETING_VERSION = 9.10;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc mega.ios.MEGAPickerFileProvider";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAPickerFileProvider";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-Bridging-Header.h";
@@ -15504,11 +15823,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
@@ -15523,9 +15840,9 @@
 				MARKETING_VERSION = 9.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development mega.ios.MEGAPicker";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -15544,13 +15861,11 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
@@ -15566,7 +15881,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc mega.ios.MEGAPicker";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -15584,14 +15899,12 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
@@ -15605,9 +15918,9 @@
 				);
 				MARKETING_VERSION = 9.10;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc mega.ios.MEGAPicker";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAPicker";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -15664,7 +15977,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
@@ -15695,7 +16008,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15799,7 +16112,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -15845,10 +16157,10 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -15870,8 +16182,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -15909,9 +16220,9 @@
 				);
 				MARKETING_VERSION = 9.10;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAShare";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAShare";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
@@ -15933,9 +16244,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGANotifications/MEGANotifications.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGANotifications/Supporting Files/MEGANotifications.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -15971,9 +16281,9 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGANotifications";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGANotifications";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -16000,7 +16310,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16024,7 +16334,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
@@ -16052,8 +16362,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidgetExtension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -16083,9 +16392,9 @@
 				);
 				MARKETING_VERSION = 9.10;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAWidget";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAWidget";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -16106,8 +16415,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAIntent/MEGAIntent.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COMPILER_INDEX_STORE_ENABLE = NO;
 				COPY_PHASE_STRIP = NO;
@@ -16128,9 +16436,9 @@
 				);
 				MARKETING_VERSION = 9.10;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.MEGAIntent";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAIntent";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};

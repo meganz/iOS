@@ -34,29 +34,31 @@ default_platform(:ios)
 platform :ios do
 
   desc "Upload symbols to crashlytics after running the gym"
-  lane :upload_symbols do
+  lane :upload_symbols do |options|
     upload_symbols_with_dsym_path(
-      dsym_path: lane_context[SharedValues::DSYM_OUTPUT_PATH]
+      dsym_path: lane_context[SharedValues::DSYM_OUTPUT_PATH],
+      configuration: options[:configuration] || "Release"
     )
   end
 
   desc "Upload symbols to crashlytics with dsym path as parameter"
   lane :upload_symbols_with_dsym_path do |options|
-    paths = {
-      "MEGA": "./iMEGA/Supporting Files/GoogleService-Info.plist",
-      "MEGANotifications": "./iMEGA/Extensions/MEGANotifications/GoogleService-Info.plist",
-      "MEGAIntent": "./iMEGA/Extensions/MEGAIntent/Supporting Files/GoogleService-Info.plist",
-      "MEGAPicker": "./iMEGA/Extensions/MEGAPicker/GoogleService-Info.plist",
-      "MEGAPickerFileProvider": "./iMEGA/Extensions/MEGAPickerFileProvider/GoogleService-Info.plist",
-      "MEGAShare": "./iMEGA/Extensions/MEGAShare/Supporting Files/GoogleService-Info.plist",
-      "MEGAWidget": "./iMEGA/Extensions/MEGAWidget/Supporting Files/GoogleService-Info.plist"
-    }
-    paths.each_with_index do |(target, path), index|
+    targets = [
+      "MEGA",
+      "MEGANotifications",
+      "MEGAIntent",
+      "MEGAPicker",
+      "MEGAPickerFileProvider",
+      "MEGAShare",
+      "MEGAWidget"
+    ]
+
+    targets.each_with_index do |target, index|
       upload_symbols_to_crashlytics(
         dsym_path: options[:dsym_path],
-        gsp_path: path,
+        gsp_path: gsp_path(configuration: options[:configuration], target: target),
         binary_path: "./SwiftPackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols",
-        step_name: "Uploading dsym #{index + 1} of #{paths.keys.count} - target is #{target}"
+        step_name: "Uploading dsym #{index + 1} of #{targets.count} - target is #{target}"
       )
     end
   end
@@ -85,7 +87,7 @@ platform :ios do
         key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
         is_key_content_base64: true,
         in_house: false
-    ) 
+    )
 
     match(
       type: options[:type],
@@ -93,7 +95,7 @@ platform :ios do
       keychain_name: TEMP_KEYCHAIN_NAME,
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
       readonly: options[:readonly],
-      verbose: true
+      app_identifier: app_identifier(type: options[:type])
     )
   end
 
@@ -192,17 +194,72 @@ platform :ios do
     ) # to only upload the build
   end
 
-  lane :sync_all_code_signing do
-    match_configuration(type: "development")
-    match_configuration(type: "adhoc")    
-    match_configuration(type: "appstore")
+  lane :all_certs do
+    cert_dev()
+    cert_qa()
+    cert_appstore()
   end
 
-  private_lane :match_configuration do |options|
+  desc "Sync development signing certificates"
+  lane :cert_dev do |options|
     match(
-      type: options[:type],
-      verbose: true
+      readonly: options[:readonly],  
+      type: "development",
+      app_identifier: app_identifier(type: "development")
     )
+  end
+
+  desc "Sync QA (adhoc) signing certificates"
+  lane :cert_qa do |options|
+    match(
+      readonly: options[:readonly],
+      type: "adhoc",
+      app_identifier: app_identifier(type: "adhoc")
+    )
+  end
+
+  desc "Sync appstore signing certificates"
+  lane :cert_appstore do |options|
+    match(
+      readonly: options[:readonly],
+      type: "appstore",
+      app_identifier: app_identifier(type: "appstore")
+    )
+  end
+
+  private_lane :app_identifier do |options|
+    case options[:type]
+    when "adhoc"
+      [
+        "mega.ios.qa", 
+        "mega.ios.qa.MEGAPicker", 
+        "mega.ios.qa.MEGAPickerFileProvider", 
+        "mega.ios.qa.MEGAShare", 
+        "mega.ios.qa.MEGANotifications", 
+        "mega.ios.qa.MEGAWidget", 
+        "mega.ios.qa.MEGAIntent"
+      ]
+    when "appstore"
+      [
+        "mega.ios", 
+        "mega.ios.MEGAPicker", 
+        "mega.ios.MEGAPickerFileProvider", 
+        "mega.ios.MEGAShare", 
+        "mega.ios.MEGANotifications", 
+        "mega.ios.MEGAWidget", 
+        "mega.ios.MEGAIntent"
+      ]
+    else 
+      [
+        "mega.ios.dev", 
+        "mega.ios.dev.MEGAPicker", 
+        "mega.ios.dev.MEGAPickerFileProvider", 
+        "mega.ios.dev.MEGAShare", 
+        "mega.ios.dev.MEGANotifications", 
+        "mega.ios.dev.MEGAWidget", 
+        "mega.ios.dev.MEGAIntent"
+      ]
+    end
   end
 
   desc "Run unit tests for main app"
@@ -337,20 +394,20 @@ platform :ios do
         iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
         provisioningProfiles: {
-          "mega.ios": "match AdHoc mega.ios",
-          "mega.ios.MEGAIntent": "match AdHoc mega.ios.MEGAIntent",
-          "mega.ios.MEGANotifications": "match AdHoc mega.ios.MEGANotifications",
-          "mega.ios.MEGAPicker": "match AdHoc mega.ios.MEGAPicker",
-          "mega.ios.MEGAPickerFileProvider": "match AdHoc mega.ios.MEGAPickerFileProvider",
-          "mega.ios.MEGAShare": "match AdHoc mega.ios.MEGAShare",
-          "mega.ios.MEGAWidget": "match AdHoc mega.ios.MEGAWidget"
+          "mega.ios.qa": "match AdHoc mega.ios.qa",
+          "mega.ios.qa.MEGAIntent": "match AdHoc mega.ios.qa.MEGAIntent",
+          "mega.ios.qa.MEGANotifications": "match AdHoc mega.ios.qa.MEGANotifications",
+          "mega.ios.qa.MEGAPicker": "match AdHoc mega.ios.qa.MEGAPicker",
+          "mega.ios.qa.MEGAPickerFileProvider": "match AdHoc mega.ios.qa.MEGAPickerFileProvider",
+          "mega.ios.qa.MEGAShare": "match AdHoc mega.ios.qa.MEGAShare",
+          "mega.ios.qa.MEGAWidget": "match AdHoc mega.ios.qa.MEGAWidget"
         }
       }
     )
   end
 
   desc "Upload build to Firebase"
-  lane :upload_build_to_firebase do
+  lane :upload_build_to_firebase do |options|
     # Get the 20 latest commints from the current branch.
     changelog_from_git_commits(
       commits_count: 20,  
@@ -359,9 +416,11 @@ platform :ios do
       match_lightweight_tag: false,
       merge_commit_filtering: "include_merges"
     )
-
-    gsp_path = "./iMEGA/Supporting Files/GoogleService-Info.plist"
-    google_app_id = get_info_plist_value(path: gsp_path, key: 'GOOGLE_APP_ID')
+    
+    google_app_id = get_info_plist_value(
+      path: gsp_path(configuration: options[:configuration]), 
+      key: 'GOOGLE_APP_ID'
+    )
 
     firebase_app_distribution(
       app: google_app_id,
@@ -370,6 +429,14 @@ platform :ios do
       groups: "internal-testers",
       release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
+  end
+
+  private_lane :gsp_path do |options|
+    if options[:target].nil? || options[:target] == "MEGA"
+      "./iMEGA/Supporting Files/#{options[:configuration]}/GoogleService-Info.plist"
+    else
+      "./iMEGA/Extensions/#{options[:target]}/Supporting Files/#{options[:configuration]}/GoogleService-Info.plist"
+    end
   end
 
   desc "zip archive to path"

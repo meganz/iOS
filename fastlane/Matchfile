@@ -1,14 +1,5 @@
 git_url("https://code.developers.mega.co.nz/mobile/ios/iOSCertificates.git")
 
 storage_mode("git")
-
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
-
-app_identifier(["mega.ios", "mega.ios.MEGAPicker", "mega.ios.MEGAPickerFileProvider", "mega.ios.MEGAShare", "mega.ios.MEGANotifications", "mega.ios.MEGAWidget", "mega.ios.MEGAIntent"])
-# username("hl@mega.co.nz") # Your Apple Developer Portal username
-
-# For all available options run `fastlane match --help`
-# Remove the # in the beginning of the line to enable the other options
-
-# The docs are available on https://docs.fastlane.tools/actions/match
 force_for_new_devices(true)
+verbose(true)
