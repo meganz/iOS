@@ -862,6 +862,42 @@
         <string>минуты</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d unread message</string>
+        <key>other</key>
+        <string>%d unread messages</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>За один раз вы можете добавить в альбом до %d элемента.</string>
+        <key>few</key>
+        <string>За один раз вы можете добавить в альбом до %d элементов.</string>
+        <key>many</key>
+        <string>За один раз вы можете добавить в альбом до %d элементов.</string>
+        <key>other</key>
+        <string>За один раз вы можете добавить в альбом до %d элемента.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

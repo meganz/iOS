@@ -361,9 +361,9 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Membuat links…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Copied link";
+"linkCopied"="Tautan disalin";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Copied links";
+"linksCopied"="Tautan disalin";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Disalin ke clipboard";
 /* A title for the Copyright Warning dialog. */
@@ -413,7 +413,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="File dikirim ke obrolan";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d files sent";
+"xfilesSentSuccesfully"="%d file terkirim ";
 /* Title show when a file is being downloaded */
 "downloading"="Mengunduh";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -489,7 +489,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder dibagikan";
 /* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d folders shared";
+"sharedFolders_success"="%d folder dibagikan ";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Import";
 /* Message shown when a file has been imported */
@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Linimasa";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Tidak ada media ditemukan";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="Tidak dapat memilih lebih banyak";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
@@ -535,7 +537,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="Album baru";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="An album with this name already exists.";
+"cameraUploads.albums.create.alert.userAlbumExists"="Album dengan nama ini sudah ada.";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="Nama album ini tidak diizinkan";
 /* Used in create album popup album name validation */
@@ -543,7 +545,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterNewName"="Masukkan nama baru.";
 /* Used in add content album view. */
-"cameraUploads.albums.create.addItemsTo"="Add items to “%@”";
+"cameraUploads.albums.create.addItemsTo"="Tambahkan item ke “%@”";
 /* Used in empty album view. */
 "cameraUploads.albums.empty.title"="Album kosong";
 /* Used as a alert title when removing album photos. */
@@ -851,7 +853,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ini adalah langkah terakhir untuk menghapus akun anda. Anda akan kehilangan semua data yang disimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Your account has been deleted";
+"accountCanceledSuccessfully"="Akun anda telah dihapus";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Tutup akun";
 /* Title for the action that allows to remove a file or folder */
@@ -911,7 +913,7 @@
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Kunci pemulihan anda akan dipakai untuk me-reset password anda. Harap, masukan password baru anda.";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset. Please log in to your account now.";
+"yourPasswordHasBeenReset"="Kata sandi anda telah diatur ulang. Silakan masuk ke akun anda sekarang.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Kirim";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -1093,7 +1095,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Ganti Nama";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="You have changed your profile";
+"youHaveSuccessfullyChangedYourProfile"="Anda telah mengubah profil anda";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nama depan";
 /* Hint text for the last name (Placeholder) */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Mulai mengobrol dengan aman dengan kontak Anda menggunakan enkripsi ujung-ke-ujung";
+"Start chatting securely with your contacts using end-to-end encryption"="Mulailah mengobrol dengan aman dengan kontak anda menggunakan enkripsi tanpa pengetahuan";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Aktifkan";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1229,7 +1231,7 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] dihapus dari percakapan grup oleh [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat";
+"leftTheGroupChat"="[A] meninggalkan obrolan grup ";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] bergabung ke percakapan grup oleh undangan dari [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rich URL previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tingkatkan pengalaman MEGA chat. Isi URL akan diambil tanpa enkripsi end-to-end.";
+"richPreviewsFooter"="Tingkatkan pengalaman Obrolan MEGA. Konten URL akan diambil tanpa enkripsi tanpa pengetahuan.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Panggilan video dan suara";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Tidak dapat memuat. [RED]Ketuk untuk mencoba lagi[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
+"chatIntroductionMessage"="MEGA melindungi obrolan anda dengan enkripsi tanpa pengetahuan yang memberikan jaminan keamanan penting:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Kerahasiaan.[/S] Hanya penulis dan penerima yang diinginkan dapat men-decipher dan membaca konten.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1661,7 +1663,7 @@
 /* Title of flag of archived chats. */
 "archived"="Diarsipkan";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No archived chats or meetings";
+"noArchivedChats"="Tidak ada obrolan atau rapat yang diarsipkan";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Otentikasi dua faktor";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="Hapus file lebih lama dari";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Untuk periode retensi yang lebih lama [S]Tingkatkan ke Pro[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="hari";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Tempat sampah dikosongkan untuk anda secara otomatis. Jangka waktu minimum adalah 7 hari dan jangka waktu maksimum adalah 30 hari.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Pembayaran anda untuk plan %1 telah diterima.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Pembayaran anda untuk plan %1 tidak berhasil.";
+"Your payment for the %1 plan was unsuccessful."="Kami tidak menerima pembayaran anda untuk paket %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Membership Pro anda akan habis besok.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -1993,7 +1997,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Diubah oleh %@";
 /* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s and %2$s more";
+"home.recent.multipleFileTitle"="%1$s dan %2$s lebihnya";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Dibuat oleh %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2321,7 +2325,7 @@
 /* Message for action to modify the registered phone number. */
 "This operation will remove your current phone number and start the process of associating a new phone number with your account."="Operasi ini akan menghapus nomor telepon anda saat ini dan memulai proses mengaitkan nomor telepon baru dengan akun anda.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Your phone number has been removed";
+"Your phone number has been removed successfully."="Nomor telepon anda telah dihapus";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Gagal menghapus nomor telepon anda, silakan coba lagi nanti.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Sandi Disalin ke Papan Klip";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistem enkripsi ujung-ke-ujung kami memerlukan kunci unik yang dibuat secara otomatis untuk file ini. Tautan dengan kunci ini dibuat secara default, tetapi Anda dapat mengekspor kunci dekripsi secara terpisah untuk lapisan keamanan tambahan.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistem enkripsi tanpa pengetahuan kami memerlukan kunci unik yang dibuat secara otomatis untuk file atau folder ini. Tautan dengan kunci ini dibuat secara default, tetapi anda dapat mengekspor kunci dekripsi secara terpisah untuk lapisan keamanan tambahan.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Hapus Kata Sandi";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="pengiriman pesan dibatalkan";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Privasi anda";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Kami menggunakan Cookie dan teknologi serupa (“Cookies”) untuk menyediakan dan meningkatkan pengalaman anda dengan layanan kami. Terima penggunaan Cookie kami sejak awal kunjungan anda atau sesuaikan Cookie di Pengaturan Cookie. Baca selengkapnya di [A]Kebijakan Cookie[/A] kami.";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Terima Cookies";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookie Penting";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Ketuk <b>Notifikasi</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Nyalakan <b>Izinkan Notifikasi</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Buka Pengaturan";
 /* Dialog title for the change launch tab screen */
@@ -2997,11 +3005,11 @@
 /* Meetings: Notification message to be shown when two people join the call at the same time */
 "meetings.notification.twoUsersJoined"="%@ dan %@ bergabung";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
+"meetings.notification.twoUsersLeft"="%@ dan %@ meninggalkan panggilan ";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
 "meetings.notification.moreThanTwoUsersJoined"="%@ dan %@ lainnya bergabung";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
+"meetings.notification.moreThanTwoUsersLeft"="%@ dan %@ yang lain meninggalkan panggilan";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Pindahkan ke Sampah";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3049,7 +3057,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="File akan diperbarui dengan versi baru.";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Apply to all %@ duplicates";
+"nameCollision.applyToAll"="Terapkan ke semua %@ duplikat ";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Anda satu-satunya di sini";
 /* Meetings end call dialog description */
@@ -3181,7 +3189,7 @@
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Folder tidak terdekripsi]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
-"sharedItems.tab.outgoing.sharedToContact"="Shared with %@";
+"sharedItems.tab.outgoing.sharedToContact"="Dibagikan dengan %@";
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@: membuat rapat";
 /* Button title to load more participants in meeting info view */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Lihat lebih sedikit";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA melindungi komunikasi anda dengan sistem enkripsi end-to-end (dikendalikan pengguna) kami yang memberikan jaminan keamanan penting:";
+"chat.introductionHeader.privacy.description"="MEGA melindungi komunikasi anda dengan sistem enkripsi tanpa pengetahuan kami yang memberikan jaminan keamanan penting:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Mulai pertemuan";
 /* Button title to join an scheduled meeting */
@@ -3221,31 +3229,31 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Pertemuan";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] invited[/B] you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] telah mengundang[/B] anda ke rapat yang dijadwalkan untuk:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] telah diperbarui[/B] rincian pertemuan yang dijadwalkan untuk: ";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] updated[/B] the meeting description";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] telah diperbarui[/B] deskripsi pertemuan ";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] telah membatalkan[/B] pertemuan yang dijadwalkan untuk: ";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] telah diperbarui[/B] tanggal pertemuan ";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] telah diperbarui[/B] waktu pertemuan";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] telah diperbarui[/B] nama pertemuan dari  “[PreviousTitle]” menjadi [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
+"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] telah membatalkan[/B] pertemuan dan segala kejadiannya";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] invited you to a recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] mengundang anda ke rapat berulang yang dijadwalkan untuk:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the details of the recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] telah diperbarui[/B] rincian rapat rutin yang dijadwalkan untuk: ";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] updated[/B] the recurring meeting description";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] telah diperbarui[/B] deskripsi pertemuan berulang";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] telah diperbarui[/B] tanggal pertemuan berulang ";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] telah diperbarui[/B] waktu pertemuan berulang ";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Kejadian";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3257,19 +3265,21 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Lihat lebih banyak";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.forever"="Setiap hari efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]";
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.recurring.daily.until"="Setiap hari efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] telah membatalkan[/B] kejadian yang dijadwalkan untuk: ";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] telah diperbarui[/B] kejadian untuk: ";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="Peningkatan keamanan";
+"account.upgradeSecurity.title"="Peningkatan keamanan akun";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, tap on Cancel.";
+"account.upgradeSecurity.message.upgrade"="Kami meningkatkan keamanan akun anda. Anda akan melihat pesan ini hanya sekali. Jika anda pernah melihatnya sebelumnya, pastikan dulu untuk akun ini dan bukan untuk akun MEGA lain yang anda miliki.\n\nJika anda yakin dan ini kedua kalinya anda melihat pesan ini untuk akun ini, berhentilah menggunakan akun ini.";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="OK, mengerti";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Deskripsi";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3301,16 +3311,56 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="Sab";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="daily";
+"meetings.scheduled.recurring.daily"="harian";
 /* Text description for a meeting showing that is a weekly recurring meeting */
-"meetings.scheduled.recurring.weekly"="weekly";
+"meetings.scheduled.recurring.weekly"="mingguan";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="bulanan";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Tidak dapat memverifikasi kontak";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Anda tidak dapat memverifikasi %@ karena mereka tidak ada dalam daftar kontak anda. Tunggu mereka menerima undangan anda terlebih dahulu. ";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
-"picker.disable.passcode.title"="Disable MEGA passcode";
+"picker.disable.passcode.title"="Nonaktifkan kode sandi MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+"picker.disable.passcode.description"="Untuk menggunakan MEGA di aplikasi Files, nonaktifkan kode sandi MEGA anda. Buka Pengaturan di aplikasi MEGA, ketuk Keamanan > Kode Sandi.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Rapat sedang berlangsung";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Jadwalkan pertemuan";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Nama rapat";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Starts";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Ends";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Berulang";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Link pertemuan";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Siapa pun yang memiliki tautan ini dapat bergabung ke rapat dan melihat obrolan rapat.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Tambahkan peserta";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Kirim undangan kalender";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Izinkan non-host untuk menambahkan peserta";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Tambah deskripsi";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Masukan kurang dari 30 karakter";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Masukan kurang dari 4,000 karakter";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Batal";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Buat";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Membuang perubahan";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Terus ubah";

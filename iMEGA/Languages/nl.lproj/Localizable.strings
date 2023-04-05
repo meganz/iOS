@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Tijdlijn";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Geen media gevonden";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="Kan niet meer selecteren";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albums";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="Geen Gesprekken";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Begin veilig te chatten met uw contacten door middel van end-to-end encryptie";
+"Start chatting securely with your contacts using end-to-end encryption"="Begin met veilig chatten met uw contacten door gebruik van end-to-end codering";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Inschakelen";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Rijke URL Weergave";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Verbeter de MEGA chat ervaring. URL inhoud wordt binnengehaald zonder end-to-end encryptie.";
+"richPreviewsFooter"="Verbeter de MEGA Chat ervaring. URL inhoud wordt binnengehaald zonder zero-knowledge codering.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Spraak en video oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Kan niet laden. [RED]Tik om opnieuw te proberen[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA beschermt uw chat met end-to-end encryptie (gebruikersgecontrolleerd) door het verstrekken van essentiële veiligheidswaarborgen:";
+"chatIntroductionMessage"="MEGA beschermt uw gesprek met zero-knowledge codering, wat zorgt voor noodzakelijke beveiliging zekerheid:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S] Vertrouwelijk.[/S] Alleen de auteur en de beoogde ontvangers zijn in staat om de inhoud te lezen en ontcijferen.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="Verwijder bestanden ouder dan";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Voor een langere bewaarperiode [S]Upgrade naar Pro[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="dagen";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="De Prullenbak wordt automatisch voor u geleegd. De minimale periode is 7 dagen en de maximale periode is 30 dagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Uw betaling voor het %1 abonnement is ontvangen.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Uw betaling voor het %1 abonnement is onsuccesvol.";
+"Your payment for the %1 plan was unsuccessful."="We hebben uw betaling voor het %1 abonnement niet ontvangen.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Uw Pro-lidmaatschap abonnement verloopt morgen.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Wachtwoord Gekopieerd naar Klembord";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Onze end-to-end encryptiesysteem vereist een unieke sleutel die automatisch wordt gegenereerd voor dit bestand. Er wordt standaard een koppeling met deze sleutel gemaakt, maar u kunt de decoderingssleutel afzonderlijk exporteren voor een extra beveiligingslaag.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Onze zero-knowledge coderingssysteem vereist een unieke sleutel die automatisch wordt gegenereerd voor dit bestand of map. Er wordt standaard een link met deze sleutel gemaakt, maar u kunt de decoderingssleutel afzonderlijk exporteren voor een extra beveiligingslaag.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Wachtwoord Verwijderen";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="verzenden van berichten geannuleerd";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Uw privacy";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="We gebruiken Cookies en vergelijkbare technologieën (“Cookies”) om uw ervaring met onze diensten te bieden en te verbeteren. Accepteer ons gebruik van Cookies vanaf het begin van uw bezoek of pas Cookies aan in de Cookie-Instellingen. Lees meer in ons [A]Cookiebeleid[/A].";
+/* Cookie dialog text. */
+"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Cookies Accepteren";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Essentiële Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,8 +2558,10 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tik <b>Meldingen</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> <b>Meldingen Toestaan</b> inschakelen";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. <b>Meldingen toestaan</b> Inschakelen";
 /* Title of the button to open Settings */
-"dialog.turnOnNotifications.button.primary"="Instellingen Openen";
+"dialog.turnOnNotifications.button.primary"="Instellingen openen";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Wijzig Lanceer Tab";
 /* Dialog description for the change launch tab screen */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]heeft een gebeurtenis bijgewerkt[/B] naar:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="Beveiligingsupgrade";
+"account.upgradeSecurity.title"="Account beveiligingsupgrade";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="De beveiliging van uw account wordt nu geüpgraded. Dit zal slechts één keer gebeuren. Als u dit bericht eerder voor dit account hebt gezien, tikt u op Annuleren.";
+"account.upgradeSecurity.message.upgrade"="We upgraden de beveiliging van uw account. U zou dit bericht slechts één keer moeten zien. Als u het al eerder hebt gezien, controleer dan eerst of het voor dit account was en niet voor een ander MEGA-account dat u heeft \n\nAls u het zeker weet en het is de tweede keer dat u dit bericht voor dit account ziet, stop dan met het gebruik van dit account .";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="Ok, ik snap het";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Omschrijving";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="MEGA toegangscode uitgschakelen";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Schakel uw MEGA-toegangscode uit om MEGA in de Bestanden-applicatie te gebruiken. Ga naar Instellingen in de MEGA-applicatie, tik op Beveiliging > Toegangscode.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Vergadering bezig";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Plan vergadering";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Vergadernaam";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Begint";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Eindigt";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Herhaling";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Vergaderingslink";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Iedereen met deze link kan aansluiten in de vergadering en het vergadergesprek weergeven.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Deelnemers toevoegen";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Verstuur kalender uitnodiging";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Toestaan ​​dat non-hosts deelnemers kan toevoegen";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Omschrijving toevoegen";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Voer minder dan 30 tekens in";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Voer minder dan 4000 tekens in";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Annuleren";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Creëren";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Wijzigingen weggooien of doorgaan met bewerken?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Wijzigingen Ongedaan maken";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Doorgaan met bewerken";

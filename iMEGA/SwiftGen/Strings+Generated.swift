@@ -393,7 +393,7 @@ public enum Strings {
     public static let chatLinkUnavailable = Strings.tr("Localizable", "Chat Link Unavailable")
     /// Chat notifications
     public static let chatNotifications = Strings.tr("Localizable", "Chat Notifications")
-    /// MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances:
+    /// MEGA protects your chat with zero-knowledge encryption providing essential safety assurances:
     public static let chatIntroductionMessage = Strings.tr("Localizable", "chatIntroductionMessage")
     /// Chat not found
     public static let chatNotFound = Strings.tr("Localizable", "chatNotFound")
@@ -1743,7 +1743,7 @@ public enum Strings {
     public static let restore = Strings.tr("Localizable", "restore")
     /// Resume
     public static let resume = Strings.tr("Localizable", "resume")
-    /// Resume All
+    /// Resume all
     public static let resumeAll = Strings.tr("Localizable", "Resume All")
     /// Resume transfers?
     public static let resumeTransfers = Strings.tr("Localizable", "Resume Transfers?")
@@ -1757,7 +1757,7 @@ public enum Strings {
     public static let revert = Strings.tr("Localizable", "revert")
     /// You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?
     public static let richPreviewsConfirmation = Strings.tr("Localizable", "richPreviewsConfirmation")
-    /// Enhance the MEGA Chat experience. URL content will be retrieved without end-to-end encryption.
+    /// Enhance the MEGA Chat experience. URL content will be retrieved without zero-knowledge encryption.
     public static let richPreviewsFooter = Strings.tr("Localizable", "richPreviewsFooter")
     /// Rich URL previews
     public static let richUrlPreviews = Strings.tr("Localizable", "richUrlPreviews")
@@ -1967,7 +1967,7 @@ public enum Strings {
     public static let sslUnverifiedAlertTitle = Strings.tr("Localizable", "sslUnverified_alertTitle")
     /// Standard
     public static let standard = Strings.tr("Localizable", "standard")
-    /// Start chatting securely with your contacts using end-to-end encryption
+    /// Start chatting securely with your contacts using zero-knowledge encryption
     public static let startChattingSecurelyWithYourContactsUsingEndToEndEncryption = Strings.tr("Localizable", "Start chatting securely with your contacts using end-to-end encryption")
     /// Start group
     public static let startGroup = Strings.tr("Localizable", "Start Group")
@@ -2351,7 +2351,7 @@ public enum Strings {
     public static let youAcceptedAContactRequest = Strings.tr("Localizable", "You accepted a contact request")
     /// You are back.
     public static let youAreBack = Strings.tr("Localizable", "You are back!")
-    /// You can turn on mobile data for this App in the device’s Settings.
+    /// You can turn on mobile data for this app in the device’s Settings.
     public static let youCanTurnOnMobileDataForThisAppInSettings = Strings.tr("Localizable", "You can turn on mobile data for this app in Settings.")
     /// You cannot remove %1$s as a contact because they are part of your Business account.
     public static func youCannotRemove1SAsAContactBecauseTheyArePartOfYourBusinessAccount(_ p1: UnsafePointer<CChar>) -> String {
@@ -2397,7 +2397,7 @@ public enum Strings {
     public static let yourPasswordLeakedAndIsNowBeingUsedByBadActorsToLogIntoYourAccountsIncludingButNotLimitedToYourMEGAAccount = Strings.tr("Localizable", "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.")
     /// Your payment for the %1 plan was received.
     public static let yourPaymentForThe1PlanWasReceived = Strings.tr("Localizable", "Your payment for the %1 plan was received.")
-    /// Your payment for the %1 plan was unsuccessful.
+    /// We didn’t receive your payment for the %1 plan.
     public static let yourPaymentForThe1PlanWasUnsuccessful = Strings.tr("Localizable", "Your payment for the %1 plan was unsuccessful.")
     /// Your phone number
     public static let yourPhoneNumber = Strings.tr("Localizable", "Your phone number")
@@ -2517,7 +2517,7 @@ public enum Strings {
       public static let _264Formats = Strings.tr("Localizable", "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.")
     }
     public enum OurEndToEndEncryptionSystemRequiresAUniqueKeyAutomaticallyGeneratedForThisFile {
-      /// Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.
+      /// Our zero-knowledge encryption system requires a unique key automatically generated for this file or folder. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.
       public static let aLinkWithThisKeyIsCreatedByDefaultButYouCanExportTheDecryptionKeySeparatelyForAnAddedLayerOfSecurity = Strings.tr("Localizable", "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.")
     }
     public enum PleaseGoToThePrivacySectionInYourDeviceSSetting {
@@ -3097,7 +3097,7 @@ public enum Strings {
       }
       public enum IntroductionHeader {
         public enum Privacy {
-          /// MEGA protects your communications with our end-to-end (user controlled) encryption system providing essential safety assurances:
+          /// MEGA protects your communications with our zero-knowledge encryption system providing essential safety assurances:
           public static let description = Strings.tr("Localizable", "chat.introductionHeader.privacy.description")
         }
       }
@@ -3332,7 +3332,7 @@ public enum Strings {
       public enum Cookies {
         /// Accept Cookies
         public static let accept = Strings.tr("Localizable", "dialog.cookies.accept")
-        /// We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don't use cookies for ad tracking or sharing any personal information about you with third parties.
+        /// We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.
         public static let description = Strings.tr("Localizable", "dialog.cookies.description")
         public enum Title {
           /// Your privacy
@@ -3453,7 +3453,7 @@ public enum Strings {
       }
       public enum TurnOnNotifications {
         public enum Button {
-          /// Open settings
+          /// Open Settings
           public static let primary = Strings.tr("Localizable", "dialog.turnOnNotifications.button.primary")
         }
         public enum Label {
@@ -3461,11 +3461,11 @@ public enum Strings {
           public static let description = Strings.tr("Localizable", "dialog.turnOnNotifications.label.description")
           /// 4. Turn on <b>Allow notifications</b>
           public static let stepFour = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepFour")
-          /// 1. Open <b>Settings</b>
+          /// <b>1.</b> Open <b>Settings</b>
           public static let stepOne = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepOne")
-          /// 3. Tap <b>MEGA</b>
+          /// <b>3.</b> Turn on <b>Allow notifications</b>
           public static let stepThree = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepThree")
-          /// 2. Tap <b>Notifications</b>
+          /// <b>2.</b> Tap <b>Notifications</b>
           public static let stepTwo = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepTwo")
           /// Turn on notifications
           public static let title = Strings.tr("Localizable", "dialog.turnOnNotifications.label.title")
@@ -4412,7 +4412,7 @@ public enum Strings {
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         public enum Description {
-          /// Enter fewer than 4000 characters
+          /// Enter fewer than 4,000 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.description.lenghtError")
         }
         public enum DiscardChanges {
@@ -4428,7 +4428,7 @@ public enum Strings {
           public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.link.description")
         }
         public enum MeetingName {
-          /// Enter fewer than 30 characters
+          /// Enter fewer than 30 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.lenghtError")
           /// Meeting name
           public static let placeholder = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.placeholder")
@@ -5014,7 +5014,7 @@ public enum Strings {
     public enum Settings {
       public enum Accept {
         public enum Cookies {
-          /// Cookies aren't used for ad tracking or sharing any personal information with third parties
+          /// Cookies aren’t used for ad tracking or sharing any personal information with third parties
           public static let footer = Strings.tr("Localizable", "settings.accept.cookies.footer")
         }
       }

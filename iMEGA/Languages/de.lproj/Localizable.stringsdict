@@ -690,6 +690,38 @@
         <string>Minuten</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d unread message</string>
+        <key>other</key>
+        <string>%d unread messages</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Sie können maximal %d Element gleichzeitig zu einem Album hinzufügen.</string>
+        <key>other</key>
+        <string>Sie können maximal %d Elemente gleichzeitig zu einem Album hinzufügen.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -717,9 +749,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Delete (%d)</string>
+        <string>Löschen (%d)</string>
         <key>other</key>
-        <string>Delete (%d)</string>
+        <string>Löschen (%d)</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumTitle</key>
@@ -765,9 +797,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>“[A]” deleted</string>
+        <string>„[A]“ wurde gelöscht</string>
         <key>other</key>
-        <string>%d albums deleted</string>
+        <string>%d Alben gelöscht</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removedItemFrom</key>

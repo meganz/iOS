@@ -348,10 +348,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Remove link?</string>
         <key>other</key>
-        <string>Remove links?</string>
+        <string>Hapus tautan?</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
@@ -364,10 +362,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>People you have shared this link with, will no longer be able to access it</string>
         <key>other</key>
-        <string>People you have shared these links with, will no longer be able to access them</string>
+        <string>Orang yang telah anda bagikan tautan ini, tidak akan dapat mengaksesnya lagi</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -608,6 +604,38 @@
         <string>menit</string>
       </dict>
     </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d unread message</string>
+        <key>other</key>
+        <string>%d unread messages</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>You can add only up to %d item at a time to an album.</string>
+        <key>other</key>
+        <string>You can add only up to %d items at a time to an album.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.addedItemTo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -632,10 +660,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Delete (%d)</string>
         <key>other</key>
-        <string>Delete (%d)</string>
+        <string>Hapus (%d)</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumTitle</key>
@@ -676,10 +702,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>“[A]” deleted</string>
         <key>other</key>
-        <string>%d albums deleted</string>
+        <string>%d album dihapus </string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removedItemFrom</key>
@@ -692,10 +716,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Removed %d item from “[A]”</string>
         <key>other</key>
-        <string>Removed %d items from “[A]”</string>
+        <string>Menghapus %d barang dari “[A]”</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -708,10 +730,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[WeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDay] setiap %d minggu efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -724,10 +744,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[WeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDay] setiap %d minggu efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -740,10 +758,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] dan [LastWeekDay] setiap %d minggu efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -756,10 +772,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] dan [LastWeekDay] setiap %d minggu efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -772,10 +786,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Day [MonthDay] of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Day [MonthDay] of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Hari [MonthDay] dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -788,10 +800,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Day [MonthDay] of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Day [MonthDay] of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Hari [MonthDay] dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -804,10 +814,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -820,10 +828,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -836,10 +842,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa kedua dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -852,10 +856,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -868,10 +870,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -884,10 +884,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -900,10 +898,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -916,10 +912,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -932,10 +926,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Monday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Monday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -948,10 +940,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Monday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Monday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Senin kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -964,10 +954,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -980,10 +968,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -996,10 +982,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1012,10 +996,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1028,10 +1010,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1044,10 +1024,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1060,10 +1038,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
@@ -1076,10 +1052,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1092,10 +1066,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Tuesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Tuesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1108,10 +1080,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Tuesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Tuesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Selasa kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1124,10 +1094,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1140,10 +1108,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1156,10 +1122,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu kedua dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1172,10 +1136,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1188,10 +1150,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1204,10 +1164,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1220,10 +1178,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
@@ -1236,10 +1192,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1252,10 +1206,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Wednesday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Wednesday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1268,10 +1220,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Wednesday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Wednesday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Rabu kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1284,10 +1234,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1300,10 +1248,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1316,10 +1262,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis kedua dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1332,10 +1276,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1348,10 +1290,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1364,10 +1304,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1380,10 +1318,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
@@ -1396,10 +1332,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1412,10 +1346,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Thursday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Thursday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1428,10 +1360,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Thursday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Thursday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Kamis kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1444,10 +1374,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1460,10 +1388,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1476,10 +1402,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat kedua dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1492,10 +1416,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1508,10 +1430,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1524,10 +1444,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1540,10 +1458,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
@@ -1556,10 +1472,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1572,10 +1486,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Friday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Friday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1588,10 +1500,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Friday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Friday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Jumat kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1604,10 +1514,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu pertama dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] sampai [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1620,10 +1528,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -1636,10 +1542,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu kedua dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -1652,10 +1556,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -1668,10 +1570,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -1684,10 +1584,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -1700,10 +1598,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
@@ -1716,10 +1612,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -1732,10 +1626,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Saturday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Saturday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -1748,10 +1640,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Saturday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Saturday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Sabtu kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -1764,10 +1654,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu pertama dari setiap %d bulan efektif [B][StartDate]sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -1780,10 +1668,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>First Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>First Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu pertama dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -1796,10 +1682,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu kedua dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -1812,10 +1696,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Second Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Second Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu kedua dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -1828,10 +1710,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu ketiga dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -1844,10 +1724,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Third Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Third Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu ketiga dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -1860,10 +1738,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu keempat dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
@@ -1876,10 +1752,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fourth Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fourth Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu keempat dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -1892,10 +1766,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Sunday of every month effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Sunday of every %d months effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu kelima dari setiap %d bulan efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -1908,10 +1780,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Fifth Sunday of every month effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Fifth Sunday of every %d months effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Minggu kelima dari setiap %d bulan efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
@@ -1938,10 +1808,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You’re currently sharing the following folder: [A]</string>
         <key>other</key>
-        <string>You’re currently sharing the following folders: [A]</string>
+        <string>Anda sedang berbagi folder berikut: [A]</string>
       </dict>
     </dict>
   </dict>

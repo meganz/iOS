@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="Linha do tempo";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Não há arquivos de mídia";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="Não foi possível selecionar mais";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Álbuns";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="Não há chats";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Converse com segurança com os seus contatos usando criptografia de ponta a ponta";
+"Start chatting securely with your contacts using end-to-end encryption"="Converse com segurança com os seus contatos usando criptografia de conhecimento zero";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Ativar";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Visualização de URLs avançadas";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Melhore a sua experiência no MEGA chat. O conteúdo de URLs será recuperado sem criptografia de ponta a ponta.";
+"richPreviewsFooter"="Melhore a sua experiência no MEGA chat. O conteúdo de URLs será recuperado sem criptografia de conhecimento zero.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chamadas de voz e vídeo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Não foi possível carregar. [RED]Toque aqui para tentar novamente[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="O MEGA protege o seu chat com criptografia de ponta a ponta (controlada pelo usuário), proporcionando garantias de segurança essenciais:";
+"chatIntroductionMessage"="O MEGA protege o seu chat com criptografia de conhecimento zero, proporcionando garantias de segurança essenciais:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidencialidade.[/S] Apenas o autor e os destinatários são capazes de decodificar e ler o conteúdo.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="Remover arquivos com mais de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Para um período de retenção mais longo, [S]faça upgrade a um plano Pro[/S]";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="dias";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="A Lixeira será esvaziada de forma automática. O período mínimo é de 7 dias, e o período máximo é de 30 dias.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="O seu pagamento para o plano %1 foi recebido.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="O seu pagamento para o plano %1 não foi concluído.";
+"Your payment for the %1 plan was unsuccessful."="Não recebemos o pagamento do plano %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="O seu plano Pro expirará amanhã.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Senha copiada para a área de transferência";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="O nosso sistema de criptografia de ponta a ponta requer uma chave exclusiva, que é gerada automaticamente para este arquivo. O link é criado de forma predeterminada com essa chave, mas você pode exportar a chave de decodificação separadamente, para que o compartilhamento seja mais seguro.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Nosso sistema de criptografia de conhecimento zero requer uma chave exclusiva, gerada automaticamente para este arquivo ou para esta pasta. Um link com esta chave será criado de maneira predeterminada, mas você pode exportar a chave de decodificação separadamente, para assim garantir uma camada adicional de segurança.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Remover senha";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="o envio da mensagem foi cancelado";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="A sua privacidade";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="Usamos Cookies e tecnologias semelhantes (“Cookies”) para fornecer e melhorar a sua experiência com os nossos serviços. Você pode aceitar o nosso uso de Cookies desde o início da sua visita ou personalizar os Cookies nas Configurações de Cookies. Para mais informações, acesse a nossa [A]Política de Cookies[/A].";
+/* Cookie dialog text. */
+"dialog.cookies.description"="Usamos cookies e tecnologias semelhantes apenas para proporcionar os serviços que você solicita do MEGA ou para análise e coleta de dados de desempenho. Não usamos cookies para rastrear anúncios ou compartilhar qualquer informação pessoal sobre você com terceiros.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Aceitar cookies";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Não usamos cookies para rastrear anúncios ou compartilhar qualquer informação pessoal com terceiros";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies essenciais";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Toque em <b>Notificações</b>";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Ative a opção <b>Permitir notificações</b>";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Acessar as configurações";
 /* Dialog title for the change launch tab screen */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Ver menos";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="O MEGA protege a sua comunicação com o nosso sistema de criptografia de ponta a ponta (controlada pelo usuário), proporcionando garantias de segurança essenciais:";
+"chat.introductionHeader.privacy.description"="O MEGA protege a sua comunicação com o nosso sistema de criptografia de conhecimento zero, proporcionando garantias de segurança essenciais:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Começar a reunião";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] atualizou[/B] uma repetição para:";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="Upgrade de segurança";
+"account.upgradeSecurity.title"="Upgrade de segurança da conta";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="Está sendo realizado um upgrade de segurança da sua conta. Este procedimento acontecerá somente uma vez: se você já tiver visto esta mensagem nesta conta, selecione Cancelar.";
+"account.upgradeSecurity.message.upgrade"="Está sendo realizado um upgrade de segurança da sua conta. Você deve ver esta mensagem apenas uma vez: se você já a tiver visto, certifique-se de que foi para esta conta e não para outra conta que você tiver no MEGA. \n\nSe você tiver certeza que é a segunda vez que vê esta mensagem para esta conta, deixe de usá-la.";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="OK, entendido";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Descrição";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="Desativar o código de acesso do MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Para usar o MEGA no aplicativo Arquivos, desative a sua senha do MEGA. Acesse as Configurações no aplicativo do MEGA e selecione Segurança - Senha.";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="Reunião em andamento";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Reunião em andamento · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Programar reunião";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Nome da reunião";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Começa em";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Termina em";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Repetir";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Link da reunião";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Qualquer pessoa com este link pode entrar na reunião e visualizar o chat correspondente.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Adicionar participantes";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Enviar convite de calendário";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Permitir adicionar participantes a usuários que não forem anfitriões";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Adicionar descrição";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Digite menos de 30 caracteres";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Digite menos de 4 000 caracteres";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Cancelar";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Criar";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Descartar as alterações ou continuar editando?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Descartar alterações";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Continuar editando";

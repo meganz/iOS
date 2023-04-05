@@ -516,6 +516,8 @@
 "cameraUploads.timeline.title"="タイムライン";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="メディアが見つかりません";
+/* Alert title shown when adding photos once photo selection limit reached. */
+"cameraUploads.albums.addItems.alert.limitReached.title"="これ以上選択できません";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="アルバム";
 /* Favourites album title */
@@ -1217,7 +1219,7 @@
 /* Empty Conversations section */
 "noConversations"="会話なし";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="エンドツーエンドの暗号化を使用して、ご連絡先と安全にチャットを開始してください";
+"Start chatting securely with your contacts using end-to-end encryption"="ゼロ知識暗号化を使用して、ご連絡先と安全にチャットを開始してください";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="オンにする";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1245,7 +1247,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="リッチURLプレビュー";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="MEGA chat体験を強化します。URLコンテンツがエンドツーエンドの暗号化なしで取得されます。";
+"richPreviewsFooter"="MEGA Chat体験を強化します。URLコンテンツは、ゼロ知識暗号化なしで取得されます。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1337,7 +1339,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="読み込めませんでした。[RED]タップして再試行[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGAは、必須の安全保証をご提供するエンドツーエンド（ユーザー制御の）暗号化を使用してチャットを保護いたします：";
+"chatIntroductionMessage"="MEGAは、ゼロ知識暗号化でチャットを保護し、必須の安全保証をご提供いたします。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]機密性。[/S]作者と意図された受信者のみがコンテンツを解読して読むことができます。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1776,6 +1778,8 @@
 "Remove files older than"="次の日数より古いファイルを削除";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
 "settings.fileManagement.rubbishBin.longerRetentionUpgrade"="より長い保存期間をご希望の場合は、[S]Proにアップグレード[/S]してください";
+/* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
+"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="日";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的に空になります。最小期間は7日間で、最大期間は30日間です。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1913,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="%1 プランのお支払いを受領いたしました。";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="%1プランのお支払いは受領できませんでした。";
+"Your payment for the %1 plan was unsuccessful."="当社は%1プランのお支払いをお受け取りしませんでした。";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="お客様のProメンバーシッププランは明日失効いたします。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2401,7 +2405,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="パスワードがクリップボードにコピーされました";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="当社のエンドツーエンドの暗号化システムでは、このファイルに対して自動的に生成される一意のキーが必要です。このキーを有するリンクはデフォルトで作成されますが、セキュリティの層を追加するために、復号キーを個別にエクスポートできます。";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="当社のゼロ知識暗号化システムでは、このファイルかフォルダに対して自動的に生成される一意のキーが必要です。このキーを有するリンクはデフォルトで作成されますが、セキュリティの層を追加するために、復号キーを個別にエクスポートできます。";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="パスワードを削除";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2498,10 +2502,12 @@
 "message sending cancelled"="メッセージの送信がキャンセルされました";
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="お客様のプライバシー";
-/* Cookie dialog text. Please leave [A], [/A] as it is. */
-"dialog.cookies.description"="当社は、お客様に当社のサービスをご提供し、その利便性を高めるために、クッキー（Cookie）および類似の技術（以下、「クッキー」）を使用いたします。お客様がご訪問された最初から当社のクッキーの使用を受け入れるか、クッキー設定でクッキーをカスタマイズしてください。詳しくは、当社の[A]クッキーポリシー[/A]をご覧ください。";
+/* Cookie dialog text. */
+"dialog.cookies.description"="当社は、お客様からご要求されたサービスを提供する目的、または分析とパフォーマンスデータの収集の目的でのみ、Cookieおよび類似のテクノロジを使用します。広告の追跡や、お客様に関する個人情報を第三者と共有するためにCookieを使用することはありません。";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="クッキーを受け入れる";
+/* Cookie dialog footer description */
+"settings.accept.cookies.footer"="Cookieは、広告追跡や第三者との個人情報の共有には使用されません";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="必須クッキー";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2552,6 +2558,8 @@
 "dialog.turnOnNotifications.label.stepTwo"="<b>2. </b><b>通知</b>をタップ。";
 /* Third step to turn on notifications */
 "dialog.turnOnNotifications.label.stepThree"="<b>3.</b><b>「通知を許可」</b>をオンにする";
+/* Fourth step to turn on notifications */
+"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="設定を開く";
 /* Dialog title for the change launch tab screen */
@@ -3207,7 +3215,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="表示を減らす";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGAは、必須の安全保証をご提供するエンドツーエンド（ユーザー制御の）暗号化を使用してお客様の通信を保護いたします：";
+"chat.introductionHeader.privacy.description"="MEGAは、必須の安全保証をご提供するゼロ知識暗号化を使用してお客様の通信を保護いたします：";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="ミーティング開始";
 /* Button title to join an scheduled meeting */
@@ -3267,9 +3275,11 @@
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="開催日時を[B][Email]さんが更新しました[/B]：";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.title"="セキュリティのアップグレード";
+"account.upgradeSecurity.title"="アカウントセキュリティのアップグレード";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="アカウントのセキュリティは現在アップグレードされています。これは一度だけ発生します。このアカウントに関するこのメッセージが以前に表示されたことがある場合は、「キャンセル」をタップしてください。";
+"account.upgradeSecurity.message.upgrade"="当社はお客様のアカウントのセキュリティをアップグレードしています。このメッセージは1回だけ表示されます。以前に見たことがある場合は、まず、それがこのアカウントに対するものであり、お持ちの別のMEGAアカウントに対するものではないことをご確認ください。\n\nこのアカウントでこのメッセージが表示されるのが2回目であると確信している場合は、このアカウントのご使用を中止してください。";
+/* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
+"account.upgradeSecurity.button.title"="はい、わかりました。";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="説明";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3314,3 +3324,43 @@
 "picker.disable.passcode.title"="MEGAパスコードを無効にする";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="ファイルアプリでMEGAを使用するには、MEGAパスコードを無効にします。MEGAアプリの「設定」 に移動し、「セキュリティ」>「パスコード」をタップします。";
+/* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.description"="ミーティング中";
+/* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="ミーティングをスケジュール";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="ミーティング名";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="開始";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="終了";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="再開催";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="ミーティングリンク";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="このリンクを知っている人は誰でもミーティングに参加し、ミーティングチャットを表示できます。";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="参加者を追加";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="カレンダーの招待状を送信";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="主催者以外が参加者を追加できるようにします";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="説明を追加";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="30文字未満で入力してください";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="4000 文字未満で入力してください";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="キャンセル";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="作成";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="変更を破棄しますか、それとも編集を続けますか？";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="変更を破棄";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="編集を続ける";
