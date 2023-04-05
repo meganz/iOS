@@ -52,3 +52,9 @@ extension MEGAUserList {
         return (0..<count).compactMap { user(at: $0)?.toUserEntity() }
     }
 }
+
+extension UserEntity {
+    func toMEGAUser() -> MEGAUser? {
+        MEGASdk.shared.contact(forEmail: email)
+    }
+}

@@ -111,7 +111,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var presentMeetingAlreayExists_calledTimes = 0
     var presentCreateMeeting_calledTimes = 0
     var presentEnterMeeting_calledTimes = 0
-    var presentScheduleMeetingScreen_calledTimes = 0
+    var presentScheduleMeeting_calledTimes = 0
     var showInviteContactScreen_calledTimes = 0
     var showContactsOnMegaScreen_calledTimes = 0
     var showDetails_calledTimes = 0
@@ -143,8 +143,8 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         presentEnterMeeting_calledTimes += 1
     }
     
-    func presentScheduleMeetingScreen() {
-        presentScheduleMeetingScreen_calledTimes += 1
+    func presentScheduleMeeting() {
+        presentScheduleMeeting_calledTimes += 1
     }
     
     func showInviteContactScreen() {

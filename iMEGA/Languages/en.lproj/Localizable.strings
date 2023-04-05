@@ -3326,3 +3326,41 @@
 "meetings.scheduled.listing.inProgress.description"="Meeting in progress";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"picker.disable.passcode.description"="To use MEGA in the Files app, disable your MEGA passcode. Go to Settings in the MEGA app, tap Security > Passcode.";
+/* Schedule meeting view title */
+"meetings.scheduleMeeting.title"="Schedule meeting";
+/* Schedule meeting name field placeholder */
+"meetings.scheduleMeeting.meetingName.placeholder"="Meeting name";
+/* Schedule meeting start field */
+"meetings.scheduleMeeting.start"="Starts";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.end"="Ends";
+/* Schedule meeting recurrence field */
+"meetings.scheduleMeeting.recurrence"="Recurrence";
+/* Schedule meeting link field */
+"meetings.scheduleMeeting.link"="Meeting link";
+/* Schedule meeting end field */
+"meetings.scheduleMeeting.link.description"="Anyone with this link can join the meeting and view the meeting chat.";
+/* Schedule meeting add participants field */
+"meetings.scheduleMeeting.addParticipants"="Add participants";
+/* Schedule meeting send calendar invite field */
+"meetings.scheduleMeeting.sendCalendarInvite"="Send calendar invite";
+/* Schedule meeting open invite field */
+"meetings.scheduleMeeting.openInvite"="Allow non-hosts to add participants";
+/* Schedule meeting description field placeholder */
+"meetings.scheduleMeeting.description"="Add description";
+/* Schedule meeting name error */
+"meetings.scheduleMeeting.meetingName.lenghtError"="Enter fewer than 30 characters";
+/* Schedule meeting description error */
+"meetings.scheduleMeeting.description.lenghtError"="Enter fewer than 4000 characters";
+/* Schedule meeting cancel button */
+"meetings.scheduleMeeting.cancel"="Cancel";
+/* Schedule meeting create button */
+"meetings.scheduleMeeting.create"="Create";
+/* Schedule meeting discard changes title */
+"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+/* Schedule meeting discard changes confirmation */
+"meetings.scheduleMeeting.discardChanges.confirm"="Discard changes";
+/* Schedule meeting discard changes cancellation */
+"meetings.scheduleMeeting.discardChanges.cancel"="Keep editing";
+

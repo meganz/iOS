@@ -9,7 +9,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeChatAttachParticipant = 5,
     ContactsModeChatCreateGroup = 6,
     ContactsModeChatNamingGroup = 7,
-    ContactsModeInviteParticipants = 8
+    ContactsModeInviteParticipants = 8,
+    ContactsModeScheduleMeeting = 9
 };
 
 typedef NS_ENUM(NSUInteger, ChatOptionType) {
@@ -23,9 +24,11 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 - (void)nodeEditCompleted:(BOOL)complete;
 @end
 
-@class ShareFolderActivity;
+@class ShareFolderActivity, ItemListModel, UserEntity;
 
 @interface ContactsViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
 
@@ -37,6 +40,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
+@property (nonatomic, strong) NSMutableArray<MEGAUser *> *visibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
@@ -50,4 +54,6 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 - (void)shareNodesWithLevel:(MEGAShareType)shareType nodes:(NSArray *)nodes;
 - (void)shareNodesWithLevel:(MEGAShareType)shareType;
 - (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton;
+- (void)addItemsToList:(NSArray<ItemListModel *> *)items;
+
 @end

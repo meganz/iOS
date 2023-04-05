@@ -32,15 +32,12 @@
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 
 @property (strong, nonatomic) ContactsTableViewHeader *contactsTableViewHeader;
 
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *visibleUsersIndexedMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAUser *> *recentlyAddedUsersArray;
-@property (nonatomic, strong) NSMutableArray *visibleUsersArray;
 
 @property (nonatomic, strong) NSMutableArray *outSharesForNodeMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAShare *> *pendingShareUsersArray;
@@ -240,6 +237,7 @@
     switch (self.contactsMode) {
         case ContactsModeChatAddParticipant:
         case ContactsModeInviteParticipants:
+        case ContactsModeScheduleMeeting:
             self.itemListView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
             break;
             
@@ -328,9 +326,10 @@
             
         case ContactsModeChatAddParticipant:
         case ContactsModeInviteParticipants:
+        case ContactsModeScheduleMeeting:
         case ContactsModeChatAttachParticipant: {
             self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
-            self.addParticipantBarButtonItem.title = (self.contactsMode == ContactsModeInviteParticipants) ? NSLocalizedString(@"invite", nil) : NSLocalizedString(@"ok", nil);
+            self.addParticipantBarButtonItem.title = (self.contactsMode == ContactsModeInviteParticipants) ? NSLocalizedString(@"invite", nil) : (self.contactsMode == ContactsModeScheduleMeeting) ? NSLocalizedString(@"next", nil) : NSLocalizedString(@"ok", nil);
             [self setTableViewEditing:YES animated:NO];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
@@ -461,6 +460,7 @@
         }
             
         case ContactsModeChatAddParticipant:
+        case ContactsModeScheduleMeeting:
         case ContactsModeInviteParticipants: {
             for (MEGAUser *user in visibleContactsArray) {
                 if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
@@ -718,6 +718,7 @@
             self.navigationItem.title = NSLocalizedString(@"startConversation", @"start a chat/conversation");
             break;
             
+        case ContactsModeScheduleMeeting:
         case ContactsModeChatAddParticipant:
             self.navigationItem.title = NSLocalizedString(@"addParticipants", @"Menu item to add participants to a chat");
             break;
@@ -810,7 +811,7 @@
     if (!self.selectedUsersArray) {
         self.selectedUsersArray = [NSMutableArray new];
         [self.deleteBarButtonItem setEnabled:NO];
-        if (self.contactsMode == ContactsModeChatAddParticipant || self.contactsMode == ContactsModeInviteParticipants) {
+        if (self.contactsMode == ContactsModeChatAddParticipant || self.contactsMode == ContactsModeInviteParticipants || self.contactsMode == ContactsModeScheduleMeeting) {
             self.addParticipantBarButtonItem.enabled = NO;
         }
     }
@@ -975,6 +976,7 @@
         case ContactsModeShareFoldersWith:
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatAddParticipant:
+        case ContactsModeScheduleMeeting:
         case ContactsModeChatCreateGroup:
         case ContactsModeChatStartConversation:
         case ContactsModeInviteParticipants: {
@@ -1341,7 +1343,7 @@
 }
 
 - (IBAction)addParticipantAction:(UIBarButtonItem *)sender {
-    if (self.selectedUsersArray.count > 0) {
+    if (self.selectedUsersArray.count > 0 || self.contactsMode == ContactsModeScheduleMeeting) {
         if (self.searchController.isActive) {
             self.searchController.active = NO;
         }
@@ -1778,6 +1780,7 @@
         case ContactsModeChatCreateGroup:
         case ContactsModeShareFoldersWith:
         case ContactsModeInviteParticipants:
+        case ContactsModeScheduleMeeting:
             if (tableView.isEditing) {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
                 if (!user) {
@@ -1785,7 +1788,9 @@
                     return;
                 }
                 [self.selectedUsersArray addObject:user];
-                self.addParticipantBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
+                if (self.contactsMode != ContactsModeScheduleMeeting) {
+                    self.addParticipantBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
+                }
                 [self addItemsToList:@[[ItemListModel.alloc initWithUser:user]]];
                 if (self.searchController.searchBar.isFirstResponder) {
                     self.searchController.searchBar.text = @"";
@@ -1853,7 +1858,8 @@
         if (self.contactsMode != ContactsModeChatAddParticipant
             || self.contactsMode != ContactsModeChatAttachParticipant
             || self.contactsMode != ContactsModeChatCreateGroup
-            || self.contactsMode != ContactsModeInviteParticipants) {
+            || self.contactsMode != ContactsModeInviteParticipants
+            || self.contactsMode != ContactsModeScheduleMeeting) {
             if (self.searchController.searchBar.isFirstResponder) {
                 self.searchController.searchBar.text = @"";
             }

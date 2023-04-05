@@ -4388,6 +4388,52 @@ public enum Strings {
         /// Reconnecting
         public static let title = Strings.tr("Localizable", "meetings.reconnecting.title")
       }
+      public enum ScheduleMeeting {
+        /// Add participants
+        public static let addParticipants = Strings.tr("Localizable", "meetings.scheduleMeeting.addParticipants")
+        /// Cancel
+        public static let cancel = Strings.tr("Localizable", "meetings.scheduleMeeting.cancel")
+        /// Create
+        public static let create = Strings.tr("Localizable", "meetings.scheduleMeeting.create")
+        /// Add description
+        public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.description")
+        /// Ends
+        public static let end = Strings.tr("Localizable", "meetings.scheduleMeeting.end")
+        /// Meeting link
+        public static let link = Strings.tr("Localizable", "meetings.scheduleMeeting.link")
+        /// Allow non-hosts to add participants
+        public static let openInvite = Strings.tr("Localizable", "meetings.scheduleMeeting.openInvite")
+        /// Recurrence
+        public static let recurrence = Strings.tr("Localizable", "meetings.scheduleMeeting.recurrence")
+        /// Send calendar invite
+        public static let sendCalendarInvite = Strings.tr("Localizable", "meetings.scheduleMeeting.sendCalendarInvite")
+        /// Starts
+        public static let start = Strings.tr("Localizable", "meetings.scheduleMeeting.start")
+        /// Schedule meeting
+        public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
+        public enum Description {
+          /// Enter fewer than 4000 characters
+          public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.description.lenghtError")
+        }
+        public enum DiscardChanges {
+          /// Keep editing
+          public static let cancel = Strings.tr("Localizable", "meetings.scheduleMeeting.discardChanges.cancel")
+          /// Discard changes
+          public static let confirm = Strings.tr("Localizable", "meetings.scheduleMeeting.discardChanges.confirm")
+          /// Discard changes or keep editing?
+          public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.discardChanges.title")
+        }
+        public enum Link {
+          /// Anyone with this link can join the meeting and view the meeting chat.
+          public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.link.description")
+        }
+        public enum MeetingName {
+          /// Enter fewer than 30 characters
+          public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.lenghtError")
+          /// Meeting name
+          public static let placeholder = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.placeholder")
+        }
+      }
       public enum Scheduled {
         /// [B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]
         public static let oneOff = Strings.tr("Localizable", "meetings.scheduled.oneOff")

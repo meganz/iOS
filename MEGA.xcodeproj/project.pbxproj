@@ -922,6 +922,7 @@
 		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
 		8371CD0C299F9431002B01EB /* FirstMeetingsLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371CD0B299F9431002B01EB /* FirstMeetingsLoadView.swift */; };
 		8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */; };
+		8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
 		8375B74325EFC77500B70F6B /* RecentsQuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B73025EFC68000B70F6B /* RecentsQuickAccessWidgetViewModel.swift */; };
 		8375B75425EFC77D00B70F6B /* RecentsQuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B72F25EFC67F00B70F6B /* RecentsQuickAccessWidget.swift */; };
@@ -1053,6 +1054,15 @@
 		83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
 		83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
+		83DBDDD429D2DA7B00CF433B /* ScheduleMeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */; };
+		83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */; };
+		83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */; };
+		83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */; };
+		83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE229D730C800CF433B /* TextFieldView.swift */; };
+		83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */; };
+		83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE629D730EC00CF433B /* ErrorView.swift */; };
+		83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE829D7310500CF433B /* DatePickerView.swift */; };
+		83DBDDEB29D7312E00CF433B /* ScheduleMeetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */; };
 		83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */; };
 		83DE6D1C298940CF000503CC /* OccurrenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DE6D1B298940CF000503CC /* OccurrenceView.swift */; };
 		83DE6D1F2989410E000503CC /* ScheduleMeetingOccurence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DE6D1E2989410E000503CC /* ScheduleMeetingOccurence.swift */; };
@@ -3416,6 +3426,7 @@
 		836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatChangeGroupNameRequestDelegate.m; sourceTree = "<group>"; };
 		8371CD0B299F9431002B01EB /* FirstMeetingsLoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMeetingsLoadView.swift; sourceTree = "<group>"; };
 		8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPresentationItemSource.swift; sourceTree = "<group>"; };
+		8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Additions.swift"; sourceTree = "<group>"; };
 		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
 		83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
 		8375B72325EFC65200B70F6B /* FavouritesQuickAccessWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesQuickAccessWidget.swift; sourceTree = "<group>"; };
@@ -3533,6 +3544,15 @@
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
+		83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewController.swift; sourceTree = "<group>"; };
+		83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingRouter.swift; sourceTree = "<group>"; };
+		83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewModel.swift; sourceTree = "<group>"; };
+		83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDisclosureView.swift; sourceTree = "<group>"; };
+		83DBDDE229D730C800CF433B /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDescriptionView.swift; sourceTree = "<group>"; };
+		83DBDDE629D730EC00CF433B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		83DBDDE829D7310500CF433B /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
+		83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingView.swift; sourceTree = "<group>"; };
 		83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
 		83DE6D1B298940CF000503CC /* OccurrenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceView.swift; sourceTree = "<group>"; };
 		83DE6D1E2989410E000503CC /* ScheduleMeetingOccurence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOccurence.swift; sourceTree = "<group>"; };
@@ -5782,6 +5802,7 @@
 				415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */,
 				415226731A692ECC00EC7BB6 /* Contacts.storyboard */,
 				94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */,
+				8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */,
 				415226741A692ECC00EC7BB6 /* ContactsViewController.h */,
 				415226751A692ECC00EC7BB6 /* ContactsViewController.m */,
 				A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */,
@@ -6311,6 +6332,7 @@
 				B69AF65928A1E5180022B094 /* ManageHistoryScene */,
 				83BFDBD1291BE66000FFFEA0 /* MeetingInfoScene */,
 				41C736BD1DBE6CCE00F1F38A /* Model */,
+				83DBDDD229D2DA4B00CF433B /* ScheduleMeetingScene */,
 				83669E952987F9A1003E8F74 /* ScheduledMeetingOccurrencesScene */,
 				41136FB91E1692650031C516 /* Views */,
 				2F3083BB2428169E0058DF91 /* Chat.storyboard */,
@@ -8569,6 +8591,30 @@
 				836AEDDF20188F3C00868FC7 /* TestPasswordViewController.m */,
 			);
 			path = PasswordReminder;
+			sourceTree = "<group>";
+		};
+		83DBDDD229D2DA4B00CF433B /* ScheduleMeetingScene */ = {
+			isa = PBXGroup;
+			children = (
+				83DBDDDF29D726A300CF433B /* Views */,
+				83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */,
+				83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */,
+				83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */,
+				83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */,
+			);
+			path = ScheduleMeetingScene;
+			sourceTree = "<group>";
+		};
+		83DBDDDF29D726A300CF433B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */,
+				83DBDDE229D730C800CF433B /* TextFieldView.swift */,
+				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
+				83DBDDE629D730EC00CF433B /* ErrorView.swift */,
+				83DBDDE829D7310500CF433B /* DatePickerView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		83DE6D1A298940B2000503CC /* Views */ = {
@@ -12606,6 +12652,7 @@
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */,
+				83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */,
 				83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */,
 				83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */,
 				83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */,
@@ -12616,6 +12663,7 @@
 				5D3AD46F252C370C006986AF /* CellConfiguration.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */,
+				83DBDDD429D2DA7B00CF433B /* ScheduleMeetingViewController.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
@@ -12680,6 +12728,7 @@
 				8358333029487FEA00394F1A /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */,
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
 				BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */,
+				83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */,
 				BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */,
 				83DE9D0828EC376F00F24DF4 /* ChatRoomsListRouter.swift in Sources */,
 				836A783028E2F2B500B6849F /* ChatRoomsListView.swift in Sources */,
@@ -12691,6 +12740,7 @@
 				83B71A6428F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift in Sources */,
 				83B71A6428F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift in Sources */,
 				94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */,
+				83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */,
 				94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */,
 				C45F9807264AA88C0004DCA5 /* ChatRoomsViewController+MyAvatar.swift in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
@@ -12703,6 +12753,7 @@
 				BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */,
+				83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */,
 				9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
@@ -13108,6 +13159,7 @@
 				5D166B8D252198EF004F4F4A /* HomeSearchHintViewModel.swift in Sources */,
 				5D166B89252198A7004F4F4A /* HomeSearchResultFileViewModel.swift in Sources */,
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
+				83DBDDEB29D7312E00CF433B /* ScheduleMeetingView.swift in Sources */,
 				5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */,
 				5D166B7725219650004F4F4A /* HomeSearchResultViewModel.swift in Sources */,
 				5D166B7B25219762004F4F4A /* HomeSearchState.swift in Sources */,
@@ -13454,6 +13506,7 @@
 				B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */,
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				B65AC8E321F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m in Sources */,
+				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				B65AC8E421F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m in Sources */,
 				B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
@@ -13669,6 +13722,7 @@
 				B699D585275853F2006132EF /* PhotoCardTitle.swift in Sources */,
 				B6D7FB1A2762A534003D9570 /* PhotoCardViewModel.swift in Sources */,
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
+				83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */,
 				BFAB114A23CEA5C300BCE72D /* PhotoCarouselCell.swift in Sources */,
 				BFAB114623CEA5C300BCE72D /* PhotoCarouselDataSource.swift in Sources */,
 				BFAB114B23CEA5C300BCE72D /* PhotoCarouselDelegate.swift in Sources */,
@@ -13810,6 +13864,7 @@
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
+				83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
@@ -13989,6 +14044,7 @@
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
+				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
 				328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */,
 				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
