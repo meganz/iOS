@@ -205,7 +205,15 @@ fileprivate struct ChatRoomContentDescriptionView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
-        if let hybridDescription = viewModel.hybridDescription {
+        if viewModel.existsInProgressCallInChatRoom {
+            Text(
+                viewModel.totalCallDuration > 0
+                ? Strings.Localizable.Meetings.Scheduled.Listing.InProgress.descriptionWithDuration(viewModel.totalCallDuration.timeString)
+                : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
+            )
+            .font(.caption)
+            .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+        } else if let hybridDescription = viewModel.hybridDescription {
             HStack(spacing: 0) {
                 if let sender = hybridDescription.sender {
                     Text(sender)

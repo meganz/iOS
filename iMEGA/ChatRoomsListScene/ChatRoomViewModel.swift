@@ -5,7 +5,7 @@ import Foundation
 import MEGAUI
 import Combine
 
-final class ChatRoomViewModel: ObservableObject, Identifiable {
+final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let chatListItem: ChatListItemEntity
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
@@ -24,7 +24,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     @Published var chatStatus: ChatStatusEntity = .invalid
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
-    
+    @Published var totalCallDuration: TimeInterval = 0
+
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     
@@ -42,6 +43,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     let shouldShowUnreadCount: Bool
     let unreadCountString: String
+    
+    var callDurationTotal: TimeInterval?
+    var callDurationCapturedTime: TimeInterval?
+    var timerSubscription: AnyCancellable?
     
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -90,6 +95,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.displayDateString = formattedLastMessageSentDate()
         
         self.existsInProgressCallInChatRoom = chatUseCase.isCallInProgress(for: chatListItem.chatId)
+        if let call = callUseCase.call(for: chatListItem.chatId) {
+            configureCallInProgress(for: call)
+        }
         monitorActiveCallChanges()
         
         if !chatListItem.group {
@@ -383,6 +391,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             .sink { [weak self] call in
                 guard let self, call.chatId == self.chatListItem.chatId else { return }
                 self.existsInProgressCallInChatRoom = call.status == .inProgress || call.status == .userNoPresent
+                self.configureCallInProgress(for: call)
                 self.contextMenuOptions = self.constructContextMenuOptions()
             }
             .store(in: &subscriptions)

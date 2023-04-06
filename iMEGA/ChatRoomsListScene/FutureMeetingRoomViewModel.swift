@@ -1,7 +1,7 @@
 import MEGADomain
 import Combine
 
-final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
+final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let scheduledMeeting: ScheduledMeetingEntity
     let nextOccurrenceDate: Date
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
@@ -17,9 +17,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     private var subscriptions = Set<AnyCancellable>()
-    private var callDurationTotal: TimeInterval?
-    private var callDurationCapturedTime: TimeInterval?
-    private var timerSubscription: AnyCancellable?
+    
+    var callDurationTotal: TimeInterval?
+    var callDurationCapturedTime: TimeInterval?
+    var timerSubscription: AnyCancellable?
 
     var title: String {
         scheduledMeeting.title
@@ -241,37 +242,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
                 self.contextMenuOptions = self.constructContextMenuOptions()
             }
             .store(in: &subscriptions)
-    }
-    
-    private func configureCallInProgress(for call: CallEntity) {
-        guard call.duration > 0 else {
-            timerSubscription?.cancel()
-            timerSubscription = nil
-            return
-        }
-        
-        callDurationTotal = TimeInterval(call.duration)
-        callDurationCapturedTime = Date().timeIntervalSince1970
-        
-        populateTotalCallDuration()
-        
-        timerSubscription?.cancel()
-        timerSubscription = Timer
-            .publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                self?.populateTotalCallDuration()
-            }
-
-    }
-    
-    private func populateTotalCallDuration() {
-        guard let callDurationTotal = callDurationTotal,
-              let callDurationCapturedTime = callDurationCapturedTime else {
-            return
-        }
-        
-        totalCallDuration = Date().timeIntervalSince1970 - callDurationCapturedTime + callDurationTotal
     }
     
     private func startOrJoinMeetingTapped() {

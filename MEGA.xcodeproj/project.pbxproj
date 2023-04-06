@@ -1916,6 +1916,7 @@
 		BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFC8268D366D00460DB3 /* CallActionManager.swift */; };
+		BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */; };
 		BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */; };
 		BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */; };
 		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
@@ -4420,6 +4421,7 @@
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF22BFC8268D366D00460DB3 /* CallActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionManager.swift; sourceTree = "<group>"; };
+		BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInProgressTimeReporting.swift; sourceTree = "<group>"; };
 		BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingFloatingPanelViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatMessage+Additions.swift"; sourceTree = "<group>"; };
@@ -8518,6 +8520,7 @@
 				BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */,
 				BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */,
 				BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */,
+				BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */,
 			);
 			path = ChatRoomsListScene;
 			sourceTree = "<group>";
@@ -12728,6 +12731,7 @@
 				8358333029487FEA00394F1A /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */,
 				8358333029487FEA00394F1A /* ChatRoomPrivilegeEntity+Mapper.swift in Sources */,
 				BF66DF162612C20200066F35 /* ChatRoomRepository.swift in Sources */,
+				BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */,
 				BFD213BA28ED4CDF0057150E /* ChatRoomsEmptyView.swift in Sources */,
 				BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */,
 				83DE9D0828EC376F00F24DF4 /* ChatRoomsListRouter.swift in Sources */,
