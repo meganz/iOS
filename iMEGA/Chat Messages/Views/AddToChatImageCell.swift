@@ -90,6 +90,7 @@ class AddToChatImageCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         cellType = .media
+        imageView.backgroundColor = .white
     }
     
     func toggleSelection() {
