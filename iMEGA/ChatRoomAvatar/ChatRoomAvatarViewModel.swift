@@ -122,7 +122,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                     }
                     
                     let downloadedPrimaryAvatar = try await downloadAvatar(forHandle: primaryAvatarUserHandle)
-                    await updateSecondaryAvatar(downloadedPrimaryAvatar)
+                    await updatePrimaryAvatar(downloadedPrimaryAvatar)
                 }
             }
         } else {
