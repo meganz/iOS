@@ -64,10 +64,11 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoSelection.selectedPhoto, AlbumPhotoEntity(photo: node4.photo))
     }
     
-    func testIsSaveButtonDisabled_whenSelectedNodeChange_shouldSelectTheRightValues(){
+    func testIsSaveButtonDisabled_whenSelectedNodeChange_ignoreTheInitialSelectionAndEnableForTheNextOne(){
         let sut = albumCoverPickerViewModel()
         
         XCTAssertTrue(sut.isSaveButtonDisabled)
+        sut.photoSelection.selectedPhoto = AlbumPhotoEntity(photo: NodeEntity(handle: 2))
         sut.photoSelection.selectedPhoto = AlbumPhotoEntity(photo: NodeEntity(handle: 2))
         XCTAssertFalse(sut.isSaveButtonDisabled)
     }
