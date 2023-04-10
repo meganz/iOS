@@ -13,7 +13,10 @@ import MEGADomain
                     } catch {
                         if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                             await SVProgressHUD.dismiss()
-                            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                            SVProgressHUD.show(
+                                Asset.Images.NodeActions.saveToPhotos.image,
+                                status: error.localizedDescription
+                            )
                         }
                     }
                 }
