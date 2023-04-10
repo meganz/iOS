@@ -188,12 +188,6 @@
 
 #pragma mark - uploads state
 
-- (void)hideRightBarButtonItem:(BOOL)shouldHide {
-    if (shouldHide) {
-        [self.objcWrapper_parent.navigationItem setRightBarButtonItems:nil];
-    }
-}
-
 - (void)reloadHeader {
     MEGALogDebug(@"[Camera Upload] reload photos view header");
     
