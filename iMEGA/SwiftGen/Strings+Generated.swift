@@ -3461,11 +3461,11 @@ public enum Strings {
           public static let description = Strings.tr("Localizable", "dialog.turnOnNotifications.label.description")
           /// 4. Turn on <b>Allow notifications</b>
           public static let stepFour = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepFour")
-          /// <b>1.</b> Open <b>Settings</b>
+          /// 1. Open <b>Settings</b>
           public static let stepOne = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepOne")
-          /// <b>3.</b> Turn on <b>Allow notifications</b>
+          /// 3. Tap <b>MEGA</b>
           public static let stepThree = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepThree")
-          /// <b>2.</b> Tap <b>Notifications</b>
+          /// 2. Tap <b>Notifications</b>
           public static let stepTwo = Strings.tr("Localizable", "dialog.turnOnNotifications.label.stepTwo")
           /// Turn on notifications
           public static let title = Strings.tr("Localizable", "dialog.turnOnNotifications.label.title")
